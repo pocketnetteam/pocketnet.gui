@@ -56,7 +56,7 @@ var panel = (function(){
 				})
 			},
 
-			bestposts : function(){
+			/*bestposts : function(){
 				
 
 				self.nav.api.load({
@@ -76,7 +76,7 @@ var panel = (function(){
 					}
 
 				})
-			},
+			},*/
 	
 
 			lastcomments : function(clbk){
@@ -230,7 +230,7 @@ var panel = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

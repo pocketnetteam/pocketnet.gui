@@ -84,10 +84,22 @@ var Wss = function(node, service){
     }
 
     self.connect = function(user){
+        let wsprotocol = 'ws';
+        let wsport = node.ws;
 
-        var path = `ws://${node.host}:${node.ws}/ws`;
+        if (global.USE_TLS_NODES_ONLY && !node.portPrivate) {
+            wsprotocol = 'wss';
+            wsport = node.sws;
+        }
+
+        var path = `${wsprotocol}://${node.host}:${wsport}/ws`;
 
         if(!ws){
+            /*if(user)
+                console.log('new ws', path, user.address, f.rand(0, 100))
+            else{
+                console.log('new ws', path, 'noaddress', f.rand(0, 100))
+            }*/
             ws = new WebSocket(path);        
 
             attempt++
@@ -110,7 +122,8 @@ var Wss = function(node, service){
 
                 emit('close')
 
-                if (attempt > 5){
+                if (attempt > 2){
+
                     emit('disconnected')
                 }
                 else{
@@ -138,8 +151,6 @@ var Wss = function(node, service){
 
                     node.notification(data)
 
-                    //blockhash
-            
                 }
 
                 emit('message', data)

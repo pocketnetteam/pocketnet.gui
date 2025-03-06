@@ -6,10 +6,6 @@
 #notifications .closentooltip {
   display: none;
 }
-#notifications ._wrp .commenttext,
-#notifications ._wrp .data {
-  overflow: hidden;
-}
 #notifications .error,
 #notifications .loader {
   padding: 3em;
@@ -88,7 +84,6 @@
 #notifications .nwrapper .notification .caption {
   text-overflow: ellipsis;
   overflow: hidden;
-  white-space: nowrap;
 }
 #notifications .nwrapper .notification .date {
   font-size: 0.8em;
@@ -121,6 +116,12 @@
 }
 #content #notifications .panel {
   display: none;
+}
+#content > div#notifications .wrk {
+  width: 95%;
+  max-width: 1280px;
+  padding: 0 48px;
+  margin: 0 auto;
 }
 .wndnotifications .ncaption {
   display: none;

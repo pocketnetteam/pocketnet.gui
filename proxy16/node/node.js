@@ -27,10 +27,13 @@ var Node = function(options, manager){
 
     self.host = options.host
     self.port = options.port
+    self.sport = options.sport
+    self.ws = options.ws
+    self.sws = options.sws
+
     self.portPrivate = options.portPrivate
     self.rpcuser = options.rpcuser || ""
     self.rpcpass = options.rpcpass || ""
-    self.ws = options.ws
     self.name = options.name || "Pocketnet Node"
     self.stable = options.stable || false
     self.addedby = options.addedby || ''
@@ -153,7 +156,11 @@ var Node = function(options, manager){
             wss.service.on('disconnected', function(){
                 wss.service = null
                 wssconnected = false
-                serviceConnection()
+
+
+                setTimeout(() => {
+                    serviceConnection()
+                }, 60000)
             })
 
         }
@@ -199,7 +206,10 @@ var Node = function(options, manager){
     }
 
     self.notification = function(block){
-        manager.notifications.addblock(block, self)
+        var chaininfo = manager.currentChainCommon2()
+        
+        if (chaininfo && chaininfo.commonHeight - block.height < 10)
+            manager.notifications.addblock(block, self)
     }
 
     self.addblock = function(block){
@@ -221,13 +231,10 @@ var Node = function(options, manager){
     
                 timedifference(block.time)
 
-                /*if(block?.msg === 'new block') {
-
-                    manager.notifications.sendBlock(block, self.id)
-                }*/
+                chain = f.lastelements(chain, 30, 10)
             }
 
-            chain = f.lastelements(chain, 150, 10)
+            
 
             lastnodeblock = block
 
@@ -287,17 +294,28 @@ var Node = function(options, manager){
         
     }
 
-    self.key = self.host + ":" + self.port
-    self.wskey = self.host + ":" + self.ws
-    self.ckey = self.host + ":" + self.port + ":" + self.ws
+    let tprotocol = 'http'
+    let webport = self.port
+    let wsport = self.ws
+
+    if (global.USE_TLS_NODES_ONLY && !self.portPrivate) {
+        tprotocol = 'https'
+        webport = options.sport
+        wsport = options.sws
+    }
+
+    self.key = self.host + ":" + webport
+    self.wskey = self.host + ":" + wsport
+    self.ckey = self.host + ":" + webport + ":" + wsport
 
     self.rpc = new RpcClient({
-        protocol: 'http',
+        protocol: tprotocol,
         user: self.rpcuser,
         pass: self.rpcpass,
         host: self.host,
-        port: self.port,
+        port: webport,
         portPrivate: self.portPrivate,
+        transports : global.USE_NODE_TRANSPORTS && manager ? manager.transports : null
     })
 
     self.rpcs = function(method, parsed){
@@ -345,10 +363,13 @@ var Node = function(options, manager){
 
                     if(err.code == -5) code = 200 // not found
 
+                
                     if(err.code == 521) penalty.set(0.8, 220000, '521')
                     if(err.code == 408) penalty.set(0.5, 60000, '408')
                     if(err.code == 429) penalty.set(0.3, 60000, '429')
-    
+
+                    manager.logger.w('rpc', 'error', `Node (${self.host}) request error: ${err.code}: ${err.error || 'undefined'}`)
+
                 }	
 
                 self.statistic.add({
@@ -658,19 +679,21 @@ var Node = function(options, manager){
         rating : function(){
 
             if(cachedrating){
-                if(f.date.addseconds(cachedrating.time, 30) > new Date()){
+
+
+                if(cachedrating.time + 130000 > Date.now()){
                     return cachedrating.result || 0
                 }
             }
 
             var lastblock = self.lastblock() || {}
             var result = 0;
+            var notcache = false
 
             if(
-                (!lastblock.height) || (self.testing)
-                || (!self.inited)
+                (!lastblock.height) || (self.testing) || (!self.inited)
             ){
-
+                notcache = true
             }
             else{
 
@@ -678,8 +701,12 @@ var Node = function(options, manager){
 
                 var difference = status.difference || 0
 
-                if (difference > 0) difference = 0
-                    difference = -difference
+                if (difference > 0) {
+                    difference = 0
+                }
+
+                difference = -difference
+
                 if (
                     (status.fork && difference > 5 || difference > 50)
                 ){
@@ -694,8 +721,7 @@ var Node = function(options, manager){
                     var availabilityAllTime = self.statistic.calcAvailability(s) || 0
                     var availability5Minutes = self.statistic.calcAvailability(slice) || 0
                     ///
-        
-        
+                    
                     var usersl = _.toArray(wss.users).length + 1
                     var userski = 1
         
@@ -718,11 +744,14 @@ var Node = function(options, manager){
             }
 
             ///
-    
-            cachedrating = {
-                result : result,
-                time : new Date()
+            
+            if(!notcache){
+                cachedrating = {
+                    result : result,
+                    time : Date.now()
+                }
             }
+            
 
             return  result
         },
@@ -928,6 +957,15 @@ var Node = function(options, manager){
 
         return self.rpcs('getPeerInfo').then(result => {
 
+            result = _.filter(result || [], function(peer){
+
+                if(!peer.addr || peer.addr.indexOf('.i2p') > -1){
+                    return false
+                }
+
+                return true
+
+            })
 
             var nodes = _.map(result || [], function(peer){
 
@@ -935,8 +973,10 @@ var Node = function(options, manager){
 
                 var node = new Node({
                     host : pr[0],
-                    port : 38081, //// TODO
-                    ws : 8087, //// TODO
+                    port : 38081,
+                    sport : 38881,
+                    ws : 8087,
+                    sws : 8887,
                     peer : true
                 }, manager)  
 
@@ -968,7 +1008,7 @@ var Node = function(options, manager){
 
             if (lastinfo && lastinfoTime){
     
-                var dif = Math.floor(((new Date()).getTime()) / 1000) - Math.floor(((lastinfoTime).getTime()) / 1000)
+                var dif = Math.floor((Date.now()) / 1000) - Math.floor(((lastinfoTime).getTime()) / 1000)
 
                 if (dif < 55){
     
@@ -1035,24 +1075,38 @@ var Node = function(options, manager){
         return options
     }
 
+    self.forbidUsage = function(){
+        if (global.EXPERIMENTALNODES || f.deep(manager,'proxy.test')) return false 
+
+        /*if (self.version){
+            if(f.numfromreleasestring(self.version) >= 0.22) return true
+        }*/
+
+        return false
+    }
+
     self.export = function(){
 
         var s = self.statistic.getst()
 
         var lastblock = self.lastblock() || {}
 
+        var chainStatus = self.chainStatus()
+
         return {
             host : self.host,
             port : self.port,
+            sport : self.sport,
+            ws : self.ws,
+            sws : self.sws,
             rpcuser : self.rpcuser,
             rpcpass : self.rpcpass,
-            ws : self.ws,
             name : self.name,
             addedby : self.addedby,
             key : self.key,
             testing : self.testing,
             stable : self.stable,
-            canuse : (s.success > 0 && lastblock.height) ? true : false,
+            canuse : (s.success > 0 && lastblock.height && !self.forbidUsage()) ? true : false,
             local : self.local || false,
             peer : self.peer,
             wssusers : _.toArray(wss.users).length,
@@ -1060,7 +1114,10 @@ var Node = function(options, manager){
             version : self.version,
             vcode : self.version ? f.numfromreleasestring(self.version) : 1,
             service : wssconnected ? true : false,
-            allowRpc : self.allowRpc
+            allowRpc : self.allowRpc,
+            single : self.single,
+            backward : chainStatus.fork || chainStatus.difference > 20
+
         }
     }
 

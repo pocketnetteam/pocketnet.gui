@@ -7,6 +7,7 @@
 					<%-e(format === 'liftUpThePost' ? 'liftUpThePost' : 'thankTheAuthor')%>
 				</span>
 			</div>
+
 			<div class="buyButtonWrapper">
 				<div class="buyButton" id="buyButton">
 					<span class="text">
@@ -17,14 +18,12 @@
 				</div>
 			</div>
 		</div>
-
 		<div class="abswrappcontent customscroll">
 
 			<% 
 				var address = userinfo.address;
 				var src = userinfo.image;
-				var name = userinfo.name;
-				var about = filterXSS(clearScripts((findAndReplaceLink(userinfo.about, true))));
+				var about = findAndReplaceLink(userinfo.about, true);
 
 				var _d = userinfo.regdate
 				var  d = null;
@@ -34,7 +33,6 @@
 					d.setTime(_d * 1000);	
 				}
 
-				var letter = name ? name[0] : '';  
 				var dev = userinfo.dev;
 				var authorlink = app.platform.api.authorlink(address);
 			%>
@@ -45,12 +43,12 @@
 
 						<div class="usericon" image="<%-src || '*'%>">
 					
-							<% if(!src && letter) { %>
+							<% if(!src && userinfo.letter) { %>
 					
 								<span 
 									class="letter"
 								>
-									<%-letter.toUpperCase()%>
+									<%-userinfo.letter%>
 								</span>
 					
 							<% } else if (!src) { %>
@@ -64,15 +62,23 @@
 				
 				</div>
 				<div class="description">
-					<div class="name"><%- name %></div>
-					<% if(about) {%><div class="about"><%= about %></div>
+					<div class="name"><%- userinfo.name %></div>
+					<% if(about) {%><div class="about"><%- about %></div>
 					<% } else { %> 
 						<% if(d) {%>
-							<div class="label"><%=e('joined')%> <b><%-_d.yyyymmdd('.')%></b></div>
+							<div class="label"><%-e('joined')%> <b><%-_d.yyyymmdd('.')%></b></div>
 						<% } %>
 					<% } %>
 				</div>
 			</div>
+
+			<div id="playVideo" class="playVideo">
+				<div class="text">
+					<%-e('learnMoreBoost')%>
+				</div>
+				<i class="fa fa-play"></i>
+			</div>
+
 			<div id="fieldsWrapper" class="fieldsWrapper">
 			</div>
 

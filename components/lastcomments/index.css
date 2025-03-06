@@ -35,7 +35,7 @@
   cursor: pointer;
 }
 #lastcomments .comment .commentmessage {
-  font-size: 0.9em;
+  font-size: 0.85em;
   opacity: 0.85;
   -moz-transition: opacity 0.3s;
   -o-transition: opacity 0.3s;

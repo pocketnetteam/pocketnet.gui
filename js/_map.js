@@ -22,23 +22,26 @@ var insertingfunc = function(settings, p){
 __map =  { 
 
 	__vendor : [
-		"js/vendor/device.js", //
-		"js/vendor/modernizr-2.8.3.min.js",//
-		"js/vendor/jquery.js",//
+		
+		"js/vendor/jquery.min.js",//
         "js/vendor/tooltipster.core.js",//
         "js/vendor/tooltipster.bundle.js",//
         "js/vendor/imagesloaded.pkgd.js",///
         "js/vendor/timer.js",//
         
 		"js/vendor/aesjs.js",//
-		"js/vendor/linkify.min.js",
-		"js/vendor/linkify-html.min.js",
+		{path : "js/vendor/linkify.js", babelify : true},
+		{path : "js/vendor/linkify-html.js", babelify : true},
+		{path : "js/vendor/linkify-string.js", babelify : true},
+		"js/vendor/exif.js",
+		"js/vendor/firebase-app.js",
+		"js/vendor/firebase-messaging.js",
 
-		{path :"js/vendor/leoprofanity.js", babelify : true},
+		//{path :"js/vendor/leoprofanity.js", babelify : true},
 
 		//new
 		{path : "js/lib/pocketnet/btc17.js", babelify : true}, //
-		{path : "js/lib/pocketnet/htls.js", babelify : true}, //
+		//{path : "js/lib/pocketnet/htls.js", babelify : true}, //
 		{path : "js/lib/pocketnet/buffer.js", babelify : true}, //
 		
 		//
@@ -53,44 +56,56 @@ __map =  {
 		"js/vendor/unmute.js", //
         {path : "js/vendor/plyr.js", babelify : true}, // later
         "js/vendor/reconnectingwebsocket.js", //
-        "js/vendor/xss.min.js", //
+        
 		"js/vendor/jquery.mark.js", //?
-
+		
 		"js/vendor/moment.min.js", //?
 		"js/vendor/moment.locale.js", //?
+		"js/vendor/ua-parser.min.js",
 		"js/vendor/jquery.inputmask.bundle.js",
 		 //
 		"js/vendor/isotope.pkgd.js", //
-		"js/vendor/circular-progress.js", //
 		{path : "js/vendor/workbox-v6.1.5/workbox-sw.js", babelify : true},
 		"js/vendor/ion.sound/ion.sound.js",
 		"js/vendor/hammer.min.js",
-		"js/vendor/owl/owl.carousel.js",
+		//"js/vendor/owl/owl.carousel.js",
 		
 		{path : "js/vendor/shadow-popup/popup.js", babelify : true},
+		{path : "js/popups/index.js", babelify : true},
 	],
 
 	__sourcesfirst : [
-		/*"js/vendor/firebase-app.js",*/
-		/*"js/vendor/firebase-messaging.js",*/ /// temp
+		"js/vendor/device.js", //
+		"js/vendor/modernizr-2.8.3.min.js",//
+		"js/polyfills.js",
 		"js/vendor/axios.js",
 		"js/vendor/underscore-min.js",  
+		"js/vendor/xss.min.js", //
+		
 		{path : "js/functionsfirst.js", babelify : true},
+
 		"js/localization.js",
-		//"js/notifications.js",
+	
 		{path : "js/lib/client/system16.js", babelify : true},
+		{path : "js/lib/client/monetization.js", babelify : true},
 		{path : "js/lib/client/api.js", babelify : true},
-		{path : "js/image-uploader.js", babelify : true},
+		{path : "js/lib/client/resoursesdb.js", babelify : true},
+		{path : "js/kit.js", babelify : true},
+		{path : "js/lib/client/actions.js", babelify : true},
+		{path : "js/lib/client/sdk.js", babelify : true},
+		
 		"js/_map.js",
+
 		{path : "js/logger.js", babelify : true},
 		{path : "js/videotransport.js", babelify : true},
+		{path : "js/media.js", babelify : true},
 		{path : "js/app.js", babelify : true},
 		"js/main.js"
 	],
 
-	__sourceslast : [
+	/*__sourceslast : [
 		{path : "peertube/video-embed.bundle.js", babelify : true}
-	],
+	],*/
 
 
 	__sources : [
@@ -100,13 +115,20 @@ __map =  {
 		{path : "js/module.js", babelify : true},
 		{path : "js/navn.js", babelify : true},
 		{path : "js/validation.js", babelify : true},
-		{path : "js/kit.js", babelify : true},
-		{path : "js/satolist.js", babelify : true},
+		{path : "js/vendor/hex-captcha/js/captcha.js", babelify : true},
+		{path : "js/image-uploader.js", babelify : true},
 		{path : "js/peertube.js", babelify : true},
+		{path : "js/lib/apps/index.js", babelify : true},
+		{path : "js/lib/external/index.min.js"},
+
+		{path : "js/satolist.js", babelify : true},
+		"js/bastyonCalls/bastyonCalls.min.js",
 		{path : "js/lib/client/p2pvideo.js", babelify : true},
 		{path : "js/effects.js", babelify : true},
 		{path : "js/video-uploader.js", babelify : true},
-		{path : "js/file-hash.js", babelify : true}
+		{path : "js/file-hash.js", babelify : true},
+		{path : "js/widgets.js", babelify : true}
+
 		
 	],
 
@@ -121,7 +143,9 @@ __map =  {
 		"peertube/video-embed.css",
 		"js/vendor/owl/assets/owl.carousel.min.css",
 		"js/vendor/owl/assets/owl.theme.default.min.css",
-		"js/vendor/shadow-popup/css/popup.css"
+		"js/vendor/shadow-popup/css/popup.css",
+		"css/fontawesome/css/all.min.css",
+		"js/vendor/hex-captcha/css/captcha.css"
 	],
 
 	__exportcss : {
@@ -133,23 +157,30 @@ __map =  {
 	},
 	
 	__templates : [
-		{ c : 'navigation', n : 'menu' },
+		{ c : 'bnavigation', n : 'menu' },
 		{ c : 'menu', n : 'index' },
+		{ c : 'menu', n : 'userinfo' },
 		
-		//{ c : 'toppanel', n : 'index' },
-		{ c : 'navigation', n : 'index' },
+		{ c : 'bnavigation', n : 'index' },
 		{ c : 'footer', n : 'index' },
 		{ c : 'main', n : 'menu' },
 		{ c : 'main', n : 'index' },
 		{ c : 'panel', n : 'index' },
 		{ c : 'leftpanel', n : 'index' },
+		{ c : 'leftpanel', n : 'footer' },
+		{ c : 'leftpanel', n : 'menu' },
+		{ c : 'leftpanel', n : 'best' },
+		{ c : 'miniapps', n : 'index' },
+		{ c : 'miniapps', n : 'apps' },
 		{ c : 'lastcomments', n : 'index' },
 		{ c : 'tagcloud', n : 'index' },
+		{ c : 'tagcloud', n : 'tags' },
 		{ c : 'userpage', n : 'index' },
 		{ c : 'categories', n : 'index' },
 		{ c : 'categories', n : 'categories' },
 		{ c : 'lenta', n : 'share' },
 		{ c : 'lenta', n : 'shares' },
+		{ c : 'lenta', n : 'metmenu' },
 		{ c : 'lenta', n : 'wholike' },
 		{ c : 'lenta', n : 'index' },
 		{ c : 'lenta', n : 'sharevideo' },
@@ -159,11 +190,25 @@ __map =  {
 		{ c : 'lenta', n : 'groupshares' },
 		{ c : 'lenta', n : 'commentspreview' },
 		{ c : 'lenta', n : 'tosubscribeshares' },
+		{ c : 'notifications', n : 'index' },
+		{ c : 'embeding', n : 'images' },
+		{ c : 'taginput', n : 'index' },
+		{ c : 'taginput', n : 'tags' },
 
+		
+		
 		{ c : 'share', n : 'body' },
 		{ c : 'share', n : 'postline' },
 		{ c : 'share', n : 'index' },
 		{ c : 'share', n : 'url' },
+		{ c : 'share', n : 'repost' },
+		{ c : 'share', n : 'settings' },
+
+		{ c : 'staking', n : 'index' },
+		{ c : 'staking', n : 'lastprice' },
+		{ c : 'staking', n : 'graph' },
+
+		
 
 		{ c : 'comments', n : 'index' },
 		{ c : 'comments', n : 'post' },
@@ -172,12 +217,14 @@ __map =  {
 		{ c : 'author', n : 'preshell'},
 		{ c : 'post', n : 'preshell'},
 		{ c : 'commentBanner', n : 'index' },
+		{ c : 'updatenotifier', n : 'index' },
 		{ c : 'registration', n : 'index' },
 		{ c : 'test', n : 'options' },
 		{ c : 'test', n : 'icon' },
 		{ c : 'author', n : 'info'},
 		{ c : 'author', n : 'index'},
 		{ c : 'author', n : 'menu'},
+		{ c : 'author', n : 'panel'},
 		{ c : 'mobilesearch', n : 'index'},
 
 
@@ -198,13 +245,22 @@ __map =  {
 		],*/
 	},      
 
-	
+	bastyon_iphone: {
+		uri : "bastyon_iphone",
+		href : "bastyon_iphone",
+		add : insertingfunc,
+		anonimus : true,
+		electronDontOpen : true
+	},
+
 	easynode : {
 		uri : "easynode",
 		href : "easynode",
 		add : insertingfunc,
 		anonimus : true,
-		electronDontOpen : true
+		electronDontOpen : true,
+
+		ignoreMinimize : true
 	},
 
 	about : {
@@ -212,7 +268,10 @@ __map =  {
 		href : "about",
 		add : insertingfunc,
 		anonimus : true,
-		electronDontOpen : true
+		electronDontOpen : true,
+
+		ignoreMinimize : true
+
 	},
 
 	aboutHome : {
@@ -222,6 +281,9 @@ __map =  {
 			el : 'content'
 		},
 		anonimus : true,
+
+		ignoreMinimize : true
+
 		/*redirect : {
 			auth : 'authorization',
 			//validate : 'filluser'
@@ -236,6 +298,9 @@ __map =  {
 			el : 'content'
 		},
 		anonimus : true,
+
+		ignoreMinimize : true
+
 		/*redirect : {
 			auth : 'authorization',
 			//validate : 'filluser'
@@ -250,6 +315,9 @@ __map =  {
 			el : 'content'
 		},
 		anonimus : true,
+
+		ignoreMinimize : true
+
 		/*redirect : {
 			auth : 'authorization',
 			//validate : 'filluser'
@@ -265,6 +333,7 @@ __map =  {
 		},
 		anonimus : true,
 
+		ignoreMinimize : true
 	
 	},
 
@@ -276,6 +345,7 @@ __map =  {
 		},
 		anonimus : true,
 
+		ignoreMinimize : true
 	
 	},
 
@@ -286,6 +356,9 @@ __map =  {
 			el : 'content'
 		},
 		anonimus : true,
+
+		ignoreMinimize : true
+
 	},
 
 	abilityincrease : {
@@ -305,12 +378,53 @@ __map =  {
 		add : insertingfunc,
 	},
 
+	actions : {
+		uri : "actions",
+		href : "actions",
+		add : {
+			el : 'content'
+		},
+		add : insertingfunc,
+	},
+
+	requestpermission : {
+		uri : "requestpermission",
+		href : "requestpermission",
+		add : insertingfunc,
+		anonimus : true,
+	},
+
+	applicationmeta : {
+		uri : "applicationmeta",
+		href : "applicationmeta",
+		add : insertingfunc,
+		anonimus : true,
+	},
+
+	application : {
+		uri : "application",
+		href : "application",
+		add : insertingfunc,
+		anonimus : true,
+	},
+
 	applications : {
 		uri : "applications",
 		href : "applications",
 		add : insertingfunc,
 		anonimus : true,
-		electronDontOpen : true
+		electronDontOpen : true,
+
+		ignoreMinimize : true,
+		insearch : true
+
+	},
+
+	monetization : {
+		uri : "monetization",
+		href : "monetization",
+		add : insertingfunc,
+		anonimus : true
 	},
 
 	boost : {
@@ -326,7 +440,21 @@ __map =  {
 		href : "terms",
 		add : insertingfunc,
 		anonimus : true,
-		electronDontOpen : true
+		electronDontOpen : true,
+
+		ignoreMinimize : true
+
+	},
+
+	csaepolicy : {
+		uri : "csaepolicy",
+		href : "csaepolicy",
+		add : insertingfunc,
+		anonimus : true,
+		electronDontOpen : true,
+
+		ignoreMinimize : true
+
 	},
 
 	
@@ -377,14 +505,7 @@ __map =  {
 		add : insertingfunc,
 		anonimus : true,
 
-		relations : [
-			/*{src : 'js/vendor/qr/qrscanner.js',			   f : 'js'},*/
-			{src : 'js/validation.js',			   f : 'js'},		
-			/*{src : 'js/vendor/qr/qrcode.min.js',			   f : 'js', require : function(){
-				QRCode = require('./js/vendor/qr/qrcode.min.js')
-			}},	*/
-
-		],
+		
 		electronDontOpen : true
 	},
 
@@ -419,6 +540,13 @@ __map =  {
 			anonimus : true
 		},
 
+		captcha : {
+			uri : "captcha",
+			href : "captcha",
+			add : insertingfunc,
+			anonimus : true
+		},
+
 		test : {
 			uri : "test",
 			href : "test",
@@ -426,17 +554,6 @@ __map =  {
 			anonimus : true,
 			relationsSunc : true,
 			electronDontOpen : true,
-			relations : [
-
-				{src : 'js/vendor/exif.js', f : 'js', 
-
-					require : function(){
-
-						EXIF = require('./js/vendor/exif.js')
-
-				}}
-			],
-
 			
 		},
 
@@ -477,7 +594,6 @@ __map =  {
 			href : "streampeertube",
 			add : insertingfunc,
 		},
-
 		
 		tagcloud : {
 			uri : "tagcloud",
@@ -529,22 +645,6 @@ __map =  {
 			anonimus : true,
 		},
 
-
-		// usermodal : {
-		// 	uri : "usermodal",
-		// 	href : "usermodal",
-		
-		// 	anonimus : true,
-		// },
-
-
-		bestposts : {
-			uri : "bestposts",
-			href : "bestposts",
-			
-			add : insertingfunc,
-			anonimus : true,
-		},
 
 		lastcomments : {
 			uri : "lastcomments",
@@ -616,6 +716,9 @@ __map =  {
 			],
 
 			relationsSunc : true,
+
+			ignoreMinimize : true
+
 			
 		},
 
@@ -626,18 +729,41 @@ __map =  {
 				el : 'content'
 			},
 			anonimus : true,
+
+			ignoreMinimize : true
+
 		},
 
-	
+		home : {
+			uri : "home",
+			href : "home",
+			add : insertingfunc,
+			anonimus : true,
+			insearch : true
+		},
+
 
 		donations : {
 			uri : "donations",
 			href : "donations",
-			add : {
-				el : 'content'
-			},
+			add : insertingfunc,
 			anonimus : true,
 		},
+		
+		howtobuy : {
+			uri : "howtobuy",
+			href : "howtobuy",
+			add : insertingfunc,
+			anonimus : true,
+		},
+
+		searchusers : {
+			uri : "searchusers",
+			href : "searchusers",
+			add : insertingfunc,
+			anonimus : true,
+		},
+		
 
 		faq : {
 			uri : "faq",
@@ -646,6 +772,9 @@ __map =  {
 				el : 'content'
 			},
 			anonimus : true,
+
+			ignoreMinimize : true
+
 		},
 		addcategory: {
 			uri : "addcategory",
@@ -660,14 +789,53 @@ __map =  {
 			href : "slides",
 			add : insertingfunc,
 			anonimus : true,
+
+			ignoreMinimize : true
+
+		},
+		transportsmanagement : {
+			uri : "transportsmanagement",
+			href : "transportsmanagement",
+			add : insertingfunc,
+			anonimus : true,
 		},
 
-
-		
 	
 		embeding : {
 			uri : "embeding",
 			href : "embeding",
+			add : insertingfunc
+		},
+
+		fastsend : {
+			uri : "fastsend",
+			href : "fastsend",
+			add : insertingfunc
+		},
+
+		managepaidsubscription : {
+			uri : "managepaidsubscription",
+			href : "managepaidsubscription",
+			add : insertingfunc
+		},
+
+		getpaidsubscription : {
+			uri : "getpaidsubscription",
+			href : "getpaidsubscription",
+			add : insertingfunc
+		},
+
+		devapplication : {
+			uri : "devapplication",
+			href : "devapplication",
+			add : insertingfunc,
+			anonimus : true,
+		},
+
+		devapplications : {
+			uri : "devapplications",
+			href : "devapplications",
+			anonimus : true,
 			add : insertingfunc
 		},
 
@@ -687,6 +855,13 @@ __map =  {
 		donate : {
 			uri : "donate",
 			href : "donate",
+			add : insertingfunc,
+			ignoreMinimize : true
+		},
+
+		donateAnimations : {
+			uri : "donateAnimations",
+			href : "donateAnimations",
 			add : insertingfunc
 		},
 
@@ -710,8 +885,22 @@ __map =  {
 			electronDontOpen : true
 			
 		},
-	
 
+		qrscanner : {
+			uri : "qrscanner",
+			href : "qrscanner",
+			add : insertingfunc,
+
+			relations : [
+				{src : 'js/vendor/qr-scanner.umd.min.js',			   f : 'js'}
+			],
+		},
+	
+		external : {
+			uri : "external",
+			href : "external",
+			add : insertingfunc
+		},
 		wallet : {
 			uri : "wallet",
 			href : "wallet",
@@ -734,13 +923,6 @@ __map =  {
 			add : insertingfunc,
 
 			relations : [
-				{src : 'js/vendor/exif.js', f : 'js', 
-
-					require : function(){
-
-						EXIF = require('./js/vendor/exif.js')
-
-				}},
 
 				{src : 'js/vendor/Sortable.min.js', f : 'js', 
 
@@ -766,13 +948,6 @@ __map =  {
 			},
 
 			relations : [
-				{src : 'js/vendor/exif.js', f : 'js', 
-
-					require : function(){
-
-						EXIF = require('./js/vendor/exif.js')
-
-				}},
 		
 				{src : 'js/vendor/emojionearea.min.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},	
 				{src : 'js/vendor/emojionearea.min.css',			   f : 'css'},	
@@ -797,11 +972,15 @@ __map =  {
 		transactionview : {
 			uri : "transactionview",
 			href : "transactionview",
-			add : {
-				el : 'content'
-			},
+			add : insertingfunc,
 			exportcss : true,
 			anonimus : true,
+		},	
+
+		transactionslist : {
+			uri : "transactionslist",
+			href : "transactionslist",
+			add : insertingfunc,
 		},	
 
 	
@@ -816,8 +995,7 @@ __map =  {
 			uri : "imagegallery",
 			href : "imagegallery",
 			add : insertingfunc,
-			anonimus : true,
-			relationsSunc : true,
+			anonimus : true
 		},
 
 		aboutus : {
@@ -845,37 +1023,23 @@ __map =  {
 		viewchangereload : true
 	},
 
-	
-	
-	// electronnav
-	
-	/*electronnav : {
-		uri : "electronnav",
-		href : "electronnav",
+	miniapps : {
+		uri : "miniapps",
+		href : "miniapps",
 		add : {
-			el : 'electronnav'
-		},
-		now : typeof _Electron != 'undefined' && _Electron,
-		anonimus : true,
-		renew : true,
-		reload : true
-	},*/
-
-	/*toppanel : {
-		uri : "toppanel",
-		href : "toppanel",
-		add : {
-			el : 'toppanel'
+			el : 'miniapps'
 		},
 		now : true,
 		anonimus : true,
 		renew : true,
-		reload : true
-	},*/
+		reload : true,
+		viewchangereload : true,
+		dontwait : true
+	},
 
-	navigation : {
-		uri : "navigation",
-		href : "navigation",
+	bnavigation : {
+		uri : "bnavigation",
+		href : "bnavigation",
 		add : {
 			el : 'navigation'
 		},
@@ -902,6 +1066,12 @@ __map =  {
 		add : insertingfunc,
 
 		
+	},
+
+	downloadMedia : {
+		uri : "downloadMedia",
+		href : "downloadMedia",
+		add : insertingfunc
 	},
 
 	panel : {
@@ -932,8 +1102,6 @@ __map =  {
 		add : insertingfunc,
 		relations : [
 
-			
-			{src : 'js/validation.js',			   f : 'js'},
 			{src : 'js/vendor/qr/qrscanner.js',			   f : 'js'},				
 			
 		],
@@ -947,8 +1115,6 @@ __map =  {
 		add : insertingfunc,
 		relations : [
 
-		
-			{src : 'js/validation.js',			   f : 'js'},				
 			{src : 'js/vendor/qr/qrscanner.js',			   f : 'js'},	
 			
 		]
@@ -1004,6 +1170,16 @@ __map =  {
 		
 	},
 
+	authorn : {
+		uri : "authorn",
+		href : "authorn",
+		add : insertingfunc,
+		anonimus : true,
+		//preshell : true,
+		exportcss : true,
+		
+	},
+
 	channel : {
 		uri : "channel",
 		href : "channel",
@@ -1026,6 +1202,14 @@ __map =  {
 		add : insertingfunc,
 		anonimus : true,
 	},
+
+	activities : {
+		uri : "activities",
+		href : "activities",
+		add : insertingfunc,
+		anonimus : true,
+	},
+
 	ustate : {
 		uri : "ustate",
 		href : "ustate",
@@ -1040,10 +1224,16 @@ __map =  {
 		
 	},
 
-	statistic : {
-		uri : "statistic",
-		href : "statistic",
-		add : insertingfunc,
+	advertising : {
+		uri : "advertising",
+		href : "advertising",
+		add : insertingfunc
+	},
+
+	earnings : {
+		uri : "earnings",
+		href : "earnings",
+		add : insertingfunc
 	},
 
 	videoCabinet : {
@@ -1052,29 +1242,45 @@ __map =  {
 		add : insertingfunc,
 	},
 
+	editVideoDescription : {
+		uri : "editVideoDescription",
+		href : "editVideoDescription",
+		add : insertingfunc,
+	},
+
+	diagnosticsPage : {
+		uri : "diagnosticsPage",
+		href : "diagnosticsPage",
+		add : insertingfunc,
+		anonimus : true,
+	},
+
 	dust : {
 		uri : "dust",
 		href : "dust",
 		add : insertingfunc,
 
-		relations : [
-			{src : 'js/validation.js',			   f : 'js'},	
-		]
+		ignoreMinimize : true
+
 	},
 
 	testApi : {
 		uri : "testApi",
 		href : "testApi",
-		add : insertingfunc,
-
-		relations : [
-			{src : 'js/validation.js',			   f : 'js'},	
-		]
+		add : insertingfunc
 	},
 
 	commentBanner : {
 		uri : "commentBanner",
 		href : "commentBanner",
+		add : insertingfunc,
+		anonimus : true,
+		exportcss : true,
+	},
+
+	updatenotifier : {
+		uri : "updatenotifier",
+		href : "updatenotifier",
 		add : insertingfunc,
 		anonimus : true,
 		exportcss : true,

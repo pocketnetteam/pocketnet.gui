@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-android-enumeratedevices" version="0.0.1"
+    xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <name>EnumerateDevicesPlugin</name>
+    <description>Cordova Android plugin exposing the audio and video devices connected</description>
+	<author>OpenVidu</author>
+	<license>Apache-2.0</license>
+	<keywords>webrtc, enumeratedevices, android</keywords>
+
+	<info>
+		Cordova Android plugin getting enumerate devices
+	</info>
+
+    
+
+    <platform name="android">
+        <js-module name="EnumerateDevicesPlugin" src="www/EnumerateDevicesPlugin.js">
+            <clobbers target="cordova.plugins.EnumerateDevicesPlugin" />
+        </js-module>
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="EnumerateDevicesPlugin">
+                <param name="android-package" value="cordova.plugin.android.enumeratedevices.EnumerateDevicesPlugin" />
+                <param name="onload" value="true" />
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="AndroidManifest.xml"></config-file>
+        <source-file src="src/android/EnumerateDevicesPlugin.java" target-dir="src/cordova-plugin-android-enumeratedevices/EnumerateDevicesPlugin" />
+    </platform>
+    
+</plugin>

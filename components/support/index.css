@@ -26,6 +26,28 @@
 #support .parameter textarea {
   width: 100%;
 }
+#support .buttonwrapper button {
+  min-width: 180px;
+}
+#support .solution {
+  max-width: 80%;
+  margin-bottom: 4em;
+}
+#support .solution .caption {
+  margin-bottom: 1em;
+}
+#support .solution .caption span {
+  font-size: 2em;
+  font-weight: 700;
+  color: rgb(var(--color-txt-orange));
+}
+#support .solution .text {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+#support .solution .addressWrapper {
+  font-weight: 700;
+}
 .wnd.supportwnd .wndinner {
   max-height: 550px;
   max-width: 450px;

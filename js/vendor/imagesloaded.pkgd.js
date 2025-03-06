@@ -348,7 +348,7 @@
       }
     }
 
-    url = url.replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet')
+    url = replaceArchiveInImage(url)
 
     if (app){
 
@@ -427,6 +427,7 @@
   };
   
   ImagesLoadedPN.prototype.complete = function() {
+
 
     if(this.isComplete) return
 
@@ -581,6 +582,7 @@
   Background.prototype = Object.create( LoadingImage.prototype );
   
   Background.prototype.check = function() {
+
     this.img.addEventListener( 'load', this );
     this.img.addEventListener( 'error', this );
     this.img.src = this.url;

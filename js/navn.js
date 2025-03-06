@@ -22,6 +22,10 @@ Nav = function(app)
 		links : true,
 	}
 
+	if (history.scrollRestoration) {
+		history.scrollRestoration = "manual";
+	}
+
 	var hostname = window.location.hostname
 
 	var electronopen = false
@@ -33,12 +37,19 @@ Nav = function(app)
 		defaultpathname = 'openapi.html'
 	}
 
+	self.initialHistoryLength = history.length
+
 	var protocol = null;
 
 	if (typeof window != 'undefined'){
 		protocol = window.location.protocol.replace(":",'');
 
-		if(window.cordova) protocol = 'file'
+		if(window.cordova) {
+			protocol = 'file'
+
+			if(isios()) protocol = 'bstn'
+		}
+		
 	}
 
 	if (protocol == "http" || protocol == "https" || _Node)
@@ -59,8 +70,9 @@ Nav = function(app)
 	var relations = {}
 
 	self.wnds = {};
+	self.prepared = false
 
-	var externalexclusions = ['blockexplorer', 'pocketnet-crypto-challenge']
+	var externalexclusions = ['blockexplorer', 'embedVideo.php', 'docs/', 'pocketnet-crypto-challenge']
 
 	var module = {
 		find : function(href){
@@ -75,6 +87,7 @@ Nav = function(app)
 			p.module.nav = self;
 			p.module.app = app;
 			p.module.sdk = app.platform.sdk;
+			p.module.psdk = app.platform.psdk;
 			p.module.user = app.user;
 			p.module.ajax = app.ajax;
 			p.module.componentsPath = options.path;
@@ -87,10 +100,6 @@ Nav = function(app)
 	}
 
 	var indexpage = 'index'
-
-	if (app.curation()){
-		indexpage = 'userpage'
-	}
 
 	var backManager = {
 
@@ -152,8 +161,13 @@ Nav = function(app)
 
 			var np = parameters(href, true)
 
-				href = khref + collectParameters(np, ['back', 'ref']);
+				href = khref /*+ collectParameters(np, ['back', 'ref', 'pc']);*/
 
+				if(np.video || np.read || np.audio || np.r || np.fx || np.id){
+					href = khref + collectParameters({
+						fx : np.fx, video : np.video, audio : np.audio, r : np.r, read : np.read, id : np.id
+					})
+				}
 
 			var wb = false;
 
@@ -172,21 +186,33 @@ Nav = function(app)
 
 			else{	
 
-				if (khref == indexpage && !np.video && !np.read && !np.r){
+				if (khref == indexpage && !np.fx && !np.video && !np.audio && !np.read && !np.r && !np.fx){
 					//// 
 					backManager.clearAll()
 				}
 				else{
 
+
 					if(deep(backManager, 'chain.0.href') == href) return
 
-					var needadd = this.mapSearch(khref, firstEl(backManager.chain)) || (np.video || np.read || np.r);
-	
+					var needadd = this.mapSearch(khref, firstEl(backManager.chain)) || (np.video || np.read || np.audio || np.r || np.fx || np.id);
+
 					if (needadd){
 	
 						var riobj = removeEqualRIObj(backManager.chain, {
 							href : href
 						})
+
+						if(!riobj && np.fx && backManager.chain.length > 1){
+							var c0 = backManager.chain[0]
+
+							if (c0.href.split('?')[0] == khref){
+								riobj = {
+									el : c0,
+									index : 1
+								}
+							}
+						}
 
 	
 						if (riobj && riobj.index == 1 && backManager.chain.length > 1){
@@ -234,8 +260,22 @@ Nav = function(app)
 
 			var bp = deep(app, 'backmap.' + lhref) 
 
+			if(!bp){
+
+				if (self.dynamic && !module.find(lhref)){
+					bp = deep(app, 'backmap.authorn') 
+				}
+			}
+
 			if (bp){
 				if(bp.childrens.indexOf(href) > -1) return true
+
+				if (self.dynamic && !module.find(href)){
+					if(bp.childrens.indexOf('authorn') > -1) return true
+				}
+			}
+			else{
+				
 			}
 		}
 
@@ -360,6 +400,8 @@ Nav = function(app)
 				historyManager.addParameters(pa)
 
 				self.wnds[p.id] = p
+
+				app.mobile.reload.initdestroyparallaxAuto()
 			
 
 				return
@@ -382,7 +424,7 @@ Nav = function(app)
 				}
 
 				if (p.replaceState){
-					
+
 					history.replaceState({
 
 						href : href,
@@ -506,12 +548,13 @@ Nav = function(app)
 				delete self.wnds[id]
 			})
 
+			app.mobile.reload.initdestroyparallaxAuto()
+
 			
 		},
 		
 		open : function(p){
-
-
+			
 			if(!p) p = {};
 
 				p.clbk || (p.clbk = emptyFunction);
@@ -531,8 +574,10 @@ Nav = function(app)
 						current.completeHref = p.completeHref;
 						
 
-						if(!p.goback){
+						if(!p.goback && !p.noscroll){
 							app.actions.scrollToTop()
+
+							app.mobile.removescrollmodedown()
 						}
 							
 
@@ -578,7 +623,7 @@ Nav = function(app)
 
 						try{
 
-							var stop = current.module.stop(p.href);
+							var stop = current.module.stop(p.href, p);
 
 							if (stop && _.isObject(stop)){
 
@@ -599,6 +644,8 @@ Nav = function(app)
 
 							app.actions.scrollToTop()
 
+							app.mobile.removescrollmodedown()
+
 						}
 						catch(e){
 							console.error(e)
@@ -618,12 +665,16 @@ Nav = function(app)
 
 						p.clbk = function(a, b, d){
 
-							core.removeWindows(p.completeHref)
-							core.removeChat(p.completeHref)
-
-							if (p.goback){
-								app.actions.scroll(p.goback.scroll)
+							if(!p.loadDefault){
+								core.removeWindows(p.completeHref)
+								core.removeChat(p.completeHref)
 							}
+							
+
+							/*if (p.goback){
+								console.log("GOBACKSCROLL")
+								app.actions.scroll(p.goback.scroll)
+							}*/
 
 							c(a, b, d)
 						}
@@ -656,6 +707,8 @@ Nav = function(app)
 			{
 				app.actions.scrollToTop()
 
+				app.mobile.removescrollmodedown()
+
 				p.clbk(null, p);
 			}
 
@@ -667,77 +720,67 @@ Nav = function(app)
 
 			var cashed = app.module(map.id);
 
-			var importScriptClbk = function(){
-				topPreloader(50)
-
-				core.loadTemplates(map, function(){
-
-					topPreloader(100)
-
-					loading[map.id] = false;
-
-					clbk(app.module(map.id));
-
-				})
-			}
-
+			
 			if(loading[map.id]) {
 
-				retry(
-					function(){
-						return !loading[map.id];
-					},
-					function(){
-						core.loadSource(map, clbk)
-					}
-				)
-			
-				return;
+				return loading[map.id].then(() => {
+					clbk(app.module(map.id));
+				})
+				
 			}
 
-			loading[map.id] = true;
+			//loading[map.id] = true;
 
 			var path = map.path || "";
 
 			var src =  path + options.path + map.uri + "/index.js"; 
 
-			topPreloader(20)
-			
 
-			core.loadRelations(map, function(){
+			loading[map.id] = new Promise((resolve, reject) => {
 
-				topPreloader(40)
+				core.loadRelations(map, function(){
 
-				if (window.design)
-				{
-
-					if(!cssimported[map.uri])
+					if (window.design || map.ignoreMinimize)
 					{
-						importCss( (map.uri.csspath || path) + options.path + map.uri + "/index.css");
-						cssimported[map.uri] = true
+	
+						if(!cssimported[map.uri])
+						{
+							importCss( (map.uri.csspath || path) + options.path + map.uri + "/index.css");
+							cssimported[map.uri] = true
+						}
 					}
-				}
-				
+					
+	
+					if(options.cashe && cashed)
+					{
 
-				if(options.cashe && cashed)
-				{
-					importScriptClbk()
-				}
-				else
-				{
+						core.loadTemplates(map, function(){
+							clbk(app.module(map.id));
+							resolve()
+						})
+					}
+					else
+					{
+	
+						importScript(src, function(){
 
+							core.loadTemplates(map, function(){
+								clbk(app.module(map.id));
+								resolve()
+							})
+	
+						}, null, app, map.id);
+					}
+	
+					
+	
+				})
 
-
-					importScript(src, function(){
-
-						importScriptClbk()
-
-					}, null, app, map.id);
-				}
-
-				
-
+			}).finally(() => {
+				delete loading[map.id]
 			})
+			
+			
 
 				
 		},
@@ -857,24 +900,30 @@ Nav = function(app)
 				if(map.now === true) return true;
 			})	
 			
-			
+
 			lazyEach({
 				array : map,
 				sync : false,
 				action : function(p){
 					var obj = p.item;
 
+					if(obj.dontwait){
+						if (p.success)
+							p.success();
+					}
+
 					core.load({
 						href : obj.href,
 						open : true,
 						clbk : function(error)
 						{
+
 							if(error)
 							{
 								
 							}
 
-							if (p.success)
+							if (p.success && !obj.dontwait)
 								p.success();
 						}
 					})
@@ -886,6 +935,7 @@ Nav = function(app)
 			})
 		},
 		load : function(p){
+
 			if(!p) p = {};
 
 			if(!p.href && !p.id) {
@@ -902,8 +952,23 @@ Nav = function(app)
 			if(p.href){
 
 				p.completeHref || (p.completeHref = p.href)
-
 				p.href = p.href.split("?")[0];
+
+				if (p.saveparameters){
+
+					var currentParameters = parameters(),
+						hrefParameters = parameters(p.completeHref, true);
+					var filteredParameters = {}
+
+					_.each(p.saveparameters, (i) => {
+						if(currentParameters[i]) filteredParameters[i] = currentParameters[i]
+					})
+
+					currentParameters = _.extend(filteredParameters, hrefParameters);
+
+					p.completeHref = p.href + collectParameters(currentParameters);
+
+				}
 
 				p.map = module.find(p.href);
 
@@ -1014,8 +1079,7 @@ Nav = function(app)
 			var ex = _.find(externalexclusions, function(ex){
 				return href.indexOf(ex) != -1
 			})
-			
-			
+
 			var e = _OpenApi || external || (
 				
 			(!href 
@@ -1023,11 +1087,11 @@ Nav = function(app)
 				|| href.indexOf("mailto") > -1
 				|| href.indexOf("skype:") > -1 
 				|| href.indexOf('/') > -1 
-				|| href.indexOf('.') > -1
+				//|| href.indexOf('.') > -1
 				|| href == "#")
 				
 				
-				&& (href.indexOf(host) == -1) && (href.indexOf('pocketnet://') == -1) && (href.indexOf('bastyon://') == -1)
+				&& (href.indexOf(host) == -1) && !thislink(href)
 			)
 
 			if (!e && ex) e = true; 
@@ -1065,20 +1129,19 @@ Nav = function(app)
 				link.off('click').on('click', function(){
 	
 					var ref = cordova.InAppBrowser.open(href, link.attr('cordovalink') || '_system');
+					
+					return false
+					
+				})
 
-					/*var scrollremoved = app.scrollRemoved
+			}
 
-					 '_blank', 'location=yes'
+			if(typeof _Electron != 'undefined' && electron && electron.shell && electron.shell.openExternal){
 
-					if (scrollremoved){
-						app.onScroll()
-					}
-
-					ref.addEventListener('exit', function(){
-						if (scrollremoved){
-							app.offScroll()
-						}
-					});*/
+				link.off('click').on('click', function(event){
+					event.preventDefault();
+					
+					electron.shell.openExternal(this.href);
 
 					return false
 					
@@ -1104,6 +1167,13 @@ Nav = function(app)
 			}
 			else
 			{
+
+				var protocol = ((window.project_config || {}).protocol || 'bastyon')
+
+				if (href.indexOf(protocol + '://') == 0){
+					href = href.replace(protocol + '://', '')
+				}
+
 				return href
 			}
 		},
@@ -1114,7 +1184,12 @@ Nav = function(app)
 
 			var _links = null;
 
-			if(_el) _links = _el.find('a'); else _links = $('a');		
+			if(_el) _links = _el.find('a'); else {
+				console.error("GLOBAL LINKS")
+
+				return
+				//_links = $('a');		
+			}
 
 			if(!_links.length) return
 
@@ -1126,36 +1201,125 @@ Nav = function(app)
 
 				var external = core.externalLink(link);
 
+
 				if(!external)
 				{
-					if(link.attr('donottrust'))
-					{
-						
-						link.off('click').on('click', function(){
+			
+					if (link.attr('donottrust')){
+						link.off('click').on('click', function(e){
 							var href = $(this).attr('href');	
 
 							app.mobile.vibration.small()
 
-							if (href.indexOf('http') == -1) href = 'https://' + href						
+							var openanother = function(){
+								self.api.load({
+									open : true,
+									id : 'anothersite',
+									inWnd : true,
 
-							self.api.load({
-								open : true,
-								id : 'anothersite',
-								inWnd : true,
+									essenseData : {
+										link : href
+									}
+								})
+							}
 
-								essenseData : {
-									link : href
+							app.apps.get.applicationsSearchOld(href).then(apps => {
+
+								if(href.indexOf('http') == -1) href = 'https://' + href
+
+								if(apps.length == 0){
+									openanother()
 								}
+								else{
+									var application = apps[0]
+									var scope = application.manifest.scope.replace('https://', '')
+
+									var newpath = href.replace('https://', '').replace('http://', '').replace(scope, '')
+
+									if (newpath[0] == '/') newpath = newpath.substring(1)
+
+									var pth  = 'application?id=' + application.manifest.id + (newpath.length ? '&p=' + hexEncode(newpath): '')
+
+									if(app.apps.get.applicationExternalLink(scope)){
+										sitemessage(app.localization.e('redirectminiappsuccess', application.manifest.name))
+
+										//app.apps.openInWnd(application, null, hexEncode(newpath))
+										self.api.go({
+											href : pth,
+											history : true,
+											open : true
+										})
+
+										return
+									}
+									
+
+									new dialog({
+										header: app.localization.e('askdefaultapplink', application.manifest.name),
+										btn1text: app.localization.e('dyes'),
+										btn2text: app.localization.e('dno'),
+										nomoreask : app.localization.e('nomoreaskdefaultapplink', {name : application.manifest.name, scope : scope}),
+										class: 'zindex',
+						
+										success: function (d) {
+
+											if(d.nomoreask){
+												app.apps.set.applicationExternalLink(scope, application.manifest.id)
+											}
+
+											//app.apps.openInWnd(application, null, hexEncode(newpath))
+
+
+											self.api.go({
+												href : pth,
+												history : true,
+												open : true
+											})
+
+											
+										},
+						
+										fail: function () {
+											openanother()
+										}
+									})
+
+									
+
+									////dialog
+
+									
+
+									
+
+
+									//
+
+								}
+
+								
+		
 							})
+
+
+							
+
+							
+
 
 							return false;
 						})
-
+	
 					}
 					else
 					{
 						core.externalTarget(link)
 					}
+					
+
+					
+
+					
 					
 				}
 				else
@@ -1171,12 +1335,40 @@ Nav = function(app)
 							blockclick = false
 						}, 800)
 
-						var href = core.thisSiteLink( $(this).attr('href') );
+						var href = core.thisSiteLink( $(this).attr('href') ) || '';
+						var handler = $(this).attr('handler') || null;
+						var replace = $(this).attr('replace') || false;
+						var force = $(this).attr('replace') || false;
+						var mobilepreview = $(this).attr('mobilepreview') || null;
 
-						var handler = $(this).attr('handler') || null
-						var replace = $(this).attr('replace') || false
-						var force = $(this).attr('replace') || false
-						var mobilepreview = $(this).attr('mobilepreview') || null
+						var arrHref = href.split("?");
+
+						if (arrHref && arrHref[0] === 'welcome' && app.user.address && app.user.address.value){
+
+							const params = new URLSearchParams('?' + arrHref[1]);
+
+							app.platform.matrixchat.connectWith = params.get('connect');
+			
+							app.platform.matrixchat.joinRoom = params.get('publicroom');
+			
+							app.platform.matrixchat.connect();
+			
+							return false;
+						}
+
+
+						if (arrHref && arrHref[0] === 'index'){
+
+							const params = new URLSearchParams('?' + arrHref[1]);
+
+							var ext = params.get('ext');
+
+							if (ext){
+								app.platform.ui.externalFromCurrentUrl()
+								return false;
+							}
+							
+						}
 
 						if (mobilepreview && app.mobileview){
 
@@ -1215,7 +1407,8 @@ Nav = function(app)
 							open : true,
 							handler : handler,
 							replaceState : replace,
-							force : force
+							force : force,
+							fade : app.el.content
 						})
 
 						
@@ -1307,8 +1500,6 @@ Nav = function(app)
 			pathnameSearch : function(){
 				var loc =  window.location; 
 
-				
-
 				return protocolActions.file.pathname() + loc.search
 			},
 
@@ -1322,6 +1513,28 @@ Nav = function(app)
 				}
 
 				return loc.pathname.replace(options.navPrefix, '').replace(".html", "").replace('.cordova', "").replace('indexcordova', "index")
+			}
+
+		},
+		bstn : {
+			prefix : function(){
+
+				options.navPrefix = '/'
+
+			},
+
+			pathnameSearch : function(){
+				var loc =  window.location; 
+
+				
+
+				return protocolActions.bstn.pathname() + loc.search
+			},
+
+			pathname : function(){
+				var loc =  window.location; 
+
+				return loc.pathname.replace("bstn://bastyon", "").replace(".html", "").replace(options.navPrefix, '').replace('indexcordova', "index")
 			}
 
 		},
@@ -1466,6 +1679,7 @@ Nav = function(app)
 
 	self.get = {
 		href : function(){
+
 			var loc =  window.location;  
 
 			var pathname = protocolAction('pathname')
@@ -1497,7 +1711,6 @@ Nav = function(app)
 
 	self.init = function(p, clbk){
 
-
 		if(!p) p = {};
 
 		if(typeof window != 'undefined'){
@@ -1506,6 +1719,17 @@ Nav = function(app)
 
 			protocolAction('prefix');
 			protocolAction('seoRedirect');
+
+			if (window.cordova && backManager.chain.length){
+				var href = backManager.chain[0].href || ''
+
+				history.replaceState({
+
+					href : href,
+					lfox : true
+
+				}, 'Bastyon', href);
+			}
 		
 			if (options.history === true && !_OpenApi)
 			{
@@ -1530,7 +1754,6 @@ Nav = function(app)
 				p.history = true;
 				p.loadDefault = true;
 
-
 				var path = parameters().path
 
 				if (path){
@@ -1547,9 +1770,11 @@ Nav = function(app)
 				self.api.loadDefault(p);
 
 				//////
+				var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
+				var electronprotocol = ((window.project_config || {}).electron || {}).protocol || ""
 
-				if (!electron && !window.cordova && !electronopen && !app.platform.sdk.usersettings.meta.openlinksinelectron.value && !isMobile() && !isTablet()){
+				if (!electron && !window.cordova && !electronopen && !app.platform.sdk.usersettings.meta.openlinksinelectron.value && !isMobile() && !isTablet() && !isFirefox && electronprotocol){
 
 					var currentHref = self.get.href();
 					var pathname = self.get.pathname();
@@ -1560,7 +1785,7 @@ Nav = function(app)
 
 					var electronDontOpen = false
 
-					if (mpobj.electronDontOpen) {
+					if (mpobj.electronDontOpen && !parameters().ext) {
 
 						if(typeof mpobj.electronDontOpen == 'function'){
 							electronDontOpen = mpobj.electronDontOpen()
@@ -1579,7 +1804,7 @@ Nav = function(app)
 
 							try{
 
-								window.location = app.meta.protocol + '://electron/' + currentHref;
+								window.location = electronprotocol + '://electron/' + currentHref;
 								localStorage['electron_hrefs'] = JSON.stringify(electronHrefs.slice(electronHrefs.length - 100))
 								
 							}
@@ -1618,6 +1843,8 @@ Nav = function(app)
 
 	self.relations = relations;
 	self.current = current
+	self.thisSiteLink = core.thisSiteLink
+	self.backManager = backManager
 
 	return self;
 }
@@ -1628,6 +1855,3 @@ if(typeof module != "undefined")
 	module.exports = Nav;
 }
 
-
-topPreloader(45);
-	

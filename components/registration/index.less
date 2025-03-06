@@ -1,6 +1,7 @@
 @import "../../css/__cssvar";
 
 #registration{
+
 	.caption{
 		margin-top: 3 * @rhythm;
 		font-size: 2.1em;
@@ -40,20 +41,22 @@
 	}
 
 	.upanelloader{
-		display: none;
+		/*display: none;*/
+		visibility: hidden;
+		opacity: 0;
 		position: absolute;
 		left : 0;
 		right : 0;
 		top : 0;
 		bottom : 0;
-		z-index: 3000;
+		z-index: 1000;
 		background: rgba(var(--background-total-theme));
+		.transition(0.3s, opacity);
 
 		.table{
 			width : 100%;
 			height: 100%;
 			>div{
-				vertical-align: middle;
 				text-align: center;
 				color : rgba(var(--color-txt-ac));
 			}
@@ -61,8 +64,16 @@
 	}
 
 	&.loading{
+		.stepsWrapper{
+			opacity: 0;
+		}
 		.upanelloader{
-			display: block;
+			visibility: visible;
+			opacity: 1;
+		}
+
+		.hasaccount{
+			display: none;
 		}
 	}
 
@@ -70,72 +81,10 @@
 		margin-top: 4 * @rhythm;
 		position: relative;
 
-		.panelWrapper{
-			margin-top: 4 * @rhythm;
-			padding : 2 * @rhythm;
-			padding-bottom: 10 * @rhythm;
-
-			.elpanel{
-				opacity: 0;
-				.transition(0.3s);
-
-				&.active{
-					opacity: 1;
-				}
-
-				.lwrapper{
-					display: none;
-				}
-
-
-			}
-
-			&.loading{
-				.elpanel{
-					opacity: 0.5;
-					.nlberl{
-						display: none;
-					}
-					.lwrapper{
-						display: inline;
-					}
-
-				}
-			}
-
-
-			.btn{
-				margin : 0 auto;
-				text-align: center;
-				width: 200px;
-				color : rgba(var(--text-on-bg-ac-color));
-				cursor : pointer;
-				background: rgba(var(--color-bg-orange));
-				padding : @rhythm 0;
-				border-radius: 2px;
-
-				&.save{
-					border-radius: 30px;
-					cursor: default;
-					background: rgba(var(--color-txt-orange));
-					.transition(0.3s);
-				}
-
-				
-			}
-
-			&.changes{
-				.btn{
-					&.save{
-						background: rgba(var(--color-bg-orange));
-						color : rgba(var(--text-on-bg-ac-color));
-						cursor : pointer;
-					}
-				}
-			}
-		}
+		
 
 		.stepsWrapper{
+			.transition(0.3s, opacity);
 			overflow: hidden;
 
 			.stepsWrapperLine{
@@ -143,13 +92,7 @@
 			}
 			.step{
 				min-height: 1px;
-				float: left;
-				opacity: 0;
 				.transition(0.3s);
-
-				&.active{
-					opacity: 1;
-				}
 			}
 		}
 
@@ -193,6 +136,7 @@
 			.parameter{
 				display: flex;
 				flex-direction: column-reverse;
+				margin : 0 auto;
 
 				>div{
 					width: 100%;
@@ -234,22 +178,28 @@
 
 			.subcaption{
 				text-align: center;
+				display: none;
 			}
+
+
 
 			.uploadTable{
 				width: auto;
 				margin : 0 auto;
+				flex-direction: column;
 				>div{
+
 					&.label{
-						display : none;
+						margin-top: 2 * @rhythm;
+						margin-left: 0;
 					}
-
+					
 					&.iconWrapper{
-						width: 60px;
-						position: relative;
-
-						.plissingCnt{
-							left : 45px;
+						width: 130px;
+						.usericon{
+							width : 130px;
+							height: 130px;
+							line-height: 130px;
 						}
 					}
 				}
@@ -280,15 +230,7 @@
 					margin-bottom: @rhythm;
 				}
 
-				.uploadPhoto{
-					height: 130px;
-				}
-
-				.uploadTable>div.iconWrapper .usericon{
-					width: 130px;
-					height: 130px;
-					line-height: 130px;
-				}
+				
 			}
 			.parameterMaketWrapper[parameter="addresses"]{
 				display: none;
@@ -297,6 +239,36 @@
 			.parameterMaketWrapper[parameter="email"]{
 				display: block;
 			}
+		}
+
+		.filluser{
+				
+			.elpanel{
+				margin-top: 4 * @rhythm;
+				padding : 2 * @rhythm;
+				padding-bottom: 6 * @rhythm;
+
+				.btn{
+					margin : 0 auto;
+					text-align: center;
+					width: 200px;
+					color : rgba(var(--text-on-bg-ac-color));
+					cursor : pointer;
+					background: rgba(var(--color-bg-orange));
+					padding : @rhythm 0;
+					border-radius: 2px;
+	
+					&.save{
+						border-radius: 30px;
+						cursor: default;
+						background: rgba(var(--color-txt-orange));
+						.transition(0.3s);
+					}
+					
+				}
+
+			}
+	
 		}
 
 		.ucaptcha{
@@ -317,23 +289,25 @@
 				font-size: 1.7em;
 				font-weight: 300;
 				text-align: center;
-				max-width: 600px;
+				max-width: 300px;
 			}
 
 			.inputWrapper{
-				max-width: 600px;
+				max-width: 300px;
 				margin : 3 * @rhythm auto;
 			}
 
 			input{
 				font-size: 1.4em;
-				border : 0;
+				border: 0;
+
 				border-bottom: 1px solid rgb(var(--neutral-grad-2));
 				.transition(0.3s);
+				border-radius: 0;
 				width: 100%;
 				background: transparent;
 				text-align : center;
-			
+				
 
 				&:focus{
 					border-color : rgb(var(--color-txt-ac));
@@ -655,6 +629,19 @@
 				}
 			}
 
+			.nextStepButtons{
+				position: sticky;
+				z-index: 1000;
+				bottom: 0;
+				height: 100px;
+				background: rgb(var(--background-hidden-layer));
+
+				.subc{
+					margin-top: @rhythm * 4;
+					padding-top: @rhythm * 2
+				}
+			}
+
 			.usersHorizontal{
 				margin-top: 20px;
 				display: flex;
@@ -685,13 +672,40 @@
 
 					}
 
+					.aboutWrapper{
+						padding : 0 @rhythm * 2;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						display: -webkit-box;
+						-webkit-line-clamp: 12;
+						line-clamp: 12; 
+						-webkit-box-orient: vertical;
+
+						&.aboutWrapperShort{
+							padding: 0;
+							height: 38px;
+							max-width: 100%;
+							font-size: .9em;
+							-webkit-line-clamp: 2;
+							line-clamp: 2; 
+						}
+					}
+
 					.subscribeWrapper{
 						margin-top: 16px; 
+						width: 100%;
+
+						>button{
+							min-width: 80px;
+							width: 100%;
+							max-width: 210px;
+						}
+
+
 
 						.unsubscribeButton{
 							display: none;
 							font-size: 14px;
-							width: 140px;
 							background: rgb(var(--color-good));
 							border: 1px solid rgb(var(--color-good));
 
@@ -703,7 +717,6 @@
 
 						.subscribeButton{
 							font-size: 14px;
-							width: 140px;
 						}
 
 						&.following{
@@ -712,7 +725,7 @@
 							}
 
 							.unsubscribeButton{
-								display: block;
+								display: inline-block;
 							}
 						}
 
@@ -726,7 +739,7 @@
 						cursor: default;
 						width: 308px;
 						position: absolute;
-						z-index: 9999;
+						z-index: 999;
 						right: 180px;
 						margin-top: 15px;
 						background: rgb(var(--background-total-theme));
@@ -818,32 +831,8 @@
 								}
 							}
 						}
+				
 		
-						.aboutWrapper{
-							padding : 0 @rhythm * 2;
-							overflow: hidden;
-							text-overflow: ellipsis;
-							display: -webkit-box;
-							-webkit-line-clamp: 12;
-							line-clamp: 12; 
-							-webkit-box-orient: vertical;
-						}
-
-		
-		
-					}
-
-					.iconWrapper{
-					
-						&:hover{
-
-							@media (pointer: fine){
-								.modal{
-									display: block;
-								}					
-							}
-	
-						}
 					}
 		
 
@@ -854,6 +843,13 @@
 					padding : @rhythm * 2;
 					border: 1px solid rgba(var(--color-medium-theme), 0.3);			
 					border-radius: 12px;
+
+					&.showMore{
+						.modal{
+							display: block;
+						}	
+					}
+	
 					
 					
 		
@@ -912,8 +908,6 @@
 		
 							.name{
 								font-weight: 600;
-								font-size: .9em;
-								max-width: 100px;
 								text-overflow: ellipsis;
 								white-space: nowrap;
 								overflow: hidden;
@@ -1027,6 +1021,16 @@
 				text-decoration: underline;
 			}
 
+			.showMoreAbout{
+				margin-top: @rhythm;
+				color: #00A4FF;
+				cursor: pointer;
+				
+				&:hover{
+					opacity: 0.6;
+				}
+			}
+
 			.subcaption{
 				font-weight: 100;
 				padding-top: 3em;
@@ -1068,10 +1072,54 @@
 			display: none;
 		}
     }
+
+	&[step="bloggers"]{
+		.stepsWrapper{
+			overflow: visible;
+
+			.stepsWrapperLine{
+				overflow: visible;
+			}
+
+		}
+	}
+
     
 }
 
+.wnd.regwindow{
+	.wndcontent{
+		padding : 0;
+	}
+	.wndinner{
+		max-width: 400px;
+		max-height: 670px;
+	}
+	#registration{
+		.work{
+			padding-left: 0;
+			padding-right: 0;
+		}
+
+		.caption{
+			margin-top: 2 * @rhythm;
+			font-size: 1.5em;
+		}
+
+		.mWrapper{
+			.panelWrapper{
+				padding-bottom: 2 * @rhythm;
+			}
+
+			#test{
+				width: 100%;
+			}
+		}
+	}
+}
+
 .wndcontent{
+	
 	#registration{
 		.categories{
 
@@ -1110,6 +1158,15 @@ html[theme="gray"]{
 
 	#registration{
 
+		&[step="bloggers"]{
+
+			.bloggers{
+				.nextStepButtons{
+					height: 150px;
+				}
+			}
+		}
+
 		.mWrapper {
 			.categories {
 
@@ -1129,11 +1186,6 @@ html[theme="gray"]{
 				font-size: .8em!important;
 			}
 
-			.bloggers{
-				.subc{
-					margin-top: @rhythm * 4;
-				}
-			}
 		}
 
 		
@@ -1141,17 +1193,20 @@ html[theme="gray"]{
 
 	.wndcontent{
 		#registration{
-			.categories{
+			&[step="categories"]{
 			
 				.nextStepButtons{
 					position: static;
 				}
 			
 			}
+
 			
 		}
 		
 	
 	}
+
+
 	
 }

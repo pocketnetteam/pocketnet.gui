@@ -87,7 +87,13 @@ Notifications = function(app) {
                 return resolve(Notification.permission);
             // If user didn't answer permission, ask him
             if (Notification.permission !== "denied") {
-                Notification.requestPermission().then(function (permission) {
+                const notificationPermission = Notification.requestPermission();
+
+                if (!notificationPermission) {
+                    return reject(Notification.permission);
+                }
+
+                notificationPermission.then(function (permission) {
                     // If the user accepts, let's create a notification
                     if (permission === "granted")
                         return resolve(permission);

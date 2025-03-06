@@ -188,12 +188,9 @@ var Control = function(settings, proxy) {
                     'staticrpcport=38082' + EOL +
                     'restrpcport=38083' + EOL +
                     'wsport=8087' + EOL +
-                    'rpcallowip=127.0.0.1' + EOL +
-                    'rpchost=localhost' + EOL +
                     'rpcuser=' + f.randomString(10) + EOL +
                     'rpcpassword=' + f.randomString(256) + EOL +
                     'api=1' + EOL +
-                    'wsuse=1' + EOL +
                     'rest=0' + EOL
     
                 fs.writeFileSync(node.confPath, data)
@@ -324,12 +321,12 @@ var Control = function(settings, proxy) {
         return Promise.resolve()
     }
 
-    self.info = function(){
+    self.info = function(compact){
+
         return {
             enabled : enabled,
             instance : node.instance ? true : false,
             hasbin : self.kit.hasbin(),
-
             
             state : state,
             node : {
@@ -580,6 +577,7 @@ var Control = function(settings, proxy) {
 
                 // Calculate elapsed time
                 // (total - current) / avg(chunk) * (nodeAutorunInterval / 1000)
+                
                 state.sync.left = Math.round(
                     (self.proxy.nodeManager.chain().commonHeight - state.info.lastblock.height) /
                     (state.sync.chunks.reduce((a, b) => a + b, 0) / state.sync.chunks.length) *

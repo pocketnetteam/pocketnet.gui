@@ -21,8 +21,6 @@ Localization = function(app){
 			key : 'en'
 		},
 
-	
-
 		ru : {
 			name : "Русский",
 			key : 'ru'
@@ -132,6 +130,9 @@ Localization = function(app){
 				moment.locale(self.key)
 
 			self.locSave();
+
+
+			app.apps.emit('locale', self.key)
 
 			self.import(function(){
 

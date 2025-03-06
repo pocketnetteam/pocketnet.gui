@@ -8,10 +8,10 @@ require('./js/functions.js');
 var uglifyJS = require("uglify-js");
 var uglifycss = require('uglifycss');
 var ncp = require('ncp').ncp;
-const _path = require('path');
+const { execSync } = require('child_process');
 ncp.limit = 16;
 
-var minifyHtml = require('html-minifier').minify;
+var minifyHtml = require('html-minifier-terser').minify;
 
 var args = {
 	test : false,
@@ -19,7 +19,7 @@ var args = {
 	vendor : 90,
     path : '/',
     makewebnode: false,
-	project : "Pocketnet",
+	project : "",
 	composetemplates : false
 }
 
@@ -45,6 +45,8 @@ _.each(argcli, function(a){
 	}
 	
 })
+
+if(!args.project) args.project = package.project
 
 var addzeros = function(v){
     v = v.toString()
@@ -76,52 +78,122 @@ var mapJsPath = './js/_map.js';
 console.log("run")
 console.log(args)
 
-var tpls = ['embedVideo.php', 'index_el.html', 'index.html', 'index.php', 'indexcordova.html', 'config.xml', 'openapi.html', /*'.htaccess',*/ 'service-worker.js', 'manifest.json', 'main.js']
+var tpls = [
+	'embedVideo.php', 
+	'index_el.html', 
+	'index.html', 
+	'index.php', 
+	'external.js',
+	'indexcordova.html', 
+	{
+		name : 'config.xml', 
+		underscoreTemplate : true
+	}, 
+	{
+		name : 'package.cordova.json', 
+		underscoreTemplate : true
+	}, 
+	'openapi.html', 
+	'service-worker.js', 
+	'manifest.json', 
 
-var tplspath = {
+	{
+		name : 'main.js', 
+		underscoreTemplate : true
+	}, 
 
-}
-	
-var _meta = {
-	Pocketnet : {
-		url : "pocketnet.app",
-		turl : "test.pocketnet.app"
+	{
+		name : 'privacy_a.html', 
+		path : 'dcs/'
+	},{
+		name : 'privacy_p.html', 
+		path : 'dcs/'
+	},
+	{
+		name : 'terms.html', 
+		path : 'dcs/'
 	},
 
-	Bastyon : {
-		url : "bastyon.com",
-		turl : "test.pocketnet.app"
+	'examples.html'
+]
+
+if (!args.sha) {
+	try {
+		args.sha = execSync('git rev-parse HEAD', {
+			encoding: "utf8",
+			windowsHide: true,
+		}).trim();
+	} catch (e) {
+		console.log('It is not a git project, omitting commit SHA');
 	}
+}
+
+var config = {}
+
+try{
+	var config = require('./config/'+args.project+'.json');
+	var commonconfig = require('./config/common.json');
+	
+	config = {...commonconfig, ...config}
+}
+catch(e){
+
 }
 
 var vars = {
 	test : {
-		proxypath : '"https://test.pocketnet.app:8899/"',
-		domain : _meta[args.project].turl,
+		proxypath : '"http://test.pocketnet.app:8898/"',
+		domain : config.turl,
+		packageVersion: package.version,
 		test : '<script>window.testpocketnet = true;</script>',
 		globaltest : 'global.TESTPOCKETNET = true;',
 		path : args.path,
-		project : args.project
+		project : args.project,
+		store : args.store || false,
+		gfree : args.gfree || false,
+		silentupdate : args.silentupdate || false,
+		name : config.name,
+		sha : args.sha || false,
+		run : args.run || false,
+		lname : config.lname || config.name,
+		support : config.support,
+		config,
+		strconfig : JSON.stringify(config),
+		protocol : config.protocol
 	},
 	prod : {
-		proxypath : '"https://pocketnet.app:8899/"',
-		domain : _meta[args.project].url,
+		proxypath : '"http://pocketnet.app:8898/"',
+		domain : config.url,
+		packageVersion: package.version,
 		test : '',
 		globaltest : '',
 		path : args.path,
-		project : args.project
+		project : args.project,
+		store : args.store || false,
+		gfree : args.gfree || false,
+		silentupdate : args.silentupdate || false,
+		name : config.name,
+		lname : config.lname || config.name,
+		sha : args.sha || false,
+		run : args.run || false,
+		support : config.support,
+		config,
+		strconfig : JSON.stringify(config),
+		protocol : config.protocol
 	}
 }
 
 
 var VARS = args.test ? vars.test : vars.prod
 
+console.log('VARS', VARS)
+
 var babelifycode = function(code){
 	var c = bablecore.transformSync(code, {
 		presets: [
 			"@babel/preset-env"
 		],
-			plugins: ["remove-use-strict"]
+		plugins: ["remove-use-strict"]
 	});
 	return c.code
 	
@@ -148,11 +220,6 @@ fs.exists(mapJsPath, function (exists) {
 			path : './js/joinfirst.min.js'
 		}
 
-		var joinlast = {
-			data : "",
-			path : './js/joinlast.min.js'
-		}
-
 		var vendor = {
 			data : "",
 			path : './js/vendor.min.js'
@@ -169,7 +236,6 @@ fs.exists(mapJsPath, function (exists) {
 
 		var exported = {
 			data : "",
-			//path : '../matrix/src/components/events/event/metaMessage/exported.less'
 			path : './css/exported.less'
 		}
 
@@ -203,25 +269,20 @@ fs.exists(mapJsPath, function (exists) {
 
 				return true
 			},
-			copy : ['chat', 'components', 'css', 'images', 'img', 'js', 'localization', 'peertube', 'sounds', 'browserconfig.xml', 'crossdomain.xml', 'favicon.svg', 'indexcordova.html']
+			copy : ['chat', 'components', 'css', 'images', 'img', 'js', 'localization', 'peertube', 'sounds', 'browserconfig.xml', 'crossdomain.xml', 'favicon.svg', 'favicon.ico', 'indexcordova.html']
 		}
 
 		var cordovaconfig = {
 			path : './cordova',
-			copy : ['config.xml']
+			copy : ['config.xml', {
+				name : 'package.cordova.json',
+				rename : 'package.json'
+			}]
 		}
-
-		var cordovaiosfast = {
-			path : './cordova/platforms/ios/www',
-			copy : ['chat', 'components', 'css', 'images', 'img', 'js', 'localization', 'peertube', 'sounds', 'browserconfig.xml', 'crossdomain.xml', 'favicon.svg', 'indexcordova.html']
-		}
-
 
 		var _modules = _.filter(m, function(_m, mn){
-			if(mn != "__sources" && mn != "__css" && mn != '__vendor' && mn != '__templates'  && mn != '__sourcesfirst' && mn != '__sourceslast' && mn != '__exportcss') return true;
-			
+			if(mn != "__sources" && mn != "__css" && mn != '__vendor' && mn != '__templates'  && mn != '__sourcesfirst' && mn != '__sourceslast' && mn != '__exportcss' && !_m.ignoreMinimize) return true;
 		})
-
 
 		var webnode = {
 			path : './web',
@@ -354,7 +415,7 @@ fs.exists(mapJsPath, function (exists) {
 	
 							var arf = _.clone(m.__sourcesfirst || []);
 	
-							var arl = _.clone(m.__sourceslast || []);
+							//var arl = _.clone(m.__sourceslast || []);
 	
 							var ar = _.clone(m.__sources || []);
 								ar.push(modules.path.replace('./', ''));
@@ -378,23 +439,25 @@ fs.exists(mapJsPath, function (exists) {
 										joinScripts(ar, join, function(){
 	
 											console.log("joinScripts DONE")
+
+											joinCss(function(){
 	
-											joinScripts(arl, joinlast, function(){
+												console.log("joinCss DONE")
+
+												createTemplates().catch(e => {
+													
+												}).then( r => {
+													if(_clbk) _clbk()
+												})
+											})
+	
+											/*joinScripts(arl, joinlast, function(){
 	
 												console.log("joinScriptsLast DONE")
 	
-												joinCss(function(){
+												
 	
-													console.log("joinCss DONE")
-	
-													createTemplates().catch(e => {
-														
-													}).then( r => {
-														if(_clbk) _clbk()
-													})
-												})
-	
-											})
+											})*/
 											
 										});
 	
@@ -441,7 +504,7 @@ fs.exists(mapJsPath, function (exists) {
 										throw err;
 									}
 
-									var pre2 = data
+									var pre2 = data.toString().replace(/\.\.\/webfonts/g, 'fontawesome/webfonts')
 
 									try{
 										pre2 = uglifycss.processString(data, {
@@ -646,16 +709,24 @@ fs.exists(mapJsPath, function (exists) {
 										throw err;
 									}
 
-									if(!scripted[i.c]) scripted[i.c] = {}
-
-									scripted[i.c][i.n] = minifyHtml(data.toString(), {
+									minifyHtml(data.toString(), {
 										collapseWhitespace : true,
 										removeComments : true
+									}).then((r) => {
+
+										if(!scripted[i.c]) scripted[i.c] = {}
+										
+										scripted[i.c][i.n] = r
+
+									}).catch(e => {
+
+									}).finally(() => {
+										p.success();
 									})
 
-									//var uglified = htmlUglify.process(htmlString);
+									
 
-									p.success();
+									
 								});
 
 							}
@@ -832,6 +903,14 @@ fs.exists(mapJsPath, function (exists) {
 
 		var createTemplatedFile = function(tplname){
 			/*WORK WITH INDEX*/
+
+			var options = {}
+
+			if(_.isObject(tplname)) {
+				options = tplname
+				tplname = tplname.name
+			}
+
 			var pth = './tpls/' + tplname + '.tpl'
 
 			console.log("CREATING TEMPLATE: ", tplname)
@@ -853,24 +932,52 @@ fs.exists(mapJsPath, function (exists) {
 							var VE = "";
 							var CACHED_FILES = "";
 	
-							if(args.test){
-								JSENV += '<script>window.testpocketnet = true;</script>';
+							if (args.test){
+								JSENV += '<script>window.testpocketnet = true;</script>\n';
 							}
 
-							if(args.path){
-								JSENV += '<script>window.pocketnetpublicpath = "'+args.path+'";</script>';
+							if (args.path){
+								JSENV += '<script>window.pocketnetpublicpath = "'+args.path+'";</script>\n';
 							}
+
+							JSENV += '<script>window.project_config = ' + JSON.stringify(VARS.config || {}) + ';</script>\n';
 
 							if(VARS.domain){
-								JSENV += '<script>window.pocketnetdomain = "' + VARS.domain + '";</script>';
+								JSENV += '<script>window.pocketnetdomain = "' + VARS.domain + '";</script>\n';
 							}
 
 							if(VARS.project){
-								JSENV += '<script>window.pocketnetproject = "' + VARS.project + '";</script>';
+								JSENV += '<script>window.pocketnetproject = "' + VARS.project + '";</script>\n';
 							}
 
-							JSENV += '<script>window.packageversion = "' + package.version + '";</script>';
-							JSENV += '<script>window.versionsuffix = "' + package.versionsuffix + '";</script>';
+							if(VARS.store){
+								JSENV += '<script>window.pocketnetstore = ' + VARS.store + ';</script>\n';
+							}
+
+							if(VARS.gfree){
+								JSENV += '<script>window.pocketnetgfree = ' + VARS.gfree + ';</script>\n';
+							}
+							
+							if(VARS.sha){
+								const isHex = /^[0-9A-Fa-f]+$/;
+
+								if (isHex.test(VARS.sha)) {
+									const shaShort = VARS.sha.slice(0, 7);
+
+									let builtFrom = shaShort;
+
+									if (VARS.run) {
+										builtFrom += `-${VARS.run}`;
+									}
+
+									JSENV += '<script>window.builtfromsha = "' + builtFrom + '";</script>\n';
+								}
+							}
+
+
+							JSENV += '<script>window.packageversion = "' + package.version + '";</script>\n';
+							JSENV += '<script>window.versionsuffix = "' + package.versionsuffix + '";</script>\n';
+
 
 							vs = numfromreleasestring(package.version) + '_' + (package.versionsuffix || "0")
 	
@@ -880,7 +987,8 @@ fs.exists(mapJsPath, function (exists) {
 								//JS += '<script type="text/javascript">'+joinfirst.data+'</script>';
 								JS += '<script join src="js/joinfirst.min.js?v='+vs+'"></script>';
 								JSPOST += '<script async join src="js/join.min.js?v='+vs+'"></script>';
-								JSPOST += '<script async join src="js/joinlast.min.js?v='+vs+'"></script>';
+								///remove peertube in clbk
+								//JSPOST += '<script async join src="js/joinlast.min.js?v='+vs+'"></script>';
 								VE = '<script async join src="js/vendor.min.js?v='+args.vendor+'"></script>';
 								CSS = '<link rel="stylesheet" href="css/master.css?v='+vs+'">';
 	
@@ -890,7 +998,7 @@ fs.exists(mapJsPath, function (exists) {
 							{
 	
 
-								JSENV += '<script>window.design = true;</script>';
+								JSENV += '<script>window.design = true;</script>\n';
 
 								_.each(m.__sourcesfirst, function(source){
 
@@ -916,7 +1024,7 @@ fs.exists(mapJsPath, function (exists) {
 									CACHED_FILES += `'${filepath}',\n`;
 								})
 
-								_.each(m.__sourceslast, function(source){
+								/*_.each(m.__sourceslast, function(source){
 
 									var filepath = source;
 
@@ -926,7 +1034,7 @@ fs.exists(mapJsPath, function (exists) {
 
 									JSPOST += '<script  join src="'+filepath+'?v='+rand(1, 999999999999)+'"></script>\n';
 									CACHED_FILES += `'${filepath}',\n`;
-								})
+								})*/
 	
 								_.each(m.__css, function(source){
 									CSS += '<link rel="stylesheet" href="'+source+'?v='+rand(1, 999999999999)+'">\n';
@@ -958,15 +1066,28 @@ fs.exists(mapJsPath, function (exists) {
 							_.each(VARS, function(v, i){
 								index = index.replaceAll("__VAR__." + i, v);
 							})
+
+							if(options.underscoreTemplate){
+								var t = _.template(index)
+
+								index = t(VARS)
+							}
+
+							if(options.path) {
+								console.log("CREATE FOLDER " + options.path)
+
+								if(!fs.existsSync(options.path)){
+									fs.mkdirSync(options.path);
+								}
+							}
 	
-							fs.writeFile('./' + tplname, index, function(err) {
+							fs.writeFile('./' + (options.path ? options.path : '') + tplname, index, function(err) {
 
 								if (err) {
 									return reject(err)
 								}
 
 								resolve()
-								
 							})
 	
 						});
@@ -1037,7 +1158,7 @@ var helpers = {
 	clearfolder : function(directory, clbk){
 
 		try{
-			fs.rmdirSync(directory, {
+			fs.rmSync(directory, {
 				recursive : true
 			})
 		}
@@ -1065,14 +1186,17 @@ var copycontent = function(options, clbk, nac) {
 			sync : true,
 			array : options.copy,
 			action : function(p){
-				ncp(p.item, options.path + '/' + p.item, {
+
+				var filename = p.item
+
+				if (filename.name) filename = filename.name
+
+				ncp(filename, options.path + '/' + filename, {
 					filter : function(name){
 
-						console.log('p.item', p.item, name)
 
 						if(options.filter){
-							console.log('filter', options.filter(p.item, name))
-							return options.filter(p.item, name)
+							return options.filter(filename, name)
 						}
 						else
 						return name.indexOf('.map') == -1
@@ -1080,7 +1204,13 @@ var copycontent = function(options, clbk, nac) {
 					},
 				}, function (err) {
 					if (err) {
-					  console.error(err);
+					  	console.error(err);
+					}
+
+					else{
+						if (p.item.rename){
+							fs.renameSync(options.path + '/' + filename, options.path + '/' + p.item.rename);
+						}
 					}
 	
 					p.success();

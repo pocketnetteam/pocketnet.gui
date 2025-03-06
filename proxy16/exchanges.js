@@ -1,6 +1,5 @@
-const { zip } = require('underscore');
 var f = require('./functions');
-
+var axios = require('axios');
 var Exchanges = function(){
     var self = this
 
@@ -13,22 +12,24 @@ var Exchanges = function(){
     var keys = {
         //'mercatox' : 'last_price',
         //'bilaxy' : 'close',
-        'bitforex' : 'last',
-        'digifinex' : 'last'
+        //'bitforex' : 'last',
+        'digifinex' : 'last',
+        'coingecko' : 'price',
     }
 
     var apis = {
         //'mercatox' : 'https://mercatox.com/api/public/v1/ticker',
         //'bilaxy' : 'https://newapi.bilaxy.com/v1/ticker/24hr',
-        'bitforex' : 'https://www.bitforex.com/server/market.act?cmd=searchTickers&type=all',
-        'digifinex' : 'https://openapi.digifinex.vip/v3/ticker'
+        //'bitforex' : 'https://www.bitforex.com/server/market.act?cmd=searchTickers&type=all',
+        'digifinex' : 'https://openapi.digifinex.vip/v3/ticker',
+        'coingecko' : 'https://api.coingecko.com/api/v3/coins/pocketcoin/tickers',
     }
 
     var followInterval = null
 
     self.api = {
         price : {
-            bilaxy : function(){
+            /*bilaxy : function(){
 
                 return self.transports.axios.get(apis.bilaxy).then(function(response) {
 
@@ -56,27 +57,7 @@ var Exchanges = function(){
                 })
             },*/
 
-            digifinex : function(){
-                return self.transports.axios.get(apis.digifinex).then(function(response) {
-
-                    var converted = {}
-
-                    _.each(f.deep(response, 'data.ticker') || [], function(c){
-                        if (c.symbol && c.symbol.toUpperCase)
-                            converted[c.symbol.toUpperCase()] = c
-                    })
-
-                    return f.getPkoinPrice(converted, 'last')
-
-                }).catch(e => {
-
-                    //console.log('digifinex error', e)
-
-                    return Promise.reject('notfound')
-                })
-            },
-
-            bitforex : function(){
+            /*bitforex : function(){
                  return self.transports.axios.post(apis.bitforex).then(function(response) {
 
 
@@ -99,6 +80,66 @@ var Exchanges = function(){
 
                      return Promise.reject('notfound')
                  })
+            },*/
+
+            digifinex : function(){
+                return axios.get(apis.digifinex).then(function(response) {
+
+                    var converted = {}
+
+                    _.each(f.deep(response, 'data.ticker') || [], function(c){
+                        if (c.symbol && c.symbol.toUpperCase)
+                            converted[c.symbol.toUpperCase()] = c
+                    })
+
+                    return f.getPkoinPrice(converted, 'last')
+
+                }).catch(e => {
+
+                    return Promise.reject('notfound')
+                })
+            },
+
+            coingecko : function(){
+                /**
+                 * This function is based on Coingecko price medium calculation
+                 * to maximally fit the CoinGecko rate. Read more here
+                 * https://www.coingecko.com/en/methodology
+                 *
+                 * @param tickers
+                 * @return {number}
+                 */
+                function calculateCryptoPrice(tickers) {
+                    let totalVolume = 0, totalPrice = 0
+                    tickers.forEach(ticker => (totalVolume += ticker.volume))
+                    tickers.forEach(ticker => (totalPrice += ticker.volume * ticker.price))
+
+                    /** Float point truncation to 6 decimals */
+                    return Math.floor(totalPrice / totalVolume * 1e6) / 1e6;
+                }
+
+                return fetch(apis.coingecko).then(async function(response) {
+                    const currency = 'usd'
+                    const data = await response.json()
+
+                    const validTickers = data.tickers.filter(ticker => (!ticker.is_stale && !ticker.is_anomaly))
+
+                    const formattedTickers = validTickers.map(ticker => ({
+                        volume: ticker.converted_volume[currency],
+                        price: ticker.converted_last[currency],
+                    }))
+
+                    const prepared = {
+                        PKOIN_USDT: {
+                            price: calculateCryptoPrice(formattedTickers),
+                        }
+                    }
+
+                    return f.getPkoinPrice(prepared, 'price')
+                }).catch(e => {
+
+                    return Promise.reject('notfound')
+                })
             },
         }
 
@@ -225,6 +266,8 @@ var Exchanges = function(){
                 if(!history.prices.common) history.prices.common = []
 
                 history.prices.common.push(common)
+
+                history.prices.common = f.lastelements(history.prices.common, 100)
 
                 hasdata = true
 

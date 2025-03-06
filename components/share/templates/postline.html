@@ -1,12 +1,21 @@
 
 
-<div class="postpanel table">
+<div class="postpanel">
     <div class="panelWrapper">
         <div class="panel">
 
             <% if(!external) {%>
             
-                <% if(!share.itisvideo()) {%>
+                <%
+                const isIpfs = share.itisipfs()
+                const isEmbed = share.itisembed()
+                const isPlayer = share.itisvideo() || share.itisaudio()
+
+                const condition1 = (isIpfs && !isPlayer)
+                const condition2 = (!isPlayer && !isIpfs && !isEmbed)
+                %>
+
+                <% if(condition1 || condition2) {%>
 
                     <div elementsid="saddimages" class="item images tooltip" title="<%=e('saddimages')%>">
                         <i class="fas fa-camera"></i> <span class="mobiledevice"><%=e('saddimages')%></span>
@@ -26,20 +35,27 @@
 
                 if(!share.hasexchangetag() && !share.repost.v){
 
-                        
-                    if (!share.repost.v && !share.itisvideo() && !share.aliasid && !app.pkoindisable) { %>
-                        <div elementsid="peertubeAddVideo" class="item peertube tooltip nowidth" embeding="addVideo" title="<%=e('peertubeAddVideo')%>">
-                            <i class="fas fa-video"></i> <span><%- e('peertubeAddVideo') %></span>
+                    if (!share.repost.v && !share.itisvideo() && !share.itisaudio() && !share.aliasid && !share.images.v.length) { %>
+
+                        <div elementsid="peertubeAddAudio" class="item peertube tooltip nowidth" embeding="addAudio" title="<%=e('peertubeAddAudio')%>">
+                            <i class="fas fa-volume-up"></i> <span class="mobiledevice"><%- e('peertubeAddAudio') %></span>
                         </div>
 
-                    
+                        <div elementsid="peertubeAddVideo" class="item peertube tooltip nowidth" embeding="addVideo" title="<%=e('peertubeAddVideo')%>">
+                            <i class="fas fa-video"></i> <span class="mobiledevice"><%- e('peertubeAddVideo') %></span>
+                        </div>
+                        <% if ((( typeof u != 'undefined' && (_.indexOf(u.badges || [], 'shark') > -1) || app.platform.istest(app.user.address.value) || app.test || app.platform.ui.usertype(app.user.address.value)) && !isTablet())) {%>
+                            <div elementsid="peertubeAddStream" class="item peertube tooltip nowidth" embeding="addStream" title="<%=e('peertubeAddStream')%>">
+                                <i class="fas fa-dot-circle"></i> <span class="mobiledevice"><%- e('peertubeAddStream') %></span>
+                            </div>
+                        <% } %>
                     <% }
 
                 } %>
             
                 <% if(!share.aliasid && !share.repost.v) {%>
-                    <div elementsid="stimes" class="item times tooltip <% if(share.itisvideo() || share.hasexchangetag()) {%> nowidth <%} %>" embeding="times" title="<%=e('stimes')%>">
-                        <i class="fas fa-times-circle"></i> <span class="<% if(!share.itisvideo() && !share.hasexchangetag()) {%>mobiledevice <% } %>"><%=e('stimes')%></span>
+                    <div elementsid="stimes" class="item times tooltip <% if(share.itisvideo() || share.itisaudio() || share.hasexchangetag()) {%> nowidth <%} %>" embeding="times" title="<%=e('stimes')%>">
+                        <i class="fas fa-times-circle"></i> <span class="<% if(!share.itisvideo() && !share.itisaudio() && !share.hasexchangetag()) {%>mobiledevice <% } %>"><%=e('stimes')%></span>
                     </div>
                 <% } %>
 
@@ -96,13 +112,10 @@
                         <button elementsid="usave" class="post shadow"><%=e('usave')%></button>
                     </div>
 
-                   
+                    <div class="cancelpost element">
+                        <button elementsid="cancelediting" class="cancelediting ghost"><%=e('ucancel')%></button>
+                    </div>
 
-                        <div class="cancelpost element">
-                            <button elementsid="cancelediting" class="cancelediting ghost"><%=e('ucancel')%></button>
-                        </div>
-
-                
                 <% } %>
              
             </div>

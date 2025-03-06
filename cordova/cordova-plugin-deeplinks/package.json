@@ -1,0 +1,51 @@
+{
+  "name": "cordova-plugin-deeplinks",
+  "version": "1.1.1",
+  "description": "Cordova plugin to add in your application support for Universal Links (iOS 9) and Deep Links (Android). Basically, open application through the link in the browser.",
+  "cordova": {
+    "id": "cordova-plugin-deeplinks",
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:e-imaxina/cordova-plugin-deeplinks.git"
+  },
+  "keywords": [
+    "cordova",
+    "links",
+    "universal",
+    "deep links",
+    "universal links",
+    "ecosystem:cordova",
+    "cordova-ios",
+    "cordova-android",
+    "ios",
+    "android"
+  ],
+  "engines": {
+    "cordova-ios": ">=3.8",
+    "cordova-android": ">=4"
+  },
+  "dependencies": {
+    "mkpath": ">=1.0.0",
+    "xml2js": ">=0.4",
+    "rimraf": ">=2.4",
+    "node-version-compare": ">=1.0.1",
+    "plist": ">=1.2.0"
+  },
+  "author": "Nikolay Demyankov for Nordnet Bank AB",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/e-imaxina/cordova-plugin-deeplinks/issues"
+  },
+  "homepage": "https://github.com/e-imaxina/cordova-plugin-deeplinks#readme",
+  "devDependencies": {
+    "standard-version": "^7.0.0"
+  },
+  "scripts": {
+    "release": "standard-version"
+  }
+}

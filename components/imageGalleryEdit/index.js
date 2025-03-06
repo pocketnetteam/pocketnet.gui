@@ -662,7 +662,7 @@ var imageGalleryEdit = (function(){
 
 				el.imageNavigation.find('.number').html(helpers.nFormat(Number(num) + 1));
 
-				$(window).off('resize', helpers.resize)
+				self.app.el.window.off('resize', helpers.resize)
 
 				if(!p) p = {};
 
@@ -686,7 +686,7 @@ var imageGalleryEdit = (function(){
 						
 						helpers.resize();
 
-						$(window).on('resize', helpers.resize)
+						self.app.el.window.on('resize', helpers.resize)
 						
 						if(filters)
 						{
@@ -838,7 +838,7 @@ var imageGalleryEdit = (function(){
 
 			destroy : function(){
 
-				$(window).off('resize', helpers.resize)
+				self.app.el.window.off('resize', helpers.resize)
 
 
 				el = {};
@@ -912,7 +912,7 @@ var imageGalleryEdit = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

@@ -45,7 +45,7 @@ var channel = (function(){
 				history : true,
 				
 				count : function(){
-					return deep(author, 'data.subscribers.length') || 0 
+					return deep(author, 'data.subscribers_count') || 0 
 				}
 			},
 
@@ -58,13 +58,50 @@ var channel = (function(){
 				history : true,
 				
 				count : function(){
-					return deep(author, 'data.subscribes.length') || 0 
+					return deep(author, 'data.subscribes_count') || 0 
 				}
 			}
 		}
 
 		var renders = {
-			
+			blocking : function(){
+				var _el = el.c.find('.userinfo')
+
+				var me = self.app.psdk.userInfo.getmy()
+
+				blocking = me.relation(author.address, 'blocking')
+
+				if(blocking){
+					_el.addClass('blocked')
+				}
+				else{
+					_el.removeClass('blocked')
+				}
+			}
+		}
+
+		var actions = {
+			blocking : function(){
+				self.app.mobile.vibration.small()
+
+				var me = self.app.psdk.userInfo.getmy()
+				if(!me) return 
+
+				var blocking = me.relation(author.address, 'blocking')
+
+				self.app.platform.sdk.user.stateAction(() => {
+					self.app.platform.api.actions[blocking ? 'unblocking' : 'blocking'](author.address, function(tx, error){
+						if(!tx){
+							self.app.platform.errorHandler(error, true)	
+
+							return 
+						}
+
+						
+
+					})
+				})
+			},
 		}
 
 		var state = {
@@ -77,6 +114,17 @@ var channel = (function(){
 		}
 
 		var initEvents = function(){
+
+			el.c.find('.blockWrapper').on('click', function(){
+				actions.blocking()
+			})
+
+			if(ed.customaction){
+				el.c.find('.customaction').on('click', function(){
+					ed.customaction.action(author.data)
+				})
+			}
+			
 			
 			_.each(reports, function(r, j){
 				if(r.events){
@@ -103,6 +151,60 @@ var channel = (function(){
 				}
 			})
 
+			self.app.platform.actionListeners.authorn = function({type, alias, status}){
+
+				if(type == 'blocking' || type == 'unblocking'){
+
+					author.data = self.psdk.userInfo.get(author.address)
+					
+					renders.blocking()
+				}
+				
+			}
+
+		}
+
+		var make = function(){
+
+			Circles({
+				target: el.c.find('.bgwallpaper')[0],
+				quantity: 15,
+				radius: {
+					min: 2,
+					max: 400
+				},
+				zIndex: {
+					min: 0,
+					max: 20
+				},
+				hue: {
+					min: 0,
+					max: 180
+				},
+				saturation: {
+					min: 50,
+					max: 100
+				},
+				light: {
+					min: 25,
+					max: 75
+				},
+				alpha: {
+					min: 0.2,
+					max: 0.8
+				}
+			})
+			
+			self.app.platform.sdk.users.getCover(author.address).then(cover => {
+				if(!cover){
+					
+				}
+				else{
+
+					el.c.find('.bgwallpaper').attr('image', cover)
+					bgImages(el.c)
+				}
+			})
 		}
 
 		return {
@@ -112,8 +214,11 @@ var channel = (function(){
 
 				ed = p.settings.essenseData || {}
 
+				if(!ed.id) ed.id = parameters().addressid
+
 				if(!ed.id){
 					clbk({
+						author : null,
 						ed : ed
 					})
 
@@ -123,18 +228,14 @@ var channel = (function(){
 				self.sdk.users.get(ed.id, function(){
 					self.sdk.ustate.get(ed.id, function(){
 
-						author.data = self.sdk.users.storage[ed.id]
-						author.state = self.sdk.ustate.storage[ed.id]
+						author.data = self.psdk.userInfo.get(ed.id)
+						author.state = self.psdk.userState.get(ed.id)
 						author.address = ed.id;
 
-						var me = null;
-	
-						if(self.app.user.address.value)
-							me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'));
-
+						var me = self.psdk.userInfo.getmy()
+							
 						author.following = me && me.relation(author.address, 'subscribes');
-
-
+						author.me = self.app.user.isItMe(author.address)
 
 						var data = {
 							author : author,
@@ -148,7 +249,7 @@ var channel = (function(){
 
 					})
 
-				})
+				}, true)
 
 				
 
@@ -166,12 +267,13 @@ var channel = (function(){
 				el.c = p.el.find('#' + self.map.id);
 
 				initEvents();
+				make();
 
 				p.clbk(null, p);
 			},
 
 			wnd : {			
-				class : 'normalizedmobile',
+				class : 'normalizedmobile channelwnd',
 			}
 		}
 	};
@@ -190,7 +292,7 @@ var channel = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="__PACKAGE-CORDOVAVERSIONCODE__" android-packageName="pocketnet.app" ios-CFBundleIdentifier="app.pocketnet" version="__PACKAGE-CORDOVAVERSION__" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="pocketnet.app" android-versionCode="__PACKAGE-CORDOVAVERSIONCODE__" android-packageName="pocketnet.app" ios-CFBundleIdentifier="app.pocketnet" version="__PACKAGE-CORDOVAVERSION__" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:tools="http://schemas.android.com/tools">
     <name>__VAR__.project</name>
     <description>
         __VAR__.project Application
@@ -10,7 +10,7 @@
     <content src="indexcordova.html" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="24" />
-    <preference name="android-targetSdkVersion" value="32" />
+    <preference name="android-targetSdkVersion" value="34" />
     <preference name="loadUrlTimeoutValue" value="700000" />
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashShowOnlyFirstTime" value="true" />
@@ -19,10 +19,12 @@
     <preference name="SplashMaintainAspectRatio" value="true" />
     <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="StatusBarOverlaysWebView" value="true" />
-    <preference name="StatusBarBackgroundColor" value="#00000000" />
+    <preference name="StatusBarBackgroundColor" value="#000000" />
+    <preference name="NavigationBarBackgroundColor" value="#011621" />
+    <preference name="NavigationBarLight" value="true" />
     <preference name="AndroidWindowSplashScreenBackground" value="#011621" />
     <preference name="AndroidWindowSplashScreenIconBackgroundColor" value="#011621" />
-    <preference name="BackgroundColor" value="0xff011621" />
+    <preference name="BackgroundColor" value="#011621" />
     <preference name="StatusBarStyle" value="lightcontent" />
     <preference name="AndroidLaunchMode" value="singleTask" />
     <preference name="Fullscreen" value="false" />
@@ -41,8 +43,13 @@
         <icon density="xxxhdpi" src="resources/android/icon/drawable-xxxhdpi-icon.png" />
 
         <resource-file src="resources/android/colors.xml" target="app/src/main/res/values/colors.xml" />
-        
-        <!--<splash density="land-ldpi" src="resources/android/splash/drawable-land-ldpi-screen.png" />
+        <resource-file src="resources/android/notification/drawable-mdpi/notification_icon.png" target="app/src/main/res/drawable-mdpi/notification_icon.png" />
+        <resource-file src="resources/android/notification/drawable-mdpi/notification_icon.png" target="app/src/main/res/drawable/notification_icon.png" />
+        <resource-file src="resources/android/notification/drawable-hdpi/notification_icon.png" target="app/src/main/res/drawable-hdpi/notification_icon.png" />
+        <resource-file src="resources/android/notification/drawable-xhdpi/notification_icon.png" target="app/src/main/res/drawable-xhdpi/notification_icon.png" />
+        <resource-file src="resources/android/notification/drawable-xxhdpi/notification_icon.png" target="app/src/main/res/drawable-xxhdpi/notification_icon.png" />
+        <resource-file src="resources/android/notification/drawable-xxxhdpi/notification_icon.png" target="app/src/main/res/drawable-xxxhdpi/notification_icon.png" />
+        <splash density="land-ldpi" src="resources/android/splash/drawable-land-ldpi-screen.png" />
         <splash density="land-mdpi" src="resources/android/splash/drawable-land-mdpi-screen.png" />
         <splash density="land-hdpi" src="resources/android/splash/drawable-land-hdpi-screen.png" />
         <splash density="land-xhdpi" src="resources/android/splash/drawable-land-xhdpi-screen.png" />
@@ -53,8 +60,14 @@
         <splash density="port-hdpi" src="resources/android/splash/drawable-port-hdpi-screen.png" />
         <splash density="port-xhdpi" src="resources/android/splash/drawable-port-xhdpi-screen.png" />
         <splash density="port-xxhdpi" src="resources/android/splash/drawable-port-xxhdpi-screen.png" />
-        <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />-->
+        <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
       
+        <resource-file src="resources/android/banner/mipmap-mdpi.png" target="app/src/main/res/drawable-mdpi/banner.png" />
+        <resource-file src="resources/android/banner/mipmap-mdpi.png" target="app/src/main/res/drawable-mdpi/banner.png" />
+        <resource-file src="resources/android/banner/mipmap-hdpi.png" target="app/src/main/res/drawable-hdpi/banner.png" />
+        <resource-file src="resources/android/banner/mipmap-xhdpi.png" target="app/src/main/res/drawable-xhdpi/banner.png" />
+        <resource-file src="resources/android/banner/mipmap-xxhdpi.png" target="app/src/main/res/drawable-xxhdpi/banner.png" />
+        <resource-file src="resources/android/banner/mipmap-xhdpi.png" target="app/src/main/res/drawable/banner.png" />
     </platform>
     <platform name="ios">
         <icon height="57" src="resources/ios/icon/icon.png" width="57" />
@@ -104,17 +117,20 @@
         <splash height="960" src="resources/ios/splash/Default@2x~iphone.png" width="640" />
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
         <splash height="2732" src="resources/ios/splash/Default@2x~universal~anyany.png" width="2732" />
+        <preference name="scheme" value="bstn" />
+        <preference name="hostname" value="bastyon" />
+        
     </platform>
     
 
     <allow-navigation href="*" />
+    <allow-navigation href="data:*" />
     <allow-intent href="*" />
-    
+    <allow-intent href="data:*" />
     <access origin="cdvfile://*" />
 
     <access allows-arbitrary-loads-for-media="true" allows-arbitrary-loads-in-web-content="true" allows-local-networking="true" minimum-tls-version="TLSv1.1" origin="*" requires-certificate-transparency="true" requires-forward-secrecy="false" />
-    <plugin name="cordova-plugin-device" spec="~1.1.1" />
-    <plugin name="cordova-plugin-fullscreen" spec="^1.3.0" />
+    
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
@@ -130,6 +146,14 @@
         <config-file overwrite="true" parent="NSPhotoLibraryUsageDescription" target="*-Info.plist">
             <string>Allow the application access to the photo gallery to select photos for publication.</string>
         </config-file>
+
+        <resource-file src="configs/de.lproj" />
+        <resource-file src="configs/es.lproj" />
+        <resource-file src="configs/fr.lproj" />
+        <resource-file src="configs/it.lproj" />
+        <resource-file src="configs/kr.lproj" />
+        <resource-file src="configs/ru.lproj" />
+        <resource-file src="configs/zh.lproj" />
        
         <preference name="UseSwiftLanguageVersion" value="4.2" />
         <preference name="NativeXHRLogging" value="full" />
@@ -137,29 +161,45 @@
         <preference name="InterceptRemoteRequests" value="all" />
         <preference name="allowFileAccessFromFileURLs" value="true" />
         <preference name="allowUniversalAccessFromFileURLs" value="true" />
-        <config-file target="*-Info.plist" parent="CFBundleURLTypes">
-        <array>
-            <dict>
-                <key>CFBundleTypeRole</key>
-                <string>Editor</string>
-                <key>CFBundleURLName</key>
-                <string>REVERSED_CLIENT_ID</string>
-                <key>CFBundleURLSchemes</key>
+        <% if(config.cordova.reversedClientId) {%>
+            <config-file target="*-Info.plist" parent="CFBundleURLTypes">
                 <array>
-                    <string>com.googleusercontent.apps.1020521924918-0he8n2cuadpvdm9mi2dv9vj8llr8pgr1</string>
+                    <dict>
+                        <key>CFBundleTypeRole</key>
+                        <string>Editor</string>
+                        <key>CFBundleURLName</key>
+                        <string>REVERSED_CLIENT_ID</string>
+                        <key>CFBundleURLSchemes</key>
+                        <array>
+                            <string><%-config.cordova.reversedClientId%></string>
+                        </array>
+                    </dict>
                 </array>
-            </dict>
-        </array>
-        </config-file>
+            </config-file>
+        <% } %>
 
     </platform>
     <platform name="android">
 
-        <preference name="AndroidXEnabled" value="true" />
+        <!--<preference name="AndroidXEnabled" value="true" />-->
+
+        <!--<edit-config file="AndroidManifest.xml" target="/manifest" mode="merge">
+            <manifest xmlns:tools="http://schemas.android.com/tools" />
+        </edit-config>-->
 
         <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application">
-            <application android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
+            <application android:hardwareAccelerated="true" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" android:largeHeap="true" android:banner="@drawable/banner" android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
         </edit-config>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <provider android:authorities="${applicationId}.sharing.provider" android:exported="false" android:grantUriPermissions="true" android:name="nl.xservices.plugins.FileProvider">
+                <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/sharing_paths" />
+            </provider>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@drawable/notification_icon" />
+        </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/manifest">
             <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
@@ -167,35 +207,50 @@
             <uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT" />
             <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
             <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-            <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+            <uses-permission android:name="android.permission.CAMERA" />
+            <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+            <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+            <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+            <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
         </config-file>
 
         <edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:name='MainActivity']" mode="merge">
-            <activity android:windowSoftInputMode="adjustPan" android:supportsPictureInPicture="true"/>
+            <activity android:windowSoftInputMode="adjustPan" android:supportsPictureInPicture="true" />
         </edit-config>
+
+        <config-file parent="/manifest/application/activity[@android:name='MainActivity']/intent-filter" target="AndroidManifest.xml">
+            <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+        </config-file>
+
+        <config-file parent="/manifest" target="AndroidManifest.xml">
+            <uses-feature android:name="android.software.leanback" android:required="false" />
+            <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
+            <uses-feature android:name="android.hardware.faketouch" android:required="false"/>
+            <uses-feature android:name="android.hardware.telephony" android:required="false"/>
+            <uses-feature android:name="android.hardware.camera" android:required="false"/>
+            <uses-feature android:name="android.hardware.nfc" android:required="false"/>
+            <uses-feature android:name="android.hardware.location.gps" android:required="false"/>
+            <uses-feature android:name="android.hardware.microphone" android:required="false"/>
+            <uses-feature android:name="android.hardware.sensor" android:required="false"/>
+        </config-file>
 
         <preference name="AndroidPersistentFileLocation" value="Compatibility" />
 
     </platform>
 
     <universal-links>
-        <ios-team-id value="Y5JW9JU787"/>
+        <% if(config.cordova.iosTeamId) {%>
+            <ios-team-id value="<%-config.cordova.iosTeamId%>"/>
+        <% } %>
 
-        <host name="pocketnet.app" scheme="https">
+        <host name="<%-domain%>" scheme="https">
             <path url="*" event="nav-message" />
         </host>
 
-        <host name="test.pocketnet.app" scheme="https">
-            <path url="*" event="nav-message" />
-        </host>
-
-        <host name="bastyon.com" scheme="https">
-            <path url="*" event="nav-message" />
-        </host>
-
-        <host name="test.bastyon.com" scheme="https">
+        <host name="*" scheme="__VAR__.protocol">
             <path url="*" event="nav-message" />
         </host>
 
     </universal-links>
+    
 </widget>

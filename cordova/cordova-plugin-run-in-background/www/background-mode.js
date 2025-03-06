@@ -454,21 +454,22 @@ exports._isActive = false;
 
 exports._defaults = {
     title:              'App is running in background',
-    text:               'Doing heavy tasks.',
+    text:               'This allows you to upload videos in stealth mode, or listen videos with the screen off.',
     subText:            '',
     bigText:            false,
     resume:             true,
     silent:             false,
-    hidden:             true,
+    hidden:             false,
     color:              undefined,
-    icon:               'icon',
+    icon:               'notification_icon',
     channelName:        'cordova-plugin-background-mode',
     channelDescription: 'cordova-plugin-background-moden notification',
     allowClose:         false,
     closeIcon:          'power',
     closeTitle:         'Close',
     showWhen:           true,
-    visibility:         undefined
+    visibility:         undefined,
+    foregroundType :    'mediaPlayback'
 };
 
 /**

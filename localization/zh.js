@@ -1,10 +1,11 @@
 if(typeof loclib == 'undefined' || !loclib)
 loclib = {};
 
-loclib.cmn = {};
+loclib.zh = {};
 
-var _l = loclib.cmn;
-var appname = window.pocketnetproject || "Pocketnet"
+var _l = loclib.zh;
+var appname = (window.project_config || {}).fullname || 'Bastyon'
+
 //time
 
 _l.fewseconds = "几秒前";	
@@ -189,6 +190,9 @@ _l.uabout = "个人简介";
 _l.uwebsite = "网站";
 _l.uaddresesd = "捐款地址";
 _l.usavechanges = "是否保存你的修改？";
+
+_l.settings_save = "保存更改";
+_l.settings_discard = "重置更改";
 
 //ustate
 
@@ -528,7 +532,10 @@ _l.e13106 = "口袋网节点"
 _l.e13107 = "节点管理可通过应用程序进行"
 _l.e13108 = "没有与Electron代理接口的连接"
 
+
 _l.e13109 = "请输入图片中的字以接收口袋币并继续注册"
+_l.e13109h = "点击六边形组合图片，然后在生成的图片上输入文字"
+
 _l.e13110 = "輸入單詞"
 _l.poll = "创建投票"
 _l.next = "下一步"
@@ -632,7 +639,7 @@ _l.e13176 = "地址类型"
 _l.e13177 = "上传图片"
 
 _l.requiredfields = "必填项"
-_l.e13178 = "未与你的个人资料绑定"
+_l.e13178 = "选修的"
 _l.e13179 = "未使用列表"
 _l.e13180 = "你的发票已成功生成"
 _l.e13181 = "在生成报价的过程中发生了错误"
@@ -760,6 +767,7 @@ _l.e13285 = '从电报中发帖前先询问'
 _l.e13286 = '向电报发送前询问'
 _l.e13287 = "发送至电报渠道"
 _l.video = "视频"
+_l.audio = "声音的"
 _l.e13288 = "主頁小工具"
 _l.e13289 = "电报整合"
 
@@ -909,7 +917,7 @@ _l.e140701 = '我们非常热情地支持言论。但是，我们不希望把口
 _l.e140702 = '不要投诉那些你仅仅不喜欢或感到被冒犯的内容。这不是一个很高的标准。不要关注那些冒犯你的人，我们很快就会有一个取消看他们帖子的功能，但不要投诉他们。请只投诉那些威胁到口袋网作为一个大众交流平台的长期生存的事情，这个平台打算深入到许多国家的各个社会阶层。'
 _l.e140703 = '我们强烈建议你对任何的色情内容进行投诉。网络上有很多色情网站，我们不想把我们的言论自由努力与之混为一谈。我们强烈鼓励社区对色情内容投票剔除。其次，任何类型的直接威胁都应该投票剔除，明确的种族主义内容也应该被投票取消。如果我们允许现在的主流媒体将我们与种族主义或暴力直接联系在一起，那么口袋网将在我们还没来得清除这些内容时不复存在。仅仅因为主流媒体对虚假的种族主义虚假报道，并不意味着我们应该在我们的平台上容忍种族主义来证明他们是正确的。这将偏离我们试图实现的目标，即挑战由媒体、金融和腐败的政府官员组成的邪恶联盟所创造的新极权主义。'
 _l.e14071 = '关于种族主义的重要声明'
-_l.e14072 = '自由思想和自由言论在主流社交平台和媒体上受到攻击。正因如此，我们需要说出真相，这个平台是非公司制和去中心化的。但我们要求每个人在提出你的观点时不要攻击他人的国籍或种族。你可以用证据来表达你的观点。我们不能把口袋网变成一个边缘化的平台。表达事实，但请避免种族主义和对特定民族的集体攻击。我们知道，硅谷和主流媒体已经把种族主义问题变成了他们的扑克牌，他们不断地喊狼来了。我们更应该有分寸，以证据为基础，不要让他们用这个来抹黑我们。如果我们不这样做，我们就不能让大多数人在口袋网上权衡主流媒体腐败的证据。请记住这一点，这样言论自由才能蓬勃发展，我们才能战胜世界上的那些“脸书”。</div><div>最终将是社区决定平台的方向。一群人投诉冒犯他们的内容，无异于和人们直接发出暴力威胁一样糟糕。然而，最初的迹象表明，平台的早期用户一般都很有智慧，而且讲求证据，所以未来前景看起来非常光明。口袋网团队注意到，在beta测试的几天后，我们甚至不再阅读另类新闻，因为口袋网上有很多有趣的内容。继续加油吧！</div><div>请参与到这些话题的讨论中来。这是一个社区平台。我们一直渴望提高平台的透明度，期待你告诉我们如何改进我们的内容策展和管理。你可以通过群聊，或发送邮件到support@pocketnet.app，或就这个话题发表完整的帖子。'
+_l.e14072 = '自由思想和自由言论在主流社交平台和媒体上受到攻击。正因如此，我们需要说出真相，这个平台是非公司制和去中心化的。但我们要求每个人在提出你的观点时不要攻击他人的国籍或种族。你可以用证据来表达你的观点。我们不能把口袋网变成一个边缘化的平台。表达事实，但请避免种族主义和对特定民族的集体攻击。我们知道，硅谷和主流媒体已经把种族主义问题变成了他们的扑克牌，他们不断地喊狼来了。我们更应该有分寸，以证据为基础，不要让他们用这个来抹黑我们。如果我们不这样做，我们就不能让大多数人在口袋网上权衡主流媒体腐败的证据。请记住这一点，这样言论自由才能蓬勃发展，我们才能战胜世界上的那些“脸书”。</div><div>最终将是社区决定平台的方向。一群人投诉冒犯他们的内容，无异于和人们直接发出暴力威胁一样糟糕。然而，最初的迹象表明，平台的早期用户一般都很有智慧，而且讲求证据，所以未来前景看起来非常光明。口袋网团队注意到，在beta测试的几天后，我们甚至不再阅读另类新闻，因为口袋网上有很多有趣的内容。继续加油吧！</div><div>请参与到这些话题的讨论中来。这是一个社区平台。我们一直渴望提高平台的透明度，期待你告诉我们如何改进我们的内容策展和管理。你可以通过群聊'
 _l.e14073 = '口袋网的内容策展规范'
 _l.e14074 = '口袋网是否允许出现任何内容？如果有些内容不被允许，这个平台还能被称为言论自由吗？'
 _l.e14075 = '有时可能会有用户带着特定的目的，发布一系列邪恶的图片，以此来攻击口袋网。为了防止这种情况，我们有以下机制：如果某人的信誉达到-50，他的账户就会被自动封锁。获得-50的声誉相当于得到了25个一星评分且没有四星或五星评分。如果不是发布了大量内容极差的帖子，这几乎是不会发生的。'
@@ -1008,21 +1016,69 @@ _l.noDownloadedVideos = "没有下载的视频";
 
 _l.buy = '买';
 
-_l.lowstar1 = "Bastyon 團隊正在實施臨時暫停 1 星和 2 星評級，禁止內容除外。禁止內容是："
-_l.lowstar_reason_1 = "色情"
+_l.lowstar1 = ""+appname+" 團隊正在實施臨時暫停 1 星和 2 星評級，禁止內容除外。禁止內容是："
+_l.lowstar_reason_1 = "情色/色情"
 _l.lowstar_reason_2 = "兒童剝削"
 _l.lowstar_reason_3 = "直接的暴力威脅"
 _l.lowstar_reason_4 = "非法藥物"
 _l.lowstar2 = "請不要出於其他原因使用 1 星和 2 星評級。在新的審核在中旬發布後。希望您能夠出於其他原因使用低評級"
 _l.lowstaragree = "我確認這篇文章包含四種禁止內容之一"
 
-_l.androidPopupTitle = "在 Bastyon 移动应用中获取未经审查的信息"
+_l.androidPopupTitle = "在 "+appname+" 移动应用中获取未经审查的信息"
 _l.androidPopupAgree = "切换到应用"
 _l.androidPopupDisagree = "不是现在"
 
-_l.desktopPopupTitle = "在 Bastyon 桌面应用程序中获取未经审查的信息"
+_l.desktopPopupTitle = "在 "+appname+" 桌面应用程序中获取未经审查的信息"
 _l.desktopPopupAgree = "下载应用程序"
 _l.desktopPopupDisagree = "不是现在"
 
+_l.copybuiltfrom = "组装号被复制到剪贴板上"
 
 _l.profanity_tag = '褻瀆'
+
+_l.saved = "已保存"
+_l.savePost = "保存帖子"
+_l.postsaved = "保存的帖子"
+_l.deleteSavedPost = "删除已保存的帖子"
+_l.doYouDownloadVideo = "你想在你的设备上下载视频吗？"
+_l.gotosaved2 = "转到已保存"
+_l.yes = "是"
+_l.no = "拒绝"
+
+_l.torusing_neveruse = "从不";
+_l.torusing_auto = "自动";
+_l.torusing_always = "始终";
+
+_l.torusing_directProxy = "内置代理";
+_l.torusing_notdirectProxy = "外部代理";
+
+_l.torusing_changedirectProxy = "改变为外部代理";
+_l.torusing_changenotdirectProxy = "改为内置代理";
+
+_l.torusing_disclaimer = "这个功能只在使用内置代理时有效。";
+
+_l.torusing_Networking = "网络";
+_l.torusing_proxyCaption = "选择一个代理服务器";
+_l.torusing_useTor = "使用TOR";
+_l.torusing_useSnowflakeBridge = "使用Snowflake";
+
+_l.torusing_stat_currentbytesLength = "现在，直接通话"
+_l.torusing_stat_torbytesLength = "现在，TOR电话"
+_l.torusing_stat_directBytes = "共计，直接通话"
+_l.torusing_stat_totalTorBytes = "总计，TOR电话"
+_l.torusing_settings = "TOR设置"
+_l.torusing_stats = "查询统计"
+_l.torusing_proxychangequestion = "你确定你要改变代理服务器吗？"
+
+/** ↓ Component UpdateNotifier ↓ */
+_l.updateNotifier_topHeading1 = '更新';
+_l.updateNotifier_topHeading2 = '可用';
+_l.updateNotifier_mainHeading = '我们有一个更新';
+_l.updateNotifier_mainText = '我们建议保持应用程序的更新。新的功能和更好的性能正在等待你！';
+_l.updateNotifier_button1 = '安装';
+_l.updateNotifier_button2 = '稍后...';
+_l.updateNotifier_stateStart = '开始...';
+_l.updateNotifier_stateDownload = '已下载';
+_l.updateNotifier_stateError = '发生错误';
+_l.updateNotifier_availableSilent = "更新可用"
+/** ↑ Component UpdateNotifier ↑ */

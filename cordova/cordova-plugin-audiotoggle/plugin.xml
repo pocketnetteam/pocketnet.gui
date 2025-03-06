@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="cordova-plugin-audiotoggle"
+    version="1.0.3">
+
+    <name>cordova-plugin-audiotoggle</name>
+    <description>Toggle between speaker and earpiece when playing audio</description>
+    <license>Apache</license>
+
+    <engines>
+        <engine name="cordova" version=">=3.0.0" />
+    </engines>    
+
+    <js-module src="www/audiotoggle.js" name="AudioToggle">
+        <clobbers target="AudioToggle" />
+    </js-module>
+	
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+			<feature name="AudioTogglePlugin">
+				<param name="ios-package" value="AudioTogglePlugin" />
+			</feature>
+        </config-file>
+
+        <header-file src="src/ios/AudioTogglePlugin.h" />		
+        <source-file src="src/ios/AudioTogglePlugin.m" />
+
+        <framework src="AVFoundation.framework" />
+		<framework src="AudioToolbox.framework" />
+    </platform>
+
+    <platform name="android">
+        <source-file src="src/android/com/dooble/audiotoggle/AudioTogglePlugin.java" target-dir="src/com/dooble/audiotoggle" />
+  
+        <config-file target="res/xml/config.xml" parent="/*">
+			<feature name="AudioTogglePlugin">
+				<param name="android-package" value="com.dooble.audiotoggle.AudioTogglePlugin" />
+			</feature>	
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+			<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+        </config-file>
+    </platform>
+</plugin>

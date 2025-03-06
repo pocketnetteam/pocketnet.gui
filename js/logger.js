@@ -3,8 +3,17 @@ const DEFAULT_CONTENT_TYPE = 'text/plain';
 const SENDING_INTERVAL = 30000;
 
 class FrontendLogger {
-  constructor(userAgent = '', app = {}) {
+  constructor(
+    userAgent = '',
+    userData = '',
+    uri = '',
+    timezone = '',
+    app = {},
+  ) {
     this.userAgent = userAgent;
+    this.userData = userData;
+    this.uri = uri;
+    this.timezone = timezone;
     this.app = app;
 
     this.guid = makeid();
@@ -27,7 +36,7 @@ class FrontendLogger {
 
   get loggerActive() {
     return (
-      this.app.platform.sdk.usersettings.meta.sendUserStatistics.value &&
+      this.app.platform && this.app.platform.sdk.usersettings.meta.sendUserStatistics.value &&
       !this.app.test
     );
   }
@@ -73,9 +82,9 @@ class FrontendLogger {
       description: 'One of the best videos selected',
     },
 
-    USER_COMPLAIN : {
+    USER_COMPLAIN: {
       id: 'USER_COMPLAIN',
-      description: 'user send complain'
+      description: 'user send complain',
     },
 
     SESSION_STARTED: {
@@ -123,7 +132,7 @@ class FrontendLogger {
       .map((err) => _createErrorBody(err));
 
     if (logsBatch.length) {
-      instance.post('front/action/v2', logsBatch.join(','));
+      instance.post('front/action/v2', logsBatch.join(','))
     }
 
     if (errorsBatch.length) {
@@ -140,6 +149,9 @@ class FrontendLogger {
     err = '',
     guid = '',
     userAgent = '',
+    // userData = '',
+    // uri = '',
+    // timezone = '',
   }) {
     const parametersOrder = [
       level,
@@ -149,6 +161,9 @@ class FrontendLogger {
       payload,
       err,
       userAgent,
+      // userData,
+      // uri,
+      // timezone,
       guid,
     ].map((element) =>
       typeof element !== 'number' ? `'${element}'` : element,
@@ -164,6 +179,9 @@ class FrontendLogger {
     date = moment().format('YYYY-MM-DD hh:mm:ss'),
     moduleVersion = '0.0.1',
     userAgent = '',
+    // userData = '',
+    // uri = '',
+    // timezone = '',
     guid = '',
     language = 'no',
   }) {
@@ -174,6 +192,9 @@ class FrontendLogger {
       date,
       moduleVersion,
       userAgent,
+      // userData,
+      // uri,
+      // timezone,
       guid,
       language,
     ].map((element) =>
@@ -188,6 +209,9 @@ class FrontendLogger {
       _errorsCache,
       guid,
       userAgent,
+      userData,
+      uri,
+      timezone,
       _addLogWithAggregation,
       errorCounters,
       loggerActive,
@@ -207,7 +231,17 @@ class FrontendLogger {
       errorBody = `{ "error": "Unable to stringify received error. Report: ${errorFormat}", "type": "ERROR_PROCESSING_FAILED"}`;
     }
 
-    const formattedError = { ...error, guid, userAgent, payload: errorBody };
+    const formattedError = {
+      ...error,
+      guid,
+      userAgent,
+      // userData,
+      // uri,
+      // timezone,
+      payload: errorBody,
+    };
+
+    if (error.level) formattedError.level = error.level;
 
     if (_addLogWithAggregation[error.err]) {
       _addLogWithAggregation[error.err](
@@ -218,7 +252,6 @@ class FrontendLogger {
     } else {
       _addLogWithAggregation.default(formattedError, _errorsCache);
     }
-
   }
 
   _addLogWithAggregation = {
@@ -319,20 +352,23 @@ class FrontendLogger {
     },
   };
 
-  info({ actionId = '', actionSubType = '', actionValue = '' }) {
+  info({ actionId = '', actionSubType = '', actionValue = '', active = false }) {
     const {
       _logsCache,
       guid,
       userAgent,
+      userData,
+      uri,
+      timezone,
       loggerActive,
       logCodes,
       _addLogWithAggregation,
       app,
     } = this;
 
-    if (!loggerActive) return;
+    if (!loggerActive && !active) return;
 
-    const infoType = logCodes[actionId] ? logCodes[actionId].id : '';
+    const infoType = logCodes[actionId] ? logCodes[actionId].id : actionId;
     const language = (app.localization || {}).key || 'no';
 
     const info = {
@@ -341,15 +377,16 @@ class FrontendLogger {
       value: actionValue,
       guid,
       userAgent,
+      // userData,
+      // uri,
+      // timezone,
       language,
     };
-
 
     if (_addLogWithAggregation[infoType]) {
       _addLogWithAggregation[infoType](info, _logsCache);
     } else {
       _addLogWithAggregation.default(info, _logsCache);
     }
-
   }
 }

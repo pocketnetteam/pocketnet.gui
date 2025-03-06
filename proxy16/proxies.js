@@ -1,4 +1,3 @@
-/*var hashFiles = require('hash-files');*/
 
 
 var ProxyRequest = function(){
@@ -11,6 +10,7 @@ var ProxyRequest = function(){
 
         return data
     }
+
     
     var timeout = function (ms, promise, controller) {
 

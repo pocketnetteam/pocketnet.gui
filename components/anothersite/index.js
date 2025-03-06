@@ -69,7 +69,7 @@ var anothersite = (function(){
 			},
 
 			wnd : {
-				header : "Another site",
+				header : self.app.localization.e('anotherSiteHeader'),
 				class : 'transparent small anothersite normalizedmobile'
 			}
 		}
@@ -89,7 +89,7 @@ var anothersite = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

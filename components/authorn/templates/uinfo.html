@@ -1,0 +1,104 @@
+<% 
+
+var sUserInfo = psdk.userInfo.getShortForm(author.address)
+
+%>
+
+<div class="uinfo">
+    <div class="ucaption">
+        <span><%-e('information')%></span>
+        <i class="fas fa-chevron-down"></i>
+    </div>
+
+
+    <% if(deep(author, 'data.about')) {
+        var a = deep(author, 'data.about');
+    %>
+    
+        <div class="item about">
+            <%=findAndReplaceLink(a, true)%>
+        </div>
+    
+    <% } %>
+    
+   
+    
+
+    <% if(deep(author, 'data.site')) {
+        
+        var url = filterXSS(deep(author, 'data.site') || '')
+
+        if (url.indexOf('http://') == -1 && url.indexOf('https://') == -1){
+            url = 'https://' + url
+        }
+        
+        %>
+
+        <div class="item site">
+            <div class="itemtable">
+                <div class="icon"><i class="fas fa-link"></i></div>
+                
+                <div class="label">
+                    <a donottrust="true" href="<%-url%>">
+                        <span><%-url%></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    <% } %>
+
+    <% if(!app.television) {%>
+    <div class="item foraddress">
+        <div class="itemtable">
+            <div class="icon"><i class="fas fa-th toblockexplorer"></i></div>
+            <div class="label">
+                <span elementsid="copyaddress" class="copyaddress"><%-deep(author, 'address')%></span>
+            </div>
+        </div>
+    </div>
+    <% } %>
+
+    <% if(!sUserInfo.deleted) {%>
+
+        <% if(deep(author, 'data.postcnt')) {%>
+
+            <div class="item site">
+                <div class="itemtable">
+                    <div class="icon"><i class="fas fa-rss"></i></div>
+    
+                    <div class="label"><span><%=e('shares')%></span></div>
+                    <div class="value">
+                        <span><%-deep(author, 'data.postcnt')%></span>
+                    </div>
+    
+                </div>
+            </div>
+    
+        <% } %>
+        
+
+        <% var _d = deep(author, 'data.regdate')
+
+            if(_d ) {
+
+                var d = new Date();
+                    d.setTime(_d * 1000);	
+
+            %>
+
+            <div class="item date">
+                <div class="itemtable">
+                    <div class="icon"><i class="far fa-calendar"></i></div>
+                    <div class="label"><span><%=e('joined')%></span></div>
+                    <div class="value">
+                        <span><%-_d.yyyymmdd('.')%></span>
+                    </div>
+                </div>
+            </div>
+
+        <% } %>
+    <% } %>
+
+    
+</div>

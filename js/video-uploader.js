@@ -198,14 +198,18 @@ class VideoUploader {
     data.title = self.title || '';
     options.type = 'uploadVideo';
 
+    var error = null
+
     const response = await self.ptVideoApi
       .initResumableUpload(data, options)
-      .catch(() => {
+      .catch((e) => {
+        error = e
         console.error('Resumable video init failed');
+        console.log(e);
       });
 
     if (!response) {
-      throw 'RESUMABLE_UPLOAD_INIT';
+      throw error || 'RESUMABLE_UPLOAD_INIT';
     }
 
     return Promise.resolve(response.uploadId);
@@ -228,6 +232,8 @@ class VideoUploader {
         }
 
       }
+
+      throw e
     }
 
     return r

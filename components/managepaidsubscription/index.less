@@ -1,0 +1,94 @@
+@import "../../css/__cssvar";
+
+#managepaidsubscription{
+    .formWrapper{
+        padding : 4 * @rhythm;
+        text-align: center;
+
+        .caption{
+
+            span{
+                font-weight: 700;
+            }
+
+        }
+
+        .textWrapper{
+            padding : 2 * @rhythm;
+
+
+
+            span{
+                font-size: 0.8em;
+            }
+        }
+
+        .inputWrapperCaption{
+            margin-top: @rhythm;
+            margin-bottom: 2 * @rhythm;
+            span{
+                font-size: 0.9em;
+                font-weight: 700;
+            }
+        }
+
+        .inputWrapper{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            input{
+                margin-right: 2 * @rhythm;
+            }
+            span{
+                font-size: 0.9em;
+            }
+        }
+
+        .otherConditions{
+            margin-top: 2 * @rhythm;
+            margin-bottom: 2 * @rhythm;
+
+            span{
+                font-size: 0.8em;
+            }
+        }
+
+        .removecondition{
+            margin-top: 1 * @rhythm;
+
+            margin-bottom: 2 * @rhythm;
+            cursor: pointer;
+            span{
+                font-size: 0.8em;
+                color : rgb(var(--color-bad));
+            }
+        }
+
+        .buttonsrow{
+            bottom : 0;
+            left : 0;
+            right: 0;
+            margin-top: 4 * @rhythm;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fwr{
+            padding : 2 * @rhythm;
+            border-radius: 12px;
+            background: rgba(var(--neutral-grad-0), 0.5);
+        }
+    }
+}
+
+
+#windowsContainer{
+    .wnd.managepaidsubscriptionWindow{
+        .wndinner{
+            height: 570px;
+            width: 480px;
+        }
+    }
+}

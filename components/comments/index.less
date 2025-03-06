@@ -1,6 +1,16 @@
 @import "../../css/__cssvar";
 
+.share_common.fullScreenVideo {
+	#comments {
+		.streamLink {
+			margin: 0;
+		}
+	}
+}
+
 #comments{
+
+	position: relative;
 
 	.usericon{
 		height : 38px;
@@ -18,9 +28,16 @@
 
 	.repliesloaderWrapper,
 	.loaderWrapper{
-		padding : 3 * @rhythm;
+		padding : 4 * @rhythm;
 		text-align: center;
+		position: absolute;
+		left: 0;
+		top : 0;
+		right: 0;
+		height: 66px;
+		z-index: 2;
 	}
+
 
 	.adr{
 		max-width: 190px;
@@ -39,9 +56,9 @@
 	.donateEmbWr{
 
 		.donatecntWrapper{
-			padding-top: @rhythm * 2;
-			padding-bottom: @rhythm * 2;
 
+			margin-top: 0.5 * @rhythm;
+			
 			.removedonate{
 				border-radius: 50%;
 				height: 30px;
@@ -53,18 +70,27 @@
 				color : rgb(var(--color-bad));
 
 				&:hover{
-					background : rgb(var(--neutral-grad-2));
+					background : rgb(var(--neutral-grad-1));
 				}
 			}
 
 			.donatecnt{
-				.value, .removeWrapper{
-					display: inline-block;
-				}
 
-				.removeWrapper{
-					position: relative; 
-					top: -10px
+				display: flex;
+				align-items:center;
+
+				.donateSum{
+					display: inline;
+					border-radius: 25px;
+					padding: @rhythm;
+					padding-left: @rhythm * 2;
+					padding-right: @rhythm * 2;
+					color:  rgb(var(--text-on-bg-ac-color));
+					font-size: .8em;
+					font-weight: 500;
+					white-space: nowrap;
+					background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+					background-size: 400% 400%;
 				}
 			}
 
@@ -120,6 +146,17 @@
 		}
 	}
 
+	.streamLink {
+		margin: 0 8 * @rhythm;
+		padding: 2.4 * @rhythm 2 * @rhythm;
+		padding-right: 0;
+		margin-right: 3.5 * @rhythm;
+		
+		button{
+			width: 100%;
+		}
+	}
+
 	.captionfwrapper{
 		overflow : hidden;
 		height: 0px;
@@ -129,139 +166,8 @@
 		.csharetable{
 			display: none;
 		}
-
-		&.cf_caption{
-			height: auto;
-			.csharetable{
-				display: table;
-			}
-		}
 	}
 
-	.caption{
-		padding-left:  2.5 * @rhythm;
-		padding-right: 6 * @rhythm;
-		background: rgb(var(--background-total-theme));
-
-		.captionTable{
-			>div{
-				vertical-align: middle;
-
-				&.captionPanel{
-					width: 160px;
-
-					.items{
-						margin-left: auto;
-						width: auto;
-
-						>div{
-							vertical-align: middle;
-							padding : @rhythm;
-
-							.cact{
-								padding: 0 @rhythm;
-								cursor : pointer;
-								.transition(0.3s);
-
-								&:hover{
-									color : rgb(var(--color-bg-ac));
-								}
-							}
-
-							&.close{
-								padding-right: 0;
-
-								.cact{
-									padding-right: 0;
-								}
-							}
-						}
-					}
-
-					span{
-						font-weight: 700;
-						font-size : 0.8em;
-					}
-				}
-			}
-		}
-
-		.csharetable{
-			>div{
-				padding : @rhythm 0;
-				vertical-align: middle;
-
-				&.image{
-					width: 45px;
-
-					.icon{
-						height: 45px;
-						width: 100%;
-						padding-top : 3px;
-
-						.usericon{
-							margin : 0 auto;
-						}
-					}
-				}
-
-				&.csharecnt{
-					padding-left: @rhythm;
-				}
-			}
-
-			.shareprwrapper{
-				display: none;
-	            >div{
-	                vertical-align: middle;
-	                padding : 0.5 * @rhythm;
-
-	                &.forimage{
-	                    width: 25px;
-	                    padding-left: 0;
-	                    padding-right: 0;
-	                }
-
-	                &.fortext{
-	                    padding-left: 0.5 * @rhythm;
-	                    overflow: hidden;
-	                    text-overflow: ellipsis;
-	                    white-space: nowrap; 
-	                    span{
-	                        font-size: 0.8em;
-	                    }
-	                }
-
-	                &.extra{
-	                    div{
-	                        font-size: 0.9em;
-	                        float: right;
-	                    }
-	                }
-	            }
-
-				.additionalcontent{
-					font-size: 0.8em;
-				}
-
-	            .img{
-	                width: 25px;
-	                height: 25px;
-	                border-radius: 50%;
-	                position: relative;
-
-	                .vstyle{
-	                    position: absolute;
-	                    left: 20px;
-	                    top: 14px;
-	                    font-size: 0.6em;
-	                    color : rgb(var(--neutral-grad-1));
-	                }
-	            }
-	        }
-		}
-	}
-	
 	&.fromtop{
 		.list{
 			border-bottom : 0;
@@ -281,21 +187,54 @@
 			.operations-wrapper {
 				display: flex;
 				justify-content: center;
-				margin-top : @rhythm;
+				padding-top : @rhythm;
 
-				>div {
+				.vc_valuecustom{
 					margin: 0 @rhythm;
 				}
+				/*>div {
+					
+				}*/
 
-				.refresh-comments {
+				.close-comments{
 					cursor: pointer;
+					width: 44px;
+					height: 44px;
+					
+					background: rgb(var(--background-total-theme));
+					border-radius: 30px;
+					overflow: hidden;
 
 					.icon-wrapper {
 						text-align: center;
 						vertical-align: middle;
 						color : rgb(var(--neutral-grad-3));
+						line-height: 42px;
 						.transition(0.3s);
 
+						&:hover{
+							color : rgb(var(--neutral-grad-4));
+						}
+					}
+
+					i{
+						font-size: 0.8em;
+					}
+				}
+				.refresh-comments {
+					cursor: pointer;
+					width: 44px;
+					height: 44px;
+					
+					background: rgb(var(--background-total-theme));
+					border-radius: 30px;
+					overflow: hidden;
+					.icon-wrapper {
+						text-align: center;
+						vertical-align: middle;
+						color : rgb(var(--neutral-grad-3));
+						.transition(0.3s);
+						line-height: 42px;
 						&:hover{
 							color : rgb(var(--neutral-grad-4));
 						}
@@ -305,16 +244,7 @@
 						animation: 0.6s rotate linear;
 					}
 
-					width: 38px;
-					height: 38px;
 					
-					background: rgb(var(--background-total-theme));
-					border-radius: 30px;
-					overflow: hidden;
-
-					.icon-wrapper{
-						line-height: 36px;
-					}
 
 					i{
 						font-size: 0.8em;
@@ -328,6 +258,8 @@
 					width: 300px;
 					cursor: pointer;
 					.transition(0.3s);
+
+				
 
 					&.opened{
 						border-bottom-left-radius: 0;
@@ -360,7 +292,6 @@
 						input{
 							text-align: center;
 							font-size: 0.8em;
-							cursor: pointer!important;
 						}
 					}
 				}
@@ -387,9 +318,29 @@
 			border-top : 1px solid rgb(var(--neutral-grad-0));
 			.transition(0.9s, color);
 			position : relative;
+			padding-top: @rhythm;
 
 			&:nth-child(1){
 				border-top : 0;
+			}
+
+				
+			.answersWrapper{
+				position: relative;
+				display: none;
+				min-height: 66px;
+				padding-top: 2 * @rhythm;
+				padding-bottom: 2 * @rhythm;
+				padding-left: 4 * @rhythm;
+				.answers{
+					
+				}
+			}
+
+			&.showedreplies{
+				.answersWrapper{
+					display: block;
+				}
 			}
 
 			&.mycomment,
@@ -419,20 +370,45 @@
 				color : rgb(var(--color-txt-ac-1));	
 			}
 
+			&.hiddenBlockedUserComment,
 			&.hiddenComment{
-				.commentimages,
-				.commentmessage{
-					display: none;
-				}
 
-				.hiddenCommentLabel{
-					display: block;
-					color : rgb(var(--neutral-grad-2));
+				>div.commentPaddingWrapper{
+					.commentimages,
+					.commentmessage{
+						display: none;
+					}
+	
+					.hiddenCommentLabel{
+						display: block;
+						color : rgb(var(--neutral-grad-2));
+					}
+	
+					.showBlockedUserCommentWrapper{
+						display: block;
+					}
+	
+					.usericon{
+						background: rgb(var(--neutral-grad-1))!important;
+					}
+	
+					.donatedbefore{
+						display: none;
+					}
 				}
+				
 			} 
 
 			.hiddenCommentLabel{
 				.ghost{
+					padding-left: 0;
+				}
+			}
+
+			.showBlockedUserCommentWrapper{
+				display: none;
+
+				button{
 					padding-left: 0;
 				}
 			}
@@ -464,26 +440,26 @@
 
 			.commentPaddingWrapper{
 				padding-left:  3 * @rhythm;
-				padding-right: 5 * @rhythm;
+				padding-right: 3 * @rhythm;
 			}
 			
 			.answer{
 				.postbody{
 					border-top : 1px solid rgb(var(--neutral-grad-0));
 					padding-left:  3 * @rhythm;
-					padding-right: 5 * @rhythm;
+					padding-right: 3 * @rhythm;
 
 					.embeddonate{
 						display: none;
 					}
 
-					.embedimages{
+					/*.embedimages{
 						right: 40px;
 					}
 
 					.embedEmojiPrivew, .emojionearea-button{
 						right: 12px;
-					}
+					}*/
 				}
 				
 				background: rgb(var(--background-total-theme));
@@ -523,12 +499,7 @@
 			}
 
 			.metatable{
-				
-				.temppanel{
-					display: none;
-					text-align: right;
-				}
-
+			
 				.adr{
 					font-weight: 700;
 				}
@@ -632,7 +603,7 @@
 		}
 
 		.metatable{
-			padding-top : 1.5 * @rhythm;
+			padding-top : 2 * @rhythm;
 			>div{
 				padding : 0;
 
@@ -661,6 +632,14 @@
 
 				.date{	
 					color : rgb(var(--neutral-grad-3));
+				}
+
+				.tempicon{
+					color : rgba(var(--neutral-grad-2), 0.3);
+				}
+
+				.templabel{
+					color : rgba(var(--neutral-grad-2), 1);
 				}
 
 				.edited{
@@ -699,23 +678,30 @@
 
 		.commentpanel{
 			overflow: hidden;
-			margin-top : @rhythm;
+			
 
 			.items{
 				display: flex;
 				align-items: center;
 
 				>div{
-					margin-right: 2 * @rhythm;
+					padding : @rhythm;
+					padding-top: 2 * @rhythm;
+					margin-right: @rhythm;
+					padding-left: 0;
 
 					.cact{
 						cursor: pointer;
 						color : rgb(var(--neutral-grad-2));
 						.transition(0.3s);
 
-						&:hover{
-							color : rgb(var(--color-bg-ac-bright));
+						@media (pointer:hover) {
+							&:hover{
+								color : rgb(var(--color-bg-ac-bright));
+							}
 						}
+
+						
 					}
 				}	
 			}
@@ -739,19 +725,11 @@
 				cursor: pointer;
 				color : rgb(var(--neutral-grad-2));
 				.transition(0.3s);
-
-				&.ratedScore,
-				&:hover{
-					color : rgb(var(--color-bg-ac-bright));
-				}
-			}
-
-			.upvoteCommentTable{
 				width: auto;
 				display: flex;
 				align-items: center;
 
-				>div{
+				>i, span{
 					
 					padding : 0 @rhythm;
 
@@ -763,7 +741,19 @@
 				.commentScore{
 					font-size: 0.8em;
 				}
+
+
+				&.ratedScore{
+					color : rgb(var(--color-bg-ac-bright));
+				}
+
+				@media (pointer:hover) {
+					&:hover{
+						color : rgb(var(--color-bg-ac-bright));
+					}
+				}
 			}
+
 					
 		}
 
@@ -985,11 +975,21 @@
 	.answer,
 	.post{
 		padding-left:  3 * @rhythm;
-		padding-right: 4.5 * @rhythm;
+		padding-right: 3 * @rhythm;
 
 		.postbody{
 			position: relative;
 			.closeAnswer{
+				margin-left: 1.5 * @rhythm;
+				color: rgba(var(--neutral-grad-2));
+				cursor: pointer;
+				.transition(0.3s);
+
+				&:hover{
+					color : rgba(var(--color-txt-ac));
+				}
+			}
+			/*.closeAnswer{
 				right: 0;
 				top : 0;
 				padding : @rhythm;
@@ -1001,7 +1001,14 @@
 				&:hover{
 					color : rgba(var(--color-txt-ac));
 				}
-			}
+			}*/
+		}
+
+		.errormessage{
+			margin-top: @rhythm;
+			font-size: 0.9em;
+			text-align: center;
+			color : rgba(var(--neutral-grad-2));
 		}
 
 		.posttable{
@@ -1043,11 +1050,16 @@
 
 				}
 
+				.preloader5{
+					height: 40px;
+				}
+
 				&.closeWrapper,
 				&.postCellWrapper{
 					width: 38px;
 					min-width: 38px;
-					
+
+					.closeAnswer,
 					.closeEdit,
 					.postaction{
 						line-height: 40px;
@@ -1111,7 +1123,7 @@
 				box-shadow: none;
 				padding : 0;
 				padding-left : 2 * @rhythm;
-				padding-right : 2 * @rhythm;
+				padding-right : 8 * @rhythm;
 				outline: none;
 				line-height: 36px;
 				height: 38px;
@@ -1187,11 +1199,16 @@
 			border-radius: 3px;
 			padding : 8px;
 			padding-left : 2 * @rhythm;
-			padding-right : 66px;
-			padding-right : 94px;
+			padding-right : 64px;
 			outline: none;
 			border : 0;
 			min-height: 36px;
+		}
+
+		.donateactive{
+			.emojionearea-editor{
+				padding-right : 114px;
+			}
 		}
 
 		.emojionearea-button{
@@ -1234,10 +1251,9 @@
 			position: absolute;
 			right : 7px;
 			top: 1px;
-			padding : 6px;
 			cursor: pointer;
 			color : rgb(var(--neutral-grad-3));
-			filter: grayscale(1) invert(74%) sepia(11%) saturate(657%) hue-rotate(197deg) brightness(77%) contrast(88%);
+			
 			.transition(0.3s);
 
 			/*&.right{
@@ -1249,7 +1265,10 @@
 			}
 
 			img{
+				margin-top: 10px;
+				margin-right: 6px;
 				height: 15px;
+				filter: grayscale(1) invert(74%) sepia(11%) saturate(657%) hue-rotate(197deg) brightness(77%) contrast(88%);
 			}
 
 			.donate-hover{
@@ -1280,6 +1299,12 @@
 		.hasemoji.hasembedimage{
 			.embeddonate{
 				right : 80px
+			}
+		}
+
+		.hasemoji.hasdonate.hasembedimage{
+			.emojionearea-editor{
+				padding-right : 110px;
 			}
 		}
 
@@ -1381,13 +1406,12 @@
 	.answers{		
 		.comment{
 			.commentPaddingWrapper{
-				padding-left:  0;
-				padding-right: 0;
+				
 			}
 
-			&:nth-child(1){
+			/*&:nth-child(1){
 				border-top : 1px solid rgb(var(--neutral-grad-0));
-			}
+			}*/
 			
 		}
 	}
@@ -1405,7 +1429,7 @@
 	.menuitem{
 		cursor: pointer;
 		>div{
-			padding : @rhythm;
+			padding : 2*  @rhythm;
 			border-bottom: 1px solid rgb(var(--neutral-grad-0));
 			.transition(0.3s);
 
@@ -1519,7 +1543,12 @@ html.mobileview{
 				}
 			}
 		}
-		
+		.streamLink {
+			margin-right: @rhythm;
+			margin-left: @rhythm;
+			padding-left: 0;
+			padding-right: 0;
+		}
 
 		.list{
 			.comment{
@@ -1531,8 +1560,19 @@ html.mobileview{
 				.answer{
 					.postbody{
 						padding-left: @rhythm;
-						padding-right: 0.3em;
+						padding-right: @rhythm;
 					}
+				}
+
+				.answers{
+					.commentPaddingWrapper{
+						padding-left: 2 * @rhythm;
+						padding-right: @rhythm;
+					}
+				}
+
+				.answersWrapper{
+					padding-left: 2 * @rhythm;
 				}
 			}
 			.commentWrapper{
@@ -1552,20 +1592,33 @@ html.mobileview{
 			}
 
 			.comments-operations{
+				padding-bottom : @rhythm;
+				padding-top : @rhythm;
 				.operations-wrapper {
-					margin-bottom : @rhythm;
-					margin-top : @rhythm;
+					
 					position: relative;
 
-					>div {
+					.vc_valuecustom{
 						margin: 0 1.5 * @rhythm;
 						margin-left: @rhythm;
 					}
+
+					/*>div {
+						
+					}*/
 	
 					.refresh-comments{
 						position: absolute;
-						left : 0;
-						top : 0;
+						left : @rhythm;
+						top : @rhythm;
+						bottom: 0;
+						z-index: 1;
+					}
+
+					.close-comments{
+						position: absolute;
+						left : 38px;
+						top : @rhythm;
 						bottom: 0;
 						z-index: 1;
 					}
@@ -1627,6 +1680,10 @@ html.mobileview{
 
 			.comment{
 				margin-bottom: @rhythm;
+
+				&:nth-last-child(1){
+					margin-bottom: 0;
+				}
 			}
 
 			.metatable{
@@ -1675,15 +1732,11 @@ html.mobileview{
 		.answer,
 		.post{
 			padding-left:  @rhythm;
-			padding-right: 0.3em;
+			padding-right: @rhythm;
 
 			.postbody{
 				padding : 0;
 				position: relative;
-
-				.closeAnswer{
-					display: none;
-				}
 			}
 
 			.posttable{
@@ -1699,7 +1752,17 @@ html.mobileview{
 
 		.answer{
 			padding : 0;
+
+			.iconWrapper{
+				display: none;
+			}
+
+			.closeAnswer{
+				margin-left: 0!important;
+			}
 		}
+
+		
 
 		.answers{		
 			.comment{
@@ -1777,7 +1840,7 @@ html.mobileview{
 
 		.answer{
 			.postbody{
-				.closeAnswer{
+				/*.closeAnswer{
 					position: absolute;
 					left : 0;
 					right: auto;
@@ -1792,7 +1855,7 @@ html.mobileview{
 						width: 38px;
 						height: 38px;
 					}
-				}
+				}*/
 
 				.posttable{
 					>div{

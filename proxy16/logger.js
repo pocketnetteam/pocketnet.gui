@@ -37,7 +37,7 @@ var Logger = function(_loggers){
 
     var self = this
     var loggers = _loggers
-    var level = 'warn'
+    var level = 'info'
     var writelogs = false
 
     self.app = null
@@ -64,7 +64,7 @@ var Logger = function(_loggers){
     var transports = function(key){
 
         var tr = [
-            new winston.transports.Console({}),
+            //new winston.transports.Console({}),
             new wsstransport({ logger : self })
         ]
 
@@ -84,10 +84,12 @@ var Logger = function(_loggers){
 
     const myFormat = printf(({ level, message, label, timestamp }) => {
         return `${timestamp} [${label}] ${level}: ${message}`;
-      });
+    });
 
     self.w = function(key, level, message, meta){
 
+        return false
+            
         var l = winston.loggers.get(key)
         if (l) l.log({level, message, meta})
 
@@ -104,7 +106,6 @@ var Logger = function(_loggers){
                 writelogs = true
             }
             catch(e){
-                console.log("E", e)
                 writelogs = false
             }
         }
@@ -120,9 +121,6 @@ var Logger = function(_loggers){
     self.init = function(){
 
         self.prepare()
-
-        console.log('writelogs', writelogs, global.WRITE_LOGS)
-
         _.each(loggers, function(key){
 
             var logger = winston.loggers.add(key, { 
@@ -130,7 +128,7 @@ var Logger = function(_loggers){
                 level : level,
                 
                 format: combine(
-                    winston.format.colorize(),
+                    //winston.format.colorize(),
                     label({ label: key }),
                     timestamp(),
                     prettyPrint(),

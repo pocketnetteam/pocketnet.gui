@@ -73,11 +73,13 @@ var welcome = (function(){
 
 				var data = {};
 
-				if(p.state){
+				if (p.state){
 					self.nav.api.load({
 						open : true,
 						href : 'index',
-						//history : true
+						replaceState : true,
+						fade : self.app.el.content,
+						history : true
 					})
 
 					return
@@ -123,7 +125,7 @@ var welcome = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

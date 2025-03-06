@@ -69,6 +69,10 @@ Keyboard.setKeyboardStyle = function(style) {
     console.warn("Keyboard.setKeyboardStyle() not supported in Android");
 };
 
+Keyboard.getInsets = function (success, error) {
+    exec(success, error, "CDVIonicKeyboard", "getinsets", []);
+};
+
 channel.onCordovaReady.subscribe(function () {
     exec(success, null, 'CDVIonicKeyboard', 'init', []);
 

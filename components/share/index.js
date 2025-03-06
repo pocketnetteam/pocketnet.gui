@@ -57,13 +57,13 @@ var share = (function(){
 				
 				el.c.removeClass('minimized')
 
-				make();	
+				makeDebounced();	
 			},
 
 			closeexternal : function(){
 				external = null
 
-				if(!destroying) make();
+				if(!destroying) makeDebounced();
 			},
 
 			getrepost : function(clbk){
@@ -72,7 +72,8 @@ var share = (function(){
 				if (repost){
 					self.app.platform.sdk.node.shares.getbyid([repost], function(){
 
-						var share = self.app.platform.sdk.node.shares.storage.trx[repost]
+						var share = self.psdk.share.get(repost) 
+						
 
 						if (clbk) clbk(share)
 	
@@ -140,7 +141,7 @@ var share = (function(){
 				
 			},
 
-			uploadVideoWallpaper : function(image){
+			uploadVideoWallpaper : function(image, base64){
 				var shareUrl = (currentShare.url || {}).v || '';
 			
 				var parameters = {
@@ -167,10 +168,10 @@ var share = (function(){
 						  settingsObject.aspectRatio = res.aspectRatio;
 					  });
 				})
-				.then(() => toDataURL(image))
+				
 				.then((fileBase64) => {
 
-					return actions.resizeImage(fileBase64, settingsObject)
+					return actions.resizeImage(base64, settingsObject)
 
 				}).then(img => {
 
@@ -260,22 +261,7 @@ var share = (function(){
 					el.c.addClass('unfocus').removeClass('focus')
 			},
 
-			waitActions : function(){
-				self.app.platform.sdk.user.waitActions(function(r){
-
-					if(!el.c) return
-
-					if(!r || r == 'inf'){
-
-						el.c.removeClass('waitActions')
-
-					}
-					else
-					{
-						el.c.addClass('waitActions')
-					}
-				})
-			},
+			
 
 			autoFilled : function(){
 
@@ -397,7 +383,7 @@ var share = (function(){
 
 				var storage = currentShare.export(true)
 
-				if (type === 'addVideo') {
+				if (type === 'addVideo' || type === 'addAudio' || type === 'addStream') {
 
 					if(currentShare.images.v.length){
 						new dialog({
@@ -463,8 +449,7 @@ var share = (function(){
 								actions.removevideo(link)
 							}
 
-							currentShare.clear();
-							currentShare.language.set(self.app.localization.key)
+							currentShare = new Share(self.app.localization.key, self.app)
 
 							make();
 							
@@ -682,6 +667,7 @@ var share = (function(){
 
 				var text = el.eMessage[0].emojioneArea.getText();
 
+				text = text.split(findAndReplaceLinkClearReverse(l)).join('');
 				text = text.split(l).join('');
 
 
@@ -703,11 +689,11 @@ var share = (function(){
 			
 
 			applyText : function(text){
-				currentShare.message.set(text);
+				currentShare.message.set(findAndReplaceLinkClearReverse(text));
 			},
 
 			caption : function(caption){
-				currentShare.caption.set(caption);
+				currentShare.caption.set(findAndReplaceLinkClearReverse(caption));
 			},
 
 			loadimage : function(url, callback){
@@ -746,33 +732,70 @@ var share = (function(){
 				}
 			},
 
+			isIpfsVideo : async function(url) {
+				return fetch(url, { method: 'HEAD' })
+					.then((res) => {
+						const contentType = res.headers.get('content-type');
+
+						const isMp4 = (contentType === 'video/mp4');
+						const isOgg = (contentType === 'video/ogg');
+						const isWebm = (contentType === 'video/webm');
+
+						return isMp4 || isOgg || isWebm;
+					}).catch(() => {
+						return false;
+					})
+			},
+
 			linksFromText : function(text){
 
 
 				if(!currentShare.url.v){
-					var r = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%|_\+.~#/?&//=]*)?/gi; 
-					
+					var protocol = ((window.project_config || {}).protocol || 'bastyon')
 
-					var matches = text.match(r);
+					//var r = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,5}\b(\/[-a-zA-Z0-9@:%|_\+.~#/?&//=]*)?/gi;
+					var r = /(([-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,5}\b)|(bastyon:\/))(\/[-a-zA-Z0-9@:%|_\+.~#/?&//=]*)?/gi
+
+					var tkns = linkify.tokenize(text)
+
+
+
+					var matches = _.map(_.filter(tkns, (t) => {
+						return t.t == 'url'
+					}), (t) => {
+						return t.v
+					})
+					
+					//var r = new RegExp(rtpl, 'gi')
+
+					//var matches = text.match(r);
+
+					console.log('matches url', tkns, matches)
 
 
 					if(matches && matches.length > 0){
 
-						_.each(matches, function(url){
+						_.each(matches, async function(url){
 							if(actions.checkUrlForImage(url)){
-
-								/*if (currentShare.images.v.indexOf(url) == -1){
-									currentShare.images.set(url)
-
-									renders['images']()
-								}*/
-
-
 
 							}
 							else
 							{
 								if(currentShare.url.v) return;
+
+								const ipfsIdRegex = /ipfs\/([A-z0-9]+)/;
+								const ipfsId = url.match(ipfsIdRegex)?.[1];
+
+								if (ipfsId) {
+									const ipfsUrl = `https://cloudflare-ipfs.com/ipfs/${ipfsId}`;
+									const isVideo = await actions.isIpfsVideo(ipfsUrl);
+
+									if (isVideo) {
+										url += '?type=video'
+									}
+								}
+
+								console.log("MATCH url", url)
 
 								currentShare.url.set(url)
 
@@ -846,14 +869,24 @@ var share = (function(){
 			},
 
 			checktranscoding : function(clbk){
-				if(currentShare.itisvideo() && !currentShare.aliasid){
-
+				const proceed = () => {
 					currentShare.canSend(self.app, (result) => {
 						clbk(result)
 					});
-
-				}
-				else{
+				};
+				
+				if ((currentShare.itisvideo() || currentShare.itisaudio()) && !currentShare.aliasid) {
+					if (currentShare.itisstream() && !currentShare.settings.c) {
+						/*Stream*/
+						self.app.platform.matrixchat.core.createStreamRoom(makeid(currentShare.message.v)).then(id => {
+							currentShare.settings.c = id;
+							proceed();
+						});
+					} else {
+						/*Not a stream or stream already created*/
+						proceed();
+					}
+				} else {
 					clbk(true)
 				}
 			},
@@ -866,6 +899,11 @@ var share = (function(){
 
 				el.postWrapper.removeClass('showError');
 
+				if (self.app.platform.sdk.user.reputationBlockedMe()){
+					sitemessage(self.app.localization.e('lockedaccount'))
+					return
+				}
+
 				if(essenseData.hash == currentShare.shash()){
 
 
@@ -875,19 +913,12 @@ var share = (function(){
 
 				el.c.addClass('loading')
 				
-				topPreloader(50)
 
 				var SAVE = function(){
 
-					console.log("SAVE")
-
 					currentShare.language.set(self.app.localization.key)
-
 					actions.checktranscoding(function(result){
-						console.log("AS")
 						currentShare.uploadImages(self.app, function(){
-
-							console.log("AS2")
 
 							if (currentShare.hasexchangetag()){
 								currentShare.repost.v = ''
@@ -900,136 +931,129 @@ var share = (function(){
 							}
 
 							if (currentShare.checkloaded()){
-								
-		
-								var t = self.app.platform.errorHandler('imageerror', true);
-		
-								topPreloader(100)
-		
+			
 								el.c.removeClass('loading')
-		
-								if (t){
-									sitemessage(t)
-								}
-		
+								sitemessage(self.app.platform.errorHandler('imageerror', true))
 								
 								return
 							}
-		
-							self.sdk.node.transactions.create.commonFromUnspent(
-		
-								currentShare,
-		
-								function(_alias, error){
 
-									console.log("ASD", error)
+							self.app.platform.actions.addActionAndSendIfCan(currentShare).then(action => {
 
-									topPreloader(100)
-		
-									el.c.removeClass('loading')
-		
-									if(!_alias){
-										
-		
-										if (clbk){
-											clbk(false, errors[error])
+								if (action.currentState == 'actions_checkFail'){
+
+									new dialog({
+										html: self.app.localization.e('info_actions_checkFail'),
+										btn1text: self.app.localization.e('ok'),
+										btn2text: "",
+										class: 'one zindex',
+										success: () => {
 										}
-										else{
-											el.postWrapper.addClass('showError');
-		
-											var t = self.app.platform.errorHandler(error, true);
-		
-											if (t) actions.errortext(t)
-		
-										}
-									}
-									else
-									{
-										//sitemessage("Success")
-		
-										try{
+									});
+									
+								}
 
-											var alias = new pShare();
-												alias._import(_alias, true)
+								var alias = action.object
 
 
+								if (alias.itisvideo() || alias.itisaudio() || alias.itisstream()) {
+									var unpostedVideos;
 
-												alias.temp = _alias.temp;
-												alias.relay = _alias.relay;
-												alias.checkSend = _alias.checkSend
-												alias.address = _alias.address
-		
-											if(currentShare.aliasid) alias.edit = "true"	
-											if(currentShare.time) alias.time = currentShare.time
-		
-											self.app.platform.sdk.node.shares.add(alias)
-		
-											if(!essenseData.notClear){
-												currentShare.clear();
-												self.app.nav.api.history.removeParameters(['repost'])
-		
-												self.closeContainer()
-		
-												if(!essenseData.share){
-													state.save()
-												}
-		
-												make();	
+									try {
+										unpostedVideos = JSON.parse(localStorage.getItem('unpostedVideos') || '{}');
+									} catch (error) {
+										unpostedVideos = {};
+
+										self.app.Logger.error({
+											err: 'DAMAGED_LOCAL_STORAGE',
+											code: 801,
+											payload: error,
+										  });
+									};
+
+									if (unpostedVideos[self.app.user.address.value]) {
+										unpostedVideos[self.app.user.address.value] =
+											unpostedVideos[self.app.user.address.value].filter(
+												(video) => video !== alias.url,
+											);
+
+											try {
+												localStorage.setItem(
+													'unpostedVideos',
+													JSON.stringify(unpostedVideos),
+												);
 											}
-		
-										}
-		
-										catch (e){
-											console.log(e)
-										}
-		
-										self.app.platform.sdk.user.get(function(u){
-											u.postcnt++
+											catch (e) { }
+
+										
+									}
+								}
+
+								if(!essenseData.notClear){
+									currentShare = new Share(self.app.localization.key, self.app)
+									
+									
+									setTimeout(() => {
+										self.app.nav.api.history.removeParameters(['repost'])
+										self.closeContainer()
+									}, 100)
+									
+
+									if(!essenseData.share){
+										state.save()
+									}
+
+									make();	
+								}
+								
+								if (essenseData.post){
+									essenseData.post(alias)
+								}
+								else{
+
+									if(isMobile()){
+
+										self.app.nav.api.load({
+											open : true,
+											href : 'authorn?address=' + self.app.user.address.value,
+											history : true
 										})
-		
-										intro = false
-		
-										if (essenseData.post){
-											essenseData.post()
-										}
-										else{
-		
-											if(isMobile()){
 
-												self.app.nav.api.load({
-													open : true,
-													href : 'author?address=' + self.app.user.address.value,
-													history : true
-												})
-
-											}
-											else{
-												self.app.actions.scroll(0)
-											}
-		
-											
-		
-										}
-		
-										if (clbk)
-											clbk(true)
-		
-		
-										actions.unfocus();
-										
-										successCheck()
-										
-										
 									}
-		
-								},
-		
-								p
-							)
-		
+									else{
+										self.app.actions.scroll(0)
+									}
+
+								}
+
+
+								actions.unfocus();
+								
+								successCheck()
+
+								if (clbk)
+									clbk(true)
+									
+							}).catch(e => {
+
+								if (clbk){
+									clbk(false, errors[e])
+								}
+									
+								var t = self.app.platform.errorHandler(e, true);
+
+								if (t) actions.errortext(t)
+
+
+
+							}).then(() => {
+								if (el.c)
+									el.c.removeClass('loading')
+							})
 						})
 					})
 
+					return
 
 					
 				}
@@ -1041,7 +1065,6 @@ var share = (function(){
 
 					el.c.removeClass('loading')
 
-					topPreloader(100)
 				}
 
 				
@@ -1056,11 +1079,11 @@ var share = (function(){
 						return
 					}
 
-					if (currentShare.itisvideo()) {
+					if (currentShare.itisvideo() || currentShare.itisaudio()) {
 
 						const options = {};
 	
-						if (currentShare.message.v) options.description = `Watch more exciting videos at https://`+self.app.options.url+`/! \n ${currentShare.message.v}`;
+						if (currentShare.message.v) options.description = currentShare.message.v;
 						if (currentShare.caption.v) options.name = currentShare.caption.v;
 	
 						var urlMeta = self.app.peertubeHandler.parselink(currentShare.url.v);
@@ -1130,6 +1153,10 @@ var share = (function(){
 						el.caption.focus() 
 					}
 
+					if(error == 'ntime1'){
+						events.selectTimeWrapper()
+					}
+
 					return true
 				}
 				else
@@ -1167,7 +1194,8 @@ var share = (function(){
             url : self.app.localization.e('e13164'),
             error_video : self.app.localization.e('e13165'),
 			videocaption : self.app.localization.e('entervideocaption'),
-			pkoin_commerce_tag : self.app.localization.e('pkoin_commerce_tag_share_error') 
+			pkoin_commerce_tag : self.app.localization.e('pkoin_commerce_tag_share_error'),
+			ntime1 : self.app.localization.e('emptyntime1')
 		}
 
 		var events = {
@@ -1179,62 +1207,134 @@ var share = (function(){
 				}
 		
 			},
+			selectTimeWrapper : function(){
+				events.selectTime(currentShare.settings.t > 1 ? new Date(currentShare.settings.t * 1000) : null, function(date){
 
-			selectTime : function(){
+					if(date){
+						currentShare.settings.t = Number((date.getTime() / 1000).toFixed(0))
+					}
 
-				var d = new Date()
+					renders.settings();
+					state.save()
+				})
+			},
+			selectTime : function(time, clbk){
 
-					d = d.addMinutes(10);
+				var date = {}
+				var dlg = null
 
-				var date = {
-					day : null,
-					hour : d.getHours(),
-					minutes : d.getMinutes()
+				var defdateclear = function(){
+					var d = new Date()
+
+					d = d.addMinutes(30);
+
+					return d
 				}
 
-				if(essenseData.time){
-					date.day = essenseData.time.yyyymmdd()
-					date.hour = essenseData.time.getHours()
-					date.minutes = essenseData.time.getMinutes()
+				var defdate = function(){
+					
+					var d = defdateclear()
+
+					date = {
+						day : d.yyyymmdd(),
+						hour : d.getHours(),
+						minutes : d.getMinutes()
+					}
 				}
 
-				self.fastTemplate('sharedate', function(html){
+				var preparetemplate = function(time, clbk){
+					
 
-					new dialog({
+					if (time && time > defdateclear()){
+						date.day = time.yyyymmdd()
+						date.hour = time.getHours()
+						date.minutes = time.getMinutes()
+					}
+
+					self.fastTemplate('sharedate', function(html){
+						if(clbk) clbk(html)
+					}, {
+						date : date,
+						min : defdateclear()
+					})
+				}
+
+				var getdate = function(){
+
+					var ds = strToDateSmall(date.day)
+						ds = ds.addHours(date.hour)
+						ds = ds.addMinutes(date.minutes)
+
+					return ds
+				}
+
+				var livetemplate = function(el){
+
+
+					el.find('.day').on('change', function() {
+						date.day = $(this).val()
+
+						if(getdate() < defdateclear()) defdate()
+
+						replacetemplate()
+					})
+
+					el.find('.hours').on('change', function() {
+						date.hour = $(this).val()
+
+						if(getdate() < defdateclear()) defdate()
+
+						replacetemplate()
+
+					})
+
+					el.find('.minutes').on('change', function() {
+						date.minutes = $(this).val()
+
+						if(getdate() < defdateclear()) defdate()
+
+						replacetemplate()
+
+					})
+				}
+
+				var replacetemplate = function(){
+
+					if(!dlg) return
+
+					preparetemplate(null, (html) => {
+						dlg.replacehtml(html)
+
+						livetemplate(dlg.el)
+					})
+					
+				}
+
+				defdate()
+
+				preparetemplate(time, (html) => {
+					dlg = new dialog({
 						html : html,
 
 						btn1text : self.app.localization.e('daccept'),
 
 						class : "one sharedate zindex",
 
-						clbk : function(d){
-
-
+						clbk : function(el){
+							livetemplate(el)
 						},	
 
 						wrap : true,
 
 						success : function(d){
-							var day = d.el.find('.day').val()
-							var hours = d.el.find('.hours').val()
-							var minutes = d.el.find('.minutes').val()
 
-							var date = strToDateSmall(day)
-
-								date = date.addHours(hours)
-
-								date = date.addMinutes(minutes)
+							var date = getdate(d.el)
 
 							var now = new Date();
 
 							if (now < date){
 
-								essenseData.time = date;
-
-								el.selectTime.find('.selectedTime').html(convertDate(dateToStr(date)))
-
-								if (essenseData.selectTime)
-									essenseData.selectTime(date)
+								if(clbk) clbk(date)
 
 								return true;
 							}
@@ -1247,13 +1347,14 @@ var share = (function(){
 							}
 						}
 					})
-
-					html
-
-				}, {
-					date : date
 				})
 
+
+					
+
+					
+
+				
 				
 			},
 
@@ -1273,8 +1374,6 @@ var share = (function(){
 
 							if (essenseData.type)
 								essenseData.type(type)
-
-
 							
 						},
 
@@ -1322,14 +1421,16 @@ var share = (function(){
 
 				var icon = el.c.find('.usericon')
 
-				var src = deep(app, 'platform.sdk.users.storage.'+address+'.image') || '';
+				var info = self.psdk.userInfo.get(address)
+
+				var src = info.image || ''
 
 				if(src){
 					icon.html('');
 
 					icon.attr('image', src);
 
-					bgImages(el.c.find('.icon'))
+					bgImagesCl(el.c.find('.icon'))
 				}
 				else
 				{
@@ -1545,7 +1646,6 @@ var share = (function(){
 		var imagesHelper = {
 			slowUploadGif : function(file, storage, clbk){
 			
-						
 				file.id = makeid();
 				file.slow = true;
 				file.base64 = file.base64;
@@ -1623,7 +1723,7 @@ var share = (function(){
 						initUpload({
 							el : p.el.find('.images'),
 				
-							ext : ['png', 'jpeg', 'jpg', 'gif', 'jfif'],
+							ext : ['png', 'jpeg', 'jpg', 'gif', 'jfif', 'webp', 'avif'],
 		
 							dropZone : el.c,
 							app : self.app,
@@ -1632,8 +1732,6 @@ var share = (function(){
 		
 							action : function(file, clbk){
 
-								console.log("FILE", file)
-		
 								if (file.ext == 'gif'){
 									imagesHelper.slowUploadGif(file, tstorage, clbk)
 								}
@@ -1667,6 +1765,8 @@ var share = (function(){
 								actions.addimage(images)
 
 								tstorage = []
+
+								renders.postline();
 							
 							}
 						})
@@ -1707,48 +1807,104 @@ var share = (function(){
 					if(!currentShare.hasexchangetag() && !currentShare.repost.v && u && (u.reputation > 50 || !u.trial)) {
 
 						currentShare.settings.f || (currentShare.settings.f = '0')
+						currentShare.settings.t || (currentShare.settings.t = '0')
 
-						var selector = new Parameter({
+						self.sdk.paidsubscription.getcondition(self.app.user.address.value).then(value => {
 
-							type : "VALUES",
-							name : "Visibility",
-							id : 'organizationCode',
-							dbId : "INS_BROKER_CODE",
-							possibleValues : ['0','1','2'],
-							possibleValuesLabels : [
+							var visvalues = ['0','1','2']
+							var visvaluesLabels = [
 								self.app.localization.e('visibletoeveryone'), 
 								self.app.localization.e('visibleonlytosubscribers'),
 								self.app.localization.e('visibleonlytoregistered')
-							],
-							defaultValue : currentShare.settings.f,
-							value : currentShare.settings.f
+							]
 
-						})
-
-						self.shell({
-							name :  'settings',
-							el : el.settings,
-							data : {
-								share : currentShare,
-								essenseData : essenseData,
-								selector : selector
-							},
-
-						}, function(p){
-
-							ParametersLive([selector], p.el)
-
-
-							selector._onChange = function(){
-
-								currentShare.settings.f = selector.value
-
-								state.save()
+							if(value){
+								visvalues.push('3')
+								visvaluesLabels.push(self.app.localization.e('visibleonlytopaid'))
 							}
 
-							if (clbk)
-								clbk();
+							var selector = new Parameter({
+
+								type : "VALUES",
+								name : "Visibility",
+								id : 'organizationCode',
+								dbId : "INS_BROKER_CODE",
+								possibleValues : visvalues,
+								possibleValuesLabels : visvaluesLabels,
+								defaultValue : currentShare.settings.f,
+								value : currentShare.settings.f
+	
+							})
+	
+							var timeselector = new Parameter({
+	
+								type : "VALUES",
+								name : "Time",
+								id : 'time',
+								possibleValues : ['0','1'],
+								possibleValuesLabels : [
+									self.app.localization.e('spostnow'), 
+									self.app.localization.e('sposttime')
+								],
+								defaultValue : '0',
+								value : currentShare.settings.t <= 1 ? (currentShare.settings.t || '0') : '1'
+	
+							})
+	
+							self.shell({
+								name :  'settings',
+								el : el.settings,
+								data : {
+									share : currentShare,
+									essenseData : essenseData,
+									selector : selector,
+									timeselector
+								},
+	
+							}, function(p){
+	
+								ParametersLive([selector, timeselector], p.el)
+	
+	
+								selector._onChange = function(){
+	
+									currentShare.settings.f = selector.value
+	
+									state.save()
+								}
+	
+								timeselector._onChange = function(){
+	
+									currentShare.settings.t = timeselector.value
+	
+									if(timeselector.value == '0') delete currentShare.settings.t
+	
+									renders.settings();
+	
+									state.save()
+								}
+	
+								p.el.find('.timelabel').on('click', function(){
+	
+									events.selectTimeWrapper()
+								})
+	
+								p.el.find('.cleartimelabel').on('click', function(){
+									delete currentShare.settings.t
+	
+									renders.settings();
+									state.save()
+								})
+	
+								if (clbk)
+									clbk();
+							})
+
+						}).catch(e => {
+							console.error(e)
 						})
+
+						
 					}
 
 					else{
@@ -1799,6 +1955,11 @@ var share = (function(){
 							addTag : function(tag){
 								actions.addTag(tag)
 								renders.stateline()
+								
+								setTimeout(() => {
+									if (taginput)
+										taginput.focus()
+								}, 10)
 							},
 
 							addTags : function(tags){
@@ -1857,8 +2018,6 @@ var share = (function(){
 
 					renders.repost();
 
-					
-
 				});
 
 				renders.postline();
@@ -1868,7 +2027,7 @@ var share = (function(){
 
 			caption : function(){
 
-				if(currentShare.caption.v || currentShare.itisvideo()){
+				if(currentShare.caption.v || currentShare.itisvideo() || currentShare.itisaudio()){
 
 					if(!el.cpt.hasClass('active'))
 						el.cpt.addClass('active');
@@ -1884,6 +2043,7 @@ var share = (function(){
 
 				var typeDictionary = {
 					addVideo: 'uploadpeertube',
+					addAudio: 'uploadpeertube',
 					addStream: 'streampeertube',
 				};
 
@@ -1907,13 +2067,13 @@ var share = (function(){
 					essenseData : {
 						storage : p.storage,
 						value : p.value,
+						isAudio: (p.type == 'addAudio') ? true : false,
 						currentLink : currentShare.url ? currentShare.url.v : '',
 						inLentaWindow : true,
 						scrollElementName: '.wnd.videoCabinet .wndcontent'
 					},
 
 					clbk : function(p, element){
-
 						external = element;
 
 						external.addclbk('share' + key, actions.videoadded)
@@ -1935,6 +2095,8 @@ var share = (function(){
 				
 				var url = currentShare.url.v;
 
+				console.log("RENDER URL", url)
+
 				var meta = self.app.platform.parseUrl(url);
 
 				var og = self.app.platform.sdk.remote.storage[url];
@@ -1953,21 +2115,26 @@ var share = (function(){
 
 				}, function(p){
 
-					
 
 					if(currentShare.url.v && !og){
 
-						if (meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube') {
+						if (meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube' || meta.type == 'ipfs') {
 
 							destroyPlayer()
 
                             Plyr.setup('#' + self.map.id + ' .js-player', function(_player) {
 
-								player = _player
+								console.log("player clbk plyr", _player)
 
-								try{
-									player.muted = false
-								}catch(e){}
+								if(_player){
+									player = _player
+
+									try{
+										player.muted = false
+									}catch(e){}
+								}
+
+								
 								
 							}, {
 								denyPeertubeAutoPlay: true,
@@ -1987,7 +2154,7 @@ var share = (function(){
 							initUpload({
 								el : el.urlWrapper.find('.uploadpeertubewp'),
 					
-								ext : ['png', 'jpeg', 'jpg', 'webp', 'jfif'],
+								ext : ['png', 'jpeg', 'jpg', 'webp', 'jfif', 'avif'],
 								app : self.app,
 								dropZone : el.urlWrapper,
 		
@@ -1995,7 +2162,7 @@ var share = (function(){
 		
 								action : function(file, clbk){
 	
-									actions.uploadVideoWallpaper(file.file).then(r => {
+									actions.uploadVideoWallpaper(file.file, file.base64).then(r => {
 
 										self.app.platform.sdk.videos.clearstorage(currentShare.url.v)
 
@@ -2012,13 +2179,18 @@ var share = (function(){
 						} 
 						
 						else if (meta.type != 'brighteon' && meta.type != 'stream.brighteon') {
-							self.app.platform.sdk.remote.get(meta.url, function(og){
+							self.app.platform.sdk.remote.getnew(meta.url).then(og => {
+								if(og){
+									renders.url()
+								}
+							})
+							/*self.app.platform.sdk.remote.get(meta.url, function(og){
 
 								if(og){
 									renders.url()
 								}
 
-							})
+							})*/
 						}
 					}
 
@@ -2070,7 +2242,8 @@ var share = (function(){
 				})
 
 				if (meta.type == 'peertube') {
-					self.app.platform.sdk.videos.info([url])
+					console.log("updateupdate")
+					self.app.platform.sdk.videos.info([url], true, true)
 						.then(() => rndr())
 						.catch(() => rndr())
 				} else {
@@ -2101,6 +2274,8 @@ var share = (function(){
 						var r = $(this).closest('.imageContainer').attr('value');
 
 						actions.removeImage(r)
+
+						renders.postline();
 					})
 
 					p.el.find('.edit').on('click', function(){
@@ -2140,30 +2315,34 @@ var share = (function(){
 						if(!el.c) return
 
 						if(!isMobile()){
-							var elimages = el.images.find('.imagesEmbWr')
+							
+							setTimeout(() => {
+								var elimages = el.images.find('.imagesEmbWr')
 
 
-						  	elimages.isotope({
-
-								layoutMode: 'packery',
-								itemSelector: '.imageContainer',
-								packery: {
-									gutter: 20
-								},
-								initLayout: false
-							});
-
-
-							elimages.on('arrangeComplete', function(){
-
-								if (clbk)
-									clbk();
-			
-								el.images.addClass('active')
-
-							});
-
-							elimages.isotope()
+								elimages.isotope({
+  
+								  layoutMode: 'packery',
+								  itemSelector: '.imageContainer',
+								  packery: {
+									  gutter: 20
+								  },
+								  initLayout: false
+							  });
+  
+  
+							  elimages.on('arrangeComplete', function(){
+  
+								  if (clbk)
+									  clbk();
+			  
+								  el.images.addClass('active')
+  
+							  });
+  
+							  elimages.isotope()
+							}, 10)
+							
 						}
 						else
 						{
@@ -2189,7 +2368,8 @@ var share = (function(){
 
 				self.app.platform.sdk.node.shares.getbyid([repost], function(){
 
-					var share = self.app.platform.sdk.node.shares.storage.trx[repost] 
+					var share = self.psdk.share.get(repost) 
+					
 						
 					self.shell({
 						name :  'repost',
@@ -2335,6 +2515,7 @@ var share = (function(){
 						ed : essenseData
 					},
 
+					insertimmediately : true
 
 				}, function(p){
 
@@ -2420,8 +2601,6 @@ var share = (function(){
 		
 								el.c.find('.emojionearea-editor').on('pasteImage', function (ev, data){
 		
-									topPreloader(100)
-
 									resize(data.dataURL, 1920, 1080, function(resized){
 										var r = resized.split(',');
 						
@@ -2448,11 +2627,9 @@ var share = (function(){
 		
 								}).on('pasteImageStart', function(){
 		
-									topPreloader(30)
 		
 								}).on('pasteImageError', function(ev, data){
 		
-									 topPreloader(100)
 		
 								}).on('pasteText', function (ev, data){
 		
@@ -2519,7 +2696,7 @@ var share = (function(){
 
 					if (lastvideo && !lastvideo.wasclbk){
 
-						if(!currentShare.itisvideo())
+						if(!currentShare.itisvideo() && !currentShare.itisaudio())
 							actions._videoadded(lastvideo.link, lastvideo.name)
 							
 						self.app.settings.delete('common', 'lastuploadedvideo');
@@ -2532,8 +2709,12 @@ var share = (function(){
 		}
 
 		var make = function(){
+			if(destroying) return
+
 			renders.all()
 		}
+
+		var makeDebounced = _.debounce(make, 300)
 
 		var initEvents = function(){
 
@@ -2554,7 +2735,11 @@ var share = (function(){
 			
 			currentShare.on.change.edit = events.change;
 
-			self.app.platform.ws.messages.transaction.clbks.share = actions.waitActions
+			self.app.platform.sdk.paidsubscription._clbks.setcondition['share' + key] = function(){
+				renders.settings()
+			}
+
+			//self.app.platform.ws.messages.transaction.clbks.share = actions.waitActions
 
 			el.c.on('click', function(){
 				
@@ -2579,6 +2764,9 @@ var share = (function(){
 
 
 		var destroyPlayer = function(){
+
+			console.log('player', player)
+
 			if (player) {
 
 				if (player.playing){
@@ -2621,14 +2809,30 @@ var share = (function(){
 				intro = false;
 				external = null
 				currentShare = deep(p, 'settings.essenseData.share') || new Share(self.app.localization.key, self.app);
+
 				essenseData = deep(p, 'settings.essenseData') || {};
 
 				currentShare.app = self.app
 
-				if(!essenseData.share){
+				if(!essenseData.share && !essenseData.dontsave){
 
-					state.load()
+					if(!state.load() && window.project_config.preferredtags && window.project_config.preferredtags.length){
+						if (essenseData.repost || parameters().repost) {
 
+						}
+						else{
+
+							var preferred = self.app.platform.sdk.categories.getbyids(window.project_config.preferredtags, self.app.localization.key)
+
+							var preferredtags = []
+
+							_.each(preferred, (p) => {
+								preferredtags = preferredtags.concat(p.tags)
+							})
+
+							currentShare.tags.set(preferredtags)
+						}
+					}
 					
 					currentShare.language.set(self.app.localization.key)
 				}
@@ -2636,7 +2840,8 @@ var share = (function(){
 				if (essenseData.repost || parameters().repost) 
 					currentShare.repost.set(essenseData.repost || parameters().repost)
 
-				var checkEntity = currentShare.message.v || currentShare.caption.v || currentShare.repost.v || currentShare.url.v || currentShare.images.v.length || currentShare.tags.v.length;
+				var checkEntity = currentShare.message.v || currentShare.caption.v || currentShare.repost.v || currentShare.url.v || currentShare.images.v.length;
+
 
 				var data = {
 					essenseData : essenseData,
@@ -2644,6 +2849,12 @@ var share = (function(){
 					postcnt : 1,
 					checkEntity : checkEntity,
 				};
+
+				if (currentShare.settings.t > 1){
+					if((new Date).getTime() / 1000 > currentShare.settings.t){
+						currentShare.settings.t = 0
+					}
+				}
 
 				clbk(data);
 
@@ -2661,10 +2872,21 @@ var share = (function(){
 					el.c.find('.emojionearea-editor').off('pasteImage')
 
 				try{
-					if (el.eMessage) el.eMessage[0].emojioneArea.destroy();
+					if (el.eMessage) {
+		
+						el.eMessage[0].emojioneArea.destroy();
+
+						el.eMessage.remove()
+
+						delete el.eMessage[0].emojioneArea
+
+
+					}
+
+					
 				}
 				catch(e){
-
+					console.error(e)
 				}
 				
 
@@ -2695,19 +2917,21 @@ var share = (function(){
 				}
 
 				
+				
 
 				$('html').off('click', events.unfocus);
 
 				delete self.app.platform.ws.messages.transaction.clbks.share;
+				delete self.app.platform.sdk.paidsubscription._clbks.setcondition['share' + key]
 
 				if (sortable){
 					sortable.destroy()
 					sortable = null
 				}
 
+				if(el.c) el.c.empty()
 
 				el = {};
-				essenseData = {}
 					
 			},
 			
@@ -2739,14 +2963,18 @@ var share = (function(){
 					currentShare.caption.set('');
 					currentShare.images.set();
 					currentShare.repost.set();
+
+					if (essenseData.name) {
+						currentShare.caption.set(findAndReplaceLinkClearReverse(essenseData.name));
+					}
 				}
 
-				if (essenseData.name) {
-					currentShare.caption.set(essenseData.name);
+				if (essenseData.url) {
+					currentShare.url.set(essenseData.url);
 				}
 
 				if (essenseData.description) {
-					currentShare.message.set(essenseData.description);
+					currentShare.message.set(findAndReplaceLinkClearReverse(essenseData.description));
 				}
 
 				if (essenseData.tags) {
@@ -2763,13 +2991,17 @@ var share = (function(){
 					external.addclbk('share' + key, actions.closeexternal, 'closed')
 				}
 
+				if (essenseData.images){
+					currentShare.images.set(essenseData.images);
+				}
+
 				make();
 
 				//p.noscroll = self.app.actions.scrollBMenu()
 
 				p.clbk(null, p);
 
-				actions.waitActions();
+				//actions.waitActions();
 
 				el.c.on('click', function(){
 					el.c.removeClass('minimized')
@@ -2780,7 +3012,7 @@ var share = (function(){
 
 			wnd : {
 				close : function(){
-	
+					self.nav.api.history.removeParameters(['ext'])
 					
 					if (essenseData.close){
 						essenseData.close()
@@ -2809,7 +3041,7 @@ var share = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

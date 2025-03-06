@@ -4,8 +4,11 @@
     <div class="work">
 
         <% if(admins.length) {%>
+            
         <% _.each(admins, function(uadmin){ 
-            var user = deep(app, 'platform.sdk.users.storage.'+uadmin) || {} %>
+            var user = psdk.userInfo.get(uadmin) || {} 
+            
+            %>
 
        
             <div class="adminWrapper">

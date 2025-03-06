@@ -3,6 +3,7 @@
 	<%= selector.input() %>
 </div>-->
 <div class="contentsInner">
+
     <div class=" contentmenu">
 
         <%
@@ -98,8 +99,8 @@
             </div>
 
             <div class="reportCaption">
-                <div class="label">
-                    <a elementsid="https://<%-app.options.url%>/blockexplorer/" href="https://<%-app.options.url%>/blockexplorer/" cordovalink="_system" external="external">Block Explorer</a>
+                <div class="label toblockexplorer">
+                    Block Explorer
                 </div>
             </div>
 
@@ -119,6 +120,16 @@
                     <a elementsid="hrefabout" href="applications"><%=e('e13120')%> <i class="fas fa-long-arrow-alt-down"></i></a>
                 </div>
             </div>
+
+            <% if(!window.pocketnetstore) {%>
+
+                <div class="reportCaption">
+                    <div class="label">
+                        <a elementsid="hrefabout" href="donations"><%=e('donate')%> </a>
+                    </div>
+                </div>
+
+            <% } %>  
             
         <% } else { %> 
 
@@ -133,14 +144,6 @@
             </div>
         <% } %>
        
-        <% if(!window.cordova && !app.cutversion) {%>
-            <div class="reportCaption">
-                <div class="label">
-                    <a elementsid="hrefdonations" href="donations"><%=e('donate')%></a>
-                </div>
-            </div>
-
-        <% } %>
 
         <% if(isTablet()) {%>
 
@@ -175,12 +178,15 @@
                         </button>
 
                         
-                    <% } else { %> 
+                    <% } %>
 
-                        <span class="applicaitonversion">
-                            <%=e('applicationversion')%> &middot; <%- window.packageversion %>
-                        </span>
-                        
+                    <span class="applicaitonversion">
+                        <%=e('applicationversion')%> &middot; <%- window.packageversion %>
+                    </span>
+
+                    <% if (window.builtfromsha) { %>
+                        &nbsp;&middot;&nbsp;
+                        <span class="app-builtfrom"><%- window.builtfromsha %></span>
                     <% } %>
                     
                 </div>

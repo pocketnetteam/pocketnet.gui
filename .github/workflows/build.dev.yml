@@ -4,20 +4,21 @@ on:
   workflow_dispatch:
 
 jobs:
-  
+
   build-macos:
     runs-on: macos-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
       - name: Install Node.js, NPM and Yarn
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 16
       - name: Prepare building
         run: |
           npm i
-          npm run dev:bastyon
+          npm run build:proxy16
+          npm run dev:bastyon -- -sha=${{ github.sha }}
       - name: Prepare for app notarization
         run: |
           mkdir -p ~/private_keys/
@@ -35,58 +36,62 @@ jobs:
           npm run distm
           ls -lh ./dist/
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: macos
           path: ./dist/BastyonSetup.dmg
-        
+
   build-unix:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
       - name: Save HEAD information
         run: git --no-pager log --decorate=short --pretty=oneline -n1 > head.txt
       - name: Install Node.js, NPM and Yarn
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 16
       - name: Prepare building
         run: |
+          apt update && apt install -y binutils rpm
           npm i
-          npm run dev:bastyon
+          npm run build:proxy16
+          npm run dev:bastyon -- -sha=${{ github.sha }}
       - name: Building
         run: |
           npm run distl
           ls -lh ./dist/
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: unix
           path: |
             ./dist/BastyonSetup.deb
+            ./dist/BastyonSetup.rpm
             ./dist/Bastyon.AppImage
             ./head.txt
-    
+
   build-windows:
     runs-on: windows-latest
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
       - name: Install Node.js, NPM and Yarn
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 16
       - name: Prepare building
         run: |
           npm i
-          npm run dev:bastyon
+          npm run build:proxy16
+          npm run dev:bastyon -- -sha=${{ github.sha }}
       - name: Building
         run: |
           npm run dist
           ls .\dist\
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: windows
           path: ./dist/BastyonSetup.exe
@@ -97,12 +102,12 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '11'
+          java-version: '17'
       - name: Check out Git repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 16
       - name: Install Cordova
         run: |
           npm i -g cordova@10
@@ -110,7 +115,8 @@ jobs:
       - name: Prepare building
         run: |
           npm i
-          npm run minimize:cordova
+          npm run build:proxy16
+          npm run minimize:cordova -- -sha=${{ github.sha }}
           cd ./cordova
           npm i
       - name: Prepare configuration
@@ -141,7 +147,7 @@ jobs:
           ls -lh
           mv app-release.apk Bastyon.apk
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: android
           path: ./cordova/platforms/android/app/build/outputs/apk/release/Bastyon.apk
@@ -151,7 +157,7 @@ jobs:
     runs-on: dev.pocketnet.app
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
       - name: Copy artifacts
         run: cp ./**/Bastyon* /data/dev/binaries/
       - name: Copy HEAD information

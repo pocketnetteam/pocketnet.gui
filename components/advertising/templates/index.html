@@ -1,0 +1,39 @@
+
+<div id="<%-module.map.id%>">
+
+	<div class="advertising">
+        <div class="rightchatspacer">
+            <div class="advertisingCaption">
+                <div class="work">
+                    <span><%=e('advertising_Advertising')%></span>
+                </div>
+            </div>
+
+            <div class="advertisingPanel">
+                
+            
+            </div>
+            <div class="advertisingEarnings">
+                
+            </div>
+            <div class="advertisingChange">
+                <div class="advertisingCaption">
+                    <div class="work">
+                        <span><%=e('advertising_exchange')%></span>
+                    </div>
+                </div>
+                <div class="work">
+
+                    <div class="exchangesProfiles">
+                        <% _.each(advertisingParameters.exchanges, function(address){ %> 
+                            <div class="exchange" address="<%-address%>">
+
+                            </div>
+                        <% }) %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

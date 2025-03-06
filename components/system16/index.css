@@ -132,6 +132,50 @@
 #system16 .botsWrapper .botinlist .removefromlist:hover {
   color: rgb(var(--color-good));
 }
+#system16 .aTransactionsWrapper .emptyATransactions {
+  background: rgba(var(--neutral-grad-3), 0.15);
+  margin-top: 1em;
+  padding: 1em 0;
+  text-align: center;
+}
+#system16 .aTransactionsWrapper .emptyATransactions span {
+  color: rgb(var(--neutral-grad-3));
+  font-size: 0.8em;
+}
+#system16 .aTransactionsWrapper .exportpanel {
+  padding: 1em 0;
+}
+#system16 .aTransactionsWrapper .aTransactionslist {
+  padding: 1em 0;
+  overflow: hidden;
+}
+#system16 .aTransactionsWrapper .aTransactionslist > div {
+  width: 50%;
+  float: left;
+  padding-right: 1em;
+}
+#system16 .aTransactionsWrapper .aTransactioninlist {
+  color: rgb(var(--neutral-grad-3));
+  margin-right: 1em;
+  margin-bottom: 1em;
+  font-size: 0.8em;
+  display: flex;
+}
+#system16 .aTransactionsWrapper .aTransactioninlist a {
+  font-weight: 700;
+}
+#system16 .aTransactionsWrapper .aTransactioninlist .removefromlist {
+  margin-left: 0.5em;
+  cursor: pointer;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  color: rgba(var(--neutral-grad-3), 0.7);
+}
+#system16 .aTransactionsWrapper .aTransactioninlist .removefromlist:hover {
+  color: rgb(var(--color-good));
+}
 #system16 .proxyselecttable {
   width: auto;
 }
@@ -228,6 +272,19 @@
 #system16 .settingTable .clearfirebase {
   cursor: pointer;
 }
+#system16 .settingTable .values {
+  display: flex;
+  align-items: center;
+}
+#system16 .settingTable .values > div {
+  margin-right: 1em;
+}
+#system16 .settingTable .values .status {
+  color: rgb(var(--color-txt-ac));
+}
+#system16 .settingTable .values button {
+  font-size: 0.8em;
+}
 #system16 .managepanel {
   padding: 1em 0;
   background: rgb(var(--background-secondary-theme));
@@ -320,9 +377,25 @@
 }
 #system16 .webservercontent .panel {
   display: flex;
+  flex-wrap: wrap;
 }
 #system16 .webservercontent .panel > div {
   margin-right: 0.5em;
+  margin-bottom: 0.5em;
+}
+#system16 .translateapicontent .info {
+  margin-top: 2em;
+  padding: 2 0.5em 0;
+}
+#system16 .translateapicontent .info .row {
+  display: flex;
+  margin-bottom: 0.5em;
+}
+#system16 .translateapicontent .info .row > div {
+  margin-right: 1em;
+}
+#system16 .translateapicontent .info .row .value {
+  font-weight: 700;
 }
 #system16 .webdistributioncontent .walletWrapper {
   border-top: 1px solid rgb(var(--neutral-grad-1));
@@ -651,6 +724,104 @@
 }
 #system16 .nodescontent .node > div span {
   font-size: 0.9em;
+}
+#system16 .notificationcontent .caption {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(var(--color-txt-gray-dark));
+  margin: 0 auto;
+}
+#system16 .notificationcontent .field {
+  width: 100%;
+  padding: 1.5em 1em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#system16 .notificationcontent .field span {
+  font-size: 0.8em;
+}
+#system16 .notificationcontent .notifications-table {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background: rgb(var(--background-secondary-theme));
+  border-radius: 6px;
+}
+#system16 .notificationcontent .notifications-users {
+  margin-bottom: 40px;
+}
+#system16 .notificationcontent .notification,
+#system16 .notificationcontent .users {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+#system16 .notificationcontent .notification .field,
+#system16 .notificationcontent .users .field {
+  border-bottom: 1px solid rgb(var(--neutral-grad-2));
+}
+#system16 .notificationcontent .notification .field .green,
+#system16 .notificationcontent .users .field .green {
+  color: green;
+}
+#system16 .notificationcontent .notification .field .red,
+#system16 .notificationcontent .users .field .red {
+  color: red;
+}
+#system16 .notificationcontent .notification .controls,
+#system16 .notificationcontent .users .controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+  width: 100%;
+}
+#system16 .notificationcontent .notification .tooltip,
+#system16 .notificationcontent .users .tooltip {
+  visibility: hidden;
+  box-sizing: border-box;
+  border: 1px solid rgba(var(--color-medium-theme));
+  text-align: center;
+  background: rgb(var(--background-secondary-theme));
+  padding: 5px;
+  border-radius: 3px;
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  right: 155%;
+}
+#system16 .notificationcontent .notification .tooltip::after,
+#system16 .notificationcontent .users .tooltip::after {
+  content: " ";
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent transparent rgba(var(--color-medium-theme));
+}
+#system16 .notificationcontent .notification .button,
+#system16 .notificationcontent .users .button {
+  position: relative;
+  cursor: pointer;
+}
+#system16 .notificationcontent .notification .button:hover .tooltip,
+#system16 .notificationcontent .users .button:hover .tooltip {
+  visibility: visible;
+}
+#system16 .notificationcontent .notification i,
+#system16 .notificationcontent .users i,
+#system16 .notificationcontent .notification span,
+#system16 .notificationcontent .users span {
+  font-size: 0.8em;
+}
+#system16 .notificationcontent .users .field {
+  font-size: 10px;
+  white-space: normal;
+  text-overflow: unset;
 }
 #system16 .peertubecontent .peertubeWrapper {
   border-bottom: 1px solid rgb(var(--neutral-grad-2));

@@ -9,19 +9,36 @@ ImageUploader = function(app) {
 
         if (base64.indexOf('data:image') > -1){
 
-            return self.uploadImage({ base64 }, 'imgur').catch(err => {
-                return self.uploadImage({ base64 }, 'up1')
-            }).then(url => {
-                return Promise.resolve(url)
-            })
-            
-            return self.uploadImage({ base64 }, 'peertube')/*.catch(err => {
-                return self.uploadImage({ base64 }, 'imgur')
-            }).catch(err => {
-                return self.uploadImage({ base64 }, 'up1')
-            }).then(url => {
-                return Promise.resolve(url)
-            })*/
+            // If we are in test environment, try to upload images to Peertube
+            // (fallback to Imgur if failure)
+
+            if (1 == 1) {
+                
+                return self.uploadImage({ base64 }, 'peertube').catch(err => {
+                    console.error(err)
+                    return self.uploadImage({ base64 }, 'up1')
+                    
+                }).catch(err => {
+                    console.error(err)
+                    return self.uploadImage({ base64 }, 'imgur')
+                }).then(url => {
+                    return Promise.resolve(url)
+                }).catch(err => {
+                    console.error(err)
+                    return Promise.reject(err)
+                })
+
+            }
+            // Else, upload images to Imgur
+            else {
+
+                return self.uploadImage({ base64 }, 'imgur').catch(err => {
+                    return self.uploadImage({ base64 }, 'up1')
+                }).then(url => {
+                    return Promise.resolve(url)
+                })
+
+            }
         }
         else{
             return Promise.resolve(base64)
@@ -63,19 +80,43 @@ ImageUploader = function(app) {
             // If we need to use the IP address instead of the domain name
 
             if (p.peertubeImage){
+                // Fetch Peertube server if needed
+                app.peertubeHandler.api.proxy.bestIfNeed().finally(() => {
 
-                var server = app.peertubeHandler.helpers.urlextended(app.options.peertubeServer, true)
+                    if(!app.options.peertubeServer){
+                        reject()
 
-                p.url = server.current
+                        return
+                    }
 
-                p.success = function(data){
+                    var server = app.peertubeHandler.helpers.urlextended(app.options.peertubeServer, true)
 
-                    var url = 'peertube://' +  data.image.filename
+                    p.url = server.current
+                    if (p.url[p.url.length - 1] != '/')
+                        p.url += '/';
+                    p.url += 'api/v1/';
 
-                    resolve(url)
-                }
+                    p.success = function(data){
 
-                app.ajax.run(p)
+                        app.Logger.info({ actionId: "IMG_PEERTUBE_UPLOAD_SUCCESS" });
+
+                        var url = data.url.indexOf('http://') > -1 ? data.url : 'https://' + data.url
+
+                        resolve(url)
+                    }
+
+                    p.fail = function(e){
+
+                        app.Logger.info({ actionId: "IMG_PEERTUBE_UPLOAD_FAILED" });
+
+                        reject(e)
+                    }
+
+                    app.ajax.run(p)
+                    
+                }).catch((e) => {
+                    reject(e)
+                });
 
                 return 
             }
@@ -83,7 +124,7 @@ ImageUploader = function(app) {
             if (p.up1){
                 p.success = function(data){
 
-                    var url = 'https://'+app.options.url+':8092/i/' + deep(data, 'data.ident')
+                    var url = 'https://bastyon.com:8092/i/' + deep(data, 'data.ident')
 
                     resolve(url)
                 }
@@ -91,6 +132,8 @@ ImageUploader = function(app) {
 
             if (p.imgur){
                 p.success = function(data){
+
+                    app.Logger.info({ actionId: "IMG_IMGUR_UPLOAD_SUCCESS" });
 
                     var url =  deep(data, 'data.link')
                     resolve(url)

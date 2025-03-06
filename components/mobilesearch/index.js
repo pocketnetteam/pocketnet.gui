@@ -17,8 +17,6 @@ var mobilesearch = (function(){
 		var events = {
 			search : function(value){
 
-				console.log(value)
-
 				if (ed.events.search && value){
 
 					el.c.addClass('active')
@@ -34,6 +32,9 @@ var mobilesearch = (function(){
 				}
 			},
 			fastsearch : function(e, element){
+
+				if(!el.c) return
+				
 				var value = element.val()
 
 				if(currentFastId == value) return
@@ -46,13 +47,14 @@ var mobilesearch = (function(){
 					return
 				}
 
+
 				el.c.addClass('active')
 
 				ed.events.fastsearch(value, (r, revents) => {
 
-					if(thisSearch != currentFastId || !element.val()) return;
-
 					el.c.removeClass('active')
+
+					if(thisSearch != currentFastId || !element.val()) return;
 
 					if (r){
 
@@ -77,7 +79,8 @@ var mobilesearch = (function(){
 			},
 			
 			clear : function(){
-				el.input.val('')
+				if (el.input)
+					el.input.val('')
 			},
 
 			getvalue : function(){
@@ -88,7 +91,7 @@ var mobilesearch = (function(){
 		var renders = {
 			last : function(){
 
-				var result = ed.last.get();
+				var result = ed.last ? ed.last.get() : [];
 
 				if (result.length){
 
@@ -117,7 +120,9 @@ var mobilesearch = (function(){
 
 		var initEvents = function(){
 
-			var dfastsearch = _.debounce(events.fastsearch)
+			var dfastsearch = _.debounce(events.fastsearch, 450)
+
+			
 
 			el.c.find('.cancelWrapper').on('click', () => {
 				self.closeContainer()
@@ -141,7 +146,10 @@ var mobilesearch = (function(){
 					events.search($(this).val())
 				}
 			})
-			//el.input.on('change', events.search)
+
+			el.input.on('change', function(e){
+				dfastsearch(e, $(this))
+			})
 
 		}
 
@@ -237,7 +245,7 @@ var mobilesearch = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

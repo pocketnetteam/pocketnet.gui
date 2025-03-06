@@ -1,1018 +1,10914 @@
 (window["matrixElement_jsonp"] = window["matrixElement_jsonp"] || []).push([[3],{
 
-/***/ "0f1d":
+/***/ "7212":
 /***/ (function(module, exports, __webpack_require__) {
 
-// style-loader: Adds some css to the DOM by adding a <style> tag
 
-// load the styles
-var content = __webpack_require__("8967");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("7994e1ff", content, shadowRoot)
-};
-
-/***/ }),
-
-/***/ "1288":
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "img/csscheckbox.e97412d1.png";
-
-/***/ }),
-
-/***/ "14ac":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_11_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_11_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_11_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_11_oneOf_1_3_node_modules_less_loader_dist_cjs_js_ref_11_oneOf_1_4_exported2_less_vue_type_style_index_1_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("8966");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_11_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_11_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_11_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_11_oneOf_1_3_node_modules_less_loader_dist_cjs_js_ref_11_oneOf_1_4_exported2_less_vue_type_style_index_1_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_11_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_11_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_11_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_11_oneOf_1_3_node_modules_less_loader_dist_cjs_js_ref_11_oneOf_1_4_exported2_less_vue_type_style_index_1_lang_less___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_11_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_11_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_11_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_11_oneOf_1_3_node_modules_less_loader_dist_cjs_js_ref_11_oneOf_1_4_exported2_less_vue_type_style_index_1_lang_less___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_11_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_11_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_11_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_11_oneOf_1_3_node_modules_less_loader_dist_cjs_js_ref_11_oneOf_1_4_exported2_less_vue_type_style_index_1_lang_less___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
-
-/***/ }),
-
-/***/ "1ca2":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".metaMsg[data-v-cffb7280]{width:100%;padding:0;height:auto}.metaMsg .plyr[data-v-cffb7280]{margin-bottom:.25em;margin-top:.25em;border-radius:5px}.metaMsg .customURL[data-v-cffb7280]{display:flex;flex-direction:column-reverse}.metaMsg .customURL[data-v-cffb7280],.metaMsg .pocketnet_iframe_wrapper[data-v-cffb7280]{border-top:1px solid rgb(var(--neutral-grad-0));box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.7);border-radius:5px;overflow:hidden}.metaMsg .pocketnet_iframe_wrapper[data-v-cffb7280]{background:rgba(var(--background-main),.1);font-size:.9em}.metaMsg .pocketnet_iframe_wrapper[data-v-cffb7280] iframe{width:100%;height:100%}.metaMsg .openlink[data-v-cffb7280]{padding:.5em;text-align:center}.metaMsg .link[data-v-cffb7280]{max-width:90%;margin-left:auto;margin-right:.5em;padding:.5em .5em;padding-top:.5em;overflow:hidden;text-overflow:ellipsis;text-align:right;padding-right:0;line-height:1em;cursor:pointer;word-wrap:break-word}.metaMsg .link i[data-v-cffb7280]{opacity:.5;font-size:.7em}.metaMsg .link span[data-v-cffb7280]{opacity:.7;text-decoration:underline;font-size:.7em}.metaMsg .header[data-v-cffb7280]{display:flex}.metaMsg .header .header-text[data-v-cffb7280]{flex-direction:column;padding:.5em;max-height:100px;overflow:hidden;text-overflow:ellipsis;padding-bottom:0}.metaMsg .header .header-text .title[data-v-cffb7280]{font-weight:700;margin:0}.metaMsg .header .pocketnet[data-v-cffb7280]{font-size:11px;font-weight:500;color:grey}.metaMsg .bgimage[data-v-cffb7280]{width:50px;height:50px;border-radius:5px;border-bottom-left-radius:0;border-top-right-radius:0}.metaMsg .textMsg[data-v-cffb7280]{word-break:break-all;font-size:.8em;cursor:pointer}.metaMsg .textMsg:hover a[data-v-cffb7280]{display:block;width:100%;height:100%;color:rgb(var(--color-txt-ac))}.metaMsg .textMsg a[data-v-cffb7280]{font-weight:700;color:rgb(var(--color-txt-ac))}.metaMsg .title[data-v-cffb7280]{font-weight:700;display:block;font-size:.9em;margin:.4em 0}.metaMsg .title span[data-v-cffb7280]{display:block}.metaMsg .description[data-v-cffb7280]{font-size:.8em}.metaMsg .image[data-v-cffb7280]{margin:.2em 0}.metaMsg .image img[data-v-cffb7280]{display:block;-o-object-fit:contain;object-fit:contain;border-radius:.5em;width:100%;-o-object-fit:cover;object-fit:cover}.metaMsg .video[data-v-cffb7280]{margin:.5em 0}.metaMsg .video iframe[data-v-cffb7280]{border:0;border-radius:.5em}.metaMsg[data-v-cffb7280] .videoTips{display:none!important}", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
-/***/ "1de5":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function (url, options) {
-  if (!options) {
-    // eslint-disable-next-line no-param-reassign
-    options = {};
-  } // eslint-disable-next-line no-underscore-dangle, no-param-reassign
-
-
-  url = url && url.__esModule ? url.default : url;
-
-  if (typeof url !== 'string') {
-    return url;
-  } // If url is already wrapped in quotes, remove them
-
-
-  if (/^['"].*['"]$/.test(url)) {
-    // eslint-disable-next-line no-param-reassign
-    url = url.slice(1, -1);
-  }
-
-  if (options.hash) {
-    // eslint-disable-next-line no-param-reassign
-    url += options.hash;
-  } // Should url be wrapped?
-  // See https://drafts.csswg.org/css-values-3/#urls
-
-
-  if (/["'() \t\n]/.test(url) || options.needQuotes) {
-    return "\"".concat(url.replace(/"/g, '\\"').replace(/\n/g, '\\n'), "\"");
-  }
-
-  return url;
-};
-
-/***/ }),
-
-/***/ "2a8c":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".empty[data-v-ffacfd66]{padding:2em;text-align:center}.empty span[data-v-ffacfd66]{font-size:.9em}.publicPreviewContent .name[data-v-ffacfd66]{padding:1.5em 1em;text-align:center}.publicPreviewContent .name span[data-v-ffacfd66]{font-weight:700;font-size:2em}.publicPreviewContent .topic[data-v-ffacfd66]{text-align:center;padding:0 2em}.publicPreviewContent .topic span[data-v-ffacfd66]{font-size:1em;width:100%;display:block;word-wrap:break-word}.publicPreviewContent .membersCount[data-v-ffacfd66]{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}.publicPreviewContent .membersCount span[data-v-ffacfd66]{display:block;font-size:.8em}.publicPreviewContent .membersCount i[data-v-ffacfd66]{font-size:1.2em;color:rgb(var(--color-txt-ac));margin:20px 0 10px 0}.publicPreviewContent .actions[data-v-ffacfd66]{display:flex;justify-content:center;align-items:center;margin:50px auto}", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
-/***/ "3023":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("2a8c");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("2f2ab3de", content, shadowRoot)
-};
-
-/***/ }),
-
-/***/ "3636":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".pocketnet_iframe .plyr__volume{max-width:32px}.pocketnet_iframe .pipped{position:fixed;left:0;right:0;top:0;bottom:0;z-index:10000;max-height:none!important;max-width:none!important}.pocketnet_iframe .jsPlayerLoading{width:auto;height:auto;background:#000;position:relative;min-height:200px;border-radius:6px}.pocketnet_iframe .jsPlayerLoading .preloader5{position:absolute;left:50%;top:50%;margin-left:-15px;margin-top:-8px;width:30px;height:15px;contain:strict}.pocketnet_iframe .jsPlayerLoading .jsPlayerLoadingD{position:absolute;left:0;top:0;bottom:0;right:0;display:flex;align-items:center;justify-content:center}.pocketnet_iframe .jsPlayerLoading.ytbvimb{padding-bottom:56.25%}.pocketnet_iframe .jsPlayerLoading.ytbvimb .jsPlayerLoading{display:none}.pocketnet_iframe .jsPlayerLoading.ytbvimb .playerlabel{position:absolute;left:.5em;padding:.5em;border-radius:6px;background:rgba(0,12,16,.5);bottom:.5em}.pocketnet_iframe .jsPlayerLoading.ytbvimb.loading .jsPlayerLoading{height:100%;max-height:none;display:block;background:transparent}.pocketnet_iframe .jsPlayerLoading.ytbvimb.loading .jsPlayerLoading .preloader5{display:block}.pocketnet_iframe .jsPlayerLoading.ytbvimb.loading .initvideoplayer,.pocketnet_iframe .jsPlayerLoading.ytbvimb.loading .playerlabel{display:none}.pocketnet_iframe .jsPlayerLoading .initvideoplayer{text-align:center;cursor:pointer;width:100px;height:100px;line-height:100px;font-size:1.5em;margin:0 auto}.pocketnet_iframe .video-js button:hover{color:#fff}.pocketnet_iframe #lenta .shares .share .metatable>div.metapanel .metapanelitem{display:none}.pocketnet_iframe #comments .list .metatable>div.panelWrapper .panel{display:none!important}.pocketnet_iframe #comments .list .metatable>div{padding-top:.25em!important}.pocketnet_iframe #comments .list .comment .commentPaddingWrapper{padding-left:.5em!important}.pocketnet_iframe #comments .list .comment{margin-bottom:0;border-bottom:0}.pocketnet_iframe #lenta .shares .share .panel>div.forrepost{margin-right:0}.pocketnet_iframe #comments.fromtop .list{border-top:0}.pocketnet_iframe #comments .list .commentpanel .items>div.replies,.pocketnet_iframe #comments .list .commentpanel .items>div.reply{display:none}.pocketnet_iframe #comments .list .commentWrapper>div.commentBody{padding-top:.5em}.pocketnet_iframe #lenta .shares .share .meta{padding-top:1.2em}.pocketnet_iframe #lenta .shares .iconWrapper{padding-bottom:.25em}.pocketnet_iframe #lenta .shares .share{padding-top:0}.pocketnet_iframe #lenta .loader{display:none}.pocketnet_iframe #lenta .jsPlayerLoading,.pocketnet_iframe #lenta .share .jsPlayerLoading,.pocketnet_iframe #lenta .share .video-js,.pocketnet_iframe #lenta .video-js{max-height:80vh}.pocketnet_iframe #lenta .share.fullScreenVideo .jsPlayerLoading,.pocketnet_iframe #lenta .share.fullScreenVideo .video-js{max-height:none}.pocketnet_iframe #lenta.loading .loader{display:block}.pocketnet_iframe #lenta.openapi .loadmore{display:none!important}.pocketnet_iframe #transactionview .workd{background:0;padding:.5em}.pocketnet_iframe #transactionview .usericon{line-height:22px}.pocketnet_iframe #transactionview .usericon .letter{font-size:1em}.pocketnet_iframe #lenta .shares .share .showMore{display:none}.pocketnet_iframe .pocketnet_iframe #channel .channel{background:transparent!important}.pocketnet_iframe .pocketnet_iframe #channel .emptychannel{padding:2em;text-align:center;font-size:.8em}.pocketnet_iframe .pocketnet_iframe .owl-dots{text-align:center;margin-top:.5em}.pocketnet_iframe .pocketnet_iframe .owl-carousel button.owl-dot{width:.5em;height:.5em;border-radius:50%;background:#b2abac;margin:0 .25em}.pocketnet_iframe .pocketnet_iframe .owl-carousel button.owl-dot.active{background:#00a4ff}.pocketnet_iframe .pocketnet_iframe .owl-carousel .owl-nav{opacity:0}.pocketnet_iframe .pocketnet_iframe .owl-carousel .owl-nav button{text-align:center;position:absolute;top:50%;margin-top:-33px;width:44px;height:44px;line-height:44px;color:#fff;border-radius:50%}.pocketnet_iframe .pocketnet_iframe .owl-carousel .owl-nav button i{font-size:.7em;opacity:.7}.pocketnet_iframe .pocketnet_iframe .owl-carousel .owl-nav button:hover i{opacity:.87}.pocketnet_iframe .pocketnet_iframe .owl-carousel:hover .owl-nav{opacity:1}.pocketnet_iframe .pocketnet_iframe .owl-carousel .owl-nav button.owl-next{right:0}.pocketnet_iframe .pocketnet_iframe .owl-carousel .owl-nav button.owl-prev{left:0}.pocketnet_iframe .pocketnet_iframe .owl-carousel .owl-nav button.disabled{opacity:.5}.pocketnet_iframe #lenta .shares .share{background:transparent!important}.pocketnet_iframe #lenta .shares .share .shareSave i{display:none}.pocketnet_iframe #lenta .shares .share .shareSave[status=cansave] .cansave,.pocketnet_iframe #lenta .shares .share .shareSave[status=saved] .saved,.pocketnet_iframe #lenta .shares .share .shareSave[status=saving] .saving{display:inline-block}.pocketnet_iframe #lenta .shares .share .statswrapperExtended{display:flex;padding:.5em 0}.pocketnet_iframe #lenta .shares .share .statswrapperExtended span{font-weight:500;font-size:.9em}.pocketnet_iframe #lenta .shares .share .images .imagesContainer.owlcar{height:auto;width:100%;max-width:500px;margin:0 auto}.pocketnet_iframe #lenta .shares .share .images .imagesContainer.owlcar .imagesWrapper{height:500px;float:none;width:100%;background:transparent}.pocketnet_iframe #lenta .shares .share .images .imagesContainer.owlcar .imagesWrapper .image{background-size:contain!important}.pocketnet_iframe #lenta .shares .share .sharecnt .removeDescription{display:none;padding-bottom:1.5em;color:#b2abac}.pocketnet_iframe #lenta .shares .share .sharecnt.deleted .cntscontent,.pocketnet_iframe #lenta .shares .share .sharecnt.deleted .commentsWrapperHb,.pocketnet_iframe #lenta .shares .share .sharecnt.deleted .metapanel,.pocketnet_iframe #lenta .shares .share .sharecnt.deleted .repostWrapper,.pocketnet_iframe #lenta .shares .share .sharecnt.deleted .sys{display:none!important}.pocketnet_iframe #lenta .shares .share .sharecnt.deleted .removeDescription{display:block}.pocketnet_iframe #lenta .shares .share .hiddenpost{padding:7em 5em;font-size:.9em;text-align:center;border-radius:5px;background:rgba(178,171,172,.05);margin-bottom:2em;margin-top:.5em}.pocketnet_iframe #lenta .shares .share .hiddenpost .hiddenlabelaction{margin-top:1em}.pocketnet_iframe #lenta .shares .share .hiddenpost .hiddenlabeltext{opacity:.6}.pocketnet_iframe #lenta .shares .share .hiddenpost .captionpreview{font-weight:700}.pocketnet_iframe #post .share .images .imagesContainer.owlcar{height:auto;width:100%;max-width:400px}.pocketnet_iframe #post .share .images .imagesContainer.owlcar .imagesWrapper{height:500px;float:none;width:100%;background:transparent}.pocketnet_iframe #post .share .images .imagesContainer.owlcar .imagesWrapper .image{background-size:contain!important}.pocketnet_iframe .owl-dots{text-align:center;margin-top:.5em}.pocketnet_iframe .owl-carousel button.owl-dot{width:.5em;height:.5em;border-radius:50%;background:rgb(var(--neutral-grad-2));margin:0 .25em}.pocketnet_iframe .owl-carousel button.owl-dot.active{background:rgb(var(--color-bg-ac-bright))}.pocketnet_iframe .owl-carousel .owl-nav{opacity:0}.pocketnet_iframe .owl-carousel .owl-nav button{text-align:center;position:absolute;top:50%;margin-top:-33px;width:44px;height:44px;line-height:44px;color:rgba(var(--text-on-bg-ac-color),.5);border-radius:50%}.pocketnet_iframe .owl-carousel .owl-nav button i{font-size:.7em;opacity:.7}.pocketnet_iframe .owl-carousel .owl-nav button:hover i{opacity:.87}.pocketnet_iframe .owl-carousel:hover .owl-nav{opacity:1}.pocketnet_iframe .owl-carousel .owl-nav button.owl-next{right:0}.pocketnet_iframe .owl-carousel .owl-nav button.owl-prev{left:0}.pocketnet_iframe .owl-carousel .owl-nav button.disabled{opacity:.5}", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
-/***/ "40d2":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_matrixlink_vue_vue_type_style_index_0_id_15518517_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("c0b5");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_matrixlink_vue_vue_type_style_index_0_id_15518517_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_matrixlink_vue_vue_type_style_index_0_id_15518517_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_matrixlink_vue_vue_type_style_index_0_id_15518517_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_matrixlink_vue_vue_type_style_index_0_id_15518517_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
-
-/***/ }),
-
-/***/ "463c":
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "img/arrow.b36ffeee.png";
-
-/***/ }),
-
-/***/ "4a05":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, "[data-v-15518517] .actionsWrapper{display:none}", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
-/***/ "5719":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chat/publicroom/index.vue?vue&type=template&id=ffacfd66&scoped=true&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"chatpublicroom"},[(_vm.ready)?_c('div',[(_vm.room.length > 0)?_c('div',{staticClass:"publicPreviewContent"},[_c('div',{staticClass:"name"},[_c('span',[_vm._v(_vm._s(_vm.room[0].name))])]),(_vm.room[0].topic)?_c('div',{staticClass:"topic"},[_c('span',[_vm._v(_vm._s(_vm.room[0].topic.replace(/_/g, ' ')))])]):_vm._e(),_c('div',{staticClass:"membersCount"},[_c('i',{staticClass:"fas fa-users"}),_c('span',[_c('b',[_vm._v(_vm._s(_vm.room[0].num_joined_members))]),_vm._v(" Users in room")])]),_c('div',{staticClass:"actions"},[_c('button',{staticClass:"button small rounded",on:{"click":function($event){return _vm.joinRoom()}}},[_vm._v(_vm._s(_vm.$t("button.join"))+" ")])])]):_c('div',{staticClass:"empty"},[_vm._m(0)])]):_c('div',[_c('div',{staticClass:"empty"},[_c('linepreloader')],1)])])}
-var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"caption"},[_c('span',[_vm._v("Room not found")])])}]
-
-
-// CONCATENATED MODULE: ./src/components/chat/publicroom/index.vue?vue&type=template&id=ffacfd66&scoped=true&
-
-// EXTERNAL MODULE: ./node_modules/vuex/dist/vuex.esm.js
-var vuex_esm = __webpack_require__("2f62");
-
-// EXTERNAL MODULE: ./src/components/assets/topheader/index.vue + 4 modules
-var topheader = __webpack_require__("08da");
-
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chat/publicroom/index.vue?vue&type=script&lang=js&
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-/* harmony default export */ var publicroomvue_type_script_lang_js_ = ({
-  name: 'chatpublicroom',
-  props: {
-    id: String
-  },
-  data: function () {
-    return {
-      ready: false,
-      room: {}
-    };
-  },
-  components: {
-    topheader: topheader["a" /* default */]
-  },
-  computed: Object(vuex_esm["c" /* mapState */])({
-    active: state => state.active,
-    pocketnet: state => state.pocketnet,
-    minimized: state => state.minimized,
-    pocketteammessages: state => state.pocketteammessages
-  }),
-  methods: {
-    joinRoom() {
-      this.core.mtrx.client.joinRoom(this.room[0].room_id).then(r => {
-        this.$router.push('/chat?id=' + this.room[0].room_id).catch(e => {});
-      });
-    }
-
-  },
-
-  mounted() {
-    //////////////// get public room by id
-    this.core.mtrx.wait().then(r => {
-      this.core.mtrx.client.publicRooms().then(r => {
-        this.ready = true;
-
-        if (this.id[0] === '!') {
-          return this.room = r['chunk'].filter(i => i.room_id === this.id);
-        } else {
-          return this.room = r['chunk'].filter(i => i.name === this.id.replace(/_/g, ' '));
-        }
-      });
-    });
-  }
-
+/*!
+ * vue-awesome-swiper v4.1.1
+ * Copyright (c) Surmon. All rights reserved.
+ * Released under the MIT License.
+ * Surmon <https://github.com/surmon-china>
+ */
+
+(function(g,f){ true?f(exports,__webpack_require__("b619"),__webpack_require__("a026")):undefined;}(this,(function(exports, SwiperClass, Vue){'use strict';SwiperClass=SwiperClass&&Object.prototype.hasOwnProperty.call(SwiperClass,'default')?SwiperClass['default']:SwiperClass;Vue=Vue&&Object.prototype.hasOwnProperty.call(Vue,'default')?Vue['default']:Vue;/**
+ * @file vue-awesome-swiper
+ * @module constants
+ * @author Surmon <https://github.com/surmon-china>
+ */
+var CoreNames;
+(function (CoreNames) {
+    CoreNames["SwiperComponent"] = "Swiper";
+    CoreNames["SwiperSlideComponent"] = "SwiperSlide";
+    CoreNames["SwiperDirective"] = "swiper";
+    CoreNames["SwiperInstance"] = "$swiper";
+})(CoreNames || (CoreNames = {}));
+var DEFAULT_CLASSES = Object.freeze({
+    containerClass: 'swiper-container',
+    wrapperClass: 'swiper-wrapper',
+    slideClass: 'swiper-slide'
 });
-// CONCATENATED MODULE: ./src/components/chat/publicroom/index.vue?vue&type=script&lang=js&
- /* harmony default export */ var chat_publicroomvue_type_script_lang_js_ = (publicroomvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
-var componentNormalizer = __webpack_require__("2877");
+var ComponentEvents;
+(function (ComponentEvents) {
+    ComponentEvents["Ready"] = "ready";
+    ComponentEvents["ClickSlide"] = "clickSlide";
+})(ComponentEvents || (ComponentEvents = {}));
+var ComponentPropNames;
+(function (ComponentPropNames) {
+    ComponentPropNames["AutoUpdate"] = "autoUpdate";
+    ComponentPropNames["AutoDestroy"] = "autoDestroy";
+    ComponentPropNames["DeleteInstanceOnDestroy"] = "deleteInstanceOnDestroy";
+    ComponentPropNames["CleanupStylesOnDestroy"] = "cleanupStylesOnDestroy";
+})(ComponentPropNames || (ComponentPropNames = {}));
+// https://swiperjs.com/api/#events
+var SWIPER_EVENTS = [
+    'init',
+    'beforeDestroy',
+    'slideChange',
+    'slideChangeTransitionStart',
+    'slideChangeTransitionEnd',
+    'slideNextTransitionStart',
+    'slideNextTransitionEnd',
+    'slidePrevTransitionStart',
+    'slidePrevTransitionEnd',
+    'transitionStart',
+    'transitionEnd',
+    'touchStart',
+    'touchMove',
+    'touchMoveOpposite',
+    'sliderMove',
+    'touchEnd',
+    'click',
+    'tap',
+    'doubleTap',
+    'imagesReady',
+    'progress',
+    'reachBeginning',
+    'reachEnd',
+    'fromEdge',
+    'setTranslate',
+    'setTransition',
+    'resize',
+    'observerUpdate',
+    'beforeLoopFix',
+    'loopFix'
+];/*! *****************************************************************************
+Copyright (c) Microsoft Corporation. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
 
-// CONCATENATED MODULE: ./src/components/chat/publicroom/index.vue
+THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+MERCHANTABLITY OR NON-INFRINGEMENT.
 
+See the Apache Version 2.0 License for specific language governing permissions
+and limitations under the License.
+***************************************************************************** */
 
-
-function injectStyles (context) {
-  
-  var style0 = __webpack_require__("c09f")
-if (style0.__inject__) style0.__inject__(context)
-var style1 = __webpack_require__("f155")
-if (style1.__inject__) style1.__inject__(context)
-
-}
-
-/* normalize component */
-
-var component = Object(componentNormalizer["a" /* default */])(
-  chat_publicroomvue_type_script_lang_js_,
-  render,
-  staticRenderFns,
-  false,
-  injectStyles,
-  "ffacfd66",
-  null
-  ,true
-)
-
-/* harmony default export */ var publicroom = __webpack_exports__["a"] = (component.exports);
-
-/***/ }),
-
-/***/ "87b8":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".empty[data-v-ffacfd66]{padding:2em;text-align:center}.empty span[data-v-ffacfd66]{font-size:.9em}", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
-/***/ "8966":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("3636");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("5b47ad1a", content, shadowRoot)
+function __spreadArrays() {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+}/**
+ * @file vue-awesome-swiper
+ * @module utils
+ * @author Surmon <https://github.com/surmon-china>
+ */
+var kebabcase = function (string) {
+    return string
+        .replace(/([a-z])([A-Z])/g, '$1-$2')
+        .replace(/\s+/g, '-')
+        .toLowerCase();
+};/**
+ * @file vue-awesome-swiper
+ * @module event
+ * @author Surmon <https://github.com/surmon-china>
+ */
+var handleClickSlideEvent = function (swiper, event, emit) {
+    var _a, _b, _c;
+    if (swiper && !(swiper.destroyed)) {
+        var eventPath = ((_a = event.composedPath) === null || _a === void 0 ? void 0 : _a.call(event)) || event.path;
+        if ((event === null || event === void 0 ? void 0 : event.target) && eventPath) {
+            var slides_1 = Array.from(swiper.slides);
+            var paths = Array.from(eventPath);
+            // Click slide || slide[children]
+            if (slides_1.includes(event.target) || paths.some(function (item) { return slides_1.includes(item); })) {
+                var clickedIndex = swiper.clickedIndex;
+                var reallyIndex = Number((_c = (_b = swiper.clickedSlide) === null || _b === void 0 ? void 0 : _b.dataset) === null || _c === void 0 ? void 0 : _c.swiperSlideIndex);
+                var reallyIndexValue = Number.isInteger(reallyIndex) ? reallyIndex : null;
+                emit(ComponentEvents.ClickSlide, clickedIndex, reallyIndexValue);
+                emit(kebabcase(ComponentEvents.ClickSlide), clickedIndex, reallyIndexValue);
+            }
+        }
+    }
 };
+var bindSwiperEvents = function (swiper, emit) {
+    SWIPER_EVENTS.forEach(function (eventName) {
+        swiper.on(eventName, function () {
+            var arguments$1 = arguments;
 
-/***/ }),
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments$1[_i];
+            }
+            emit.apply(void 0, __spreadArrays([eventName], args));
+            var kebabcaseName = kebabcase(eventName);
+            if (kebabcaseName !== eventName) {
+                emit.apply(void 0, __spreadArrays([kebabcaseName], args));
+            }
+        });
+    });
+};/**
+ * @file vue-awesome-swiper
+ * @module directive
+ * @author Surmon <https://github.com/surmon-china>
+ */
+var INSTANCE_NAME_KEY = 'instanceName';
+function getDirective(SwiperClass, globalOptions) {
+    var getStandardisedOptionByAttrs = function (vnode, key) {
+        var _a, _b, _c, _d;
+        var value = (_b = (_a = vnode.data) === null || _a === void 0 ? void 0 : _a.attrs) === null || _b === void 0 ? void 0 : _b[key];
+        return value !== undefined
+            ? value
+            : (_d = (_c = vnode.data) === null || _c === void 0 ? void 0 : _c.attrs) === null || _d === void 0 ? void 0 : _d[kebabcase(key)];
+    };
+    // Get swiper instace name in directive
+    var getSwiperInstanceName = function (element, binding, vnode) {
+        return (binding.arg ||
+            getStandardisedOptionByAttrs(vnode, INSTANCE_NAME_KEY) ||
+            element.id ||
+            CoreNames.SwiperInstance);
+    };
+    var getSwiperInstance = function (element, binding, vnode) {
+        var instanceName = getSwiperInstanceName(element, binding, vnode);
+        return vnode.context[instanceName] || null;
+    };
+    var getSwipeOptions = function (binding) {
+        return binding.value || globalOptions;
+    };
+    var getBooleanValueByInput = function (input) {
+        return [true, undefined, null, ''].includes(input);
+    };
+    // Emit event in Vue directive
+    var getEventEmiter = function (vnode) {
+        var _a, _b;
+        var handlers = ((_a = vnode.data) === null || _a === void 0 ? void 0 : _a.on) || ((_b = vnode.componentOptions) === null || _b === void 0 ? void 0 : _b.listeners);
+        return function (name) {
+            var arguments$1 = arguments;
 
-/***/ "8967":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".video-js .vjs-big-play-button .vjs-icon-placeholder:before,.video-js .vjs-modal-dialog,.vjs-button>.vjs-icon-placeholder:before,.vjs-modal-dialog .vjs-modal-dialog-content{position:absolute;top:0;left:0;width:100%;height:100%}.video-js .vjs-big-play-button .vjs-icon-placeholder:before,.vjs-button>.vjs-icon-placeholder:before{text-align:center}@font-face{font-family:VideoJS;src:url(data:application/font-woff;charset=utf-8;base64,d09GRgABAAAAABDkAAsAAAAAG6gAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABHU1VCAAABCAAAADsAAABUIIslek9TLzIAAAFEAAAAPgAAAFZRiV3hY21hcAAAAYQAAADaAAADPv749/pnbHlmAAACYAAAC3AAABHQZg6OcWhlYWQAAA3QAAAAKwAAADYZw251aGhlYQAADfwAAAAdAAAAJA+RCLFobXR4AAAOHAAAABMAAACM744AAGxvY2EAAA4wAAAASAAAAEhF6kqubWF4cAAADngAAAAfAAAAIAE0AIFuYW1lAAAOmAAAASUAAAIK1cf1oHBvc3QAAA/AAAABJAAAAdPExYuNeJxjYGRgYOBiMGCwY2BycfMJYeDLSSzJY5BiYGGAAJA8MpsxJzM9kYEDxgPKsYBpDiBmg4gCACY7BUgAeJxjYGS7wTiBgZWBgaWQ5RkDA8MvCM0cwxDOeI6BgYmBlZkBKwhIc01hcPjI+FGJHcRdyA4RZgQRADK3CxEAAHic7dFZbsMgAEXRS0ycyZnnOeG7y+qC8pU1dHusIOXxuoxaOlwZYWQB0Aea4quIEN4E9LzKbKjzDeM6H/mua6Lmc/p8yhg0lvdYx15ZG8uOLQOGjMp3EzqmzJizYMmKNRu27Nhz4MiJMxeu3Ljz4Ekqm7T8P52G8PP3lnTOVk++Z6iN6QZzNN1F7ptuN7eGOjDUoaGODHVsuvU8MdTO9Hd5aqgzQ50b6sJQl4a6MtS1oW4MdWuoO0PdG+rBUI+GejLUs6FeDPVqqDdDvRvqw1CfhpqM9At0iFLaAAB4nJ1YDXBTVRZ+5/22TUlJ8we0pHlJm7RJf5O8F2j6EymlSPkpxaL8U2xpa3DKj0CBhc2IW4eWKSokIoLsuMqssM64f+jA4HSdWXXXscBq67IOs3FXZ1ZYWVyRFdo899yXtIBQZ90k7717zz3v3HPPOfd854YCCj9cL9dL0RQFOqCbGJnrHb5EayiKIWN8iA/hWBblo6hUWm8TtCDwE80WMJus/irwyxOdxeB0MDb14VNJHnXYoLLSl6FfCUYO9nYPTA8Epg9090LprfbBbZ2hY0UlJUXHQp3/vtWkS6EBv8+rPMq5u9692f/dNxJNiqwC1xPE9TCUgCsSdQWgE3XQD25lkG4CN2xmTcOXWBOyser6RN6KnGbKSbmQ3+d0OI1m2W8QzLLkI2sykrWAgJJEtA8vGGW/2Q+CmT3n8zS9wZwu2DCvtuZKZN3xkrLh36yCZuUomQSqGpY8t/25VfHVhw8z4ebGBtfLb0ya9PCaDc+8dGTvk2dsh6z7WzvowlXKUSWo9MJ15a3KrEP2loOr2Ojhw6iW6hf2BDdEccQvZGpaAy7YovSwq8kr7HGllxpd71rkS6G0Sf11sl9OvMK1+jwPPODxjUwkOim9CU3ix1wNjXDfmJSEn618Bs6lpWwUpU+8PCqLMY650zjq8VhCIP17NEKTx3eaLL+s5Pi6yJWaWjTHLR1jYzPSV9VF/6Ojdb/1kO3Mk3uhHC0x6gc1BjlKQ+nQFxTYdaJkZ7ySVxLBbhR1dsboNXp1tCYKW2LRaEzpYcIx2BKNxaL0ZaUnSqfFoiNhHKR/GkX6PWUSAaJelQaqZL1EpoHNsajSEyPSoJ9IjhIxTdjHLmwZvhRDOiFTY/YeQnvrVZmiTQtGncECXtFTBZLOVwwMRgoXHAkXzMzPn1nAJJ8jYSbMDaqN2waGLzNhih/bZynUBMpIWSg7VYi7DRx2m8ALkIdRCJwI6ArJx2EI8kaDWeTQKeAFk9fjl/1AvwktjQ1P7NjyMGQyfd4vjipX6M/i52D7Cq80kqlcxEcGXRr/FEcgs0u5uGgB4VWuMFfpdn2Re6Hi3PqzmxWKsz6+ae2Pn9hXXw/fqM859UiGC0oKYYILJBqJrsn1Z1E5qOs9rQCiUQRREjm8yJcbHF5cUJufX1vAHlefw0XgUoboS3ETfQlTxBC4SOtuE8VPRJTBSCQSjZCpk7Gqzu+masaZ2y7Zjehho4F3g82BNDkAHpORG4+OCS+f6JTPmtRn/PH1kch6d04sp7AQb25aQ/pqUyXeQ8vrebG8OYQdXOQ+585u0sdW9rqalzRURiJ+9F4MweRFrKUjl1GUYhH1A27WOHw5cTFSFPMo9EeUIGnQTZHIaJ7AHLaOKsOODaNF9jkBjYG2QEsQ2xjMUAx2bBEbeTBWMHwskBjngq56S/yfgkBnWBa4K9sqKtq2t1UI8S9He5XuBRbawAdatrQEAi30Aks2+LM8WeCbalVZkWNylvJ+dqJnzVb+OHlSoKW8nPCP7Rd+CcZ2DdWAGqJ2CBFOphgywFFCFBNtfAbGtNPBCwxvygHeYMZMY9ZboBqwq/pVrsbgN5tkv152ODlbMfiqwGMBgxa4Exz3QhovRIUp6acqZmQzRq0ypDXS2TPLT02YIkQETnOE445oOGxOmXAqUJNNG7XgupMjPq2ua9asrj5yY/yuKteO1Kx0YNJTufrirLe1mZnat7OL6rnUdCWenpW6I8mAnbsY8KWs1PuSovCW9A/Z25PQ24a7cNOqgmTkLmBMgh4THgc4b9k2IVv1/g/F5nGljwPLfOgHAzJzh45V/4+WenTzmMtR5Z7us2Tys909UHqrPY7KbckoxRvRHhmVc3cJGE97uml0R1S0jdULVl7EvZtDFVBF35N9cEdjpgmAiOlFZ+Dtoh93+D3zzHr8RRNZQhnCNMNbcegOvpEwZoL+06cJQ07h+th3fZ/7PVbVC6ngTAV/KoLFuO6+2KFcU651gEb5ugPSIb1D+Xp8V4+k3sEIGnw5mYe4If4k1lFYr6SCzmM2EQ8iWtmwjnBI9kTwe1TlfAmXh7H02by9fW2gsjKwtv0aaURKil4OdV7rDL1MXIFNrhdxohcZXYTnq47WisrKitaObbf5+yvkLi5J6lCNZZ+B6GC38VNBZBDidSS/+mSvh6s+srgC8pyKMvDtt+de3c9fU76ZPfuM8ud4Kv0fyP/LqfepMT/3oZxSqpZaTa1DaQYLY8TFsHYbWYsPoRhRWfL5eSSQbhUGgGC3YLbVMk6PitTFNGpAsNrC6D1VNBKgBHMejaiuRWEWGgsSDBTJjqWIl8kJLlsaLJ2tXDr6xGfT85bM2Q06a46x2HTgvdnV8z5YDy/27J4zt6x2VtkzjoYpkq36kaBr4eQSg7tyiVweWubXZugtadl58ydapfbORfKsDTuZ0OBgx4cfdjCf5tbWNITnL120fdOi1RV1C3uKGzNdwYLcMvZ3BxoPyTOCD1XvXTp7U10gWCVmTV9b3r2z0SkGWovb2hp9I89O8a2smlyaO8muMU+dRmtzp60IzAoFpjLr1n388boLyf0dRvxhsHZ0qbWqDkwqvvpkj4l0fY6EIXRi5sQSrAvsVYwXRy4qJ2EVtD1AN7a0HWth9ymvL1xc3WTUKK/TAHA/bXDVtVWfOMfuGxGZv4Ln/jVr9jc3j1yMv0tndmyt9Vq88Y9gH1wtLX3KWjot5++jWHgAoZZkQ14wGQ20Fli71UmKJAy4xKMSTGbVdybW7FDDAut9XpD5AzWrYO7zQ8qffqF8+Ynd/clrHcdyxGy3a/3+mfNnzC/cBsveTjnTvXf1o6vzOlZw7WtqtdmPK/Errz/6NNtD72zmNOZfbmYdTGHfoofqI79Oc+R2n1lrnL6pOm0Up7kwxhTW12Amm7WYkXR2qYrF2AmgmbAsxZjwy1xpg/m1Je2vrp8v/nz2xpmlBg4E9hrMU341wVpTOh/OfmGvAnra8q6uctr60ZQHV3Q+WMQJykMj8ZsWn2QBOmmHMB+m5pDIpTFonYigiaKAhGEiAHF7EliVnQkjoLVIMPtJpBKHYd3A8GYH9jJzrWwmHx5Qjp7vDAX0suGRym1vtm/9W1/HyR8vczfMs6Sk8DSv855/5dlX9oQq52hT8syyp2rx5Id17IAyAM3wIjQPMOHzytEB64q6D5zT91yNbnx3V/nqnd017S9Y0605k3izoXLpsxde2n38yoOV9s1LcjwzNjbdX6asnBVaBj/6/DwKwPkpcqbDG7BnsXoSqWnUAmottYF6jMSdVyYZh3zVXCjwTiwwHH6sGuRiEHQGzuRX6whZkp123oy1BWE2mEfJ/tvIRtM4ZM5bDXiMsPMaAKOTyc5uL57rqyyc5y5JE5pm1i2S2iUX0CcaQ6lC6Zog7JqSqZmYlosl2K6pwNA84zRnQW6SaALYZQGW5lhCtU/W34N6o+bKfZ8cf3/Cl/+iTX3wBzpOY4mRkeNf3rptycGSshQWgGbYt5jFc2e0+DglIrwl6DVWQ7BuwaJ3Xk1J4VL5urnLl/Wf+gHU/hZoZdKNym6lG+I34FaNeZKcSpJIo2IeCVvpdsDGfKvzJnAwmeD37Ow65ZWwSowpgwX5T69s/rB55dP5BcpgDKFV8p7q2sn/1uc93bVzT/w6UrCqDTWvfCq/oCD/qZXNoUj8BL5Kp6GU017frfNXkAtiiyf/SOCEeLqnd8R/Ql9GlCRfctS6k5chvIBuQ1zCCjoCHL2DHNHIXxMJ3kQeO8lbsUXONeSfA5EjcG6/E+KdhN4bP04vBhdi883+BFBzQbxFbvZzQeY9LNBZc0FNfn5NwfDn6rCTnTw6R8o+gfpf5hCom33cRuiTlss3KHmZjD+BPN+5gXuA2ziS/Q73mLxUkpbKN/eqwz5uK0X9F3h2d1V4nGNgZGBgAOJd776+iue3+crAzc4AAje5Bfcg0xz9YHEOBiYQBQA8FQlFAHicY2BkYGBnAAGOPgaG//85+hkYGVCBMgBGGwNYAAAAeJxjYGBgYB8EmKOPgQEAQ04BfgAAAAAAAA4AaAB+AMwA4AECAUIBbAGYAcICGAJYArQC4AMwA7AD3gQwBJYE3AUkBWYFigYgBmYGtAbqB1gIEghYCG4IhAi2COh4nGNgZGBgUGYoZWBnAAEmIOYCQgaG/2A+AwAYCQG2AHicXZBNaoNAGIZfE5PQCKFQ2lUps2oXBfOzzAESyDKBQJdGR2NQR3QSSE/QE/QEPUUPUHqsvsrXjTMw83zPvPMNCuAWP3DQDAejdm1GjzwS7pMmwi75XngAD4/CQ/oX4TFe4Qt7uMMbOzjuDc0EmXCP/C7cJ38Iu+RP4QEe8CU8pP8WHmOPX2EPz87TPo202ey2OjlnQSXV/6arOjWFmvszMWtd6CqwOlKHq6ovycLaWMWVydXKFFZnmVFlZU46tP7R2nI5ncbi/dDkfDtFBA2DDXbYkhKc+V0Bqs5Zt9JM1HQGBRTm/EezTmZNKtpcAMs9Yu6AK9caF76zoLWIWcfMGOSkVduvSWechqZsz040Ib2PY3urxBJTzriT95lipz+TN1fmAAAAeJxtkMl2wjAMRfOAhABlKm2h80C3+ajgCKKDY6cegP59TYBzukAL+z1Zsq8ctaJTTKPrsUQLbXQQI0EXKXroY4AbDDHCGBNMcYsZ7nCPB8yxwCOe8IwXvOIN7/jAJ76wxHfUqWX+OzgumWAjJMV17i0Ndlr6irLKO+qftdT7i6y4uFSUvCknay+lFYZIZaQcmfH/xIFdYn98bqhra1aKTM/6lWMnyaYirx1rFUQZFBkb2zJUtoXeJCeg0WnLtHeSFc3OtrnozNwqi0TkSpBMDB1nSde5oJXW23hTS2/T0LilglXX7dmFVxLnq5U0vYATHFk3zX3BOisoQHNDFDeZnqKDy9hRNawN7Vh727hFzcJ5c8TILrKZfH7tIPxAFP0BpLeJPA==) format(\"woff\");font-weight:400;font-style:normal}.video-js .vjs-big-play-button .vjs-icon-placeholder:before,.video-js .vjs-play-control .vjs-icon-placeholder,.vjs-icon-play{font-family:VideoJS;font-weight:400;font-style:normal}.video-js .vjs-big-play-button .vjs-icon-placeholder:before,.video-js .vjs-play-control .vjs-icon-placeholder:before,.vjs-icon-play:before{content:\"\"}.vjs-icon-play-circle{font-family:VideoJS;font-weight:400;font-style:normal}.vjs-icon-play-circle:before{content:\"\"}.video-js .vjs-play-control.vjs-playing .vjs-icon-placeholder,.vjs-icon-pause{font-family:VideoJS;font-weight:400;font-style:normal}.video-js .vjs-play-control.vjs-playing .vjs-icon-placeholder:before,.vjs-icon-pause:before{content:\"\"}.video-js .vjs-mute-control.vjs-vol-0 .vjs-icon-placeholder,.vjs-icon-volume-mute{font-family:VideoJS;font-weight:400;font-style:normal}.video-js .vjs-mute-control.vjs-vol-0 .vjs-icon-placeholder:before,.vjs-icon-volume-mute:before{content:\"\"}.video-js .vjs-mute-control.vjs-vol-1 .vjs-icon-placeholder,.vjs-icon-volume-low{font-family:VideoJS;font-weight:400;font-style:normal}.video-js .vjs-mute-control.vjs-vol-1 .vjs-icon-placeholder:before,.vjs-icon-volume-low:before{content:\"\"}.video-js .vjs-mute-control.vjs-vol-2 .vjs-icon-placeholder,.vjs-icon-volume-mid{font-family:VideoJS;font-weight:400;font-style:normal}.video-js .vjs-mute-control.vjs-vol-2 .vjs-icon-placeholder:before,.vjs-icon-volume-mid:before{content:\"\"}.video-js .vjs-mute-control .vjs-icon-placeholder,.vjs-icon-volume-high{font-family:VideoJS;font-weight:400;font-style:normal}.video-js .vjs-mute-control .vjs-icon-placeholder:before,.vjs-icon-volume-high:before{content:\"\"}.video-js .vjs-fullscreen-control .vjs-icon-placeholder,.vjs-icon-fullscreen-enter{font-family:VideoJS;font-weight:400;font-style:normal}.video-js .vjs-fullscreen-control .vjs-icon-placeholder:before,.vjs-icon-fullscreen-enter:before{content:\"\"}.video-js.vjs-fullscreen .vjs-fullscreen-control .vjs-icon-placeholder,.vjs-icon-fullscreen-exit{font-family:VideoJS;font-weight:400;font-style:normal}.video-js.vjs-fullscreen .vjs-fullscreen-control .vjs-icon-placeholder:before,.vjs-icon-fullscreen-exit:before{content:\"\"}.vjs-icon-square{font-family:VideoJS;font-weight:400;font-style:normal}.vjs-icon-square:before{content:\"\"}.vjs-icon-spinner{font-family:VideoJS;font-weight:400;font-style:normal}.vjs-icon-spinner:before{content:\"\"}.video-js.video-js:lang(en-AU) .vjs-subs-caps-button .vjs-icon-placeholder,.video-js.video-js:lang(en-GB) .vjs-subs-caps-button .vjs-icon-placeholder,.video-js.video-js:lang(en-IE) .vjs-subs-caps-button .vjs-icon-placeholder,.video-js.video-js:lang(en-NZ) .vjs-subs-caps-button .vjs-icon-placeholder,.video-js .vjs-subs-caps-button .vjs-icon-placeholder,.video-js .vjs-subtitles-button .vjs-icon-placeholder,.vjs-icon-subtitles{font-family:VideoJS;font-weight:400;font-style:normal}.video-js.video-js:lang(en-AU) .vjs-subs-caps-button .vjs-icon-placeholder:before,.video-js.video-js:lang(en-GB) .vjs-subs-caps-button .vjs-icon-placeholder:before,.video-js.video-js:lang(en-IE) .vjs-subs-caps-button .vjs-icon-placeholder:before,.video-js.video-js:lang(en-NZ) .vjs-subs-caps-button .vjs-icon-placeholder:before,.video-js .vjs-subs-caps-button .vjs-icon-placeholder:before,.video-js .vjs-subtitles-button .vjs-icon-placeholder:before,.vjs-icon-subtitles:before{content:\"\"}.video-js .vjs-captions-button .vjs-icon-placeholder,.video-js:lang(en) .vjs-subs-caps-button .vjs-icon-placeholder,.video-js:lang(fr-CA) .vjs-subs-caps-button .vjs-icon-placeholder,.vjs-icon-captions{font-family:VideoJS;font-weight:400;font-style:normal}.video-js .vjs-captions-button .vjs-icon-placeholder:before,.video-js:lang(en) .vjs-subs-caps-button .vjs-icon-placeholder:before,.video-js:lang(fr-CA) .vjs-subs-caps-button .vjs-icon-placeholder:before,.vjs-icon-captions:before{content:\"\"}.video-js .vjs-chapters-button .vjs-icon-placeholder,.vjs-icon-chapters{font-family:VideoJS;font-weight:400;font-style:normal}.video-js .vjs-chapters-button .vjs-icon-placeholder:before,.vjs-icon-chapters:before{content:\"\"}.vjs-icon-share{font-family:VideoJS;font-weight:400;font-style:normal}.vjs-icon-share:before{content:\"\"}.vjs-icon-cog{font-family:VideoJS;font-weight:400;font-style:normal}.vjs-icon-cog:before{content:\"\"}.video-js .vjs-play-progress,.video-js .vjs-volume-level,.vjs-icon-circle,.vjs-seek-to-live-control .vjs-icon-placeholder{font-family:VideoJS;font-weight:400;font-style:normal}.video-js .vjs-play-progress:before,.video-js .vjs-volume-level:before,.vjs-icon-circle:before,.vjs-seek-to-live-control .vjs-icon-placeholder:before{content:\"\"}.vjs-icon-circle-outline{font-family:VideoJS;font-weight:400;font-style:normal}.vjs-icon-circle-outline:before{content:\"\"}.vjs-icon-circle-inner-circle{font-family:VideoJS;font-weight:400;font-style:normal}.vjs-icon-circle-inner-circle:before{content:\"\"}.vjs-icon-hd{font-family:VideoJS;font-weight:400;font-style:normal}.vjs-icon-hd:before{content:\"\"}.video-js .vjs-control.vjs-close-button .vjs-icon-placeholder,.vjs-icon-cancel{font-family:VideoJS;font-weight:400;font-style:normal}.video-js .vjs-control.vjs-close-button .vjs-icon-placeholder:before,.vjs-icon-cancel:before{content:\"\"}.video-js .vjs-play-control.vjs-ended .vjs-icon-placeholder,.vjs-icon-replay{font-family:VideoJS;font-weight:400;font-style:normal}.video-js .vjs-play-control.vjs-ended .vjs-icon-placeholder:before,.vjs-icon-replay:before{content:\"\"}.vjs-icon-facebook{font-family:VideoJS;font-weight:400;font-style:normal}.vjs-icon-facebook:before{content:\"\"}.vjs-icon-gplus{font-family:VideoJS;font-weight:400;font-style:normal}.vjs-icon-gplus:before{content:\"\"}.vjs-icon-linkedin{font-family:VideoJS;font-weight:400;font-style:normal}.vjs-icon-linkedin:before{content:\"\"}.vjs-icon-twitter{font-family:VideoJS;font-weight:400;font-style:normal}.vjs-icon-twitter:before{content:\"\"}.vjs-icon-tumblr{font-family:VideoJS;font-weight:400;font-style:normal}.vjs-icon-tumblr:before{content:\"\"}.vjs-icon-pinterest{font-family:VideoJS;font-weight:400;font-style:normal}.vjs-icon-pinterest:before{content:\"\"}.video-js .vjs-descriptions-button .vjs-icon-placeholder,.vjs-icon-audio-description{font-family:VideoJS;font-weight:400;font-style:normal}.video-js .vjs-descriptions-button .vjs-icon-placeholder:before,.vjs-icon-audio-description:before{content:\"\"}.video-js .vjs-audio-button .vjs-icon-placeholder,.vjs-icon-audio{font-family:VideoJS;font-weight:400;font-style:normal}.video-js .vjs-audio-button .vjs-icon-placeholder:before,.vjs-icon-audio:before{content:\"\"}.vjs-icon-next-item{font-family:VideoJS;font-weight:400;font-style:normal}.vjs-icon-next-item:before{content:\"\"}.vjs-icon-previous-item{font-family:VideoJS;font-weight:400;font-style:normal}.vjs-icon-previous-item:before{content:\"\"}.video-js .vjs-picture-in-picture-control .vjs-icon-placeholder,.vjs-icon-picture-in-picture-enter{font-family:VideoJS;font-weight:400;font-style:normal}.video-js .vjs-picture-in-picture-control .vjs-icon-placeholder:before,.vjs-icon-picture-in-picture-enter:before{content:\"\"}.video-js.vjs-picture-in-picture .vjs-picture-in-picture-control .vjs-icon-placeholder,.vjs-icon-picture-in-picture-exit{font-family:VideoJS;font-weight:400;font-style:normal}.video-js.vjs-picture-in-picture .vjs-picture-in-picture-control .vjs-icon-placeholder:before,.vjs-icon-picture-in-picture-exit:before{content:\"\"}.video-js{display:block;vertical-align:top;box-sizing:border-box;color:#fff;background-color:#000;padding:0;font-size:10px;line-height:1;font-weight:400;font-style:normal;font-family:Arial,Helvetica,sans-serif;word-break:normal}.video-js:-moz-full-screen{position:absolute}.video-js:-webkit-full-screen{width:100%!important;height:100%!important}.video-js[tabindex=\"-1\"]{outline:none}.video-js *,.video-js :after,.video-js :before{box-sizing:inherit}.video-js ul{font-family:inherit;font-size:inherit;line-height:inherit;list-style-position:outside;margin-left:0;margin-right:0;margin-top:0;margin-bottom:0}.video-js.vjs-1-1,.video-js.vjs-4-3,.video-js.vjs-9-16,.video-js.vjs-16-9,.video-js.vjs-fluid{width:100%;max-width:100%}.video-js.vjs-1-1:not(.vjs-audio-only-mode),.video-js.vjs-4-3:not(.vjs-audio-only-mode),.video-js.vjs-9-16:not(.vjs-audio-only-mode),.video-js.vjs-16-9:not(.vjs-audio-only-mode),.video-js.vjs-fluid:not(.vjs-audio-only-mode){height:0}.video-js.vjs-16-9:not(.vjs-audio-only-mode){padding-top:56.25%}.video-js.vjs-4-3:not(.vjs-audio-only-mode){padding-top:75%}.video-js.vjs-9-16:not(.vjs-audio-only-mode){padding-top:177.7777777778%}.video-js.vjs-1-1:not(.vjs-audio-only-mode){padding-top:100%}.video-js.vjs-fill:not(.vjs-audio-only-mode),.video-js .vjs-tech{width:100%;height:100%}.video-js.vjs-audio-only-mode .vjs-tech{display:none}body.vjs-full-window{padding:0;margin:0;height:100%}.vjs-full-window .video-js.vjs-fullscreen{position:fixed;overflow:hidden;z-index:1000;left:0;top:0;bottom:0;right:0}.video-js.vjs-fullscreen:not(.vjs-ios-native-fs){width:100%!important;height:100%!important;padding-top:0!important}.video-js.vjs-fullscreen.vjs-user-inactive{cursor:none}.vjs-hidden{display:none!important}.vjs-disabled{opacity:.5;cursor:default}.video-js .vjs-offscreen{height:1px;left:-9999px;position:absolute;top:0;width:1px}.vjs-lock-showing{display:block!important;opacity:1!important;visibility:visible!important}.vjs-no-js{padding:20px;color:#fff;background-color:#000;font-size:18px;font-family:Arial,Helvetica,sans-serif;text-align:center;width:300px;height:150px;margin:0 auto}.vjs-no-js a,.vjs-no-js a:visited{color:#66a8cc}.video-js .vjs-big-play-button{font-size:3em;line-height:1.5em;height:1.63332em;width:3em;display:block;position:absolute;top:10px;left:10px;padding:0;cursor:pointer;opacity:1;border:.06666em solid #fff;background-color:#2b333f;background-color:rgba(43,51,63,.7);border-radius:.3em;transition:all .4s}.vjs-big-play-centered .vjs-big-play-button{top:50%;left:50%;margin-top:-.81666em;margin-left:-1.5em}.video-js .vjs-big-play-button:focus,.video-js:hover .vjs-big-play-button{border-color:#fff;background-color:#73859f;background-color:rgba(115,133,159,.5);transition:all 0s}.vjs-controls-disabled .vjs-big-play-button,.vjs-error .vjs-big-play-button,.vjs-has-started .vjs-big-play-button,.vjs-using-native-controls .vjs-big-play-button{display:none}.vjs-has-started.vjs-paused.vjs-show-big-play-button-on-pause .vjs-big-play-button{display:block}.video-js button{background:none;border:none;color:inherit;display:inline-block;font-size:inherit;line-height:inherit;text-transform:none;text-decoration:none;transition:none;-webkit-appearance:none;-moz-appearance:none;appearance:none}.vjs-control .vjs-button{width:100%;height:100%}.video-js .vjs-control.vjs-close-button{cursor:pointer;height:3em;position:absolute;right:0;top:.5em;z-index:2}.video-js .vjs-modal-dialog{background:rgba(0,0,0,.8);background:linear-gradient(180deg,rgba(0,0,0,.8),hsla(0,0%,100%,0));overflow:auto}.video-js .vjs-modal-dialog>*{box-sizing:border-box}.vjs-modal-dialog .vjs-modal-dialog-content{font-size:1.2em;line-height:1.5;padding:20px 24px;z-index:1}.vjs-menu-button{cursor:pointer}.vjs-menu-button.vjs-disabled{cursor:default}.vjs-workinghover .vjs-menu-button.vjs-disabled:hover .vjs-menu{display:none}.vjs-menu .vjs-menu-content{display:block;padding:0;margin:0;font-family:Arial,Helvetica,sans-serif;overflow:auto}.vjs-menu .vjs-menu-content>*{box-sizing:border-box}.vjs-scrubbing .vjs-control.vjs-menu-button:hover .vjs-menu{display:none}.vjs-menu li{list-style:none;margin:0;padding:.2em 0;line-height:1.4em;font-size:1.2em;text-align:center;text-transform:lowercase}.js-focus-visible .vjs-menu li.vjs-menu-item:hover,.vjs-menu li.vjs-menu-item:focus,.vjs-menu li.vjs-menu-item:hover{background-color:#73859f;background-color:rgba(115,133,159,.5)}.js-focus-visible .vjs-menu li.vjs-selected:hover,.vjs-menu li.vjs-selected,.vjs-menu li.vjs-selected:focus,.vjs-menu li.vjs-selected:hover{background-color:#fff;color:#2b333f}.js-focus-visible .vjs-menu :not(.vjs-selected):focus:not(.focus-visible),.video-js .vjs-menu :not(.vjs-selected):focus:not(:focus-visible){background:none}.vjs-menu li.vjs-menu-title{text-align:center;text-transform:uppercase;font-size:1em;line-height:2em;padding:0;margin:0 0 .3em 0;font-weight:700;cursor:default}.vjs-menu-button-popup .vjs-menu{display:none;position:absolute;bottom:0;width:10em;left:-3em;height:0;margin-bottom:1.5em;border-top-color:rgba(43,51,63,.7)}.vjs-menu-button-popup .vjs-menu .vjs-menu-content{background-color:#2b333f;background-color:rgba(43,51,63,.7);position:absolute;width:100%;bottom:1.5em;max-height:15em}.vjs-layout-tiny .vjs-menu-button-popup .vjs-menu .vjs-menu-content,.vjs-layout-x-small .vjs-menu-button-popup .vjs-menu .vjs-menu-content{max-height:5em}.vjs-layout-small .vjs-menu-button-popup .vjs-menu .vjs-menu-content{max-height:10em}.vjs-layout-medium .vjs-menu-button-popup .vjs-menu .vjs-menu-content{max-height:14em}.vjs-layout-huge .vjs-menu-button-popup .vjs-menu .vjs-menu-content,.vjs-layout-large .vjs-menu-button-popup .vjs-menu .vjs-menu-content,.vjs-layout-x-large .vjs-menu-button-popup .vjs-menu .vjs-menu-content{max-height:25em}.vjs-menu-button-popup .vjs-menu.vjs-lock-showing,.vjs-workinghover .vjs-menu-button-popup.vjs-hover .vjs-menu{display:block}.video-js .vjs-menu-button-inline{transition:all .4s;overflow:hidden}.video-js .vjs-menu-button-inline:before{width:2.222222222em}.video-js .vjs-menu-button-inline.vjs-slider-active,.video-js .vjs-menu-button-inline:focus,.video-js .vjs-menu-button-inline:hover,.video-js.vjs-no-flex .vjs-menu-button-inline{width:12em}.vjs-menu-button-inline .vjs-menu{opacity:0;height:100%;width:auto;position:absolute;left:4em;top:0;padding:0;margin:0;transition:all .4s}.vjs-menu-button-inline.vjs-slider-active .vjs-menu,.vjs-menu-button-inline:focus .vjs-menu,.vjs-menu-button-inline:hover .vjs-menu{display:block;opacity:1}.vjs-no-flex .vjs-menu-button-inline .vjs-menu{display:block;opacity:1;position:relative;width:auto}.vjs-no-flex .vjs-menu-button-inline.vjs-slider-active .vjs-menu,.vjs-no-flex .vjs-menu-button-inline:focus .vjs-menu,.vjs-no-flex .vjs-menu-button-inline:hover .vjs-menu{width:auto}.vjs-menu-button-inline .vjs-menu-content{width:auto;height:100%;margin:0;overflow:hidden}.video-js .vjs-control-bar{display:none;width:100%;position:absolute;bottom:0;left:0;right:0;height:3em;background-color:#2b333f;background-color:rgba(43,51,63,.7)}.vjs-audio-only-mode .vjs-control-bar,.vjs-has-started .vjs-control-bar{display:flex;visibility:visible;opacity:1;transition:visibility .1s,opacity .1s}.vjs-has-started.vjs-user-inactive.vjs-playing .vjs-control-bar{visibility:visible;opacity:0;pointer-events:none;transition:visibility 1s,opacity 1s}.vjs-controls-disabled .vjs-control-bar,.vjs-error .vjs-control-bar,.vjs-using-native-controls .vjs-control-bar{display:none!important}.vjs-audio-only-mode.vjs-has-started.vjs-user-inactive.vjs-playing .vjs-control-bar,.vjs-audio.vjs-has-started.vjs-user-inactive.vjs-playing .vjs-control-bar{opacity:1;visibility:visible}.vjs-has-started.vjs-no-flex .vjs-control-bar{display:table}.video-js .vjs-control{position:relative;text-align:center;margin:0;padding:0;height:100%;width:4em;flex:none}.video-js .vjs-control.vjs-visible-text{width:auto;padding-left:1em;padding-right:1em}.vjs-button>.vjs-icon-placeholder:before{font-size:1.8em;line-height:1.67}.vjs-button>.vjs-icon-placeholder{display:block}.video-js .vjs-control:focus,.video-js .vjs-control:focus:before,.video-js .vjs-control:hover:before{text-shadow:0 0 1em #fff}.video-js :not(.vjs-visible-text)>.vjs-control-text{border:0;clip:rect(0 0 0 0);height:1px;overflow:hidden;padding:0;position:absolute;width:1px}.vjs-no-flex .vjs-control{display:table-cell;vertical-align:middle}.video-js .vjs-custom-control-spacer{display:none}.video-js .vjs-progress-control{cursor:pointer;flex:auto;display:flex;align-items:center;min-width:4em;touch-action:none}.video-js .vjs-progress-control.disabled{cursor:default}.vjs-live .vjs-progress-control{display:none}.vjs-liveui .vjs-progress-control{display:flex;align-items:center}.vjs-no-flex .vjs-progress-control{width:auto}.video-js .vjs-progress-holder{flex:auto;transition:all .2s;height:.3em}.video-js .vjs-progress-control .vjs-progress-holder{margin:0 10px}.video-js .vjs-progress-control:hover .vjs-progress-holder{font-size:1.6666666667em}.video-js .vjs-progress-control:hover .vjs-progress-holder.disabled{font-size:1em}.video-js .vjs-progress-holder .vjs-load-progress,.video-js .vjs-progress-holder .vjs-load-progress div,.video-js .vjs-progress-holder .vjs-play-progress{position:absolute;display:block;height:100%;margin:0;padding:0;width:0}.video-js .vjs-play-progress{background-color:#fff}.video-js .vjs-play-progress:before{font-size:.9em;position:absolute;right:-.5em;top:-.3333333333em;z-index:1}.video-js .vjs-load-progress{background:rgba(115,133,159,.5)}.video-js .vjs-load-progress div{background:rgba(115,133,159,.75)}.video-js .vjs-time-tooltip{background-color:#fff;background-color:hsla(0,0%,100%,.8);border-radius:.3em;color:#000;float:right;font-family:Arial,Helvetica,sans-serif;font-size:1em;padding:6px 8px 8px 8px;pointer-events:none;position:absolute;top:-3.4em;visibility:hidden;z-index:1}.video-js .vjs-progress-holder:focus .vjs-time-tooltip{display:none}.video-js .vjs-progress-control:hover .vjs-progress-holder:focus .vjs-time-tooltip,.video-js .vjs-progress-control:hover .vjs-time-tooltip{display:block;font-size:.6em;visibility:visible}.video-js .vjs-progress-control.disabled:hover .vjs-time-tooltip{font-size:1em}.video-js .vjs-progress-control .vjs-mouse-display{display:none;position:absolute;width:1px;height:100%;background-color:#000;z-index:1}.vjs-no-flex .vjs-progress-control .vjs-mouse-display{z-index:0}.video-js .vjs-progress-control:hover .vjs-mouse-display{display:block}.video-js.vjs-user-inactive .vjs-progress-control .vjs-mouse-display{visibility:hidden;opacity:0;transition:visibility 1s,opacity 1s}.video-js.vjs-user-inactive.vjs-no-flex .vjs-progress-control .vjs-mouse-display{display:none}.vjs-mouse-display .vjs-time-tooltip{color:#fff;background-color:#000;background-color:rgba(0,0,0,.8)}.video-js .vjs-slider{position:relative;cursor:pointer;padding:0;margin:0 .45em 0 .45em;-webkit-touch-callout:none;-webkit-user-select:none;-moz-user-select:none;user-select:none;background-color:#73859f;background-color:rgba(115,133,159,.5)}.video-js .vjs-slider.disabled{cursor:default}.video-js .vjs-slider:focus{text-shadow:0 0 1em #fff;box-shadow:0 0 1em #fff}.video-js .vjs-mute-control{cursor:pointer;flex:none}.video-js .vjs-volume-control{cursor:pointer;margin-right:1em;display:flex}.video-js .vjs-volume-control.vjs-volume-horizontal{width:5em}.video-js .vjs-volume-panel .vjs-volume-control{visibility:visible;opacity:0;width:1px;height:1px;margin-left:-1px}.video-js .vjs-volume-panel{transition:width 1s}.video-js .vjs-volume-panel.vjs-hover .vjs-mute-control~.vjs-volume-control,.video-js .vjs-volume-panel.vjs-hover .vjs-volume-control,.video-js .vjs-volume-panel .vjs-volume-control.vjs-slider-active,.video-js .vjs-volume-panel .vjs-volume-control:active,.video-js .vjs-volume-panel:active .vjs-volume-control,.video-js .vjs-volume-panel:focus .vjs-volume-control{visibility:visible;opacity:1;position:relative;transition:visibility .1s,opacity .1s,height .1s,width .1s,left 0s,top 0s}.video-js .vjs-volume-panel.vjs-hover .vjs-mute-control~.vjs-volume-control.vjs-volume-horizontal,.video-js .vjs-volume-panel.vjs-hover .vjs-volume-control.vjs-volume-horizontal,.video-js .vjs-volume-panel .vjs-volume-control.vjs-slider-active.vjs-volume-horizontal,.video-js .vjs-volume-panel .vjs-volume-control:active.vjs-volume-horizontal,.video-js .vjs-volume-panel:active .vjs-volume-control.vjs-volume-horizontal,.video-js .vjs-volume-panel:focus .vjs-volume-control.vjs-volume-horizontal{width:5em;height:3em;margin-right:0}.video-js .vjs-volume-panel.vjs-hover .vjs-mute-control~.vjs-volume-control.vjs-volume-vertical,.video-js .vjs-volume-panel.vjs-hover .vjs-volume-control.vjs-volume-vertical,.video-js .vjs-volume-panel .vjs-volume-control.vjs-slider-active.vjs-volume-vertical,.video-js .vjs-volume-panel .vjs-volume-control:active.vjs-volume-vertical,.video-js .vjs-volume-panel:active .vjs-volume-control.vjs-volume-vertical,.video-js .vjs-volume-panel:focus .vjs-volume-control.vjs-volume-vertical{left:-3.5em;transition:left 0s}.video-js .vjs-volume-panel.vjs-volume-panel-horizontal.vjs-hover,.video-js .vjs-volume-panel.vjs-volume-panel-horizontal.vjs-slider-active,.video-js .vjs-volume-panel.vjs-volume-panel-horizontal:active{width:10em;transition:width .1s}.video-js .vjs-volume-panel.vjs-volume-panel-horizontal.vjs-mute-toggle-only{width:4em}.video-js .vjs-volume-panel .vjs-volume-control.vjs-volume-vertical{height:8em;width:3em;left:-3000em;transition:visibility 1s,opacity 1s,height 1s 1s,width 1s 1s,left 1s 1s,top 1s 1s}.video-js .vjs-volume-panel .vjs-volume-control.vjs-volume-horizontal{transition:visibility 1s,opacity 1s,height 1s 1s,width 1s,left 1s 1s,top 1s 1s}.video-js.vjs-no-flex .vjs-volume-panel .vjs-volume-control.vjs-volume-horizontal{width:5em;height:3em;visibility:visible;opacity:1;position:relative;transition:none}.video-js.vjs-no-flex .vjs-volume-control.vjs-volume-vertical,.video-js.vjs-no-flex .vjs-volume-panel .vjs-volume-control.vjs-volume-vertical{position:absolute;bottom:3em;left:.5em}.video-js .vjs-volume-panel{display:flex}.video-js .vjs-volume-bar{margin:1.35em .45em}.vjs-volume-bar.vjs-slider-horizontal{width:5em;height:.3em}.vjs-volume-bar.vjs-slider-vertical{width:.3em;height:5em;margin:1.35em auto}.video-js .vjs-volume-level{position:absolute;bottom:0;left:0;background-color:#fff}.video-js .vjs-volume-level:before{position:absolute;font-size:.9em;z-index:1}.vjs-slider-vertical .vjs-volume-level{width:.3em}.vjs-slider-vertical .vjs-volume-level:before{top:-.5em;left:-.3em;z-index:1}.vjs-slider-horizontal .vjs-volume-level{height:.3em}.vjs-slider-horizontal .vjs-volume-level:before{top:-.3em;right:-.5em}.video-js .vjs-volume-panel.vjs-volume-panel-vertical{width:4em}.vjs-volume-bar.vjs-slider-vertical .vjs-volume-level{height:100%}.vjs-volume-bar.vjs-slider-horizontal .vjs-volume-level{width:100%}.video-js .vjs-volume-vertical{width:3em;height:8em;bottom:8em;background-color:#2b333f;background-color:rgba(43,51,63,.7)}.video-js .vjs-volume-horizontal .vjs-menu{left:-2em}.video-js .vjs-volume-tooltip{background-color:#fff;background-color:hsla(0,0%,100%,.8);border-radius:.3em;color:#000;float:right;font-family:Arial,Helvetica,sans-serif;font-size:1em;padding:6px 8px 8px 8px;pointer-events:none;position:absolute;top:-3.4em;visibility:hidden;z-index:1}.video-js .vjs-volume-control:hover .vjs-progress-holder:focus .vjs-volume-tooltip,.video-js .vjs-volume-control:hover .vjs-volume-tooltip{display:block;font-size:1em;visibility:visible}.video-js .vjs-volume-vertical:hover .vjs-progress-holder:focus .vjs-volume-tooltip,.video-js .vjs-volume-vertical:hover .vjs-volume-tooltip{left:1em;top:-12px}.video-js .vjs-volume-control.disabled:hover .vjs-volume-tooltip{font-size:1em}.video-js .vjs-volume-control .vjs-mouse-display{display:none;position:absolute;width:100%;height:1px;background-color:#000;z-index:1}.video-js .vjs-volume-horizontal .vjs-mouse-display{width:1px;height:100%}.vjs-no-flex .vjs-volume-control .vjs-mouse-display{z-index:0}.video-js .vjs-volume-control:hover .vjs-mouse-display{display:block}.video-js.vjs-user-inactive .vjs-volume-control .vjs-mouse-display{visibility:hidden;opacity:0;transition:visibility 1s,opacity 1s}.video-js.vjs-user-inactive.vjs-no-flex .vjs-volume-control .vjs-mouse-display{display:none}.vjs-mouse-display .vjs-volume-tooltip{color:#fff;background-color:#000;background-color:rgba(0,0,0,.8)}.vjs-poster{display:inline-block;vertical-align:middle;background-repeat:no-repeat;background-position:50% 50%;background-size:contain;background-color:#000;cursor:pointer;margin:0;padding:0;position:absolute;top:0;right:0;bottom:0;left:0;height:100%}.vjs-has-started .vjs-poster,.vjs-using-native-controls .vjs-poster{display:none}.vjs-audio.vjs-has-started .vjs-poster,.vjs-has-started.vjs-audio-poster-mode .vjs-poster{display:block}.video-js .vjs-live-control{display:flex;align-items:flex-start;flex:auto;font-size:1em;line-height:3em}.vjs-no-flex .vjs-live-control{display:table-cell;width:auto;text-align:left}.video-js.vjs-liveui .vjs-live-control,.video-js:not(.vjs-live) .vjs-live-control{display:none}.video-js .vjs-seek-to-live-control{align-items:center;cursor:pointer;flex:none;display:inline-flex;height:100%;padding-left:.5em;padding-right:.5em;font-size:1em;line-height:3em;width:auto;min-width:4em}.vjs-no-flex .vjs-seek-to-live-control{display:table-cell;width:auto;text-align:left}.video-js.vjs-live:not(.vjs-liveui) .vjs-seek-to-live-control,.video-js:not(.vjs-live) .vjs-seek-to-live-control{display:none}.vjs-seek-to-live-control.vjs-control.vjs-at-live-edge{cursor:auto}.vjs-seek-to-live-control .vjs-icon-placeholder{margin-right:.5em;color:#888}.vjs-seek-to-live-control.vjs-control.vjs-at-live-edge .vjs-icon-placeholder{color:red}.video-js .vjs-time-control{flex:none;font-size:1em;line-height:3em;min-width:2em;width:auto;padding-left:1em;padding-right:1em}.video-js .vjs-current-time,.video-js .vjs-duration,.vjs-live .vjs-time-control,.vjs-no-flex .vjs-current-time,.vjs-no-flex .vjs-duration{display:none}.vjs-time-divider{display:none;line-height:3em}.vjs-live .vjs-time-divider{display:none}.video-js .vjs-play-control{cursor:pointer}.video-js .vjs-play-control .vjs-icon-placeholder{flex:none}.vjs-text-track-display{position:absolute;bottom:3em;left:0;right:0;top:0;pointer-events:none}.video-js.vjs-controls-disabled .vjs-text-track-display,.video-js.vjs-user-inactive.vjs-playing .vjs-text-track-display{bottom:1em}.video-js .vjs-text-track{font-size:1.4em;text-align:center;margin-bottom:.1em}.vjs-subtitles{color:#fff}.vjs-captions{color:#fc6}.vjs-tt-cue{display:block}video::-webkit-media-text-track-display{transform:translateY(-3em)}.video-js.vjs-controls-disabled video::-webkit-media-text-track-display,.video-js.vjs-user-inactive.vjs-playing video::-webkit-media-text-track-display{transform:translateY(-1.5em)}.video-js .vjs-picture-in-picture-control{cursor:pointer;flex:none}.video-js.vjs-audio-only-mode .vjs-picture-in-picture-control{display:none}.video-js .vjs-fullscreen-control{cursor:pointer;flex:none}.video-js.vjs-audio-only-mode .vjs-fullscreen-control{display:none}.vjs-playback-rate .vjs-playback-rate-value,.vjs-playback-rate>.vjs-menu-button{position:absolute;top:0;left:0;width:100%;height:100%}.vjs-playback-rate .vjs-playback-rate-value{pointer-events:none;font-size:1.5em;line-height:2;text-align:center}.vjs-playback-rate .vjs-menu{width:4em;left:0}.vjs-error .vjs-error-display .vjs-modal-dialog-content{font-size:1.4em;text-align:center}.vjs-error .vjs-error-display:before{color:#fff;content:\"X\";font-family:Arial,Helvetica,sans-serif;font-size:4em;left:0;line-height:1;margin-top:-.5em;position:absolute;text-shadow:.05em .05em .1em #000;text-align:center;top:50%;vertical-align:middle;width:100%}.vjs-loading-spinner{display:none;position:absolute;top:50%;margin:-25px 0 0 -25px;opacity:.85;text-align:left;border:6px solid rgba(43,51,63,.7);box-sizing:border-box;background-clip:padding-box;width:50px;height:50px;border-radius:25px}.vjs-seeking .vjs-loading-spinner,.vjs-waiting .vjs-loading-spinner{display:block;-webkit-animation:vjs-spinner-show 0s linear .3s forwards;animation:vjs-spinner-show 0s linear .3s forwards}.vjs-loading-spinner:after,.vjs-loading-spinner:before{content:\"\";position:absolute;margin:-6px;box-sizing:inherit;width:inherit;height:inherit;border-radius:inherit;opacity:1;border:inherit;border-color:transparent;border-top-color:#fff}.vjs-seeking .vjs-loading-spinner:after,.vjs-seeking .vjs-loading-spinner:before,.vjs-waiting .vjs-loading-spinner:after,.vjs-waiting .vjs-loading-spinner:before{-webkit-animation:vjs-spinner-spin 1.1s cubic-bezier(.6,.2,0,.8) infinite,vjs-spinner-fade 1.1s linear infinite;animation:vjs-spinner-spin 1.1s cubic-bezier(.6,.2,0,.8) infinite,vjs-spinner-fade 1.1s linear infinite}.vjs-seeking .vjs-loading-spinner:before,.vjs-waiting .vjs-loading-spinner:before{border-top-color:#fff}.vjs-seeking .vjs-loading-spinner:after,.vjs-waiting .vjs-loading-spinner:after{border-top-color:#fff;-webkit-animation-delay:.44s;animation-delay:.44s}@-webkit-keyframes vjs-spinner-show{to{visibility:visible}}@keyframes vjs-spinner-spin{to{transform:rotate(1turn)}}@-webkit-keyframes vjs-spinner-spin{to{-webkit-transform:rotate(1turn)}}@keyframes vjs-spinner-fade{0%{border-top-color:#73859f}20%{border-top-color:#73859f}35%{border-top-color:#fff}60%{border-top-color:#73859f}to{border-top-color:#73859f}}@-webkit-keyframes vjs-spinner-fade{0%{border-top-color:#73859f}20%{border-top-color:#73859f}35%{border-top-color:#fff}60%{border-top-color:#73859f}to{border-top-color:#73859f}}.video-js.vjs-audio-only-mode .vjs-captions-button{display:none}.vjs-chapters-button .vjs-menu ul{width:24em}.video-js.vjs-audio-only-mode .vjs-descriptions-button{display:none}.video-js .vjs-subs-caps-button+.vjs-menu .vjs-captions-menu-item .vjs-menu-item-text .vjs-icon-placeholder{vertical-align:middle;display:inline-block;margin-bottom:-.1em}.video-js .vjs-subs-caps-button+.vjs-menu .vjs-captions-menu-item .vjs-menu-item-text .vjs-icon-placeholder:before{font-family:VideoJS;content:\"\";font-size:1.5em;line-height:inherit}.video-js.vjs-audio-only-mode .vjs-subs-caps-button{display:none}.video-js .vjs-audio-button+.vjs-menu .vjs-main-desc-menu-item .vjs-menu-item-text .vjs-icon-placeholder{vertical-align:middle;display:inline-block;margin-bottom:-.1em}.video-js .vjs-audio-button+.vjs-menu .vjs-main-desc-menu-item .vjs-menu-item-text .vjs-icon-placeholder:before{font-family:VideoJS;content:\" \";font-size:1.5em;line-height:inherit}.video-js.vjs-layout-small .vjs-current-time,.video-js.vjs-layout-small .vjs-duration,.video-js.vjs-layout-small .vjs-playback-rate,.video-js.vjs-layout-small .vjs-remaining-time,.video-js.vjs-layout-small .vjs-time-divider,.video-js.vjs-layout-small .vjs-volume-control,.video-js.vjs-layout-tiny .vjs-current-time,.video-js.vjs-layout-tiny .vjs-duration,.video-js.vjs-layout-tiny .vjs-playback-rate,.video-js.vjs-layout-tiny .vjs-remaining-time,.video-js.vjs-layout-tiny .vjs-time-divider,.video-js.vjs-layout-tiny .vjs-volume-control,.video-js.vjs-layout-x-small .vjs-current-time,.video-js.vjs-layout-x-small .vjs-duration,.video-js.vjs-layout-x-small .vjs-playback-rate,.video-js.vjs-layout-x-small .vjs-remaining-time,.video-js.vjs-layout-x-small .vjs-time-divider,.video-js.vjs-layout-x-small .vjs-volume-control{display:none}.video-js.vjs-layout-small .vjs-volume-panel.vjs-volume-panel-horizontal.vjs-hover,.video-js.vjs-layout-small .vjs-volume-panel.vjs-volume-panel-horizontal.vjs-slider-active,.video-js.vjs-layout-small .vjs-volume-panel.vjs-volume-panel-horizontal:active,.video-js.vjs-layout-small .vjs-volume-panel.vjs-volume-panel-horizontal:hover,.video-js.vjs-layout-tiny .vjs-volume-panel.vjs-volume-panel-horizontal.vjs-hover,.video-js.vjs-layout-tiny .vjs-volume-panel.vjs-volume-panel-horizontal.vjs-slider-active,.video-js.vjs-layout-tiny .vjs-volume-panel.vjs-volume-panel-horizontal:active,.video-js.vjs-layout-tiny .vjs-volume-panel.vjs-volume-panel-horizontal:hover,.video-js.vjs-layout-x-small .vjs-volume-panel.vjs-volume-panel-horizontal.vjs-hover,.video-js.vjs-layout-x-small .vjs-volume-panel.vjs-volume-panel-horizontal.vjs-slider-active,.video-js.vjs-layout-x-small .vjs-volume-panel.vjs-volume-panel-horizontal:active,.video-js.vjs-layout-x-small .vjs-volume-panel.vjs-volume-panel-horizontal:hover{width:auto}.video-js.vjs-layout-tiny .vjs-progress-control,.video-js.vjs-layout-x-small .vjs-progress-control{display:none}.video-js.vjs-layout-x-small .vjs-custom-control-spacer{flex:auto;display:block}.video-js.vjs-layout-x-small.vjs-no-flex .vjs-custom-control-spacer{width:auto}.vjs-modal-dialog.vjs-text-track-settings{background-color:#2b333f;background-color:rgba(43,51,63,.75);color:#fff;height:70%}.vjs-text-track-settings .vjs-modal-dialog-content{display:table}.vjs-text-track-settings .vjs-track-settings-colors,.vjs-text-track-settings .vjs-track-settings-controls,.vjs-text-track-settings .vjs-track-settings-font{display:table-cell}.vjs-text-track-settings .vjs-track-settings-controls{text-align:right;vertical-align:bottom}@supports(display:grid){.vjs-text-track-settings .vjs-modal-dialog-content{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr;padding:20px 24px 0 24px}.vjs-track-settings-controls .vjs-default-button{margin-bottom:20px}.vjs-text-track-settings .vjs-track-settings-controls{grid-column:1/-1}.vjs-layout-small .vjs-text-track-settings .vjs-modal-dialog-content,.vjs-layout-tiny .vjs-text-track-settings .vjs-modal-dialog-content,.vjs-layout-x-small .vjs-text-track-settings .vjs-modal-dialog-content{grid-template-columns:1fr}}.vjs-track-setting>select{margin-right:1em;margin-bottom:.5em}.vjs-text-track-settings fieldset{margin:5px;padding:3px;border:none}.vjs-text-track-settings fieldset span{display:inline-block}.vjs-text-track-settings fieldset span>select{max-width:7.3em}.vjs-text-track-settings legend{color:#fff;margin:0 0 5px 0}.vjs-text-track-settings .vjs-label{position:absolute;clip:rect(1px 1px 1px 1px);clip:rect(1px,1px,1px,1px);display:block;margin:0 0 5px 0;padding:0;border:0;height:1px;width:1px;overflow:hidden}.vjs-track-settings-controls button:active,.vjs-track-settings-controls button:focus{outline-style:solid;outline-width:medium;background-image:linear-gradient(0deg,#fff 88%,#73859f)}.vjs-track-settings-controls button:hover{color:rgba(43,51,63,.75)}.vjs-track-settings-controls button{background-color:#fff;background-image:linear-gradient(-180deg,#fff 88%,#73859f);color:#2b333f;cursor:pointer;border-radius:2px}.vjs-track-settings-controls .vjs-default-button{margin-right:1em}@media print{.video-js>:not(.vjs-tech):not(.vjs-poster){visibility:hidden}}.vjs-resize-manager{position:absolute;top:0;left:0;width:100%;height:100%;border:none;z-index:-1000}.js-focus-visible .video-js :focus:not(.focus-visible),.video-js :focus:not(:focus-visible){outline:none}.video-js.vjs-peertube-skin .peertube-dock{--avatarSize:48px;transition:opacity .1s;display:flex;align-items:center;pointer-events:none;position:absolute;top:0;left:0;width:100%;font-size:23px;padding:20px;background:linear-gradient(180deg,rgba(20,20,20,.7) 0,rgba(20,20,20,0))}@supports((-webkit-padding-end:60px) or (padding-inline-end:60px)){.video-js.vjs-peertube-skin .peertube-dock{-webkit-padding-end:60px;padding-inline-end:60px}}@supports not ((-webkit-padding-end:60px) or (padding-inline-end:60px)){.video-js.vjs-peertube-skin .peertube-dock{padding-right:60px}}.video-js.vjs-peertube-skin .peertube-dock-avatar{border-radius:50%;margin-right:10px;min-width:var(--avatarSize);min-height:var(--avatarSize);max-height:var(--avatarSize)}.video-js.vjs-peertube-skin .peertube-dock-title-description{min-width:0}.video-js.vjs-peertube-skin .peertube-dock-title{font-weight:600;letter-spacing:1px;line-height:normal;min-width:0}.video-js.vjs-peertube-skin .peertube-dock-description,.video-js.vjs-peertube-skin .peertube-dock-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 3px rgba(0,0,0,.5)}.video-js.vjs-peertube-skin .peertube-dock-title+.peertube-dock-description{margin-top:3px}.video-js.vjs-peertube-skin .peertube-dock-description{font-size:11px;line-height:1.5}@supports((-webkit-margin-end:4px) or (margin-inline-end:4px)){.video-js.vjs-peertube-skin .peertube-dock-description .text:before{-webkit-margin-end:4px;margin-inline-end:4px}}@supports not ((-webkit-margin-end:4px) or (margin-inline-end:4px)){.video-js.vjs-peertube-skin .peertube-dock-description .text:before{margin-right:4px}}.video-js.vjs-peertube-skin .peertube-dock-description .text:after{transform:scaleX(-1)}@supports((-webkit-margin-start:4px) or (margin-inline-start:4px)){.video-js.vjs-peertube-skin .peertube-dock-description .text:after{-webkit-margin-start:4px;margin-inline-start:4px}}@supports not ((-webkit-margin-start:4px) or (margin-inline-start:4px)){.video-js.vjs-peertube-skin .peertube-dock-description .text:after{margin-left:4px}}@media screen and (max-width:750px){.video-js.vjs-peertube-skin .peertube-dock-avatar{--avatarSize:40px}.video-js.vjs-peertube-skin .peertube-dock{font-size:16px}.video-js.vjs-peertube-skin .peertube-dock-description{font-size:9px}}@media screen and (max-width:570px){.video-js.vjs-peertube-skin .peertube-dock-avatar{--avatarSize:35px}.video-js.vjs-peertube-skin .peertube-dock{font-size:14px}}@media screen and (max-width:350px){.video-js.vjs-peertube-skin .peertube-dock-avatar{--avatarSize:30px}.video-js.vjs-peertube-skin .peertube-dock{font-size:13px}}.video-js.vjs-peertube-skin.vjs-playing.vjs-user-inactive .peertube-dock{opacity:0;transition:opacity 1s}.video-js.vjs-peertube-skin .vjs-control-bar{z-index:10;align-items:center;height:38px;background:linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.6));box-shadow:0 -15px 40px 10px rgba(0,0,0,.2);text-shadow:-1px -1px 1px hsla(0,0%,100%,.1),1px 1px 1px rgba(0,0,0,.5);transition:visibility .3s,opacity .3s!important;padding-bottom:2em;padding-left:2em;padding-right:2em}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-control{display:flex;align-items:center;width:3em}.video-js.vjs-peertube-skin .vjs-control-bar.control-bar-hidden{display:none!important}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-fullscreen-control,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-mute-control,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube-link,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-play-control,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-playback-rate,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-progress-control,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-resolution-control,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-settings,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-theater-control,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-volume-control{color:var(--embedForegroundColor)!important;opacity:.9;transition:opacity .1s}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-fullscreen-control:hover,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-mute-control:hover,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube-link:hover,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-play-control:hover,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-playback-rate:hover,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-progress-control:hover,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-resolution-control:hover,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-settings:hover,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-theater-control:hover,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-volume-control:hover{opacity:1}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-current-time,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-duration,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube{color:var(--embedForegroundColor);opacity:.9}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-progress-control{position:absolute;bottom:0;z-index:100;height:2.5em;left:2em;right:2em;width:auto}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-progress-control .vjs-slider{margin:0;border-radius:0;background-color:hsla(0,0%,100%,.2);height:4px;border-radius:2px;overflow:hidden}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-progress-control .vjs-slider .vjs-slider-bar{transition:.3s}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-progress-control .vjs-slider .vjs-mouse-display{display:none!important}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-progress-control .vjs-slider .vjs-play-progress{background:#fff;width:100%}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-progress-control .vjs-slider .vjs-play-progress:before{opacity:0;transition:opacity .1s ease;top:-.3em;display:none!important}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-progress-control .vjs-slider .vjs-play-progress .vjs-time-tooltip{display:none!important}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-progress-control .vjs-slider .vjs-load-progress,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-progress-control .vjs-slider .vjs-load-progress div{background:hsla(0,0%,100%,.2)}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-play-control{cursor:pointer;width:4em;order:0}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-mute-control{order:1}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-volume-control{order:2}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-current-time{order:3}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-time-divider{order:4;min-width:0;padding:0 .25em;width:auto}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-duration{order:5}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-picture-in-picture-control{order:6}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-settings{order:7}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-fullscreen-control{order:8}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-time-control{width:auto}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-time-control.vjs-current-time{display:flex;align-items:center;padding:0}@supports((-webkit-margin-start:0.5em) or (margin-inline-start:0.5em)){.video-js.vjs-peertube-skin .vjs-control-bar .vjs-time-control.vjs-current-time{-webkit-margin-start:.5em;margin-inline-start:.5em}}@supports not ((-webkit-margin-start:0.5em) or (margin-inline-start:0.5em)){.video-js.vjs-peertube-skin .vjs-control-bar .vjs-time-control.vjs-current-time{margin-left:.5em}}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-time-control.vjs-duration{display:flex;align-items:center;padding:0;margin-right:auto}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-time-control.vjs-remaining-time{display:none}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-live-control{min-width:4em;width:inherit}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube{text-align:end;overflow:hidden}@supports((-webkit-margin-end:6px) or (margin-inline-end:6px)){.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube{-webkit-margin-end:6px;margin-inline-end:6px}}@supports not ((-webkit-margin-end:6px) or (margin-inline-end:6px)){.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube{margin-right:6px}}@supports((-webkit-margin-start:auto) or (margin-inline-start:auto)){.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube{-webkit-margin-start:auto;margin-inline-start:auto}}@supports not ((-webkit-margin-start:auto) or (margin-inline-start:auto)){.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube{margin-left:auto}}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube .vjs-peertube-displayed{display:block}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube .vjs-peertube-hidden{display:none}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube .download-speed-number,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube .http-fallback,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube .peers-number,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube .upload-speed-number{font-weight:600}@supports((-webkit-margin-end:15px) or (margin-inline-end:15px)){.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube .download-speed-text,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube .http-fallback,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube .peers-text,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube .upload-speed-text{-webkit-margin-end:15px;margin-inline-end:15px}}@supports not ((-webkit-margin-end:15px) or (margin-inline-end:15px)){.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube .download-speed-text,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube .http-fallback,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube .peers-text,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube .upload-speed-text{margin-right:15px}}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube .icon{display:inline-block;width:15px;height:15px;background-size:contain;vertical-align:middle;background-repeat:no-repeat;position:relative;top:-1px}@supports((-webkit-margin-end:2px) or (margin-inline-end:2px)){.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube .icon{-webkit-margin-end:2px;margin-inline-end:2px}}@supports not ((-webkit-margin-end:2px) or (margin-inline-end:2px)){.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube .icon{margin-right:2px}}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube .icon.icon-download{background-image:url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj48cGF0aCBkPSJNMTIgM3YxNyIvPjxwYXRoIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Ik0yMCAxM2wtOCA4LTgtOCIvPjwvZz48L3N2Zz4=)}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube .icon.icon-upload{background-image:url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj48cGF0aCBkPSJNMTIgNHYxNyIvPjxwYXRoIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Ik0yMCAxMWwtOC04LTggOCIvPjwvZz48L3N2Zz4=)}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-next-video,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-previous-video{width:34px}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-next-video.vjs-disabled,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-previous-video.vjs-disabled{cursor:default}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-next-video .icon.icon-next,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-next-video .icon.icon-previous,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-previous-video .icon.icon-next,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-previous-video .icon.icon-previous{mask-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMiAxMiIgaGVpZ2h0PSI4IiB3aWR0aD0iOCI+PHBhdGggZD0iTTAgMTJsOC41LTZMMCAwek0xMCAwdjEyaDJWMHoiIGZpbGw9IiNmZmYiLz48L3N2Zz4=);-webkit-mask-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMiAxMiIgaGVpZ2h0PSI4IiB3aWR0aD0iOCI+PHBhdGggZD0iTTAgMTJsOC41LTZMMCAwek0xMCAwdjEyaDJWMHoiIGZpbGw9IiNmZmYiLz48L3N2Zz4=);mask-size:cover;-webkit-mask-size:cover;background-color:#fff;width:14px;height:14px;display:inline-block}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-next-video .icon.icon-previous,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-previous-video .icon.icon-previous{transform:rotate(180deg)}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-mute-control{padding:0;width:26px}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-mute-control:focus:not(.focus-visible){outline:none}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-mute-control .vjs-icon-placeholder{display:inline-block;vertical-align:middle}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-volume-control{display:flex;align-items:center;margin-left:1em;margin-right:1em}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-volume-bar{height:4px;width:100%;margin:0;border-radius:2px}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-volume-bar .vjs-volume-level{height:100%;transform-origin:left}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-volume-bar .vjs-volume-level:before{content:\"\"}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-volume-bar:focus{text-shadow:none;box-shadow:none}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-volume-panel.vjs-volume-panel-horizontal.vjs-slider-active,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-volume-panel.vjs-volume-panel-horizontal:active,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-volume-panel.vjs-volume-panel-horizontal:focus,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-volume-panel.vjs-volume-panel-horizontal:hover{width:6em;transition-property:none}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-volume-panel .vjs-mute-control:hover~.vjs-volume-control.vjs-volume-horizontal{width:3em;height:auto}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-volume-panel .vjs-mute-control:hover~.vjs-volume-control{transition-property:none}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-volume-panel .vjs-mute-control{width:2em;z-index:1;padding:0}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-volume-panel .vjs-volume-control{display:inline-block;position:relative;left:5px;opacity:1;width:3em;height:auto}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-settings{font-family:VideoJS;font-weight:400;font-style:normal;cursor:pointer}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-settings .vjs-icon-placeholder:before{content:\"\"}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube-link{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none;padding:0 5px;max-width:150px}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube-link:focus:not(.focus-visible){outline:none}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube-link:active,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube-link:focus,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube-link:hover{text-decoration:none!important;outline:none!important}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-theater-control{width:38px;cursor:pointer}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-theater-control:focus:not(.focus-visible){outline:none}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-theater-control .vjs-icon-placeholder{transition:transform .2s ease;display:inline-block;width:26px;height:26px;vertical-align:middle;background:url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEgNmgyMnYxMkgxeiIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIvPjwvc3ZnPg==) no-repeat;background-size:contain}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-theater-control .vjs-icon-placeholder:before{content:\"\"}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-fullscreen-control:focus:not(.focus-visible){outline:none}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-fullscreen-control .vjs-icon-placeholder{display:inline-block;vertical-align:middle}@media screen and (max-width:750px){.video-js.vjs-peertube-skin .vjs-control-bar .vjs-theater-control{display:none}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube .download-speed-text,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube .icon,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube .upload-speed-text{display:none!important}}@media screen and (max-width:570px){.video-js.vjs-peertube-skin .vjs-control-bar .vjs-volume-control{display:none}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube{padding:0!important}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube .vjs-peertube-displayed{display:none!important}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube-link{max-width:100px}.video-js.vjs-peertube-skin .vjs-control-bar.vjs-live .vjs-duration,.video-js.vjs-peertube-skin .vjs-control-bar.vjs-live .vjs-peertube{display:none!important}}@media screen and (max-width:350px){.video-js.vjs-peertube-skin .vjs-control-bar .vjs-next-video,.video-js.vjs-peertube-skin .vjs-control-bar .vjs-previous-video{display:none!important}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-peertube-link{padding:0!important}@supports((-webkit-margin-start:0) or (margin-inline-start:0)){.video-js.vjs-peertube-skin .vjs-control-bar>button:first-child{-webkit-margin-start:0;margin-inline-start:0}}@supports not ((-webkit-margin-start:0) or (margin-inline-start:0)){.video-js.vjs-peertube-skin .vjs-control-bar>button:first-child{margin-left:0}}@supports((-webkit-margin-end:0) or (margin-inline-end:0)){.video-js.vjs-peertube-skin .vjs-control-bar>button:last-child{-webkit-margin-end:0;margin-inline-end:0}}@supports not ((-webkit-margin-end:0) or (margin-inline-end:0)){.video-js.vjs-peertube-skin .vjs-control-bar>button:last-child{margin-right:0}}.video-js.vjs-peertube-skin .vjs-control-bar .vjs-play-control{width:30px}@supports((-webkit-margin-start:0) or (margin-inline-start:0)){.video-js.vjs-peertube-skin .vjs-control-bar .vjs-play-control{-webkit-margin-start:0;margin-inline-start:0}}@supports not ((-webkit-margin-start:0) or (margin-inline-start:0)){.video-js.vjs-peertube-skin .vjs-control-bar .vjs-play-control{margin-left:0}}.video-js.vjs-peertube-skin .vjs-control-bar.vjs-live .vjs-current-time{display:none!important}}.video-js.vjs-peertube-skin.vjs-is-mobile .vjs-control-bar .vjs-progress-control .vjs-slider .vjs-play-progress:before{margin-top:-1px;opacity:1}.video-js.vjs-peertube-skin.vjs-is-mobile .vjs-big-play-button{display:none}.vjs-mobile-buttons-overlay{display:none;position:absolute;background-color:rgba(0,0,0,.4);width:100%;height:100%;top:0}.vjs-mobile-buttons-overlay .vjs-paused,.vjs-mobile-buttons-overlay .vjs-user-active{display:block}.vjs-mobile-buttons-overlay .forward-button,.vjs-mobile-buttons-overlay .main-button,.vjs-mobile-buttons-overlay .rewind-button{width:-webkit-fit-content;width:-moz-fit-content;width:fit-content;height:-webkit-fit-content;height:-moz-fit-content;height:fit-content;position:relative;top:calc(50% - 10px);transform:translateY(-50%);-webkit-user-select:none;-moz-user-select:none;user-select:none}.vjs-mobile-buttons-overlay .forward-button .icon,.vjs-mobile-buttons-overlay .main-button,.vjs-mobile-buttons-overlay .rewind-button .icon{font-family:VideoJS;font-weight:400;font-style:normal}.vjs-mobile-buttons-overlay .main-button{font-size:5em;margin:auto}.vjs-mobile-buttons-overlay .forward-button,.vjs-mobile-buttons-overlay .rewind-button{margin:0 10px;position:absolute;text-align:center}.vjs-mobile-buttons-overlay .forward-button .icon,.vjs-mobile-buttons-overlay .rewind-button .icon{opacity:0;-webkit-animation:fadeInAndOut 1s linear infinite;animation:fadeInAndOut 1s linear infinite}.vjs-mobile-buttons-overlay .forward-button .icon:before,.vjs-mobile-buttons-overlay .rewind-button .icon:before{font-size:20px;content:\"\";display:inline-block;width:16px}.vjs-mobile-buttons-overlay .forward-button{right:5px}.vjs-mobile-buttons-overlay .forward-button .icon:before{margin-left:-2px}.vjs-mobile-buttons-overlay .forward-button .icon:nth-child(2){-webkit-animation-delay:.25s;animation-delay:.25s}.vjs-mobile-buttons-overlay .forward-button .icon:nth-child(3){-webkit-animation-delay:.5s;animation-delay:.5s}.vjs-mobile-buttons-overlay .rewind-button{left:5px}.vjs-mobile-buttons-overlay .rewind-button .icon:before{margin-right:-2px;transform:scaleX(-1)}.vjs-mobile-buttons-overlay .rewind-button .icon:first-child{-webkit-animation-delay:.5s;animation-delay:.5s}.vjs-mobile-buttons-overlay .rewind-button .icon:nth-child(2){-webkit-animation-delay:.25s;animation-delay:.25s}.vjs-paused .main-button:before{content:\"\"}.vjs-playing .main-button:before{content:\"\"}.vjs-ended .main-button:before{content:\"\"}.vjs-has-started.vjs-paused .vjs-mobile-buttons-overlay,.vjs-has-started.vjs-user-active .vjs-mobile-buttons-overlay{display:block}.vjs-has-started.vjs-fast-seeking .main-button,.vjs-has-started.vjs-scrubbing .vjs-mobile-buttons-overlay,.vjs-has-started.vjs-seeking .main-button,.vjs-has-started.vjs-waiting .main-button{display:none}@-webkit-keyframes fadeInAndOut{0%,20%{opacity:0}60%,70%{opacity:1}to{opacity:0}}@keyframes fadeInAndOut{0%,20%{opacity:0}60%,70%{opacity:1}to{opacity:0}}.video-js .vjs-contextmenu-ui-menu{position:absolute;background-color:rgba(0,0,0,.8);padding:8px 0;border-radius:4px;width:350px;z-index:105}.video-js .vjs-contextmenu-ui-menu .vjs-menu-content{opacity:.9;color:var(--embedForegroundColor);font-size:13px!important;font-weight:600}.video-js .vjs-contextmenu-ui-menu .vjs-menu-item{cursor:pointer;font-size:1em;padding:8px 16px;text-align:start;text-transform:none}.video-js .vjs-contextmenu-ui-menu .vjs-menu-item:hover{background-color:hsla(0,0%,100%,.2)}.video-js .vjs-contextmenu-ui-menu .vjs-menu-item [class^=vjs-icon-]{display:inline-flex;position:relative;top:2px;cursor:pointer;width:14px;height:14px;background-color:#fff;-webkit-mask-size:cover;mask-size:cover}@supports((-webkit-margin-end:0.8rem !important) or (margin-inline-end:0.8rem !important)){.video-js .vjs-contextmenu-ui-menu .vjs-menu-item [class^=vjs-icon-]{-webkit-margin-end:.8rem!important;margin-inline-end:.8rem!important}}@supports not ((-webkit-margin-end:0.8rem !important) or (margin-inline-end:0.8rem !important)){.video-js .vjs-contextmenu-ui-menu .vjs-menu-item [class^=vjs-icon-]{margin-right:.8rem!important}}.video-js .vjs-contextmenu-ui-menu .vjs-menu-item [class^=vjs-icon-][class$=-link-2]{mask-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0iZmVhdGhlciBmZWF0aGVyLWxpbmstMiI+PHBhdGggZD0iTTE1IDdoM2E1IDUgMCAwMTUgNSA1IDUgMCAwMS01IDVoLTNtLTYgMEg2YTUgNSAwIDAxLTUtNSA1IDUgMCAwMTUtNWgzTTggMTJoOCIvPjwvc3ZnPg==);-webkit-mask-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0iZmVhdGhlciBmZWF0aGVyLWxpbmstMiI+PHBhdGggZD0iTTE1IDdoM2E1IDUgMCAwMTUgNSA1IDUgMCAwMS01IDVoLTNtLTYgMEg2YTUgNSAwIDAxLTUtNSA1IDUgMCAwMTUtNWgzTTggMTJoOCIvPjwvc3ZnPg==)}.video-js .vjs-contextmenu-ui-menu .vjs-menu-item [class^=vjs-icon-][class$=-repeat]{mask-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0iZmVhdGhlciBmZWF0aGVyLXJlcGVhdCI+PHBhdGggZD0iTTE3IDFsNCA0LTQgNCIvPjxwYXRoIGQ9Ik0zIDExVjlhNCA0IDAgMDE0LTRoMTRNNyAyM2wtNC00IDQtNCIvPjxwYXRoIGQ9Ik0yMSAxM3YyYTQgNCAwIDAxLTQgNEgzIi8+PC9zdmc+);-webkit-mask-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0iZmVhdGhlciBmZWF0aGVyLXJlcGVhdCI+PHBhdGggZD0iTTE3IDFsNCA0LTQgNCIvPjxwYXRoIGQ9Ik0zIDExVjlhNCA0IDAgMDE0LTRoMTRNNyAyM2wtNC00IDQtNCIvPjxwYXRoIGQ9Ik0yMSAxM3YyYTQgNCAwIDAxLTQgNEgzIi8+PC9zdmc+)}.video-js .vjs-contextmenu-ui-menu .vjs-menu-item [class^=vjs-icon-][class$=-code]{mask-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0iZmVhdGhlciBmZWF0aGVyLWNvZGUiPjxwYXRoIGQ9Ik0xNiAxOGw2LTYtNi02TTggNmwtNiA2IDYgNiIvPjwvc3ZnPg==);-webkit-mask-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0iZmVhdGhlciBmZWF0aGVyLWNvZGUiPjxwYXRoIGQ9Ik0xNiAxOGw2LTYtNi02TTggNmwtNiA2IDYgNiIvPjwvc3ZnPg==)}.video-js .vjs-contextmenu-ui-menu .vjs-menu-item [class^=vjs-icon-][class$=-tick-white]{mask-image:url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj48cGF0aCBkPSJNMjEgNkw5IDE4TTQgMTNsNSA1Ii8+PC9nPjwvc3ZnPg==);-webkit-mask-image:url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj48cGF0aCBkPSJNMjEgNkw5IDE4TTQgMTNsNSA1Ii8+PC9nPjwvc3ZnPg==)}.video-js .vjs-contextmenu-ui-menu .vjs-menu-item [class^=vjs-icon-][class$=-info]{mask-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0iZmVhdGhlciBmZWF0aGVyLWluZm8iPjxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjEwIi8+PHBhdGggZD0iTTEyIDE2di00TTEyIDhoLjAxIi8+PC9zdmc+);-webkit-mask-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0iZmVhdGhlciBmZWF0aGVyLWluZm8iPjxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjEwIi8+PHBhdGggZD0iTTEyIDE2di00TTEyIDhoLjAxIi8+PC9zdmc+)}.video-js .vjs-contextmenu-ui-menu .vjs-menu-item [class^=vjs-icon-][class$=-tick-white]{float:right;margin:0!important}.video-js .vjs-settings-sub-menu-title{width:4em;text-transform:none}.video-js .vjs-settings-dialog{position:absolute;right:.5em;bottom:3.5em;color:var(--embedForegroundColor);opacity:.9;margin:0 auto;font-size:13px!important;z-index:1001;border-radius:12px;width:auto;overflow:hidden;background:#000;transition:width .15s ease-out,height .15s ease-out}.video-js .vjs-settings-dialog .vjs-settings-sub-menu-title,.video-js .vjs-settings-dialog .vjs-settings-sub-menu-value{display:table-cell;padding:0 5px;text-transform:capitalize}.video-js .vjs-settings-dialog .vjs-settings-sub-menu-title{text-align:start;font-weight:600}.video-js .vjs-settings-dialog .vjs-settings-sub-menu-value{width:100%;text-align:end}.video-js .vjs-settings-dialog .vjs-settings-sub-menu-value small{font-size:.85em;opacity:.8}.video-js .vjs-settings-dialog .vjs-settings-panel{position:absolute;bottom:0;right:0;overflow-y:auto;overflow-x:hidden;border-radius:1px}.video-js .vjs-settings-dialog .vjs-settings-panel-child{display:flex;align-items:flex-end;white-space:nowrap}.video-js .vjs-settings-dialog .vjs-settings-panel-child:active,.video-js .vjs-settings-dialog .vjs-settings-panel-child:focus{outline:none}.video-js .vjs-settings-dialog .vjs-settings-panel-child>.vjs-menu{flex:1;min-width:200px}.video-js .vjs-settings-dialog .vjs-settings-panel-child>.vjs-menu,.video-js .vjs-settings-dialog .vjs-settings-panel-child>.vjs-settings-sub-menu{transition:all .15s ease-out}.video-js .vjs-settings-dialog .vjs-settings-panel-child>.vjs-menu .vjs-menu-item,.video-js .vjs-settings-dialog .vjs-settings-panel-child>.vjs-settings-sub-menu .vjs-menu-item{font-size:1em;text-transform:none}.video-js .vjs-settings-dialog .vjs-settings-panel-child>.vjs-menu .vjs-menu-item:hover,.video-js .vjs-settings-dialog .vjs-settings-panel-child>.vjs-settings-sub-menu .vjs-menu-item:hover{cursor:pointer;background-color:hsla(0,0%,100%,.2)}.video-js .vjs-settings-dialog .vjs-settings-panel-child>.vjs-menu .vjs-menu-item:first-child,.video-js .vjs-settings-dialog .vjs-settings-panel-child>.vjs-settings-sub-menu .vjs-menu-item:first-child{margin-top:5px}.video-js .vjs-settings-dialog .vjs-settings-panel-child>.vjs-menu .vjs-menu-item:last-child,.video-js .vjs-settings-dialog .vjs-settings-panel-child>.vjs-settings-sub-menu .vjs-menu-item:last-child{margin-bottom:5px}.video-js .vjs-settings-dialog .vjs-settings-panel-child>.vjs-menu .vjs-menu-item.disabled,.video-js .vjs-settings-dialog .vjs-settings-panel-child>.vjs-settings-sub-menu .vjs-menu-item.disabled{opacity:.5;cursor:default!important;background-color:inherit!important}.video-js .vjs-settings-dialog .vjs-settings-panel-child>.vjs-menu .vjs-menu-item{padding:8px 16px}.video-js .vjs-settings-dialog .vjs-settings-panel-child>.vjs-menu .vjs-settings-sub-menu-value:after{border-style:solid;border-width:2px 2px 0 0;content:\"\";display:inline-block;transform:rotate(-45deg);height:9px;width:9px;position:relative;left:0;transform:rotate(45deg)}@supports((-webkit-margin-start:5px) or (margin-inline-start:5px)){.video-js .vjs-settings-dialog .vjs-settings-panel-child>.vjs-menu .vjs-settings-sub-menu-value:after{-webkit-margin-start:5px;margin-inline-start:5px}}@supports not ((-webkit-margin-start:5px) or (margin-inline-start:5px)){.video-js .vjs-settings-dialog .vjs-settings-panel-child>.vjs-menu .vjs-settings-sub-menu-value:after{margin-left:5px}}.video-js .vjs-settings-dialog .vjs-settings-panel-child>.vjs-settings-sub-menu{min-width:80px}.video-js .vjs-settings-dialog .vjs-settings-panel-child>.vjs-settings-sub-menu .vjs-menu-item{outline:0;font-weight:600;text-align:end;padding:5px 8px}.video-js .vjs-settings-dialog .vjs-settings-panel-child>.vjs-settings-sub-menu .vjs-menu-item.vjs-back-button{padding:8px 8px 13px 12px;margin-bottom:5px;border-bottom:1px solid grey;text-align:start}.video-js .vjs-settings-dialog .vjs-settings-panel-child>.vjs-settings-sub-menu .vjs-menu-item.vjs-back-button:before{border-style:solid;border-width:2px 2px 0 0;content:\"\";display:inline-block;transform:rotate(-45deg);height:9px;width:9px;position:relative;left:.25em;transform:rotate(-135deg)}@supports((-webkit-margin-end:5px) or (margin-inline-end:5px)){.video-js .vjs-settings-dialog .vjs-settings-panel-child>.vjs-settings-sub-menu .vjs-menu-item.vjs-back-button:before{-webkit-margin-end:5px;margin-inline-end:5px}}@supports not ((-webkit-margin-end:5px) or (margin-inline-end:5px)){.video-js .vjs-settings-dialog .vjs-settings-panel-child>.vjs-settings-sub-menu .vjs-menu-item.vjs-back-button:before{margin-right:5px}}.video-js .vjs-settings-dialog .vjs-settings-panel-child>.vjs-settings-sub-menu .vjs-menu-item.vjs-selected{background-color:inherit;color:inherit;position:relative}.video-js .vjs-settings-dialog .vjs-settings-panel-child>.vjs-settings-sub-menu .vjs-menu-item.vjs-selected:focus{background-color:rgba(115,133,159,.5)}.video-js .vjs-settings-dialog .vjs-settings-panel-child>.vjs-settings-sub-menu .vjs-menu-item.vjs-selected:before{display:inline-block;background-repeat:no-repeat;background-size:contain;width:15px;height:15px;vertical-align:middle;cursor:pointer;position:absolute;left:8px;content:\" \";margin-top:1px;background-image:url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj48cGF0aCBkPSJNMjEgNkw5IDE4TTQgMTNsNSA1Ii8+PC9nPjwvc3ZnPg==)}.video-js .vjs-settings-dialog .vjs-settings-panel-child>.vjs-settings-sub-menu.vjs-captions-button{width:200px}.video-js .vjs-settings-dialog .vjs-settings-panel-child>.vjs-settings-sub-menu.vjs-captions-button .vjs-menu-item{text-align:start}.video-js .vjs-settings-dialog .vjs-settings-panel-child>.vjs-settings-sub-menu.vjs-captions-button .vjs-menu-item .vjs-menu-item-text{text-transform:capitalize}@supports((-webkit-margin-start:25px) or (margin-inline-start:25px)){.video-js .vjs-settings-dialog .vjs-settings-panel-child>.vjs-settings-sub-menu.vjs-captions-button .vjs-menu-item .vjs-menu-item-text{-webkit-margin-start:25px;margin-inline-start:25px}}@supports not ((-webkit-margin-start:25px) or (margin-inline-start:25px)){.video-js .vjs-settings-dialog .vjs-settings-panel-child>.vjs-settings-sub-menu.vjs-captions-button .vjs-menu-item .vjs-menu-item-text{margin-left:25px}}.video-js .vjs-settings-dialog .vjs-settings-panel-child>.vjs-settings-sub-menu .vjs-menu{width:inherit}.vjs-loading-spinner{left:50%;font-size:10px;text-indent:-9999em;border:.7em solid hsla(0,0%,100%,.2);border-left-color:#fff;transform:translateZ(0);-webkit-animation:vjs-spinner-show .3s ease-out 1.1s forwards,spinner 1.4s linear infinite!important;animation:vjs-spinner-show .3s ease-out 1.1s forwards,spinner 1.4s linear infinite!important;overflow:hidden;visibility:hidden}.vjs-loading-spinner:after,.vjs-loading-spinner:before{-webkit-animation:none!important;animation:none!important}.vjs-loading-spinner:after{border-radius:50%;width:6em;height:6em}@-webkit-keyframes spinner{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}@keyframes spinner{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}@keyframes vjs-spinner-show{0%{display:none;opacity:0}1%{display:block;visibility:visible;opacity:0}to{display:block;visibility:visible;opacity:1}}.video-js .vjs-upnext-content{transition:opacity .1s;font-size:1.8em;pointer-events:auto;position:absolute;top:0;bottom:0;background:rgba(0,0,0,.6);width:100%}.video-js .vjs-upnext-top{margin:0 auto;width:100%;position:absolute;bottom:50%;margin-bottom:60px}.video-js .vjs-upnext-bottom{margin:0 auto;width:100%;position:absolute;top:50%;margin-top:52px}.video-js .vjs-upnext-cancel,.video-js .vjs-upnext-suspended{display:block;float:none;text-align:center}.video-js .vjs-upnext-suspended{font-size:50%;margin-top:1rem}.video-js .vjs-upnext-headtext{display:block;font-size:14px;text-align:center;padding-bottom:7px}.video-js .vjs-upnext-title{display:block;padding:10px 10px 2px;text-align:center;font-size:22px;font-weight:600;overflow:hidden;white-space:nowrap;word-wrap:normal;text-overflow:ellipsis}.video-js .vjs-upnext-cancel-button{cursor:pointer;display:inline-block;float:none;padding:10px!important;font-size:16px!important;border:0}.video-js .vjs-upnext-cancel-button,.video-js .vjs-upnext-cancel-button:focus{outline:0}.video-js .vjs-upnext-cancel-button:hover{background-color:hsla(0,0%,100%,.25);border-radius:2px}.video-js.vjs-no-flex .vjs-upnext-content{padding-bottom:1em}.video-js .vjs-upnext-autoplay-icon{transition:stroke-dasharray .1s cubic-bezier(.4,0,1,1);position:absolute;top:50%;left:50%;width:98px;height:98px;margin:-49px 0 0 -49px;cursor:pointer}.video-js.vjs-upnext--showing .vjs-control-bar{z-index:1}@-webkit-keyframes bezels-fadeout{0%{opacity:1}to{opacity:0;transform:scale(2)}}@keyframes bezels-fadeout{0%{opacity:1}to{opacity:0;transform:scale(2)}}.vjs-bezel{position:absolute;left:50%;top:50%;width:52px;height:52px;z-index:19;margin-top:-26px;background:rgba(0,0,0,.5);border-radius:26px;-webkit-animation:bezels-fadeout .5s linear 1 normal forwards;animation:bezels-fadeout .5s linear 1 normal forwards;pointer-events:none}@supports((-webkit-margin-start:-26px) or (margin-inline-start:-26px)){.vjs-bezel{-webkit-margin-start:-26px;margin-inline-start:-26px}}@supports not ((-webkit-margin-start:-26px) or (margin-inline-start:-26px)){.vjs-bezel{margin-left:-26px}}.vjs-bezel-icon{width:36px;height:36px;margin:8px}.vjs-bezel-icon svg .vjs-svg-fill{fill:#fff}.vjs-playlist-menu{position:absolute;right:0;height:100%;width:350px;background:rgba(0,0,0,.8)!important;z-index:101;transition:right .2s;overflow-y:scroll;right:-350px}.vjs-playlist-menu ol{padding:0;margin:0}.vjs-playlist-menu .header{border-bottom:1px solid #e9eff6;padding:20px 10px;display:flex;justify-content:space-between}.vjs-playlist-menu .header .title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px;margin-bottom:5px}.vjs-playlist-menu .header .channel{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:11px;color:#bfbfbf}.vjs-playlist-menu .header .cross{mask-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0iZmVhdGhlciBmZWF0aGVyLXgiPjxwYXRoIGQ9Ik0xOCA2TDYgMThNNiA2bDEyIDEyIi8+PC9zdmc+);-webkit-mask-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0iZmVhdGhlciBmZWF0aGVyLXgiPjxwYXRoIGQ9Ik0xOCA2TDYgMThNNiA2bDEyIDEyIi8+PC9zdmc+);mask-size:cover;-webkit-mask-size:cover;cursor:pointer;width:20px;height:20px;background-color:#fff}.playlist-menu-displayed .vjs-playlist-menu{right:0;display:block}.playlist-menu-displayed .vjs-playlist-button{display:none}@media screen and (max-width:350px){.vjs-playlist-menu{width:100%;min-width:unset;display:none}.playlist-menu-displayed .vjs-playlist-menu{display:block}}.vjs-playlist-button{font-size:16px;position:absolute;right:0;top:0;z-index:100;padding:20px;cursor:pointer}.vjs-playlist-icon{mask-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0iZmVhdGhlciBmZWF0aGVyLWxpc3QiPjxwYXRoIGQ9Ik04IDZoMTNNOCAxMmgxM004IDE4aDEzTTMgNmguMDFNMyAxMmguMDFNMyAxOGguMDEiLz48L3N2Zz4=);-webkit-mask-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0iZmVhdGhlciBmZWF0aGVyLWxpc3QiPjxwYXRoIGQ9Ik04IDZoMTNNOCAxMmgxM004IDE4aDEzTTMgNmguMDFNMyAxMmguMDFNMyAxOGguMDEiLz48L3N2Zz4=);mask-size:cover;-webkit-mask-size:cover;width:22px;height:22px;background-color:#fff;margin-bottom:3px}.vjs-playing.vjs-user-inactive .vjs-playlist-button{opacity:0;transition:opacity 1s}.vjs-playing.vjs-no-flex.vjs-user-inactive .vjs-playlist-button{display:none}.vjs-playlist-menu-item{display:flex;padding:10px 0;height:60px}.vjs-playlist-menu-item:not(.vjs-disabled){cursor:pointer}.vjs-playlist-menu-item .item-position-block{width:30px;flex-shrink:0}.vjs-playlist-menu-item .item-position-block,.vjs-playlist-menu-item .item-unavailable{position:relative;display:flex;align-items:center;justify-content:center}.vjs-playlist-menu-item .item-player{width:0;height:0;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.5);border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:20px solid hsla(0,0%,100%,.95);display:none}.vjs-playlist-menu-item.vjs-selected{background-color:hsla(0,0%,58.8%,.3)}.vjs-playlist-menu-item.vjs-selected .item-position{display:none}.vjs-playlist-menu-item.vjs-selected .item-player{display:block}.vjs-playlist-menu-item:hover:not(.vjs-disabled){background-color:hsla(0,0%,58.8%,.2)}.vjs-playlist-menu-item img{width:80px;height:40px}.vjs-playlist-menu-item .info-block{margin:0 10px;min-width:1px}.vjs-playlist-menu-item .info-block .title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13px;margin-bottom:3px}.vjs-playlist-menu-item .info-block .channel,.vjs-playlist-menu-item .info-block .timestamps{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:11px;color:#bfbfbf}.vjs-playlist-menu-item .info-block .timestamps{font-size:10px;margin-top:3px}.video-js .vjs-stats-content{transition:opacity .1s;position:absolute;background-color:rgba(0,0,0,.6);padding:5px 0;border-radius:4px;width:420px;min-width:27em;max-width:calc(100vw - 20px);left:10px;top:10px;z-index:64;font-size:12px;line-height:1.2}.video-js .vjs-stats-close{cursor:pointer;position:absolute;right:3px;top:3px;padding:0}.video-js .vjs-stats-list>div>div{display:inline-block;font-weight:600;padding:0 .5em;text-align:end;min-width:11.5em;white-space:nowrap}.video-js{background:transparent;font-family:Segoe UI Variable,Segoe UI,SegoeUI,Helvetica Neue,Helvetica,Arial,sans-serif!important;position:relative;height:auto;line-height:3em;background:#000}.video-js.vjs-fullscreen video{max-width:none!important;max-height:100%}.video-js.vjs-fullscreen .vjs-picture-in-picture-control{display:none!important}.video-js .vjs-menu-content{font-family:Segoe UI Variable,Segoe UI,SegoeUI,Helvetica Neue,Helvetica,Arial,sans-serif!important}.video-js .vjs-peertube{display:none!important}.video-js .vjs-bezel,.video-js .vjs-control-bar{text-shadow:-1px -1px 1px hsla(0,0%,100%,.1),1px 1px 1px rgba(0,0,0,.5);background:#000;background:linear-gradient(0deg,rgba(0,0,0,.25) 0,transparent)}.video-js .vjs-bezel button,.video-js .vjs-control-bar button,.video-js .vjs-overlay{filter:drop-shadow(1px 1px 1px rgba(0,0,0,.5))}.video-js .vjs-progress-control .vjs-slider-bar,.video-js .vjs-volume-control .vjs-slider-bar{box-shadow:1px 1px 1px rgba(0,0,0,.2)}.video-js .vjs-progress-control .vjs-play-progress{width:100%}.video-js .vjs-bezel{z-index:1}.video-js .vjs-slider-vertical .vjs-slider-bar{height:100%!important;transition:transform .2s}.video-js .vjs-slider-vertical .vjs-slider-bar:before{display:none}.video-js .vjs-volume-level{pointer-events:none}.video-js .vjs-volume-level:before{display:none}.video-js .vjs-play-progress{pointer-events:none}.video-js .vjs-play-progress .vjs-time-tooltip{display:none!important}.video-js .vjs-tech{position:absolute;left:0;top:0;bottom:0;right:0}.video-js .vjs-poster{background-size:100% auto;left:-1px;top:-1px;bottom:-1px;right:-1px;height:auto}.video-js .error-block,.video-js .warning-block{height:300px;display:flex;align-items:center;background:#000;color:#bebebe}.video-js .error-block>div,.video-js .warning-block>div{margin:0 auto;text-align:left;padding:50px}.video-js[error=noncritical] #vjs-forward-button,.video-js[error=noncritical] #vjs-rewind-button,.video-js[error=noncritical] .vjs-big-play-button{display:none!important}.video-js[error=noncritical] .error-block{position:absolute;left:0;right:0;top:0;bottom:0;height:auto;background:rgba(0,0,0,.85)}.video-js[error=noncritical] .error-block .error-title{display:none}.video-js[error=noncritical] .error-block .error-reload{background:#1a65f1;color:#fff;border:1px solid #1a65f1;text-align:center;font-size:.8em;font-weight:400;border-radius:2px;padding:.75em 3em}.video-js[error=noncritical] .error-block .error-reload:hover{background:transparent;color:#fff;border:1px solid #fff}.video-js .warning-block{position:absolute;z-index:20;left:0;top:0;bottom:0;right:0;background:rgba(0,0,0,.45);height:auto}.video-js .warning-overlay{position:absolute;padding-left:2em;z-index:1000;top:50%}.video-js.vjs-thumb{width:100%;background:#000;background-size:100% auto}.video-js .vjs-time-tooltip{top:-3.9em}.video-js .vjs-menu li.vjs-menu-item:focus,.video-js .vjs-menu li.vjs-menu-item:hover,.video-js button{outline:none}.video-js .pocketnet-link-button{width:auto;padding:0 1em}.video-js .pocketnet-link-button a{display:block;background:#20232a;color:#fff;padding:0 1em;border-radius:6px;height:3em;line-height:3em;text-decoration:none}.video-js .vjs-mouse-display{display:none}.video-js .vjs-controls-disabled .vjs-big-play-button{display:none!important}.video-js.vjs-ended .vjs-big-play-button,.video-js.vjs-has-started .vjs-big-play-button,.video-js.vjs-paused .vjs-big-play-button{display:block}.video-js.vjs-playing .vjs-big-play-button{display:none}.video-js .vjs-load-progress div,.video-js.vjs-seeking .vjs-big-play-button,.video-js.vjs-waiting .vjs-big-play-button{display:none!important}.video-js.vjs-ended .vjs-big-play-button{display:block!important}.video-js #vjs-forward-button,.video-js #vjs-rewind-button,.video-js .vjs-big-play-button{position:absolute;top:50%;left:50%;margin-left:-1.5em;margin-top:-1.5em;width:3em;height:3em;line-height:3em;text-align:center;font-size:1.3em;border:none;border-radius:50%;color:#fff;font-size:40px;transition:border-color .4s,outline .4s,background-color .4s;text-shadow:-1px -1px 1px hsla(0,0%,100%,.1),1px 1px 1px rgba(0,0,0,.5);background:transparent}.video-js #vjs-forward-button i,.video-js #vjs-rewind-button i,.video-js .vjs-big-play-button i{vertical-align:middle;font-size:.5em}.video-js #vjs-rewind-button{margin-left:-4.5em;line-height:2.85em}.video-js #vjs-forward-button{margin-left:1.5em;line-height:2.85em}.video-js .vjs-big-play-button:active,.video-js .vjs-big-play-button:focus,.video-js:hover .vjs-big-play-button{background-color:transparent}.video-js .vjs-remaining-time-display{display:none}.video-js .vjs-current-time,.video-js .vjs-duration{display:block;left:0}.video-js .vjs-time-divider{display:block}.video-js .pocketnet-logo-video-player .icon.icon-only-logo-transparent:hover{opacity:1}.video-js .pocketnet-logo-video-player .icon.icon-only-logo-transparent:hover:before{color:#fff}.video-js .pocketnet-logo-video-player{max-width:100%;left:1.5em;top:1.5em;position:absolute;transition:all .3s ease-in}.video-js .vjs-play-progress:before{padding:1em;right:-1.5em;top:-1.3333333em}.video-js .vjs-settings-dialog{bottom:5em}.video-js.vjs-live .vjs-time-control{display:none}.video-js .vjs-control:focus,.video-js .vjs-control:focus:before,.video-js .vjs-control:hover:before{text-shadow:0 0 0 #fff}.video-js .vjs-control-bar{touch-action:none;-webkit-backface-visibility:hidden;backface-visibility:hidden;height:5em!important;font-size:1.25em;text-shadow:-1px -1px 1px hsla(0,0%,100%,.1),1px 1px 1px rgba(0,0,0,.5)}.video-js .vjs-control-bar button{filter:drop-shadow(1px 1px 1px rgba(0,0,0,.5))}.video-js .vjs-control-bar .vjs-mouse-display{display:none!important}.video-js.vjs-fullscreen .vjs-control-bar{font-size:1.5em;background:transparent}html.mobileview .video-js .vjs-control-bar{padding-left:1em;padding-right:1em}html.mobileview .video-js .vjs-control-bar .vjs-progress-control{left:1em;right:1em}html.mobileview .video-js .vjs-control-bar .vjs-play-control,html.mobileview .video-js .vjs-control-bar .vjs-volume-control{display:none}@media only screen and (max-width:768px){.video-js .vjs-control-bar{padding-left:1em;padding-right:1em}.video-js .vjs-control-bar .vjs-progress-control{left:1em;right:1em}.video-js .vjs-control-bar .vjs-play-control,.video-js .vjs-control-bar .vjs-volume-control{display:none}}.pipmini .js-player .vjs-control-bar,.pipmode .js-player .vjs-control-bar{-webkit-backdrop-filter:none;backdrop-filter:none}.pipmini .js-player .vjs-control-bar>button,.pipmini .js-player .vjs-control-bar>div,.pipmode .js-player .vjs-control-bar>button,.pipmode .js-player .vjs-control-bar>div{display:none}.pipmini .js-player .vjs-control-bar>button.vjs-mute-control,.pipmode .js-player .vjs-control-bar>button.vjs-mute-control{right:0;bottom:0;display:block;width:3em}.pipmini .js-player #vjs-forward-button,.pipmini .js-player #vjs-rewind-button,.pipmini .js-player .vjs-overlay,.pipmode .js-player #vjs-forward-button,.pipmode .js-player #vjs-rewind-button,.pipmode .js-player .vjs-big-play-button,.pipmode .js-player .vjs-control-bar,.pipmode .js-player .vjs-overlay,[hidden]{display:none!important}#video-wrapper{width:100%;height:100%}.video-js.vjs-peertube-skin{width:100%;height:100%;overflow:hidden}.video-js.vjs-peertube-skin .vjs-poster{background-size:100% auto}#error-block{display:none;flex-direction:column;align-content:center;justify-content:center;text-align:center;width:100%;height:100%;color:#fff;box-sizing:border-box;font-family:sans-serif}#error-title{font-size:45px;margin-bottom:5px}#error-content{font-size:24px}#placeholder-preview{position:absolute;top:0;left:0;background-size:100% auto;width:100%;height:100%;background-position:50% 50%;background-repeat:no-repeat}.player-information{width:100%;color:#fff;background:rgba(0,0,0,.6);padding:20px 0;position:absolute;bottom:0;text-align:center}.pocketnet-logo-video-player .icon.logo-bastyon{background:url(data:image/svg+xml;base64,PHN2ZyBpZD0i0KHQu9C+0LlfMSIgZGF0YS1uYW1lPSLQodC70L7QuSAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2aWV3Qm94PSIwIDAgNTU0Ljc3IDc4Ljc4Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ItCR0LXQt9GL0LzRj9C90L3Ri9C5X9Cz0YDQsNC00LjQtdC90YJfNyIgeDE9IjEzLjMiIHkxPSI0MC4xNiIgeDI9IjEzLjMiIHkyPSIuNDUiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNlNmU2ZTYiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM5ODk4OTgiLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0i0JHQtdC30YvQvNGP0L3QvdGL0Llf0LPRgNCw0LTQuNC10L3Rgl83LTIiIHgxPSIzOS40MiIgeTE9IjEzLjMiIHgyPSI3OC40NiIgeTI9IjEzLjMiIHhsaW5rOmhyZWY9IiPQkdC10LfRi9C80Y/QvdC90YvQuV/Qs9GA0LDQtNC40LXQvdGCXzciLz48bGluZWFyR3JhZGllbnQgaWQ9ItCR0LXQt9GL0LzRj9C90L3Ri9C5X9Cz0YDQsNC00LjQtdC90YJfNy0zIiB4MT0iNjUuNzIiIHkxPSIzOS4wNSIgeDI9IjY2LjMxIiB5Mj0iNzkuNDEiIHhsaW5rOmhyZWY9IiPQkdC10LfRi9C80Y/QvdC90YvQuV/Qs9GA0LDQtNC40LXQvdGCXzciLz48bGluZWFyR3JhZGllbnQgaWQ9ItCR0LXQt9GL0LzRj9C90L3Ri9C5X9Cz0YDQsNC00LjQtdC90YJfNy00IiB4MT0iMzkuNTciIHkxPSI2NS41IiB4Mj0iLjA3IiB5Mj0iNjUuNSIgeGxpbms6aHJlZj0iI9CR0LXQt9GL0LzRj9C90L3Ri9C5X9Cz0YDQsNC00LjQtdC90YJfNyIvPjxzdHlsZT4uY2xzLTV7ZmlsbDojZmZmfTwvc3R5bGU+PC9kZWZzPjxwYXRoIGQ9Ik0xNi40NiA1Mi4yM2wtLjExLS4yQTI2LjIzIDI2LjIzIDAgMDEyNi42IDE2LjQ2bC02LjY2LTkuOTVhMzIgMzIgMCAwMC03LjU2IDUuODVBMzguMjIgMzguMjIgMCAwMDYgNThhNiA2IDAgMDEuNzcgM0E2IDYgMCAwMTUgNjUuMTZsLTUgNSA4LjQzIDguNDMgNS4yLTUuMjJhMTggMTggMCAwMDIuNzEtMy41OSAxNy45MyAxNy45MyAwIDAwLjEyLTE3LjU5eiIgZmlsbD0idXJsKCPQkdC10LfRi9C80Y/QvdC90YvQuV/Qs9GA0LDQtNC40LXQvdGCXzcpIi8+PHBhdGggZD0iTTY2LjU3IDEyLjM4QTM4LjIyIDM4LjIyIDAgMDAyMSA2YTYgNiAwIDAxLTMgLjc3QTYgNiAwIDAxMTMuNzcgNWwtNS01TC4zIDguNDNsNS4yMiA1LjJBMTcuODYgMTcuODYgMCAwMDE4IDE4LjcxYTE3Ljg0IDE3Ljg0IDAgMDA4Ljg5LTIuMzZBMjYuMjMgMjYuMjMgMCAwMTYyLjQ2IDI2LjZsMTAuMTQtNi4zOGEzNC4zNSAzNC4zNSAwIDAwLTYuMDMtNy44NHoiIGZpbGw9InVybCgj0JHQtdC30YvQvNGP0L3QvdGL0Llf0LPRgNCw0LTQuNC10L3Rgl83LTIpIi8+PHBhdGggZD0iTTY2LjU4IDY2LjQ5YTM4LjIyIDM4LjIyIDAgMDA2LjM1LTQ1LjYgNiA2IDAgMDExLTcuMmw1LTUtOC40LTguNDctNS4yIDUuMjJhMTcuOTMgMTcuOTMgMCAwMC0yLjcyIDIxLjM5IDI2LjIzIDI2LjIzIDAgMDEtMTAuMjQgMzUuNTVsNi44NiA5Ljg1YTMwLjYgMzAuNiAwIDAwNy4zNS01Ljc0eiIgZmlsbD0idXJsKCPQkdC10LfRi9C80Y/QvdC90YvQuV/Qs9GA0LDQtNC40LXQvdGCXzctMykiLz48cGF0aCBkPSJNNzMuNDggNjUuMTZhMTcuOTMgMTcuOTMgMCAwMC0yMS4zOS0yLjcyIDI2LjM0IDI2LjM0IDAgMDEtMzUuNjMtMTAuMjEgMTcuOTMgMTcuOTMgMCAwMS0uMTIgMTcuNTlBMzguMjQgMzguMjQgMCAwMDU4IDcyLjc2YTYgNiAwIDAxNy4yIDFsNSA1IDguNDMtOC40M3oiIGZpbGw9InVybCgj0JHQtdC30YvQvNGP0L3QvdGL0Llf0LPRgNCw0LTQuNC10L3Rgl83LTQpIi8+PHBhdGggY2xhc3M9ImNscy01IiBkPSJNMTM3LjU0IDcuMTNjMy41OSAwIDEwLjA5LjI5IDE0Ljg0IDQuMDcgMiAxLjU1IDUuODIgNS41MyA1LjgyIDEzLjM5YTE0LjYgMTQuNiAwIDAxLTYuNCAxMi43MWM5IDIuMjMgMTIuMzIgMTAuMDkgMTIuMzIgMTYuM2ExNy44OCAxNy44OCAwIDAxLTYuNiAxNGMtNS4xNCA0LjA3LTExLjA2IDQuMjctMTUuNTIgNC4yN2gtMjMuMVY3LjEzem0tMTEuNDYgMjguNDJoMTIuNDNjMy43OCAwIDEyLjcxLS43OCAxMi43MS0xMC43NyAwLTEwLjY3LTEwLjQ4LTEwLjg2LTEyLjUxLTEwLjg2aC0xMi42M3ptMCAyOS40OWgxNS4yNWM0LjE3IDAgOC4yNS0uMjkgMTEuMzUtMi43MmExMC45IDEwLjkgMCAwMDQuMjctOC45MiAxMC40OCAxMC40OCAwIDAwLTUuNTMtOS41MWMtMi40Mi0xLjM2LTUuODItMS45NC0xMS0xLjk0aC0xNC4zNHpNMjc3LjQ3IDE5Ljc4YTE1LjYgMTUuNiAwIDAwLTMuNzgtNC44NSAxMS42NCAxMS42NCAwIDAwLTcuMjctMi4yM2MtNi40IDAtMTAuODYgNC0xMC44NiAxMGE2Ljc4IDYuNzggMCAwMDIuNDQgNS42MiAyMS4xMyAyMS4xMyAwIDAwNi43OSA0LjA3bDYuMjEgMi43MmMzLjc4IDEuNjUgNy4yNyAzLjQgMTAgNi4xMUExNS41NyAxNS41NyAwIDAxMjg1LjYyIDUzYzAgMTEuOTMtOC44MyAxOS44OC0yMC40NyAxOS44OC00LjI3IDAtOS42LS44Ny0xNC4wNi01LjI0YTIzLjQ1IDIzLjQ1IDAgMDEtNi0xMS40NWw3LTEuOTRhMTUuMjcgMTUuMjcgMCAwMDMuODggOC4yNSAxMi4zNyAxMi4zNyAwIDAwOS4zMSAzLjU5YzguODMgMCAxMy02LjMgMTMtMTIuOGE5LjY1IDkuNjUgMCAwMC0zLjItNy41N2MtMS44NC0xLjc1LTQuMzctMi45MS03Ljc2LTQuNDZsLTUuODItMi43MmEyOC42NiAyOC42NiAwIDAxLTguNjMtNS4zMyAxMy40NCAxMy40NCAwIDAxLTQuNDYtMTAuNTdjMC0xMCA3LjY2LTE2LjY4IDE4LjE0LTE2LjY4YTE3LjUzIDE3LjUzIDAgMDExMC4zOCAyLjkxQTE5LjU3IDE5LjU3IDAgMDEyODMuMiAxNnpNMzIxIDEzLjkydjU3LjkxaC03LjJWMTMuOTJoLTE5LjcxVjcuMTNoNDYuNjF2Ni43OXpNNDE2LjQgMzkuMzhjMC0xOS4zIDE1LTMzLjQ2IDMzLjY2LTMzLjQ2czMzLjY2IDE0LjE2IDMzLjY2IDMzLjQ2LTE0Ljk0IDMzLjQ2LTMzLjY2IDMzLjQ2LTMzLjY2LTE0LjI2LTMzLjY2LTMzLjQ2em03LjM3IDBhMjYuMjkgMjYuMjkgMCAxMDUyLjU3IDAgMjYuMjkgMjYuMjkgMCAxMC01Mi41NyAwek0yMjYuNSA3MS44NWg4TDIwNi43NyA3LjE0aC01LjU4bC0yNy42NiA2NC43MWg4bDcuNjItMTguMjdoMjkuNzh6TTE5MiA0Ni43bDEyLTI4Ljg0IDEyIDI4Ljg0ek01NDcuNTkgNy4xM3Y1My40MmwtNDMuNS01My40MmgtNy4xOHY2NC44aDcuMThWMTguNTFsNDMuNSA1My40MXYuMDFoNy4xOFY3LjEzaC03LjE4ek00MDkuOTMgOC41OWwtNS41Ny00LjUzLTI0LjMxIDI5Ljg2LTI0LjMxLTI5Ljg2LTUuNTcgNC41MyAyNi4xOSAzMi4xN3YzMWg3LjM4di0zMXptLTI5Ljc2IDI5Ljc3aC0uMjNsLjExLS4wOXoiLz48L3N2Zz4=) no-repeat;width:100px;height:15px;display:block;opacity:.5}.js-player .error-block{height:300px;background:#000;color:#fff;display:flex;align-items:center;justify-content:center;text-align:center;padding:4em}.js-player .error-block .error-title{font-size:2em;margin-bottom:1em}.standalone-video-embed{margin:0!important;background-color:#000;overflow:hidden}.standalone-video-embed .video-js-wrapper{position:absolute;left:0;top:0;height:100%;width:100%}.standalone-video-embed .pocketnet-logo-video-player,.standalone-video-embed .vjs-picture-in-picture-control{display:none!important}@media screen and (max-width:300px){#error-block{font-size:36px}#error-content{font-size:14px}}.pipmini .js-player .video-js .vjs-control-bar,.pipmode .js-player .video-js .vjs-control-bar{-webkit-backdrop-filter:none;backdrop-filter:none}.pipmini .js-player .video-js .vjs-control-bar>button,.pipmini .js-player .video-js .vjs-control-bar>div,.pipmode .js-player .video-js .vjs-control-bar>button,.pipmode .js-player .video-js .vjs-control-bar>div{display:none!important}.pipmini .js-player .video-js .vjs-control-bar>button.vjs-mute-control,.pipmode .js-player .video-js .vjs-control-bar>button.vjs-mute-control{display:block!important;position:absolute;height:3em;line-height:3.5em;font-size:1em;right:.25em;bottom:0;width:3em;font-size:.9em}.pipmini .js-player .video-js #vjs-forward-button,.pipmini .js-player .video-js #vjs-rewind-button,.pipmini .js-player .video-js .vjs-overlay,.pipmode .js-player .video-js #vjs-forward-button,.pipmode .js-player .video-js #vjs-rewind-button,.pipmode .js-player .video-js .vjs-big-play-button,.pipmode .js-player .video-js .vjs-control-bar,.pipmode .js-player .video-js .vjs-overlay{display:none!important}", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
-/***/ "8e73":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_3_id_cffb7280_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("b33e");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_3_id_cffb7280_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_3_id_cffb7280_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_3_id_cffb7280_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_3_id_cffb7280_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
-
-/***/ }),
-
-/***/ "ab2a":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_7_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_7_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_7_oneOf_1_3_peerTube_css_vue_type_style_index_2_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("0f1d");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_7_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_7_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_7_oneOf_1_3_peerTube_css_vue_type_style_index_2_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_7_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_7_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_7_oneOf_1_3_peerTube_css_vue_type_style_index_2_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_7_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_7_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_7_oneOf_1_3_peerTube_css_vue_type_style_index_2_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_7_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_7_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_7_oneOf_1_3_peerTube_css_vue_type_style_index_2_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
-
-/***/ }),
-
-/***/ "b33e":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("1ca2");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("7a7d8369", content, shadowRoot)
+            var args = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                args[_i - 1] = arguments$1[_i];
+            }
+            var _a;
+            var handle = (_a = handlers) === null || _a === void 0 ? void 0 : _a[name];
+            if (handle) {
+                handle.fns.apply(handle, args);
+            }
+        };
+    };
+    return {
+        // Init
+        bind: function (element, binding, vnode) {
+            // auto class name
+            if (element.className.indexOf(DEFAULT_CLASSES.containerClass) === -1) {
+                element.className += ((element.className ? ' ' : '') + DEFAULT_CLASSES.containerClass);
+            }
+            // bind click event
+            element.addEventListener('click', function (event) {
+                var emitEvent = getEventEmiter(vnode);
+                var swiper = getSwiperInstance(element, binding, vnode);
+                handleClickSlideEvent(swiper, event, emitEvent);
+            });
+        },
+        // DOM inserted
+        inserted: function (element, binding, vnode) {
+            var context = vnode.context;
+            var swiperOptions = getSwipeOptions(binding);
+            var instanceName = getSwiperInstanceName(element, binding, vnode);
+            var emitEvent = getEventEmiter(vnode);
+            var vueContext = context;
+            var swiper = vueContext === null || vueContext === void 0 ? void 0 : vueContext[instanceName];
+            // Swiper will destroy but not delete instance, when used <keep-alive>
+            if (!swiper || swiper.destroyed) {
+                swiper = new SwiperClass(element, swiperOptions);
+                vueContext[instanceName] = swiper;
+                bindSwiperEvents(swiper, emitEvent);
+                emitEvent(ComponentEvents.Ready, swiper);
+                // MARK: Reinstance when the nexttick with <keep-alive>
+                // Vue.nextTick(instancing) | setTimeout(instancing)
+            }
+        },
+        // On options changed or DOM updated
+        componentUpdated: function (element, binding, vnode) {
+            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
+            var autoUpdate = getStandardisedOptionByAttrs(vnode, ComponentPropNames.AutoUpdate);
+            if (getBooleanValueByInput(autoUpdate)) {
+                var swiper = getSwiperInstance(element, binding, vnode);
+                if (swiper) {
+                    var swiperOptions = getSwipeOptions(binding);
+                    var isLoop = swiperOptions.loop;
+                    if (isLoop) {
+                        (_b = (_a = swiper) === null || _a === void 0 ? void 0 : _a.loopDestroy) === null || _b === void 0 ? void 0 : _b.call(_a);
+                    }
+                    (_c = swiper === null || swiper === void 0 ? void 0 : swiper.update) === null || _c === void 0 ? void 0 : _c.call(swiper);
+                    (_e = (_d = swiper.navigation) === null || _d === void 0 ? void 0 : _d.update) === null || _e === void 0 ? void 0 : _e.call(_d);
+                    (_g = (_f = swiper.pagination) === null || _f === void 0 ? void 0 : _f.render) === null || _g === void 0 ? void 0 : _g.call(_f);
+                    (_j = (_h = swiper.pagination) === null || _h === void 0 ? void 0 : _h.update) === null || _j === void 0 ? void 0 : _j.call(_h);
+                    if (isLoop) {
+                        (_l = (_k = swiper) === null || _k === void 0 ? void 0 : _k.loopCreate) === null || _l === void 0 ? void 0 : _l.call(_k);
+                        (_m = swiper === null || swiper === void 0 ? void 0 : swiper.update) === null || _m === void 0 ? void 0 : _m.call(swiper);
+                    }
+                }
+            }
+        },
+        // Destroy this directive
+        unbind: function (element, binding, vnode) {
+            var _a;
+            var autoDestroy = getStandardisedOptionByAttrs(vnode, ComponentPropNames.AutoDestroy);
+            if (getBooleanValueByInput(autoDestroy)) {
+                var swiper = getSwiperInstance(element, binding, vnode);
+                if (swiper && swiper.initialized) {
+                    (_a = swiper === null || swiper === void 0 ? void 0 : swiper.destroy) === null || _a === void 0 ? void 0 : _a.call(swiper, getBooleanValueByInput(getStandardisedOptionByAttrs(vnode, ComponentPropNames.DeleteInstanceOnDestroy)), getBooleanValueByInput(getStandardisedOptionByAttrs(vnode, ComponentPropNames.CleanupStylesOnDestroy)));
+                }
+            }
+        }
+    };
+}/**
+ * @file vue-awesome-swiper
+ * @module SwiperComponent
+ * @author Surmon <https://github.com/surmon-china>
+ */
+var SlotNames;
+(function (SlotNames) {
+    SlotNames["ParallaxBg"] = "parallax-bg";
+    SlotNames["Pagination"] = "pagination";
+    SlotNames["Scrollbar"] = "scrollbar";
+    SlotNames["PrevButton"] = "button-prev";
+    SlotNames["NextButton"] = "button-next";
+})(SlotNames || (SlotNames = {}));
+function getSwiperComponent(SwiperClass) {
+    var _a;
+    return Vue.extend({
+        name: CoreNames.SwiperComponent,
+        props: (_a = {
+                defaultOptions: {
+                    type: Object,
+                    required: false,
+                    default: function () { return ({}); }
+                },
+                // eslint-disable-next-line vue/require-default-prop
+                options: {
+                    type: Object,
+                    required: false
+                }
+            },
+            _a[ComponentPropNames.AutoUpdate] = {
+                type: Boolean,
+                default: true
+            },
+            // https://github.com/surmon-china/vue-awesome-swiper/pull/550/files
+            _a[ComponentPropNames.AutoDestroy] = {
+                type: Boolean,
+                default: true
+            },
+            // https://github.com/surmon-china/vue-awesome-swiper/pull/388
+            _a[ComponentPropNames.DeleteInstanceOnDestroy] = {
+                type: Boolean,
+                required: false,
+                default: true
+            },
+            _a[ComponentPropNames.CleanupStylesOnDestroy] = {
+                type: Boolean,
+                required: false,
+                default: true
+            },
+            _a),
+        data: function () {
+            var _a;
+            return _a = {},
+                _a[CoreNames.SwiperInstance] = null,
+                _a;
+        },
+        computed: {
+            swiperInstance: {
+                cache: false,
+                set: function (swiper) {
+                    this[CoreNames.SwiperInstance] = swiper;
+                },
+                get: function () {
+                    return this[CoreNames.SwiperInstance];
+                }
+            },
+            swiperOptions: function () {
+                return this.options || this.defaultOptions;
+            },
+            wrapperClass: function () {
+                return this.swiperOptions.wrapperClass || DEFAULT_CLASSES.wrapperClass;
+            }
+        },
+        methods: {
+            // Feature: click event
+            handleSwiperClick: function (event) {
+                handleClickSlideEvent(this.swiperInstance, event, this.$emit.bind(this));
+            },
+            autoReLoopSwiper: function () {
+                var _a, _b;
+                if (this.swiperInstance && this.swiperOptions.loop) {
+                    // https://github.com/surmon-china/vue-awesome-swiper/issues/593
+                    // https://github.com/surmon-china/vue-awesome-swiper/issues/544
+                    // https://github.com/surmon-china/vue-awesome-swiper/pull/545/files
+                    var swiper = this.swiperInstance;
+                    (_a = swiper === null || swiper === void 0 ? void 0 : swiper.loopDestroy) === null || _a === void 0 ? void 0 : _a.call(swiper);
+                    (_b = swiper === null || swiper === void 0 ? void 0 : swiper.loopCreate) === null || _b === void 0 ? void 0 : _b.call(swiper);
+                }
+            },
+            updateSwiper: function () {
+                var _a, _b, _c, _d, _e, _f, _g, _h;
+                if (this[ComponentPropNames.AutoUpdate] && this.swiperInstance) {
+                    this.autoReLoopSwiper();
+                    (_b = (_a = this.swiperInstance) === null || _a === void 0 ? void 0 : _a.update) === null || _b === void 0 ? void 0 : _b.call(_a);
+                    (_d = (_c = this.swiperInstance.navigation) === null || _c === void 0 ? void 0 : _c.update) === null || _d === void 0 ? void 0 : _d.call(_c);
+                    (_f = (_e = this.swiperInstance.pagination) === null || _e === void 0 ? void 0 : _e.render) === null || _f === void 0 ? void 0 : _f.call(_e);
+                    (_h = (_g = this.swiperInstance.pagination) === null || _g === void 0 ? void 0 : _g.update) === null || _h === void 0 ? void 0 : _h.call(_g);
+                }
+            },
+            destroySwiper: function () {
+                var _a, _b;
+                if (this[ComponentPropNames.AutoDestroy] && this.swiperInstance) {
+                    // https://github.com/surmon-china/vue-awesome-swiper/pull/341
+                    // https://github.com/surmon-china/vue-awesome-swiper/issues/340
+                    if (this.swiperInstance.initialized) {
+                        (_b = (_a = this.swiperInstance) === null || _a === void 0 ? void 0 : _a.destroy) === null || _b === void 0 ? void 0 : _b.call(_a, this[ComponentPropNames.DeleteInstanceOnDestroy], this[ComponentPropNames.CleanupStylesOnDestroy]);
+                    }
+                }
+            },
+            initSwiper: function () {
+                this.swiperInstance = new SwiperClass(this.$el, this.swiperOptions);
+                bindSwiperEvents(this.swiperInstance, this.$emit.bind(this));
+                this.$emit(ComponentEvents.Ready, this.swiperInstance);
+            }
+        },
+        mounted: function () {
+            if (!this.swiperInstance) {
+                this.initSwiper();
+            }
+        },
+        // Update swiper when the parent component activated with `keep-alive`.
+        activated: function () {
+            this.updateSwiper();
+        },
+        updated: function () {
+            this.updateSwiper();
+        },
+        beforeDestroy: function () {
+            // https://github.com/surmon-china/vue-awesome-swiper/commit/2924a9d4d3d1cf51c0d46076410b1f804b2b8a43#diff-7f4e0261ac562c0f354cb91a1ca8864f
+            this.$nextTick(this.destroySwiper);
+        },
+        render: function (createElement) {
+            return createElement('div', {
+                staticClass: DEFAULT_CLASSES.containerClass,
+                on: {
+                    click: this.handleSwiperClick
+                }
+            }, [
+                this.$slots[SlotNames.ParallaxBg],
+                createElement('div', {
+                    class: this.wrapperClass
+                }, this.$slots.default),
+                this.$slots[SlotNames.Pagination],
+                this.$slots[SlotNames.PrevButton],
+                this.$slots[SlotNames.NextButton],
+                this.$slots[SlotNames.Scrollbar]
+            ]);
+        }
+    });
+}/**
+ * @file vue-awesome-swiper
+ * @module SwiperSlideComponent
+ * @author Surmon <https://github.com/surmon-china>
+ */
+var SwiperSlideComponent = Vue.extend({
+    name: CoreNames.SwiperSlideComponent,
+    computed: {
+        slideClass: function () {
+            var _a, _b;
+            return ((_b = (_a = this.$parent) === null || _a === void 0 ? void 0 : _a.swiperOptions) === null || _b === void 0 ? void 0 : _b.slideClass) || DEFAULT_CLASSES.slideClass;
+        }
+    },
+    methods: {
+        update: function () {
+            var _a;
+            var parent = this.$parent;
+            // https://github.com/surmon-china/vue-awesome-swiper/issues/632
+            if (parent[ComponentPropNames.AutoUpdate]) {
+                (_a = parent === null || parent === void 0 ? void 0 : parent.swiperInstance) === null || _a === void 0 ? void 0 : _a.update();
+            }
+        }
+    },
+    mounted: function () {
+        this.update();
+    },
+    updated: function () {
+        this.update();
+    },
+    render: function (createElement) {
+        return createElement('div', {
+            class: this.slideClass
+        }, this.$slots.default);
+    }
+});/**
+ * @file vue-awesome-swiper
+ * @module exporter
+ * @author Surmon <https://github.com/surmon-china>
+ */
+var getInstaller = function (SwiperClass) {
+    var install = function (Vue, globalOptions) {
+        if (install.installed)
+            { return; }
+        var SwiperComponent = getSwiperComponent(SwiperClass);
+        if (globalOptions) {
+            SwiperComponent.options.props.defaultOptions.default = function () { return globalOptions; };
+        }
+        Vue.component(CoreNames.SwiperComponent, SwiperComponent);
+        Vue.component(CoreNames.SwiperSlideComponent, SwiperSlideComponent);
+        Vue.directive(CoreNames.SwiperDirective, getDirective(SwiperClass, globalOptions));
+        install.installed = true;
+    };
+    return install;
 };
+function exporter(SwiperClass) {
+    var _a;
+    return _a = {
+            version: '4.1.1',
+            install: getInstaller(SwiperClass),
+            directive: getDirective(SwiperClass)
+        },
+        _a[CoreNames.SwiperComponent] = getSwiperComponent(SwiperClass),
+        _a[CoreNames.SwiperSlideComponent] = SwiperSlideComponent,
+        _a;
+}/**
+ * @file vue-awesome-swiper
+ * @module default-export
+ * @author Surmon <https://github.com/surmon-china>
+ */
+var VueAwesomeSwiper = exporter(SwiperClass);
+var version = VueAwesomeSwiper.version;
+var install = VueAwesomeSwiper.install;
+var directive = VueAwesomeSwiper.directive;
+var Swiper = VueAwesomeSwiper.Swiper;
+var SwiperSlide = VueAwesomeSwiper.SwiperSlide;exports.Swiper=Swiper;exports.SwiperSlide=SwiperSlide;exports.default=VueAwesomeSwiper;exports.directive=directive;exports.install=install;exports.version=version;Object.defineProperty(exports,'__esModule',{value:true});})));
 
 /***/ }),
 
-/***/ "ba23":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("87b8");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("0a80d090", content, shadowRoot)
-};
-
-/***/ }),
-
-/***/ "c09f":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_ffacfd66_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("ba23");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_ffacfd66_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_ffacfd66_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_ffacfd66_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_ffacfd66_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
-
-/***/ }),
-
-/***/ "c0b5":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("4a05");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("b2742f5c", content, shadowRoot)
-};
-
-/***/ }),
-
-/***/ "c2a2":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-var ___CSS_LOADER_GET_URL_IMPORT___ = __webpack_require__("1de5");
-var ___CSS_LOADER_URL_IMPORT_0___ = __webpack_require__("463c");
-var ___CSS_LOADER_URL_IMPORT_1___ = __webpack_require__("1288");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-var ___CSS_LOADER_URL_REPLACEMENT_0___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_0___);
-var ___CSS_LOADER_URL_REPLACEMENT_1___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_1___);
-// Module
-exports.push([module.i, ".pocketnet_iframe{\n  /*! HTML5 Boilerplate v5.2.0 | MIT License | https://html5boilerplate.com/ */}.pocketnet_iframe #lenta .optimizationTip{height:150px;display:flex;align-items:center;justify-content:center;margin-bottom:.5em;border-radius:6px}.pocketnet_iframe #lenta .optimizationTip>div{padding:1em;text-align:center;opacity:.8;max-width:80%;border-radius:12px;background:rgb(var(--background-secondary-theme));border:1px solid rgb(var(--neutral-grad-1))}.pocketnet_iframe #lenta .optimizationTip .icon{opacity:.5;margin-top:.5em}.pocketnet_iframe #lenta.destroying{display:none}.pocketnet_iframe #lenta.openapi .loadmore{display:none!important}.pocketnet_iframe #lenta.rebuilding{transition:.3s;opacity:.3}.pocketnet_iframe #lenta .work{padding-right:0}.pocketnet_iframe #lenta .mlwr{position:relative}.pocketnet_iframe #lenta .loader{background:rgb(var(--background-total-theme));padding:3em 0;display:none;border-radius:12px;height:111px;contain:strict}.pocketnet_iframe #lenta.loading .loader{display:block}.pocketnet_iframe #lenta.sharesEnded .loader{display:none}.pocketnet_iframe #lenta .panel{overflow:hidden}.pocketnet_iframe #lenta .video-js .vjs-volume-control{display:none}.pocketnet_iframe #lenta .fullScreenVideo .video-js .vjs-volume-control{display:inherit}.pocketnet_iframe #lenta .circularprogress{overflow:hidden;height:0;position:absolute;left:0;right:0;top:0}.pocketnet_iframe #lenta .circularprogress .circularprogressWrapper{padding:1em;text-align:center}.pocketnet_iframe #lenta .circularprogress .circularprogressWrapper canvas{margin:0 auto}.pocketnet_iframe #lenta .share .sharecnt .removeDescription{display:none;padding-bottom:1.5em;color:rgb(var(--neutral-grad-1))}.pocketnet_iframe #lenta .share .sharecnt.deleted .cntscontent,.pocketnet_iframe #lenta .share .sharecnt.deleted .commentsWrapperHb,.pocketnet_iframe #lenta .share .sharecnt.deleted .metapanel,.pocketnet_iframe #lenta .share .sharecnt.deleted .repostWrapper,.pocketnet_iframe #lenta .share .sharecnt.deleted .sys{display:none!important}.pocketnet_iframe #lenta .share .sharecnt.deleted .removeDescription{display:block}.pocketnet_iframe #lenta .share.fromsub{border:1px solid #000}.pocketnet_iframe #lenta .share{margin-bottom:.5em;padding-bottom:0;border-radius:12px}.pocketnet_iframe #lenta .share .shareSpacer{height:400px;padding:0 2em}.pocketnet_iframe #lenta .share .images,.pocketnet_iframe #lenta .share .message,.pocketnet_iframe #lenta .share .sharecaption{max-width:590px}.pocketnet_iframe #lenta .share .verticalVideo{max-width:350px}.pocketnet_iframe #lenta .share .squareVideo{max-width:450px}.pocketnet_iframe #lenta .share .debuginfo{display:none!important}.pocketnet_iframe #lenta .share.fullScreenVideo .squareVideo,.pocketnet_iframe #lenta .share.fullScreenVideo .verticalVideo{max-width:none}.pocketnet_iframe #lenta .shares{overflow:hidden}.pocketnet_iframe #lenta .shares,.pocketnet_iframe #lenta .shares .authorgroup{display:flex;flex-direction:column}.pocketnet_iframe #lenta .shares .authorgroup.blocking{display:none}.pocketnet_iframe #lenta .shares .work{padding-left:0}.pocketnet_iframe #lenta .shares .ss{padding:1em}.pocketnet_iframe #lenta .shares .ss span{font-size:2em}.pocketnet_iframe #lenta .shares .showmorebyauthor{text-align:center;padding:1em;cursor:pointer;font-size:.8em;margin-bottom:.6em;border-radius:12px;font-weight:700;text-decoration:underline}.pocketnet_iframe #lenta .subc{margin-top:1em}.pocketnet_iframe #lenta .subc button{min-width:220px}.pocketnet_iframe #lenta .ended,.pocketnet_iframe #lenta .zero{display:none;padding:4em 0;padding-bottom:4em;color:rgb(var(--neutral-grad-4));text-align:center;background:rgb(var(--background-total-theme));border-radius:12px}.pocketnet_iframe #lenta .ended .tou,.pocketnet_iframe #lenta .zero .tou{padding:2em 0;color:rgb(var(--color-txt-ac))}.pocketnet_iframe #lenta .loadmore,.pocketnet_iframe #lenta .loadprev,.pocketnet_iframe #lenta .seemore{background:rgb(var(--background-total-theme));padding:1em 0;text-align:center}.pocketnet_iframe #lenta .loadmore button,.pocketnet_iframe #lenta .loadprev button,.pocketnet_iframe #lenta .seemore button{border-radius:30px;width:350px;max-width:90%}.pocketnet_iframe #lenta .loadmore{display:none}.pocketnet_iframe #lenta .loadprev{display:none;margin-bottom:.5em}.pocketnet_iframe #lenta.showLoadmore{display:none}.pocketnet_iframe #lenta.showprev .loadprev{display:block}.pocketnet_iframe #lenta.loading .loadmore{display:none}.pocketnet_iframe #lenta.sharesZero .zero{display:block}.pocketnet_iframe #lenta.sharesZero .loader,.pocketnet_iframe #lenta.sharesZero .loadmore{display:none}.pocketnet_iframe #lenta .networkErrorMessage{border-radius:12px;background:rgb(var(--background-total-theme));display:none;padding:3em;text-align:center}.pocketnet_iframe #lenta .networkErrorMessage i{font-size:2em;opacity:.5}.pocketnet_iframe #lenta.networkError .networkErrorMessage{display:block}.pocketnet_iframe #lenta.networkError .loadmore{display:none}.pocketnet_iframe #lenta.networkError .loader{display:none!important}.pocketnet_iframe #lenta .seemore{display:none}.pocketnet_iframe #lenta.sharesEnded .ended,.pocketnet_iframe #lenta.sharesEnded .seemore{display:block}.pocketnet_iframe #lenta.sharesEnded .loadmore{display:none}.pocketnet_iframe #lenta.mainvideo .ended,.pocketnet_iframe #lenta.mainvideo .loader,.pocketnet_iframe #lenta.mainvideo .loadmore,.pocketnet_iframe #lenta.mainvideo .loadprev,.pocketnet_iframe #lenta.mainvideo .seemore,.pocketnet_iframe #lenta.mainvideo .zero{background:transparent}.pocketnet_iframe #lenta.mainvideo .share{background:transparent;padding:0;margin-bottom:0;overflow:hidden;border-radius:6px}.pocketnet_iframe #lenta.mainvideo .share .sharecaption{margin-bottom:0;white-space:nowrap;text-overflow:ellipsis}.pocketnet_iframe #lenta.mainvideo .share .tags{white-space:nowrap;text-overflow:ellipsis;display:block}.pocketnet_iframe #lenta.mainvideo .share .tags .tag{float:none;display:inline;margin-right:0}.pocketnet_iframe #lenta.mainvideo .share.hidden{display:block!important}.pocketnet_iframe #lenta.mainvideo .share .sharecaption{white-space:inherit;padding-right:1em}.pocketnet_iframe #lenta.mainvideo .share .sharecaption div{font-size:1em;font-weight:500;text-transform:capitalize}.pocketnet_iframe #lenta.mainvideo .share .sharecaption span{font-size:1em}.pocketnet_iframe #lenta.mainvideo .share .meta{padding-top:.5em;margin-bottom:0}.pocketnet_iframe #lenta.mainvideo .share .commentsWrapperHb,.pocketnet_iframe #lenta.mainvideo .share .hideOnFullVideo,.pocketnet_iframe #lenta.mainvideo .share .showMore,.pocketnet_iframe #lenta.mainvideo .share .videoviews{display:none}.pocketnet_iframe #lenta.mainvideo .share .iconWrapper{padding:0;z-index:12;width:32px!important}.pocketnet_iframe #lenta.mainvideo .share .iconWrapper .icon{width:auto;height:32px!important}.pocketnet_iframe #lenta.mainvideo .share .iconWrapper .icon .usericon{width:32px!important;height:32px!important;line-height:32px!important;font-size:1.5em}.pocketnet_iframe #lenta.mainvideo .share .forurl{height:200px;position:relative;max-width:350px;margin:0 auto}.pocketnet_iframe #lenta.mainvideo .share .forurl.verticalVideo{height:530px}.pocketnet_iframe #lenta.mainvideo .share .url{margin-bottom:0;height:100%;width:100%;position:absolute;left:0;top:0}.pocketnet_iframe #lenta.mainvideo .share .url .videoWrapper,.pocketnet_iframe #lenta.mainvideo .share .url .videoWrapper .js-player{height:100%}.pocketnet_iframe #lenta.mainvideo .share .panel,.pocketnet_iframe #lenta.mainvideo .share .urlcnt{display:none}.pocketnet_iframe #lenta.mainvideo .share .tags>div span{opacity:.7;text-decoration:none}.pocketnet_iframe #lenta.mainvideo .share .shareTable{padding-top:0;padding-bottom:0}.pocketnet_iframe #lenta.mainvideo .share .shareTable .authorTable{align-items:center;display:flex}.pocketnet_iframe #lenta.mainvideo .share .shareTable .authorTable>div.authorCell{padding-left:.5em;padding-right:0}.pocketnet_iframe #lenta.mainvideo .share .shareTable .authorTable>div a{font-size:.9em}.pocketnet_iframe #lenta.mainvideo .share .shareTable .authorTable>div.datetime{padding-left:.5em;opacity:.5;white-space:nowrap;text-overflow:ellipsis}.pocketnet_iframe #lenta.mainvideo .share .shareTable .authorTable>div.datetime span{color:rgb(var(--text-color))}.pocketnet_iframe #lenta.mainvideo .share .shareTable .authorTable>div span{font-size:.9em;font-weight:400}.pocketnet_iframe #lenta.mainvideo .share .shareTable .metatable>div.metapanel{width:40px;color:rgb(var(--text-color))}.pocketnet_iframe #lenta.mainvideo .share .shareTable .metatable>div.metapanel .metapanelitem{opacity:1}.pocketnet_iframe #lenta.mainvideo .share .cntswrk{margin-left:0;padding-left:0;padding-right:0}.pocketnet_iframe #lenta.mainvideo .share .paddingWrapper{margin-left:32px;padding-left:.5em}.pocketnet_iframe #lenta.mainvideo .shares .spsp{font-weight:400}.pocketnet_iframe #lenta.mainvideo .shares .authorgroup{float:left;width:33.3333%}.pocketnet_iframe #lenta.mainvideo .shares .authorgroup .share{padding:15px}.pocketnet_iframe #lenta.mainvideo .shares .authorgroup .anothercntswrk{height:100px;overflow:hidden}.pocketnet_iframe #lenta.mainvideo .shares .authorgroup:nth-child(3n+1){clear:left}.pocketnet_iframe #lenta.mainvideo .shares .showmorebyauthor{display:none}.pocketnet_iframe #lenta.horizontal{display:flex;flex-grow:1}.pocketnet_iframe #lenta.horizontal .mlwr{display:flex;flex-grow:1;align-items:center}.pocketnet_iframe #lenta.horizontal .mlwr .ended{padding:.5em}.pocketnet_iframe #lenta.horizontal .share{flex-grow:1;width:300px;margin:0;margin-right:.5em;margin-bottom:.5em}.pocketnet_iframe #lenta.horizontal .share:last-child{margin-right:0}.pocketnet_iframe #lenta.horizontal .shares{display:flex!important;flex-wrap:nowrap;flex-grow:1;flex-direction:row}.pocketnet_iframe #lenta.horizontal .ended,.pocketnet_iframe #lenta.horizontal .loader{display:none!important}.pocketnet_iframe #lenta.horizontal.mainvideo .share .forurl.verticalVideo{height:200px}.pocketnet_iframe #lenta.horizontal.mainvideo .share .formeta{padding-top:0}.pocketnet_iframe #lenta.horizontal.compact .shareSpacer{height:180px}.pocketnet_iframe #lenta.horizontal.compact .share{width:230px}.pocketnet_iframe #lenta.horizontal.compact .share .tags{display:none}.pocketnet_iframe #lenta.horizontal.compact .share .shareTable{position:relative}.pocketnet_iframe #lenta.horizontal.compact .share .shareTable .authorTable>div.authorCell,.pocketnet_iframe #lenta.horizontal.compact .share .shareTable .authorTable>div.datetime,.pocketnet_iframe #lenta.horizontal.compact .share .shareTable .metatable>div.metapanel .metapanelitem{display:none}.pocketnet_iframe #lenta.horizontal.compact .share .shareTable .anothercntswrk{position:absolute;left:0;bottom:0;height:40px;display:flex;flex-wrap:nowrap;overflow:hidden;flex-direction:row;align-items:center;width:100%}.pocketnet_iframe #lenta.horizontal.compact .share .shareTable .anothercntswrk .formeta{width:32px;min-width:32px}.pocketnet_iframe #lenta.horizontal.compact .share .shareTable .anothercntswrk .meta{padding-top:.125em;margin-bottom:0}.pocketnet_iframe #lenta.horizontal.compact .share .shareTable .anothercntswrk .authorTable{display:block}.pocketnet_iframe #lenta.horizontal.compact .share .shareTable .anothercntswrk .paddingWrapper{margin-left:0;padding-right:0;padding-left:.25em}.pocketnet_iframe #lenta.horizontal.compact .share .shareTable .anothercntswrk .sharecaption{max-height:36px;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;flex-grow:1;max-width:200px;padding-top:.25em;padding-right:.5em;font-size:.85em!important}.pocketnet_iframe #lenta.horizontal.compact .share .shareTable .anothercntswrk .sharecaption .adr{font-weight:700}.pocketnet_iframe #lenta.horizontal.compact.mainvideo .share .shareTable{height:180px;padding-top:0}.pocketnet_iframe #lenta.horizontal.compact.mainvideo .share .forurl,.pocketnet_iframe #lenta.horizontal.compact.mainvideo .share .forurl.verticalVideo{height:140px}@media only screen and (max-width:1920px){.pocketnet_iframe #lenta .share .images{max-width:none}.pocketnet_iframe #lenta .share .showMore{text-align:center}.pocketnet_iframe #lenta .openoriginallabel{display:none}}@media only screen and (max-width:1920px){.pocketnet_iframe #lenta.horizontal.compact.mainvideo .shares .formeta{margin-left:.25em}.pocketnet_iframe #lenta .loadprev.fxdp{position:fixed;left:0;top:110px;z-index:10;right:0;background:transparent!important;transition:.3s;will-change:transform;-webkit-backface-visibility:hidden}.pocketnet_iframe #lenta .loadprev.fxdp button{width:260px}.pocketnet_iframe html.scrollmodedown #lenta .loadprev.fxdp{transform:translateY(-220px)}}@media only screen and (max-width:1180px){.pocketnet_iframe #lenta.mainvideo .shares .authorgroup{width:50%}}@media only screen and (max-width:1920px){.pocketnet_iframe #lenta .loader{padding:1em;text-align:center}.pocketnet_iframe #lenta .shares{overflow:hidden}.pocketnet_iframe #lenta .shares .work{padding:0}.pocketnet_iframe #lenta .shares .loadmore{padding:1em 0;padding-bottom:1em}.pocketnet_iframe #lenta .shares .loadmore button{width:100%}.pocketnet_iframe #lenta .shares .statswrapperExtended{padding:.5em}.pocketnet_iframe #lenta .shares .ss{padding:1em}.pocketnet_iframe #lenta .shares .ss span{font-size:2em}.pocketnet_iframe #lenta .share .squareVideo,.pocketnet_iframe #lenta .share .verticalVideo{max-width:none}.pocketnet_iframe #lenta.mainvideo .share .cntswrk{margin-left:0;padding-left:0;padding-right:0}.pocketnet_iframe #lenta.mainvideo .share .formeta{padding-top:1em;margin-left:1em}.pocketnet_iframe #lenta.mainvideo .shares .authorgroup{width:50%;width:100%;padding:0;margin-bottom:1em}.pocketnet_iframe #lenta.mainvideo .shares .authorgroup .share{padding:0}.pocketnet_iframe #lenta.mainvideo .shares .authorgroup .anothercntswrk{max-height:none;height:auto}.pocketnet_iframe html.tablet #lenta.mainvideo .shares .authorgroup{width:50%}.pocketnet_iframe html.tablet #lenta.mainvideo .shares .authorgroup .share{padding:15px}.pocketnet_iframe html.tablet #lenta.mainvideo .shares .authorgroup .anothercntswrk{height:100px;overflow:hidden}.pocketnet_iframe html.tablet #lenta.mainvideo .share .paddingWrapper{margin-left:46px}.pocketnet_iframe .dialog.donation .thwrapper{padding-left:0;padding-right:0}.pocketnet_iframe .dialog.donation .thwrapper .addr{font-size:.9em}}.pocketnet_iframe html.mobileview #lenta .share .jsPlayerLoading,.pocketnet_iframe html.mobileview #lenta .share .video-js{max-height:calc(var(--vh, 1vh)*80)}.pocketnet_iframe html.mobileview #lenta .fullScreenVideo .video-js .vjs-volume-control{display:none}.pocketnet_iframe html.mobileview.ios #lenta .share .jsPlayerLoading,.pocketnet_iframe html.mobileview.ios #lenta .share .video-js{max-height:80vh}.pocketnet_iframe html.mobileview #lenta .fullScreenVideo{will-change:transform;-webkit-backface-visibility:hidden}.pocketnet_iframe html.mobileview.fullscreen #lenta .fullScreenVideo #comments{display:none}.pocketnet_iframe #transactionview .workd{background:rgb(var(--background-secondary-theme));border-radius:10px;padding:1em}.pocketnet_iframe #transactionview .scaption{padding:.5em 0}.pocketnet_iframe #transactionview .scaption span{font-size:.9em;font-weight:700}.pocketnet_iframe #transactionview .usericon{width:1.5em;height:1.5em}.pocketnet_iframe #transactionview .line{display:flex;align-items:center;padding:.5em 0}.pocketnet_iframe #transactionview .line>div{margin-right:1em}.pocketnet_iframe #transactionview .line>div span{font-size:.9em}.pocketnet_iframe #transactionview .user{width:auto}.pocketnet_iframe #transactionview .user>div{vertical-align:middle}.pocketnet_iframe #transactionview .user>div.iconWrapper{width:1.5em}.pocketnet_iframe #transactionview .user>div.nameWrapper{padding-left:.5em}.pocketnet_iframe #transactionview .user>div.nameWrapper span{font-size:.8em}.pocketnet_iframe #transactionview .date{text-decoration:underline;padding:.5em 0}.pocketnet_iframe #transactionview i{font-size:.8em}.pocketnet_iframe #transactionview .amount{color:rgb(var(--color-good))}.pocketnet_iframe #transactionview .input .amount{color:rgb(var(--color-txt-orange))}.pocketnet_iframe #transactionview .empty{text-align:center}.pocketnet_iframe #transactionview .empty .remakewr{padding:1em}.pocketnet_iframe #transactionview .io{display:flex;max-width:640px;align-items:center;flex-direction:column}.pocketnet_iframe #transactionview .io>div{margin-bottom:1em}.pocketnet_iframe #transactionview .io>div:last-child{margin-bottom:0}.pocketnet_iframe #transactionview .io .ioarrow{opacity:.7}.pocketnet_iframe #transactionview .io .inputs,.pocketnet_iframe #transactionview .io .outputs{width:100%;border-radius:3px;padding:1em;border:1px solid rgb(var(--neutral-grad-0))}.pocketnet_iframe #transactionview .txid{padding:1em 0;opacity:.7;align-items:center;display:flex}.pocketnet_iframe #transactionview .txid i{width:20px;text-align:center;font-size:.7em}.pocketnet_iframe #transactionview .txid span{font-size:.8em;max-width:310px;overflow:hidden;text-overflow:ellipsis;display:inline-block}.pocketnet_iframe #transactionview .copytext{cursor:pointer}.pocketnet_iframe #transactionview .input,.pocketnet_iframe #transactionview .output{display:flex;align-items:center;margin-bottom:.5em}.pocketnet_iframe #transactionview .input:last-child,.pocketnet_iframe #transactionview .output:last-child{margin-bottom:0}.pocketnet_iframe #transactionview .input>div.amount,.pocketnet_iframe #transactionview .output>div.amount{padding-left:1em}.pocketnet_iframe #comments .usericon{height:38px;width:38px}.pocketnet_iframe #comments .usericon .letter{font-size:1.5em}.pocketnet_iframe #comments [profile]{cursor:pointer}.pocketnet_iframe #comments .loaderWrapper,.pocketnet_iframe #comments .repliesloaderWrapper{padding:1.5em;text-align:center}.pocketnet_iframe #comments .adr{max-width:190px;overflow:hidden;text-overflow:ellipsis;vertical-align:bottom;display:inline-block;white-space:nowrap}.pocketnet_iframe #comments .panel{height:auto;contain:none}.pocketnet_iframe #comments .donateEmbWr .donatecntWrapper{padding-top:1em;padding-bottom:1em}.pocketnet_iframe #comments .donateEmbWr .donatecntWrapper .removedonate{border-radius:50%;height:30px;width:30px;line-height:30px;text-align:center;cursor:pointer;transition:.3s;color:rgb(var(--color-bad))}.pocketnet_iframe #comments .donateEmbWr .donatecntWrapper .removedonate:hover{background:rgb(var(--neutral-grad-2))}.pocketnet_iframe #comments .donateEmbWr .donatecntWrapper .donatecnt .removeWrapper,.pocketnet_iframe #comments .donateEmbWr .donatecntWrapper .donatecnt .value{display:inline-block}.pocketnet_iframe #comments .donateEmbWr .donatecntWrapper .donatecnt .removeWrapper{position:relative;top:-10px}.pocketnet_iframe #comments.preview .post .embedEmojiPrivew,.pocketnet_iframe #comments.preview .post .txt textarea{display:block}.pocketnet_iframe #comments .loadnewcomments{text-align:center;color:rgb(var(--color-txt-gray-dark));cursor:pointer}.pocketnet_iframe #comments .loadnewcomments span{font-weight:100;font-size:.8em}.pocketnet_iframe #comments.listpreview .list .comment.firstcomment,.pocketnet_iframe #comments.listpreview .loadnewcomments{display:none}.pocketnet_iframe #comments.listpreview .list .comment.firstcomment:last-child{display:block}.pocketnet_iframe #comments .captionfwrapper{overflow:hidden;height:0}.pocketnet_iframe #comments .captionfwrapper .csharetable{display:none}.pocketnet_iframe #comments .captionfwrapper.cf_caption{height:auto}.pocketnet_iframe #comments .captionfwrapper.cf_caption .csharetable{display:table}.pocketnet_iframe #comments .caption{padding-left:1.25em;padding-right:3em;background:rgb(var(--background-total-theme))}.pocketnet_iframe #comments .caption .captionTable>div{vertical-align:middle}.pocketnet_iframe #comments .caption .captionTable>div.captionPanel{width:160px}.pocketnet_iframe #comments .caption .captionTable>div.captionPanel .items{margin-left:auto;width:auto}.pocketnet_iframe #comments .caption .captionTable>div.captionPanel .items>div{vertical-align:middle;padding:.5em}.pocketnet_iframe #comments .caption .captionTable>div.captionPanel .items>div .cact{padding:0 .5em;cursor:pointer;transition:.3s}.pocketnet_iframe #comments .caption .captionTable>div.captionPanel .items>div .cact:hover{color:rgb(var(--color-bg-ac))}.pocketnet_iframe #comments .caption .captionTable>div.captionPanel .items>div.close,.pocketnet_iframe #comments .caption .captionTable>div.captionPanel .items>div.close .cact{padding-right:0}.pocketnet_iframe #comments .caption .captionTable>div.captionPanel span{font-weight:700;font-size:.8em}.pocketnet_iframe #comments .caption .csharetable>div{padding:.5em 0;vertical-align:middle}.pocketnet_iframe #comments .caption .csharetable>div.image{width:45px}.pocketnet_iframe #comments .caption .csharetable>div.image .icon{height:45px;width:100%;padding-top:3px}.pocketnet_iframe #comments .caption .csharetable>div.image .icon .usericon{margin:0 auto}.pocketnet_iframe #comments .caption .csharetable>div.csharecnt{padding-left:.5em}.pocketnet_iframe #comments .caption .csharetable .shareprwrapper{display:none}.pocketnet_iframe #comments .caption .csharetable .shareprwrapper>div{vertical-align:middle;padding:.25em}.pocketnet_iframe #comments .caption .csharetable .shareprwrapper>div.forimage{width:25px;padding-left:0;padding-right:0}.pocketnet_iframe #comments .caption .csharetable .shareprwrapper>div.fortext{padding-left:.25em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.pocketnet_iframe #comments .caption .csharetable .shareprwrapper>div.fortext span{font-size:.8em}.pocketnet_iframe #comments .caption .csharetable .shareprwrapper>div.extra div{font-size:.9em;float:right}.pocketnet_iframe #comments .caption .csharetable .shareprwrapper .additionalcontent{font-size:.8em}.pocketnet_iframe #comments .caption .csharetable .shareprwrapper .img{width:25px;height:25px;border-radius:50%;position:relative}.pocketnet_iframe #comments .caption .csharetable .shareprwrapper .img .vstyle{position:absolute;left:20px;top:14px;font-size:.6em;color:rgb(var(--neutral-grad-1))}.pocketnet_iframe #comments.fromtop .list{border-bottom:0}.pocketnet_iframe #comments .list{transition:opacity .3s}.pocketnet_iframe #comments .list.listloading{opacity:.5}.pocketnet_iframe #comments .list .comments-operations .operations-wrapper{display:flex;justify-content:center;margin-top:.5em}.pocketnet_iframe #comments .list .comments-operations .operations-wrapper>div{margin:0 .5em}.pocketnet_iframe #comments .list .comments-operations .operations-wrapper .refresh-comments{cursor:pointer;width:38px;height:38px;background:rgb(var(--background-total-theme));border-radius:30px;overflow:hidden}.pocketnet_iframe #comments .list .comments-operations .operations-wrapper .refresh-comments .icon-wrapper{text-align:center;vertical-align:middle;color:rgb(var(--neutral-grad-3));transition:.3s}.pocketnet_iframe #comments .list .comments-operations .operations-wrapper .refresh-comments .icon-wrapper:hover{color:rgb(var(--neutral-grad-4))}.pocketnet_iframe #comments .list .comments-operations .operations-wrapper .refresh-comments.refreshing i{-webkit-animation:rotate .6s linear;animation:rotate .6s linear}.pocketnet_iframe #comments .list .comments-operations .operations-wrapper .refresh-comments .icon-wrapper{line-height:36px}.pocketnet_iframe #comments .list .comments-operations .operations-wrapper .refresh-comments i{font-size:.8em}.pocketnet_iframe #comments .list .comments-operations .operations-wrapper .vc_valuecustom{padding-left:30px;border-radius:30px;background:rgb(var(--background-total-theme));width:300px;cursor:pointer;transition:.3s}.pocketnet_iframe #comments .list .comments-operations .operations-wrapper .vc_valuecustom.opened{border-bottom-left-radius:0;border-bottom-right-radius:0}.pocketnet_iframe #comments .list .comments-operations .operations-wrapper .vc_valuecustom .vc_value{padding:1em}.pocketnet_iframe #comments .list .comments-operations .operations-wrapper .vc_valuecustom .vc_iconWrapper{border:0}.pocketnet_iframe #comments .list .comments-operations .operations-wrapper .vc_valuecustom .vc_selectInput{border:0;text-align:center;border-bottom-left-radius:20px;border-bottom-right-radius:20px}.pocketnet_iframe #comments .list .comments-operations .operations-wrapper .vc_valuecustom .vc_textInput{border:0;background:transparent;border-radius:0}.pocketnet_iframe #comments .list .comments-operations .operations-wrapper .vc_valuecustom .vc_inputWrapper{border:0;text-align:center;text-decoration:underline}.pocketnet_iframe #comments .list .comments-operations .operations-wrapper .vc_valuecustom .vc_inputWrapper input{text-align:center;font-size:.8em;cursor:pointer!important}.pocketnet_iframe #comments .list .showmorecomments{text-align:center;padding:.5em;cursor:pointer;margin:0 auto;border-radius:30px;margin-top:.5em;padding-bottom:1em;width:300px}.pocketnet_iframe #comments .list .showmorecomments span{font-size:.8em;text-decoration:underline}.pocketnet_iframe #comments .list .comment{border-top:1px solid rgb(var(--neutral-grad-0));transition:color .9s;position:relative}.pocketnet_iframe #comments .list .comment:first-child{border-top:0}.pocketnet_iframe #comments .list .comment.mycomment>div.commentPaddingWrapper>div.commentWrapper>div.commentBody>div.cbodyWrapper .commentpanel .upvoteComment,.pocketnet_iframe #comments .list .comment.rated>div.commentPaddingWrapper>div.commentWrapper>div.commentBody>div.cbodyWrapper .commentpanel .upvoteComment{cursor:default;color:rgb(var(--neutral-grad-2))}.pocketnet_iframe #comments .list .comment.mycomment>div.commentPaddingWrapper>div.commentWrapper>div.commentBody>div.cbodyWrapper .commentpanel .upvoteComment.ratedScore,.pocketnet_iframe #comments .list .comment.rated>div.commentPaddingWrapper>div.commentWrapper>div.commentBody>div.cbodyWrapper .commentpanel .upvoteComment.ratedScore{color:rgb(var(--color-bg-ac-bright))}.pocketnet_iframe #comments .list .comment.deleted .commentmessage{color:rgb(var(--neutral-grad-2))}.pocketnet_iframe #comments .list .comment.newcomments,.pocketnet_iframe #comments .list .comment.newcommentsn{color:rgb(var(--color-txt-ac-1))}.pocketnet_iframe #comments .list .comment.hiddenComment .commentimages,.pocketnet_iframe #comments .list .comment.hiddenComment .commentmessage{display:none}.pocketnet_iframe #comments .list .comment.hiddenComment .hiddenCommentLabel{display:block;color:rgb(var(--neutral-grad-2))}.pocketnet_iframe #comments .list .comment .hiddenCommentLabel .ghost{padding-left:0}.pocketnet_iframe #comments .list .comment .commentBody.editing .cbodyWrapper,.pocketnet_iframe #comments .list .comment.firstcomment,.pocketnet_iframe #comments .list .comment .hiddenCommentLabel{display:none}.pocketnet_iframe #comments .list .comment .tocomment,.pocketnet_iframe #comments .list .comment .tocommentno{cursor:pointer;color:rgb(var(--color-txt-ac))}.pocketnet_iframe #comments .list .comment .commentPaddingWrapper{padding-left:1.5em;padding-right:2.5em}.pocketnet_iframe #comments .list .comment .answer{background:rgb(var(--background-total-theme))}.pocketnet_iframe #comments .list .comment .answer .postbody{border-top:1px solid rgb(var(--neutral-grad-0));padding-left:1.5em;padding-right:2.5em}.pocketnet_iframe #comments .list .comment .answer .postbody .embeddonate{display:none}.pocketnet_iframe #comments .list .comment .answer .postbody .embedimages{right:40px}.pocketnet_iframe #comments .list .comment .answer .postbody .embedEmojiPrivew,.pocketnet_iframe #comments .list .comment .answer .postbody .emojionearea-button{right:12px}.pocketnet_iframe #comments .list .comment .answers .comment:last-child{padding-top:0;border-bottom:0}.pocketnet_iframe #comments .list .comment.showedreplies .replies .icon i:before{content:\"\\f106\"}.pocketnet_iframe #comments .list .comment:hover .metatable>div.panelWrapper .panel{opacity:1}.pocketnet_iframe #comments .list .comment .metatable .temppanel{display:none;text-align:right}.pocketnet_iframe #comments .list .comment .metatable .adr{font-weight:700}.pocketnet_iframe #comments .list .comment.temptransaction.commentnotedited .commentpanel .items>div.reply{display:none}.pocketnet_iframe #comments .list .commentWrapper{display:flex;justify-content:space-between}.pocketnet_iframe #comments .list .commentWrapper>div.iconWrapper{position:relative;font-size:.8em;width:45px;min-width:45px;padding-top:1em;float:none;padding-left:0}.pocketnet_iframe #comments .list .commentWrapper>div.iconWrapper .icon{position:relative}.pocketnet_iframe #comments .list .commentWrapper>div.iconWrapper .donatedbefore{position:absolute;width:42px;height:42px;left:-2px;top:-2px;right:-2px;z-index:1;color:rgb(var(--text-on-bg-ac-color));background:linear-gradient(-45deg,#ee7752,#e73c7e,#23a6d5,#23d5ab);background-size:400% 400%;border-radius:50%}.pocketnet_iframe #comments .list .commentWrapper>div.iconWrapper .usericon{position:absolute;left:0;top:0;right:0;z-index:2}.pocketnet_iframe #comments .list .commentWrapper>div.iconWrapper .donater{position:absolute;top:-2px;left:-2px;width:41px;height:41px;max-width:none}.pocketnet_iframe #comments .list .commentWrapper>div.commentBody{padding-left:.5em;flex-grow:1}.pocketnet_iframe #comments .list .commentWrapper>div.commentBody .cbodyWrapper{padding-bottom:1em}.pocketnet_iframe #comments .list .commentWrapper>div .commentmessage{padding-top:.5em;word-wrap:break-word}.pocketnet_iframe #comments .list .commentWrapper>div .commentmessage a{color:rgb(var(--color-txt-ac));text-decoration:underline}.pocketnet_iframe #comments .list .commentWrapper>div .edited{padding-top:.5em}.pocketnet_iframe #comments .list .commentWrapper>div .edited i,.pocketnet_iframe #comments .list .commentWrapper>div .edited span{color:rgb(var(--color-txt-gray));font-size:.8em}.pocketnet_iframe #comments .list .metatable{padding-top:.75em}.pocketnet_iframe #comments .list .metatable>div{padding:0}.pocketnet_iframe #comments .list .metatable>div span{font-size:.9em}.pocketnet_iframe #comments .list .metatable>div.author{color:rgb(var(--color-txt-gray-dark))}.pocketnet_iframe #comments .list .metatable>div .donateSum{display:inline;border-radius:25px;padding:.5em;padding-left:1em;padding-right:1em;color:rgb(var(--text-on-bg-ac-color));margin-left:.5em;font-size:.8em;font-weight:500;white-space:nowrap;background:linear-gradient(-45deg,#ee7752,#e73c7e,#23a6d5,#23d5ab);background-size:400% 400%}.pocketnet_iframe #comments .list .metatable>div .date,.pocketnet_iframe #comments .list .metatable>div .edited{color:rgb(var(--neutral-grad-3))}.pocketnet_iframe #comments .list .metatable>div.panelWrapper{width:40px}.pocketnet_iframe #comments .list .metatable>div.panelWrapper .panel{width:100%;text-align:right;color:rgb(var(--neutral-grad-2));cursor:pointer;transition:.3s;font-size:.8em;opacity:0}.pocketnet_iframe #comments .list .metatable>div.panelWrapper .panel:hover{color:rgb(var(--neutral-grad-4))}.pocketnet_iframe #comments .list .commentcontenttable .commentpanel{margin-top:0;width:170px}.pocketnet_iframe #comments .list .commentpanel{overflow:hidden;margin-top:.5em}.pocketnet_iframe #comments .list .commentpanel .items{display:flex;align-items:center}.pocketnet_iframe #comments .list .commentpanel .items>div{margin-right:1em}.pocketnet_iframe #comments .list .commentpanel .items>div .cact{cursor:pointer;color:rgb(var(--neutral-grad-2));transition:.3s}.pocketnet_iframe #comments .list .commentpanel .items>div .cact:hover{color:rgb(var(--color-bg-ac-bright))}.pocketnet_iframe #comments .list .commentpanel .iconlabelWrapper{display:flex;align-items:center}.pocketnet_iframe #comments .list .commentpanel .iconlabelWrapper .icon{width:20px;text-align:center;cursor:pointer}.pocketnet_iframe #comments .list .commentpanel span{font-weight:500;font-size:.9em}.pocketnet_iframe #comments .list .commentpanel .upvoteComment{cursor:pointer;color:rgb(var(--neutral-grad-2));transition:.3s}.pocketnet_iframe #comments .list .commentpanel .upvoteComment.ratedScore,.pocketnet_iframe #comments .list .commentpanel .upvoteComment:hover{color:rgb(var(--color-bg-ac-bright))}.pocketnet_iframe #comments .list .commentpanel .upvoteCommentTable{width:auto;display:flex;align-items:center}.pocketnet_iframe #comments .list .commentpanel .upvoteCommentTable>div{padding:0 .5em}.pocketnet_iframe #comments .list .commentpanel .upvoteCommentTable>div:first-child{padding-left:0}.pocketnet_iframe #comments .list .commentpanel .upvoteCommentTable .commentScore{font-size:.8em}.pocketnet_iframe #comments.showedall .showall{display:none}.pocketnet_iframe #comments.showedall .list .comment.firstcomment{display:block}.pocketnet_iframe #comments .showall{display:flex;justify-content:space-between;transition:.3s;cursor:pointer;position:sticky;color:rgb(var(--color-txt-gray-dark));padding-top:.5em;padding-bottom:.5em;padding-left:1.5em;padding-right:2.5em}.pocketnet_iframe #comments .showall i,.pocketnet_iframe #comments .showall span{font-size:.8em;font-weight:600}.pocketnet_iframe #comments .showall:hover{color:rgb(var(--color-txt-gray))}.pocketnet_iframe #comments .commentimages{max-width:700px;padding:1em 0;transition:.3s;overflow:hidden}.pocketnet_iframe #comments .commentimages .imagesWrapper{width:140px;height:140px;background:rgb(var(--neutral-grad-1));border-radius:5px}.pocketnet_iframe #comments .commentimages .imagesWrapper .image{width:100%;height:100%;transition:.3s;cursor:pointer;border-radius:5px;opacity:1}.pocketnet_iframe #comments .commentimages .imagesContainer{display:flex;flex-wrap:wrap;gap:.25em}.pocketnet_iframe #comments .commentimages .imagesContainer.one .imagesWrapper{width:100px;height:100px}.pocketnet_iframe #comments .commentimages .imagesContainer.one .imagesWrapper.h2,.pocketnet_iframe #comments .commentimages .imagesContainer.one .imagesWrapper.w2{width:120px}.pocketnet_iframe #comments .commentimages .imagesContainer.two .imagesWrapper{width:70px;height:70px}.pocketnet_iframe #comments .commentimages .imagesContainer.two .imagesWrapper.w2{width:140px}.pocketnet_iframe #comments .commentimages .imagesContainer.two .imagesWrapper.h2{width:120px}.pocketnet_iframe #comments .commentimages .imagesContainer.four .imagesWrapper{width:70px;height:70px}.pocketnet_iframe #comments .commentimages .imagesContainer.four .imagesWrapper.w2{width:140px}.pocketnet_iframe #comments .commentimages .imagesContainer.four .imagesWrapper.h2{width:120px}.pocketnet_iframe #comments .commentimages .imagesContainer.articleImages .imagesWrapper{width:60px;height:60px;border-radius:30px;overflow:hidden;margin-right:.5em}.pocketnet_iframe #comments .newcommentimages .imagesEmbWr{margin-top:1em;overflow:hidden}.pocketnet_iframe #comments .newcommentimages .imagesEmbWr.active{opacity:1}.pocketnet_iframe #comments .newcommentimages .imageContainer{float:left;width:130px}.pocketnet_iframe #comments .newcommentimages .imageContainer .imageContainerCnt,.pocketnet_iframe #comments .newcommentimages .imageContainer .imageWrapper{position:relative}.pocketnet_iframe #comments .newcommentimages .imageContainer img{width:100%;border-radius:6px}.pocketnet_iframe #comments .newcommentimages .imageContainer .imgpanel{display:none;position:absolute;left:50%;bottom:20%;background:rgba(var(--color-shadow-base),.8);border-radius:20px;padding:5px;margin-left:-34px}.pocketnet_iframe #comments .newcommentimages .imageContainer .imgpanel .item{margin-left:6px;border-radius:15px;float:right;width:30px;height:30px;line-height:30px;text-align:center;color:rgba(var(--text-on-bg-shadow-color),.8);cursor:pointer;transition:.3s}.pocketnet_iframe #comments .newcommentimages .imageContainer .imgpanel .item:hover{background:rgba(var(--color-txt-gray-dark),.6)}.pocketnet_iframe #comments .newcommentimages .imageContainer .imgpanel .item:last-child{margin-left:0}.pocketnet_iframe #comments .newcommentimages .imageContainer:hover .imgpanel{display:block}.pocketnet_iframe #comments .newcommentimages .imageContainer .spinnerWrapperCnt{position:absolute;left:0;right:0;top:0;bottom:0;background:rgba(var(--background-total-theme))}.pocketnet_iframe #comments .newcommentimages .imageContainer .spinnerWrapperCnt .spinnerWrapper{width:100%;height:100%}.pocketnet_iframe #comments .newcommentimages .imageContainer .spinnerWrapperCnt .spinnerWrapper>div{vertical-align:middle;text-align:center}.pocketnet_iframe #comments .answer,.pocketnet_iframe #comments .edit,.pocketnet_iframe #comments .post{padding-left:1.5em;padding-right:2.25em}.pocketnet_iframe #comments .answer .postbody,.pocketnet_iframe #comments .edit .postbody,.pocketnet_iframe #comments .post .postbody{position:relative}.pocketnet_iframe #comments .answer .postbody .closeAnswer,.pocketnet_iframe #comments .edit .postbody .closeAnswer,.pocketnet_iframe #comments .post .postbody .closeAnswer{right:0;top:0;padding:.5em;color:rgba(var(--neutral-grad-1));position:absolute;cursor:pointer;transition:.3s}.pocketnet_iframe #comments .answer .postbody .closeAnswer:hover,.pocketnet_iframe #comments .edit .postbody .closeAnswer:hover,.pocketnet_iframe #comments .post .postbody .closeAnswer:hover{color:rgba(var(--color-txt-ac))}.pocketnet_iframe #comments .answer .posttable,.pocketnet_iframe #comments .edit .posttable,.pocketnet_iframe #comments .post .posttable{display:flex;justify-content:space-between}.pocketnet_iframe #comments .answer .posttable>div,.pocketnet_iframe #comments .edit .posttable>div,.pocketnet_iframe #comments .post .posttable>div{padding:1em .5em}.pocketnet_iframe #comments .answer .posttable>div.iconWrapper,.pocketnet_iframe #comments .edit .posttable>div.iconWrapper,.pocketnet_iframe #comments .post .posttable>div.iconWrapper{width:45px;min-width:45px;font-size:.8em;padding-top:1.15em;padding-left:0;padding-right:0;float:none}.pocketnet_iframe #comments .answer .posttable>div.iconWrapper .usericon,.pocketnet_iframe #comments .edit .posttable>div.iconWrapper .usericon,.pocketnet_iframe #comments .post .posttable>div.iconWrapper .usericon{position:relative}.pocketnet_iframe #comments .answer .posttable>div.lcpp,.pocketnet_iframe #comments .edit .posttable>div.lcpp,.pocketnet_iframe #comments .post .posttable>div.lcpp{padding-right:0;min-width:0;flex-grow:1}.pocketnet_iframe #comments .answer .posttable>div.reputationFailCell,.pocketnet_iframe #comments .edit .posttable>div.reputationFailCell,.pocketnet_iframe #comments .post .posttable>div.reputationFailCell{vertical-align:middle;font-size:.9em;color:rgb(var(--color-txt-ac));padding-top:.5em}.pocketnet_iframe #comments .answer .posttable>div.postCellWrapper,.pocketnet_iframe #comments .edit .posttable>div.postCellWrapper,.pocketnet_iframe #comments .post .posttable>div.postCellWrapper{padding-left:0;padding-right:0}.pocketnet_iframe #comments .answer .posttable>div.closeWrapper,.pocketnet_iframe #comments .answer .posttable>div.postCellWrapper,.pocketnet_iframe #comments .edit .posttable>div.closeWrapper,.pocketnet_iframe #comments .edit .posttable>div.postCellWrapper,.pocketnet_iframe #comments .post .posttable>div.closeWrapper,.pocketnet_iframe #comments .post .posttable>div.postCellWrapper{width:38px;min-width:38px}.pocketnet_iframe #comments .answer .posttable>div.closeWrapper .closeEdit,.pocketnet_iframe #comments .answer .posttable>div.closeWrapper .postaction,.pocketnet_iframe #comments .answer .posttable>div.postCellWrapper .closeEdit,.pocketnet_iframe #comments .answer .posttable>div.postCellWrapper .postaction,.pocketnet_iframe #comments .edit .posttable>div.closeWrapper .closeEdit,.pocketnet_iframe #comments .edit .posttable>div.closeWrapper .postaction,.pocketnet_iframe #comments .edit .posttable>div.postCellWrapper .closeEdit,.pocketnet_iframe #comments .edit .posttable>div.postCellWrapper .postaction,.pocketnet_iframe #comments .post .posttable>div.closeWrapper .closeEdit,.pocketnet_iframe #comments .post .posttable>div.closeWrapper .postaction,.pocketnet_iframe #comments .post .posttable>div.postCellWrapper .closeEdit,.pocketnet_iframe #comments .post .posttable>div.postCellWrapper .postaction{line-height:40px;text-align:center}.pocketnet_iframe #comments .answer .posttable>div.closeWrapper .closeEdit .preloaderWrapper,.pocketnet_iframe #comments .answer .posttable>div.closeWrapper .postaction .preloaderWrapper,.pocketnet_iframe #comments .answer .posttable>div.postCellWrapper .closeEdit .preloaderWrapper,.pocketnet_iframe #comments .answer .posttable>div.postCellWrapper .postaction .preloaderWrapper,.pocketnet_iframe #comments .edit .posttable>div.closeWrapper .closeEdit .preloaderWrapper,.pocketnet_iframe #comments .edit .posttable>div.closeWrapper .postaction .preloaderWrapper,.pocketnet_iframe #comments .edit .posttable>div.postCellWrapper .closeEdit .preloaderWrapper,.pocketnet_iframe #comments .edit .posttable>div.postCellWrapper .postaction .preloaderWrapper,.pocketnet_iframe #comments .post .posttable>div.closeWrapper .closeEdit .preloaderWrapper,.pocketnet_iframe #comments .post .posttable>div.closeWrapper .postaction .preloaderWrapper,.pocketnet_iframe #comments .post .posttable>div.postCellWrapper .closeEdit .preloaderWrapper,.pocketnet_iframe #comments .post .posttable>div.postCellWrapper .postaction .preloaderWrapper{display:none}.pocketnet_iframe #comments .answer .posttable>div.closeWrapper .closeEdit .preloaderWrapper .preloader5,.pocketnet_iframe #comments .answer .posttable>div.closeWrapper .postaction .preloaderWrapper .preloader5,.pocketnet_iframe #comments .answer .posttable>div.postCellWrapper .closeEdit .preloaderWrapper .preloader5,.pocketnet_iframe #comments .answer .posttable>div.postCellWrapper .postaction .preloaderWrapper .preloader5,.pocketnet_iframe #comments .edit .posttable>div.closeWrapper .closeEdit .preloaderWrapper .preloader5,.pocketnet_iframe #comments .edit .posttable>div.closeWrapper .postaction .preloaderWrapper .preloader5,.pocketnet_iframe #comments .edit .posttable>div.postCellWrapper .closeEdit .preloaderWrapper .preloader5,.pocketnet_iframe #comments .edit .posttable>div.postCellWrapper .postaction .preloaderWrapper .preloader5,.pocketnet_iframe #comments .post .posttable>div.closeWrapper .closeEdit .preloaderWrapper .preloader5,.pocketnet_iframe #comments .post .posttable>div.closeWrapper .postaction .preloaderWrapper .preloader5,.pocketnet_iframe #comments .post .posttable>div.postCellWrapper .closeEdit .preloaderWrapper .preloader5,.pocketnet_iframe #comments .post .posttable>div.postCellWrapper .postaction .preloaderWrapper .preloader5{display:block}.pocketnet_iframe #comments .answer .posttable>div.closeWrapper .closeEdit .icon,.pocketnet_iframe #comments .answer .posttable>div.closeWrapper .postaction .icon,.pocketnet_iframe #comments .answer .posttable>div.postCellWrapper .closeEdit .icon,.pocketnet_iframe #comments .answer .posttable>div.postCellWrapper .postaction .icon,.pocketnet_iframe #comments .edit .posttable>div.closeWrapper .closeEdit .icon,.pocketnet_iframe #comments .edit .posttable>div.closeWrapper .postaction .icon,.pocketnet_iframe #comments .edit .posttable>div.postCellWrapper .closeEdit .icon,.pocketnet_iframe #comments .edit .posttable>div.postCellWrapper .postaction .icon,.pocketnet_iframe #comments .post .posttable>div.closeWrapper .closeEdit .icon,.pocketnet_iframe #comments .post .posttable>div.closeWrapper .postaction .icon,.pocketnet_iframe #comments .post .posttable>div.postCellWrapper .closeEdit .icon,.pocketnet_iframe #comments .post .posttable>div.postCellWrapper .postaction .icon{cursor:pointer;transition:.3s;color:rgb(var(--neutral-grad-2))}.pocketnet_iframe #comments .answer .posttable>div.closeWrapper .closeEdit .icon:hover,.pocketnet_iframe #comments .answer .posttable>div.closeWrapper .postaction .icon:hover,.pocketnet_iframe #comments .answer .posttable>div.postCellWrapper .closeEdit .icon:hover,.pocketnet_iframe #comments .answer .posttable>div.postCellWrapper .postaction .icon:hover,.pocketnet_iframe #comments .edit .posttable>div.closeWrapper .closeEdit .icon:hover,.pocketnet_iframe #comments .edit .posttable>div.closeWrapper .postaction .icon:hover,.pocketnet_iframe #comments .edit .posttable>div.postCellWrapper .closeEdit .icon:hover,.pocketnet_iframe #comments .edit .posttable>div.postCellWrapper .postaction .icon:hover,.pocketnet_iframe #comments .post .posttable>div.closeWrapper .closeEdit .icon:hover,.pocketnet_iframe #comments .post .posttable>div.closeWrapper .postaction .icon:hover,.pocketnet_iframe #comments .post .posttable>div.postCellWrapper .closeEdit .icon:hover,.pocketnet_iframe #comments .post .posttable>div.postCellWrapper .postaction .icon:hover{color:rgb(var(--color-txt-ac))}.pocketnet_iframe #comments .answer .posttable>div .limits,.pocketnet_iframe #comments .edit .posttable>div .limits,.pocketnet_iframe #comments .post .posttable>div .limits{padding:.5em;font-size:.8em;color:rgb(var(--neutral-grad-4));display:none}.pocketnet_iframe #comments .answer .posttable>div .limits.active,.pocketnet_iframe #comments .edit .posttable>div .limits.active,.pocketnet_iframe #comments .post .posttable>div .limits.active{display:block}.pocketnet_iframe #comments .answer .posttable>div .limits.bad,.pocketnet_iframe #comments .edit .posttable>div .limits.bad,.pocketnet_iframe #comments .post .posttable>div .limits.bad{color:rgb(var(--color-bad))}.pocketnet_iframe #comments .answer .txt,.pocketnet_iframe #comments .edit .txt,.pocketnet_iframe #comments .post .txt{position:relative}.pocketnet_iframe #comments .answer .txt textarea,.pocketnet_iframe #comments .edit .txt textarea,.pocketnet_iframe #comments .post .txt textarea{display:none;border-radius:20px;border:1px solid rgb(var(--neutral-grad-0));box-shadow:none;padding:0;padding-left:1em;padding-right:1em;outline:0;line-height:36px;height:38px;width:100%;overflow:hidden;resize:none;font-size:14px}.pocketnet_iframe #comments .answer .postbody.sending .posttable>div.postCellWrapper .postaction .icon,.pocketnet_iframe #comments .edit .postbody.sending .posttable>div.postCellWrapper .postaction .icon,.pocketnet_iframe #comments .post .postbody.sending .posttable>div.postCellWrapper .postaction .icon{display:none}.pocketnet_iframe #comments .answer .postbody.sending .posttable>div.postCellWrapper .postaction .preloaderWrapper,.pocketnet_iframe #comments .edit .postbody.sending .posttable>div.postCellWrapper .postaction .preloaderWrapper,.pocketnet_iframe #comments .post .postbody.sending .posttable>div.postCellWrapper .postaction .preloaderWrapper{display:block}.pocketnet_iframe #comments .answer .postbody.hastext .posttable>div.postCellWrapper .postaction .icon,.pocketnet_iframe #comments .edit .postbody.hastext .posttable>div.postCellWrapper .postaction .icon,.pocketnet_iframe #comments .post .postbody.hastext .posttable>div.postCellWrapper .postaction .icon{color:rgb(var(--color-bg-ac-bright))}.pocketnet_iframe #comments .answer .emojionearea,.pocketnet_iframe #comments .answer .emojionearea.form-control,.pocketnet_iframe #comments .edit .emojionearea,.pocketnet_iframe #comments .edit .emojionearea.form-control,.pocketnet_iframe #comments .post .emojionearea,.pocketnet_iframe #comments .post .emojionearea.form-control{border-radius:20px;border:1px solid rgb(var(--neutral-grad-0));box-shadow:none}.pocketnet_iframe #comments .answer .emojionearea .emojionearea-editor,.pocketnet_iframe #comments .answer .emojionearea.form-control .emojionearea-editor,.pocketnet_iframe #comments .edit .emojionearea .emojionearea-editor,.pocketnet_iframe #comments .edit .emojionearea.form-control .emojionearea-editor,.pocketnet_iframe #comments .post .emojionearea .emojionearea-editor,.pocketnet_iframe #comments .post .emojionearea.form-control .emojionearea-editor{margin-right:0}.pocketnet_iframe #comments .answer .emojionearea.focused,.pocketnet_iframe #comments .edit .emojionearea.focused,.pocketnet_iframe #comments .post .emojionearea.focused{border:1px solid rgb(var(--neutral-grad-1));box-shadow:none}.pocketnet_iframe #comments .answer .embedEmojiPrivew,.pocketnet_iframe #comments .edit .embedEmojiPrivew,.pocketnet_iframe #comments .post .embedEmojiPrivew{display:none;width:24px;height:24px;position:absolute;top:7px;right:7px;color:rgb(var(--neutral-grad-2));cursor:pointer}.pocketnet_iframe #comments .answer .emojionearea-editor,.pocketnet_iframe #comments .edit .emojionearea-editor,.pocketnet_iframe #comments .post .emojionearea-editor{border-radius:3px;padding:8px;padding-left:1em;padding-right:66px;padding-right:94px;outline:0;border:0;min-height:36px}.pocketnet_iframe #comments .answer .emojionearea-button,.pocketnet_iframe #comments .edit .emojionearea-button,.pocketnet_iframe #comments .post .emojionearea-button{top:6px;right:6px}.pocketnet_iframe #comments .answer .embedimages,.pocketnet_iframe #comments .edit .embedimages,.pocketnet_iframe #comments .post .embedimages{position:absolute;right:40px;top:3.5px;padding:6px;cursor:pointer;color:rgb(var(--neutral-grad-2));transition:.3s}.pocketnet_iframe #comments .answer .embedimages:hover,.pocketnet_iframe #comments .edit .embedimages:hover,.pocketnet_iframe #comments .post .embedimages:hover{color:rgb(var(--neutral-grad-4))}.pocketnet_iframe #comments .answer .embedimages i,.pocketnet_iframe #comments .edit .embedimages i,.pocketnet_iframe #comments .post .embedimages i{font-size:1.1em}.pocketnet_iframe #comments .answer .embeddonate,.pocketnet_iframe #comments .edit .embeddonate,.pocketnet_iframe #comments .post .embeddonate{position:absolute;right:68px;top:1px;padding:6px;cursor:pointer;color:rgb(var(--neutral-grad-3));transition:.3s}.pocketnet_iframe #comments .answer .embeddonate img,.pocketnet_iframe #comments .edit .embeddonate img,.pocketnet_iframe #comments .post .embeddonate img{height:15px}.pocketnet_iframe #comments .answer .embeddonate .donate-hover,.pocketnet_iframe #comments .edit .embeddonate .donate-hover,.pocketnet_iframe #comments .post .embeddonate .donate-hover{display:none}.pocketnet_iframe #comments .answer .embeddonate:hover,.pocketnet_iframe #comments .edit .embeddonate:hover,.pocketnet_iframe #comments .post .embeddonate:hover{color:rgb(var(--neutral-grad-4))}.pocketnet_iframe #comments .answer .commentPanel,.pocketnet_iframe #comments .edit .commentPanel,.pocketnet_iframe #comments .post .commentPanel{display:none}.pocketnet_iframe #comments .answer .commentPanel>div,.pocketnet_iframe #comments .edit .commentPanel>div,.pocketnet_iframe #comments .post .commentPanel>div{width:50%;vertical-align:middle}.pocketnet_iframe #comments .answer .commentPanel>div.cpostWrapper,.pocketnet_iframe #comments .edit .commentPanel>div.cpostWrapper,.pocketnet_iframe #comments .post .commentPanel>div.cpostWrapper{text-align:right}.pocketnet_iframe #comments .answer .commentPanel>div.cpostWrapper button,.pocketnet_iframe #comments .edit .commentPanel>div.cpostWrapper button,.pocketnet_iframe #comments .post .commentPanel>div.cpostWrapper button{width:160px;font-size:.8em}.pocketnet_iframe #comments .answer .commentPanel>div.panelWrapper,.pocketnet_iframe #comments .edit .commentPanel>div.panelWrapper,.pocketnet_iframe #comments .post .commentPanel>div.panelWrapper{padding-left:.5em}.pocketnet_iframe #comments .answer .commentPanel>div.panelWrapper .panel,.pocketnet_iframe #comments .edit .commentPanel>div.panelWrapper .panel,.pocketnet_iframe #comments .post .commentPanel>div.panelWrapper .panel{overflow:none}.pocketnet_iframe #comments .answer .commentPanel>div.panelWrapper .panel>div,.pocketnet_iframe #comments .edit .commentPanel>div.panelWrapper .panel>div,.pocketnet_iframe #comments .post .commentPanel>div.panelWrapper .panel>div{float:left;color:rgb(var(--color-txt-ac));font-size:.8em;padding-top:.5em;margin-right:1.5em;cursor:pointer;transition:.3s}.pocketnet_iframe #comments .answer .commentPanel>div.panelWrapper .panel>div:hover,.pocketnet_iframe #comments .edit .commentPanel>div.panelWrapper .panel>div:hover,.pocketnet_iframe #comments .post .commentPanel>div.panelWrapper .panel>div:hover{color:rgb(var(--color-txt-gray))}.pocketnet_iframe #comments .answer,.pocketnet_iframe #comments .edit,.pocketnet_iframe #comments .edit .postbody{padding:0}.pocketnet_iframe #comments .edit .posttable>div .embeddonate,.pocketnet_iframe #comments .edit .posttable>div.iconWrapper{display:none}.pocketnet_iframe #comments .edit .posttable>div.lcpp{padding-left:0}.pocketnet_iframe #comments .edit .posttable>div.postCellWrapper{padding-right:0}.pocketnet_iframe #comments .answers .comment .commentPaddingWrapper{padding-left:0;padding-right:0}.pocketnet_iframe #comments .answers .comment:first-child{border-top:1px solid rgb(var(--neutral-grad-0))}.pocketnet_iframe #comments.inited .post .commentPanel{display:table}.pocketnet_iframe .commentmenu .menuitem{cursor:pointer}.pocketnet_iframe .commentmenu .menuitem>div{padding:.5em;border-bottom:1px solid rgb(var(--neutral-grad-0));transition:.3s}.pocketnet_iframe .commentmenu .menuitem>div span{font-size:.9em}.pocketnet_iframe .commentmenu .menuitem>div.icon{width:30px;text-align:center}.pocketnet_iframe .commentmenu .menuitem:last-child>div{border-bottom:0}.pocketnet_iframe .commentmenu .menuitem:hover>div{color:rgb(var(--color-txt-ac))}.pocketnet_iframe .commentmenu .menuitem.complain:hover>div{color:rgb(var(--color-bad))}.pocketnet_iframe html.mobile #comments .embedEmojiPrivew,.pocketnet_iframe html.mobile #comments .emojionearea-button,.pocketnet_iframe html.tablet #comments .embedEmojiPrivew,.pocketnet_iframe html.tablet #comments .emojionearea-button{display:none!important}.pocketnet_iframe html.mobile #comments .embeddonate,.pocketnet_iframe html.tablet #comments .embeddonate{right:40px!important}.pocketnet_iframe html.mobile #comments .embedimages,.pocketnet_iframe html.tablet #comments .embedimages{right:12px!important}.pocketnet_iframe html.mobile #comments .list .metatable>div.panelWrapper .panel,.pocketnet_iframe html.tablet #comments .list .metatable>div.panelWrapper .panel{opacity:1}@media only screen and (max-width:1920px){.pocketnet_iframe #comments .loaderWrapper,.pocketnet_iframe #comments .repliesloaderWrapper{padding:.5em}.pocketnet_iframe #comments .caption{padding-left:.5em;padding-right:1em}.pocketnet_iframe #comments .caption .csharetable .shareprwrapper>div.fortext,.pocketnet_iframe #comments .caption .csharetable>div.csharecnt{padding-left:0}.pocketnet_iframe #comments .caption .csharetable .shareprwrapper>div.forimage{width:42px}.pocketnet_iframe #comments .list .comment .commentPaddingWrapper{padding-left:.5em;padding-right:.5em}.pocketnet_iframe #comments .list .comment .answer .postbody{padding-left:.5em;padding-right:.3em}.pocketnet_iframe #comments .list .commentWrapper>div{vertical-align:top}.pocketnet_iframe #comments .list .commentWrapper>div.iconWrapper{width:36px;min-width:36px;padding-top:.5em}.pocketnet_iframe #comments .list .commentWrapper>div.iconWrapper .usericon{margin:0}.pocketnet_iframe #comments .list .comments-operations .operations-wrapper{margin-bottom:.5em;margin-top:.5em;position:relative}.pocketnet_iframe #comments .list .comments-operations .operations-wrapper>div{margin:0 .75em;margin-left:.5em}.pocketnet_iframe #comments .list .comments-operations .operations-wrapper .refresh-comments{position:absolute;left:0;top:0;bottom:0;z-index:1}.pocketnet_iframe #comments .list .comments-operations .operations-wrapper .vc_valuecustom{width:100%}.pocketnet_iframe #comments .list.commentBody .donate{display:block;margin-left:0}.pocketnet_iframe #comments .list .commentcontenttable{display:block}.pocketnet_iframe #comments .list .commentcontenttable>div{display:block;width:100%}.pocketnet_iframe #comments .list .commentcontenttable>div.commentpanel,.pocketnet_iframe #comments .list .commentpanel{width:100%}.pocketnet_iframe #comments .list .commentpanel span{font-size:.9em}.pocketnet_iframe #comments .list .commentpanel .items{padding-top:.5em}.pocketnet_iframe #comments .list .commentpanel .items>div{padding-left:0;padding-right:0;margin-right:1em}.pocketnet_iframe #comments .list .commentpanel .items>div.upvoteCommentWrapper{margin-right:.5em;padding-right:0}.pocketnet_iframe #comments .list .commentpanel .items>div:last-child{margin-right:0;padding-right:0}.pocketnet_iframe #comments .list .comment{margin-bottom:.5em}.pocketnet_iframe #comments .list .metatable>div span{font-size:1em}.pocketnet_iframe #comments .list .metatable>div .donateSum{margin-left:0;margin-top:1em;margin-bottom:.5em;display:block;text-align:center}.pocketnet_iframe #comments .list .metatable>div.panelWrapper{vertical-align:top}.pocketnet_iframe #comments .list .metatable>div.panelWrapper .panel{text-align:center;opacity:1}.pocketnet_iframe #comments .showall{padding:1.5em;padding-left:.5em;padding-right:1.5em;padding-bottom:1em}.pocketnet_iframe #comments .showall span{font-size:.9em}.pocketnet_iframe #comments .answer,.pocketnet_iframe #comments .post{padding-left:.5em;padding-right:.3em}.pocketnet_iframe #comments .answer .postbody,.pocketnet_iframe #comments .post .postbody{padding:0;position:relative}.pocketnet_iframe #comments .answer .postbody .closeAnswer,.pocketnet_iframe #comments .post .postbody .closeAnswer{display:none}.pocketnet_iframe #comments .answer .posttable>div.postCellWrapper .postaction,.pocketnet_iframe #comments .post .posttable>div.postCellWrapper .postaction{text-align:center}.pocketnet_iframe #comments .answer{padding:0}.pocketnet_iframe #comments .answers .comment .commentPaddingWrapper{padding-left:0;padding-right:0}.pocketnet_iframe #comments .answer .postbody .posttable>div.lcpp,.pocketnet_iframe #comments .edit .postbody .posttable>div.lcpp,.pocketnet_iframe #comments .post .postbody .posttable>div.lcpp{padding-left:0}.pocketnet_iframe #comments .answer .posttable>div.postCellWrapper .postaction .icon,.pocketnet_iframe #comments .edit .posttable>div.postCellWrapper .postaction .icon,.pocketnet_iframe #comments .post .posttable>div.postCellWrapper .postaction .icon{text-align:center}.pocketnet_iframe #comments .answer.active .postbody .posttable>div.lcpp,.pocketnet_iframe #comments .answer.active .postbody .posttable>div.postCellWrapper,.pocketnet_iframe #comments .edit.active .postbody .posttable>div.lcpp,.pocketnet_iframe #comments .edit.active .postbody .posttable>div.postCellWrapper,.pocketnet_iframe #comments .post.active .postbody .posttable>div.lcpp,.pocketnet_iframe #comments .post.active .postbody .posttable>div.postCellWrapper{padding-left:0}.pocketnet_iframe #comments .answer .postbody .closeAnswer{position:absolute;left:0;right:auto;top:0;display:block!important;padding:1em .5em;width:auto;text-align:center}.pocketnet_iframe #comments .answer .postbody .closeAnswer i{line-height:38px;width:38px;height:38px}.pocketnet_iframe #comments .answer .postbody .posttable>div.iconWrapper .icon .usericon{display:none}}.pocketnet_iframe #channel .emptychannel{text-align:center}.pocketnet_iframe #channel .channel{background:rgb(var(--background-total-theme));padding:0 .5em}.pocketnet_iframe #channel .channel .userinfo{padding:.5em 0;display:flex}.pocketnet_iframe #channel .channel .userinfo .name{font-size:1.75em;font-weight:700;padding-bottom:.5em}.pocketnet_iframe #channel .channel .userinfo .adr{max-width:500px;overflow:hidden;text-overflow:ellipsis;vertical-align:bottom;display:inline-block}.pocketnet_iframe #channel .channel .userinfo .nameinfo{padding-left:1em;flex-grow:2}.pocketnet_iframe #channel .channel .userinfo .openprofilebuttonwrapper{padding-bottom:1em}.pocketnet_iframe #channel .channel .userinfo .openprofilebutton{min-width:200px}.pocketnet_iframe #channel .channel .userinfo .additional{margin-top:.5em;padding-top:1em;padding-bottom:1em;border-top:1px solid rgb(var(--neutral-grad-0))}.pocketnet_iframe #channel .channel .panel{margin:0 auto;max-width:600px;display:flex;flex-direction:column}.pocketnet_iframe #channel .channel .panel .usermenuitem{padding:.5em 0;cursor:pointer;white-space:nowrap}.pocketnet_iframe #channel .channel .panel>div i{text-align:center;width:30px;font-size:.8em}.pocketnet_iframe #channel .channel .usericon{width:40px;height:40px;line-height:40px;margin:0 auto}.pocketnet_iframe #channel .channel .usericon.letter{font-size:1.5em}.pocketnet_iframe #channel .channel .action{padding:1em;text-align:center}.pocketnet_iframe .wnd #channel{padding-bottom:3em;padding-left:.5em;padding-right:.5em}.pocketnet_iframe #author .rightchatspacer{height:100%}.pocketnet_iframe #author .curationWrapper{padding:6em;text-align:center}.pocketnet_iframe #author .authorlentawrapper{padding-top:.5em}.pocketnet_iframe #author.curation .startchat{padding-left:.5em}.pocketnet_iframe #author .mobileinfo,.pocketnet_iframe #author .mobileinfo .item.name{display:none}.pocketnet_iframe #author .copyaddress{cursor:pointer;text-overflow:ellipsis}.pocketnet_iframe #author .newsharewrapper{padding-bottom:0;border-radius:12px;background:rgb(var(--background-total-theme));margin-top:.5em}.pocketnet_iframe #author .authorlentawrappermain{position:relative}.pocketnet_iframe #author .authorlentawrappermain .authorsearchicon{position:absolute;left:100%;top:0;padding-top:.5em}.pocketnet_iframe #author .authorlentawrappermain .authorsearchicon .icon{padding:1em;cursor:pointer;transition:.3s;color:rgb(var(--neutral-grad-3))}.pocketnet_iframe #author .authorlentawrappermain .authorsearchicon .icon:hover{color:rgb(var(--color-txt-ac))}.pocketnet_iframe #author .authorlentawrappermain .authorsearchwrapper{background:rgb(var(--background-total-theme));padding:.25em .5em;padding-right:0;display:none;border-right:3px;margin-top:.5em;border-radius:12px}.pocketnet_iframe #author .authorlentawrappermain .authorsearchwrapper .search .searchPanel{background:transparent;border:0;display:none}.pocketnet_iframe #author .authorlentawrappermain .authorsearchwrapper .search .searchInput .searchInputIcon .sminput{padding:1em;padding-left:1em;background:transparent;border:0}.pocketnet_iframe #author .authorlentawrappermain.searchactive .authorsearchwrapper{display:block}.pocketnet_iframe #author .authorlentawrappermain.searchactive .newsharewrapper{display:none}.pocketnet_iframe #author .authorlentawrappermain.searchactive .authorsearchicon .icon i:before{content:\"\\f00d\"}.pocketnet_iframe #author .postauwrapper .postauarrows{background:rgb(var(--background-total-theme));padding:0 3em;padding-right:2.5em;opacity:0;transition:.3s}.pocketnet_iframe #author .postauwrapper .postauarrows.topwr{border-bottom:1px solid rgb(var(--color-medium-theme));opacity:1}.pocketnet_iframe #author .postauwrapper .postauarrows.active{opacity:1}.pocketnet_iframe #author .postauwrapper .arrowstable{height:100%}.pocketnet_iframe #author .postauwrapper .arrowstable>div{padding:1.5em 0;vertical-align:middle}.pocketnet_iframe #author .postauwrapper .arrowaucenter{text-align:center}.pocketnet_iframe #author .postauwrapper .arrowauwrapper{width:60px;text-align:center}.pocketnet_iframe #author .postauwrapper .arrowauwrapperback{width:60px}.pocketnet_iframe #author .postauwrapper .arrowaucenter{width:120px}.pocketnet_iframe #author .postauwrapper .arrowau{cursor:pointer;height:100%}.pocketnet_iframe #author .postauwrapper .arrowau:hover{color:rgb(var(--color-txt-ac))}.pocketnet_iframe #author .postauwrapper .backtoshares{cursor:pointer;height:100%;color:rgb(var(--neutral-grad-2))}.pocketnet_iframe #author .postauwrapper .backtoshares:hover{color:rgb(var(--color-txt-ac))}.pocketnet_iframe #author .postauwrapper .arrowaucenter{font-weight:700;font-size:.8em}.pocketnet_iframe #author .postauwrapper .postcnt #post .share .cntswrk{padding-right:3.5em;margin-left:5em}.pocketnet_iframe #author .postauwrapper .postcnt #post .share .iconWrapper{width:5em;padding-left:2em}.pocketnet_iframe #author .postauwrapper .postcnt #post #post .cntswrk{padding-right:3.5em}.pocketnet_iframe #author .postauwrapper .postcnt #post #post .share .cntswrk{margin-left:4.5em}.pocketnet_iframe #author .postauwrapper .postcnt #post #post .share .iconWrapper{width:4.5em;padding-left:2em}.pocketnet_iframe #author .postauwrapper .postcnt #comments .caption{padding-right:3.5em;padding-left:2.5em}.pocketnet_iframe #author .postauwrapper .postcnt #comments .answer,.pocketnet_iframe #author .postauwrapper .postcnt #comments .post{padding-right:4em;padding-left:1em}.pocketnet_iframe #author .postauwrapper .postcnt #comments .list .comment .commentPaddingWrapper{padding-right:4.5em;padding-left:1em}.pocketnet_iframe #author .lentacell{margin-right:150px;margin-left:240px;min-height:800px}.pocketnet_iframe #author .lentacell .cnt{margin:0 auto;max-width:760px}.pocketnet_iframe #author .authorinfo{font-size:.9em;margin-bottom:3.5em}.pocketnet_iframe #author .authorinfo .itemtable>div.icon{width:30px;padding-top:.5em;text-align:center;opacity:.6;font-size:.8em}.pocketnet_iframe #author .authorinfo .itemtable>div.label{overflow:hidden;text-overflow:ellipsis;padding-right:.5em}.pocketnet_iframe #author .authorinfo .itemtable>div.label a{color:rgb(var(--color-txt-ac));text-decoration:underline}.pocketnet_iframe #author .authorinfo .itemtable>div .showmoreabout{margin-top:1em;font-size:.8em;text-decoration:underline;color:rgb(var(--color-txt-ac));cursor:pointer}.pocketnet_iframe #author .authorinfo .itemtable>div .showmoreabout:hover{color:rgb(var(--neutral-grad-2))}.pocketnet_iframe #author .authorinfo .item{margin-bottom:1em}.pocketnet_iframe #author .authorinfo .postcnt{cursor:pointer}.pocketnet_iframe #author .authorinfo .postcnt .label{text-transform:capitalize;text-decoration:underline}.pocketnet_iframe #author .authorinfo .name{font-size:1.2em;font-weight:500}.pocketnet_iframe #author .authorinfo .showmoreinabout,.pocketnet_iframe #author .authorinfo .site{text-decoration:underline;color:rgb(var(--color-txt-ac))}.pocketnet_iframe #author .authorinfo .showmoreinabout{display:none}.pocketnet_iframe #author .lentaWrapper .authorinfo{padding:.5em}.pocketnet_iframe #author .leftpanelcell{float:left;width:240px;padding:2.5em 0;padding-left:.5em;padding-right:1.5em;overflow:hidden;text-overflow:ellipsis}.pocketnet_iframe #author .lentaWrapper{min-height:700px}.pocketnet_iframe #author .mainpanelcell{float:right;width:350px;padding-top:10px}.pocketnet_iframe #author .panel{border-radius:3px}.pocketnet_iframe #author .work.mwork{padding:0!important;overflow:hidden}.pocketnet_iframe #author .work .work{width:100%!important}.pocketnet_iframe #author .mworkwrapper{background:rgb(var(--background-main))}.pocketnet_iframe #author .bgCaption{background:rgb(var(--color-shadow-var));color:rgb(var(--text-on-bg-shadow-color));height:180px;position:relative;margin-bottom:0;padding-bottom:0}.pocketnet_iframe #author .bgCaption .adr{max-width:500px;overflow:hidden;text-overflow:ellipsis;vertical-align:bottom;display:inline-block}.pocketnet_iframe #author .bgCaption .changeaccount{width:30px;text-align:center;opacity:.7;cursor:pointer;font-size:.5em;display:none}.pocketnet_iframe #author .bgCaption .changeaccount:hover{opacity:1}.pocketnet_iframe #author .bgCaption .create{min-width:250px}.pocketnet_iframe #author .bgCaption .funf{cursor:pointer;opacity:.4;transition:.3s}.pocketnet_iframe #author .bgCaption .funf:hover{opacity:1}.pocketnet_iframe #author .bgCaption .blockingWrapper{display:none}.pocketnet_iframe #author .bgCaption.blocking{background:#290318}.pocketnet_iframe #author .bgCaption.blocking .subscribebuttonstop{display:none}.pocketnet_iframe #author .bgCaption.blocking .blockingWrapper{display:inline}.pocketnet_iframe #author .bgCaption .subscribebuttonstop .unsubscribe{display:none}.pocketnet_iframe #author .bgCaption .subscribebuttonstop .startchat{white-space:nowrap}.pocketnet_iframe #author .bgCaption .subscribebuttonstop .fa-comments{font-size:.35em}.pocketnet_iframe #author .bgCaption .subscribebuttonstop .notificationturn{display:none;cursor:pointer}.pocketnet_iframe #author .bgCaption .subscribebuttonstop .notificationturn i{width:38px;text-align:center;font-size:.6em;transition:.3s}.pocketnet_iframe #author .bgCaption .subscribebuttonstop .notificationturn.turnon i:before{content:\"\\f0f3\"}.pocketnet_iframe #author .bgCaption .subscribebuttonstop.following .notificationturn,.pocketnet_iframe #author .bgCaption .subscribebuttonstop.following .startchat,.pocketnet_iframe #author .bgCaption .subscribebuttonstop.following .unsubscribe{display:inline}.pocketnet_iframe #author .bgCaption .subscribebuttonstop.following .subscribe{display:none}.pocketnet_iframe #author .bgCaption .telements{overflow:hidden}.pocketnet_iframe #author .bgCaption .telements .telement{float:left;margin-right:1em}.pocketnet_iframe #author .bgCaption .telements .telement.sbscr{padding-right:2em}.pocketnet_iframe #author .bgCaption .usermenu{overflow:hidden}.pocketnet_iframe #author .bgCaption .usermenu .usermenuitem{float:left;margin-right:1em;font-size:.8em;font-weight:500;padding:.5em;border-bottom:2px solid transparent;cursor:pointer;transition:.3s}.pocketnet_iframe #author .bgCaption .usermenu .usermenuitem.active,.pocketnet_iframe #author .bgCaption .usermenu .usermenuitem:hover{border-bottom:2px solid rgb(var(--text-on-bg-shadow-color))}.pocketnet_iframe #author .bgCaption .usermenu .usermenuitem:first-child{padding-left:0}.pocketnet_iframe #author .bgCaption .cellforimage{width:95px}.pocketnet_iframe #author .bgCaption .cellforimage .usericon{width:75px;height:75px;line-height:73px;font-size:1.5em}.pocketnet_iframe #author .bgCaption .cellforimage .usericon.active{cursor:pointer}.pocketnet_iframe #author .bgCaption .cellforimage .usericon .plissingCnt{left:45px}.pocketnet_iframe #author .bgCaption .infoWrapper{position:absolute;left:0;right:0;top:0;bottom:0;z-index:1}.pocketnet_iframe #author .bgCaption .imagiconWrapper{position:absolute;left:0;right:0;top:0;bottom:0;z-index:0}.pocketnet_iframe #author .bgCaption .imagiconWrapper .imagejdenticon{position:absolute;left:-60px;right:0;top:-100px;bottom:0;z-index:0;opacity:.1}.pocketnet_iframe #author .bgCaption .work{position:relative;overflow:hidden}.pocketnet_iframe #author .fxd{top:75px;z-index:10}.pocketnet_iframe #author .fxd.dfxd{position:fixed}.pocketnet_iframe #author .contents{background:rgb(var(--background-total-theme));padding:1em 2em}.pocketnet_iframe #author .contents .cgroup{padding-top:1em;padding-bottom:1em}.pocketnet_iframe #author .contents .ccaption{font-weight:100;margin-bottom:1em}.pocketnet_iframe #author .contents .ccaption span{font-size:2em}.pocketnet_iframe #author .contents .gcontents .citemtable>div{vertical-align:middle;overflow:hidden;padding:.5em 0}.pocketnet_iframe #author .contents .gcontents .citemtable>div.cscorecell{width:150px;text-align:right;padding-right:1em}.pocketnet_iframe #author .contents .gcontents .cname,.pocketnet_iframe #author .contents .gcontents .score{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.pocketnet_iframe #author .contents .gcontents .cname span{font-size:1.1em;font-weight:100}.pocketnet_iframe #author .contents .gcontents .score{color:rgb(var(--color-txt-gray))}.pocketnet_iframe #author .contents .gcontents .citem.selected .cname span{font-weight:700}.pocketnet_iframe #author .contents .gcontents .citem.selected .score{font-weight:700;color:rgb(var(--color-star-yellow))}.pocketnet_iframe #author .contents .chidden{display:none}.pocketnet_iframe #author .contents .captiontable{width:auto}.pocketnet_iframe #author .contents .captiontable .captionicon{width:30px;text-align:center;display:none}.pocketnet_iframe #author .contents .cgroup.hasmore .captiontable{cursor:pointer}.pocketnet_iframe #author .contents .cgroup.hasmore .captionicon{display:table-cell}.pocketnet_iframe #author .contents .cgroup.hasmore.showedmore .captionicon i:before{content:\"\\f078\"}.pocketnet_iframe #author .contents .cgroup.hasmore.showedmore .dots{display:none}.pocketnet_iframe #author .contents .cgroup.hasmore.showedmore .chidden{display:block}.pocketnet_iframe #author.preshell .bgCaption .cellforimage .usericon{background:rgba(var(--background-secondary-theme),.3)}.pocketnet_iframe html.mobileview #author .lentacell{margin-right:0;margin-left:0}.pocketnet_iframe html.mobileview #author .bgCaption .adr{max-width:none;display:block}.pocketnet_iframe html.mobileview #author .bgCaption .middotwrapper,.pocketnet_iframe html.mobileview #author .leftpanelcell{display:none}.pocketnet_iframe html.mobileview #author .authorlentawrappermain{position:relative}.pocketnet_iframe html.mobileview #author .authorlentawrappermain .authorsearchicon{display:none}.pocketnet_iframe html.mobileview #author .authorlentawrappermain .authorsearchwrapper{padding:0 .5em}.pocketnet_iframe html.mobileview #author .authorlentawrappermain .authorsearchwrapper .search .searchPanel{display:table-cell}.pocketnet_iframe html.mobileview #author .authorlentawrappermain .authorsearchwrapper .search .searchPanel .searchPanelWrapper>div[event=clear]{display:block}.pocketnet_iframe html.mobileview #author .authorlentawrappermain .authorsearchwrapper .search .searchInput .searchInputIcon .sminput{background:transparent;padding-left:.5em}@media only screen and (max-width:1920px){.pocketnet_iframe #author .bgCaption .caption{justify-content:center}.pocketnet_iframe #author .mobileinfo{display:block}.pocketnet_iframe #author .leftpanelcell,.pocketnet_iframe #author .newsharewrapper{display:none}.pocketnet_iframe #author .lentacell{margin-right:44px;margin-left:0}.pocketnet_iframe #author .work.mwork{width:90%}.pocketnet_iframe #author .bgCaption{margin-bottom:0;margin-top:0;height:auto;padding-bottom:2em;background:#051b48}.pocketnet_iframe #author .bgCaption .cwrapper,.pocketnet_iframe #author .bgCaption .cwrapper>div{display:block}.pocketnet_iframe #author .bgCaption .cwrapper .cellforimage{margin:0 auto}.pocketnet_iframe #author .bgCaption .work{padding-right:0}.pocketnet_iframe #author .bgCaption .telements .telement{width:100%;margin-right:0}.pocketnet_iframe #author .bgCaption .telements .telement.sbscr{display:none;padding-left:1em;padding-right:0}.pocketnet_iframe #author .bgCaption .tips{margin-top:.5em}.pocketnet_iframe #author .bgCaption .caption{font-size:1.1em;overflow:hidden;text-overflow:ellipsis;text-align:center;padding-left:0;padding-right:0;white-space:nowrap;margin-top:0;margin-bottom:1em}.pocketnet_iframe #author .bgCaption .caption .adr{font-size:1em}.pocketnet_iframe #author .bgCaption .usermenu{width:100%;display:flex!important;flex-wrap:nowrap}.pocketnet_iframe #author .bgCaption .usermenu .usermenuitem{flex-grow:1;width:auto;float:none;margin-right:0;padding-left:0;padding-right:0;text-align:center;padding-bottom:1em;font-size:.8em;border-bottom:2px solid rgba(var(--color-txt-gray),.5)}.pocketnet_iframe #author .bgCaption .usermenu .usermenuitem.active{border-bottom:2px solid rgba(var(--color-txt-gray),.8)}.pocketnet_iframe #author .bgCaption .cellforimage{width:100px;padding-top:2em}.pocketnet_iframe #author .bgCaption .cellforimage .usericon{width:100px;height:100px;line-height:98px}.pocketnet_iframe #author .bgCaption .infoWrapper{position:static;left:0;right:0;top:20px;bottom:0;z-index:1}.pocketnet_iframe #author .bgCaption .infoWrapper .work{padding:0 .5em}.pocketnet_iframe #author .bgCaption .work{position:relative;overflow:hidden}.pocketnet_iframe #author .authorinfo .showmoreinabout{display:inline}.pocketnet_iframe #author .authorinfo .additionalinfo.hasabout,.pocketnet_iframe #author .authorinfo.displayedall .showmoreinabout{display:none}.pocketnet_iframe #author .authorinfo.displayedall .additionalinfo.hasabout{display:block}}@media only screen and (max-width:1920px){.pocketnet_iframe #author .bgCaption{padding-top:0}.pocketnet_iframe #author .bgCaption .caption{text-align:left!important;padding-left:.5em}.pocketnet_iframe #author .bgCaption .changeaccount{display:block}.pocketnet_iframe #author .bgCaption .infoWrapper,.pocketnet_iframe #author .lentacell .cnt{max-width:640px;margin:0 auto}.pocketnet_iframe #author .newsharewrapper{display:none}.pocketnet_iframe html.allcontent #author .bgCaption{padding-top:44px}.pocketnet_iframe #author .work.mwork{width:100%}.pocketnet_iframe #author .lentaWrapper .authorinfo{padding:1em}.pocketnet_iframe #author .copyaddress{font-size:1em;font-weight:700}.pocketnet_iframe #author .subscribewrapperphones .subscribebuttons button{padding-bottom:.5em;padding-top:.5em}.pocketnet_iframe #author .bgCaption .caption .subscribe{font-size:1.4em;border-bottom:1px solid #ff4800;opacity:1}.pocketnet_iframe #author .bgCaption .cwrapper>div{vertical-align:top;padding-top:1em}.pocketnet_iframe #author .lentaWrapper{min-height:0}.pocketnet_iframe #author .lentacell{margin-right:0;margin-left:0}.pocketnet_iframe #author .leftpanelcell{float:none;display:none;width:100%;padding:1em}.pocketnet_iframe #author .leftpanelcell .authorinfo .itemtable>div{vertical-align:middle}.pocketnet_iframe #author .leftpanelcell .authorinfo .itemtable>div.icon{width:30px}.pocketnet_iframe #author .leftpanelcell .authorinfo .item:last-child{margin-bottom:0}.pocketnet_iframe #author .mainpanelcell{display:none}.pocketnet_iframe #author .work.mwork{padding:0!important;overflow:hidden}.pocketnet_iframe #author .work .work{width:100%!important}.pocketnet_iframe #author .fxd{position:fixed}}.pocketnet_iframe .lentaWrapper>div#post{background:transparent}.pocketnet_iframe .lentaWrapper>div#post .share{margin-bottom:0}.pocketnet_iframe #post.preshell{background:transparent}.pocketnet_iframe #post{background:rgb(var(--background-main))}.pocketnet_iframe #post .jsPlayerLoading,.pocketnet_iframe #post .video-js{max-height:80vh;max-height:calc(var(--vh, 1vh)*80)}.pocketnet_iframe #post .videoWrapper{max-width:650px;position:relative;overflow:hidden}.pocketnet_iframe #post .empty,.pocketnet_iframe #post .lockedaccount{text-align:center;padding:5em}.pocketnet_iframe #post .empty span,.pocketnet_iframe #post .lockedaccount span{font-size:2em;font-weight:100}.pocketnet_iframe #post .empty.allb,.pocketnet_iframe #post .lockedaccount.allb{background:rgb(var(--background-main));margin:0 auto;margin-top:5em;max-width:400px;border-radius:12px}.pocketnet_iframe #post .showmorelenta{display:none;background:rgb(var(--background-total-theme))}.pocketnet_iframe #post .showmorelenta.hasshares{display:block}.pocketnet_iframe #post .showmorelenta .horizontalLentaWrapper{padding:1em}.pocketnet_iframe #post .showmorelenta .horizontalLentacaption{padding:1em 0}.pocketnet_iframe #post .showmorelenta .horizontalLentacaption span{font-weight:700;font-size:.8em}.pocketnet_iframe #post .showmorelenta .durationWrapper,.pocketnet_iframe #post .showmorelenta .statswrapper{top:0;bottom:auto!important}.pocketnet_iframe #post #lenta .share .sharecaption{font-size:1em}.pocketnet_iframe #post .debuginfo{display:none!important}.pocketnet_iframe #post .postWrapper{margin:0 auto;max-width:930px;opacity:0;transition:opacity .3s}.pocketnet_iframe #post .postWrapper.active{opacity:1}.pocketnet_iframe #post .share{background:rgb(var(--background-total-theme));border-radius:6px}.pocketnet_iframe #post .share .work{padding:0;padding-right:0;margin:0;padding-bottom:0}.pocketnet_iframe #post .share .exitFull,.pocketnet_iframe #post .share .videoTips{display:none}.pocketnet_iframe #post .share .images{max-width:620px}.pocketnet_iframe #post .share .images .imagesWrapper{width:180px;height:180px}.pocketnet_iframe #post .share .images .imagesContainer.owlcar{height:auto;width:100%;max-width:400px}.pocketnet_iframe #post .share .images .imagesContainer.owlcar .imagesWrapper{height:500px;float:none;width:100%;background:transparent}.pocketnet_iframe #post .share .images .imagesContainer.owlcar .imagesWrapper .image{background-size:contain!important}.pocketnet_iframe #post .share .images .imagesContainer.one .imagesWrapper{width:400px;height:400px}.pocketnet_iframe #post .share .images .imagesContainer.one .imagesWrapper.w2{width:600px}.pocketnet_iframe #post .share .images .imagesContainer.one .imagesWrapper.h2{width:400px}.pocketnet_iframe #post .share .images .imagesContainer.two .imagesWrapper{width:200px;height:200px}.pocketnet_iframe #post .share .images .imagesContainer.two .imagesWrapper.w2{width:400px}.pocketnet_iframe #post .share .images .imagesContainer.two .imagesWrapper.h2{width:200px}.pocketnet_iframe #post .share .images .imagesContainer.four .imagesWrapper{width:200px;height:200px}.pocketnet_iframe #post .share .images .imagesContainer.four .imagesWrapper.w2{width:400px}.pocketnet_iframe #post .share .images .imagesContainer.four .imagesWrapper.h2{width:200px}.pocketnet_iframe #post .share .images .imagesContainer.articleImages .imagesWrapper{width:60px;height:60px;border-radius:30px;overflow:hidden;margin-right:.5em;margin-bottom:.5em}.pocketnet_iframe #post .share .message,.pocketnet_iframe #post .share .sharecaption{max-width:620px}.pocketnet_iframe #post.videomainpost .hiddenpost{background:rgb(var(--background-total-theme))}.pocketnet_iframe #post.videomainpost .postWrapper{background:transparent;max-width:none}.pocketnet_iframe #post.videomainpost .videoWrapper{border-bottom-left-radius:0;border-bottom-right-radius:0}.pocketnet_iframe #post.videomainpost .videoWrapper .js-player{border-radius:0}.pocketnet_iframe #post.videomainpost .share{background:transparent}.pocketnet_iframe #post.videomainpost .share .shareTable{background:rgb(var(--background-total-theme));padding-top:0;border-top-left-radius:12px;border-top-right-radius:12px}.pocketnet_iframe #post.videomainpost .share .commentmessage div,.pocketnet_iframe #post.videomainpost .share .message,.pocketnet_iframe #post.videomainpost .share .sharecaption{max-width:650px}.pocketnet_iframe #post.videomainpost .share .jsPlayerLoading{width:100%}.pocketnet_iframe #post.videomainpost .share .anothercntswrk,.pocketnet_iframe #post.videomainpost .share .statswrapperExtended{background:rgb(var(--background-total-theme));padding-left:1em}.pocketnet_iframe #post.videomainpost .share .anothercntswrk{padding-right:1em}.pocketnet_iframe #post.videomainpost .share .work{padding:0}.pocketnet_iframe #post.videomainpost .share .url{margin-bottom:0}.pocketnet_iframe #post.videomainpost .share .paddingWrapper{margin-left:48px;padding-left:.5em}.pocketnet_iframe #post.videomainpost .share .urlcnt{display:none}.pocketnet_iframe #post.videomainpost .share .shareTable .iconWrapper{padding:0;z-index:12;width:48px}.pocketnet_iframe #post.videomainpost .share .shareTable .iconWrapper .icon{width:auto;height:48px}.pocketnet_iframe #post.videomainpost .share .shareTable .iconWrapper .icon .usericon{width:48px;height:48px}.pocketnet_iframe #post.videomainpost .shareTable .authorTable>div.authorCell{padding-left:.5em;padding-right:0}.pocketnet_iframe #post.videomainpost .shareTable .authorTable>div .datetime{opacity:.5}.pocketnet_iframe #post.videomainpost .shareTable .metatable>div.metapanel .metapanelitem{color:rgba(var(--neutral-grad-3),.8)}.pocketnet_iframe #post.videomainpost .cntswrk{padding:0;margin:0}.pocketnet_iframe #post.videomainpost .share .metatable>div.metapanel{padding-right:.5em}.pocketnet_iframe #post.videomainpost .videoWrapper{overflow:hidden;max-width:none;position:static}.pocketnet_iframe #post.videomainpost .jsPlayerLoading,.pocketnet_iframe #post.videomainpost .video-js{max-height:80vh;max-height:calc(var(--vh, 1vh)*80)}.pocketnet_iframe #post.videomainpost .forurl .url{border-radius:12px;background:#000}.pocketnet_iframe #post.videomainpost .statswrapperExtended{display:none}.pocketnet_iframe #post.videomainpost .share{margin:0 auto;max-width:960px}.pocketnet_iframe #post .sharearticle{opacity:0;transition:opacity .3s}.pocketnet_iframe #post .sharearticle .shareTable{padding-top:0;padding-bottom:0}.pocketnet_iframe #post .sharearticle .sharecaption,.pocketnet_iframe #post .sharearticle .tags{max-width:none}.pocketnet_iframe #post .sharearticle.ready{opacity:1}.pocketnet_iframe #post .sharearticle .sharepanel{padding-right:.5em}.pocketnet_iframe #post .sharearticle .articleend .author,.pocketnet_iframe #post .sharearticle .shareBgCaption .author{margin-top:1em;margin-bottom:.5em}.pocketnet_iframe #post .sharearticle .articleend .author i,.pocketnet_iframe #post .sharearticle .shareBgCaption .author i{display:none}.pocketnet_iframe #post .sharearticle .articleend .author .notificationturn,.pocketnet_iframe #post .sharearticle .shareBgCaption .author .notificationturn{display:none!important}.pocketnet_iframe #post .sharearticle .articleend .forstars,.pocketnet_iframe #post .sharearticle .shareBgCaption .forstars{margin-bottom:1em}.pocketnet_iframe #post .sharearticle .articleend .forstars .itemwr,.pocketnet_iframe #post .sharearticle .shareBgCaption .forstars .itemwr{display:flex;flex-direction:column-reverse;align-items:center}.pocketnet_iframe #post .sharearticle .articleend .forstars .itemwr i,.pocketnet_iframe #post .sharearticle .articleend .forstars .starWrapper,.pocketnet_iframe #post .sharearticle .shareBgCaption .forstars .itemwr i,.pocketnet_iframe #post .sharearticle .shareBgCaption .forstars .starWrapper{text-align:center}.pocketnet_iframe #post .sharearticle .articleend .forstars .count span,.pocketnet_iframe #post .sharearticle .shareBgCaption .forstars .count span{font-size:2em;font-weight:700;font-family:Nunito Sans}.pocketnet_iframe #post .sharearticle .articleend .sys,.pocketnet_iframe #post .sharearticle .shareBgCaption .sys{text-align:center}.pocketnet_iframe #post .sharearticle .articleend .buttonOpenWrapper,.pocketnet_iframe #post .sharearticle .shareBgCaption .buttonOpenWrapper{margin-bottom:.5em}.pocketnet_iframe #post .sharearticle .articleend .buttonOpenWrapper button,.pocketnet_iframe #post .sharearticle .shareBgCaption .buttonOpenWrapper button{width:130px;border-radius:0;background:rgba(var(--color-shadow-base),.1);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid transparent!important}.pocketnet_iframe #post .sharearticle .articleend .buttonOpenWrapper button:hover,.pocketnet_iframe #post .sharearticle .shareBgCaption .buttonOpenWrapper button:hover{background:rgba(var(--color-shadow-base),.01)}.pocketnet_iframe #post .sharearticle .articleend .divider,.pocketnet_iframe #post .sharearticle .shareBgCaption .divider{margin:0 auto;margin-bottom:.5em;height:1px;width:110px;background:rgb(var(--background-total-theme))}.pocketnet_iframe #post .sharearticle .articleend .tags,.pocketnet_iframe #post .sharearticle .shareBgCaption .tags{justify-content:center}.pocketnet_iframe #post .sharearticle .shareBgCaption{height:640px;position:relative}.pocketnet_iframe #post .sharearticle .shareBgCaption .tags div span{color:rgb(var(--text-on-bg-ac-color))}.pocketnet_iframe #post .sharearticle .shareBgCaption .sys span{color:rgb(var(--text-on-bg-shadow-color))}.pocketnet_iframe #post .sharearticle .shareBgCaption .blackmatte{background:#000;background:linear-gradient(0,#000,hsla(0,0%,100%,0))}.pocketnet_iframe #post .sharearticle .shareBgCaption .captioncnt{padding-bottom:2em;display:flex;flex-direction:column;justify-content:flex-end;z-index:1;color:rgb(var(--text-on-bg-ac-color));text-align:center}.pocketnet_iframe #post .sharearticle .shareBgCaption .captioncnt .sharecaption{font-size:4em;font-family:Georgia,serif;max-height:400px;overflow-x:hidden;overflow-y:auto;text-overflow:ellipsis;overscroll-behavior:auto;max-width:none}.pocketnet_iframe #post .sharearticle .shareBgCaption .icon .usericon{margin:0 auto;position:relative}.pocketnet_iframe #post .sharearticle .shareBgCaption.showtext .iconWrapper{position:absolute;width:auto;bottom:-22px;left:0;right:0;padding-left:0}.pocketnet_iframe #post .sharearticle .shareBgCaption .socialsharewrapper,.pocketnet_iframe #post .sharearticle .shareBgCaption .starstoppanel{position:absolute;bottom:.75em;right:1.25em}.pocketnet_iframe #post .sharearticle .shareBgCaption .socialsharewrapper .iconwrapper,.pocketnet_iframe #post .sharearticle .shareBgCaption .starstoppanel .iconwrapper{width:3.5em;height:3.5em;line-height:3.5em;border-radius:3.5em;color:rgb(var(--neutral-grad-3));cursor:pointer;display:flex;align-items:center;font-family:Nunito Sans}.pocketnet_iframe #post .sharearticle .shareBgCaption .socialsharewrapper .iconwrapper:hover,.pocketnet_iframe #post .sharearticle .shareBgCaption .starstoppanel .iconwrapper:hover{opacity:.6}.pocketnet_iframe #post .sharearticle .shareBgCaption .socialsharewrapper .iconwrapper i,.pocketnet_iframe #post .sharearticle .shareBgCaption .starstoppanel .iconwrapper i{width:30px;text-align:center;font-size:.7em}.pocketnet_iframe #post .sharearticle .shareBgCaption .socialsharewrapper .iconwrapper{justify-content:flex-end}.pocketnet_iframe #post .sharearticle .shareBgCaption .starstoppanel{bottom:.75em;left:1.5em;right:auto;display:flex}.pocketnet_iframe #post .sharearticle .shareBgCaption .starstoppanel .panelLeft{display:flex}.pocketnet_iframe #post .sharearticle .shareBgCaption .articleCover,.pocketnet_iframe #post .sharearticle .shareBgCaption .blackmatte,.pocketnet_iframe #post .sharearticle .shareBgCaption .captioncnt{position:absolute;left:0;right:0;top:0;bottom:0}.pocketnet_iframe #post .sharearticle .shareBgCaption.smallimage .articleCover{background-color:rgb(var(--color-shadow-base));background-size:100px auto!important}.pocketnet_iframe #post .sharearticle .shareBgCaption.caption_small .captionmult{font-size:1.5em}.pocketnet_iframe #post .sharearticle .shareBgCaption.caption_long .captionmult{font-size:.5em}.pocketnet_iframe #post .sharearticle .shareBgCaption.verticalcover{height:720px}.pocketnet_iframe #post .sharearticle .shareBgCaption.verticalcover.showtext{border-bottom:1px dashed rgba(var(--neutral-grad-4),.5)}.pocketnet_iframe #post .sharearticle .shareBgCaption.verticalcover .articleCover{left:.5em;top:.5em;bottom:.5em;right:56%}.pocketnet_iframe #post .sharearticle .shareBgCaption.verticalcover .captioncnt{left:44%;right:.5em;top:.5em;bottom:.5em}.pocketnet_iframe #post .sharearticle .shareBgCaption.verticalcover .blackmatte{display:none}.pocketnet_iframe #post .sharearticle .shareBgCaption.verticalcover .icon{position:static}.pocketnet_iframe #post .sharearticle .shareBgCaption.verticalcover .captioncnt{justify-content:center;color:rgb(var(--text-color))}.pocketnet_iframe #post .sharearticle .shareBgCaption.verticalcover .divider{background:rgb(var(--text-color))}.pocketnet_iframe #post .sharearticle .shareBgCaption.verticalcover .socialsharewrapper .iconwrapper,.pocketnet_iframe #post .sharearticle .shareBgCaption.verticalcover .starstoppanel .iconwrapper,.pocketnet_iframe #post .sharearticle .shareBgCaption.verticalcover .sys span,.pocketnet_iframe #post .sharearticle .shareBgCaption.verticalcover .tags div span{color:rgb(var(--text-color))}.pocketnet_iframe #post .sharearticle .shareBgCaption.verticalcover.showtext .iconWrapper{position:static;width:auto;padding-left:0;float:none}.pocketnet_iframe #post .sharearticle .shareBgCaption.verticalcover.showtext .toppanel{order:1}.pocketnet_iframe #post .sharearticle .articlecontent{padding-top:4em;padding-bottom:4em}.pocketnet_iframe #post .sharearticle .articlecontent .articlerenderError{text-align:center}.pocketnet_iframe #post .sharearticle .articlecontent .cntswrk{margin-left:0;padding-left:0;padding-right:0}.pocketnet_iframe #post .sharearticle .articlecontent .articleend{margin-top:3em}.pocketnet_iframe #post .sharearticle .articlecontent .commentsWrapper{border-radius:12px}.pocketnet_iframe #post .sharearticle .articlecontent .forcomments{margin-top:2em}.pocketnet_iframe #post .sharearticle .articlecontent .article{max-width:640px;margin:0 auto}.pocketnet_iframe #post .sharearticle .removeDescription{display:none;padding:1.5em;color:rgb(var(--neutral-grad-2));text-align:center}.pocketnet_iframe #post .sharearticle.deleted .forcomments,.pocketnet_iframe #post .sharearticle.deleted .socialsharewrapper,.pocketnet_iframe #post .sharearticle.deleted .starstoppanel,.pocketnet_iframe #post .sharearticle.deleted .textscnts{display:none!important}.pocketnet_iframe #post .sharearticle.deleted .acticletext{display:none}.pocketnet_iframe #post .sharearticle.deleted .removeDescription{display:block!important}.pocketnet_iframe #post .sharearticle.deleted .articleCover{filter:blur(10px)}.pocketnet_iframe #post .sharearticle p a{white-space:nowrap;text-overflow:ellipsis;max-width:90%;overflow:hidden}.pocketnet_iframe #content>div#post.sharec .postWrapper{max-width:none}.pocketnet_iframe #content>div#post.sharec .widthcontainer{width:80%;max-width:800px;margin:0 auto}.pocketnet_iframe html.mobileview #post .videoWrapper{max-width:none}.pocketnet_iframe html.mobileview #post .sharearticle .articlecontent{padding-left:.5em;padding-right:.5em}.pocketnet_iframe html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent{max-width:none}@media only screen and (max-width:1920px){.pocketnet_iframe #content>div#post.sharec .widthcontainer{width:100%;padding-left:.5em;padding-right:.5em}.pocketnet_iframe #post{padding:0}.pocketnet_iframe #post .videoWrapper{border-radius:0}.pocketnet_iframe #post .videoWrapper .js-player,.pocketnet_iframe #post .videoWrapper .js-player .vjs-control-bar{border-radius:0;overflow:visible}.pocketnet_iframe #post .sharearticle .shareBgCaption.caption_small .captionmult{font-size:1.1em}.pocketnet_iframe #post .sharearticle .shareBgCaption.caption_long .captionmult{font-size:.8em}.pocketnet_iframe #post .sharearticle .shareBgCaption .captioncnt .sharecaption{max-height:none}.pocketnet_iframe #post .sharearticle .shareBgCaption:not(.verticalcover){height:auto}.pocketnet_iframe #post .sharearticle .shareBgCaption:not(.verticalcover) .captioncnt{padding-bottom:2em;padding-left:1em;padding-right:1em;display:flex;flex-direction:column;justify-content:flex-end;z-index:1;color:#fff;text-align:center;position:relative;border-bottom:1px dashed rgba(var(--neutral-grad-4),.5);color:rgb(var(--text-color))}.pocketnet_iframe #post .sharearticle .shareBgCaption:not(.verticalcover) .captioncnt .tags{justify-content:center}.pocketnet_iframe #post .sharearticle .shareBgCaption:not(.verticalcover) .captioncnt .sys span,.pocketnet_iframe #post .sharearticle .shareBgCaption:not(.verticalcover) .captioncnt .tags div span{color:rgb(var(--text-color))}.pocketnet_iframe #post .sharearticle .shareBgCaption:not(.verticalcover) .captioncnt .sharecaption{font-size:3em;padding:.5em 0;padding-top:1em}.pocketnet_iframe #post .sharearticle .shareBgCaption:not(.verticalcover) .articleCover{height:300px;position:relative}.pocketnet_iframe #post .sharearticle .shareBgCaption:not(.verticalcover) .blackmatte{display:none}.pocketnet_iframe #post .sharearticle .shareBgCaption.verticalcover{height:720px;border-bottom:0}.pocketnet_iframe #post .sharearticle .shareBgCaption.verticalcover .articleCover{left:0;top:0;bottom:0;right:0}.pocketnet_iframe #post .sharearticle .shareBgCaption.verticalcover .captioncnt{left:0;right:0;top:0;bottom:0;padding-bottom:4em}.pocketnet_iframe #post .sharearticle .shareBgCaption.verticalcover .captioncnt .sharecaption{font-size:3em;padding:.5em 0;padding-top:1em}.pocketnet_iframe #post .sharearticle .shareBgCaption.verticalcover .blackmatte{display:block;-webkit-backdrop-filter:brightness(85%);backdrop-filter:brightness(85%)}.pocketnet_iframe #post .sharearticle .shareBgCaption.verticalcover .captioncnt{justify-content:flex-end;color:rgb(var(--text-on-bg-ac-color))}.pocketnet_iframe #post .sharearticle .shareBgCaption.verticalcover .divider{background:rgb(var(--text-on-bg-ac-color))}.pocketnet_iframe #post .sharearticle .shareBgCaption.verticalcover .socialsharewrapper .iconwrapper,.pocketnet_iframe #post .sharearticle .shareBgCaption.verticalcover .starstoppanel .iconwrapper,.pocketnet_iframe #post .sharearticle .shareBgCaption.verticalcover .sys span,.pocketnet_iframe #post .sharearticle .shareBgCaption.verticalcover .tags div span{color:rgb(var(--text-on-bg-ac-color))}.pocketnet_iframe #post .sharearticle .socialsharewrapper,.pocketnet_iframe #post .sharearticle .starstoppanel{bottom:-.25em!important}.pocketnet_iframe #post .sharearticle .socialsharewrapper .panelLeft,.pocketnet_iframe #post .sharearticle .starstoppanel .panelLeft{flex-direction:column}.pocketnet_iframe #post .sharearticle .articlecontent{padding-left:.5em;padding-right:.5em}.pocketnet_iframe #post .sharearticle .articlecontent .article{max-width:640px;margin:0 auto}.pocketnet_iframe #post .sharearticle .articlecontent .article_link_custom,.pocketnet_iframe #post .sharearticle .articlecontent .article_quote{width:96%;max-width:none}.pocketnet_iframe #post .sharearticle .articlecontent .article_this_embed{padding:0;margin-top:1em;border:0}}.pocketnet_iframe html.mobileview.fullscreen #post #comments{display:none}.pocketnet_iframe .wnd.postwindow .wndcontent{top:0;background:transparent;height:100%;width:100%;padding-top:0;margin:0 auto;padding-bottom:10em}.pocketnet_iframe .wnd.postwindow .wndinner{height:100%;width:100%;max-height:none;background:transparent}.pocketnet_iframe .wnd.postwindow.articlewindow .wndcontent{padding:0;border-radius:0;background:rgb(var(--background-total-theme))}.pocketnet_iframe .wnd.postwindow.articlewindow #post .postWrapper{max-width:none}.pocketnet_iframe .wnd.postwindow .widthcontainer{width:80%;max-width:800px;margin:0 auto}.pocketnet_iframe .wnd.postwindow #post{margin:0 auto;background:transparent}.pocketnet_iframe .wnd.postwindow #post .postWrapper{overflow:hidden;border-radius:3px}.pocketnet_iframe .wnd.postwindow #post .nextpost{display:block}.pocketnet_iframe html.mobileview .wnd.postwindow .widthcontainer{width:100%;max-width:none}.pocketnet_iframe html.mobileview .wnd.articlewindow .widthcontainer{width:96%;max-width:768px}@media only screen and (max-width:1920px){.pocketnet_iframe #post{border-top:1px solid rgba(var(--neutral-grad-1),.3)}.pocketnet_iframe #post .statswrapperExtended{padding:.5em}.pocketnet_iframe #post .showmorelenta .horizontalLentaWrapper{padding:.5em 0}.pocketnet_iframe #post .showmorelenta .horizontalLentacaption{padding:.5em}.pocketnet_iframe #post .repostsecond{text-align:center}.pocketnet_iframe #post .nextpost{display:none}.pocketnet_iframe #post .iconWrapper{width:4em;padding-top:.5em;padding-left:.5em;padding-right:0}.pocketnet_iframe #post .openoriginallabel{display:none}.pocketnet_iframe #post.videomainpost .formeta{margin-left:0;margin-bottom:1em;padding-left:0}.pocketnet_iframe #post.videomainpost.squareVideo .forurl .videoWrapper,.pocketnet_iframe #post.videomainpost.verticalVideo .forurl .videoWrapper{max-width:none}.pocketnet_iframe #post.videomainpost .share .anothercntswrk{padding-right:.5em}.pocketnet_iframe #post.videomainpost .share .paddingWrapper{margin-left:0;padding-left:0}.pocketnet_iframe .wnd.postwindow .widthcontainer{width:100%}.pocketnet_iframe .wnd.postwindow #post .share .sharearticle .commentsWrapper,.pocketnet_iframe .wnd.postwindow .wndcontent{padding-bottom:0}.pocketnet_iframe .wnd.postwindow #post .share .commentsWrapper{padding-bottom:5em}.pocketnet_iframe html.mobileview .wnd.postwindow .widthcontainer{width:100%}.pocketnet_iframe html.mobileview .wnd.postwindow.normalizedmobile .wndcontent{background:rgb(var(--background-total-theme))}.pocketnet_iframe html.mobileview .wnd.postwindow.normalizedmobile #post{border-top:0}.pocketnet_iframe html.mobileview .wnd.postwindow.normalizedmobile #post .cntswrk.forcomments .paddingWrapper{padding:0}.pocketnet_iframe html.mobileview .wnd.articlewindow.normalizedmobile #post .postWrapper{padding-top:0}}.pocketnet_iframe .wnd.postwindow.pipmini .wndcontent{padding-right:0;overflow-y:hidden}.pocketnet_iframe .wnd.postwindow.pipmini #post,.pocketnet_iframe .wnd.postwindow.pipmini #post .postWrapper{padding:0!important}.pocketnet_iframe .wnd.postwindow.pipmini #post .shareTable{padding:0;border-radius:6px}.pocketnet_iframe .wnd.postwindow.pipmini #post .videoWrapper{border-radius:6px}.pocketnet_iframe .wnd.postwindow.pipmini #post .videoWrapper .video-js{min-height:150px;max-height:calc(var(--vh, 1vh)*25)}.pocketnet_iframe .wnd.postwindow.pipmini #post .videoWrapper .video-js .vjs-control-bar .vjs-mute-control{position:absolute;height:3em;line-height:3.5em;font-size:1em;right:.25em;bottom:0;width:3em;font-size:.9em}.pocketnet_iframe .wnd.postwindow.pipmini #post .work{position:static}.pocketnet_iframe html.pipmode .wnd.postwindow.pipmini #post .shareTable{padding:0;border-radius:0}.pocketnet_iframe html.pipmode .wnd.postwindow.pipmini #post .videoWrapper{border-radius:0;position:absolute;left:0;top:0;bottom:0;right:0}.pocketnet_iframe html.pipmode .wnd.postwindow.pipmini #post .videoWrapper .js-player{height:100%}.pocketnet_iframe html.pipmode .wnd.postwindow.pipmini #post .videoWrapper .video-js{max-height:none;min-height:0;position:absolute;left:0;top:0;bottom:0;width:100%;height:100%;max-width:none;right:0}.pocketnet_iframe html.pipmode .wnd.postwindow.pipmini #post .videoWrapper .video-js .vjs-control-bar{padding-left:0}.pocketnet_iframe :root{--background-hidden-layer:255,255,255;--background-total-theme:255,255,255;--background-secondary-theme:250,250,250;--background-secondary-theme-2:18,22,33;--background-main:240,242,245;--background-main-contrast:10,12,23;--color-medium-theme:199,200,217;--neutral-grad-0:235,235,240;--neutral-grad-1:227,228,235;--neutral-grad-2:142,144,166;--neutral-grad-3:85,87,112;--neutral-grad-4:64,65,82;--text-color:10,12,23;--text-on-main-bg-color:85,87,112;--text-on-bg-ac-color:255,255,255;--color-bg-ac-bright:0,163,247;--color-bg-ac:0,164,255;--color-bg-ac-1:0,142,191;--color-bg-ac-2:250,110,132;--color-bg-selection:179,212,252;--color-txt-ac:0,164,255;--color-txt-ac-1:0,142,191;--color-txt-ac-2:250,110,132;--color-txt-gray:70,71,98;--color-txt-gray-dark:53,53,63;--color-bg-orange:255,59,0;--color-txt-orange:255,72,0;--color-star-yellow:255,174,0;--color-shadow-base:2,18,24;--color-shadow-var:32,35,42;--text-on-bg-shadow-color:255,255,255;--color-bad:244,26,77;--color-nrml:0,0,0;--color-good:7,108,52;--color-yellow:255,238,0;--color-h2-aboutcc:68,68,68;--color-h2-works__container:255,255,255;--color-black:0,0,0;--color-cc-videos:38,38,38;--color-cc-open:251,240,195;--color-cc-blue:0,166,255;--color-cc-white:255,255,255;--color-cc-grey:221,221,221;--color-cc-menu:0,213,195;--color-cc-dark-blue:49,60,155;--color-cc-dark:59,59,59;--color-cc-description:207,207,207;--color-cc-line:49,60,155;--color-cc-table:246,246,246;--color-services-item:5,5,5,0.2;--color-cc-dark-grey:102,102,102;--color-cc-dark-blue-cc:22,28,53;--color-cc-dark-blue-ccc:22,28,53,0.7;--color-cc-team-container:204,204,204;--color-cc-bc:238,238,238;--color-cc-bc-span:51,51,51;--color-cc-bc-p:22,28,53;--color-cc-form:33,42,73,0.6;--color-fb:10,35,71;--color-menu-2:100,255,237}.pocketnet_iframe :root[theme=black]{--background-hidden-layer:10,12,23;--background-total-theme:18,22,33;--background-secondary-theme:24,36,52;--background-secondary-theme-2:24,36,52;--background-main:12,14,18;--background-main-contrast:240,242,245;--color-medium-theme:99,100,117;--neutral-grad-0:25,25,29;--neutral-grad-1:38,38,42;--neutral-grad-2:78,78,99;--neutral-grad-3:85,87,112;--neutral-grad-4:96,103,112;--text-color:178,171,172;--text-on-main-bg-color:85,87,112;--text-on-bg-ac-color:255,255,255;--color-bg-ac-bright:0,90,200;--color-bg-ac:0,80,190;--color-bg-ac-1:0,142,191;--color-bg-ac-2:250,110,132;--color-bg-selection:7,36,170;--color-txt-ac:0,164,255;--color-txt-ac-1:0,142,191;--color-txt-ac-2:250,110,132;--color-txt-gray:103,105,128;--color-txt-gray-dark:113,113,134;--color-bg-orange:255,72,0;--text-txt-orange:255,72,0;--color-shadow-base:12,14,33;--color-shadow-var:18,18,26;--text-on-bg-shadow-color:214,219,230;--color-bad:244,26,77;--color-nrml:180,180,180;--color-good:7,108,52;--color-yellow:255,238,0}.pocketnet_iframe :root[theme=gray]{--background-hidden-layer:12,12,12;--background-total-theme:20,20,20;--background-secondary-theme:36,36,36;--background-secondary-theme-2:36,36,36;--background-main:28,28,28;--background-main-contrast:242,242,242;--color-medium-theme:104,104,104;--neutral-grad-0:37,37,37;--neutral-grad-1:47,47,47;--neutral-grad-2:88,88,88;--neutral-grad-3:95,95,95;--neutral-grad-4:105,105,105;--text-color:190,190,190;--text-on-main-bg-color:130,130,130;--text-on-bg-ac-color:255,255,255;--color-bg-ac-bright:55,120,160;--color-bg-ac:50,110,150;--color-bg-ac-1:0,142,191;--color-bg-ac-2:255,216,0;--color-bg-selection:30,80,150;--color-txt-ac:50,110,150;--color-txt-ac-1:0,142,191;--color-txt-ac-2:255,216,0;--color-txt-gray:110,110,110;--color-txt-gray-dark:120,120,120;--color-bg-orange:255,72,0;--text-txt-orange:255,72,0;--color-shadow-base:22,22,22;--color-shadow-var:25,25,25;--text-on-bg-shadow-color:214,214,214;--color-bad:210,0,20;--color-nrml:180,180,0180;--color-good:0,140,40;--color-yellow:250,230,10}.pocketnet_iframe .customscroll{overscroll-behavior:contain}.pocketnet_iframe .jsPlayerLoading{width:auto;height:auto;background:#000;position:relative;min-height:200px;border-radius:6px}.pocketnet_iframe .jsPlayerLoading .preloader5{position:absolute;left:50%;top:50%;margin-left:-15px;margin-top:-8px;width:30px;height:15px;contain:strict}.pocketnet_iframe .jsPlayerLoading .jsPlayerLoadingD{position:absolute;left:0;top:0;bottom:0;right:0;display:flex;align-items:center;justify-content:center}.pocketnet_iframe .jsPlayerLoading.ytbvimb{padding-bottom:56.25%}.pocketnet_iframe .jsPlayerLoading.ytbvimb .jsPlayerLoading{display:none}.pocketnet_iframe .jsPlayerLoading.ytbvimb .playerlabel{position:absolute;left:.5em;padding:.5em;border-radius:6px;background:rgba(var(--color-shadow-base),.5);bottom:.5em}.pocketnet_iframe .jsPlayerLoading.ytbvimb.loading .jsPlayerLoading{height:100%;max-height:none;display:block;background:transparent}.pocketnet_iframe .jsPlayerLoading.ytbvimb.loading .jsPlayerLoading .preloader5{display:block}.pocketnet_iframe .jsPlayerLoading.ytbvimb.loading .initvideoplayer,.pocketnet_iframe .jsPlayerLoading.ytbvimb.loading .playerlabel{display:none}.pocketnet_iframe .jsPlayerLoading .initvideoplayer{text-align:center;cursor:pointer;width:100px;height:100px;line-height:100px;font-size:1.5em;margin:0 auto;text-shadow:0 0 2px rgba(var(--color-shadow-base),.714),0 0 3px rgba(var(--color-shadow-base),.519)}@media only screen and (min-width:768px){.pocketnet_iframe .customscroll{overflow-y:overlay;overflow-x:hidden;scrollbar-width:7px;scrollbar-color:rgba(var(--background-main-contrast),.15) rgba(var(--background-main-contrast),.05);overscroll-behavior:contain}.pocketnet_iframe .customscroll::-webkit-scrollbar{width:7px}.pocketnet_iframe .customscroll::-webkit-scrollbar-track{background:rgba(var(--background-main-contrast),.05)}.pocketnet_iframe .customscroll::-webkit-scrollbar-thumb{background-color:rgba(var(--background-main-contrast),.25);border:0 solid rgba(var(--background-main-contrast),.05);background-image:linear-gradient(180deg,rgba(var(--background-main-contrast),.25),rgba(var(--background-hidden-layer),0) 90%)}}.pocketnet_iframe .wnd .wndcustomscroll{overflow-y:overlay;overflow-x:hidden;scrollbar-width:7px;scrollbar-color:rgba(var(--background-main-contrast),.15) rgba(var(--background-main-contrast),.05);overscroll-behavior:contain}.pocketnet_iframe .wnd .wndcustomscroll::-webkit-scrollbar{width:7px}.pocketnet_iframe .wnd .wndcustomscroll::-webkit-scrollbar-track{background:rgba(var(--background-main-contrast),.05)}.pocketnet_iframe .wnd .wndcustomscroll::-webkit-scrollbar-thumb{background-color:rgba(var(--background-main-contrast),.25);border:0 solid rgba(var(--background-main-contrast),.05);background-image:linear-gradient(180deg,rgba(var(--background-main-contrast),.25),rgba(var(--background-hidden-layer),0) 90%)}.pocketnet_iframe body,.pocketnet_iframe html{overscroll-behavior:none}.pocketnet_iframe html{font-size:15px;line-height:1.4;min-height:100%;position:relative;overflow-x:hidden;overflow-y:overlay}.pocketnet_iframe html.nooverflow{overflow:hidden}.pocketnet_iframe html.testpocketnet .testpocketnetbg{background-position:50%;background-repeat:repeat-x repeat-y}.pocketnet_iframe [image]{opacity:0;transition:opacity .3s}.pocketnet_iframe [image=\"*\"],.pocketnet_iframe [image][visibleimage]{opacity:1}.pocketnet_iframe .emojione,.pocketnet_iframe .joypixels{height:16px}.pocketnet_iframe .disable-hover,.pocketnet_iframe .disable-hover *{pointer-events:none!important}.pocketnet_iframe .fadeoverflow{-webkit-mask-image:linear-gradient(270deg,transparent 3%,#000 10%);mask-image:linear-gradient(270deg,transparent 3%,#000 10%)}.pocketnet_iframe h1,.pocketnet_iframe h2,.pocketnet_iframe h3{font-size:1em}.pocketnet_iframe .preshell .blur{-moz-filter:blur(5px);filter:blur(5px)}.pocketnet_iframe .preshell .spacertable{background:rgba(14,28,43,.02);height:11em;margin-bottom:2em}.pocketnet_iframe .preshell .textline{background:rgba(14,28,43,.04);height:21px;margin-bottom:.5em;border-radius:3px}.pocketnet_iframe .preshell .textline.light{background:rgba(14,28,43,.02)}.pocketnet_iframe .preshell .textline.slight{background:rgba(228,221,222,.06)}.pocketnet_iframe .preshell .textline.colored{background:rgba(0,164,255,.07)}.pocketnet_iframe .preshell .textline.contrast{background:rgba(255,110,132,.07)}.pocketnet_iframe .preshell .textline.yellow{background:rgba(255,174,0,.07)}.pocketnet_iframe mark{background:rgba(var(--color-bg-ac),.9);color:rgb(var(--text-on-bg-ac-color))}.pocketnet_iframe ::-moz-selection{background:rgb(var(--color-bg-selection));text-shadow:none}.pocketnet_iframe ::selection{background:rgb(var(--color-bg-selection));text-shadow:none}.pocketnet_iframe hr{display:block;height:1px;border:0;border-top:1px solid #ccc;margin:1em 0;padding:0}.pocketnet_iframe audio,.pocketnet_iframe canvas,.pocketnet_iframe iframe,.pocketnet_iframe img,.pocketnet_iframe svg,.pocketnet_iframe video{vertical-align:middle}.pocketnet_iframe fieldset{border:0;margin:0;padding:0}.pocketnet_iframe textarea{resize:vertical}.pocketnet_iframe button,.pocketnet_iframe button:active,.pocketnet_iframe button:focus,.pocketnet_iframe input:focus,.pocketnet_iframe textarea:focus{outline:none}.pocketnet_iframe input:focus{border:0}.pocketnet_iframe input.chrome[type=range],.pocketnet_iframe input.opera[type=range],.pocketnet_iframe input.safari[type=range]{-webkit-appearance:none;vertical-align:middle;line-height:25px;border-radius:2px;height:2px;margin-top:-5px;background-color:rgb(var(--background-main-contrast));cursor:pointer}.pocketnet_iframe input.chrome[type=range]::-webkit-slider-thumb,.pocketnet_iframe input.opera[type=range]::-webkit-slider-thumb,.pocketnet_iframe input.safari[type=range]::-webkit-slider-thumb{-webkit-appearance:none;vertical-align:middle;line-height:16px;background-color:rgb(var(--background-hidden-layer));border:1px solid rgb(var(--background-main-contrast));width:16px;height:16px;border-radius:8px;cursor:pointer}.pocketnet_iframe input.firefox[type=range]{width:80%}.pocketnet_iframe input.firefox[type=range]::-moz-range-track{border-radius:2px;height:7px;border:1px solid rgb(var(--background-main-contrast));background-color:rgb(var(--background-hidden-layer))}.pocketnet_iframe input.firefox[type=range]::-moz-range-thumb{background:rgb(var(--background-hidden-layer));border:1px solid rgb(var(--background-main-contrast));width:16px;height:16px;border-radius:8px;cursor:pointer}.pocketnet_iframe input.ie[type=range]::-ms-fill-lower,.pocketnet_iframe input.ie[type=range]::-ms-fill-upper{background:transparent}.pocketnet_iframe input.ie[type=range]::-ms-track{width:80%;border-radius:2px;height:7px}.pocketnet_iframe input.ie[type=range]::-ms-thumb,.pocketnet_iframe input.ie[type=range]::-ms-track{border:1px solid rgb(var(--background-main-contrast));background-color:rgb(var(--background-hidden-layer))}.pocketnet_iframe input.ie[type=range]::-ms-thumb{width:16px;height:16px;border-radius:8px;cursor:pointer}.pocketnet_iframe .browserupgrade{margin:.2em 0;background:rgb(var(--neutral-grad-2));color:rgb(var(--text-color));padding:.2em 0}.pocketnet_iframe #globalpreloader,.pocketnet_iframe #topsmallpreloader,.pocketnet_iframe .updatingFrontend{position:fixed;left:0;top:-100%;bottom:100%;right:0;z-index:2000000;transition:transform .3s}.pocketnet_iframe #globalpreloader.show,.pocketnet_iframe #topsmallpreloader.show,.pocketnet_iframe .updatingFrontend.show{transform:translateY(100%)}.pocketnet_iframe #globalpreloader.show .table .icon i,.pocketnet_iframe #topsmallpreloader.show .table .icon i,.pocketnet_iframe .updatingFrontend.show .table .icon i{display:inline-block}.pocketnet_iframe #globalpreloader .table,.pocketnet_iframe #topsmallpreloader .table,.pocketnet_iframe .updatingFrontend .table{width:100%;height:100%;color:rgb(var(--text-on-bg-ac-color));text-shadow:0 0 2px rgba(var(--color-shadow-base),.714),0 0 3px rgba(var(--color-shadow-base),.519)}.pocketnet_iframe #globalpreloader .table>div,.pocketnet_iframe #topsmallpreloader .table>div,.pocketnet_iframe .updatingFrontend .table>div{vertical-align:middle;text-align:center}.pocketnet_iframe #globalpreloader .table .text,.pocketnet_iframe #topsmallpreloader .table .text,.pocketnet_iframe .updatingFrontend .table .text{max-width:524px;margin:0 auto;padding:1em}.pocketnet_iframe #globalpreloader .table .text span,.pocketnet_iframe #topsmallpreloader .table .text span,.pocketnet_iframe .updatingFrontend .table .text span{font-size:1.5em;font-weight:100}.pocketnet_iframe #globalpreloader .table .icon,.pocketnet_iframe #topsmallpreloader .table .icon,.pocketnet_iframe .updatingFrontend .table .icon{padding:2em}.pocketnet_iframe #globalpreloader .table .icon i,.pocketnet_iframe #topsmallpreloader .table .icon i,.pocketnet_iframe .updatingFrontend .table .icon i{display:none;font-size:1.3em}.pocketnet_iframe #topsmallpreloader{top:-65px;bottom:auto;height:65px}.pocketnet_iframe .js-player .video-js{display:none}.pocketnet_iframe .js-player.player-ready .video-js,.pocketnet_iframe .js-player .video-js.vjs-thumb{display:block}.pocketnet_iframe .unselectable{-webkit-tap-highlight-color:transparent}.pocketnet_iframe .unselectable,.pocketnet_iframe html.mobile .unselectablemobile{-webkit-touch-callout:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pocketnet_iframe .cancopy{-webkit-user-select:text!important;-moz-user-select:text!important;user-select:text!important}.pocketnet_iframe div{-webkit-tap-highlight-color:transparent}.pocketnet_iframe *{box-sizing:border-box}.pocketnet_iframe body{color:rgb(var(--text-color));background:rgb(var(--background-hidden-layer));font-family:Segoe UI Variable,Segoe UI,SegoeUI,Helvetica Neue,Helvetica,Arial,sans-serif!important;min-height:100%;height:100%}.pocketnet_iframe button,.pocketnet_iframe input[type=email],.pocketnet_iframe input[type=number],.pocketnet_iframe input[type=password],.pocketnet_iframe input[type=text]{background:rgb(var(--background-hidden-layer));color:rgb(var(--text-color));border-radius:6px;padding:.5em;border:1px solid rgb(var(--neutral-grad-2))}.pocketnet_iframe textarea{background:rgb(var(--background-hidden-layer));color:rgb(var(--text-color));border:1px solid rgb(var(--neutral-grad-2));border-radius:6px}.pocketnet_iframe .image,.pocketnet_iframe img{-webkit-touch-callout:none;-webkit-user-select:none;-moz-user-select:none;user-select:none;-webkit-user-drag:none;-khtml-user-drag:none;-moz-user-drag:none;-o-user-drag:none;user-drag:none;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-tap-highlight-color:transparent}.pocketnet_iframe input.error,.pocketnet_iframe select.error,.pocketnet_iframe textarea.error{border-color:rgb(var(--color-bad))}.pocketnet_iframe input[disabled]{color:rgb(var(--neutral-grad-2))}.pocketnet_iframe ::-webkit-input-placeholder{color:rgb(var(--neutral-grad-4))}.pocketnet_iframe :-moz-placeholder,.pocketnet_iframe ::-moz-placeholder{color:rgb(var(--neutral-grad-4));opacity:1}.pocketnet_iframe :-moz-placeholder-shown{color:rgb(var(--neutral-grad-4))}.pocketnet_iframe :placeholder-shown{color:rgb(var(--neutral-grad-4))}.pocketnet_iframe button{background:rgb(var(--color-bg-ac-bright));color:rgb(var(--text-on-bg-ac-color));border:1px solid rgb(var(--color-bg-ac-bright));text-align:center;font-size:.9em;font-weight:600;border-radius:8px;transition:.3s}.pocketnet_iframe button.small{padding:.25em 2em;font-size:.7em}.pocketnet_iframe button.medium{padding:.5em 3em;font-size:.8em}.pocketnet_iframe button.disabled{cursor:default;background:rgb(var(--neutral-grad-2));border-color:rgb(var(--neutral-grad-2));color:rgb(var(--text-on-bg-ac-color))}.pocketnet_iframe button.shadowWhite{background:transparent;color:#fff;border:1px solid #fff}.pocketnet_iframe button.black{background:rgb(var(--neutral-grad-4));border:1px solid rgb(var(--neutral-grad-4))}.pocketnet_iframe button.good{background:rgb(var(--color-good));border:1px solid rgb(var(--color-good))}.pocketnet_iframe button.contrast{background:rgb(var(--color-bg-ac-2));border:1px solid rgb(var(--color-bg-ac-2));color:rgb(var(--text-on-bg-ac-color))}.pocketnet_iframe button.orange{background:rgb(var(--color-bg-orange));border:1px solid rgb(var(--color-bg-orange));color:rgb(var(--text-on-bg-ac-color))}.pocketnet_iframe button.yellow{background:#ffa600;border:1px solid #ffa600;color:#fff}.pocketnet_iframe button.gray{background:rgb(var(--neutral-grad-3));border:1px solid rgb(var(--neutral-grad-3))}.pocketnet_iframe button.bordered{background:transparent;border:1px solid rgb(var(--neutral-grad-2));color:rgb(var(--neutral-grad-2))}.pocketnet_iframe button.ghost{background:transparent;border-color:transparent;color:rgb(var(--neutral-grad-3));text-decoration:underline}.pocketnet_iframe button.orange.ghost{color:rgb(var(--color-txt-orange))}.pocketnet_iframe button.nopadding{padding-left:0;padding-right:0}@media (pointer:fine){.pocketnet_iframe button:hover{background:transparent;color:rgb(var(--color-bg-ac-bright))}.pocketnet_iframe button.disabled:hover{color:rgb(var(--text-on-bg-ac-color));background:rgb(var(--neutral-grad-2))}.pocketnet_iframe button.shadowWhite:hover{background:#fff;color:rgb(var(--color-bg-ac-bright))}.pocketnet_iframe button.black:hover{background:rgba(var(--background-main-contrast),.3);border:1px solid rgba(var(--background-main-contrast),.3);color:rgb(var(--text-on-bg-ac-color))}.pocketnet_iframe button.good:hover{background:transparent;color:rgb(var(--color-good))}.pocketnet_iframe button.contrast:hover{opacity:.8;color:rgb(var(--text-on-bg-ac-color))}.pocketnet_iframe button.orange:hover{background:rgb(var(--text-on-bg-ac-color));color:rgb(var(--color-txt-orange))}.pocketnet_iframe button.yellow:hover{background:#fff;color:#ff4800}.pocketnet_iframe button.gray:hover{opacity:.8;color:rgb(var(--text-on-bg-ac-color))}.pocketnet_iframe button.bordered{background:transparent;border:1px solid rgb(var(--neutral-grad-2));color:rgb(var(--neutral-grad-2))}.pocketnet_iframe button.bordered:hover{background:rgb(var(--color-bg-ac-bright));color:rgb(var(--text-on-bg-ac-color))}.pocketnet_iframe button.ghost{background:transparent;border-color:transparent;color:rgb(var(--neutral-grad-3));text-decoration:underline}.pocketnet_iframe button.ghost:hover{color:rgb(var(--color-bg-ac-bright))}.pocketnet_iframe button.orange.ghost{color:rgb(var(--color-txt-orange))}.pocketnet_iframe button.nopadding{padding-left:0;padding-right:0}}.pocketnet_iframe .psselect,.pocketnet_iframe select{background:rgb(var(--background-hidden-layer));-webkit-appearance:none;background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");background-position:right 10px center;background-repeat:no-repeat;line-height:1em;padding:1em;padding-right:2em;padding-left:10px;border:0;outline:none;border:1px solid rgb(var(--color-text-ac));-moz-appearance:none;text-indent:.01px;text-overflow:\"\";appearance:none!important;text-align:left}.pocketnet_iframe .psselect .name,.pocketnet_iframe select .name{width:100%;height:100%;overflow:hidden;white-space:nowrap}.pocketnet_iframe select::-ms-expand{display:none}.pocketnet_iframe .b,.pocketnet_iframe b{font-weight:700}.pocketnet_iframe ul{padding-left:1em}.pocketnet_iframe l{font-weight:100}.pocketnet_iframe .radio label{display:block;margin-bottom:1em}.pocketnet_iframe .radio label>input{display:none}.pocketnet_iframe .radio label>i{display:inline-block;width:20px;height:20px;border-radius:50%;margin-right:5px;vertical-align:middle;border:1px solid #fff;box-shadow:inset 0 0 0 4px rgb(var(--color-bg-ac));transition:.25s}.pocketnet_iframe .radio label>span{display:inline-block;border-bottom:2px dotted rgb(var(--color-bg-ac))}.pocketnet_iframe .radio label>input:checked+i{background:rgb(var(--color-bg-ac))}.pocketnet_iframe .radio label:hover{cursor:pointer}.pocketnet_iframe pie{width:5em;height:5em;display:block;border-radius:50%;background-color:rgb(var(--color-good));border:2px solid rgb(var(--color-good));float:left}.pocketnet_iframe .ten{background-image:linear-gradient(126deg,transparent 50%,#fff 0),linear-gradient(90deg,#fff 50%,transparent 0)}.pocketnet_iframe .desaturate{filter:grayscale(100%);filter:gray}.pocketnet_iframe .center{position:absolute;left:0;top:0;right:0;bottom:0;margin:auto}.pocketnet_iframe .blur{-moz-filter:blur(10px);-o-filter:blur(10px);-ms-filter:blur(10px);filter:blur(10px)}.pocketnet_iframe .cadd,.pocketnet_iframe .cmain{color:#00a4ff}.pocketnet_iframe .cbad{color:rgb(var(--color-bad))}.pocketnet_iframe .cgood{color:rgb(var(--color-good))}.pocketnet_iframe .abbr{display:none}.pocketnet_iframe .clearfix{display:block}.pocketnet_iframe .clearfix:after{content:\"\";display:block;visibility:hidden;line-height:0;height:0;margin:0;padding:0}.pocketnet_iframe .upbutton{position:fixed;left:0;bottom:0;top:65px;display:none;cursor:pointer}.pocketnet_iframe .upbutton .mini{display:none;border:1px solid rgb(var(--background-hidden-layer));background:rgb(var(--background-hidden-layer));color:rgb(var(--neutral-grad-4));cursor:pointer;text-align:center;width:44px;height:44px;line-height:42px;transition:.3s;border-radius:50%;font-size:.7em;box-shadow:0 5px 10px -5px rgba(var(--color-shadow-base),.4)}.pocketnet_iframe .upbutton .full{padding:1em 0;padding-left:0;color:rgba(var(--neutral-grad-2),.5);height:100%;width:100%;transition:.3s}.pocketnet_iframe .upbutton .full .fulltable{width:auto;margin:0 auto}.pocketnet_iframe .upbutton .full .fulltable>div{vertical-align:top}.pocketnet_iframe .upbutton .full .fulltable>div.label{font-size:.9em;white-space:nowrap}.pocketnet_iframe .upbutton .full .fulltable>div.icon{width:40px;text-align:center}.pocketnet_iframe .upbutton .full .fulltable>div.likeicon{width:40px}.pocketnet_iframe .upbutton:hover .full{background:rgba(var(--background-hidden-layer),.2);color:rgba(var(--neutral-grad-2),.7)}.pocketnet_iframe .upbutton:hover .mini{color:rgb(var(--color-bg-ac));border-color:rgb(var(--color-bg-ac))}.pocketnet_iframe .upbutton.active{display:block}.pocketnet_iframe .upbutton.light .full{color:rgba(var(--text-color),.5)}.pocketnet_iframe .upbutton.light:hover .full{background:rgba(var(--background-main-contrast),.1);color:rgba(var(--background-main-contrast),.7)}.pocketnet_iframe .upbutton.bright .full{color:rgb(var(--color-txt-ac))}.pocketnet_iframe .upbutton.bright:hover .full{background:transparent;color:rgba(var(--neutral-grad-2),.7)}.pocketnet_iframe .upbutton.bright:hover .mini{color:rgb(var(--color-txt-ac));border-color:rgb(var(--color-txt-ac))}.pocketnet_iframe .table{width:100%;height:100%;display:table;table-layout:fixed}.pocketnet_iframe .table>div{display:table-cell}.pocketnet_iframe .cf_caption{position:fixed;z-index:10}.pocketnet_iframe .sort{font-size:.9em;line-height:1em;cursor:pointer}.pocketnet_iframe .sort[reverse=\"1\"] i:before{content:\"\\f0dd\"}.pocketnet_iframe .sort[reverse=\"2\"] i:before{content:\"\\f0de\"}.pocketnet_iframe .sort i{color:rgb(var(--neutral-grad-2))}.pocketnet_iframe .sort.active i,.pocketnet_iframe .sort:hover i{color:rgb(var(--color-txt-ac))}.pocketnet_iframe .forstars .count,.pocketnet_iframe .forstars .itemwr{display:flex;align-items:center}.pocketnet_iframe .forstars .count i,.pocketnet_iframe .forstars .count span{font-size:.8em;color:rgb(var(--neutral-grad-3))}.pocketnet_iframe .forstars .count img{vertical-align:middle;opacity:.5;font-size:.3em}.pocketnet_iframe .forstars .count .v{font-weight:500;color:rgb(var(--neutral-grad-3))}.pocketnet_iframe .forstars .count .countusers{max-width:6em;margin-left:.5em;white-space:nowrap;padding:.375em .75em;border-radius:2em;border:1px solid rgb(var(--neutral-grad-3));color:rgb(var(--neutral-grad-3));display:flex;align-items:center;text-overflow:ellipsis}.pocketnet_iframe .forstars .count .countusers .c{padding-left:.25em}.pocketnet_iframe .stars{white-space:nowrap;position:relative;font-size:1.1em;color:rgb(var(--neutral-grad-3))}.pocketnet_iframe .stars .starsWrapper{overflow:hidden}.pocketnet_iframe .stars .starWrapper{float:left;text-align:left;width:1.8em}.pocketnet_iframe .stars [value=\"5\"]{transition:.5s}.pocketnet_iframe .stars [value=\"4\"]{transition:.4s}.pocketnet_iframe .stars [value=\"3\"]{transition:.3s}.pocketnet_iframe .stars [value=\"2\"]{transition:.2s}.pocketnet_iframe .stars [value=\"1\"]{transition:.1s}.pocketnet_iframe .stars[tempValue=\"1\"] [value=\"1\"],.pocketnet_iframe .stars[tempValue=\"2\"] [value=\"1\"],.pocketnet_iframe .stars[tempValue=\"2\"] [value=\"2\"],.pocketnet_iframe .stars[tempValue=\"3\"] [value=\"1\"],.pocketnet_iframe .stars[tempValue=\"3\"] [value=\"2\"],.pocketnet_iframe .stars[tempValue=\"3\"] [value=\"3\"],.pocketnet_iframe .stars[tempValue=\"4\"] [value=\"1\"],.pocketnet_iframe .stars[tempValue=\"4\"] [value=\"2\"],.pocketnet_iframe .stars[tempValue=\"4\"] [value=\"3\"],.pocketnet_iframe .stars[tempValue=\"4\"] [value=\"4\"],.pocketnet_iframe .stars[tempValue=\"5\"] [value=\"1\"],.pocketnet_iframe .stars[tempValue=\"5\"] [value=\"2\"],.pocketnet_iframe .stars[tempValue=\"5\"] [value=\"3\"],.pocketnet_iframe .stars[tempValue=\"5\"] [value=\"4\"],.pocketnet_iframe .stars[tempValue=\"5\"] [value=\"5\"]{color:rgb(var(--color-bg-ac-1))}.pocketnet_iframe .stars[value=\"5\"] [value=\"1\"],.pocketnet_iframe .stars[value=\"5\"] [value=\"2\"],.pocketnet_iframe .stars[value=\"5\"] [value=\"3\"],.pocketnet_iframe .stars[value=\"5\"] [value=\"4\"],.pocketnet_iframe .stars[value=\"5\"] [value=\"5\"]{font-weight:900;color:rgb(var(--color-star-yellow))}.pocketnet_iframe .stars[value=\"4\"] [value=\"5\"],.pocketnet_iframe .stars[value=\"4\"] [value=\"5\"] [value]{color:rgb(var(--neutral-grad-2));cursor:default!important}.pocketnet_iframe .stars[value=\"4\"] [value=\"5\"]:hover .tstars{display:block}.pocketnet_iframe .stars[value=\"4\"] [value=\"1\"],.pocketnet_iframe .stars[value=\"4\"] [value=\"2\"],.pocketnet_iframe .stars[value=\"4\"] [value=\"3\"],.pocketnet_iframe .stars[value=\"4\"] [value=\"4\"]{font-weight:900;color:rgb(var(--color-star-yellow))}.pocketnet_iframe .stars[value=\"3\"] [value=\"4\"],.pocketnet_iframe .stars[value=\"3\"] [value=\"4\"] [value],.pocketnet_iframe .stars[value=\"3\"] [value=\"5\"],.pocketnet_iframe .stars[value=\"3\"] [value=\"5\"] [value]{color:rgb(var(--neutral-grad-2));cursor:default!important}.pocketnet_iframe .stars[value=\"3\"] [value=\"4\"]:hover .tstars,.pocketnet_iframe .stars[value=\"3\"] [value=\"5\"]:hover .tstars{display:block}.pocketnet_iframe .stars[value=\"3\"] [value=\"1\"],.pocketnet_iframe .stars[value=\"3\"] [value=\"2\"],.pocketnet_iframe .stars[value=\"3\"] [value=\"3\"]{font-weight:900;color:rgb(var(--color-star-yellow))}.pocketnet_iframe .stars[value=\"2\"] [value=\"3\"],.pocketnet_iframe .stars[value=\"2\"] [value=\"3\"] [value],.pocketnet_iframe .stars[value=\"2\"] [value=\"4\"],.pocketnet_iframe .stars[value=\"2\"] [value=\"4\"] [value],.pocketnet_iframe .stars[value=\"2\"] [value=\"5\"],.pocketnet_iframe .stars[value=\"2\"] [value=\"5\"] [value]{color:rgb(var(--neutral-grad-2));cursor:default!important}.pocketnet_iframe .stars[value=\"2\"] [value=\"3\"]:hover .tstars,.pocketnet_iframe .stars[value=\"2\"] [value=\"4\"]:hover .tstars,.pocketnet_iframe .stars[value=\"2\"] [value=\"5\"]:hover .tstars{display:block}.pocketnet_iframe .stars[value=\"2\"] [value=\"1\"],.pocketnet_iframe .stars[value=\"2\"] [value=\"2\"]{font-weight:900;color:rgb(var(--color-star-yellow))}.pocketnet_iframe .stars[value=\"1\"] [value=\"2\"],.pocketnet_iframe .stars[value=\"1\"] [value=\"2\"] [value],.pocketnet_iframe .stars[value=\"1\"] [value=\"3\"],.pocketnet_iframe .stars[value=\"1\"] [value=\"3\"] [value],.pocketnet_iframe .stars[value=\"1\"] [value=\"4\"],.pocketnet_iframe .stars[value=\"1\"] [value=\"4\"] [value],.pocketnet_iframe .stars[value=\"1\"] [value=\"5\"],.pocketnet_iframe .stars[value=\"1\"] [value=\"5\"] [value]{color:rgb(var(--neutral-grad-2));cursor:default!important}.pocketnet_iframe .stars[value=\"1\"] [value=\"2\"]:hover .tstars,.pocketnet_iframe .stars[value=\"1\"] [value=\"3\"]:hover .tstars,.pocketnet_iframe .stars[value=\"1\"] [value=\"4\"]:hover .tstars,.pocketnet_iframe .stars[value=\"1\"] [value=\"5\"]:hover .tstars{display:block}.pocketnet_iframe .stars[value=\"1\"] [value=\"1\"]{font-weight:900;color:rgb(var(--color-star-yellow))}.pocketnet_iframe .stars i,.pocketnet_iframe .stars img{line-height:1.8em}.pocketnet_iframe .stars .tstars{position:absolute;left:0;right:0;bottom:0;top:0;transition:.3s}.pocketnet_iframe .stars .tstars .tstarsov{left:0;bottom:0;top:0;overflow:hidden;white-space:nowrap}.pocketnet_iframe .stars .tstars .tstarsov i{color:rgb(var(--color-star-yellow))}.pocketnet_iframe .stars .tstars .tstarsov .starsWrapper{width:20em}.pocketnet_iframe .stars:hover .tstars{display:none}.pocketnet_iframe .stars.liked .starsWrapperM i{font-weight:900}.pocketnet_iframe .stars.liked .tstars i{font-weight:400}.pocketnet_iframe .stars.liked:hover .tstars{display:block}.pocketnet_iframe .stars.disabled{cursor:default!important}.pocketnet_iframe .stars.disabled [value]{cursor:default!important;color:rgb(var(--neutral-grad-2))}.pocketnet_iframe .stars.disabled:hover .tstars{display:block}.pocketnet_iframe .subscribebuttons{width:auto}.pocketnet_iframe .subscribebuttons>div{vertical-align:middle}.pocketnet_iframe .subscribebuttons>div.item.prall{display:none}.pocketnet_iframe .subscribebuttons>div button{font-weight:700;text-transform:uppercase;padding:1em;border-radius:0;background:rgb(var(--color-bg-ac));border-color:rgb(var(--color-bg-ac))}.pocketnet_iframe .subscribebuttons>div button:hover{background:transparent;color:rgb(var(--color-bg-ac))}.pocketnet_iframe .subscribebuttons>div button.subscribe{border-radius:3px}.pocketnet_iframe .subscribebuttons>div button.subscribe i{margin-left:1em}.pocketnet_iframe .subscribebuttons>div button.subscribeprivate{border-bottom-right-radius:3px;border-top-right-radius:3px}.pocketnet_iframe .subscribebuttons>div button.unsubscribe{border-radius:3px}.pocketnet_iframe .subscribebuttons>div button.unsubscribe i{margin-left:1em}.pocketnet_iframe .subscribebuttons.subscribed>div.item{display:none}.pocketnet_iframe .subscribebuttons.subscribed>div.item.prall{display:block}.pocketnet_iframe .search{position:relative;background:transparent;color:rgb(var(--text-color))}.pocketnet_iframe .search .searchInput .searchInputIcon{display:table;width:100%;padding:0}.pocketnet_iframe .search .searchInput .searchInputIcon>div{vertical-align:middle;display:table-cell}.pocketnet_iframe .search .searchInput .searchInputIcon .sminput{outline:none;background:#f8f8f8;border-radius:2px;border:1px solid rgb(var(--neutral-grad-2));padding:.5em .5em;width:100%;border-top-right-radius:0;border-bottom-right-radius:0;border-right:0}.pocketnet_iframe .search .searchIconLabel{text-align:center;width:40px;padding:0;cursor:pointer;color:rgb(var(--neutral-grad-2));transition:.3s}.pocketnet_iframe .search .searchIconLabel .fa-circle-notch{display:none}.pocketnet_iframe .search .searchIconLabel:hover .fa-search{color:rgb(var(--color-txt-ac))}.pocketnet_iframe .search .searchPanel{width:40px;background:#f8f8f8;border-radius:2px;border-top-left-radius:0;border-bottom-left-radius:0;border:1px solid rgb(var(--color-txt-ac));border-left:0}.pocketnet_iframe .search .searchPanel .searchPanelWrapper{display:table;width:100%;padding:0}.pocketnet_iframe .search .searchPanel .searchPanelWrapper>div{text-align:center;color:rgb(var(--color-txt-ac));display:table-cell;cursor:pointer;transition:.3s}.pocketnet_iframe .search .searchPanel .searchPanelWrapper>div[event=clear]{display:none;color:rgb(var(--neutral-grad-2))}.pocketnet_iframe .search .searchPanel .searchPanelWrapper>div:hover{color:rgb(var(--color-txt-ac))}.pocketnet_iframe .search .searchInputWrapper input{width:100%}.pocketnet_iframe .search .searchFastResultWrapper{display:none;position:absolute;left:40px;right:0;top:100%;background:rgb(var(--background-total-theme));text-align:left;padding:.5em;z-index:100;box-shadow:0 5px 10px -5px rgba(var(--color-shadow-base),.4)}.pocketnet_iframe .search.fastSearchShow .searchFastResultWrapper,.pocketnet_iframe .search.searchFilled .searchPanel .searchPanelWrapper>div[event=clear]{display:block}.pocketnet_iframe .search.searchActive .searchIconLabel{cursor:default;-webkit-animation:searchSpinnerColorChange 2s ease-in-out infinite;animation:searchSpinnerColorChange 2s ease-in-out infinite}.pocketnet_iframe .search.searchActive .searchIconLabel .fa-search{display:none}.pocketnet_iframe .search.searchActive .searchIconLabel .fa-circle-notch{display:inline-block}.pocketnet_iframe .spendLine{position:absolute;left:0;right:0;top:100%;height:2px;background:rgb(var(--neutral-grad-0))}.pocketnet_iframe .spendLine.bad{background:#ff0090}.pocketnet_iframe .spendLine .line{position:absolute;left:0;bottom:0;top:0;background:rgb(var(--color-good));transition:width .3s}.pocketnet_iframe .hoverColorChange:hover{-webkit-animation:colorChange 5s ease-in-out infinite;animation:colorChange 5s ease-in-out infinite}@-webkit-keyframes spin{0%{-webkit-transform:rotate(0deg)}20%{-webkit-transform:rotate(60deg)}80%{-webkit-transform:rotate(300deg)}to{-webkit-transform:rotate(1turn)}}@keyframes spin{0%{-webkit-transform:rotate(0deg)}20%{-webkit-transform:rotate(60deg)}80%{-webkit-transform:rotate(300deg)}to{-webkit-transform:rotate(1turn)}}@-webkit-keyframes searchSpinnerColorChange{0%{color:rgb(var(--color-bg-ac))}50%{color:rgb(var(--color-bg-ac-bright))}to{color:rgb(var(--color-bg-ac))}}@keyframes searchSpinnerColorChange{0%{color:rgb(var(--color-bg-ac))}50%{color:rgb(var(--color-bg-ac-bright))}to{color:rgb(var(--color-bg-ac))}}@-webkit-keyframes colorChange{0%{color:inherit}40%{color:rgb(var(--color-bg-ac-bright))}60%{color:rgb(var(--color-bg-ac-bright))}to{color:inherit}}@keyframes colorChange{0%{color:inherit}40%{color:rgb(var(--color-bg-ac-bright))}60%{color:rgb(var(--color-bg-ac-bright))}to{color:inherit}}.pocketnet_iframe .upload{position:relative}.pocketnet_iframe .upload .fileUploader,.pocketnet_iframe .upload .fileUploader .elContent,.pocketnet_iframe .upload .fileUploader .inputWrapper{position:absolute;left:0;right:0;top:0;bottom:0;width:100%;height:100%}.pocketnet_iframe .upload .fileUploader .inputWrapper input[type=file]{position:absolute;left:0;top:0;width:100%;height:100%;opacity:0;cursor:pointer}.pocketnet_iframe .checkbox{display:none}.pocketnet_iframe .checkbox+label{display:inline;cursor:pointer;position:relative;padding-left:27px!important;margin-right:15px;font-size:.9em;line-height:20px}.pocketnet_iframe .checkbox+label:before{border-radius:1px;font-family:Font Awesome\\ 5 Free;font-weight:700;content:\"\";display:inline-block;width:20px;height:20px;margin-right:10px;position:absolute;left:0;background:transparent;color:rgb(var(--text-color));border:1px solid rgb(var(--color-txt-ac))}.pocketnet_iframe .checkbox[disabled]+label{color:rgb(var(--neutral-grad-2))}.pocketnet_iframe .checkbox[disabled]+label:before{border:1px solid rgb(var(--neutral-grad-2))}.pocketnet_iframe .checkbox[disabled]:checked+label{color:rgb(var(--neutral-grad-2))}.pocketnet_iframe .checkbox:checked+label:before{content:\"\\f00c\";text-shadow:1px 1px 1px rgba(var(--color-shadow-base),.2);text-align:center}.pocketnet_iframe .checkbox[semi]+label:before{content:\"\\f111\";opacity:.5;text-shadow:1px 1px 1px rgba(var(--color-shadow-base),.2);text-align:center}.pocketnet_iframe .checkbox.nolabel+label,.pocketnet_iframe .checkbox.nolabel+label:before{margin-right:0}.pocketnet_iframe .checkbox.onlyOne+label{position:relative;line-height:16px}.pocketnet_iframe .checkbox.onlyOne:checked+label:before{content:\"\"}.pocketnet_iframe .checkbox.onlyOne:checked+label:after{content:\"\";position:absolute;color:rgb(var(--color-txt-ac));border-radius:50%;left:4px;top:2px;height:14px;width:14px}.pocketnet_iframe .checkbox+label{line-height:40px;padding-left:35px!important}.pocketnet_iframe .checkbox+label:before{margin-top:9px;border-radius:50%;border-color:rgb(var(--neutral-grad-2));color:rgb(var(--color-txt-ac));text-shadow:none;line-height:20px;transition:.3s}.pocketnet_iframe .checkbox+label:hover:before{border-color:rgb(var(--color-bg-ac))}.pocketnet_iframe .checkbox:checked+label:hover:before{color:rgb(var(--neutral-grad-2))}.pocketnet_iframe .checkbox[disabled]+label{cursor:default}.pocketnet_iframe .checkbox[disabled]+label:hover:before{border-color:rgb(var(--neutral-grad-2))}.pocketnet_iframe .checkbox[disabled]:checked+label:hover:before{color:rgb(var(--color-bg-ac))}.pocketnet_iframe #loader{position:fixed;left:0;top:0;right:0;bottom:0;display:none;z-index:10000}.pocketnet_iframe #loader .table .td{vertical-align:middle}.pocketnet_iframe .animation{left:0;top:0;position:absolute;min-width:100%;transition:.1s}.pocketnet_iframe .animation.slide.onright.leave{left:-100px;opacity:0}.pocketnet_iframe .animation.slide.onright.enter{left:100px;opacity:0}.pocketnet_iframe .animation.slide.onright.original{left:0;opacity:1}.pocketnet_iframe .animation.slide.onleft.leave{left:100px;opacity:0}.pocketnet_iframe .animation.slide.onleft.enter{left:-100px;opacity:0}.pocketnet_iframe .animation.slide.onleft.original{left:0;opacity:1}.pocketnet_iframe input[type=radio].radio{position:absolute;z-index:-1000;left:-1000px;overflow:hidden;clip:rect(0 0 0 0);height:1px;width:1px;margin:-1px;padding:0;border:0}.pocketnet_iframe input[type=radio].radio+label{padding-left:30px;height:25px;display:inline-block;line-height:25px;background-repeat:no-repeat;background-position:0 0;vertical-align:middle;cursor:pointer;margin:3px 0;background-image:url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");-webkit-touch-callout:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pocketnet_iframe input[type=radio].radio:checked+label{background-position:0 -25px;color:rgb(var(--color-good))}.pocketnet_iframe .m-message-container{position:fixed;z-index:1010;pointer-events:none;display:flex;flex-direction:column;box-sizing:border-box;padding:15px}.pocketnet_iframe .m-message-container.is-top-center,.pocketnet_iframe .m-message-container.is-top-left,.pocketnet_iframe .m-message-container.is-top-right{width:100%;top:0;left:0}.pocketnet_iframe .m-message-container.is-top-left{align-items:flex-start}.pocketnet_iframe .m-message-container.is-top-center{align-items:center}.pocketnet_iframe .m-message-container.is-top-right{align-items:flex-end}.pocketnet_iframe .m-message-container.is-center{width:100%;height:100%;left:0;top:0;align-items:center;justify-content:center}.pocketnet_iframe .m-message-container.is-bottom-center,.pocketnet_iframe .m-message-container.is-bottom-left,.pocketnet_iframe .m-message-container.is-bottom-right{bottom:0;left:0;width:100%;justify-content:flex-end}.pocketnet_iframe .m-message-container.is-bottom-left{align-items:flex-start}.pocketnet_iframe .m-message-container.is-bottom-center{align-items:center}.pocketnet_iframe .m-message-container.is-bottom-right{align-items:flex-end}.pocketnet_iframe .m-message-container.has-mask{background-color:hsla(0,0%,100%,.5);width:100%;height:100%;pointer-events:all}.pocketnet_iframe .m-message-wrapper{display:inline-block;max-width:500px}.pocketnet_iframe .m-message-wrapper+.m-message-wrapper{margin-top:15px}.pocketnet_iframe .m-message-wrapper:after,.pocketnet_iframe .m-message-wrapper:before{content:\"\";clear:both;display:table}.pocketnet_iframe .m-message{display:flex;align-items:center;padding:10px 16px;overflow:hidden;border-radius:4px;box-shadow:0 1px 8px rgba(0,0,0,.15);color:rgba(0,0,0,.65);background:hsla(0,0%,100%,.95);pointer-events:all;position:relative}.pocketnet_iframe .m-message,.pocketnet_iframe .m-message-icons{box-sizing:border-box}.pocketnet_iframe .m-message-icons{float:left;margin-right:10px}.pocketnet_iframe .m-message--title{font-size:14px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.pocketnet_iframe .m-message-content{box-sizing:border-box;overflow:auto;width:100%}.pocketnet_iframe .m-message--description{line-height:1.6;color:#777}.pocketnet_iframe .m-message--title+.m-message--description{margin-top:5px}.pocketnet_iframe .m-message--icon{width:25px;height:25px;vertical-align:middle;display:inline-block;border-radius:50%}.pocketnet_iframe .m-message--control{position:relative;height:100%;align-self:flex-start;white-space:nowrap;margin-right:-5px;margin-left:10px}.pocketnet_iframe .m-message--button{border:none;outline:none;background:none;cursor:pointer;color:#646464;font-weight:600;padding:0;width:20px;height:20px;line-height:20px;text-align:center;vertical-align:middle}.pocketnet_iframe .m-message--button:hover{color:#f56c6c}.pocketnet_iframe .m-message--arrow-down.is-collapsed{transform:rotate(90deg)}.pocketnet_iframe .m-message-fade-enter-active{-webkit-animation:m-message-fade-in-down .3s;animation:m-message-fade-in-down .3s}.pocketnet_iframe .m-message-fade-leave-active{-webkit-animation:m-message-fade-out .3s;animation:m-message-fade-out .3s}@-webkit-keyframes m-message-fade-in-down{0%{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}@keyframes m-message-fade-in-down{0%{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}@-webkit-keyframes m-message-fade-out{0%{opacity:1;margin-top:0}to{opacity:0;margin-top:-45px}}@keyframes m-message-fade-out{0%{opacity:1;margin-top:0}to{opacity:0;margin-top:-45px}}.pocketnet_iframe .m-message-container.is-bottom-right{padding:0;right:56px;bottom:.75em;width:auto}.pocketnet_iframe .m-message-container .notificationWrapper{display:block;max-width:none;font-family:Segoe UI Variable,Segoe UI,SegoeUI,Helvetica Neue,Helvetica,Arial,sans-serif}.pocketnet_iframe .m-message-container .notificationWrapper.m-message-wrapper+.m-message-wrapper{margin-top:.5em}.pocketnet_iframe .m-message-container .notificationWrapper .m-message{padding:.5em .5em;border:1px solid rgb(var(--neutral-grad-4));border-radius:5px;box-shadow:none;background:rgb(var(--background-total-theme));font-size:1em;color:rgb(var(--text-color))}.pocketnet_iframe .m-message-container .notificationWrapper .m-message--title{font-weight:700;color:rgb(var(--color-txt-gray));font-size:.8em}.pocketnet_iframe .m-message-container .notificationWrapper .m-message--title:first-letter{text-transform:capitalize}.pocketnet_iframe .m-message-container .notificationWrapper .m-message--description{margin-top:0}.pocketnet_iframe .m-message-container .notificationWrapper .m-message-content{flex-grow:1}.pocketnet_iframe .m-message-container .notificationWrapper .m-message-content .listPreview{cursor:pointer}.pocketnet_iframe .m-message-container .notificationWrapper .m-message-content .listPreview .invitedEvent{width:180px;display:flex;justify-content:space-between;align-items:center}.pocketnet_iframe .m-message-container .notificationWrapper .m-message-content .listPreview .invitedEvent span{display:block;font-size:.8em}.pocketnet_iframe .m-message-container .notificationWrapper .m-message-content .listPreview .invitedEvent .txt{color:rgb(var(--color-txt-gray-dark))}.pocketnet_iframe .m-message-container .notificationWrapper .m-message-content .listPreview .invitedEvent .txtNew{color:#3b7700}.pocketnet_iframe .m-message-container .notificationWrapper .m-message-content .listPreview .linkPreview span:first-letter{text-transform:uppercase}.pocketnet_iframe .m-message-container .notificationWrapper .m-message-content .listPreview .linkPreview .senderName{font-weight:700;color:rgb(var(--color-txt-gray))}.pocketnet_iframe .m-message-container .notificationWrapper .m-message-content .listPreview .linkPreview .linkTitle{color:rgb(var(--color-txt-gray-dark))}.pocketnet_iframe .m-message-container .notificationWrapper .m-message-content .listPreview .linkPreview .pocketnetLink{color:rgb(var(--color-txt-gray))}.pocketnet_iframe .m-message-container .notificationWrapper .m-message-content .listPreview .previewMessageList span{color:rgb(var(--color-txt-gray-dark));text-overflow:ellipsis;overflow:hidden;white-space:nowrap;text-align:left}.pocketnet_iframe .m-message-container .notificationWrapper .m-message-content .listPreview .previewMessage{display:flex;justify-content:flex-start;align-items:center;width:100%}.pocketnet_iframe .m-message-container .notificationWrapper .m-message-content .listPreview .previewMessage span{display:block;color:rgb(var(--color-txt-gray-dark));font-size:.8em;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;text-align:left;max-width:150px}.pocketnet_iframe .m-message-container .notificationWrapper .m-message-icons{float:none}.pocketnet_iframe .m-message-container .notificationWrapper .m-message--icon{display:block;vertical-align:top}.pocketnet_iframe .m-message-container .notificationWrapper .m-message--button.m-message--arrow-down{display:none}.pocketnet_iframe .is-top-left{padding:.5em}.pocketnet_iframe .is-top-left .notificationWrapper{width:100%;box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.4)}.pocketnet_iframe .is-top-left .notificationWrapper .m-message{border:0}.pocketnet_iframe .editable{display:table;width:100%}.pocketnet_iframe .editable .editEl{padding:.5em .5em;display:table-cell;width:70%;position:relative;overflow:hidden;white-space:nowrap}.pocketnet_iframe .editable .editForm{display:table-cell;display:none;width:70%;position:relative}.pocketnet_iframe .editable .editForm input{padding:.5em;width:100%}.pocketnet_iframe .editable label{width:30%;display:table-cell}.pocketnet_iframe .editable label .lwr{width:100%;display:table}.pocketnet_iframe .editable .editButton{text-align:center;display:table-cell;cursor:pointer}.pocketnet_iframe .editable .editButton.fail,.pocketnet_iframe .editable .editButton.success{display:none}.pocketnet_iframe .editable .editButton.fail:hover{color:rgb(var(--color-bad))}.pocketnet_iframe .editable .editButton:hover{color:rgb(var(--color-good))}.pocketnet_iframe .editable.editNow .editForm{display:table-cell}.pocketnet_iframe .editable.editNow .editEl{display:none}.pocketnet_iframe .editable.editNow .editButton{width:50%;text-align:center}.pocketnet_iframe .editable.editNow .editButton.fail,.pocketnet_iframe .editable.editNow .editButton.success{display:table-cell}.pocketnet_iframe .editable.editNow .editButton.edt{display:none}.pocketnet_iframe .roundclosebutton{border-radius:50%;transition:.3s;color:rgb(var(--text-on-bg-ac-color));width:3.5em;height:3.5em;line-height:3.5em;text-align:center;font-size:.8em;cursor:pointer;text-shadow:0 0 2px rgba(var(--color-shadow-base),.714),0 0 3px rgba(var(--color-shadow-base),.519)}.pocketnet_iframe .roundclosebutton:hover{background:rgba(var(--background-total-theme),.2);box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.4)}.pocketnet_iframe .roundclosebutton.onwhite{color:rgb(var(--text-color))}.pocketnet_iframe .roundclosebutton.onwhite:hover{background:rgba(var(--background-main-contrast),.1);color:rgb(var(--text-on-bg-ac-color));box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.4)}.pocketnet_iframe .successCheck{position:fixed;left:0;right:0;top:0;bottom:0;display:none;width:78px;height:78px;margin:auto;z-index:20000}.pocketnet_iframe .successCheck .successCheckWrapper{width:100%;height:100%}.pocketnet_iframe .successCheck .successCheckWrapper>div{vertical-align:middle;text-align:center}.pocketnet_iframe .successCheck .successCheckWrapper>div .chw{margin:0 auto;width:78px;height:78px;border-radius:50%;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:1em;box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.4)}.pocketnet_iframe .successCheck .text{margin-top:.5em;font-weight:100;color:rgb(var(--neutral-grad-4));display:none}.pocketnet_iframe .successCheck svg{width:100%;height:100%}.pocketnet_iframe .successCheck path{stroke-dasharray:99.4757843;stroke-dashoffset:-99.4757843;fill:transparent}.pocketnet_iframe .successCheck svg.animate path{-webkit-animation:successCheck 1.1s ease forwards;animation:successCheck 1.1s ease forwards;opacity:1}@-webkit-keyframes successCheck{0%{opacity:1;stroke-dashoffset:-99.4757843;fill:transparent;transform:translateY(0)}35%{stroke-dashoffset:0;fill:transparent}60%{fill:rgb(var(--background-total-theme));opacity:1;transform:translateY(0)}to{fill:rgb(var(--background-total-theme));stroke-dashoffset:0;opacity:0;transform:translateY(-10px)}}@keyframes successCheck{0%{opacity:1;stroke-dashoffset:-99.4757843;fill:transparent;transform:translateY(0)}35%{stroke-dashoffset:0;fill:transparent}60%{fill:rgb(var(--background-total-theme));opacity:1;transform:translateY(0)}to{fill:rgb(var(--background-total-theme));stroke-dashoffset:0;opacity:0;transform:translateY(-10px)}}.pocketnet_iframe #windowsContainer .rightchatspacer{margin-right:0}.pocketnet_iframe #windowsContainer .wnd:last-child .wndback{background:rgba(var(--color-shadow-base),.75);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}.pocketnet_iframe #windowsContainer .wnd.nobfilter .wndback{background:rgb(var(--color-shadow-base))!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}.pocketnet_iframe .wnd{position:fixed;left:0;top:0;bottom:0;right:0;width:100%;display:none;z-index:1005;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}.pocketnet_iframe .wnd.embeding{z-index:2005}.pocketnet_iframe .wnd.pkviewwnd{z-index:9999}.pocketnet_iframe .wnd .wndback{width:100%}.pocketnet_iframe .wnd .wndback,.pocketnet_iframe .wnd .wndinner{height:100%;position:absolute;left:0;top:0;right:0;bottom:0;margin:auto}.pocketnet_iframe .wnd .wndinner{width:1024px;max-height:750px;box-shadow:0 5px 10px -5px rgba(var(--color-shadow-base),.4)}.pocketnet_iframe .wnd .wndinner>div.buttons{text-align:center;position:absolute;left:0;right:0;bottom:0;background:rgb(var(--background-total-theme));width:100%;height:55px;display:block;display:flex;justify-content:flex-end;align-items:center;padding-right:.5em}.pocketnet_iframe .wnd .wndinner>div.buttons .button{display:block;margin-left:.5em;padding:.5em 2.5em;background:rgb(var(--color-bg-ac));color:rgb(var(--text-on-bg-ac-color));font-size:.8em;border-radius:3px;transition:.3s;cursor:pointer}.pocketnet_iframe .wnd .wndinner>div.buttons .button.close{background:transparent;color:rgb(var(--neutral-grad-3))}.pocketnet_iframe .wnd .wndinner>div.buttons .button.close:hover{color:rgb(var(--neutral-grad-4));background:transparent}.pocketnet_iframe .wnd .wndinner>div.buttons .button.disabledButton{color:rgb(var(--neutral-grad-1));cursor:auto;pointer-events:none}.pocketnet_iframe .wnd .wndinner>div.buttons .button.disabledButton:hover{color:rgb(var(--neutral-grad-1))}.pocketnet_iframe .wnd .wndinner>div.buttons .button.successButton,.pocketnet_iframe .wnd .wndinner>div.buttons .button.successButton:hover{color:rgb(var(--color-good))}.pocketnet_iframe .wnd .wndinner>div.buttons .button:hover{background:rgb(var(--color-good))}.pocketnet_iframe .wnd .wndinner>div.buttons .button.disabled{cursor:default;background:rgb(var(--neutral-grad-1))}.pocketnet_iframe .wnd .wndinner>div.buttons .button.disabled:hover{background:rgb(var(--neutral-grad-1))}.pocketnet_iframe .wnd .wndinner>div.buttons .button.ghost{background:transparent;border-color:transparent;color:rgb(var(--neutral-grad-2));text-decoration:underline}.pocketnet_iframe .wnd .wndinner>div.buttons .button.ghost:hover{color:rgb(var(--color-txt-ac))}.pocketnet_iframe .wnd .changeStateButtons{display:flex;position:absolute;right:1em;top:1em}.pocketnet_iframe .wnd .changeStateButtons .changeButton{cursor:pointer}.pocketnet_iframe .wnd .changeStateButtons .changeButton:hover{color:rgb(var(--color-txt-ac))}.pocketnet_iframe .wnd .changeStateButtons .hideButton{margin-right:1em}.pocketnet_iframe .wnd .leftbg{position:absolute;left:-60px;right:0;top:0;bottom:0;height:100%;color:rgb(var(--neutral-grad-1));background:rgba(var(--background-main-contrast),.95);width:60px;display:table}.pocketnet_iframe .wnd .leftbg>div{display:table-cell;vertical-align:middle;text-align:center}.pocketnet_iframe .wnd .wndcontent{position:absolute;left:0;right:0;top:55px;bottom:55px;background:rgb(var(--background-total-theme));padding:1em;overflow-y:scroll;padding-bottom:0}.pocketnet_iframe .wnd .wndheader{border-top-left-radius:6px;border-top-right-radius:6px}.pocketnet_iframe .wnd .wndinner>div.buttons{border-bottom-left-radius:6px;border-bottom-right-radius:6px}.pocketnet_iframe .wnd.noheader .wndcontent{top:0;border-top-left-radius:6px;border-top-right-radius:6px}.pocketnet_iframe .wnd.noheader .wndinner>div.buttons{border-bottom-left-radius:6px;border-bottom-right-radius:6px}.pocketnet_iframe .wnd .wndheader{padding:0 1em;position:absolute;left:0;right:0;top:0;height:55px;font-weight:700;line-height:55px;overflow:hidden;white-space:nowrap;background:rgb(var(--background-total-theme))}.pocketnet_iframe .wnd ._changeplace,.pocketnet_iframe .wnd ._close,.pocketnet_iframe .wnd ._expand{position:absolute;backdrop-filter:blur(2px) grayscale(30%);-webkit-backdrop-filter:blur(2px) grayscale(30%);cursor:pointer;color:rgb(var(--text-on-bg-ac-color));z-index:150}.pocketnet_iframe .wnd ._close{top:.5em;right:.75em}.pocketnet_iframe .wnd ._expand{top:.5em;left:.75em}.pocketnet_iframe .wnd ._changeplace{bottom:.5em;left:.75em}.pocketnet_iframe .wnd .wndclose,.pocketnet_iframe .wnd .wndok{text-align:center;position:absolute;left:0;right:0;bottom:0;height:55px;line-height:55px;background:rgba(var(--background-total-theme),.8);cursor:pointer}.pocketnet_iframe .wnd .wndclose:hover,.pocketnet_iframe .wnd .wndok:hover{background:rgba(var(--neutral-grad-2),.5)}.pocketnet_iframe .wnd .wndok:hover{background:rgb(var(--color-bg-ac))}.pocketnet_iframe .wnd.small .wndinner{position:absolute;left:0;top:0;right:0;bottom:0;margin:auto;width:100%;max-width:950px;max-height:500px}.pocketnet_iframe .wnd.small .wndcontent{padding-top:1em}.pocketnet_iframe .wnd.smallWnd .wndinner{width:700px}.pocketnet_iframe .wnd.smallWnd .wndcontent{top:55px;bottom:66px;padding:0 1em}.pocketnet_iframe .wnd.small650 .wndinner{max-height:650px}.pocketnet_iframe .wnd.pp .wndclose{right:50%}.pocketnet_iframe .wnd.pp .wndok{left:50%}.pocketnet_iframe .wnd .work{width:95%;max-width:1280px;margin:0 auto;padding:0 1em}.pocketnet_iframe .wnd.allscreen .wndback{background:rgb(var(--background-total-theme))}.pocketnet_iframe .wnd.allscreen .wndinner{width:95%;height:95%;background:transparent;max-height:none;box-shadow:none}.pocketnet_iframe .wnd.allscreen .wndinner>div.buttons{background:transparent;width:auto;position:absolute;left:50%;bottom:30px;transform:translate(-50%);height:auto;padding:0;right:auto}.pocketnet_iframe .wnd.allscreen .wndinner>div.buttons .button{font-size:.8em;height:auto;background:transparent;padding-right:.5em;cursor:default;padding-left:0}.pocketnet_iframe .wnd.allscreen .wndinner>div.buttons .button:hover{background:transparent}.pocketnet_iframe .wnd.allscreen .wndinner>div.buttons .button:last-child{padding-right:0}.pocketnet_iframe .wnd.allscreen .wndinner>div.buttons .button>div{padding:.5em 2.5em;cursor:pointer;line-height:20px;background:rgb(var(--color-bg-ac));border:1px solid rgb(var(--color-bg-ac));color:rgb(var(--text-on-bg-ac-color));transition:.3s}.pocketnet_iframe .wnd.allscreen .wndinner>div.buttons .button>div:hover{background:transparent;color:rgb(var(--color-txt-ac))}.pocketnet_iframe .wnd.allscreen .wndinner>div.buttons .button>div.close:hover{border-color:rgb(var(--neutral-grad-4));color:rgb(var(--neutral-grad-4))}.pocketnet_iframe .wnd.allscreen .wndheader{background:transparent}.pocketnet_iframe .wnd.allscreen .wndcontent{background:transparent;bottom:30px;padding-top:0;overflow-y:hidden}.pocketnet_iframe .wnd.allscreen.a100 .wndinner{height:100%;width:100%}.pocketnet_iframe .wnd.allscreen.a100 .wndcontent{padding:0}.pocketnet_iframe .wnd.allscreen.a100 ._close{right:1em}.pocketnet_iframe .wnd.black .wndback{color:rgb(var(--text-on-bg-ac-color));background:rgba(var(--color-shadow-base),.9)}.pocketnet_iframe .wnd.black .wndcontent{color:rgb(var(--text-on-bg-ac-color));padding:2em}.pocketnet_iframe .wnd.black ._close{color:rgb(var(--text-on-bg-ac-color))}.pocketnet_iframe .wnd.transparent .wndback{background:rgba(var(--color-shadow-base),.1)}.pocketnet_iframe .wnd.transparent .wndinner{border:1px solid transparent;border-radius:2px;box-shadow:0 5px 10px -5px rgba(var(--color-shadow-base),.4)}.pocketnet_iframe .wnd.transparent.allscreen .wndinner{border:0;border-radius:2px;box-shadow:none}.pocketnet_iframe .wnd.withoutButtons .wndinner>div.buttons{display:none!important}.pocketnet_iframe .wnd.withoutButtons .wndcontent{bottom:0;border-bottom-left-radius:6px;border-bottom-right-radius:6px}.pocketnet_iframe .wnd.withoutButtons.allscreen .wndcontent{bottom:0}.pocketnet_iframe .wnd.smallwindow .wndinner{height:90%;max-height:800px;width:600px}.pocketnet_iframe .wnd.smallwindow .wndcontent{background:rgb(var(--background-total-theme));padding-top:0;top:55px;bottom:66px;overflow:auto;padding:1em}.pocketnet_iframe .wnd.article .wndcontent{top:0;bottom:0}.pocketnet_iframe .wnd.article .wndinner>div.buttons{display:none}.pocketnet_iframe .wnd.pipmini{right:60px;bottom:1em;top:auto;left:auto;max-width:300px;width:25%;height:auto;z-index:999}.pocketnet_iframe .wnd.pipmini ._changeplace{display:none}.pocketnet_iframe .wnd.pipmini:hover ._changeplace,.pocketnet_iframe .wnd.pipmini:hover ._close,.pocketnet_iframe .wnd.pipmini:hover ._expand{opacity:1}.pocketnet_iframe .wnd.pipmini ._changeplace,.pocketnet_iframe .wnd.pipmini ._close,.pocketnet_iframe .wnd.pipmini ._expand{background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;opacity:0;transition:.3s}.pocketnet_iframe .wnd.pipmini ._changeplace{bottom:0;left:0}.pocketnet_iframe .wnd.pipmini ._expand{top:0;left:0}.pocketnet_iframe .wnd.pipmini ._close{top:0;right:0}.pocketnet_iframe .wnd.pipmini .closeline,.pocketnet_iframe .wnd.pipmini .wndback{display:none}.pocketnet_iframe .wnd.pipmini .wndinner{position:static}.pocketnet_iframe .wnd.pipmini .wndcontent{position:static;padding:0!important}.pocketnet_iframe .wnd.pipmini .wndcontent .widthcontainer{max-width:none!important;width:100%}.pocketnet_iframe .wnd.pipmini .piphidden{display:none!important}.pocketnet_iframe .wnd.centercontentWindow .wndinner{display:flex;align-items:center;box-shadow:none}.pocketnet_iframe .wnd.centercontentWindow .wndinner .wndcontent{width:100%;position:static;box-shadow:0 5px 10px -5px rgba(var(--color-shadow-base),.4)}.pocketnet_iframe .wnd.hiddenState{position:fixed;width:250px;height:50px!important;top:auto!important;right:auto;bottom:10px;left:10px}.pocketnet_iframe .wnd.hiddenState .wndback{display:none}.pocketnet_iframe .wnd.hiddenState .wndinner{margin:0}.pocketnet_iframe .wnd.hiddenState .wndinner .wndcontent{padding:0;height:100%}.pocketnet_iframe .updImgWrapper{position:absolute;left:100%;width:1px;height:1px;overflow:hidden;opacity:0}.pocketnet_iframe .online{margin:0 auto;width:7px;height:7px;border-radius:50%;background:rgb(var(--neutral-grad-2));box-shadow:0 5px 10px -5px rgba(var(--color-shadow-base),.4)}.pocketnet_iframe .sitemessage{position:fixed;width:600px;background:rgba(var(--color-shadow-base),.9);color:rgb(var(--text-on-bg-ac-color));z-index:15005;text-align:left;right:20px;bottom:20px;padding:1em;border-radius:6px;transition:.3s}.pocketnet_iframe .sitemessage .action{margin-top:.5em}.pocketnet_iframe .sitemessage.removing{opacity:0}.pocketnet_iframe .bodyshadow{position:fixed;z-index:4;left:0;top:0;right:0;bottom:0;background:rgba(var(--background-total-theme),.6);display:none}.pocketnet_iframe .overflowWrapper{overflow-x:hidden}.pocketnet_iframe #panelWrapper{padding-top:65px}.pocketnet_iframe .contentWrapper #content{width:100%;margin:0 auto;padding:0}.pocketnet_iframe .contentWrapper #content.full{max-width:none;width:100%;padding:0}.pocketnet_iframe .contentWrapper #content.navtransition{opacity:.3}.pocketnet_iframe .contentWrapper #content .errordata{position:fixed;top:0;left:0;right:0;top:55px;bottom:0;background:rgb(var(--background-total-theme));color:rgb(var(--color-txt-ac))}.pocketnet_iframe .contentWrapper #content .errordata .textWr{position:absolute;left:0;top:0;right:0;bottom:0;margin:auto;font-weight:700;text-align:center;height:300px;width:40%;display:table}.pocketnet_iframe .contentWrapper #content .errordata .textWr .text{display:table-cell;width:100%;height:100%;vertical-align:middle}.pocketnet_iframe .bgCaption{height:180px;background:rgb(var(--color-bg-ac-1));color:rgb(var(--text-on-bg-ac-color));padding-bottom:.5em}.pocketnet_iframe .bgCaption .caption{font-size:2.9em;font-weight:100}.pocketnet_iframe .bgCaption .captionWrapper{width:auto;height:auto}.pocketnet_iframe .bgCaption .captionWrapper>div{vertical-align:top}.pocketnet_iframe .bgCaption .captionWrapper .captionsl{margin-bottom:.16666667em}.pocketnet_iframe .bgCaption .backWrapper{padding-right:.25em;padding-top:.75em}.pocketnet_iframe .bgCaption .tips{color:rgb(var(--text-on-bg-shadow-color))}.pocketnet_iframe .bgCaption .cwrapper,.pocketnet_iframe .bgCaption .work{height:100%}.pocketnet_iframe .bgCaption .cwrapper>div{vertical-align:middle}.pocketnet_iframe .bgCaption .back{border-radius:50%;width:42px;height:42px;text-align:center;line-height:38px;border:1px solid rgba(var(--background-total-theme),.8);cursor:pointer;background:rgba(60,65,70,.05);color:#fff;font-size:1.3em;transition:.3s}.pocketnet_iframe .bgCaption .back:hover{border:1px solid rgb(var(--background-total-theme));background:rgba(var(--background-total-theme),.1)}.pocketnet_iframe .work{width:95%;max-width:1280px;margin:0 auto;padding:0 1em}.pocketnet_iframe .work.adj{padding-right:0}.pocketnet_iframe .chats{position:fixed;right:.5em;bottom:0;z-index:100}.pocketnet_iframe #footerWrapper{position:absolute;bottom:-360px;left:0;right:0;height:360px;z-index:30;transition:.6s;color:rgb(var(--text-on-bg-ac-color));background:rgb(var(--color-shadow-var))}.pocketnet_iframe .topPreloader{position:fixed;height:2px;left:0;right:0;top:0;width:100%;z-index:10000000;display:none}.pocketnet_iframe .topPreloader span{position:absolute;left:50%;transform:translateX(-50%);font-size:.8em}.pocketnet_iframe .topPreloader>div{width:0;float:left;height:100%;transition:.3s}.pocketnet_iframe .topPreloader>div:first-child{background:#ff005a}.pocketnet_iframe .topPreloader>div:nth-child(2){background:#ff4800}.pocketnet_iframe .topPreloader>div:nth-child(3){background:#fffc00}.pocketnet_iframe .topPreloader>div:nth-child(4){background:#6accff}.pocketnet_iframe .topPreloader>div:nth-child(5){background:#00f0ff}.pocketnet_iframe .topPreloader.complete>div{background:#ff6e84!important}.pocketnet_iframe .preloader5{display:block;margin:0 auto}.pocketnet_iframe .preloader6 img{width:30px}.pocketnet_iframe .preloader5 img{height:7.5px;contain:strict;width:30px;will-change:transform}.pocketnet_iframe .preloader5 span{vertical-align:middle;border-radius:50%;background:rgb(var(--neutral-grad-2));display:block;width:6px;height:6px;position:absolute;top:3px;content-visibility:auto}.pocketnet_iframe .preloader5 span:first-child{-webkit-animation-delay:-.8;animation-delay:-.8s;left:3px}.pocketnet_iframe .preloader5 span:nth-child(2){-webkit-animation-delay:-.53333s;animation-delay:-.53333s;left:12px}.pocketnet_iframe .preloader5 span:nth-child(3){-webkit-animation-delay:-.26666s;animation-delay:-.26666s;left:21px}@keyframes preloader5{0%{transform:scale(0)}to{transform:scale(1)}}@-webkit-keyframes preloader5{0%{-webkit-transform:scale(0)}to{-webkit-transform:scale(1)}}.pocketnet_iframe .dialog{position:fixed;left:0;top:0;bottom:0;right:0;background:rgba(var(--color-shadow-var),.9);z-index:150}.pocketnet_iframe .dialog.zindex{z-index:5000}.pocketnet_iframe .dialog .caption{font-weight:700}.pocketnet_iframe .dialog .wrapper{width:100%;height:100%}.pocketnet_iframe .dialog .secondwrapper{width:100%;vertical-align:middle}.pocketnet_iframe .dialog .thwrapper{position:relative;margin:0 auto;max-width:800px;background:rgb(var(--background-total-theme));border:1px solid rgb(var(--neutral-grad-0));padding:2em;border-radius:12px;box-shadow:0 5px 10px -5px rgba(var(--color-shadow-base),.4)}.pocketnet_iframe .dialog .poll{margin-bottom:2em}.pocketnet_iframe .dialog .poll .description{margin-top:1em;margin-bottom:1em;color:rgb(var(--color-txt-ac))}.pocketnet_iframe .dialog .poll .poll-item{margin-top:.5em}.pocketnet_iframe .dialog .poll input{width:400px}.pocketnet_iframe .dialog .poll i{margin-left:1em;color:rgb(var(--neutral-grad-1));cursor:pointer}.pocketnet_iframe .dialog .poll i:hover{color:rgb(var(--color-bad))}.pocketnet_iframe .dialog .header{font-weight:700}.pocketnet_iframe .dialog .body{margin:1.5em 0;font-size:.9em}.pocketnet_iframe .dialog .buttons{overflow:hidden}.pocketnet_iframe .dialog .buttons>div{float:left;margin-right:1em}.pocketnet_iframe .dialog .text .values .value{margin-bottom:.5em}.pocketnet_iframe .dialog .text .values .value .label{color:rgb(var(--color-txt-ac))}.pocketnet_iframe .dialog .tips{color:rgb(var(--color-txt-ac-2));font-size:.9em}.pocketnet_iframe .dialog.one .btn2wr{display:none}.pocketnet_iframe .dialog.big .body{font-size:1.1em}.pocketnet_iframe .dialog.centertext .text{text-align:center}.pocketnet_iframe .dialog.nobuttons .buttons{display:none}.pocketnet_iframe .dialog.bigbuttons .header{text-align:center}.pocketnet_iframe .dialog.bigbuttons .buttons{width:100%}.pocketnet_iframe .dialog.bigbuttons .buttons>div{padding:.5em;padding-left:.25em;padding-right:.25em;margin:0;width:50%}.pocketnet_iframe .dialog.bigbuttons .buttons>div button{width:100%}.pocketnet_iframe .dialog.accepting{background:rgba(var(--color-shadow-base),.9)}.pocketnet_iframe .dialog.accepting .thwrapper{position:static;margin:0 auto;background:transparent;border:0;padding:0;box-shadow:none}.pocketnet_iframe .dialog.accepting .header .text{text-align:center;font-size:2.4em;color:rgb(var(--text-on-bg-shadow-color))}.pocketnet_iframe .dialog.accepting .body .text{text-align:center;font-size:1.2em;color:rgb(var(--text-on-bg-shadow-color))}.pocketnet_iframe .dialog.accepting ._close{color:rgb(var(--text-on-bg-shadow-color))}.pocketnet_iframe .dialog.accepting .buttons{margin:0 auto;max-width:300px}.pocketnet_iframe .dialog.accepting .buttons>div{width:60%;margin:0;padding:.5em}.pocketnet_iframe .dialog.accepting .buttons>div button{width:100%;padding-left:0!important;padding-right:0!important;text-align:center}.pocketnet_iframe .dialog.accepting .buttons>div.btn2wr{width:40%}.pocketnet_iframe .dialog.accepting .buttons>div.btn2wr button{border-radius:0;background:transparent;border-left:0;border-right:0;border-top:0}.pocketnet_iframe .dialog.accepting.accepting2 .buttons{max-width:500px}.pocketnet_iframe .dialog.accepting.one .buttons>div,.pocketnet_iframe .dialog.accepting.one .buttons>div.btn2wr{width:100%}.pocketnet_iframe .dialog.done{background:rgb(var(--background-total-theme))}.pocketnet_iframe .dialog.done .thwrapper{position:static;margin:0 auto;background:transparent;border:0;padding:0;box-shadow:none}.pocketnet_iframe .dialog.done .body .text{text-align:center;font-size:2.2em;color:rgb(var(--color-txt-ac))}.pocketnet_iframe .dialog.done ._close,.pocketnet_iframe .dialog.done .buttons{display:none}.pocketnet_iframe .dialog.takePasswordForMK .subheader{font-size:.9em;margin-bottom:1em}.pocketnet_iframe .dialog.takePasswordForMK .inputWrapper input{width:100%;padding:1em .5em}.pocketnet_iframe .dialog.takePasswordForMK .errorWrapper{margin-top:.5em;margin-bottom:.5em;font-size:.9em;color:rgb(var(--color-txt-ac));height:20px}.pocketnet_iframe .dialog.takePasswordForMK .header .text{text-align:center;font-size:1.7em;color:rgb(var(--text-on-bg-ac-color))}.pocketnet_iframe .dialog.takePasswordForMK .body .text{text-align:center;font-size:1.5em;color:rgb(var(--text-on-bg-ac-color))}.pocketnet_iframe .dialog.takePasswordForMK .body .password{text-align:center}.pocketnet_iframe .dialog.takePasswordForMK .thwrapper{max-width:550px}.pocketnet_iframe .dialog.takePasswordForMK .buttons{margin:0 auto;max-width:300px}.pocketnet_iframe .dialog.takePasswordForMK .buttons>div{width:100%;margin:0;padding:.5em}.pocketnet_iframe .dialog.takePasswordForMK .buttons>div button{width:100%}.pocketnet_iframe .dialog.takePasswordForMK .buttons>div.btn1wr{margin-top:2em}.pocketnet_iframe .dialog.takePasswordForMK .buttons>div.btn2wr{width:100%}.pocketnet_iframe .dialog.takePasswordForMK .buttons>div.btn2wr button{font-size:.8em;border-radius:0;background:transparent;border-left:0;border-right:0;border-top:0}.pocketnet_iframe .dialog .values{padding:.5em 0}.pocketnet_iframe .dialog .values .upload{width:100%;height:60px;background:rgba(var(--neutral-grad-1),.2);text-align:center}.pocketnet_iframe .dialog .values .upload .elContent{padding:1em;font-size:.8em;color:rgb(var(--neutral-grad-2))}.pocketnet_iframe .dialog .values .value .label{font-weight:700;padding:.5em 0}.pocketnet_iframe .dialog .values .value.hasslider{overflow:hidden}.pocketnet_iframe .dialog .values .value.hasslider .v{float:left;width:25%}.pocketnet_iframe .dialog .values .value.hasslider .sliderWrapper{margin-left:25%}.pocketnet_iframe .dialog .values .value.hasslider .sliderWrapper .sliderTableWrapper{height:31px;display:table;width:100%}.pocketnet_iframe .dialog .values .value.hasslider .sliderWrapper .sliderTableWrapper>div{display:table-cell;vertical-align:middle}.pocketnet_iframe .dialog .values .value.hasslider .sliderWrapper .sliderTableWrapper>div.max,.pocketnet_iframe .dialog .values .value.hasslider .sliderWrapper .sliderTableWrapper>div.min{width:90px;text-align:center;font-weight:700}.pocketnet_iframe .dialog ._close{cursor:pointer;position:absolute;right:1em;top:1em;color:rgb(var(--neutral-grad-3))}.pocketnet_iframe .dialog ._close:hover{color:rgb(var(--color-text-ac))}.pocketnet_iframe .dialog.yesnodialog ._close{display:none}.pocketnet_iframe .dialog.videoCaution{z-index:1006}.pocketnet_iframe .menudialog{z-index:10000}.pocketnet_iframe .menudialog .thwrapper{padding:0;max-width:450px;background:transparent;width:93%;margin:0 auto;border:0}.pocketnet_iframe .menudialog .buttons{display:none}.pocketnet_iframe .menudialog .body{margin:0}.pocketnet_iframe .menudialog .header{color:rgb(var(--neutral-grad-1));text-align:center}.pocketnet_iframe .menudialog .header .text{padding-bottom:1em}.pocketnet_iframe .menudialog .text .item{padding:2em 1em;text-align:center;background:rgb(var(--background-total-theme));cursor:pointer;border-radius:3px;margin-top:.25em}.pocketnet_iframe .menudialog .text .item.itemmain{color:rgb(var(--color-bg-ac))}.pocketnet_iframe .menudialog .text .item.itemclose{margin-top:1em;background:rgba(var(--neutral-grad-2),.1);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}.pocketnet_iframe .menudialog .text .item:last-child{border-bottom:0}.pocketnet_iframe .menudialog ._close{display:none}.pocketnet_iframe .menudialog .itemclose{color:rgb(var(--color-bg-ac-bright));font-weight:700}.pocketnet_iframe .tooltipMobileDialog{z-index:25000;font-size:1.1em}.pocketnet_iframe .tooltipMobileDialog .buttons{display:none}.pocketnet_iframe .tooltipMobileDialog .menuitem{margin-top:.75em}.pocketnet_iframe .tooltipMobileDialog .mobiledialogcontent{max-height:360px;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}.pocketnet_iframe .tooltipMobileDialog .closeButton{margin-top:1.5em}.pocketnet_iframe .tooltipMobileDialog .closeButton button{width:100%}.pocketnet_iframe .menudialog .mobiledialogcontent{max-height:calc(var(--vh, 1vh)*60);overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;border-radius:5px;scrollbar-width:0}.pocketnet_iframe .menudialog .mobiledialogcontent::-webkit-scrollbar{width:0;display:none!important}.pocketnet_iframe .refadd{background:rgb(var(--color-shadow-base,.95));color:rgb(var(--text-on-bg-shadow-color))}.pocketnet_iframe .refadd .thwrapper{background:transparent;border:0;box-shadow:none;position:static}.pocketnet_iframe .refadd ._close{color:rgba(var(--text-on-bg-shadow-color),.9)}.pocketnet_iframe .refadd .buttons{max-width:400px;margin:0 auto}.pocketnet_iframe .refadd .buttons>div{margin:0 auto;width:50%;padding:.5em}.pocketnet_iframe .refadd .buttons>div button{width:100%}.pocketnet_iframe .refadd .refaddHeader{font-size:1.2em;padding:1em;text-align:center;color:rgb(var(--color-txt-ac))}.pocketnet_iframe .refadd .refaddTable{width:auto;margin:0 auto}.pocketnet_iframe .refadd .refaddTable>div{padding:1em .5em;vertical-align:middle}.pocketnet_iframe .pilsingshare{position:absolute;z-index:1000;width:41px;height:41px;left:50%;top:50%;margin:-20px 0 0 -20px}.pocketnet_iframe .pilsingshare .cr{background:rgb(var(--color-bg-ac));height:17px;width:1px;position:absolute;left:20px;top:12px}.pocketnet_iframe .pilsingshare .cr:after{content:\"\";height:1px;width:17px;background:rgb(var(--color-bg-ac));position:absolute;left:-8px;top:8px}.pocketnet_iframe .pilsingshare .pulsing:first-child{animation:pilsingshare 2s infinite;-webkit-animation:pilsingshare 2s infinite;-moz-animation:pilsingshare 2s infinite;-o-animation:pilsingshare 2s infinite}.pocketnet_iframe .pilsingshare .pulsing:nth-child(2){animation:pilsingshare 2s .5s infinite;-webkit-animation:pilsingshare 2s .5s infinite;-moz-animation:pilsingshare 2s infinite .5s;-o-animation:pilsingshare 2s infinite .5s}.pocketnet_iframe .pilsingshare .pulsing{background:rgba(var(--background-total-theme),.3);border-radius:50%;position:absolute;margin:auto;top:0;bottom:0;left:0;right:0;width:100%;height:100%;border:1px solid rgb(var(--color-bg-ac))}@-webkit-keyframes pilsingshare{0%{transform:scale(.8);-moz-transform:scale(.8);-webkit-transform:scale(.8);-o-transform:scale(.8);-ms-transform:scale(.8);opacity:.8}50%{transform:scale(.99);-moz-transform:scale(.99);-webkit-transform:scale(.99);-o-transform:scale(.99);-ms-transform:scale(.99);opacity:1}to{transform:scale(.8);-moz-transform:scale(.8);-webkit-transform:scale(.8);-o-transform:scale(.8);-ms-transform:scale(.8);opacity:.8}}@keyframes pilsingshare{0%{transform:scale(.8);-moz-transform:scale(.8);-webkit-transform:scale(.8);-o-transform:scale(.8);-ms-transform:scale(.8);opacity:.8}50%{transform:scale(.99);-moz-transform:scale(.99);-webkit-transform:scale(.99);-o-transform:scale(.99);-ms-transform:scale(.99);opacity:1}to{transform:scale(.8);-moz-transform:scale(.8);-webkit-transform:scale(.8);-o-transform:scale(.8);-ms-transform:scale(.8);opacity:.8}}.pocketnet_iframe .pilsing{position:absolute;z-index:1000;width:20px;height:20px;left:50%;top:50%;margin:-10px 0 0 -10px}.pocketnet_iframe .pilsing div:first-child{animation:pulse 2s infinite;-webkit-animation:pulse 2s infinite;-moz-animation:pulse 2s infinite;-o-animation:pulse 2s infinite}.pocketnet_iframe .pilsing div:nth-child(2){animation:pulse 2s .3s infinite;-webkit-animation:pulse 2s .3s infinite;-moz-animation:pulse 2s infinite .3s;-o-animation:pulse 2s infinite .3s}.pocketnet_iframe .pilsing div{background:rgba(var(--background-total-theme),.3);border-radius:50%;position:absolute;margin:auto;top:0;bottom:0;left:0;right:0;width:100%;height:100%;border:1px solid rgb(var(--color-bg-ac-2))}@keyframes pulse{0%{transform:scale(.1);-moz-transform:scale(.1);-webkit-transform:scale(.1);-o-transform:scale(.1);-ms-transform:scale(.1);opacity:0}50%{opacity:1}to{transform:scale(1.6);-moz-transform:scale(1.6);-webkit-transform:scale(1.6);-o-transform:scale(1.6);-ms-transform:scale(1.6);opacity:0}}@-webkit-keyframes pulse{0%{transform:scale(.1);-moz-transform:scale(.1);-webkit-transform:scale(.1);-o-transform:scale(.1);-ms-transform:scale(.1);opacity:0}50%{opacity:1}to{transform:scale(1.6);-moz-transform:scale(1.6);-webkit-transform:scale(1.6);-o-transform:scale(1.6);-ms-transform:scale(1.6);opacity:0}}.pocketnet_iframe .plissingCnt{position:absolute;bottom:-.5em;right:-.5em;opacity:0;transition:.5s}.pocketnet_iframe .plissingCnt.active{opacity:1}.pocketnet_iframe .plissingCnt.left{right:90%}.pocketnet_iframe .plissingCnt.left .plissingWrapper .plissingWrapperTable>div .plissingTip{text-align:right}.pocketnet_iframe .plissingCnt.white .plissingWrapper .plissingWrapperTable>div .plissingTip{color:rgb(var(--text-on-bg-ac-color))}.pocketnet_iframe .plissingCnt.white .plissingWrapper .plissingWrapperTable>div .pilsing div{background:rgba(var(--background-main-contrast),.5)}.pocketnet_iframe .plissingWrapper .plissingWrapperTable{height:30px}.pocketnet_iframe .plissingWrapper .plissingWrapperTable>div{vertical-align:middle}.pocketnet_iframe .plissingWrapper .plissingWrapperTable>div.plissingWrapperCell{position:relative;width:25px}.pocketnet_iframe .plissingWrapper .plissingWrapperTable>div.plissingTipCell{padding-left:.5em;padding-right:.5em}.pocketnet_iframe .plissingWrapper .plissingWrapperTable>div .plissingTip{font-weight:100}.pocketnet_iframe .plissingWrapper .plissingWrapperTable>div .plissingTip.hover{display:none}.pocketnet_iframe #application .owl-dots{text-align:center;margin-top:.5em}.pocketnet_iframe #application .owl-carousel button.owl-dot{width:.5em;height:.5em;border-radius:50%;background:rgb(var(--neutral-grad-2));margin:0 .25em}.pocketnet_iframe #application .owl-carousel button.owl-dot.active{background:rgb(var(--color-bg-ac-bright))}.pocketnet_iframe #application .owl-carousel .owl-nav{opacity:0;transition:.3s}.pocketnet_iframe #application .owl-carousel .owl-nav button{text-align:center;position:absolute;top:50%;margin-top:-33px;width:44px;height:44px;line-height:44px;color:rgb(var(--text-on-bg-ac-color));border-radius:50%;transition:.3s}.pocketnet_iframe #application .owl-carousel .owl-nav button i{font-size:.7em;opacity:.7;transition:.3s}.pocketnet_iframe #application .owl-carousel .owl-nav button:hover{box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.4)}.pocketnet_iframe #application .owl-carousel .owl-nav button:hover i{box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.4);opacity:.87}.pocketnet_iframe #application .owl-carousel:hover .owl-nav{opacity:1}.pocketnet_iframe #application .owl-carousel .owl-nav button.owl-next{right:0}.pocketnet_iframe #application .owl-carousel .owl-nav button.owl-prev{left:0}.pocketnet_iframe #application .owl-carousel .owl-nav button.disabled{opacity:.5}.pocketnet_iframe #application .emojionearea .emojionearea-picker{background:rgb(var(--background-total-theme));color:rgb(var(--text-color));box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.4)}.pocketnet_iframe #application .emojionearea .emojionearea-picker .emojionearea-filters{background:rgb(var(--background-main))}.pocketnet_iframe #application .emojionearea .emojionearea-picker .emojionearea-filters .emojionearea-filter.active{background:rgb(var(--neutral-grad-1))}.pocketnet_iframe #application .emojionearea .emojionearea-picker .emojionearea-scroll-area .emojionearea-category-title{background:rgb(var(--background-total-theme));color:rgb(var(--text-color))}.pocketnet_iframe .errorcntplyrex{width:100%;padding-bottom:56%;background:#000;color:rgb(var(--text-on-bg-shadow-color));position:relative}.pocketnet_iframe .errorcntplyrex .errorcntTableWrapper{position:absolute;left:0;right:0;top:0;bottom:0}.pocketnet_iframe .errorcntplyrex .errorcntTable{display:table;width:100%;height:100%}.pocketnet_iframe .errorcntplyrex .errorcntTable>div{display:table-cell;vertical-align:middle;text-align:center}.pocketnet_iframe .errorcntplyrex .errorcntTable .errorcntCell{font-size:2em}.pocketnet_iframe .hoursrange .dayrow>div{padding:.25em}.pocketnet_iframe .hoursrange .dayrow>div.day{width:25%}.pocketnet_iframe .hoursrange .dayrow>div select{width:100%}.pocketnet_iframe .locationInputWrapper .locationInputs .radius{width:30%;padding-left:.5em}.pocketnet_iframe .locationInputWrapper .locationInputs .radius select{width:100%}.pocketnet_iframe .locationInputWrapper .map{margin-top:.5em;width:100%;height:250px}.pocketnet_iframe .vmt_valuesmultitree .vmt_group[level=\"0\"] .vmt_group_params{margin-top:.5em;padding-right:.5em;border-right:1px dashed rgb(var(--neutral-grad-2));border-top:1px dashed rgb(var(--neutral-grad-2));border-bottom:1px dashed rgb(var(--neutral-grad-2));margin-bottom:1em;border-top-right-radius:5px;border-bottom-right-radius:5px;background:rgba(var(--neutral-grad-2),.06);padding-left:.5em;display:none}.pocketnet_iframe .vmt_valuesmultitree .vmt_group[level=\"1\"] .vmt_value{font-size:.9em}.pocketnet_iframe .vmt_valuesmultitree .vmt_group.active>div.vmt_group_params{display:block}.pocketnet_iframe .vmt_valuesmultitree .vmt_group.active>div.vmt_name .vmt_panel_wrapper{transform:rotate(180deg);-webkit-transform:rotate(180deg)}.pocketnet_iframe .vmt_valuesmultitree .vmt_group.active>div.vmt_name .vmt_panel_wrapper:hover{transform:rotate(1turn);-webkit-webkit-transform:rotate(1turn)}.pocketnet_iframe .vmt_valuesmultitree .vmt_name>div{vertical-align:middle}.pocketnet_iframe .vmt_valuesmultitree .vmt_name .vmt_panel{width:22px}.pocketnet_iframe .vmt_valuesmultitree .vmt_name .vmt_panel_wrapper{width:26px;height:26px;margin:0 auto;margin-top:5px;text-align:center;line-height:24px;border-radius:50%;font-size:.8em;background:rgba(var(--color-bg-ac),.1);cursor:pointer;transition:.2s}.pocketnet_iframe .vmt_valuesmultitree .vmt_name .vmt_panel_wrapper:hover{transform:rotate(180deg);-webkit-webkit-transform:rotate(180deg)}.pocketnet_iframe .vmt_valuesmultitree .vmt_showMore{font-size:.8em;color:rgb(var(--color-txt-ac-2));cursor:pointer;padding:.5em 0;padding-left:35px}.pocketnet_iframe .vmt_valuesmultitree .vmt_showMore:hover{color:rgb(var(--color-txt-ac))}.pocketnet_iframe .vmt_valuesmultitree .vmt_hideMore{color:rgb(var(--neutral-grad-2));cursor:pointer;padding:1em 0;font-size:.9em;padding-left:35px}.pocketnet_iframe .vmt_valuesmultitree .vmt_hideMore:hover{color:rgb(var(--color-txt-ac))}.pocketnet_iframe .vmt_valuesmultitree.showedMore .vmt_showMore,.pocketnet_iframe .vmt_valuesmultitree .vmt_hidden{display:none}.pocketnet_iframe .vmt_valuesmultitree.showedMore .vmt_hidden{display:block}.pocketnet_iframe .vmt_valuesmultitree .checkbox+label{display:block;line-height:1.2em;margin-bottom:1em;margin-top:.5em}.pocketnet_iframe .vmt_valuesmultitree .checkbox+label:before{margin-top:-.125em}.pocketnet_iframe .vm_valuesmulti .vm_value{padding:.5em 0}.pocketnet_iframe .vm_valuesmulti .vm_showMore{font-size:.8em;color:rgb(var(--color-txt-ac-2));cursor:pointer;padding:.5em 0;padding-left:35px}.pocketnet_iframe .vm_valuesmulti .vm_showMore:hover{color:rgb(var(--color-txt-ac))}.pocketnet_iframe .vm_valuesmulti .vm_hideMore{color:rgb(var(--neutral-grad-2));cursor:pointer;padding:1em 0;font-size:.9em;padding-left:35px}.pocketnet_iframe .vm_valuesmulti .vm_hideMore:hover{color:rgb(var(--color-txt-ac))}.pocketnet_iframe .vm_valuesmulti.showedMore .vm_showMore,.pocketnet_iframe .vm_valuesmulti .vm_hidden{display:none}.pocketnet_iframe .vm_valuesmulti.showedMore .vm_hidden{display:block}.pocketnet_iframe .vm_valuesmulti.error .checkbox+label:before{border-color:rgb(var(--color-bad))}.pocketnet_iframe .vm_valuesmulti .checkbox+label{display:block;line-height:1.2em;margin-top:.5em}.pocketnet_iframe .vm_valuesmulti .checkbox+label:before{margin-top:-.125em}.pocketnet_iframe .vc_autosearchInput{position:relative}.pocketnet_iframe .vc_autosearchInput .placeholder{background:rgb(var(--background-total-theme));border:1px solid transparent;color:rgb(var(--neutral-grad-2));overflow:hidden}.pocketnet_iframe .vc_autosearchInput .placeholder>div{padding:.5em}.pocketnet_iframe .vc_autosearchInput .autosearchInputCnt{position:absolute;left:0;right:0;top:0;bottom:0;background:transparent!important}.pocketnet_iframe .vc_autosearchInput .autosearchInputCnt input{background:transparent!important}.pocketnet_iframe .vc_valuecustom{width:200px;height:38px;position:relative;border-radius:6px}.pocketnet_iframe .vc_valuecustom .vc_textInput{width:100%;height:100%;background:rgb(var(--background-hidden-layer));border:1px solid rgb(var(--neutral-grad-2));border-radius:6px}.pocketnet_iframe .vc_valuecustom .vc_textInput>div{vertical-align:middle}.pocketnet_iframe .vc_valuecustom .vc_textInput .vc_inputWrapper input{background:transparent;border:0;width:100%;height:100%}.pocketnet_iframe .vc_valuecustom .vc_textInput .vc_inputWrapper input[disabled]{color:rgb(var(--text-color))}.pocketnet_iframe .vc_valuecustom .vc_textInput .vc_iconWrapper{border-left:0;width:30px;cursor:pointer;color:rgb(var(--neutral-grad-2));text-align:center;transition:.3s}.pocketnet_iframe .vc_valuecustom .vc_textInput .vc_iconWrapper .vc_iconSpinWrapper{width:100%;transition:.3s}.pocketnet_iframe .vc_valuecustom .vc_textInput .vc_iconWrapper:hover{color:rgb(var(--neutral-grad-4))}.pocketnet_iframe .vc_valuecustom .vc_selectInput_bg_mobile{display:none;z-index:1000}.pocketnet_iframe .vc_valuecustom .vc_selectInput{position:absolute;left:0;right:0;top:100%;max-height:250px;overflow-y:auto;background:rgb(var(--background-total-theme));border:1px solid rgb(var(--neutral-grad-2));border-top:0;border-radius:2px;display:none;z-index:1000;border-top-left-radius:0;border-top-right-radius:0}.pocketnet_iframe .vc_valuecustom .vc_selectInput .vc_value{padding:.25em .5em;cursor:pointer}.pocketnet_iframe .vc_valuecustom .vc_selectInput .vc_value:hover{color:rgb(var(--text-on-bg-ac-color));background:rgb(var(--color-bg-ac-bright))}.pocketnet_iframe .vc_valuecustom.opened .vc_selectInput,.pocketnet_iframe .vc_valuecustom.opened .vc_selectInput_bg_mobile{display:block}.pocketnet_iframe .vc_valuecustom.opened .vc_iconWrapper .vc_iconSpinWrapper{transform:rotate(180deg);-webkit-transform:rotate(180deg)}.pocketnet_iframe .vc_valuecustom.error .vc_textInput .vc_inputWrapper{border:1px solid rgb(var(--color-bad));border-right:0}.pocketnet_iframe .vc_valuecustom.error .vc_textInput .vc_iconWrapper{border:1px solid rgb(var(--color-bad));border-left:0}.pocketnet_iframe .vc_valuecustom .currencies,.pocketnet_iframe .vc_valuecustom .paymentMethods{font-size:.9em}.pocketnet_iframe .vc_valuecustom .currencies .name,.pocketnet_iframe .vc_valuecustom .paymentMethods .name{font-size:.9em;color:#00a4ff;padding:.5em 0;text-align:center}.pocketnet_iframe .vc_valuecustom .currencies .vc_value>div,.pocketnet_iframe .vc_valuecustom .paymentMethods .vc_value>div{padding:.5em;vertical-align:middle}.pocketnet_iframe .vc_valuecustom .currencies .vc_value>div.cicon,.pocketnet_iframe .vc_valuecustom .paymentMethods .vc_value>div.cicon{width:16px;padding:.5em 0}.pocketnet_iframe .vc_valuecustom .currencies .vc_value>div.csymbol,.pocketnet_iframe .vc_valuecustom .paymentMethods .vc_value>div.csymbol{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.pocketnet_iframe .vc_valuecustom .currencies .vc_value>div:last-child,.pocketnet_iframe .vc_valuecustom .paymentMethods .vc_value>div:last-child{padding-right:0}.pocketnet_iframe .vc_valuecustom .currencies .vc_value .obscure,.pocketnet_iframe .vc_valuecustom .paymentMethods .vc_value .obscure{font-size:.9em}.pocketnet_iframe .horizontalLentaWrapper{position:relative}.pocketnet_iframe .horizontalLentaWrapper .horizontalLentacaption{display:flex;justify-content:space-between;align-items:center;padding:.5em 0;padding-bottom:.5em;font-size:18px}.pocketnet_iframe .horizontalLentaWrapper .horizontalLentacaption .controlhors{display:flex;width:75px;justify-content:space-between}.pocketnet_iframe .horizontalLentaWrapper .horizontalLentacaption span{font-weight:700;font-size:.8em}.pocketnet_iframe .horizontalLentaWrapper .controlhor{display:none;border-radius:8px;width:30px;height:30px;border:1px solid rgb(var(--neutral-grad-0));display:flex;align-items:center;justify-content:center;box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.4);cursor:pointer;text-align:center;color:rgb(var(--text-color));font-size:.8em;transition:.3s}.pocketnet_iframe .horizontalLentaWrapper .controlhor.controlleft{left:.5em}.pocketnet_iframe .horizontalLentaWrapper .controlhor.controlright{right:.5em}.pocketnet_iframe .horizontalLentaWrapper.hasitems .controlhor{display:flex}.pocketnet_iframe .horizontalLentaWrapper .showmorebywrapper{overflow:hidden;overflow-x:scroll;scroll-behavior:smooth;scrollbar-width:none;border-radius:6px}.pocketnet_iframe .horizontalLentaWrapper .showmorebywrapper::-webkit-scrollbar{height:4px;width:4px;background:rgba(var(--neutral-grad-0),.3)}.pocketnet_iframe .horizontalLentaWrapper .showmorebywrapper::-webkit-scrollbar-thumb:horizontal{background:rgb(var(--color-shadow-base));border-radius:10px}.pocketnet_iframe .horizontalLentaWrapper .showmorebywrapper::-webkit-scrollbar{display:none!important}.pocketnet_iframe .horizontalLentaWrapper .showmorebywrapper .anothercntswrk{padding-left:0!important;padding-right:0!important}.pocketnet_iframe .horizontalLentaWrapper .showmorebywrapper .showmorebywrapper{display:none}.pocketnet_iframe .carousel{width:100%;display:flex;flex-wrap:nowrap;overflow-x:scroll;scroll-behavior:smooth;scrollbar-width:none;scroll-snap-type:x mandatory;align-items:center;position:relative}.pocketnet_iframe .carousel::-webkit-scrollbar{display:none!important}.pocketnet_iframe .carousel .carousel_item{width:100%;min-width:100%;scroll-snap-align:center}.pocketnet_iframe .carousel_markers{display:flex;align-items:center;justify-content:center;margin-top:1.5em}.pocketnet_iframe .carousel_markers>div{padding:.25em}.pocketnet_iframe .carousel_markers>div>div{width:8px;height:8px;border-radius:10px;background:rgb(var(--neutral-grad-2))}.pocketnet_iframe .carousel_markers>div.active>div{background:rgb(var(--color-bg-ac))}.pocketnet_iframe .optimizationTip{background:rgb(var(--background-total-theme));background-repeat:repeat-x;background-position:50%}.pocketnet_iframe .sharepostmenu .menuitem{cursor:pointer}.pocketnet_iframe .sharepostmenu .menuitem>div{padding:1em;border-bottom:1px solid rgb(var(--neutral-grad-1));transition:.3s}.pocketnet_iframe .sharepostmenu .menuitem>div span{font-size:.9em}.pocketnet_iframe .sharepostmenu .menuitem>div.icon{width:30px;text-align:center}.pocketnet_iframe .sharepostmenu .menuitem:last-child>div{border-bottom:0}.pocketnet_iframe .sharepostmenu .menuitem:hover>div{color:rgb(var(--color-text-ac));border-color:rgb(var(--color-text-ac))}.pocketnet_iframe .sharepostmenu .menuitem.block:hover>div,.pocketnet_iframe .sharepostmenu .menuitem.complain:hover>div{color:rgb(var(--color-text-ac-2));border-color:rgb(var(--color-text-ac-2))}.pocketnet_iframe .sharepostmenu.downloadMenu h2{margin-top:0;font-size:20px;text-align:center}.pocketnet_iframe .sharepostmenu.downloadMenu h4{text-align:center;margin:0}.pocketnet_iframe .sharepostmenu.downloadMenu .menuitem .label{display:flex;justify-content:space-between}.pocketnet_iframe .sharepostmenu.downloadMenu .menuitem .label span.lightColor{color:rgb(var(--neutral-grad-3))}.pocketnet_iframe .matrixchatwrapper{font-size:16px}.pocketnet_iframe html.mobileview .matrixchatwrapper{position:fixed;contain:strict;left:0;top:0;right:0;bottom:0;background:rgb(var(--background-hidden-layer));transition:.3s;z-index:1004;-webkit-overflow-scrolling:touch;transform-origin:left center;transform:translateX(-100%);overflow:hidden;-webkit-backface-visibility:hidden;backface-visibility:hidden;will-change:transform}.pocketnet_iframe html.mobileview .matrixchatwrapper.active{transform:translateX(0)}.pocketnet_iframe html.mobileview[chatposition=above] .matrixchatwrapper{z-index:1006}.pocketnet_iframe html.mobileview .tooltipMobileDialog{-webkit-overflow-scrolling:touch;overscroll-behavior:contain;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}.pocketnet_iframe html.mobileview .tooltipMobileDialog .mobiledialogcontent{transform:translateY(100%);transition:.15s}.pocketnet_iframe html.mobileview .tooltipMobileDialog.animend .mobiledialogcontent{transform:translateY(0)}.pocketnet_iframe html.mobileview .tooltipMobileDialog .thwrapper{padding:0;max-width:450px;background:transparent;width:93%;margin:0 auto;border:0;margin-bottom:0;padding-bottom:1em;box-shadow:none}.pocketnet_iframe html.mobileview .tooltipMobileDialog ._close{display:none}.pocketnet_iframe html.mobileview .tooltipMobileDialog .mobiledialogcontent{max-height:calc(var(--vh, 1vh)*60)}.pocketnet_iframe html.mobileview .tooltipMobileDialog .secondwrapper{vertical-align:bottom}.pocketnet_iframe html.mobileview .tooltipMobileDialog .buttons{display:none}.pocketnet_iframe html.mobileview .tooltipMobileDialog .body{margin:0}.pocketnet_iframe html.mobileview .tooltipMobileDialog .label{padding-right:30px!important}.pocketnet_iframe html.mobileview .tooltipMobileDialog .header{color:rgb(var(--neutral-grad-3));text-align:center}.pocketnet_iframe html.mobileview .tooltipMobileDialog .header .text{padding-bottom:1em}.pocketnet_iframe html.mobileview .tooltipMobileDialog .closeButton,.pocketnet_iframe html.mobileview .tooltipMobileDialog .menuitem{padding:2em 1em;text-align:center;background:rgb(var(--background-total-theme));cursor:pointer;border-radius:3px;margin-top:.25em;text-align:left}.pocketnet_iframe html.mobileview .tooltipMobileDialog .closeButton>div,.pocketnet_iframe html.mobileview .tooltipMobileDialog .menuitem>div{padding:0;border-bottom:0}.pocketnet_iframe html.mobileview .tooltipMobileDialog .mobiledialogcontent{border-radius:3px}.pocketnet_iframe html.mobileview .tooltipMobileDialog .closeButton{margin-top:1em;background:rgba(var(--neutral-grad-4),.1);color:rgb(var(--text-on-bg-ac-color))}.pocketnet_iframe html.mobileview .tooltipMobileDialog .closeButton button{padding:0;color:rgb(var(--text-on-bg-ac-color));text-decoration:none}.pocketnet_iframe html.mobileview.nooverflow body{overflow:hidden!important;touch-action:none;-webkit-overflow-scrolling:none;overscroll-behavior:none}.pocketnet_iframe html.mobileview .wnd.pipmini{right:1em;top:50%;bottom:auto;left:auto;transform:translateY(-50%);max-width:33%;width:330px}.pocketnet_iframe html.mobileview .wnd.pipmini ._changeplace,.pocketnet_iframe html.mobileview .wnd.pipmini ._close,.pocketnet_iframe html.mobileview .wnd.pipmini ._expand{opacity:1}@media only screen and (max-width:1920px){.pocketnet_iframe html.mobileview .wnd.pipmini{transform:none;left:.5em;right:.5em;width:auto;max-width:none;top:70px;will-change:transform;transition:transform .3s}.pocketnet_iframe html.mobileview .wnd.pipmini ._changeplace{display:block;transition:transform .3s}.pocketnet_iframe html.mobileview .wnd.pipmini[position=bottom]{bottom:100px;top:auto}.pocketnet_iframe html.mobileview .wnd.pipmini[position=bottom] ._changeplace{transform:rotate(180deg)}.pocketnet_iframe html.mobileview.scrollmodedown .wnd.pipmini{transform:translateY(-65px)}.pocketnet_iframe html.mobileview.scrollmodedown .wnd.pipmini[position=bottom]{transform:translateY(90px)}}.pocketnet_iframe html.mobileview.fullscreen{-webkit-touch-callout:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pocketnet_iframe html.mobileview.fullscreen #menuWrapper,.pocketnet_iframe html.mobileview.fullscreen #navigationWrapper,.pocketnet_iframe html.mobileview.fullscreen .matrixchatwrapper{display:none!important}.pocketnet_iframe .windowsContainer{position:relative}@media only screen and (max-width:1920px){.pocketnet_iframe .horizontalLentaWrapper .controlhor,.pocketnet_iframe .horizontalLentaWrapper.hasitems .controlhor{display:none}.pocketnet_iframe .horizontalLentaWrapper .showmorebywrapper{scrollbar-width:none}.pocketnet_iframe .horizontalLentaWrapper .showmorebywrapper::-webkit-scrollbar{display:none!important}}.pocketnet_iframe .thinput[value=\"1\"] i:before{content:\"\\f00c\"}.pocketnet_iframe .thinput[value=\"-1\"] i:before{content:\"\"}.pocketnet_iframe .thinput[value=\"0\"] i:before{content:\"\\f00d\"}.pocketnet_iframe .coinwithsmall{width:auto;height:auto}.pocketnet_iframe .coinwithsmall>div{vertical-align:middle}.pocketnet_iframe .coinwithsmall>div.bignum{font-weight:100;font-size:1.65em;padding-right:.125em}.pocketnet_iframe .coinwithsmall>div.svlwr{font-size:.5em}.pocketnet_iframe .coinwithsmall>div.svlwr .suffix{font-weight:500}.pocketnet_iframe .coinwithsmall>div.svlwr>div{margin-top:.25em}.pocketnet_iframe .cashWrapper{display:table}.pocketnet_iframe .cashWrapper>div{display:table-cell;vertical-align:middle}.pocketnet_iframe .cashWrapper>div.convertCashWrapper{padding:0 .5em}.pocketnet_iframe .cashrangeWrapper .convertsCashrangeWrapper,.pocketnet_iframe .cashrangeWrapper .inputsCashrangeWrapper{display:table;width:100%}.pocketnet_iframe .cashrangeWrapper .convertsCashrangeWrapper>div,.pocketnet_iframe .cashrangeWrapper .inputsCashrangeWrapper>div{width:50%;display:table-cell;vertical-align:middle;padding:0 .25em}.pocketnet_iframe .cashrangeWrapper .convertsCashrangeWrapper>div:first-child,.pocketnet_iframe .cashrangeWrapper .inputsCashrangeWrapper>div:first-child{padding-left:0}.pocketnet_iframe .cashrangeWrapper .convertsCashrangeWrapper>div:last-child,.pocketnet_iframe .cashrangeWrapper .inputsCashrangeWrapper>div:last-child{padding-right:0;text-align:right}.pocketnet_iframe .cashrangeWrapper .convertsCashrangeWrapper{font-size:.8em;color:rgb(var(--neutral-grad-3))}.pocketnet_iframe .cashrangeWrapper .convertsCashrangeWrapper>div{padding-top:.25em}.pocketnet_iframe .cashrangeWrapper input{text-align:left;padding:.25em;width:100%;border:1px solid rgb(var(--neutral-grad-2));border-radius:2px}.pocketnet_iframe .numberrangeWrapper{display:table;width:100%}.pocketnet_iframe .numberrangeWrapper>div{width:50%;display:table-cell;vertical-align:middle;padding:0 .25em}.pocketnet_iframe .numberrangeWrapper>div:first-child{padding-left:0}.pocketnet_iframe .numberrangeWrapper>div:last-child{padding-right:0}.pocketnet_iframe .numberrangeWrapper input{padding:.25em;width:100%;border:1px solid rgb(var(--neutral-grad-2));border-radius:2px}.pocketnet_iframe .lighttooltip{max-height:500px}.pocketnet_iframe .lighttooltip.validation{font-weight:700}.pocketnet_iframe .lighttooltip.validation .tooltipster-content{padding:1em}.pocketnet_iframe .lighttooltip.zindex{z-index:3000!important}.pocketnet_iframe .lighttooltip .removeInTooltip{display:none!important}.pocketnet_iframe .lighttooltip .tooltipster-arrow-border{margin-right:1px}.pocketnet_iframe .lighttooltip .tooltipster-content{padding:0;color:rgb(var(--text-color));padding:.5em;overflow:hidden}.pocketnet_iframe .lighttooltip .tooltipster-box{background:rgb(var(--background-total-theme));color:rgb(var(--text-color));border-radius:0;border:1px solid rgb(var(--neutral-grad-1));box-shadow:0 5px 10px -5px rgba(var(--color-shadow-base),.4)}.pocketnet_iframe .lighttooltip.tooltipster-bottom .tooltipster-arrow-border{border-bottom-color:rgb(var(--neutral-grad-1))}.pocketnet_iframe .lighttooltip.tooltipster-bottom .tooltipster-arrow-background{border-bottom-color:rgb(var(--background-total-theme));top:1px}.pocketnet_iframe .lighttooltip.tooltipster-right .tooltipster-arrow-border{right:1px;border-right-color:rgb(var(--neutral-grad-1))}.pocketnet_iframe .lighttooltip.tooltipster-right .tooltipster-arrow-background{border-right-color:rgb(var(--background-total-theme));right:0}.pocketnet_iframe .lighttooltip.tooltipster-left .tooltipster-arrow-border{left:1px;border-left-color:rgb(var(--neutral-grad-1))}.pocketnet_iframe .lighttooltip.tooltipster-left .tooltipster-arrow-background{border-left-color:rgb(var(--background-total-theme));left:0}.pocketnet_iframe .usericon{background:rgb(var(--neutral-grad-0));color:rgb(var(--color-txt-gray-dark));box-shadow:0 5px 10px -5px rgba(var(--color-shadow-base),.4);border-radius:50%;height:3em;width:3em;text-align:center;line-height:3em;font-size:1em;position:relative}.pocketnet_iframe .usericon .realperson{position:absolute;bottom:-4%;right:-4%;text-shadow:0 0 2px rgba(var(--color-shadow-base),.714),0 0 3px rgba(var(--color-shadow-base),.519);line-height:.25em;font-size:.25em;opacity:1}.pocketnet_iframe .usericon .realperson .real .fa-certificate{color:rgb(var(--color-bg-ac-bright))}.pocketnet_iframe .usericon .realperson .real .fa-check{color:rgb(var(--text-on-bg-ac-color));box-shadow:none}.pocketnet_iframe .usericon .realperson .dev .fa-certificate{color:rgb(var(--color-bg-orange))}.pocketnet_iframe .usericon .realperson .dev .fa-code{color:rgb(var(--text-on-bg-ac-color))}.pocketnet_iframe .usericon .letter{font-size:1.5em}.pocketnet_iframe .usericon:hover .realperson{opacity:.7}.pocketnet_iframe .userpic{width:40px;height:40px;border-radius:50%;line-height:40px;text-align:center;background:transparent;font-weight:200;background:rgb(var(--neutral-grad-0));color:rgb(var(--color-txt-ac-1));cursor:pointer;box-shadow:0 5px 10px -5px rgba(var(--color-shadow-base),.4)}.pocketnet_iframe .fastMessage,.pocketnet_iframe .notification{transition:.3s}.pocketnet_iframe .fastMessage .time,.pocketnet_iframe .notification .time{padding-left:.5em}.pocketnet_iframe .fastMessage .time span,.pocketnet_iframe .notification .time span{font-size:.8em;color:rgb(var(--neutral-grad-3))}.pocketnet_iframe .fastMessage .messagethumbs,.pocketnet_iframe .notification .messagethumbs{border-radius:50%;border:1px solid rgb(var(--color-txt-ac));color:rgb(var(--color-txt-ac))}.pocketnet_iframe .fastMessage .messagestar,.pocketnet_iframe .fastMessage .messagethumbs,.pocketnet_iframe .notification .messagestar,.pocketnet_iframe .notification .messagethumbs{width:44px;height:44px;line-height:42px;text-align:center;margin-left:auto;font-size:.8em;background:rgba(var(--background-total-theme),.3);box-shadow:0 5px 10px -5px rgba(var(--color-shadow-base),.4)}.pocketnet_iframe .fastMessage .messagestar,.pocketnet_iframe .notification .messagestar{color:rgb(var(--color-star-yellow));border-radius:50%;border:1px solid rgb(var(--color-star-yellow))}.pocketnet_iframe .fastMessage .messagestar[count=\"3\"],.pocketnet_iframe .notification .messagestar[count=\"3\"]{color:rgb(var(--neutral-grad-3));border:1px solid rgb(var(--neutral-grad-3))}.pocketnet_iframe .fastMessage .messagestar[count=\"2\"],.pocketnet_iframe .notification .messagestar[count=\"2\"]{color:#ff0090;border:1px solid #ff0090}.pocketnet_iframe .fastMessage .messagestar[count=\"1\"],.pocketnet_iframe .notification .messagestar[count=\"1\"]{color:rgb(var(--color-bad));border:1px solid rgb(var(--color-bad))}.pocketnet_iframe .fastMessage .transactionmessagewrapper>div,.pocketnet_iframe .notification .transactionmessagewrapper>div{vertical-align:top}.pocketnet_iframe .fastMessage .transactionmessagewrapper>div.foramount,.pocketnet_iframe .notification .transactionmessagewrapper>div.foramount{font-weight:700;text-align:right;color:rgb(var(--color-good));font-size:.8em}.pocketnet_iframe .fastMessage .repostshare,.pocketnet_iframe .notification .repostshare{text-align:right;color:rgb(var(--neutral-grad-3));padding-right:.5em}.pocketnet_iframe .fastMessage .foranswer,.pocketnet_iframe .notification .foranswer{text-align:right}.pocketnet_iframe .fastMessage .foranswer button,.pocketnet_iframe .notification .foranswer button{padding-top:0;text-align:right;width:auto}.pocketnet_iframe .fastMessage .foranswer button i,.pocketnet_iframe .notification .foranswer button i{display:none}.pocketnet_iframe .fastMessage .foranswer button.disabled,.pocketnet_iframe .notification .foranswer button.disabled{color:rgb(var(--color-good));background:transparent}.pocketnet_iframe .fastMessage .foranswer button.disabled i,.pocketnet_iframe .notification .foranswer button.disabled i{display:inline}.pocketnet_iframe .fastMessage .foranswer button.disabled:hover,.pocketnet_iframe .notification .foranswer button.disabled:hover{background:transparent}.pocketnet_iframe .fastMessage .commentmessagewrapper>div,.pocketnet_iframe .notification .commentmessagewrapper>div{vertical-align:top}.pocketnet_iframe .fastMessage .commentmessagewrapper>div.forthumbs,.pocketnet_iframe .notification .commentmessagewrapper>div.forthumbs{width:50px;text-align:right}.pocketnet_iframe .fastMessage .commentmessagewrapper .commenttext,.pocketnet_iframe .notification .commentmessagewrapper .commenttext{cursor:pointer}.pocketnet_iframe .fastMessage .commentmessagewrapper .commenttext span,.pocketnet_iframe .notification .commentmessagewrapper .commenttext span{font-size:1;font-weight:700}.pocketnet_iframe .fastMessage .commentmessagewrapper .commentimages,.pocketnet_iframe .notification .commentmessagewrapper .commentimages{padding-top:.5em}.pocketnet_iframe .fastMessage .commentmessagewrapper .commentimages .imagesContainer,.pocketnet_iframe .notification .commentmessagewrapper .commentimages .imagesContainer{overflow:hidden}.pocketnet_iframe .fastMessage .commentmessagewrapper .commentimages .imagesContainer>div,.pocketnet_iframe .notification .commentmessagewrapper .commentimages .imagesContainer>div{float:left;margin-bottom:.5em;margin-right:.5em;width:80px;height:80px}.pocketnet_iframe .fastMessage .commentmessagewrapper .commentimages .imagesContainer>div .image,.pocketnet_iframe .notification .commentmessagewrapper .commentimages .imagesContainer>div .image{width:100%;height:100%}.pocketnet_iframe .fastMessage .sharedivide,.pocketnet_iframe .notification .sharedivide{color:rgb(var(--color-text-ac));padding:.25em 0}.pocketnet_iframe .fastMessage .sharepreview .shareprwrapper>div,.pocketnet_iframe .notification .sharepreview .shareprwrapper>div{vertical-align:top;padding:.25em}.pocketnet_iframe .fastMessage .sharepreview .shareprwrapper>div.forimage,.pocketnet_iframe .notification .sharepreview .shareprwrapper>div.forimage{width:32px;padding-right:.5em;padding-left:0}.pocketnet_iframe .fastMessage .sharepreview .shareprwrapper>div.fortext,.pocketnet_iframe .notification .sharepreview .shareprwrapper>div.fortext{padding-left:0}.pocketnet_iframe .fastMessage .sharepreview .shareprwrapper>div.fortext span,.pocketnet_iframe .notification .sharepreview .shareprwrapper>div.fortext span{font-size:.8em}.pocketnet_iframe .fastMessage .sharepreview .shareprwrapper>div.extra,.pocketnet_iframe .notification .sharepreview .shareprwrapper>div.extra{width:100px}.pocketnet_iframe .fastMessage .sharepreview .shareprwrapper>div.extra div,.pocketnet_iframe .notification .sharepreview .shareprwrapper>div.extra div{font-size:.9em;float:right}.pocketnet_iframe .fastMessage .sharepreview .shareprwrapper>div .additionalcontent,.pocketnet_iframe .notification .sharepreview .shareprwrapper>div .additionalcontent{font-size:.8em;padding-bottom:0;opacity:.5}.pocketnet_iframe .fastMessage .sharepreview .shareprwrapper .img,.pocketnet_iframe .notification .sharepreview .shareprwrapper .img{width:25px;height:25px;border-radius:50%;position:relative}.pocketnet_iframe .fastMessage .sharepreview .shareprwrapper .img .vstyle,.pocketnet_iframe .notification .sharepreview .shareprwrapper .img .vstyle{position:absolute;left:20px;top:14px;font-size:.6em;color:rgb(var(--neutral-grad-1))}.pocketnet_iframe .fastMessage .sharepreview .shareimages,.pocketnet_iframe .notification .sharepreview .shareimages{padding-top:.25em;padding-bottom:.25em}.pocketnet_iframe .fastMessage .sharepreview .shareimages .imagesContainer,.pocketnet_iframe .notification .sharepreview .shareimages .imagesContainer{overflow:hidden}.pocketnet_iframe .fastMessage .sharepreview .shareimages .imagesContainer>div,.pocketnet_iframe .notification .sharepreview .shareimages .imagesContainer>div{float:left;margin-right:.25em;overflow:hidden;border-radius:50%;width:24px;height:24px}.pocketnet_iframe .fastMessage .sharepreview .shareimages .imagesContainer>div .image,.pocketnet_iframe .notification .sharepreview .shareimages .imagesContainer>div .image{width:100%;height:100%;position:relative}.pocketnet_iframe .fastMessage .sharepreview .shareimages .imagesContainer>div .image .vstyle,.pocketnet_iframe .notification .sharepreview .shareimages .imagesContainer>div .image .vstyle{position:absolute;right:.5em;bottom:.5em;font-size:.6em;color:rgb(var(--neutral-grad-1));box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.4)}.pocketnet_iframe .fastMessage .sharepreview:last-child,.pocketnet_iframe .notification .sharepreview:last-child{border-bottom:0}.pocketnet_iframe .fastMessage .sharepreview:first-child,.pocketnet_iframe .notification .sharepreview:first-child{padding-top:.5em}.pocketnet_iframe .fastMessage .subscribeWrapper>div,.pocketnet_iframe .notification .subscribeWrapper>div{vertical-align:bottom}.pocketnet_iframe .fastMessage .subscribeWrapper>div.forsubscribe,.pocketnet_iframe .notification .subscribeWrapper>div.forsubscribe{width:80px;text-align:right}.pocketnet_iframe .fastMessage .subscribeWrapper>div.forsubscribe button,.pocketnet_iframe .notification .subscribeWrapper>div.forsubscribe button{text-align:right;width:auto;padding-top:0;padding-bottom:0}.pocketnet_iframe .fastMessage .subscribeWrapper>div.forsubscribe button i,.pocketnet_iframe .notification .subscribeWrapper>div.forsubscribe button i{display:none}.pocketnet_iframe .fastMessage .subscribeWrapper>div.forsubscribe button.disabled,.pocketnet_iframe .notification .subscribeWrapper>div.forsubscribe button.disabled{color:rgb(var(--color-good));background:transparent}.pocketnet_iframe .fastMessage .subscribeWrapper>div.forsubscribe button.disabled i,.pocketnet_iframe .notification .subscribeWrapper>div.forsubscribe button.disabled i{display:inline}.pocketnet_iframe .fastMessage .subscribeWrapper>div.forsubscribe button.disabled:hover,.pocketnet_iframe .notification .subscribeWrapper>div.forsubscribe button.disabled:hover{background:transparent}.pocketnet_iframe .fastMessage .cwrapper>div,.pocketnet_iframe .notification .cwrapper>div{vertical-align:middle}.pocketnet_iframe .fastMessage .cwrapper>div.cellforimage,.pocketnet_iframe .notification .cwrapper>div.cellforimage{width:50px;vertical-align:top}.pocketnet_iframe .fastMessage .cwrapper>div.extra,.pocketnet_iframe .notification .cwrapper>div.extra{width:90px}.pocketnet_iframe .fastMessage .cwrapper>div .infomain,.pocketnet_iframe .notification .cwrapper>div .infomain{padding-left:.5em}.pocketnet_iframe .fastMessage .cwrapper>div .infomain .caption,.pocketnet_iframe .notification .cwrapper>div .infomain .caption{font-size:1em}.pocketnet_iframe .fastMessage .cwrapper>div .infomain .donate,.pocketnet_iframe .notification .cwrapper>div .infomain .donate{color:rgb(var(--color-good))}.pocketnet_iframe .fastMessage .gotoprofileWrapper,.pocketnet_iframe .notification .gotoprofileWrapper{text-align:right;margin-top:.5em;min-width:170px;font-size:.8em}.pocketnet_iframe .fastMessage .opmessage,.pocketnet_iframe .notification .opmessage{margin-top:.5em;font-size:.9em}.pocketnet_iframe .fastMessage .opmessage span,.pocketnet_iframe .notification .opmessage span{color:rgb(var(--color-txt-ac))}.pocketnet_iframe .fastMessage .commentprev,.pocketnet_iframe .fastMessage .sharepreview,.pocketnet_iframe .notification .commentprev,.pocketnet_iframe .notification .sharepreview{cursor:pointer}.pocketnet_iframe .fastMessage .commentprev:hover,.pocketnet_iframe .fastMessage .sharepreview:hover,.pocketnet_iframe .notification .commentprev:hover,.pocketnet_iframe .notification .sharepreview:hover{color:rgb(var(--color-txt-ac))}.pocketnet_iframe .fastMessage{border-radius:12px}.pocketnet_iframe .fastMessage.smallsize{padding:.5em;width:390px;cursor:pointer}.pocketnet_iframe .fastMessage.smallsize:hover{background:rgba(var(--color-shadow-base),.8)}.pocketnet_iframe .fastMessage.smallsize .cwrapper>div.cellforimage,.pocketnet_iframe .fastMessage.smallsize .cwrapper>div .tips>div{display:none}.pocketnet_iframe .fastMessage.smallsize .cwrapper>div .tips>div.notifytext{display:block;font-size:.8em}.pocketnet_iframe .fastMessage.smallsize .messagestar{width:33px;height:33px;line-height:31px;font-size:.8em;margin-bottom:4px}.pocketnet_iframe .closecsscross{position:relative;width:64px;height:64px;opacity:.5;margin:0 auto}.pocketnet_iframe .closecsscross:after,.pocketnet_iframe .closecsscross:before{position:absolute;left:32px;content:\" \";height:64px;width:1px;background-color:rgb(var(--neutral-grad-1))}.pocketnet_iframe .closecsscross:before{transform:rotate(45deg)}.pocketnet_iframe .closecsscross:after{transform:rotate(-45deg)}.pocketnet_iframe .notification .time{padding-top:.5em}.pocketnet_iframe .notification .commentmessagewrapper>div{vertical-align:top}.pocketnet_iframe .notification .commentmessagewrapper>div.forthumbs{width:50px;text-align:right}.pocketnet_iframe .notification .commentmessagewrapper .commenttext{padding-top:.5em;cursor:pointer}.pocketnet_iframe .notification .commentmessagewrapper .commenttext span{font-weight:700}.pocketnet_iframe #hideallnotifications .hidenf{position:fixed;left:5px;bottom:5px;height:45px;line-height:45px;width:390px;background:rgba(var(--color-shadow-base),.9);color:rgb(var(--text-on-bg-shadow-color));text-align:center;font-size:.9em;z-index:140;cursor:pointer}.pocketnet_iframe #hideallnotifications .hidenf:hover,.pocketnet_iframe .fastMessage{background:rgba(var(--color-shadow-base),.98)}.pocketnet_iframe .fastMessage{position:fixed;left:5px;bottom:5px;max-height:170px;width:480px;color:rgb(var(--text-on-bg-shadow-color));padding:.75em;padding-left:1em;font-size:1em;z-index:140;overflow:hidden}.pocketnet_iframe .fastMessage button{padding-right:0}.pocketnet_iframe .fastMessage .messagestar{background:rgba(var(--color-shadow-base),.3)}.pocketnet_iframe .fastMessage .caption{font-size:.9em}.pocketnet_iframe .fastMessage .fmCnt{width:100%;height:100%;overflow:hidden;text-overflow:ellipsis}.pocketnet_iframe .fastMessage .time{display:none}.pocketnet_iframe .fastMessage .commentmessagewrapper>div.foranswer button,.pocketnet_iframe .fastMessage .subscribeWrapper>div.forsubscribe button{color:rgb(var(--color-text-ac))}.pocketnet_iframe .fastMessage .commentmessagewrapper .commentimages .imagesContainer>div{width:40px;height:40px;display:none;border-radius:20px;overflow:hidden}.pocketnet_iframe .fastMessage .commentmessagewrapper .commentimages .imagesContainer>div:first-child,.pocketnet_iframe .fastMessage .commentmessagewrapper .commentimages .imagesContainer>div:nth-child(2),.pocketnet_iframe .fastMessage .commentmessagewrapper .commentimages .imagesContainer>div:nth-child(3){display:block}.pocketnet_iframe .fastMessage .commentmessagewrapper .commentshare{display:none}.pocketnet_iframe .fastMessage .close{position:absolute;right:0;top:0;cursor:pointer;padding:.5em .75em;transition:.3s}.pocketnet_iframe .fastMessage .close:hover{color:rgb(var(--neutral-grad-3))}.pocketnet_iframe .fastMessage .fastMessageChat .user{font-weight:700;color:rgb(var(--color-bg-ac-2))}.pocketnet_iframe .fastMessage .fastMessageChat .date{text-align:right}.pocketnet_iframe .fastMessage .fastMessageChat .dmessage{margin-bottom:.5em}.pocketnet_iframe .fastMessage .fastMessageChat .cantdecrypt{font-style:italic;font-size:.9em}.pocketnet_iframe .fastMessage .notification b{color:rgb(var(--color-bg-ac-2))}.pocketnet_iframe .fastMessage .notification .date{margin-top:.5em;font-size:.9em}.pocketnet_iframe .fastMessage .notification .seenow{margin-top:1em}.pocketnet_iframe .fastMessage .dataWrapper>div{vertical-align:top;padding:.5em}.pocketnet_iframe .fastMessage .dataWrapper>div.userpicWrapper{padding-left:0;padding-right:0;width:40px}.pocketnet_iframe .fastMessage .smallusertext .text{font-size:.9em}.pocketnet_iframe .fastMessage .smallusertext .text .dataWrapper>div{vertical-align:middle}.pocketnet_iframe .fastMessage .progressWrapperTable>div{font-size:.9em;padding:.5em;padding-left:0;vertical-align:middle}.pocketnet_iframe .fastMessage .progressWrapperTable>div.label{padding:.5em 0;width:80px;text-align:center;font-weight:700}.pocketnet_iframe .fastMessage .progressWrapperTable>div.label.good{color:rgb(var(--color-good))}.pocketnet_iframe .fastMessage .progressWrapperTable>div .progressCnt{float:left;height:6px;background:rgb(var(--color-bg-ac-bright))}.pocketnet_iframe .fastMessage .cwrapper>div.extra{width:100px;vertical-align:bottom}.pocketnet_iframe .fastMessage .ghost{color:rgb(var(--color-bg-ac))}.pocketnet_iframe .editCategoryPath,.pocketnet_iframe .path{padding:.5em 0;overflow:hidden}.pocketnet_iframe .editCategoryPath .partOfPath,.pocketnet_iframe .path .partOfPath{display:inline-block;margin-right:.5em;cursor:pointer;line-height:25px}.pocketnet_iframe .editCategoryPath .partOfPath:hover,.pocketnet_iframe .path .partOfPath:hover{color:#00a3f7;text-decoration:underline}.pocketnet_iframe .editCategoryPath .partOfPath:last-child,.pocketnet_iframe .path .partOfPath:last-child{color:#00a3f7;font-weight:700}.pocketnet_iframe .editCategoryPath .partOfPath:not(:last-child):after,.pocketnet_iframe .path .partOfPath:not(:last-child):after{display:inline-block;height:100%;line-height:25px;margin-left:.5em;font:normal normal normal 14px/1 FontAwesome;content:\"\\f0da\"}.pocketnet_iframe .localizationContainer{position:relative}.pocketnet_iframe .localizationContainer:after{content:attr(localizationId);position:absolute;top:90%;left:0;font-size:10px;color:#ff00c6;line-height:1.14}.pocketnet_iframe .tokenExpired .time{margin-top:.5em;font-weight:700}.pocketnet_iframe .mobiledevice{display:none}.pocketnet_iframe .watchonyoutube{color:rgb(var(--text-on-bg-shadow-color))}.pocketnet_iframe .editCategoryPath{cursor:pointer}.pocketnet_iframe .editCategoryPath:hover{color:rgb(var(--color-txt-ac));text-decoration:underline}.pocketnet_iframe .editCategoryPath .partOfPath:hover{color:inherit;text-decoration:none}.pocketnet_iframe .editCategoryPath .partOfPath:last-child{color:inherit;font-weight:600}.pocketnet_iframe .ui-autocomplete{padding:.5em;background:rgb(var(--background-total-theme));box-shadow:0 5px 10px -5px rgba(var(--color-shadow-base),.4)}.pocketnet_iframe .ui-autocomplete.ui-widget-content{border:1px solid rgb(var(--color-txt-ac))}.pocketnet_iframe .ui-autocomplete .ui-menu-item{padding:.5em;border-bottom:1px solid rgb(var(--neutral-grad-2));font-family:Segoe UI Variable,Segoe UI,SegoeUI,Helvetica Neue,Helvetica,Arial,sans-serif;font-size:16px;font-weight:400}.pocketnet_iframe .ui-autocomplete .ui-menu-item:last-child{border-bottom:0}.pocketnet_iframe .ui-autocomplete .ui-menu-item span{font-family:Segoe UI Variable,Segoe UI,SegoeUI,Helvetica Neue,Helvetica,Arial,sans-serif;font-weight:700}.pocketnet_iframe .ui-autocomplete .ui-menu-item span.ui-state-active{margin:0;background:transparent;border:0;color:rgb(var(--color-good))}.pocketnet_iframe .video-js .vjs-control-bar{contain:strict}.pocketnet_iframe .trumbowyg-button-pane,.pocketnet_iframe .trumbowyg-modal{z-index:0!important}.pocketnet_iframe .article_body h1{font-size:2em}.pocketnet_iframe .article_body h2{font-size:1.7em}.pocketnet_iframe .article_body h3{font-size:1.4em}.pocketnet_iframe .article_body p{font-size:1.3em;margin-top:1em;margin-bottom:1em;font-family:Georgia,serif!important}.pocketnet_iframe .article_body p a{color:rgb(var(--color-txt-ac));text-decoration:underline}.pocketnet_iframe .article_body .article_list{font-size:1.3em;margin-top:1em;margin-bottom:1em;font-family:Georgia,serif!important}.pocketnet_iframe .article_body .article_list li{margin-top:.5em;margin-bottom:.5em}.pocketnet_iframe .article_body .article_image{margin-bottom:.5em}.pocketnet_iframe .article_body .article_image.withBorder{border:1px solid rgba(var(--neutral-grad-1),.5);padding:.5em;border-radius:5px}.pocketnet_iframe .article_body .article_image.withBackground{background:rgb(var(--color-shadow-base));padding:2em 1em}.pocketnet_iframe .article_body .article_image.withBackground .article_image_caption{color:rgb(var(--text-on-bg-ac-color))}.pocketnet_iframe .article_body .article_image.withBackground img{display:block;margin:0 auto;max-width:400px!important;width:100%}.pocketnet_iframe .article_body .article_image img{border-radius:5px;display:block}.pocketnet_iframe .article_body .article_image .article_image_caption{text-align:center;font-size:.9em}.pocketnet_iframe .article_body .article_warning{display:flex;overflow:hidden;margin:1em 0;padding:1em;border-radius:5px;border:1px solid rgba(var(--neutral-grad-1),.2);background:rgba(var(--neutral-grad-1),.1)}.pocketnet_iframe .article_body .article_warning .article_warning_icon{max-width:44px;text-align:center;padding-top:.5em}.pocketnet_iframe .article_body .article_warning .article_warning_icon i{color:rgb(var(--color-yellow));font-size:1.5em}.pocketnet_iframe .article_body .article_warning .article_warning_content{padding-left:1em}.pocketnet_iframe .article_body .article_warning .article_warning_title{font-weight:700}.pocketnet_iframe .article_body .article_warning .article_warning_message{text-overflow:ellipsis;overflow:hidden;font-size:.8em}.pocketnet_iframe .article_body .article_carousel{max-width:500px;margin:2em auto}.pocketnet_iframe .article_body .article_carousel .img{background-size:contain!important}.pocketnet_iframe .article_body .article_this_embed{padding:1.5em;border-radius:5px;border:1px solid rgba(var(--neutral-grad-3),.2);box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.4);max-width:640px;margin:0 auto}.pocketnet_iframe .article_body .article_link_custom{display:flex;overflow:hidden;margin:3em auto;width:56%}.pocketnet_iframe .article_body .article_link_custom .article_link_custom_content{padding-left:1em}.pocketnet_iframe .article_body .article_link_custom .article_link_custom_image{max-width:80px}.pocketnet_iframe .article_body .article_link_custom .article_link_custom_image .img{width:60px;height:60px;border-radius:10px;background:rgba(var(--neutral-grad-3),.5);opacity:1}.pocketnet_iframe .article_body .article_link_custom .article_link_custom_title{font-weight:700}.pocketnet_iframe .article_body .article_link_custom .article_link_custom_description,.pocketnet_iframe .article_body .article_link_custom .article_link_custom_href{text-overflow:ellipsis;overflow:hidden;font-size:.8em}.pocketnet_iframe .article_body .article_link_custom .article_link_custom_href{margin-top:.5em;text-decoration:underline;word-break:break-all;color:rgba(var(--neutral-grad-3),.5)}.pocketnet_iframe .article_body .article_delimiter{display:flex;max-width:90px;justify-content:space-between;margin:4.5em auto;color:rgb(var(--neutral-grad-2))}.pocketnet_iframe .article_body .article_delimiter i{font-size:1.2em}.pocketnet_iframe .article_body .article_quote{max-width:44%;margin:3.5em auto;padding:1em 0;text-align:center}.pocketnet_iframe .article_body .article_quote .article_quote_text{text-align:center;font-size:1.5em;font-weight:400;position:relative}.pocketnet_iframe .article_body .article_quote .article_quote_text:before{content:\"❝\";position:absolute;left:0;top:-.5em;font-size:7em;opacity:.3;color:rgb(var(--neutral-grad-2));text-align:left;font-family:Times New Roman,Times,serif}.pocketnet_iframe .article_body .article_quote .article_quote_text:after{content:\"❞\";position:absolute;right:0;bottom:-1em;font-size:7em;opacity:.3;color:rgb(var(--neutral-grad-2));text-align:right;font-family:Times New Roman,Times,serif}.pocketnet_iframe .article_body .article_quote .article_quote_author{text-align:center;font-weight:700;margin-top:1em;padding-top:1em;position:relative}.pocketnet_iframe .article_body .article_quote .article_quote_author:before{content:\"\";position:absolute;left:50%;top:-1.5px;width:100px;margin-left:-50px;height:3px;border-radius:1px;background:rgb(var(--neutral-grad-3))}.pocketnet_iframe .standartMobileCaption{display:flex;height:66px;align-items:center;border-bottom:1px solid rgb(var(--neutral-grad-1));background:rgb(var(--background-total-theme));position:sticky;top:0;right:0;left:0;display:none;z-index:1}.pocketnet_iframe .standartMobileCaption .additionalWrapper,.pocketnet_iframe .standartMobileCaption .backWrapper{width:55px;text-align:center}.pocketnet_iframe .standartMobileCaption .captinWrapper{flex-grow:2;text-align:center}.pocketnet_iframe .standartMobileCaption .captinWrapper span{font-weight:500}@media only screen and (max-width:1920px){.pocketnet_iframe .standartMobileCaption{display:flex}}.pocketnet_iframe #splashScreen{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#011621;z-index:5000;display:flex;justify-content:center;align-items:center;flex-direction:column}.pocketnet_iframe #splashScreen h1{color:#fff;margin-top:1em;margin-bottom:0;font-size:1em}.pocketnet_iframe #splashScreen h1.fade-in{-webkit-animation:fade-in .3s ease-out both;animation:fade-in .3s ease-out both}.pocketnet_iframe #splashScreen.fade-out{-webkit-animation:fade-out .2s ease-in both;animation:fade-out .2s ease-in both;background-color:#0098eb}.pocketnet_iframe #splashScreen img{max-height:50px;max-width:50px}.pocketnet_iframe #splashScreen img.zoom-in{-webkit-animation:zoom-in .5s ease-out both;animation:zoom-in .5s ease-out both}.pocketnet_iframe #splashScreen img.zoom-out{-webkit-animation:zoom-out .5s ease-in both;animation:zoom-out .5s ease-in both}.pocketnet_iframe #splashScreen img.rotate{-webkit-animation:rotate 1s ease-in-out infinite both;animation:rotate 1s ease-in-out infinite both}.pocketnet_iframe #splashScreen img.zoom-out-rotate{-webkit-animation:zoom-out-rotate .5s ease-in both;animation:zoom-out-rotate .5s ease-in both}.pocketnet_iframe html.mobileview .plyr__volume{max-width:32px}.pocketnet_iframe html.mobileview #comments .captionfwrapper{will-change:transform;transition:transform .3s;-webkit-backface-visibility:hidden}.pocketnet_iframe html.mobileview.scrollmodedown #comments .captionfwrapper{transform:translateY(-65px)}.pocketnet_iframe html.mobileview.openapipnet .contentWrapper,.pocketnet_iframe html.openapipnet .contentWrapper{padding-top:0}.pocketnet_iframe html.mobileview #panelWrapper{position:fixed;top:65px;left:0;right:0;padding-top:0;z-index:11}.pocketnet_iframe html.mobileview .contentWrapper{padding-top:65px}.pocketnet_iframe html.mobileview.toppanelshowed .contentWrapper{padding-top:120px}.pocketnet_iframe html.mobileview #menu .menuWrapper,.pocketnet_iframe html.mobileview #panelWrapper{will-change:transform;transition:transform .3s;-webkit-backface-visibility:hidden}.pocketnet_iframe html.mobileview #navigation{will-change:transform;-webkit-backface-visibility:hidden}.pocketnet_iframe html.mobileview.scrollmodedown #menu .menuWrapper{transform:translateY(-65px)}.pocketnet_iframe html.mobileview.scrollmodedown #panelWrapper{transform:translateY(-165px)}.pocketnet_iframe html.mobileview.scrollmodedown #navigation .nmenu{transform:translateY(90px)}.pocketnet_iframe html.mobileview.scrollmodedown #navigation .fakem{display:block;position:absolute;left:0;bottom:0;right:0;height:90px}.pocketnet_iframe html.mobileview #navigation .fakem{display:none}@media only screen and (max-width:1920px){.pocketnet_iframe #splashScreen{display:flex}.pocketnet_iframe html.mobileview #content.optimized>div{display:none!important}.pocketnet_iframe .menudialog .secondwrapper{padding-bottom:1.5em;vertical-align:bottom}}@-webkit-keyframes zoom-out{0%{transform:scaleX(1);opacity:1}50%{opacity:.25}to{transform:scale3d(50,50,50);opacity:0}}@keyframes zoom-out{0%{transform:scaleX(1);opacity:1}50%{opacity:.25}to{transform:scale3d(50,50,50);opacity:0}}@-webkit-keyframes zoom-in{0%{transform:scale3d(0,0,0);opacity:0}to{transform:scaleX(1);opacity:1}}@keyframes zoom-in{0%{transform:scale3d(0,0,0);opacity:0}to{transform:scaleX(1);opacity:1}}@-webkit-keyframes zoom-out-rotate{0%{transform:scaleX(1) rotate(0);opacity:1}50%{opacity:.25}to{transform:scale3d(75,75,75) rotate(310deg);opacity:0}}@keyframes zoom-out-rotate{0%{transform:scaleX(1) rotate(0);opacity:1}50%{opacity:.25}to{transform:scale3d(75,75,75) rotate(310deg);opacity:0}}@-webkit-keyframes rotate{0%{transform:rotate(0)}to{transform:rotate(1turn)}}@keyframes rotate{0%{transform:rotate(0)}to{transform:rotate(1turn)}}@-webkit-keyframes fade-out{0%{opacity:1}to{opacity:0}}@keyframes fade-out{0%{opacity:1}to{opacity:0}}@-webkit-keyframes fade-in{0%{opacity:0}to{opacity:1}}@keyframes fade-in{0%{opacity:0}to{opacity:1}}.pocketnet_iframe .hidden{display:none!important}.pocketnet_iframe .visuallyhidden{border:0;clip:rect(0 0 0 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}.pocketnet_iframe .visuallyhidden.focusable:active,.pocketnet_iframe .visuallyhidden.focusable:focus{clip:auto;height:auto;margin:0;overflow:visible;position:static;width:auto}.pocketnet_iframe .invisible{visibility:hidden}.pocketnet_iframe .clearfix:after,.pocketnet_iframe .clearfix:before{content:\" \";display:table}.pocketnet_iframe .clearfix:after{clear:both}@media only screen and (max-width:1640px){.pocketnet_iframe .upbutton .full{padding-right:0}.pocketnet_iframe .upbutton .full .fulltable>div.icon{width:100%}.pocketnet_iframe .upbutton .full .fulltable>div.label{display:none}}@media only screen and (max-width:1400px){.pocketnet_iframe .rightchatspacer{margin-right:33px}}@media only screen and (max-width:1920px){.pocketnet_iframe .rightchatspacer{margin-right:0}}@media only screen and (max-width:1366px){.pocketnet_iframe #content .work.adj,.pocketnet_iframe .upbutton .full{padding-right:0}.pocketnet_iframe .upbutton .full .fulltable>div.icon{width:40px}}@media only screen and (max-width:1280px){.pocketnet_iframe #content .work{width:95%;margin-right:auto}}.pocketnet_iframe html.mobileview .rightchatspacer{margin-right:0}@media print{.pocketnet_iframe *,.pocketnet_iframe :after,.pocketnet_iframe :before{background:transparent!important;color:#000!important;box-shadow:none!important;text-shadow:none!important}.pocketnet_iframe a,.pocketnet_iframe a:visited{text-decoration:underline}.pocketnet_iframe a[href]:after{content:\" (\" attr(href) \")\"}.pocketnet_iframe abbr[title]:after{content:\" (\" attr(title) \")\"}.pocketnet_iframe a[href^=\"#\"]:after,.pocketnet_iframe a[href^=\"javascript:\"]:after{content:\"\"}.pocketnet_iframe blockquote,.pocketnet_iframe pre{border:1px solid #999;page-break-inside:avoid}.pocketnet_iframe thead{display:table-header-group}.pocketnet_iframe img,.pocketnet_iframe tr{page-break-inside:avoid}.pocketnet_iframe img{max-width:100%!important}.pocketnet_iframe h2,.pocketnet_iframe h3,.pocketnet_iframe p{orphans:3;widows:3}.pocketnet_iframe h2,.pocketnet_iframe h3{page-break-after:avoid}}@media only screen and (max-width:1920px){.pocketnet_iframe button.medium{font-size:1em}.pocketnet_iframe .subscribedLabel i{display:none}.pocketnet_iframe .workstation{display:none!important}.pocketnet_iframe .mobiledevice{display:inherit!important}.pocketnet_iframe .subscribebuttons>div button.subscribe i,.pocketnet_iframe .subscribebuttons>div button.unsubscribe i{margin-left:0}.pocketnet_iframe .contentWrapper{padding-right:0;padding-left:0}.pocketnet_iframe .contentWrapper #content,.pocketnet_iframe .contentWrapper #content .work{width:100%;padding-left:0;padding-right:0}.pocketnet_iframe .contentWrapper #content .up{bottom:60px}.pocketnet_iframe .contentWrapper #content .bgCaption .backWrapper{width:60px}.pocketnet_iframe .contentWrapper #content .bgCaption .caption{font-size:1.9em;font-weight:300;text-align:center}.pocketnet_iframe .contentWrapper #content .bgCaption .cwrapper,.pocketnet_iframe .contentWrapper #content .bgCaption .work{height:100%}.pocketnet_iframe .dialog{z-index:1006}.pocketnet_iframe .dialog .buttons{overflow:hidden}.pocketnet_iframe .dialog .buttons>div{width:100%;float:left;margin-right:0;margin-top:.5em}.pocketnet_iframe .dialog .buttons>div button{width:100%}.pocketnet_iframe .dialog.accepting{background:rgba(var(--color-shadow-base),.95)}.pocketnet_iframe .dialog.accepting.accepting2 .body .text{padding:1em;text-align:left}.pocketnet_iframe .dialog.accepting.accepting2 .buttons{max-width:none;width:100%}.pocketnet_iframe .dialog.accepting.accepting2 .buttons>div{width:100%}.pocketnet_iframe .fixedbtn{left:10%;right:10%}.pocketnet_iframe .fixedbtn .all{padding-top:.2em!important}.pocketnet_iframe .wnd .wndinner{position:absolute;left:0;top:0;right:0;bottom:0;margin:auto;width:100%!important;height:100%!important;max-height:none}.pocketnet_iframe .wnd.small .wndinner{position:absolute;left:0;top:0;right:0;bottom:0;margin:auto;width:100%;height:100%}.pocketnet_iframe .wnd.transparent .wndinner{background:rgb(var(--background-total-theme));border:0}.pocketnet_iframe .wnd.allscreen .wndcontent{overflow-y:auto}.pocketnet_iframe .popupsignup .ppheader{text-align:center;font-size:1em;font-weight:100}.pocketnet_iframe .popupsignup .body{margin:0}.pocketnet_iframe .popupsignup .buttons,.pocketnet_iframe .popupsignup .buttons .btn1wr{width:100%}.pocketnet_iframe .popupsignup .buttons .btn2wr{width:100%;margin-right:0;text-align:right}.pocketnet_iframe .popupsignup .buttons .btn2wr button{background:transparent;border:0;color:rgb(var(--text-color));text-decoration:underline}.pocketnet_iframe .popupsignup .buttons .btn2wr button:hover{color:rgb(var(--color-text-ac))}.pocketnet_iframe .popupsignup .buttons button{font-size:1.1em;font-weight:100}.pocketnet_iframe html.allcontent .contentWrapper{padding-top:0}}.pocketnet_iframe html.mobileview .sitemessage{position:fixed;width:auto;left:.5em;right:.5em;bottom:25px;padding:2em;z-index:20100;min-height:50px;border-radius:5px;text-align:center;border:1px solid rgb(var(--neutral-grad-1))}.pocketnet_iframe html.mobileview .fastMessage{position:fixed;left:.25em;right:.25em;top:.25em;max-height:210px;width:auto;min-width:0;max-width:none;border-radius:6px;bottom:auto}.pocketnet_iframe html.mobileview .fastMessage .fmCnt{width:100%;height:100%;overflow:visible;text-overflow:ellipsis;padding-right:1em}.pocketnet_iframe html.mobileview .fastMessage .close{padding:1em}.pocketnet_iframe html.mobileview .fastMessage .time,.pocketnet_iframe html.mobileview .fastMessage .tips{display:none}.pocketnet_iframe html.mobileview .fastMessage .cwrapper.table>div{vertical-align:middle}.pocketnet_iframe html.mobileview .fastMessage .commentmessagewrapper>div,.pocketnet_iframe html.mobileview .fastMessage .notification .commentmessagewrapper>div{vertical-align:bottom}.pocketnet_iframe html.mobileview .fastMessage .notification .subscribeWrapper>div.forsubscribe,.pocketnet_iframe html.mobileview .fastMessage .subscribeWrapper>div.forsubscribe{width:80px;vertical-align:bottom}.pocketnet_iframe html.mobileview .fastMessage .foramount{width:auto!important}.pocketnet_iframe html.mobileview .upbutton .full,.pocketnet_iframe html.mobileview .upbutton .mini{display:none}.pocketnet_iframe html.mobileview .wnd.normalizedmobile{contain:strict}.pocketnet_iframe html.mobileview .wnd.normalizedmobile .wndinner{width:100%;background:transparent!important}.pocketnet_iframe html.mobileview .wnd.normalizedmobile .wndback{-webkit-backface-visibility:hidden;backface-visibility:hidden;transition:0s}.pocketnet_iframe html.mobileview .wnd.normalizedmobile .hideButton{display:none!important}.pocketnet_iframe html.mobileview .wnd.normalizedmobile ._close{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;opacity:0}.pocketnet_iframe html.mobileview .wnd.normalizedmobile .closeline{top:120px;height:2px;background:rgba(var(--background-total-theme),.8);border-radius:2px;width:44%;left:28%;opacity:0;position:absolute;display:none;transition:top .3s}.pocketnet_iframe html.mobileview .wnd.normalizedmobile .wndinner{max-height:none!important;top:auto!important;bottom:0;height:auto!important;max-width:none!important;transform:translateY(100%);-webkit-backface-visibility:hidden;backface-visibility:hidden;will-change:transform;transition:top .3s}.pocketnet_iframe html.mobileview .wnd.normalizedmobile .wndinner .wndheader{max-width:768px;margin:0 auto;position:sticky}.pocketnet_iframe html.mobileview .wnd.normalizedmobile .wndinner .wndcontent{position:relative;border-bottom-right-radius:0;border-bottom-left-radius:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;background:rgb(var(--background-total-theme));max-width:768px;max-height:calc(var(--vh, 1vh)*92);min-height:calc(var(--vh, 1vh)*30);top:0;bottom:0;right:0;left:0;margin:0 auto;padding-left:0;padding-right:0}.pocketnet_iframe html.mobileview .wnd.normalizedmobile .wndinner .wndcontent>div{opacity:0;transition:opacity .3s}.pocketnet_iframe html.mobileview .wnd.normalizedmobile .wndinner .wndcontent::-webkit-scrollbar{width:0;display:none!important}.pocketnet_iframe html.mobileview .wnd.normalizedmobile .wndinner>div.buttons{display:none}.pocketnet_iframe html.mobileview .wnd.normalizedmobile .wndinner>div.buttons>div{max-width:768px;margin:0 auto}.pocketnet_iframe html.mobileview .wnd.normalizedmobile.asette .closeline,.pocketnet_iframe html.mobileview .wnd.normalizedmobile.asette .wndback,.pocketnet_iframe html.mobileview .wnd.normalizedmobile.asette .wndinner{transition:.2s}.pocketnet_iframe html.mobileview .wnd.normalizedmobile.sette .wndinner{transform:translateZ(0);transition:transform .3s}.pocketnet_iframe html.mobileview .wnd.normalizedmobile.sette ._close,.pocketnet_iframe html.mobileview .wnd.normalizedmobile.sette .closeline,.pocketnet_iframe html.mobileview .wnd.normalizedmobile.sette .wndback{opacity:1}.pocketnet_iframe html.mobileview .wnd.normalizedmobile.showbetter.sette .wndinner{transform:translateZ(0)}.pocketnet_iframe html.mobileview .wnd.normalizedmobile.showbetter .closeline{opacity:0}.pocketnet_iframe html.mobileview .wnd.normalizedmobile.showbetter .roundclosebutton{-webkit-backdrop-filter:none;backdrop-filter:none}.pocketnet_iframe html.mobileview .wnd.normalizedmobile.noheader .wndinner{border-top-left-radius:10px;border-top-right-radius:10px;overflow:hidden}.pocketnet_iframe html.mobileview .wnd.normalizedmobile:only-child .wndback{transition:.2s}.pocketnet_iframe html.mobileview .wnd.normalizedmobile:only-child.asette .wndback{opacity:0}.pocketnet_iframe html.mobileview .wnd.maxheight .wndinner .wndcontent{height:calc(var(--vh, 1vh)*92)}.pocketnet_iframe html.pipmode .pipped{position:fixed!important;left:0!important;right:0!important;top:0!important;bottom:0!important;width:100%!important;height:100%!important;z-index:10000!important;max-height:none!important;max-width:none!important;transform:none!important}.pocketnet_iframe html.pipmode .wnd ._changeplace,.pocketnet_iframe html.pipmode .wnd ._close,.pocketnet_iframe html.pipmode .wnd ._expand,.pocketnet_iframe html.pipmode .wnd .closeline{display:none!important}.pocketnet_iframe html.pipmode .wnd .wndinner{transform:none!important}.pocketnet_iframe html.pipmode #content,.pocketnet_iframe html.pipmode .matrixchatwrapper{display:none}.pocketnet_iframe #application .emojionearea,.pocketnet_iframe #application .emojionearea.form-control{background:rgb(var(--background-hidden-layer));color:rgb(var(--text-color));border:1px solid rgb(var(--neutral-grad-2))}.pocketnet_iframe #application .emojionearea .emojionearea-editor,.pocketnet_iframe #application .emojionearea.form-control .emojionearea-editor{color:rgb(var(--text-color))}.pocketnet_iframe #application .emojionearea.form-control :-moz-placeholder-shown,.pocketnet_iframe #application .emojionearea :-moz-placeholder-shown{color:rgb(var(--neutral-grad-4))}.pocketnet_iframe #application .emojionearea.form-control :placeholder-shown,.pocketnet_iframe #application .emojionearea :placeholder-shown{color:rgb(var(--neutral-grad-4))}.pocketnet_iframe #application .emojionearea .emojionearea-editor:empty:before{color:rgb(var(--neutral-grad-4))}.pocketnet_iframe #application .emojionearea.focused{box-shadow:none}.pocketnet_iframe #application .embedEmojiPrivew,.pocketnet_iframe #application .emojionearea .emojionearea-button>div.emojionearea-button-open{position:relative;background-image:none!important}.pocketnet_iframe #application .embedEmojiPrivew:after,.pocketnet_iframe #application .emojionearea .emojionearea-button>div.emojionearea-button-open:after{position:absolute;left:0;top:0;right:0;bottom:0;font-weight:700;content:\"\\f118\";text-align:center;line-height:24px;font-family:Font Awesome\\ 5 Free}.pocketnet_iframe #application .embedEmojiPrivew,.pocketnet_iframe #application .emojionearea .emojionearea-button>div{-webkit-font-smoothing:antialiased;font-style:normal;font-variant:normal;text-rendering:auto;line-height:1;font-size:15px}.pocketnet_iframe #application .emojionearea .emojionearea-button>div.emojionearea-button-close{position:relative;background-image:none!important}.pocketnet_iframe #application .emojionearea .emojionearea-button>div.emojionearea-button-close:after{position:absolute;left:0;top:0;right:0;bottom:0;font-family:Font Awesome\\ 5 Free;font-weight:700;text-align:center;line-height:24px;content:\"\\f057\"}.pocketnet_iframe #application .emojionearea .emojionearea-button{opacity:1;color:rgb(var(--neutral-grad-2))}.pocketnet_iframe #application .emojionearea .emojionearea-button.active>div.emojionearea-button-close{transform:translateY(-24px) rotate(0)}.pocketnet_iframe #application .parameter{width:auto}.pocketnet_iframe #application .parameter .picker select{height:auto}.pocketnet_iframe #application .parameter>div{vertical-align:middle}.pocketnet_iframe #application .parameter .pName{padding-right:.5em;width:120px}.pocketnet_iframe #application .parameter .pName .downloads{padding-bottom:1em}.pocketnet_iframe #application .parameter .pName .pNameW{font-size:.8em;line-height:1.4em}.pocketnet_iframe #application .parameter .pName .unit{font-weight:700;color:rgb(var(--color-txt-ac))}.pocketnet_iframe #application .parameter .pName .require{color:rgb(var(--color-bad))}.pocketnet_iframe #application .parameter .pInput{position:relative;vertical-align:top}.pocketnet_iframe #application .parameter .pInput .echo{padding:.5em;color:#ff6e84;font-weight:700}.pocketnet_iframe #application .parameter .pInput .vm_valuesmulti{padding-top:.25em}.pocketnet_iframe #application .parameter .panel{vertical-align:top;padding-top:1em;width:20px}.pocketnet_iframe #application .parameter .panel .clear{text-align:right;cursor:pointer;color:rgb(var(--neutral-grad-2));transition:.3s}.pocketnet_iframe #application .parameter .panel .clear:hover{color:rgb(var(--color-txt-ac))}.pocketnet_iframe #application .parameter input,.pocketnet_iframe #application .parameter select,.pocketnet_iframe #application .parameter textarea{width:100%;padding:.5em;border-radius:6px}.pocketnet_iframe #application .parameter .error input,.pocketnet_iframe #application .parameter .error select,.pocketnet_iframe #application .parameter .error textarea,.pocketnet_iframe #application .parameter input.error,.pocketnet_iframe #application .parameter select.error,.pocketnet_iframe #application .parameter textarea.error{border:1px solid rgb(var(--color-bad))}.pocketnet_iframe #application .parameter select{height:38px;padding-right:25px;width:auto}.pocketnet_iframe #application .parameter .vc_valuecustom{width:100%;font-size:.8em}.pocketnet_iframe #application .parameter .vc_valuecustom .vc_textInput,.pocketnet_iframe #application .parameter .vc_valuecustom_multibig .vc_textInput{background:rgb(var(--background-hidden-layer))}.pocketnet_iframe #application .parameter .vm_value,.pocketnet_iframe #application .parameter .vmt_valuesmultitree{padding:0}.pocketnet_iframe #application .parameter .vm_value .checkbox+label:before,.pocketnet_iframe #application .parameter .vmt_valuesmultitree .checkbox+label:before{font-size:1.6em;line-height:19px}.pocketnet_iframe .fadeTr-enter-active{transition:opacity .3s ease-in;transition-delay:.1s}.pocketnet_iframe .fadeTr-leave-active{transition:opacity .1s ease-out}.pocketnet_iframe .fadeTr-enter,.pocketnet_iframe .fadeTr-leave-to{opacity:0}.pocketnet_iframe .slide-enter-active,.pocketnet_iframe .slide-leave-active{transition:all 1s}.pocketnet_iframe .slide-enter,.pocketnet_iframe .slide-leave-to{opacity:0;transform:translateX(30px)}.pocketnet_iframe .dg-backdrop-enter-active{-webkit-animation:dg-fadeIn .3s;animation:dg-fadeIn .3s}.pocketnet_iframe .dg-backdrop-leave-active{-webkit-animation:dg-fadeOut .5s;animation:dg-fadeOut .5s}.pocketnet_iframe .dg-fade-enter-active{-webkit-animation:dg-fadeIn .6s ease-out;animation:dg-fadeIn .6s ease-out}.pocketnet_iframe .dg-fade-leave-active{-webkit-animation:dg-fadeOut .6s ease-out;animation:dg-fadeOut .6s ease-out}@-webkit-keyframes dg-fadeIn{0%{opacity:0}to{opacity:1}}@keyframes dg-fadeIn{0%{opacity:0}to{opacity:1}}@-webkit-keyframes dg-fadeOut{0%{opacity:1}to{opacity:0}}@keyframes dg-fadeOut{0%{opacity:1}to{opacity:0}}.pocketnet_iframe .dg-zoom-enter-active{-webkit-animation:dg-zoomIn .3s ease-out;animation:dg-zoomIn .3s ease-out}.pocketnet_iframe .dg-zoom-leave-active{-webkit-animation:dg-zoomOut .4s ease-out;animation:dg-zoomOut .4s ease-out}@-webkit-keyframes dg-zoomIn{0%{opacity:0;transform:scale3d(.3,.3,.3)}50%{opacity:1}}@keyframes dg-zoomIn{0%{opacity:0;transform:scale3d(.3,.3,.3)}50%{opacity:1}}@-webkit-keyframes dg-zoomOut{0%{opacity:1}50%{opacity:0;transform:scale3d(.3,.3,.3)}to{opacity:0}}@keyframes dg-zoomOut{0%{opacity:1}50%{opacity:0;transform:scale3d(.3,.3,.3)}to{opacity:0}}.pocketnet_iframe .dg-bounce-enter-active{-webkit-animation:dg-bounceIn .6s;animation:dg-bounceIn .6s}.pocketnet_iframe .dg-bounce-leave-active{-webkit-animation:dg-zoomOut .6s;animation:dg-zoomOut .6s}@-webkit-keyframes dg-bounceIn{0%{opacity:0;transform:scale(.3)}40%{opacity:1;transform:scale(1.06)}60%{transform:scale(.92)}to{transform:scale(1)}}@keyframes dg-bounceIn{0%{opacity:0;transform:scale(.3)}40%{opacity:1;transform:scale(1.06)}60%{transform:scale(.92)}to{transform:scale(1)}}@-webkit-keyframes dg-bounceOut{0%{transform:scale(1)}25%{transform:scale(.95)}50%{opacity:1;transform:scale(1.1)}to{opacity:0;transform:scale(.3)}}@keyframes dg-bounceOut{0%{transform:scale(1)}25%{transform:scale(.95)}50%{opacity:1;transform:scale(1.1)}to{opacity:0;transform:scale(.3)}}.pocketnet_iframe .dg-btn-loader{width:100%;height:100%;position:absolute;display:flex;align-items:center;top:0;left:0}.pocketnet_iframe .dg-btn-loader .dg-circles{width:100%;display:block;text-align:center}.pocketnet_iframe .dg-btn-loader .dg-circle{width:.9em;height:.9em;opacity:0;background-color:#09a2e3;display:inline-block;border-radius:50%;-webkit-animation-name:dg-circle-oscillation;animation-name:dg-circle-oscillation;-webkit-animation-duration:.5875s;animation-duration:.5875s;-webkit-animation-iteration-count:infinite;animation-iteration-count:infinite;-webkit-animation-direction:normal;animation-direction:normal}.pocketnet_iframe .dg-btn-loader .dg-circle:not(:last-child){margin-right:8px}.pocketnet_iframe .dg-btn-loader .dg-circle:first-child{-webkit-animation-delay:.1195s;animation-delay:.1195s}.pocketnet_iframe .dg-btn-loader .dg-circle:nth-child(2){-webkit-animation-delay:.2755s;animation-delay:.2755s}.pocketnet_iframe .dg-btn-loader .dg-circle:nth-child(3){-webkit-animation-delay:.3485s;animation-delay:.3485s}@-webkit-keyframes dg-circle-oscillation{50%{opacity:1}}@keyframes dg-circle-oscillation{50%{opacity:1}}.pocketnet_iframe body.dg-open{width:100%;height:100%;overflow:hidden}.pocketnet_iframe .dg-container *{box-sizing:border-box}.pocketnet_iframe .dg-container [disabled]{cursor:not-allowed;opacity:.3}.pocketnet_iframe .dg-backdrop{background-color:rgba(0,0,0,.8)}.pocketnet_iframe .dg-backdrop,.pocketnet_iframe .dg-container{position:fixed;top:0;left:0;width:100%;height:100%;z-index:5000}.pocketnet_iframe .dg-content-cont{width:100%;font-family:inherit}.pocketnet_iframe .dg-main-content{width:98%;max-width:400px;padding:15px;border-radius:5px;margin:25px auto;background-color:#fff}.pocketnet_iframe .dg-content{font-size:16px;line-height:1.3em}.pocketnet_iframe .dg-title{margin:0 0 10px 0;padding:0;font-size:18px}.pocketnet_iframe .dg-content-body{border-bottom:2px solid #e1e6ea;padding-bottom:15px}.pocketnet_iframe .dg-content-footer{position:relative;padding:15px 0 0}.pocketnet_iframe .dg-form{background-color:#f8f8ff;padding:10px;margin-bottom:-15px}.pocketnet_iframe .dg-content-cont--floating{position:absolute;top:35%;transform:translateY(-70%);margin-top:0}@media (max-height:700px){.pocketnet_iframe .dg-content-cont--floating{position:relative;top:10%;transform:none;margin-top:0}}.pocketnet_iframe .dg-btn{display:inline-block;position:relative;min-width:80px;padding:6px 20px;border-radius:4px;outline:0;border:2px solid transparent;text-align:center;text-decoration:none;cursor:pointer;outline:none;-webkit-appearance:none;-moz-appearance:none;appearance:none;font-size:16px;font-weight:700}.pocketnet_iframe .dg-btn:active,.pocketnet_iframe .dg-btn:focus,.pocketnet_iframe .dg-btn:link{outline:none}.pocketnet_iframe .dg-btn::-moz-focus-inner{border:0}.pocketnet_iframe .dg-btn--cancel{color:#fefefe;background-color:#0096d9}.pocketnet_iframe .dg-btn--ok{color:#0096d9;background-color:#fefefe;border-color:#0096d9}.pocketnet_iframe .dg-pull-right{float:right}.pocketnet_iframe .dg-btn.dg-btn--loading .dg-btn-content{visibility:hidden}.pocketnet_iframe .dg-clear:before{content:\" \";display:block;clear:both}.pocketnet_iframe .dg-content-body--has-title .dg-content{font-size:14px}.pocketnet_iframe .dg-container--has-input .dg-main-content{max-width:450px}.pocketnet_iframe .dg-container--has-input .dg-content{margin-bottom:15px}.pocketnet_iframe .dg-container--has-input .dg-content-body{border-bottom:none}.pocketnet_iframe .dg-container--has-input .dg-form{border:1px solid #e1e6ea;border-bottom:none;border-top-left-radius:4px;border-top-right-radius:4px}.pocketnet_iframe .dg-container--has-input .dg-content-footer{background-color:#f8f8ff;border:1px solid #e1e6ea;border-top:none;border-bottom-left-radius:4px;border-bottom-right-radius:4px;padding:0 10px 10px}.pocketnet_iframe .dg-container .dg-highlight-1{color:#ff8c00;font-weight:700;border-bottom:1px solid #2ba5ff}.pocketnet_iframe .dg-container .dg-highlight-2{color:#2ba5ff;font-weight:700;border-bottom:1px solid #ff8c00}.pocketnet_iframe .dg-container{font-family:Segoe UI Variable,Segoe UI,SegoeUI,Helvetica Neue,Helvetica,Arial,sans-serif}.pocketnet_iframe .dg-container .dg-main-content{padding:1.5em;border:0;border-radius:0;background:#fff;color:#0a0c17}.pocketnet_iframe .dg-container .dg-content-footer{overflow:hidden}.pocketnet_iframe .dg-container .dg-content-footer button{margin-left:.5em;display:block;float:right;font-size:1em;font-weight:400;color:#00a4ff;background:transparent;border:1px solid transparent}.pocketnet_iframe .dg-container .dg-content-footer button.dg-pull-right{border:1px solid #00a4ff;background:#00a4ff;color:#fff}.pocketnet_iframe .dg-container .dg-content-body{border:0;padding-bottom:0}.pocketnet_iframe .dg-container .dg-content-body .dg-content{font-size:2em;font-weight:100}.pocketnet_iframe .scroll-lock{overflow-y:hidden!important}.pocketnet_iframe .share_common{background:rgb(var(--background-total-theme))}.pocketnet_iframe .share_common .commentsWrapperHb{min-height:1em}.pocketnet_iframe .share_common .gotouserprofile{cursor:pointer}.pocketnet_iframe .share_common .pkoin{display:flex;align-items:center;background:rgb(var(--color-bg-ac-bright));color:rgb(var(--text-on-bg-ac-color));border-radius:8px;padding:4px 8px;cursor:pointer}.pocketnet_iframe .share_common .pkoin img{width:1em}.pocketnet_iframe .share_common .pkoin span{margin-left:.5em}.pocketnet_iframe .share_common .commentsWrapper{background:rgb(var(--background-secondary-theme));border-bottom-left-radius:12px;border-bottom-right-radius:12px}.pocketnet_iframe .share_common img{max-width:100%}.pocketnet_iframe .share_common .adr,.pocketnet_iframe .share_common .sbtnxs{max-width:200px;overflow:hidden;text-overflow:ellipsis;vertical-align:middle;display:inline-block;white-space:nowrap}.pocketnet_iframe .share_common .statswrapperExtended{display:flex;padding:.5em 0}.pocketnet_iframe .share_common .statswrapperExtended span{font-weight:500;font-size:.9em}.pocketnet_iframe .share_common .repostWrapper{position:relative}.pocketnet_iframe .share_common .repostWrapper .shareTable{padding-top:0;padding-bottom:0}.pocketnet_iframe .share_common .wholikesTable{margin-bottom:1em;cursor:pointer;transition:.3s}.pocketnet_iframe .share_common .wholikesTable:hover{opacity:.8}.pocketnet_iframe .share_common .wholikesTable .wholikeAuthorTable{display:inline-table;width:auto;font-size:.8em}.pocketnet_iframe .share_common .wholikesTable .wholikeAuthorTable>diV{vertical-align:middle}.pocketnet_iframe .share_common .wholikesTable .wholikeAuthorTable>diV.unamecell{padding-left:.25em}.pocketnet_iframe .share_common .wholikesTable .usericon{position:relative;display:inline-block;width:21px;height:21px;vertical-align:baseline}.pocketnet_iframe .share_common .debuginfo{padding:.5em 1.5em;font-size:.7em;z-index:5}.pocketnet_iframe .share_common .debuginfo .info{display:none}.pocketnet_iframe .share_common .debuginfo .icon{cursor:pointer}.pocketnet_iframe .share_common .debuginfo.showed .info{display:block}.pocketnet_iframe .share_common .debuginfo.showed .icon{display:none}.pocketnet_iframe .share_common .repostShareWrapper .openetc{cursor:pointer;padding:1em;text-align:center}.pocketnet_iframe .share_common .repostShareWrapper .openetc i,.pocketnet_iframe .share_common .repostShareWrapper .openetc span{color:rgba(var(--neutral-grad-2),.8);font-size:.9em}.pocketnet_iframe .share_common .repostShareWrapper .openetc i{font-size:.8em}.pocketnet_iframe .share_common .js-player .warning-overlay{opacity:0}.pocketnet_iframe .share_common .hiddenpost{padding:7em 5em;font-size:.9em;text-align:center;border-radius:6px;background:rgba(var(--neutral-grad-1),.05);margin-bottom:2em;margin-top:.5em}.pocketnet_iframe .share_common .hiddenpost .hiddenlabelaction{margin-top:1em}.pocketnet_iframe .share_common .hiddenpost .hiddenlabeltext{opacity:.6}.pocketnet_iframe .share_common .hiddenpost .captionpreview{font-weight:700}.pocketnet_iframe .share_common .repostShare{border-radius:12px;border:1px solid rgba(var(--neutral-grad-1),.5);border-bottom:1px solid rgba(var(--background-total-theme),.75);border-right:1px solid rgba(var(--background-total-theme),.75);box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.4);margin-left:.5em;margin-right:.5em;margin-bottom:.5em}.pocketnet_iframe .share_common .repostShare .share{margin-bottom:0!important}.pocketnet_iframe .share_common .repostShare .share .videoTips{display:none!important}.pocketnet_iframe .share_common .article .message b{font-size:1em!important}.pocketnet_iframe .share_common .article .message figure img,.pocketnet_iframe .share_common .article .message p img{max-width:95%;border-radius:6px;margin:0 auto}.pocketnet_iframe .share_common .article .message span{font-size:1em!important}.pocketnet_iframe .share_common .medium-insert-embeds{position:relative}.pocketnet_iframe .share_common .medium-insert-embeds:after{content:\"\";position:absolute;left:0;right:0;top:0;bottom:0;z-index:150;cursor:pointer;background:transparent}.pocketnet_iframe .share_common .work{overflow:hidden;position:relative}.pocketnet_iframe .share_common .shareWrapper{position:relative}.pocketnet_iframe .share_common .subscribeWrapper{z-index:19;position:absolute;left:0;right:0;top:0;bottom:0;background:rgba(var(--background-total-theme),.96);padding:2em 1em;display:none}.pocketnet_iframe .share_common .subscribeWrapper .name{padding-top:.125em}.pocketnet_iframe .share_common .subscribeWrapper .subscribeevent,.pocketnet_iframe .share_common .subscribeWrapper .unsubscribeevent{margin-top:18px;overflow-y:hidden}.pocketnet_iframe .share_common .subscribeWrapper .subscribeevent>div,.pocketnet_iframe .share_common .subscribeWrapper .unsubscribeevent>div{float:left;margin-right:.5em}.pocketnet_iframe .share_common .subscribeWrapper .subscribeevent>div button,.pocketnet_iframe .share_common .subscribeWrapper .unsubscribeevent>div button{padding-left:0;padding-right:0;background:transparent;border-color:transparent;text-decoration:underline;color:rgb(var(--text-color))}.pocketnet_iframe .share_common .subscribeWrapper .subscribeevent>div button:hover,.pocketnet_iframe .share_common .subscribeWrapper .unsubscribeevent>div button:hover{background:transparent;border-color:transparent}.pocketnet_iframe .share_common .subscribeWrapper .unsubscribeevent{display:none}.pocketnet_iframe .share_common .shareSave{margin-right:auto}.pocketnet_iframe .share_common .shareSave i{display:none}.pocketnet_iframe .share_common .shareSave[status=cansave] .cansave,.pocketnet_iframe .share_common .shareSave[status=saved] .saved,.pocketnet_iframe .share_common .shareSave[status=saving] .saving{display:inline-block}.pocketnet_iframe .share_common .shareSpacer{height:400px;padding:0 2em}.pocketnet_iframe .share_common .shareContent{position:relative}.pocketnet_iframe .share_common .videoWrapper{max-width:600px;position:relative;border-radius:10px;overflow:hidden}.pocketnet_iframe .share_common .peertube-server-hint{z-index:1;position:absolute;margin:10px;padding:5px;border-radius:4px;font-family:monospace;font-size:.7em;background:rgba(0,0,0,.7333333333333333);color:#fff}.pocketnet_iframe .share_common .peertube-server-hint i.fa{font-size:.8em;margin-top:1px;margin-right:5px}.pocketnet_iframe .share_common .peertube-server-hint a{display:flex;flex-direction:row;align-items:center}.pocketnet_iframe .share_common .videoWrapper .videoTips{position:absolute;left:0;right:0;top:0;bottom:70px;cursor:pointer;background:#000;background:linear-gradient(180deg,rgba(0,0,0,.95281863),rgba(0,0,0,.94721639) 6%,rgba(0,0,0,.21612395) 76%,rgba(0,0,0,.09007353) 82%,transparent);color:rgb(var(--text-on-bg-shadow-color));opacity:0;transition:.3s}.pocketnet_iframe .share_common .videoWrapper .videoTips .videoTip{position:absolute;top:0;left:0;right:0;text-align:center;padding:1em}.pocketnet_iframe .share_common .videoWrapper .videoTips .videoTip span{font-size:.8em;color:rgb(var(--text-on-bg-shadow-color))}.pocketnet_iframe .share_common .videoWrapper:hover .videoTips{opacity:1}.pocketnet_iframe .share_common .videoWrapper .js-player,.pocketnet_iframe .share_common .videoWrapper .js-player .vjs-control-bar{border-radius:10px;overflow:hidden}.pocketnet_iframe .share_common .tempPreloader{padding:1em 0;margin-bottom:1em}.pocketnet_iframe .share_common .tempPreloader .label{padding-top:.5em;color:rgb(var(--color-bg-ac));font-size:.8em}.pocketnet_iframe .share_common .tempPreloader .iconwr{padding-bottom:1em}.pocketnet_iframe .share_common .tempPreloader .count{padding-right:0}.pocketnet_iframe .share_common .iconWrapper{width:4em;padding-top:.5em;padding-left:1em;padding-right:0;float:left}.pocketnet_iframe .share_common .cntswrk{margin-left:4em;padding-left:1em;padding-right:1.5em}.pocketnet_iframe .share_common .cntswrk.forcomments{padding-left:0;padding-right:0;margin-left:0;margin-right:0}.pocketnet_iframe .share_common .shareTable{padding-top:1em;padding-bottom:1em}.pocketnet_iframe .share_common .shareTable .sbtnxs .subscribedLabel{display:none}.pocketnet_iframe .share_common .shareTable .sbtnxs span{cursor:pointer}.pocketnet_iframe .share_common .shareTable .sbtnxs span:hover{color:rgb(var(--color-txt-ac))}.pocketnet_iframe .share_common .shareTable .sbtnxs .notificationturn{display:none}.pocketnet_iframe .share_common .shareTable .sbtnxs .notificationturn i{text-align:center;color:rgba(var(--color-good),.8)}.pocketnet_iframe .share_common .shareTable .sbtnxs .notificationturn.turnon i:before{content:\"\\f0f3\"}.pocketnet_iframe .share_common .shareTable .sbtnxs .notificationturn:hover i{color:rgb(var(--color-good))}.pocketnet_iframe .share_common .shareTable.subscribed .sbtnxs .notificationturn,.pocketnet_iframe .share_common .shareTable.subscribed .sbtnxs .subscribedLabel{display:inline}.pocketnet_iframe .share_common .shareTable.subscribed .sbtnxs .subscribeLabel{display:none}.pocketnet_iframe .share_common .shareTable.subscribed .iconWrapper .aunsubscribe{display:block}.pocketnet_iframe .share_common .shareTable.subscribed .iconWrapper .asubscribe{display:none}.pocketnet_iframe .share_common .shareTable.subscribed .iconWrapper .notificationturn{display:block}.pocketnet_iframe .share_common .shareTable.subscribed .iconWrapper .additional i:before{content:\"\\f068\"}.pocketnet_iframe .share_common .shareTable.subscribed .subscribeWrapper .subscribeevent{display:none}.pocketnet_iframe .share_common .shareTable.subscribed .subscribeWrapper .unsubscribeevent{display:block}.pocketnet_iframe .share_common .shareTable.emptywithrepost .cntswrk{margin-left:0}.pocketnet_iframe .share_common .shareTable.emptywithrepost .meta{padding-top:0}.pocketnet_iframe .share_common .shareTable.emptywithrepost .meta .repostCaption i{font-size:.8em;color:rgb(var(--color-txt-ac));width:20px}.pocketnet_iframe .share_common .shareTable.emptywithrepost .meta .repostCaption span{font-size:.8em}.pocketnet_iframe .share_common .jsPlayerPreview{height:100%;width:100%;position:relative;overflow:hidden;border-radius:6px}.pocketnet_iframe .share_common .jsPlayerPreview .wpl{width:100%;height:100%;cursor:pointer}.pocketnet_iframe .share_common .jsPlayerPreview .wpl:hover{opacity:.9}.pocketnet_iframe .share_common .jsPlayerPreview .durationWrapper,.pocketnet_iframe .share_common .jsPlayerPreview .statswrapper{position:absolute;bottom:6px;right:6px;border-radius:6px;background:rgba(var(--color-shadow-base),.8);color:rgb(var(--text-on-bg-shadow-color));padding:.25em .5em;padding-top:.25em;font-size:.8em}.pocketnet_iframe .share_common .jsPlayerPreview .durationWrapper.live,.pocketnet_iframe .share_common .jsPlayerPreview .statswrapper.live{background:rgba(--color-bg-orange,.8)}.pocketnet_iframe .share_common .jsPlayerPreview .durationWrapper i,.pocketnet_iframe .share_common .jsPlayerPreview .durationWrapper span,.pocketnet_iframe .share_common .jsPlayerPreview .statswrapper i,.pocketnet_iframe .share_common .jsPlayerPreview .statswrapper span{font-size:1em}.pocketnet_iframe .share_common .jsPlayerPreview .statswrapper{right:auto;left:6px}.pocketnet_iframe .share_common .jsPlayerPreview .statswrapper>div{float:left;margin-right:.5em}.pocketnet_iframe .share_common .jsPlayerPreview .statswrapper>div:last-child{margin-right:0}.pocketnet_iframe .share_common .authorTable{width:auto}.pocketnet_iframe .share_common .authorTable>div{vertical-align:middle}.pocketnet_iframe .share_common .authorTable>div.authorCell{padding-right:0}.pocketnet_iframe .share_common .authorTable>div.authorCell .pinnedIcon{color:rgba(var(--neutral-grad-3),.8)}.pocketnet_iframe .share_common .metatable{display:flex;justify-content:space-between;align-items:flex-start}.pocketnet_iframe .share_common .metatable>div.metapanel{vertical-align:top}.pocketnet_iframe .share_common .metatable>div.metapanel .metapanelitem{cursor:pointer;margin-left:auto;font-size:.8em;margin-right:auto;text-align:center;border-radius:50%;color:rgba(var(--neutral-grad-3),.8)}.pocketnet_iframe .share_common .meta{padding-top:.75em;margin-bottom:.5em}.pocketnet_iframe .share_common .meta .authorCell{white-space:nowrap}.pocketnet_iframe .share_common .meta .authorCell a{font-weight:700;cursor:pointer}.pocketnet_iframe .share_common .imagecaption{font-weight:700;font-size:.8em}.pocketnet_iframe .share_common .images{max-width:590px;padding:1em 0;opacity:0;transition:.3s;overflow:hidden}.pocketnet_iframe .share_common .images.active{opacity:1}.pocketnet_iframe .share_common .images .imagesWrapper{width:140px;height:140px;float:left;background:rgb(var(--background-secondary-theme));border-radius:6px}.pocketnet_iframe .share_common .images .imagesWrapper .image{opacity:0;width:100%;height:100%;cursor:pointer;border-radius:6px}.pocketnet_iframe .share_common .images .imagesWrapper .image.active{opacity:1}.pocketnet_iframe .share_common .images .imagesContainer.one .imagesWrapper{width:400px;height:400px}.pocketnet_iframe .share_common .images .imagesContainer.one .imagesWrapper.w2{width:600px}.pocketnet_iframe .share_common .images .imagesContainer.one .imagesWrapper.h2{width:400px}.pocketnet_iframe .share_common .images .imagesContainer.two .imagesWrapper{width:200px;height:200px}.pocketnet_iframe .share_common .images .imagesContainer.two .imagesWrapper.w2{width:400px}.pocketnet_iframe .share_common .images .imagesContainer.two .imagesWrapper.h2{width:200px}.pocketnet_iframe .share_common .images .imagesContainer.four .imagesWrapper{width:200px;height:200px}.pocketnet_iframe .share_common .images .imagesContainer.four .imagesWrapper.w2{width:400px}.pocketnet_iframe .share_common .images .imagesContainer.four .imagesWrapper.h2{width:200px}.pocketnet_iframe .share_common .images .imagesContainer.articleImages .imagesWrapper{width:60px;height:60px;border-radius:30px;overflow:hidden;margin-right:.5em;margin-bottom:.5em}.pocketnet_iframe .share_common .images .imagesContainer.owlcar{height:auto;width:100%;max-width:400px}.pocketnet_iframe .share_common .images .imagesContainer.owlcar .imagesWrapper{height:500px;float:none;width:100%;background:transparent}.pocketnet_iframe .share_common .images .imagesContainer.owlcar .imagesWrapper .image{background-size:contain!important}.pocketnet_iframe .share_common .images .carousel_markers,.pocketnet_iframe .share_common .images .imagesContainer.carousel{max-width:400px}.pocketnet_iframe .share_common .images .videoOpen{position:relative}.pocketnet_iframe .share_common .images .videoOpen .playicon{background:rgba(var(--color-shadow-base),.5);color:rgb(var(--text-on-bg-shadow-color));position:absolute;right:.5em;bottom:.5em;padding:.5em 1em;padding-top:.3em;padding-right:.8em;border-radius:3px}.pocketnet_iframe .share_common .images .videoOpen .playicon i{font-size:.8em}.pocketnet_iframe .share_common .sharecaption{margin-bottom:.5em;max-width:590px;cursor:pointer}.pocketnet_iframe .share_common .sharecaption span{font-size:1.2em;font-weight:500;overflow:hidden;text-overflow:ellipsis;display:inline-block;vertical-align:middle}.pocketnet_iframe .share_common .sharecaption a{text-decoration:underline;color:rgb(var(--color-bg-ac))}.pocketnet_iframe .share_common .sharecaption img{vertical-align:baseline}.pocketnet_iframe .share_common .message{margin-bottom:1em;max-width:590px}.pocketnet_iframe .share_common .message a{text-decoration:underline;color:rgb(var(--color-txt-ac));text-overflow:ellipsis;word-break:break-all}.pocketnet_iframe .share_common .message img{vertical-align:baseline}.pocketnet_iframe .share_common .showMore{padding:1.5em 0;padding-top:.5em;text-align:left;max-width:700px}.pocketnet_iframe .share_common .showMore button{max-width:none;padding-left:0;padding-right:0;text-decoration:none;color:rgb(var(--color-txt-ac))}.pocketnet_iframe .share_common .shareContent{cursor:pointer}.pocketnet_iframe .share_common .urlhtmlcontent{font-size:.85em}.pocketnet_iframe .share_common .urlhtmlcontent .ogtable>div{vertical-align:top;padding:.5em 0}.pocketnet_iframe .share_common .urlhtmlcontent .ogtable>div.image{width:200px;padding-right:1em;border-radius:6px}.pocketnet_iframe .share_common .urlhtmlcontent .ogtable>div.image .removeImage{display:none}.pocketnet_iframe .share_common .urlhtmlcontent .ogtable>div.image img{width:100%;border-radius:6px;box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.4)}.pocketnet_iframe .share_common .urlhtmlcontent .ogtable>div.image img.active{opacity:1}.pocketnet_iframe .share_common .urlhtmlcontent .ogtable>div.cnt .title{max-width:400px;font-weight:700;color:rgb(var(--color-txt-gray-dark))}.pocketnet_iframe .share_common .urlhtmlcontent .ogtable>div.cnt .description{max-width:400px;margin-top:.5em}.pocketnet_iframe .share_common .url{margin-bottom:1em}.pocketnet_iframe .share_common .url.hiddenurl .videoWrapper{display:none}.pocketnet_iframe .share_common .url span.linkedstyle{font-size:.8em;color:rgb(var(--color-txt-ac));text-decoration:underline}.pocketnet_iframe .share_common .url .videoviews span{font-size:.8em;color:rgb(var(--color-txt-ac))}.pocketnet_iframe .share_common .url .urlcnt{overflow:hidden}.pocketnet_iframe .share_common .url .urlcnt .linkcnt{white-space:nowrap;overflow:hidden;max-width:640px;text-overflow:ellipsis}.pocketnet_iframe .share_common .url .urlcnt .urlcnttable{width:auto;height:auto}.pocketnet_iframe .share_common .url .urlcnt .urlcnttable>div{vertical-align:middle}.pocketnet_iframe .share_common .url .urlcnt .urlcnttable>div.removeWrapper{padding-left:1em}.pocketnet_iframe .share_common .url.bigimageinlink .urlhtmlcontent .ogtable{max-width:600px;border-radius:6px;display:block}.pocketnet_iframe .share_common .url.bigimageinlink .urlhtmlcontent .ogtable>div{display:block}.pocketnet_iframe .share_common .url.bigimageinlink .urlhtmlcontent .ogtable>div.image{width:auto}.pocketnet_iframe .share_common .url.bigimageinlink .urlhtmlcontent .ogtable>div.image img{width:100%}.pocketnet_iframe .share_common .url.bigimageinlink .urlhtmlcontent .ogtable>div.cnt .description,.pocketnet_iframe .share_common .url.bigimageinlink .urlhtmlcontent .ogtable>div.cnt .title{max-width:none}.pocketnet_iframe .share_common .pkoin_commerce_info{padding:1em 0;max-width:350px;padding-top:.5em;position:relative}.pocketnet_iframe .share_common .pkoin_commerce_info:before{content:\"\";width:70px;position:absolute;left:0;top:0;height:1px;background:#f03}.pocketnet_iframe .share_common .pkoin_commerce_info span{font-size:.8em;opacity:.8}.pocketnet_iframe .share_common .tags{margin-bottom:1em;overflow:hidden;max-width:650px;display:flex;flex-wrap:wrap}.pocketnet_iframe .share_common .tags>div{margin-right:.5em}.pocketnet_iframe .share_common .tags>div span{font-size:.8em;color:rgb(var(--neutral-grad-4))}.pocketnet_iframe .share_common .tags .newlabel{background:#ff0565;color:#fff}.pocketnet_iframe .share_common .sys{margin-bottom:1em}.pocketnet_iframe .share_common .sys span{cursor:pointer;font-size:.9em;color:rgb(var(--neutral-grad-4))}.pocketnet_iframe .share_common .stars{height:40px;line-height:40px;text-align:center;cursor:pointer}.pocketnet_iframe .share_common .sharepanel{border-radius:0;display:flex;justify-content:space-between;align-items:center}.pocketnet_iframe .share_common .sharepanel .itemwr{width:auto}.pocketnet_iframe .share_common .sharepanel .itemwr>div{vertical-align:middle}.pocketnet_iframe .share_common .sharepanel .itemwr>div.iconwr{width:40px}.pocketnet_iframe .share_common .sharepanel .itemwr>div.labelwr{padding-left:.5em;cursor:pointer}.pocketnet_iframe .share_common .sharepanel .itemwr>div.labelwr span{font-weight:700;font-size:.8em}.pocketnet_iframe .share_common .sharepanel>div:last-child{margin-right:0}.pocketnet_iframe .share_common .sharepanel>div .count{cursor:pointer}.pocketnet_iframe .share_common .sharepanel>div .icon{height:40px;line-height:40px;text-align:center;font-size:1em;color:rgb(var(--neutral-grad-3));cursor:pointer;border-radius:40%}.pocketnet_iframe .share_common .sharepanel>div.right{margin-left:auto}.pocketnet_iframe .share_common .sharepanel>div.right .itemwr>div.iconwr{text-align:center;width:40px}.pocketnet_iframe .share_common .sharepanel>div:hover .icon{opacity:.7}.pocketnet_iframe .share_common .sharepanel>div.sharesocial .icon,.pocketnet_iframe .share_common .sharepanel>div.sharesocial .label,.pocketnet_iframe .share_common .sharepanel>div.sharesocial:hover .label{color:rgb(var(--color-txt-orange))}.pocketnet_iframe .share_common .sharepanel>div.sharesocial:hover .icon{border-radius:0;box-shadow:none;color:rgb(var(--color-txt-orange));background:transparent}.pocketnet_iframe .share_common .exitFull{display:none;position:fixed;right:2em;top:1em}.pocketnet_iframe .share_common .sharecnt .removeDescription{display:none;padding-bottom:1.5em;color:rgb(var(--neutral-grad-2))}.pocketnet_iframe .share_common .sharecnt.deleted .cntscontent,.pocketnet_iframe .share_common .sharecnt.deleted .commentsWrapperHb,.pocketnet_iframe .share_common .sharecnt.deleted .metapanel,.pocketnet_iframe .share_common .sharecnt.deleted .repostWrapper,.pocketnet_iframe .share_common .sharecnt.deleted .sys{display:none!important}.pocketnet_iframe .share_common .sharecnt.deleted .removeDescription{display:block}.pocketnet_iframe .share_common .blockAuthor{display:none;position:absolute;left:0;right:0;top:0;bottom:0;background:rgba(var(--background-total-theme),.98);z-index:10;align-items:center}.pocketnet_iframe .share_common .blockAuthor .blockCell{text-align:center;width:100%}.pocketnet_iframe .share_common .blockAuthor .blockCell .label{margin-bottom:1.5em}.pocketnet_iframe .share_common .blockAuthor .blockCell button{width:180px;border-radius:30px;font-size:.8em}.pocketnet_iframe .share_common.blocking .commentsWrapperHb{display:none}.pocketnet_iframe .share_common.blocking .blockAuthor{display:flex}.pocketnet_iframe .share_common.fullScreenVideo{padding:0;margin:0;z-index:1004;position:fixed;left:0;right:0;bottom:0;top:0;background:rgb(var(--color-shadow-base));padding-top:0;border-radius:0!important;margin-bottom:0!important}.pocketnet_iframe .share_common.fullScreenVideo .video-js{max-height:calc(var(--vh, 1vh)*80)}.pocketnet_iframe .share_common.fullScreenVideo .shareTable{padding-top:0}.pocketnet_iframe .share_common.fullScreenVideo .sharecnt{position:absolute;overflow-y:scroll;left:0;right:0;top:0;bottom:0;scrollbar-width:none;overscroll-behavior:none;transform:translateZ(0)}.pocketnet_iframe .share_common.fullScreenVideo .sharecnt .videoWrapper{border-radius:0}.pocketnet_iframe .share_common.fullScreenVideo .sharecnt .videoWrapper .js-player,.pocketnet_iframe .share_common.fullScreenVideo .sharecnt .videoWrapper .js-player .vjs-control-bar{border-radius:0;overflow:visible}.pocketnet_iframe .share_common.fullScreenVideo .sharecnt::-webkit-scrollbar{width:0!important}.pocketnet_iframe .share_common.fullScreenVideo .statswrapperExtended,.pocketnet_iframe .share_common.fullScreenVideo .videoviews{padding-left:1em}.pocketnet_iframe .share_common.fullScreenVideo .exitFull{display:block}.pocketnet_iframe .share_common.fullScreenVideo .showMore{display:none}.pocketnet_iframe .share_common.fullScreenVideo .commentsWrapper{margin:0 auto;max-width:960px;border-radius:0}.pocketnet_iframe .share_common.fullScreenVideo .url.hiddenurl .videoWrapper{display:block}.pocketnet_iframe .share_common.fullScreenVideo .commentsWrapperHb{padding-bottom:20%}.pocketnet_iframe .share_common.fullScreenVideo .cntswrk{margin-left:0;padding:0}.pocketnet_iframe .share_common.fullScreenVideo .shareTable{display:flex;flex-direction:column}.pocketnet_iframe .share_common.fullScreenVideo .shareTable .postcontent{order:-2}.pocketnet_iframe .share_common.fullScreenVideo .shareTable .formeta{order:-1}.pocketnet_iframe .share_common.fullScreenVideo .cntscontent.postcontent{display:flex;flex-direction:column}.pocketnet_iframe .share_common.fullScreenVideo .cntscontent.postcontent .url{order:-1}.pocketnet_iframe .share_common.fullScreenVideo .sharecaption{padding-left:1em;max-width:450px}.pocketnet_iframe .share_common.fullScreenVideo .sharecaption span{font-size:.9em}.pocketnet_iframe .share_common.fullScreenVideo .formeta,.pocketnet_iframe .share_common.fullScreenVideo .message{padding-left:1em}.pocketnet_iframe .share_common.fullScreenVideo .formeta .sbtnxs,.pocketnet_iframe .share_common.fullScreenVideo .formeta .sys{display:none}.pocketnet_iframe .share_common.fullScreenVideo .formeta .meta{padding-top:0;margin-bottom:0}.pocketnet_iframe .share_common.fullScreenVideo .hideOnFullVideo,.pocketnet_iframe .share_common.fullScreenVideo .metapanel,.pocketnet_iframe .share_common.fullScreenVideo .repostWrapper{display:none}.pocketnet_iframe .share_common.fullScreenVideo .statswrapperExtended{background:rgb(var(--background-total-theme))}.pocketnet_iframe .share_common.fullScreenVideo .work{margin:0 auto;max-width:960px;background:rgb(var(--background-total-theme));padding:0}.pocketnet_iframe .share_common.fullScreenVideo .work .iconWrapper{display:none}.pocketnet_iframe .share_common.fullScreenVideo .work .shareWrapper{padding:0}.pocketnet_iframe .share_common.fullScreenVideo .work .shareWrapper .meta{display:none;margin-top:0;margin-bottom:0;padding:1em}.pocketnet_iframe .share_common.fullScreenVideo .work .shareWrapper .meta .metapanel{display:none}.pocketnet_iframe .share_common.fullScreenVideo .work .shareContent{padding:0}.pocketnet_iframe .share_common.fullScreenVideo .work .shareContent .sharecaption{display:none;padding:1em;padding-top:0}.pocketnet_iframe .share_common.fullScreenVideo .work .shareContent .images,.pocketnet_iframe .share_common.fullScreenVideo .work .shareContent .message{display:none}.pocketnet_iframe .share_common.fullScreenVideo .work .videoWrapper{max-width:none}.pocketnet_iframe .share_common.fullScreenVideo .work .urlcnt,.pocketnet_iframe .share_common.fullScreenVideo .work .videoWrapper .videoTips{display:none}.pocketnet_iframe .share_common.fullScreenVideo .work .sys,.pocketnet_iframe .share_common.fullScreenVideo .work .tags{padding:0 1em}.pocketnet_iframe .share_common.fullScreenVideo .work .sharepanel{overflow:hidden;padding:1em;padding-bottom:1em;padding-top:.5em}.pocketnet_iframe .share_common.fullScreenVideoShowing{opacity:0;transition:0s}.pocketnet_iframe .share_common .work{width:100%}.pocketnet_iframe html.mobileview .share_common .images .imagesContainer.owlcar{max-width:none;contain:strict}.pocketnet_iframe html.mobileview .share_common .panel{contain:strict;height:40px}.pocketnet_iframe html.ios .share_common.fullScreenVideo .video-js{max-height:80vh}@media only screen and (max-width:1920px){.pocketnet_iframe .share_common{padding:0;background:rgb(var(--background-total-theme));cursor:default;padding-bottom:0;border-radius:0}.pocketnet_iframe .share_common .jsPlayerLoading .preloader5{display:none}.pocketnet_iframe .share_common .showMore button{font-size:1.2em}.pocketnet_iframe .share_common .iconWrapper{width:4em;padding-top:.5em;padding-left:.5em}.pocketnet_iframe .share_common .repostShare{margin-left:.25em;margin-right:.25em;margin-bottom:.25em}.pocketnet_iframe .share_common .cntswrk{margin-left:0;padding-left:0;padding-right:0}.pocketnet_iframe .share_common .formeta{margin-left:4em}.pocketnet_iframe .share_common .work{width:100%;padding-left:0}.pocketnet_iframe .share_common .shareTable{padding-top:.5em}.pocketnet_iframe .share_common.fullScreenVideo{contain:strict;background:rgb(var(--color-shadow-base))}.pocketnet_iframe .share_common.fullScreenVideo .message,.pocketnet_iframe .share_common.fullScreenVideo .sharecaption{padding-left:.5em}.pocketnet_iframe .share_common.fullScreenVideo .work .metawrapper{margin-left:0}.pocketnet_iframe .share_common.fullScreenVideo .work .iconWrapper{display:none}.pocketnet_iframe .share_common.fullScreenVideo .work .shareWrapper{margin-top:0}.pocketnet_iframe .share_common.fullScreenVideo .work .sys,.pocketnet_iframe .share_common.fullScreenVideo .work .tags{padding:0 .5em}.pocketnet_iframe .share_common.fullScreenVideo .work .sharepanel{padding:.5em}.pocketnet_iframe .share_common.fullScreenVideo #comments .caption,.pocketnet_iframe .share_common.fullScreenVideo #comments .commentPaddingWrapper,.pocketnet_iframe .share_common.fullScreenVideo #comments .list .answer .postbody,.pocketnet_iframe .share_common.fullScreenVideo #comments .post{padding-left:.5em;padding-right:.5em}.pocketnet_iframe .share_common .medium-insert-embeds{position:relative}.pocketnet_iframe .share_common .medium-insert-embeds:after{display:none}.pocketnet_iframe .share_common .medium-insert-embeds figure{margin-left:0;margin-right:0}.pocketnet_iframe .share_common .shareContent,.pocketnet_iframe .share_common .shareWrapper{cursor:default}.pocketnet_iframe .share_common .paddingWrapper{padding:0 .5em}.pocketnet_iframe .share_common .work{overflow:hidden}.pocketnet_iframe .share_common .shareWrapper{position:relative}.pocketnet_iframe .share_common .shareTable .authorTable>div span{font-size:1em}.pocketnet_iframe .share_common .shareTable .authorTable>div span.adr{font-size:1.2em}.pocketnet_iframe .share_common .shareTable.subscribed .iconWrapper .aunsubscribe{display:block}.pocketnet_iframe .share_common .shareTable.subscribed .iconWrapper .asubscribe{display:none}.pocketnet_iframe .share_common .shareTable.subscribed .iconWrapper .notificationturn{display:block}.pocketnet_iframe .share_common .shareTable.subscribed .iconWrapper .additional i:before{content:\"\\f068\"}.pocketnet_iframe .share_common .shareTable.subscribed .subscribeWrapper .subscribeevent{display:none}.pocketnet_iframe .share_common .shareTable.subscribed .subscribeWrapper .unsubscribeevent{display:block}.pocketnet_iframe .share_common .shareTable.emptywithrepost .meta .repostCaption{padding-left:1em}.pocketnet_iframe .share_common .videoWrapper{max-width:768px;position:relative;border-radius:0}.pocketnet_iframe .share_common .videoWrapper .js-player,.pocketnet_iframe .share_common .videoWrapper .js-player .vjs-control-bar{border-radius:0;overflow:visible}.pocketnet_iframe .share_common .videoWrapper .videoTips,.pocketnet_iframe .share_common .videoWrapper:hover .videoTips{opacity:1}.pocketnet_iframe .share_common .jsPlayerLoading{width:100%}.pocketnet_iframe .share_common .meta{margin-top:0;margin-bottom:0}.pocketnet_iframe .share_common .meta .metatable>div,.pocketnet_iframe .share_common .meta>div{margin-right:0}.pocketnet_iframe .share_common .meta .metatable>div.metapanel{width:47px}.pocketnet_iframe .share_common .meta .metatable>div.metapanel .metapanelitem{opacity:1}.pocketnet_iframe .share_common .meta .metatable>div.metapanel .metapanelitem.complain:hover{color:rgb(var(--color-bad))}.pocketnet_iframe .share_common .imagecaption{padding:.5em}.pocketnet_iframe .share_common .images .imagesWrapper{width:100%;height:auto;border-radius:0}.pocketnet_iframe .share_common .images .imagesWrapper .image{border-radius:0}.pocketnet_iframe .share_common .images .imagesContainer.owlcar{max-width:none;contain:strict}.pocketnet_iframe .share_common .images .imagesContainer.one .imagesWrapper{width:100%;height:auto}.pocketnet_iframe .share_common .images .imagesContainer.one .imagesWrapper.h2,.pocketnet_iframe .share_common .images .imagesContainer.one .imagesWrapper.w2{width:100%}.pocketnet_iframe .share_common .images .imagesContainer.four .imagesWrapper,.pocketnet_iframe .share_common .images .imagesContainer.more .imagesWrapper,.pocketnet_iframe .share_common .images .imagesContainer.three .imagesWrapper,.pocketnet_iframe .share_common .images .imagesContainer.two .imagesWrapper{width:50%;height:auto}.pocketnet_iframe .share_common .images .imagesContainer.four .imagesWrapper.h2,.pocketnet_iframe .share_common .images .imagesContainer.four .imagesWrapper.w2,.pocketnet_iframe .share_common .images .imagesContainer.more .imagesWrapper.h2,.pocketnet_iframe .share_common .images .imagesContainer.more .imagesWrapper.w2,.pocketnet_iframe .share_common .images .imagesContainer.three .imagesWrapper.h2,.pocketnet_iframe .share_common .images .imagesContainer.three .imagesWrapper.w2,.pocketnet_iframe .share_common .images .imagesContainer.two .imagesWrapper.h2,.pocketnet_iframe .share_common .images .imagesContainer.two .imagesWrapper.w2{width:50%}.pocketnet_iframe .share_common .images .imagesContainer.articleImages{padding:.5em}.pocketnet_iframe .share_common .images .imagesContainer.articleImages .imagesWrapper{float:left;width:30px;height:30px}.pocketnet_iframe .share_common .sharecaption{margin-bottom:.5em}.pocketnet_iframe .share_common .sharecaption div{font-size:1.5em;font-weight:100}.pocketnet_iframe .share_common .urlhtmlcontent{font-size:.8em}.pocketnet_iframe .share_common .urlhtmlcontent .ogtable{display:block}.pocketnet_iframe .share_common .urlhtmlcontent .ogtable>div{display:block;padding:.5em 0}.pocketnet_iframe .share_common .urlhtmlcontent .ogtable>div.image{width:100%;padding-right:0}.pocketnet_iframe .share_common .urlhtmlcontent .ogtable>div.cnt{padding:0 .5em}.pocketnet_iframe .share_common .urlhtmlcontent .ogtable>div.cnt .title{max-width:none}.pocketnet_iframe .share_common .urlhtmlcontent .ogtable>div.cnt .description{max-width:none;margin-top:.5em}.pocketnet_iframe .share_common .url .urlcnt{padding:0 .5em}.pocketnet_iframe .share_common .exitFull{right:1em}}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle{border-radius:12px;overflow:hidden;opacity:0;transition:opacity .1s}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle.ready{opacity:1}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareTable{padding-top:0;padding-bottom:0}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .articleclick{cursor:pointer}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .readarticlebutton{text-decoration:underline}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .articleend .author,.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .author{margin-top:1em}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .articleend .author i,.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .author i{display:none}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .articleend .author .notificationturn,.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .author .notificationturn{display:none!important}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .articleend .forstars .itemwr,.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .forstars .itemwr{display:flex;flex-direction:column-reverse;align-items:center}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .articleend .forstars .itemwr i,.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .articleend .forstars .starWrapper,.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .forstars .itemwr i,.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .forstars .starWrapper{text-align:center}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .articleend .forstars .count span,.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .forstars .count span{font-size:2em;font-weight:700;font-family:Nunito Sans}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .articleend .sys,.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .sys{text-align:center}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .articleend .buttonOpenWrapper,.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .buttonOpenWrapper{padding-bottom:1em}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .articleend .buttonOpenWrapper .showMoreArticle,.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .buttonOpenWrapper .showMoreArticle{color:#00a4ff;cursor:pointer}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .articleend .buttonOpenWrapper .showMoreArticle:hover,.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .buttonOpenWrapper .showMoreArticle:hover{opacity:.6}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .articleend .divider,.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .divider{margin:.5em auto;height:1px;width:110px;background:rgb(var(--background-total-theme))}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .articleend .tags,.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .tags{max-width:none}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .articleend .tags div span,.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .tags div span{color:rgba(var(--text-on-bg-ac-color),0,.7)}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .author{white-space:nowrap}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption{height:425px;position:relative}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .blackmatte{background:linear-gradient(0deg,rgba(var(--background-secondary-theme-2),.96) 10%,hsla(0,0%,100%,0) 75%),linear-gradient(180deg,rgb(var(--background-secondary-theme-2)),hsla(0,0%,100%,0) 18%)}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption.withoutcover{height:340px}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption.withoutcover .blackmatte{background:rgb(var(--background-secondary-theme-2))}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .captioncnt{display:flex;flex-direction:column;z-index:1;color:rgb(var(--text-on-bg-ac-color));overflow:hidden}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .captioncnt .toppanel{display:flex;justify-content:space-between}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .captioncnt .toppanel .authorWrapper{display:flex}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .captioncnt .toppanel .authorWrapper .iconWrapper{margin-top:6px}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .captioncnt .toppanel .authorWrapper .actionsWrapper{margin-left:12px}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .captioncnt .toppanel .authorWrapper .actionsWrapper .sys{text-align:start}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .captioncnt .toppanel .socialsharewrapper{padding-right:1em}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .captioncnt .widthcontainer{margin-top:auto;padding:0 16px}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .captioncnt .articleclick{display:flex;height:100%;flex-direction:column;cursor:pointer}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .captioncnt .articleclick .captionmult{margin-top:auto}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .captioncnt .sharecaption{font-size:1.5em;font-weight:700;max-width:85%;color:rgb(var(--text-on-bg-ac-color));max-height:220px;overflow-x:hidden;overflow-y:auto;text-overflow:ellipsis;overscroll-behavior:auto;text-shadow:0 0 2px rgba(var(--color-shadow-base),.714),0 0 3px rgba(var(--color-shadow-base),.519)}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .tags{margin-bottom:0}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .sys span,.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .tags div span{text-shadow:0 0 2px rgba(var(--color-shadow-base),.714),0 0 3px rgba(var(--color-shadow-base),.519)}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .sys span{color:rgb(var(--text-on-bg-shadow-color))}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .icon .usericon{margin:0 auto;position:relative}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption.showtext .icon{position:absolute;bottom:-22px;left:0;right:0}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .socialsharewrapper,.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .starstoppanel{bottom:.75em;right:1.25em}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .socialsharewrapper .socialsharewrapper .iconwrapper,.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .socialsharewrapper .starstoppanel .iconwrapper,.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .starstoppanel .socialsharewrapper .iconwrapper,.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .starstoppanel .starstoppanel .iconwrapper{color:rgb(var(--text-color))}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .socialsharewrapper .iconwrapper,.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .starstoppanel .iconwrapper{width:3.5em;height:3.5em;line-height:3.5em;border-radius:3.5em;cursor:pointer;display:flex;align-items:center;font-family:Nunito Sans}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .socialsharewrapper .iconwrapper:hover,.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .starstoppanel .iconwrapper:hover{opacity:.6}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .socialsharewrapper .iconwrapper i,.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .starstoppanel .iconwrapper i{width:30px;text-align:center;font-size:.7em}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .socialsharewrapper .sharesocial,.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .starstoppanel .sharesocial{display:none}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .socialsharewrapper .iconwrapper{justify-content:flex-end}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .starstoppanel{bottom:.75em;left:1.5em;right:auto;display:flex;justify-content:space-between;padding-left:1em;padding-right:1.5em;padding-bottom:.5em;contain:none;height:auto}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .starstoppanel .panelLeft{display:flex;padding-bottom:.5em}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .starstoppanel .panelRight{display:flex;align-items:center}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .starstoppanel .panelRight .panel{contain:none}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .articleCover{border-radius:12px;overflow:hidden;filter:brightness(85%)}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .blackmatte{border-radius:12px;overflow:hidden}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .articleCover,.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .blackmatte,.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .captioncnt{position:absolute;left:0;right:0;top:0;bottom:0}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption .whitematte{position:absolute;bottom:30%;top:20%;left:0;right:0;cursor:pointer;z-index:1}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption.smallimage .articleCover{background-color:rgb(var(--color-shadow-base));background-size:100px auto!important}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption.caption_small .captionmult{font-size:1.5em}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .shareBgCaption.caption_long .captionmult{font-size:.8em}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .articlecontent{padding-top:4em;padding-bottom:4em}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .articlecontent .cntswrk{margin-left:0;padding-left:0;padding-right:0}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .articlecontent .articleend{margin-top:3em}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .articlecontent .commentsWrapper{border-radius:12px}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .articlecontent .forcomments{margin-top:6em}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle .removeDescription{display:none;padding:1.5em;color:rgb(var(--neutral-grad-2))}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle.deleted .socialsharewrapper,.pocketnet_iframe .common_share_article_wrapper .share .sharearticle.deleted .starstoppanel,.pocketnet_iframe .common_share_article_wrapper .share .sharearticle.deleted .textscnts{display:none!important}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle.deleted .removeDescription{display:block}.pocketnet_iframe .common_share_article_wrapper .share .sharearticle.deleted .articleCover{filter:blur(2px)}@media only screen and (max-width:1920px){.pocketnet_iframe .common_share_article_wrapper .shares .sharearticle .shareBgCaption{contain:strict}.pocketnet_iframe .common_share_article_wrapper .shares .sharearticle .shareBgCaption .captioncnt .toppanel .socialsharewrapper,.pocketnet_iframe .common_share_article_wrapper .shares .sharearticle .shareBgCaption .starstoppanel{padding-right:.5em}}@-webkit-keyframes plyr-progress{to{background-position:25px 0}}@keyframes plyr-progress{to{background-position:25px 0}}@-webkit-keyframes plyr-popup{0%{opacity:.5;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}@keyframes plyr-popup{0%{opacity:.5;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}@-webkit-keyframes plyr-fade-in{0%{opacity:0}to{opacity:1}}@keyframes plyr-fade-in{0%{opacity:0}to{opacity:1}}.pocketnet_iframe .plyr{-moz-osx-font-smoothing:auto;-webkit-font-smoothing:subpixel-antialiased;direction:ltr;font-family:Avenir,Avenir Next,Helvetica Neue,Segoe UI,Helvetica,Arial,sans-serif;font-variant-numeric:tabular-nums;font-weight:500;line-height:1.7;max-width:100%;min-width:200px;position:relative;text-shadow:none;transition:box-shadow .3s ease}.pocketnet_iframe .plyr audio,.pocketnet_iframe .plyr video{border-radius:inherit;height:auto;vertical-align:middle;width:100%}.pocketnet_iframe .plyr button{font:inherit;line-height:inherit;width:auto}.pocketnet_iframe .plyr:focus{outline:0}.pocketnet_iframe .plyr--full-ui{box-sizing:border-box}.pocketnet_iframe .plyr--full-ui *,.pocketnet_iframe .plyr--full-ui :after,.pocketnet_iframe .plyr--full-ui :before{box-sizing:inherit}.pocketnet_iframe .plyr--full-ui a,.pocketnet_iframe .plyr--full-ui button,.pocketnet_iframe .plyr--full-ui input,.pocketnet_iframe .plyr--full-ui label{touch-action:manipulation}.pocketnet_iframe .plyr__badge{background:#4f5b5f;border-radius:2px;color:#fff;font-size:9px;line-height:1;padding:3px 4px}.pocketnet_iframe .plyr--full-ui ::-webkit-media-text-track-container{display:none}.pocketnet_iframe .plyr__captions{-webkit-animation:plyr-fade-in .3s ease;animation:plyr-fade-in .3s ease;bottom:0;color:#fff;display:none;font-size:14px;left:0;padding:10px;position:absolute;text-align:center;transition:transform .4s ease-in-out;width:100%}.pocketnet_iframe .plyr__captions .plyr__caption{background:rgba(0,0,0,.8);border-radius:2px;-webkit-box-decoration-break:clone;box-decoration-break:clone;line-height:185%;padding:.2em .5em;white-space:pre-wrap}.pocketnet_iframe .plyr__captions .plyr__caption div{display:inline}.pocketnet_iframe .plyr__captions span:empty{display:none}@media (min-width:480px){.pocketnet_iframe .plyr__captions{font-size:16px;padding:20px}}@media (min-width:768px){.pocketnet_iframe .plyr__captions{font-size:18px}}.pocketnet_iframe .plyr--captions-active .plyr__captions{display:block}.pocketnet_iframe .plyr:not(.plyr--hide-controls) .plyr__controls:not(:empty)~.plyr__captions{transform:translateY(-40px)}.pocketnet_iframe .plyr__control{background:0 0;border:0;border-radius:3px;color:inherit;cursor:pointer;flex-shrink:0;overflow:visible;padding:7px;position:relative;transition:all .3s ease}.pocketnet_iframe .plyr__control svg{display:block;fill:currentColor;height:18px;pointer-events:none;width:18px}.pocketnet_iframe .plyr__control:focus{outline:0}.pocketnet_iframe .plyr__control.plyr__tab-focus{box-shadow:0 0 0 5px rgba(26,175,255,.5);outline:0}.pocketnet_iframe a.plyr__control{text-decoration:none}.pocketnet_iframe .plyr__control.plyr__control--pressed .icon--not-pressed,.pocketnet_iframe .plyr__control.plyr__control--pressed .label--not-pressed,.pocketnet_iframe .plyr__control:not(.plyr__control--pressed) .icon--pressed,.pocketnet_iframe .plyr__control:not(.plyr__control--pressed) .label--pressed,.pocketnet_iframe a.plyr__control:after,.pocketnet_iframe a.plyr__control:before{display:none}.pocketnet_iframe .plyr--audio .plyr__control.plyr__tab-focus,.pocketnet_iframe .plyr--audio .plyr__control:hover,.pocketnet_iframe .plyr--audio .plyr__control[aria-expanded=true]{background:#1aafff;color:#fff}.pocketnet_iframe .plyr--video .plyr__control svg{filter:drop-shadow(0 1px 1px rgba(0,0,0,.15))}.pocketnet_iframe .plyr--video .plyr__control.plyr__tab-focus,.pocketnet_iframe .plyr--video .plyr__control:hover,.pocketnet_iframe .plyr--video .plyr__control[aria-expanded=true]{background:#1aafff;color:#fff}.pocketnet_iframe .plyr__control--overlaid{background:rgba(26,175,255,.8);border:0;border-radius:100%;box-shadow:0 1px 1px rgba(0,0,0,.15);color:#fff;display:none;left:50%;padding:15px;position:absolute;top:50%;transform:translate(-50%,-50%);z-index:2}.pocketnet_iframe .plyr__control--overlaid svg{left:2px;position:relative}.pocketnet_iframe .plyr__control--overlaid:focus,.pocketnet_iframe .plyr__control--overlaid:hover{background:#1aafff}.pocketnet_iframe .plyr--playing .plyr__control--overlaid{opacity:0;visibility:hidden}.pocketnet_iframe .plyr--full-ui.plyr--video .plyr__control--overlaid{display:block}.pocketnet_iframe .plyr--full-ui ::-webkit-media-controls{display:none}.pocketnet_iframe .plyr__controls{align-items:center;display:flex;justify-content:flex-end;text-align:center}.pocketnet_iframe .plyr__controls .plyr__progress__container{flex:1}.pocketnet_iframe .plyr__controls .plyr__controls__item{margin-left:2.5px}.pocketnet_iframe .plyr__controls .plyr__controls__item:first-child{margin-left:0;margin-right:auto}.pocketnet_iframe .plyr__controls .plyr__controls__item.plyr__progress__container{padding-left:2.5px}.pocketnet_iframe .plyr__controls .plyr__controls__item.plyr__time{padding:0 5px}.pocketnet_iframe .plyr__controls .plyr__controls__item.plyr__progress__container:first-child,.pocketnet_iframe .plyr__controls .plyr__controls__item.plyr__time+.plyr__time,.pocketnet_iframe .plyr__controls .plyr__controls__item.plyr__time:first-child{padding-left:0}.pocketnet_iframe .plyr__controls .plyr__controls__item.plyr__volume{padding-right:5px}.pocketnet_iframe .plyr__controls .plyr__controls__item.plyr__volume:first-child{padding-right:0}.pocketnet_iframe .plyr__controls:empty{display:none}.pocketnet_iframe .plyr--audio .plyr__controls{background:#fff;border-radius:inherit;color:#4f5b5f;padding:10px}.pocketnet_iframe .plyr--video .plyr__controls{background:linear-gradient(transparent,rgba(0,0,0,.7));border-bottom-left-radius:inherit;border-bottom-right-radius:inherit;bottom:0;color:#fff;left:0;padding:20px 5px 5px;position:absolute;right:0;transition:opacity .4s ease-in-out,transform .4s ease-in-out;z-index:3}@media (min-width:480px){.pocketnet_iframe .plyr--video .plyr__controls{padding:35px 10px 10px}}.pocketnet_iframe .plyr--video.plyr--hide-controls .plyr__controls{opacity:0;pointer-events:none;transform:translateY(100%)}.pocketnet_iframe .plyr [data-plyr=airplay],.pocketnet_iframe .plyr [data-plyr=captions],.pocketnet_iframe .plyr [data-plyr=fullscreen],.pocketnet_iframe .plyr [data-plyr=pip]{display:none}.pocketnet_iframe .plyr--airplay-supported [data-plyr=airplay],.pocketnet_iframe .plyr--captions-enabled [data-plyr=captions],.pocketnet_iframe .plyr--fullscreen-enabled [data-plyr=fullscreen],.pocketnet_iframe .plyr--pip-supported [data-plyr=pip]{display:inline-block}.pocketnet_iframe .plyr__menu{display:flex;position:relative}.pocketnet_iframe .plyr__menu .plyr__control svg{transition:transform .3s ease}.pocketnet_iframe .plyr__menu .plyr__control[aria-expanded=true] svg{transform:rotate(90deg)}.pocketnet_iframe .plyr__menu .plyr__control[aria-expanded=true] .plyr__tooltip{display:none}.pocketnet_iframe .plyr__menu__container{-webkit-animation:plyr-popup .2s ease;animation:plyr-popup .2s ease;background:hsla(0,0%,100%,.9);border-radius:4px;bottom:100%;box-shadow:0 1px 2px rgba(0,0,0,.15);color:#4f5b5f;font-size:16px;margin-bottom:10px;position:absolute;right:-3px;text-align:left;white-space:nowrap;z-index:3}.pocketnet_iframe .plyr__menu__container>div{overflow:hidden;transition:height .35s cubic-bezier(.4,0,.2,1),width .35s cubic-bezier(.4,0,.2,1)}.pocketnet_iframe .plyr__menu__container:after{border:4px solid transparent;border-top-color:hsla(0,0%,100%,.9);content:\"\";height:0;position:absolute;right:15px;top:100%;width:0}.pocketnet_iframe .plyr__menu__container [role=menu]{padding:7px}.pocketnet_iframe .plyr__menu__container [role=menuitem],.pocketnet_iframe .plyr__menu__container [role=menuitemradio]{margin-top:2px}.pocketnet_iframe .plyr__menu__container [role=menuitem]:first-child,.pocketnet_iframe .plyr__menu__container [role=menuitemradio]:first-child{margin-top:0}.pocketnet_iframe .plyr__menu__container .plyr__control{align-items:center;color:#4f5b5f;display:flex;font-size:14px;padding:4px 11px;-webkit-user-select:none;-moz-user-select:none;user-select:none;width:100%}.pocketnet_iframe .plyr__menu__container .plyr__control>span{align-items:inherit;display:flex;width:100%}.pocketnet_iframe .plyr__menu__container .plyr__control:after{border:4px solid transparent;content:\"\";position:absolute;top:50%;transform:translateY(-50%)}.pocketnet_iframe .plyr__menu__container .plyr__control--forward{padding-right:28px}.pocketnet_iframe .plyr__menu__container .plyr__control--forward:after{border-left-color:rgba(79,91,95,.8);right:5px}.pocketnet_iframe .plyr__menu__container .plyr__control--forward.plyr__tab-focus:after,.pocketnet_iframe .plyr__menu__container .plyr__control--forward:hover:after{border-left-color:currentColor}.pocketnet_iframe .plyr__menu__container .plyr__control--back{font-weight:500;margin:7px;margin-bottom:3px;padding-left:28px;position:relative;width:calc(100% - 14px)}.pocketnet_iframe .plyr__menu__container .plyr__control--back:after{border-right-color:rgba(79,91,95,.8);left:7px}.pocketnet_iframe .plyr__menu__container .plyr__control--back:before{background:#b7c5cd;box-shadow:0 1px 0 #fff;content:\"\";height:1px;left:0;margin-top:4px;overflow:hidden;position:absolute;right:0;top:100%}.pocketnet_iframe .plyr__menu__container .plyr__control--back.plyr__tab-focus:after,.pocketnet_iframe .plyr__menu__container .plyr__control--back:hover:after{border-right-color:currentColor}.pocketnet_iframe .plyr__menu__container .plyr__control[role=menuitemradio]{padding-left:7px}.pocketnet_iframe .plyr__menu__container .plyr__control[role=menuitemradio]:after,.pocketnet_iframe .plyr__menu__container .plyr__control[role=menuitemradio]:before{border-radius:100%}.pocketnet_iframe .plyr__menu__container .plyr__control[role=menuitemradio]:before{background:rgba(0,0,0,.1);content:\"\";display:block;flex-shrink:0;height:16px;margin-right:10px;transition:all .3s ease;width:16px}.pocketnet_iframe .plyr__menu__container .plyr__control[role=menuitemradio]:after{background:#fff;border:0;height:6px;left:12px;opacity:0;top:50%;transform:translateY(-50%) scale(0);transition:transform .3s ease,opacity .3s ease;width:6px}.pocketnet_iframe .plyr__menu__container .plyr__control[role=menuitemradio][aria-checked=true]:before{background:#1aafff}.pocketnet_iframe .plyr__menu__container .plyr__control[role=menuitemradio][aria-checked=true]:after{opacity:1;transform:translateY(-50%) scale(1)}.pocketnet_iframe .plyr__menu__container .plyr__control[role=menuitemradio].plyr__tab-focus:before,.pocketnet_iframe .plyr__menu__container .plyr__control[role=menuitemradio]:hover:before{background:rgba(0,0,0,.1)}.pocketnet_iframe .plyr__menu__container .plyr__menu__value{align-items:center;display:flex;margin-left:auto;margin-right:-5px;overflow:hidden;padding-left:25px;pointer-events:none}.pocketnet_iframe .plyr--full-ui input[type=range]{-webkit-appearance:none;background:0 0;border:0;border-radius:26px;color:#1aafff;display:block;height:19px;margin:0;padding:0;transition:box-shadow .3s ease;width:100%}.pocketnet_iframe .plyr--full-ui input[type=range]::-webkit-slider-runnable-track{background:0 0;border:0;border-radius:2.5px;height:5px;-webkit-transition:box-shadow .3s ease;transition:box-shadow .3s ease;-webkit-user-select:none;user-select:none;background-image:linear-gradient(90deg,currentColor var(--value,0),transparent var(--value,0))}.pocketnet_iframe .plyr--full-ui input[type=range]::-webkit-slider-thumb{background:#fff;border:0;border-radius:100%;box-shadow:0 1px 1px rgba(0,0,0,.15),0 0 0 1px rgba(47,52,61,.2);height:13px;position:relative;-webkit-transition:all .2s ease;transition:all .2s ease;width:13px;-webkit-appearance:none;margin-top:-4px}.pocketnet_iframe .plyr--full-ui input[type=range]::-moz-range-track{background:0 0;border:0;border-radius:2.5px;height:5px;-moz-transition:box-shadow .3s ease;transition:box-shadow .3s ease;-moz-user-select:none;user-select:none}.pocketnet_iframe .plyr--full-ui input[type=range]::-moz-range-thumb{background:#fff;border:0;border-radius:100%;box-shadow:0 1px 1px rgba(0,0,0,.15),0 0 0 1px rgba(47,52,61,.2);height:13px;position:relative;-moz-transition:all .2s ease;transition:all .2s ease;width:13px}.pocketnet_iframe .plyr--full-ui input[type=range]::-moz-range-progress{background:currentColor;border-radius:2.5px;height:5px}.pocketnet_iframe .plyr--full-ui input[type=range]::-ms-track{color:transparent}.pocketnet_iframe .plyr--full-ui input[type=range]::-ms-fill-upper,.pocketnet_iframe .plyr--full-ui input[type=range]::-ms-track{background:0 0;border:0;border-radius:2.5px;height:5px;-ms-transition:box-shadow .3s ease;transition:box-shadow .3s ease;user-select:none}.pocketnet_iframe .plyr--full-ui input[type=range]::-ms-fill-lower{background:0 0;border:0;border-radius:2.5px;height:5px;-ms-transition:box-shadow .3s ease;transition:box-shadow .3s ease;user-select:none;background:currentColor}.pocketnet_iframe .plyr--full-ui input[type=range]::-ms-thumb{background:#fff;border:0;border-radius:100%;box-shadow:0 1px 1px rgba(0,0,0,.15),0 0 0 1px rgba(47,52,61,.2);height:13px;position:relative;-ms-transition:all .2s ease;transition:all .2s ease;width:13px;margin-top:0}.pocketnet_iframe .plyr--full-ui input[type=range]::-ms-tooltip{display:none}.pocketnet_iframe .plyr--full-ui input[type=range]:focus{outline:0}.pocketnet_iframe .plyr--full-ui input[type=range]::-moz-focus-outer{border:0}.pocketnet_iframe .plyr--full-ui input[type=range].plyr__tab-focus::-webkit-slider-runnable-track{box-shadow:0 0 0 5px rgba(26,175,255,.5);outline:0}.pocketnet_iframe .plyr--full-ui input[type=range].plyr__tab-focus::-moz-range-track{box-shadow:0 0 0 5px rgba(26,175,255,.5);outline:0}.pocketnet_iframe .plyr--full-ui input[type=range].plyr__tab-focus::-ms-track{box-shadow:0 0 0 5px rgba(26,175,255,.5);outline:0}.pocketnet_iframe .plyr--full-ui.plyr--video input[type=range]::-webkit-slider-runnable-track{background-color:hsla(0,0%,100%,.25)}.pocketnet_iframe .plyr--full-ui.plyr--video input[type=range]::-moz-range-track{background-color:hsla(0,0%,100%,.25)}.pocketnet_iframe .plyr--full-ui.plyr--video input[type=range]::-ms-track{background-color:hsla(0,0%,100%,.25)}.pocketnet_iframe .plyr--full-ui.plyr--video input[type=range]:active::-webkit-slider-thumb{box-shadow:0 1px 1px rgba(0,0,0,.15),0 0 0 1px rgba(47,52,61,.2),0 0 0 3px hsla(0,0%,100%,.5)}.pocketnet_iframe .plyr--full-ui.plyr--video input[type=range]:active::-moz-range-thumb{box-shadow:0 1px 1px rgba(0,0,0,.15),0 0 0 1px rgba(47,52,61,.2),0 0 0 3px hsla(0,0%,100%,.5)}.pocketnet_iframe .plyr--full-ui.plyr--video input[type=range]:active::-ms-thumb{box-shadow:0 1px 1px rgba(0,0,0,.15),0 0 0 1px rgba(47,52,61,.2),0 0 0 3px hsla(0,0%,100%,.5)}.pocketnet_iframe .plyr--full-ui.plyr--audio input[type=range]::-webkit-slider-runnable-track{background-color:rgba(183,197,205,.66)}.pocketnet_iframe .plyr--full-ui.plyr--audio input[type=range]::-moz-range-track{background-color:rgba(183,197,205,.66)}.pocketnet_iframe .plyr--full-ui.plyr--audio input[type=range]::-ms-track{background-color:rgba(183,197,205,.66)}.pocketnet_iframe .plyr--full-ui.plyr--audio input[type=range]:active::-webkit-slider-thumb{box-shadow:0 1px 1px rgba(0,0,0,.15),0 0 0 1px rgba(47,52,61,.2),0 0 0 3px rgba(0,0,0,.1)}.pocketnet_iframe .plyr--full-ui.plyr--audio input[type=range]:active::-moz-range-thumb{box-shadow:0 1px 1px rgba(0,0,0,.15),0 0 0 1px rgba(47,52,61,.2),0 0 0 3px rgba(0,0,0,.1)}.pocketnet_iframe .plyr--full-ui.plyr--audio input[type=range]:active::-ms-thumb{box-shadow:0 1px 1px rgba(0,0,0,.15),0 0 0 1px rgba(47,52,61,.2),0 0 0 3px rgba(0,0,0,.1)}.pocketnet_iframe .plyr__poster{background-color:#000;background-position:50% 50%;background-repeat:no-repeat;background-size:contain;height:100%;left:0;opacity:0;position:absolute;top:0;transition:opacity .2s ease;width:100%;z-index:1}.pocketnet_iframe .plyr--stopped.plyr__poster-enabled .plyr__poster{opacity:1}.pocketnet_iframe .plyr__time{font-size:14px}.pocketnet_iframe .plyr__time+.plyr__time:before{content:\"\\2044\";margin-right:10px}@media (max-width:767px){.pocketnet_iframe .plyr__time+.plyr__time{display:none}}.pocketnet_iframe .plyr--video .plyr__time{text-shadow:0 1px 1px rgba(0,0,0,.15)}.pocketnet_iframe .plyr__tooltip{background:hsla(0,0%,100%,.9);border-radius:3px;bottom:100%;box-shadow:0 1px 2px rgba(0,0,0,.15);color:#4f5b5f;font-size:14px;font-weight:500;left:50%;line-height:1.3;margin-bottom:10px;opacity:0;padding:5px 7.5px;pointer-events:none;position:absolute;transform:translate(-50%,10px) scale(.8);transform-origin:50% 100%;transition:transform .2s ease .1s,opacity .2s ease .1s;white-space:nowrap;z-index:2}.pocketnet_iframe .plyr__tooltip:before{border-left:4px solid transparent;border-right:4px solid transparent;border-top:4px solid hsla(0,0%,100%,.9);bottom:-4px;content:\"\";height:0;left:50%;position:absolute;transform:translateX(-50%);width:0;z-index:2}.pocketnet_iframe .plyr .plyr__control.plyr__tab-focus .plyr__tooltip,.pocketnet_iframe .plyr .plyr__control:hover .plyr__tooltip,.pocketnet_iframe .plyr__tooltip--visible{opacity:1;transform:translate(-50%) scale(1)}.pocketnet_iframe .plyr .plyr__control:hover .plyr__tooltip{z-index:3}.pocketnet_iframe .plyr__controls>.plyr__control:first-child+.plyr__control .plyr__tooltip,.pocketnet_iframe .plyr__controls>.plyr__control:first-child .plyr__tooltip{left:0;transform:translateY(10px) scale(.8);transform-origin:0 100%}.pocketnet_iframe .plyr__controls>.plyr__control:first-child+.plyr__control .plyr__tooltip:before,.pocketnet_iframe .plyr__controls>.plyr__control:first-child .plyr__tooltip:before{left:16px}.pocketnet_iframe .plyr__controls>.plyr__control:last-child .plyr__tooltip{left:auto;right:0;transform:translateY(10px) scale(.8);transform-origin:100% 100%}.pocketnet_iframe .plyr__controls>.plyr__control:last-child .plyr__tooltip:before{left:auto;right:16px;transform:translateX(50%)}.pocketnet_iframe .plyr__controls>.plyr__control:first-child+.plyr__control.plyr__tab-focus .plyr__tooltip,.pocketnet_iframe .plyr__controls>.plyr__control:first-child+.plyr__control .plyr__tooltip--visible,.pocketnet_iframe .plyr__controls>.plyr__control:first-child+.plyr__control:hover .plyr__tooltip,.pocketnet_iframe .plyr__controls>.plyr__control:first-child.plyr__tab-focus .plyr__tooltip,.pocketnet_iframe .plyr__controls>.plyr__control:first-child .plyr__tooltip--visible,.pocketnet_iframe .plyr__controls>.plyr__control:first-child:hover .plyr__tooltip,.pocketnet_iframe .plyr__controls>.plyr__control:last-child.plyr__tab-focus .plyr__tooltip,.pocketnet_iframe .plyr__controls>.plyr__control:last-child .plyr__tooltip--visible,.pocketnet_iframe .plyr__controls>.plyr__control:last-child:hover .plyr__tooltip{transform:translate(0) scale(1)}.pocketnet_iframe .plyr--video{background:#000;overflow:hidden}.pocketnet_iframe .plyr--video.plyr--menu-open{overflow:visible}.pocketnet_iframe .plyr__video-wrapper{background:#000;border-radius:inherit;overflow:hidden;position:relative;z-index:0}.pocketnet_iframe .plyr__video-embed,.pocketnet_iframe .plyr__video-wrapper--fixed-ratio{height:0;padding-bottom:56.25%}.pocketnet_iframe .plyr__video-embed iframe,.pocketnet_iframe .plyr__video-wrapper--fixed-ratio video{border:0;height:100%;left:0;position:absolute;top:0;-webkit-user-select:none;-moz-user-select:none;user-select:none;width:100%}.pocketnet_iframe .plyr--full-ui .plyr__video-embed>.plyr__video-embed__container{padding-bottom:240%;position:relative;transform:translateY(-38.28125%)}.pocketnet_iframe .plyr__progress{left:6.5px;margin-right:13px;position:relative}.pocketnet_iframe .plyr__progress__buffer,.pocketnet_iframe .plyr__progress input[type=range]{margin-left:-6.5px;margin-right:-6.5px;width:calc(100% + 13px)}.pocketnet_iframe .plyr__progress input[type=range]{position:relative;z-index:2}.pocketnet_iframe .plyr__progress .plyr__tooltip{font-size:14px;left:0}.pocketnet_iframe .plyr__progress__buffer{-webkit-appearance:none;background:0 0;border:0;border-radius:100px;height:5px;left:0;margin-top:-2.5px;padding:0;position:absolute;top:50%}.pocketnet_iframe .plyr__progress__buffer::-webkit-progress-bar{background:0 0}.pocketnet_iframe .plyr__progress__buffer::-webkit-progress-value{background:currentColor;border-radius:100px;min-width:5px;-webkit-transition:width .2s ease;transition:width .2s ease}.pocketnet_iframe .plyr__progress__buffer::-moz-progress-bar{background:currentColor;border-radius:100px;min-width:5px;-moz-transition:width .2s ease;transition:width .2s ease}.pocketnet_iframe .plyr__progress__buffer::-ms-fill{border-radius:100px;-ms-transition:width .2s ease;transition:width .2s ease}.pocketnet_iframe .plyr--video .plyr__progress__buffer{box-shadow:0 1px 1px rgba(0,0,0,.15);color:hsla(0,0%,100%,.25)}.pocketnet_iframe .plyr--audio .plyr__progress__buffer{color:rgba(183,197,205,.66)}.pocketnet_iframe .plyr--loading .plyr__progress__buffer{-webkit-animation:plyr-progress 1s linear infinite;animation:plyr-progress 1s linear infinite;background-image:linear-gradient(-45deg,rgba(47,52,61,.6) 25%,transparent 0,transparent 50%,rgba(47,52,61,.6) 0,rgba(47,52,61,.6) 75%,transparent 0,transparent);background-repeat:repeat-x;background-size:25px 25px;color:transparent}.pocketnet_iframe .plyr--video.plyr--loading .plyr__progress__buffer{background-color:hsla(0,0%,100%,.25)}.pocketnet_iframe .plyr--audio.plyr--loading .plyr__progress__buffer{background-color:rgba(183,197,205,.66)}.pocketnet_iframe .plyr__volume{align-items:center;display:flex;flex:1;position:relative}.pocketnet_iframe .plyr__volume input[type=range]{margin-left:5px;position:relative;z-index:2}@media (min-width:480px){.pocketnet_iframe .plyr__volume{max-width:90px}}@media (min-width:768px){.pocketnet_iframe .plyr__volume{max-width:110px}}.pocketnet_iframe .plyr--is-ios.plyr--vimeo [data-plyr=mute],.pocketnet_iframe .plyr--is-ios .plyr__volume{display:none!important}.pocketnet_iframe .plyr:fullscreen{background:#000;border-radius:0!important;height:100%;margin:0;width:100%}.pocketnet_iframe .plyr:fullscreen video{height:100%}.pocketnet_iframe .plyr:fullscreen .plyr__video-wrapper{height:100%;width:100%}.pocketnet_iframe .plyr:fullscreen.plyr--vimeo .plyr__video-wrapper{height:0;top:50%;transform:translateY(-50%)}.pocketnet_iframe .plyr:fullscreen .plyr__control .icon--exit-fullscreen{display:block}.pocketnet_iframe .plyr:fullscreen .plyr__control .icon--exit-fullscreen+svg{display:none}.pocketnet_iframe .plyr:fullscreen.plyr--hide-controls{cursor:none}@media (min-width:1024px){.pocketnet_iframe .plyr:-webkit-full-screen .plyr__captions{font-size:21px}.pocketnet_iframe .plyr:fullscreen .plyr__captions{font-size:21px}}.pocketnet_iframe .plyr:-webkit-full-screen{background:#000;border-radius:0!important;height:100%;margin:0;width:100%}.pocketnet_iframe .plyr:-webkit-full-screen video{height:100%}.pocketnet_iframe .plyr:-webkit-full-screen .plyr__video-wrapper{height:100%;width:100%}.pocketnet_iframe .plyr:-webkit-full-screen.plyr--vimeo .plyr__video-wrapper{height:0;top:50%;transform:translateY(-50%)}.pocketnet_iframe .plyr:-webkit-full-screen .plyr__control .icon--exit-fullscreen{display:block}.pocketnet_iframe .plyr:-webkit-full-screen .plyr__control .icon--exit-fullscreen+svg{display:none}.pocketnet_iframe .plyr:-webkit-full-screen.plyr--hide-controls{cursor:none}@media (min-width:1024px){.pocketnet_iframe .plyr:-webkit-full-screen .plyr__captions{font-size:21px}}.pocketnet_iframe .plyr:-moz-full-screen{background:#000;border-radius:0!important;height:100%;margin:0;width:100%}.pocketnet_iframe .plyr:-moz-full-screen video{height:100%}.pocketnet_iframe .plyr:-moz-full-screen .plyr__video-wrapper{height:100%;width:100%}.pocketnet_iframe .plyr:-moz-full-screen.plyr--vimeo .plyr__video-wrapper{height:0;top:50%;transform:translateY(-50%)}.pocketnet_iframe .plyr:-moz-full-screen .plyr__control .icon--exit-fullscreen{display:block}.pocketnet_iframe .plyr:-moz-full-screen .plyr__control .icon--exit-fullscreen+svg{display:none}.pocketnet_iframe .plyr:-moz-full-screen.plyr--hide-controls{cursor:none}@media (min-width:1024px){.pocketnet_iframe .plyr:-moz-full-screen .plyr__captions{font-size:21px}}.pocketnet_iframe .plyr:-ms-fullscreen{background:#000;border-radius:0!important;height:100%;margin:0;width:100%}.pocketnet_iframe .plyr:-ms-fullscreen video{height:100%}.pocketnet_iframe .plyr:-ms-fullscreen .plyr__video-wrapper{height:100%;width:100%}.pocketnet_iframe .plyr:-ms-fullscreen.plyr--vimeo .plyr__video-wrapper{height:0;top:50%;transform:translateY(-50%)}.pocketnet_iframe .plyr:-ms-fullscreen .plyr__control .icon--exit-fullscreen{display:block}.pocketnet_iframe .plyr:-ms-fullscreen .plyr__control .icon--exit-fullscreen+svg{display:none}.pocketnet_iframe .plyr:-ms-fullscreen.plyr--hide-controls{cursor:none}@media (min-width:1024px){.pocketnet_iframe .plyr:-ms-fullscreen .plyr__captions{font-size:21px}}.pocketnet_iframe .plyr--fullscreen-fallback{background:#000;border-radius:0!important;height:100%;margin:0;width:100%;bottom:0;left:0;position:fixed;right:0;top:0;z-index:10000000}.pocketnet_iframe .plyr--fullscreen-fallback video{height:100%}.pocketnet_iframe .plyr--fullscreen-fallback .plyr__video-wrapper{height:100%;width:100%}.pocketnet_iframe .plyr--fullscreen-fallback.plyr--vimeo .plyr__video-wrapper{height:0;top:50%;transform:translateY(-50%)}.pocketnet_iframe .plyr--fullscreen-fallback .plyr__control .icon--exit-fullscreen{display:block}.pocketnet_iframe .plyr--fullscreen-fallback .plyr__control .icon--exit-fullscreen+svg{display:none}.pocketnet_iframe .plyr--fullscreen-fallback.plyr--hide-controls{cursor:none}@media (min-width:1024px){.pocketnet_iframe .plyr--fullscreen-fallback .plyr__captions{font-size:21px}}.pocketnet_iframe .plyr__ads{border-radius:inherit;bottom:0;cursor:pointer;left:0;overflow:hidden;position:absolute;right:0;top:0;z-index:-1}.pocketnet_iframe .plyr__ads>div,.pocketnet_iframe .plyr__ads>div iframe{height:100%;position:absolute;width:100%}.pocketnet_iframe .plyr__ads:after{background:rgba(47,52,61,.8);border-radius:2px;bottom:10px;color:#fff;content:attr(data-badge-text);font-size:11px;padding:2px 6px;pointer-events:none;position:absolute;right:10px;z-index:3}.pocketnet_iframe .plyr__ads:after:empty{display:none}.pocketnet_iframe .plyr__cues{background:currentColor;display:block;height:5px;left:0;margin:-2.5px 0 0;opacity:.8;position:absolute;top:50%;width:3px;z-index:3}.pocketnet_iframe .plyr__preview-thumb{background-color:hsla(0,0%,100%,.9);border-radius:3px;bottom:100%;box-shadow:0 1px 2px rgba(0,0,0,.15);margin-bottom:10px;opacity:0;padding:3px;pointer-events:none;position:absolute;transform:translateY(10px) scale(.8);transform-origin:50% 100%;transition:transform .2s ease .1s,opacity .2s ease .1s;z-index:2}.pocketnet_iframe .plyr__preview-thumb--is-shown{opacity:1;transform:translate(0) scale(1)}.pocketnet_iframe .plyr__preview-thumb:before{border-left:4px solid transparent;border-right:4px solid transparent;border-top:4px solid hsla(0,0%,100%,.9);bottom:-4px;content:\"\";height:0;left:50%;position:absolute;transform:translateX(-50%);width:0;z-index:2}.pocketnet_iframe .plyr__preview-thumb__image-container{background:#b7c5cd;border-radius:2px;overflow:hidden;position:relative;z-index:0}.pocketnet_iframe .plyr__preview-thumb__image-container img{height:100%;left:0;max-height:none;max-width:none;position:absolute;top:0;width:100%}.pocketnet_iframe .plyr__preview-thumb__time-container{bottom:6px;left:0;position:absolute;right:0;white-space:nowrap;z-index:3}.pocketnet_iframe .plyr__preview-thumb__time-container span{background-color:rgba(0,0,0,.55);border-radius:2px;color:#fff;font-size:14px;padding:3px 6px}.pocketnet_iframe .plyr__preview-scrubbing{bottom:0;filter:blur(1px);height:100%;left:0;margin:auto;opacity:0;overflow:hidden;position:absolute;right:0;top:0;transition:opacity .3s ease;width:100%;z-index:1}.pocketnet_iframe .plyr__preview-scrubbing--is-shown{opacity:1}.pocketnet_iframe .plyr__preview-scrubbing img{height:100%;left:0;max-height:none;max-width:none;-o-object-fit:contain;object-fit:contain;position:absolute;top:0;width:100%}.pocketnet_iframe .plyr--no-transition{transition:none!important}.pocketnet_iframe .plyr__sr-only{clip:rect(1px,1px,1px,1px);overflow:hidden;border:0!important;height:1px!important;padding:0!important;position:absolute!important;width:1px!important}.pocketnet_iframe .plyr [hidden]{display:none!important}.pocketnet_iframe .owl-carousel,.pocketnet_iframe .owl-carousel .owl-item{-webkit-tap-highlight-color:transparent;position:relative}.pocketnet_iframe .owl-carousel{display:none;width:100%;z-index:1}.pocketnet_iframe .owl-carousel .owl-stage{position:relative;touch-action:manipulation;-moz-backface-visibility:hidden}.pocketnet_iframe .owl-carousel .owl-stage:after{content:\".\";display:block;clear:both;visibility:hidden;line-height:0;height:0}.pocketnet_iframe .owl-carousel .owl-stage-outer{position:relative;overflow:hidden;-webkit-transform:translateZ(0)}.pocketnet_iframe .owl-carousel .owl-item,.pocketnet_iframe .owl-carousel .owl-wrapper{-webkit-backface-visibility:hidden;-moz-backface-visibility:hidden;-ms-backface-visibility:hidden;-webkit-transform:translateZ(0);-moz-transform:translateZ(0);-ms-transform:translateZ(0)}.pocketnet_iframe .owl-carousel .owl-item{min-height:1px;float:left;-webkit-backface-visibility:hidden;-webkit-touch-callout:none}.pocketnet_iframe .owl-carousel .owl-item img{display:block;width:100%}.pocketnet_iframe .owl-carousel .owl-dots.disabled,.pocketnet_iframe .owl-carousel .owl-nav.disabled{display:none}.pocketnet_iframe .no-js .owl-carousel,.pocketnet_iframe .owl-carousel.owl-loaded{display:block}.pocketnet_iframe .owl-carousel .owl-dot,.pocketnet_iframe .owl-carousel .owl-nav .owl-next,.pocketnet_iframe .owl-carousel .owl-nav .owl-prev{cursor:pointer;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pocketnet_iframe .owl-carousel .owl-nav button.owl-next,.pocketnet_iframe .owl-carousel .owl-nav button.owl-prev,.pocketnet_iframe .owl-carousel button.owl-dot{background:0 0;color:inherit;border:none;padding:0!important;font:inherit}.pocketnet_iframe .owl-carousel.owl-loading{opacity:0;display:block}.pocketnet_iframe .owl-carousel.owl-hidden{opacity:0}.pocketnet_iframe .owl-carousel.owl-refresh .owl-item{visibility:hidden}.pocketnet_iframe .owl-carousel.owl-drag .owl-item{touch-action:pan-y;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pocketnet_iframe .owl-carousel.owl-grab{cursor:move;cursor:-webkit-grab;cursor:grab}.pocketnet_iframe .owl-carousel.owl-rtl{direction:rtl}.pocketnet_iframe .owl-carousel.owl-rtl .owl-item{float:right}.pocketnet_iframe .owl-carousel .animated{-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-fill-mode:both;animation-fill-mode:both}.pocketnet_iframe .owl-carousel .owl-animated-in{z-index:0}.pocketnet_iframe .owl-carousel .owl-animated-out{z-index:1}.pocketnet_iframe .owl-carousel .fadeOut{-webkit-animation-name:fadeOut;animation-name:fadeOut}@-webkit-keyframes fadeOut{0%{opacity:1}to{opacity:0}}@keyframes fadeOut{0%{opacity:1}to{opacity:0}}.pocketnet_iframe .owl-height{transition:height .5s ease-in-out}.pocketnet_iframe .owl-carousel .owl-item .owl-lazy{opacity:0;transition:opacity .4s ease}.pocketnet_iframe .owl-carousel .owl-item .owl-lazy:not([src]),.pocketnet_iframe .owl-carousel .owl-item .owl-lazy[src^=\"\"]{max-height:0}.pocketnet_iframe .owl-carousel .owl-item img.owl-lazy{transform-style:preserve-3d}.pocketnet_iframe .owl-carousel .owl-video-wrapper{position:relative;height:100%;background:#000}.pocketnet_iframe .owl-carousel .owl-video-play-icon{position:absolute;height:80px;width:80px;left:50%;top:50%;margin-left:-40px;margin-top:-40px;cursor:pointer;z-index:1;-webkit-backface-visibility:hidden;transition:transform .1s ease}.pocketnet_iframe .owl-carousel .owl-video-play-icon:hover{transform:scale(1.3)}.pocketnet_iframe .owl-carousel .owl-video-playing .owl-video-play-icon,.pocketnet_iframe .owl-carousel .owl-video-playing .owl-video-tn{display:none}.pocketnet_iframe .owl-carousel .owl-video-tn{opacity:0;height:100%;background-position:50%;background-repeat:no-repeat;background-size:contain;transition:opacity .4s ease}.pocketnet_iframe .owl-carousel .owl-video-frame{position:relative;z-index:1;height:100%;width:100%}.pocketnet_iframe .owl-theme .owl-dots,.pocketnet_iframe .owl-theme .owl-nav{text-align:center;-webkit-tap-highlight-color:transparent}.pocketnet_iframe .owl-theme .owl-nav{margin-top:10px}.pocketnet_iframe .owl-theme .owl-nav [class*=owl-]{color:#fff;font-size:14px;margin:5px;padding:4px 7px;background:#d6d6d6;display:inline-block;cursor:pointer;border-radius:3px}.pocketnet_iframe .owl-theme .owl-nav [class*=owl-]:hover{background:#869791;color:#fff;text-decoration:none}.pocketnet_iframe .owl-theme .owl-nav .disabled{opacity:.5;cursor:default}.pocketnet_iframe .owl-theme .owl-nav.disabled+.owl-dots{margin-top:10px}.pocketnet_iframe .owl-theme .owl-dots .owl-dot{display:inline-block;zoom:1}.pocketnet_iframe .owl-theme .owl-dots .owl-dot span{width:10px;height:10px;margin:5px 7px;background:#d6d6d6;display:block;-webkit-backface-visibility:visible;transition:opacity .2s ease;border-radius:30px}.pocketnet_iframe .owl-theme .owl-dots .owl-dot.active span,.pocketnet_iframe .owl-theme .owl-dots .owl-dot:hover span{background:#869791}", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
-/***/ "d6fd":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_11_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_11_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_11_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_11_oneOf_1_3_node_modules_less_loader_dist_cjs_js_ref_11_oneOf_1_4_exported_less_vue_type_style_index_0_lang_less___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("e512");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_11_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_11_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_11_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_11_oneOf_1_3_node_modules_less_loader_dist_cjs_js_ref_11_oneOf_1_4_exported_less_vue_type_style_index_0_lang_less___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_11_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_11_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_11_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_11_oneOf_1_3_node_modules_less_loader_dist_cjs_js_ref_11_oneOf_1_4_exported_less_vue_type_style_index_0_lang_less___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_11_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_11_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_11_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_11_oneOf_1_3_node_modules_less_loader_dist_cjs_js_ref_11_oneOf_1_4_exported_less_vue_type_style_index_0_lang_less___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_11_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_11_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_11_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_11_oneOf_1_3_node_modules_less_loader_dist_cjs_js_ref_11_oneOf_1_4_exported_less_vue_type_style_index_0_lang_less___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
-
-/***/ }),
-
-/***/ "dacd":
+/***/ "b619":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/metaMessage/index.vue?vue&type=template&id=cffb7280&scoped=true&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"metaMsg",staticClass:"metaMsg"},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.iframe),expression:"iframe"}],staticClass:"pocketnet_iframe_wrapper"},[_c('div',{ref:"iframe",staticClass:"pocketnet_iframe"}),(_vm.gotopn)?_c('div',{staticClass:"openlink"},[_c('button',{staticClass:"button orange small rounded",on:{"click":function($event){return _vm.openlinkiframe(_vm.url)}}},[_vm._v(" "+_vm._s(_vm.$t("caption.open"))+" ")])]):_vm._e()]),(_vm.matrix)?_c('div',{staticClass:"matrixUrl"},[_c('matrixlink',{attrs:{"url":_vm.url}})],1):_vm._e(),(!_vm.iframe && !_vm.matrix)?_c('div',{staticClass:"customURL"},[_c('div',{staticClass:"link"},[_c('div',{on:{"click":function($event){return _vm.openlink(_vm.url)}}},[_c('i',{staticClass:"fas fa-link"}),_vm._v(" "),_c('span',[_vm._v(_vm._s(_vm.url))])])]),(_vm.image || _vm.title)?_c('div',{staticClass:"header"},[(_vm.image)?_c('div',[_c('bgimage',{attrs:{"src":_vm.image}})],1):_vm._e(),_c('div',{staticClass:"header-text"},[_c('span',{staticClass:"title"},[_vm._v(_vm._s(_vm.title))]),(_vm.description)?_c('span',{staticClass:"description"},[_vm._v(_vm._s(_vm.description))]):_vm._e()])]):_vm._e()]):_vm._e()])}
-var staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/ssr-window/dist/ssr-window.esm.js
+/**
+ * SSR Window 2.0.0
+ * Better handling for window object in SSR environment
+ * https://github.com/nolimits4web/ssr-window
+ *
+ * Copyright 2020, Vladimir Kharlampidi
+ *
+ * Licensed under MIT
+ *
+ * Released on: May 12, 2020
+ */
+/* eslint-disable no-param-reassign */
+function isObject(obj) {
+    return (obj !== null &&
+        typeof obj === 'object' &&
+        'constructor' in obj &&
+        obj.constructor === Object);
+}
+function extend(target, src) {
+    if (target === void 0) { target = {}; }
+    if (src === void 0) { src = {}; }
+    Object.keys(src).forEach(function (key) {
+        if (typeof target[key] === 'undefined')
+            target[key] = src[key];
+        else if (isObject(src[key]) &&
+            isObject(target[key]) &&
+            Object.keys(src[key]).length > 0) {
+            extend(target[key], src[key]);
+        }
+    });
+}
+
+var doc = typeof document !== 'undefined' ? document : {};
+var ssrDocument = {
+    body: {},
+    addEventListener: function () { },
+    removeEventListener: function () { },
+    activeElement: {
+        blur: function () { },
+        nodeName: '',
+    },
+    querySelector: function () {
+        return null;
+    },
+    querySelectorAll: function () {
+        return [];
+    },
+    getElementById: function () {
+        return null;
+    },
+    createEvent: function () {
+        return {
+            initEvent: function () { },
+        };
+    },
+    createElement: function () {
+        return {
+            children: [],
+            childNodes: [],
+            style: {},
+            setAttribute: function () { },
+            getElementsByTagName: function () {
+                return [];
+            },
+        };
+    },
+    createElementNS: function () {
+        return {};
+    },
+    importNode: function () {
+        return null;
+    },
+    location: {
+        hash: '',
+        host: '',
+        hostname: '',
+        href: '',
+        origin: '',
+        pathname: '',
+        protocol: '',
+        search: '',
+    },
+};
+extend(doc, ssrDocument);
+
+var win = typeof window !== 'undefined' ? window : {};
+var ssrWindow = {
+    document: ssrDocument,
+    navigator: {
+        userAgent: '',
+    },
+    location: {
+        hash: '',
+        host: '',
+        hostname: '',
+        href: '',
+        origin: '',
+        pathname: '',
+        protocol: '',
+        search: '',
+    },
+    history: {
+        replaceState: function () { },
+        pushState: function () { },
+        go: function () { },
+        back: function () { },
+    },
+    CustomEvent: function CustomEvent() {
+        return this;
+    },
+    addEventListener: function () { },
+    removeEventListener: function () { },
+    getComputedStyle: function () {
+        return {
+            getPropertyValue: function () {
+                return '';
+            },
+        };
+    },
+    Image: function () { },
+    Date: function () { },
+    screen: {},
+    setTimeout: function () { },
+    clearTimeout: function () { },
+    matchMedia: function () {
+        return {};
+    },
+};
+extend(win, ssrWindow);
 
 
-// CONCATENATED MODULE: ./src/components/events/event/metaMessage/index.vue?vue&type=template&id=cffb7280&scoped=true&
 
-// CONCATENATED MODULE: ./src/application/utils/widgets.js
-var PNWIDGETS = function () {
-  var self = this;
-  self.renders = {
-    iframe: function (seed, action, id, p) {
-      var domain = window.pocketnetdomain || 'pocketnet.app';
-      return '<iframe width="100%" src="https://' + domain + '/openapi.html?action=' + action + '&id=' + id + '&embeddingSettigns=' + p + '" id="pocketnet_iframe_' + seed + '" scrolling="no" style="border: none;" frameborder="0" marginheight="0" marginwidth="0" loading="lazy" allowfullscreen allowautoplay></iframe>';
+// CONCATENATED MODULE: ./node_modules/dom7/dist/dom7.modular.js
+/**
+ * Dom7 2.1.5
+ * Minimalistic JavaScript library for DOM manipulation, with a jQuery-compatible API
+ * http://framework7.io/docs/dom.html
+ *
+ * Copyright 2020, Vladimir Kharlampidi
+ * The iDangero.us
+ * http://www.idangero.us/
+ *
+ * Licensed under MIT
+ *
+ * Released on: May 15, 2020
+ */
+
+
+class Dom7 {
+  constructor(arr) {
+    const self = this;
+    // Create array-like object
+    for (let i = 0; i < arr.length; i += 1) {
+      self[i] = arr[i];
     }
+    self.length = arr.length;
+    // Return collection with methods
+    return this;
+  }
+}
+
+function $(selector, context) {
+  const arr = [];
+  let i = 0;
+  if (selector && !context) {
+    if (selector instanceof Dom7) {
+      return selector;
+    }
+  }
+  if (selector) {
+      // String
+    if (typeof selector === 'string') {
+      let els;
+      let tempParent;
+      const html = selector.trim();
+      if (html.indexOf('<') >= 0 && html.indexOf('>') >= 0) {
+        let toCreate = 'div';
+        if (html.indexOf('<li') === 0) toCreate = 'ul';
+        if (html.indexOf('<tr') === 0) toCreate = 'tbody';
+        if (html.indexOf('<td') === 0 || html.indexOf('<th') === 0) toCreate = 'tr';
+        if (html.indexOf('<tbody') === 0) toCreate = 'table';
+        if (html.indexOf('<option') === 0) toCreate = 'select';
+        tempParent = doc.createElement(toCreate);
+        tempParent.innerHTML = html;
+        for (i = 0; i < tempParent.childNodes.length; i += 1) {
+          arr.push(tempParent.childNodes[i]);
+        }
+      } else {
+        if (!context && selector[0] === '#' && !selector.match(/[ .<>:~]/)) {
+          // Pure ID selector
+          els = [doc.getElementById(selector.trim().split('#')[1])];
+        } else {
+          // Other selectors
+          els = (context || doc).querySelectorAll(selector.trim());
+        }
+        for (i = 0; i < els.length; i += 1) {
+          if (els[i]) arr.push(els[i]);
+        }
+      }
+    } else if (selector.nodeType || selector === win || selector === doc) {
+      // Node/element
+      arr.push(selector);
+    } else if (selector.length > 0 && selector[0].nodeType) {
+      // Array of elements or instance of Dom
+      for (i = 0; i < selector.length; i += 1) {
+        arr.push(selector[i]);
+      }
+    }
+  }
+  return new Dom7(arr);
+}
+
+$.fn = Dom7.prototype;
+$.Class = Dom7;
+$.Dom7 = Dom7;
+
+function unique(arr) {
+  const uniqueArray = [];
+  for (let i = 0; i < arr.length; i += 1) {
+    if (uniqueArray.indexOf(arr[i]) === -1) uniqueArray.push(arr[i]);
+  }
+  return uniqueArray;
+}
+function toCamelCase(string) {
+  return string.toLowerCase().replace(/-(.)/g, (match, group1) => group1.toUpperCase());
+}
+
+function requestAnimationFrame(callback) {
+  if (win.requestAnimationFrame) return win.requestAnimationFrame(callback);
+  else if (win.webkitRequestAnimationFrame) return win.webkitRequestAnimationFrame(callback);
+  return win.setTimeout(callback, 1000 / 60);
+}
+function cancelAnimationFrame(id) {
+  if (win.cancelAnimationFrame) return win.cancelAnimationFrame(id);
+  else if (win.webkitCancelAnimationFrame) return win.webkitCancelAnimationFrame(id);
+  return win.clearTimeout(id);
+}
+
+// Classes and attributes
+function addClass(className) {
+  if (typeof className === 'undefined') {
+    return this;
+  }
+  const classes = className.split(' ');
+  for (let i = 0; i < classes.length; i += 1) {
+    for (let j = 0; j < this.length; j += 1) {
+      if (typeof this[j] !== 'undefined' && typeof this[j].classList !== 'undefined') this[j].classList.add(classes[i]);
+    }
+  }
+  return this;
+}
+function removeClass(className) {
+  const classes = className.split(' ');
+  for (let i = 0; i < classes.length; i += 1) {
+    for (let j = 0; j < this.length; j += 1) {
+      if (typeof this[j] !== 'undefined' && typeof this[j].classList !== 'undefined') this[j].classList.remove(classes[i]);
+    }
+  }
+  return this;
+}
+function hasClass(className) {
+  if (!this[0]) return false;
+  return this[0].classList.contains(className);
+}
+function toggleClass(className) {
+  const classes = className.split(' ');
+  for (let i = 0; i < classes.length; i += 1) {
+    for (let j = 0; j < this.length; j += 1) {
+      if (typeof this[j] !== 'undefined' && typeof this[j].classList !== 'undefined') this[j].classList.toggle(classes[i]);
+    }
+  }
+  return this;
+}
+function attr(attrs, value) {
+  if (arguments.length === 1 && typeof attrs === 'string') {
+    // Get attr
+    if (this[0]) return this[0].getAttribute(attrs);
+    return undefined;
+  }
+
+  // Set attrs
+  for (let i = 0; i < this.length; i += 1) {
+    if (arguments.length === 2) {
+      // String
+      this[i].setAttribute(attrs, value);
+    } else {
+      // Object
+      // eslint-disable-next-line
+      for (const attrName in attrs) {
+        this[i][attrName] = attrs[attrName];
+        this[i].setAttribute(attrName, attrs[attrName]);
+      }
+    }
+  }
+  return this;
+}
+// eslint-disable-next-line
+function removeAttr(attr) {
+  for (let i = 0; i < this.length; i += 1) {
+    this[i].removeAttribute(attr);
+  }
+  return this;
+}
+// eslint-disable-next-line
+function dom7_modular_prop(props, value) {
+  if (arguments.length === 1 && typeof props === 'string') {
+    // Get prop
+    if (this[0]) return this[0][props];
+  } else {
+    // Set props
+    for (let i = 0; i < this.length; i += 1) {
+      if (arguments.length === 2) {
+        // String
+        this[i][props] = value;
+      } else {
+        // Object
+        // eslint-disable-next-line
+        for (const propName in props) {
+          this[i][propName] = props[propName];
+        }
+      }
+    }
+    return this;
+  }
+}
+function dom7_modular_data(key, value) {
+  let el;
+  if (typeof value === 'undefined') {
+    el = this[0];
+    // Get value
+    if (el) {
+      if (el.dom7ElementDataStorage && (key in el.dom7ElementDataStorage)) {
+        return el.dom7ElementDataStorage[key];
+      }
+
+      const dataKey = el.getAttribute(`data-${key}`);
+      if (dataKey) {
+        return dataKey;
+      }
+      return undefined;
+    }
+    return undefined;
+  }
+
+  // Set value
+  for (let i = 0; i < this.length; i += 1) {
+    el = this[i];
+    if (!el.dom7ElementDataStorage) el.dom7ElementDataStorage = {};
+    el.dom7ElementDataStorage[key] = value;
+  }
+  return this;
+}
+function removeData(key) {
+  for (let i = 0; i < this.length; i += 1) {
+    const el = this[i];
+    if (el.dom7ElementDataStorage && el.dom7ElementDataStorage[key]) {
+      el.dom7ElementDataStorage[key] = null;
+      delete el.dom7ElementDataStorage[key];
+    }
+  }
+}
+function dataset() {
+  const el = this[0];
+  if (!el) return undefined;
+  const dataset = {}; // eslint-disable-line
+  if (el.dataset) {
+    // eslint-disable-next-line
+    for (const dataKey in el.dataset) {
+      dataset[dataKey] = el.dataset[dataKey];
+    }
+  } else {
+    for (let i = 0; i < el.attributes.length; i += 1) {
+      // eslint-disable-next-line
+      const attr = el.attributes[i];
+      if (attr.name.indexOf('data-') >= 0) {
+        dataset[toCamelCase(attr.name.split('data-')[1])] = attr.value;
+      }
+    }
+  }
+  // eslint-disable-next-line
+  for (const key in dataset) {
+    if (dataset[key] === 'false') dataset[key] = false;
+    else if (dataset[key] === 'true') dataset[key] = true;
+    else if (parseFloat(dataset[key]) === dataset[key] * 1) dataset[key] *= 1;
+  }
+  return dataset;
+}
+function val(value) {
+  const dom = this;
+  if (typeof value === 'undefined') {
+    if (dom[0]) {
+      if (dom[0].multiple && dom[0].nodeName.toLowerCase() === 'select') {
+        const values = [];
+        for (let i = 0; i < dom[0].selectedOptions.length; i += 1) {
+          values.push(dom[0].selectedOptions[i].value);
+        }
+        return values;
+      }
+      return dom[0].value;
+    }
+    return undefined;
+  }
+
+  for (let i = 0; i < dom.length; i += 1) {
+    const el = dom[i];
+    if (Array.isArray(value) && el.multiple && el.nodeName.toLowerCase() === 'select') {
+      for (let j = 0; j < el.options.length; j += 1) {
+        el.options[j].selected = value.indexOf(el.options[j].value) >= 0;
+      }
+    } else {
+      el.value = value;
+    }
+  }
+  return dom;
+}
+// Transforms
+// eslint-disable-next-line
+function dom7_modular_transform(transform) {
+  for (let i = 0; i < this.length; i += 1) {
+    const elStyle = this[i].style;
+    elStyle.webkitTransform = transform;
+    elStyle.transform = transform;
+  }
+  return this;
+}
+function transition(duration) {
+  if (typeof duration !== 'string') {
+    duration = `${duration}ms`; // eslint-disable-line
+  }
+  for (let i = 0; i < this.length; i += 1) {
+    const elStyle = this[i].style;
+    elStyle.webkitTransitionDuration = duration;
+    elStyle.transitionDuration = duration;
+  }
+  return this;
+}
+// Events
+function on(...args) {
+  let [eventType, targetSelector, listener, capture] = args;
+  if (typeof args[1] === 'function') {
+    [eventType, listener, capture] = args;
+    targetSelector = undefined;
+  }
+  if (!capture) capture = false;
+
+  function handleLiveEvent(e) {
+    const target = e.target;
+    if (!target) return;
+    const eventData = e.target.dom7EventData || [];
+    if (eventData.indexOf(e) < 0) {
+      eventData.unshift(e);
+    }
+    if ($(target).is(targetSelector)) listener.apply(target, eventData);
+    else {
+      const parents = $(target).parents(); // eslint-disable-line
+      for (let k = 0; k < parents.length; k += 1) {
+        if ($(parents[k]).is(targetSelector)) listener.apply(parents[k], eventData);
+      }
+    }
+  }
+  function handleEvent(e) {
+    const eventData = e && e.target ? e.target.dom7EventData || [] : [];
+    if (eventData.indexOf(e) < 0) {
+      eventData.unshift(e);
+    }
+    listener.apply(this, eventData);
+  }
+  const events = eventType.split(' ');
+  let j;
+  for (let i = 0; i < this.length; i += 1) {
+    const el = this[i];
+    if (!targetSelector) {
+      for (j = 0; j < events.length; j += 1) {
+        const event = events[j];
+        if (!el.dom7Listeners) el.dom7Listeners = {};
+        if (!el.dom7Listeners[event]) el.dom7Listeners[event] = [];
+        el.dom7Listeners[event].push({
+          listener,
+          proxyListener: handleEvent,
+        });
+        el.addEventListener(event, handleEvent, capture);
+      }
+    } else {
+      // Live events
+      for (j = 0; j < events.length; j += 1) {
+        const event = events[j];
+        if (!el.dom7LiveListeners) el.dom7LiveListeners = {};
+        if (!el.dom7LiveListeners[event]) el.dom7LiveListeners[event] = [];
+        el.dom7LiveListeners[event].push({
+          listener,
+          proxyListener: handleLiveEvent,
+        });
+        el.addEventListener(event, handleLiveEvent, capture);
+      }
+    }
+  }
+  return this;
+}
+function off(...args) {
+  let [eventType, targetSelector, listener, capture] = args;
+  if (typeof args[1] === 'function') {
+    [eventType, listener, capture] = args;
+    targetSelector = undefined;
+  }
+  if (!capture) capture = false;
+
+  const events = eventType.split(' ');
+  for (let i = 0; i < events.length; i += 1) {
+    const event = events[i];
+    for (let j = 0; j < this.length; j += 1) {
+      const el = this[j];
+      let handlers;
+      if (!targetSelector && el.dom7Listeners) {
+        handlers = el.dom7Listeners[event];
+      } else if (targetSelector && el.dom7LiveListeners) {
+        handlers = el.dom7LiveListeners[event];
+      }
+      if (handlers && handlers.length) {
+        for (let k = handlers.length - 1; k >= 0; k -= 1) {
+          const handler = handlers[k];
+          if (listener && handler.listener === listener) {
+            el.removeEventListener(event, handler.proxyListener, capture);
+            handlers.splice(k, 1);
+          } else if (listener && handler.listener && handler.listener.dom7proxy && handler.listener.dom7proxy === listener) {
+            el.removeEventListener(event, handler.proxyListener, capture);
+            handlers.splice(k, 1);
+          } else if (!listener) {
+            el.removeEventListener(event, handler.proxyListener, capture);
+            handlers.splice(k, 1);
+          }
+        }
+      }
+    }
+  }
+  return this;
+}
+function once(...args) {
+  const dom = this;
+  let [eventName, targetSelector, listener, capture] = args;
+  if (typeof args[1] === 'function') {
+    [eventName, listener, capture] = args;
+    targetSelector = undefined;
+  }
+  function onceHandler(...eventArgs) {
+    listener.apply(this, eventArgs);
+    dom.off(eventName, targetSelector, onceHandler, capture);
+    if (onceHandler.dom7proxy) {
+      delete onceHandler.dom7proxy;
+    }
+  }
+  onceHandler.dom7proxy = listener;
+  return dom.on(eventName, targetSelector, onceHandler, capture);
+}
+function trigger(...args) {
+  const events = args[0].split(' ');
+  const eventData = args[1];
+  for (let i = 0; i < events.length; i += 1) {
+    const event = events[i];
+    for (let j = 0; j < this.length; j += 1) {
+      const el = this[j];
+      let evt;
+      try {
+        evt = new win.CustomEvent(event, {
+          detail: eventData,
+          bubbles: true,
+          cancelable: true,
+        });
+      } catch (e) {
+        evt = doc.createEvent('Event');
+        evt.initEvent(event, true, true);
+        evt.detail = eventData;
+      }
+      // eslint-disable-next-line
+      el.dom7EventData = args.filter((data, dataIndex) => dataIndex > 0);
+      el.dispatchEvent(evt);
+      el.dom7EventData = [];
+      delete el.dom7EventData;
+    }
+  }
+  return this;
+}
+function transitionEnd(callback) {
+  const events = ['webkitTransitionEnd', 'transitionend'];
+  const dom = this;
+  let i;
+  function fireCallBack(e) {
+    /* jshint validthis:true */
+    if (e.target !== this) return;
+    callback.call(this, e);
+    for (i = 0; i < events.length; i += 1) {
+      dom.off(events[i], fireCallBack);
+    }
+  }
+  if (callback) {
+    for (i = 0; i < events.length; i += 1) {
+      dom.on(events[i], fireCallBack);
+    }
+  }
+  return this;
+}
+function animationEnd(callback) {
+  const events = ['webkitAnimationEnd', 'animationend'];
+  const dom = this;
+  let i;
+  function fireCallBack(e) {
+    if (e.target !== this) return;
+    callback.call(this, e);
+    for (i = 0; i < events.length; i += 1) {
+      dom.off(events[i], fireCallBack);
+    }
+  }
+  if (callback) {
+    for (i = 0; i < events.length; i += 1) {
+      dom.on(events[i], fireCallBack);
+    }
+  }
+  return this;
+}
+// Sizing/Styles
+function width() {
+  if (this[0] === win) {
+    return win.innerWidth;
+  }
+
+  if (this.length > 0) {
+    return parseFloat(this.css('width'));
+  }
+
+  return null;
+}
+function dom7_modular_outerWidth(includeMargins) {
+  if (this.length > 0) {
+    if (includeMargins) {
+      // eslint-disable-next-line
+      const styles = this.styles();
+      return this[0].offsetWidth + parseFloat(styles.getPropertyValue('margin-right')) + parseFloat(styles.getPropertyValue('margin-left'));
+    }
+    return this[0].offsetWidth;
+  }
+  return null;
+}
+function height() {
+  if (this[0] === win) {
+    return win.innerHeight;
+  }
+
+  if (this.length > 0) {
+    return parseFloat(this.css('height'));
+  }
+
+  return null;
+}
+function dom7_modular_outerHeight(includeMargins) {
+  if (this.length > 0) {
+    if (includeMargins) {
+      // eslint-disable-next-line
+      const styles = this.styles();
+      return this[0].offsetHeight + parseFloat(styles.getPropertyValue('margin-top')) + parseFloat(styles.getPropertyValue('margin-bottom'));
+    }
+    return this[0].offsetHeight;
+  }
+  return null;
+}
+function dom7_modular_offset() {
+  if (this.length > 0) {
+    const el = this[0];
+    const box = el.getBoundingClientRect();
+    const body = doc.body;
+    const clientTop = el.clientTop || body.clientTop || 0;
+    const clientLeft = el.clientLeft || body.clientLeft || 0;
+    const scrollTop = el === win ? win.scrollY : el.scrollTop;
+    const scrollLeft = el === win ? win.scrollX : el.scrollLeft;
+    return {
+      top: (box.top + scrollTop) - clientTop,
+      left: (box.left + scrollLeft) - clientLeft,
+    };
+  }
+
+  return null;
+}
+function hide() {
+  for (let i = 0; i < this.length; i += 1) {
+    this[i].style.display = 'none';
+  }
+  return this;
+}
+function show() {
+  for (let i = 0; i < this.length; i += 1) {
+    const el = this[i];
+    if (el.style.display === 'none') {
+      el.style.display = '';
+    }
+    if (win.getComputedStyle(el, null).getPropertyValue('display') === 'none') {
+      // Still not visible
+      el.style.display = 'block';
+    }
+  }
+  return this;
+}
+function styles() {
+  if (this[0]) return win.getComputedStyle(this[0], null);
+  return {};
+}
+function css(props, value) {
+  let i;
+  if (arguments.length === 1) {
+    if (typeof props === 'string') {
+      if (this[0]) return win.getComputedStyle(this[0], null).getPropertyValue(props);
+    } else {
+      for (i = 0; i < this.length; i += 1) {
+        // eslint-disable-next-line
+        for (let prop in props) {
+          this[i].style[prop] = props[prop];
+        }
+      }
+      return this;
+    }
+  }
+  if (arguments.length === 2 && typeof props === 'string') {
+    for (i = 0; i < this.length; i += 1) {
+      this[i].style[props] = value;
+    }
+    return this;
+  }
+  return this;
+}
+
+// Dom manipulation
+function toArray() {
+  const arr = [];
+  for (let i = 0; i < this.length; i += 1) {
+    arr.push(this[i]);
+  }
+  return arr;
+}
+// Iterate over the collection passing elements to `callback`
+function each(callback) {
+  // Don't bother continuing without a callback
+  if (!callback) return this;
+  // Iterate over the current collection
+  for (let i = 0; i < this.length; i += 1) {
+    // If the callback returns false
+    if (callback.call(this[i], i, this[i]) === false) {
+      // End the loop early
+      return this;
+    }
+  }
+  // Return `this` to allow chained DOM operations
+  return this;
+}
+function forEach(callback) {
+  // Don't bother continuing without a callback
+  if (!callback) return this;
+  // Iterate over the current collection
+  for (let i = 0; i < this.length; i += 1) {
+    // If the callback returns false
+    if (callback.call(this[i], this[i], i) === false) {
+      // End the loop early
+      return this;
+    }
+  }
+  // Return `this` to allow chained DOM operations
+  return this;
+}
+function filter(callback) {
+  const matchedItems = [];
+  const dom = this;
+  for (let i = 0; i < dom.length; i += 1) {
+    if (callback.call(dom[i], i, dom[i])) matchedItems.push(dom[i]);
+  }
+  return new Dom7(matchedItems);
+}
+function map(callback) {
+  const modifiedItems = [];
+  const dom = this;
+  for (let i = 0; i < dom.length; i += 1) {
+    modifiedItems.push(callback.call(dom[i], i, dom[i]));
+  }
+  return new Dom7(modifiedItems);
+}
+// eslint-disable-next-line
+function dom7_modular_html(html) {
+  if (typeof html === 'undefined') {
+    return this[0] ? this[0].innerHTML : undefined;
+  }
+
+  for (let i = 0; i < this.length; i += 1) {
+    this[i].innerHTML = html;
+  }
+  return this;
+}
+// eslint-disable-next-line
+function dom7_modular_text(text) {
+  if (typeof text === 'undefined') {
+    if (this[0]) {
+      return this[0].textContent.trim();
+    }
+    return null;
+  }
+
+  for (let i = 0; i < this.length; i += 1) {
+    this[i].textContent = text;
+  }
+  return this;
+}
+function is(selector) {
+  const el = this[0];
+  let compareWith;
+  let i;
+  if (!el || typeof selector === 'undefined') return false;
+  if (typeof selector === 'string') {
+    if (el.matches) return el.matches(selector);
+    else if (el.webkitMatchesSelector) return el.webkitMatchesSelector(selector);
+    else if (el.msMatchesSelector) return el.msMatchesSelector(selector);
+
+    compareWith = $(selector);
+    for (i = 0; i < compareWith.length; i += 1) {
+      if (compareWith[i] === el) return true;
+    }
+    return false;
+  } else if (selector === doc) return el === doc;
+  else if (selector === win) return el === win;
+
+  if (selector.nodeType || selector instanceof Dom7) {
+    compareWith = selector.nodeType ? [selector] : selector;
+    for (i = 0; i < compareWith.length; i += 1) {
+      if (compareWith[i] === el) return true;
+    }
+    return false;
+  }
+  return false;
+}
+function indexOf(el) {
+  for (let i = 0; i < this.length; i += 1) {
+    if (this[i] === el) return i;
+  }
+  return -1;
+}
+function dom7_modular_index() {
+  let child = this[0];
+  let i;
+  if (child) {
+    i = 0;
+    // eslint-disable-next-line
+    while ((child = child.previousSibling) !== null) {
+      if (child.nodeType === 1) i += 1;
+    }
+    return i;
+  }
+  return undefined;
+}
+// eslint-disable-next-line
+function eq(index) {
+  if (typeof index === 'undefined') return this;
+  const length = this.length;
+  let returnIndex;
+  if (index > length - 1) {
+    return new Dom7([]);
+  }
+  if (index < 0) {
+    returnIndex = length + index;
+    if (returnIndex < 0) return new Dom7([]);
+    return new Dom7([this[returnIndex]]);
+  }
+  return new Dom7([this[index]]);
+}
+function append(...args) {
+  let newChild;
+
+  for (let k = 0; k < args.length; k += 1) {
+    newChild = args[k];
+    for (let i = 0; i < this.length; i += 1) {
+      if (typeof newChild === 'string') {
+        const tempDiv = doc.createElement('div');
+        tempDiv.innerHTML = newChild;
+        while (tempDiv.firstChild) {
+          this[i].appendChild(tempDiv.firstChild);
+        }
+      } else if (newChild instanceof Dom7) {
+        for (let j = 0; j < newChild.length; j += 1) {
+          this[i].appendChild(newChild[j]);
+        }
+      } else {
+        this[i].appendChild(newChild);
+      }
+    }
+  }
+
+  return this;
+}
+// eslint-disable-next-line
+function appendTo(parent) {
+  $(parent).append(this);
+  return this;
+}
+function prepend(newChild) {
+  let i;
+  let j;
+  for (i = 0; i < this.length; i += 1) {
+    if (typeof newChild === 'string') {
+      const tempDiv = doc.createElement('div');
+      tempDiv.innerHTML = newChild;
+      for (j = tempDiv.childNodes.length - 1; j >= 0; j -= 1) {
+        this[i].insertBefore(tempDiv.childNodes[j], this[i].childNodes[0]);
+      }
+    } else if (newChild instanceof Dom7) {
+      for (j = 0; j < newChild.length; j += 1) {
+        this[i].insertBefore(newChild[j], this[i].childNodes[0]);
+      }
+    } else {
+      this[i].insertBefore(newChild, this[i].childNodes[0]);
+    }
+  }
+  return this;
+}
+// eslint-disable-next-line
+function prependTo(parent) {
+  $(parent).prepend(this);
+  return this;
+}
+function insertBefore(selector) {
+  const before = $(selector);
+  for (let i = 0; i < this.length; i += 1) {
+    if (before.length === 1) {
+      before[0].parentNode.insertBefore(this[i], before[0]);
+    } else if (before.length > 1) {
+      for (let j = 0; j < before.length; j += 1) {
+        before[j].parentNode.insertBefore(this[i].cloneNode(true), before[j]);
+      }
+    }
+  }
+}
+function insertAfter(selector) {
+  const after = $(selector);
+  for (let i = 0; i < this.length; i += 1) {
+    if (after.length === 1) {
+      after[0].parentNode.insertBefore(this[i], after[0].nextSibling);
+    } else if (after.length > 1) {
+      for (let j = 0; j < after.length; j += 1) {
+        after[j].parentNode.insertBefore(this[i].cloneNode(true), after[j].nextSibling);
+      }
+    }
+  }
+}
+function next(selector) {
+  if (this.length > 0) {
+    if (selector) {
+      if (this[0].nextElementSibling && $(this[0].nextElementSibling).is(selector)) {
+        return new Dom7([this[0].nextElementSibling]);
+      }
+      return new Dom7([]);
+    }
+
+    if (this[0].nextElementSibling) return new Dom7([this[0].nextElementSibling]);
+    return new Dom7([]);
+  }
+  return new Dom7([]);
+}
+function nextAll(selector) {
+  const nextEls = [];
+  let el = this[0];
+  if (!el) return new Dom7([]);
+  while (el.nextElementSibling) {
+    const next = el.nextElementSibling; // eslint-disable-line
+    if (selector) {
+      if ($(next).is(selector)) nextEls.push(next);
+    } else nextEls.push(next);
+    el = next;
+  }
+  return new Dom7(nextEls);
+}
+function prev(selector) {
+  if (this.length > 0) {
+    const el = this[0];
+    if (selector) {
+      if (el.previousElementSibling && $(el.previousElementSibling).is(selector)) {
+        return new Dom7([el.previousElementSibling]);
+      }
+      return new Dom7([]);
+    }
+
+    if (el.previousElementSibling) return new Dom7([el.previousElementSibling]);
+    return new Dom7([]);
+  }
+  return new Dom7([]);
+}
+function prevAll(selector) {
+  const prevEls = [];
+  let el = this[0];
+  if (!el) return new Dom7([]);
+  while (el.previousElementSibling) {
+    const prev = el.previousElementSibling; // eslint-disable-line
+    if (selector) {
+      if ($(prev).is(selector)) prevEls.push(prev);
+    } else prevEls.push(prev);
+    el = prev;
+  }
+  return new Dom7(prevEls);
+}
+function siblings(selector) {
+  return this.nextAll(selector).add(this.prevAll(selector));
+}
+function dom7_modular_parent(selector) {
+  const parents = []; // eslint-disable-line
+  for (let i = 0; i < this.length; i += 1) {
+    if (this[i].parentNode !== null) {
+      if (selector) {
+        if ($(this[i].parentNode).is(selector)) parents.push(this[i].parentNode);
+      } else {
+        parents.push(this[i].parentNode);
+      }
+    }
+  }
+  return $(unique(parents));
+}
+function parents(selector) {
+  const parents = []; // eslint-disable-line
+  for (let i = 0; i < this.length; i += 1) {
+    let parent = this[i].parentNode; // eslint-disable-line
+    while (parent) {
+      if (selector) {
+        if ($(parent).is(selector)) parents.push(parent);
+      } else {
+        parents.push(parent);
+      }
+      parent = parent.parentNode;
+    }
+  }
+  return $(unique(parents));
+}
+function closest(selector) {
+  let closest = this; // eslint-disable-line
+  if (typeof selector === 'undefined') {
+    return new Dom7([]);
+  }
+  if (!closest.is(selector)) {
+    closest = closest.parents(selector).eq(0);
+  }
+  return closest;
+}
+function find(selector) {
+  const foundElements = [];
+  for (let i = 0; i < this.length; i += 1) {
+    const found = this[i].querySelectorAll(selector);
+    for (let j = 0; j < found.length; j += 1) {
+      foundElements.push(found[j]);
+    }
+  }
+  return new Dom7(foundElements);
+}
+function children(selector) {
+  const children = []; // eslint-disable-line
+  for (let i = 0; i < this.length; i += 1) {
+    const childNodes = this[i].childNodes;
+
+    for (let j = 0; j < childNodes.length; j += 1) {
+      if (!selector) {
+        if (childNodes[j].nodeType === 1) children.push(childNodes[j]);
+      } else if (childNodes[j].nodeType === 1 && $(childNodes[j]).is(selector)) {
+        children.push(childNodes[j]);
+      }
+    }
+  }
+  return new Dom7(unique(children));
+}
+function remove() {
+  for (let i = 0; i < this.length; i += 1) {
+    if (this[i].parentNode) this[i].parentNode.removeChild(this[i]);
+  }
+  return this;
+}
+function detach() {
+  return this.remove();
+}
+function add(...args) {
+  const dom = this;
+  let i;
+  let j;
+  for (i = 0; i < args.length; i += 1) {
+    const toAdd = $(args[i]);
+    for (j = 0; j < toAdd.length; j += 1) {
+      dom[dom.length] = toAdd[j];
+      dom.length += 1;
+    }
+  }
+  return dom;
+}
+function empty() {
+  for (let i = 0; i < this.length; i += 1) {
+    const el = this[i];
+    if (el.nodeType === 1) {
+      for (let j = 0; j < el.childNodes.length; j += 1) {
+        if (el.childNodes[j].parentNode) {
+          el.childNodes[j].parentNode.removeChild(el.childNodes[j]);
+        }
+      }
+      el.textContent = '';
+    }
+  }
+  return this;
+}
+
+function scrollTo(...args) {
+  let [left, top, duration, easing, callback] = args;
+  if (args.length === 4 && typeof easing === 'function') {
+    callback = easing;
+    [left, top, duration, callback, easing] = args;
+  }
+  if (typeof easing === 'undefined') easing = 'swing';
+
+  return this.each(function animate() {
+    const el = this;
+    let currentTop;
+    let currentLeft;
+    let maxTop;
+    let maxLeft;
+    let newTop;
+    let newLeft;
+    let scrollTop; // eslint-disable-line
+    let scrollLeft; // eslint-disable-line
+    let animateTop = top > 0 || top === 0;
+    let animateLeft = left > 0 || left === 0;
+    if (typeof easing === 'undefined') {
+      easing = 'swing';
+    }
+    if (animateTop) {
+      currentTop = el.scrollTop;
+      if (!duration) {
+        el.scrollTop = top;
+      }
+    }
+    if (animateLeft) {
+      currentLeft = el.scrollLeft;
+      if (!duration) {
+        el.scrollLeft = left;
+      }
+    }
+    if (!duration) return;
+    if (animateTop) {
+      maxTop = el.scrollHeight - el.offsetHeight;
+      newTop = Math.max(Math.min(top, maxTop), 0);
+    }
+    if (animateLeft) {
+      maxLeft = el.scrollWidth - el.offsetWidth;
+      newLeft = Math.max(Math.min(left, maxLeft), 0);
+    }
+    let startTime = null;
+    if (animateTop && newTop === currentTop) animateTop = false;
+    if (animateLeft && newLeft === currentLeft) animateLeft = false;
+    function render(time = new Date().getTime()) {
+      if (startTime === null) {
+        startTime = time;
+      }
+      const progress = Math.max(Math.min((time - startTime) / duration, 1), 0);
+      const easeProgress = easing === 'linear' ? progress : (0.5 - (Math.cos(progress * Math.PI) / 2));
+      let done;
+      if (animateTop) scrollTop = currentTop + (easeProgress * (newTop - currentTop));
+      if (animateLeft) scrollLeft = currentLeft + (easeProgress * (newLeft - currentLeft));
+      if (animateTop && newTop > currentTop && scrollTop >= newTop) {
+        el.scrollTop = newTop;
+        done = true;
+      }
+      if (animateTop && newTop < currentTop && scrollTop <= newTop) {
+        el.scrollTop = newTop;
+        done = true;
+      }
+      if (animateLeft && newLeft > currentLeft && scrollLeft >= newLeft) {
+        el.scrollLeft = newLeft;
+        done = true;
+      }
+      if (animateLeft && newLeft < currentLeft && scrollLeft <= newLeft) {
+        el.scrollLeft = newLeft;
+        done = true;
+      }
+
+      if (done) {
+        if (callback) callback();
+        return;
+      }
+      if (animateTop) el.scrollTop = scrollTop;
+      if (animateLeft) el.scrollLeft = scrollLeft;
+      requestAnimationFrame(render);
+    }
+    requestAnimationFrame(render);
+  });
+}
+// scrollTop(top, duration, easing, callback) {
+function dom7_modular_scrollTop(...args) {
+  let [top, duration, easing, callback] = args;
+  if (args.length === 3 && typeof easing === 'function') {
+    [top, duration, callback, easing] = args;
+  }
+  const dom = this;
+  if (typeof top === 'undefined') {
+    if (dom.length > 0) return dom[0].scrollTop;
+    return null;
+  }
+  return dom.scrollTo(undefined, top, duration, easing, callback);
+}
+function dom7_modular_scrollLeft(...args) {
+  let [left, duration, easing, callback] = args;
+  if (args.length === 3 && typeof easing === 'function') {
+    [left, duration, callback, easing] = args;
+  }
+  const dom = this;
+  if (typeof left === 'undefined') {
+    if (dom.length > 0) return dom[0].scrollLeft;
+    return null;
+  }
+  return dom.scrollTo(left, undefined, duration, easing, callback);
+}
+
+function animate(initialProps, initialParams) {
+  const els = this;
+  const a = {
+    props: Object.assign({}, initialProps),
+    params: Object.assign({
+      duration: 300,
+      easing: 'swing', // or 'linear'
+      /* Callbacks
+      begin(elements)
+      complete(elements)
+      progress(elements, complete, remaining, start, tweenValue)
+      */
+    }, initialParams),
+
+    elements: els,
+    animating: false,
+    que: [],
+
+    easingProgress(easing, progress) {
+      if (easing === 'swing') {
+        return 0.5 - (Math.cos(progress * Math.PI) / 2);
+      }
+      if (typeof easing === 'function') {
+        return easing(progress);
+      }
+      return progress;
+    },
+    stop() {
+      if (a.frameId) {
+        cancelAnimationFrame(a.frameId);
+      }
+      a.animating = false;
+      a.elements.each((index, el) => {
+        const element = el;
+        delete element.dom7AnimateInstance;
+      });
+      a.que = [];
+    },
+    done(complete) {
+      a.animating = false;
+      a.elements.each((index, el) => {
+        const element = el;
+        delete element.dom7AnimateInstance;
+      });
+      if (complete) complete(els);
+      if (a.que.length > 0) {
+        const que = a.que.shift();
+        a.animate(que[0], que[1]);
+      }
+    },
+    animate(props, params) {
+      if (a.animating) {
+        a.que.push([props, params]);
+        return a;
+      }
+      const elements = [];
+
+      // Define & Cache Initials & Units
+      a.elements.each((index, el) => {
+        let initialFullValue;
+        let initialValue;
+        let unit;
+        let finalValue;
+        let finalFullValue;
+
+        if (!el.dom7AnimateInstance) a.elements[index].dom7AnimateInstance = a;
+
+        elements[index] = {
+          container: el,
+        };
+        Object.keys(props).forEach((prop) => {
+          initialFullValue = win.getComputedStyle(el, null).getPropertyValue(prop).replace(',', '.');
+          initialValue = parseFloat(initialFullValue);
+          unit = initialFullValue.replace(initialValue, '');
+          finalValue = parseFloat(props[prop]);
+          finalFullValue = props[prop] + unit;
+          elements[index][prop] = {
+            initialFullValue,
+            initialValue,
+            unit,
+            finalValue,
+            finalFullValue,
+            currentValue: initialValue,
+          };
+        });
+      });
+
+      let startTime = null;
+      let time;
+      let elementsDone = 0;
+      let propsDone = 0;
+      let done;
+      let began = false;
+
+      a.animating = true;
+
+      function render() {
+        time = new Date().getTime();
+        let progress;
+        let easeProgress;
+        // let el;
+        if (!began) {
+          began = true;
+          if (params.begin) params.begin(els);
+        }
+        if (startTime === null) {
+          startTime = time;
+        }
+        if (params.progress) {
+          // eslint-disable-next-line
+          params.progress(els, Math.max(Math.min((time - startTime) / params.duration, 1), 0), ((startTime + params.duration) - time < 0 ? 0 : (startTime + params.duration) - time), startTime);
+        }
+
+        elements.forEach((element) => {
+          const el = element;
+          if (done || el.done) return;
+          Object.keys(props).forEach((prop) => {
+            if (done || el.done) return;
+            progress = Math.max(Math.min((time - startTime) / params.duration, 1), 0);
+            easeProgress = a.easingProgress(params.easing, progress);
+            const { initialValue, finalValue, unit } = el[prop];
+            el[prop].currentValue = initialValue + (easeProgress * (finalValue - initialValue));
+            const currentValue = el[prop].currentValue;
+
+            if (
+              (finalValue > initialValue && currentValue >= finalValue) ||
+              (finalValue < initialValue && currentValue <= finalValue)) {
+              el.container.style[prop] = finalValue + unit;
+              propsDone += 1;
+              if (propsDone === Object.keys(props).length) {
+                el.done = true;
+                elementsDone += 1;
+              }
+              if (elementsDone === elements.length) {
+                done = true;
+              }
+            }
+            if (done) {
+              a.done(params.complete);
+              return;
+            }
+            el.container.style[prop] = currentValue + unit;
+          });
+        });
+        if (done) return;
+        // Then call
+        a.frameId = requestAnimationFrame(render);
+      }
+      a.frameId = requestAnimationFrame(render);
+      return a;
+    },
   };
 
-  self.make = function (seed, action, id, p, fast, __el, resized, additional, _clbk) {
-    if (!additional) additional = {};
-    var elem = document.getElementById('pocketnet_' + seed);
+  if (a.elements.length === 0) {
+    return els;
+  }
 
-    if (window.POCKETNETINSTANCE && fast) {
-      elem = $(__el).find('#pocketnet_' + seed);
-      var app = window.POCKETNETINSTANCE;
-      var embeddingSettigns = {
-        id: makeid()
+  let animateInstance;
+  for (let i = 0; i < a.elements.length; i += 1) {
+    if (a.elements[i].dom7AnimateInstance) {
+      animateInstance = a.elements[i].dom7AnimateInstance;
+    } else a.elements[i].dom7AnimateInstance = a;
+  }
+  if (!animateInstance) {
+    animateInstance = a;
+  }
+
+  if (initialProps === 'stop') {
+    animateInstance.stop();
+  } else {
+    animateInstance.animate(a.props, a.params);
+  }
+
+  return els;
+}
+
+function stop() {
+  const els = this;
+  for (let i = 0; i < els.length; i += 1) {
+    if (els[i].dom7AnimateInstance) {
+      els[i].dom7AnimateInstance.stop();
+    }
+  }
+}
+
+const noTrigger = ('resize scroll').split(' ');
+function eventShortcut(name, ...args) {
+  if (typeof args[0] === 'undefined') {
+    for (let i = 0; i < this.length; i += 1) {
+      if (noTrigger.indexOf(name) < 0) {
+        if (name in this[i]) this[i][name]();
+        else {
+          $(this[i]).trigger(name);
+        }
+      }
+    }
+    return this;
+  }
+  return this.on(name, ...args);
+}
+
+function click(...args) {
+  return eventShortcut.bind(this)('click', ...args);
+}
+function dom7_modular_blur(...args) {
+  return eventShortcut.bind(this)('blur', ...args);
+}
+function dom7_modular_focus(...args) {
+  return eventShortcut.bind(this)('focus', ...args);
+}
+function focusin(...args) {
+  return eventShortcut.bind(this)('focusin', ...args);
+}
+function focusout(...args) {
+  return eventShortcut.bind(this)('focusout', ...args);
+}
+function keyup(...args) {
+  return eventShortcut.bind(this)('keyup', ...args);
+}
+function keydown(...args) {
+  return eventShortcut.bind(this)('keydown', ...args);
+}
+function keypress(...args) {
+  return eventShortcut.bind(this)('keypress', ...args);
+}
+function dom7_modular_submit(...args) {
+  return eventShortcut.bind(this)('submit', ...args);
+}
+function change(...args) {
+  return eventShortcut.bind(this)('change', ...args);
+}
+function mousedown(...args) {
+  return eventShortcut.bind(this)('mousedown', ...args);
+}
+function mousemove(...args) {
+  return eventShortcut.bind(this)('mousemove', ...args);
+}
+function mouseup(...args) {
+  return eventShortcut.bind(this)('mouseup', ...args);
+}
+function mouseenter(...args) {
+  return eventShortcut.bind(this)('mouseenter', ...args);
+}
+function mouseleave(...args) {
+  return eventShortcut.bind(this)('mouseleave', ...args);
+}
+function mouseout(...args) {
+  return eventShortcut.bind(this)('mouseout', ...args);
+}
+function mouseover(...args) {
+  return eventShortcut.bind(this)('mouseover', ...args);
+}
+function touchstart(...args) {
+  return eventShortcut.bind(this)('touchstart', ...args);
+}
+function touchend(...args) {
+  return eventShortcut.bind(this)('touchend', ...args);
+}
+function touchmove(...args) {
+  return eventShortcut.bind(this)('touchmove', ...args);
+}
+function resize(...args) {
+  return eventShortcut.bind(this)('resize', ...args);
+}
+function dom7_modular_scroll(...args) {
+  return eventShortcut.bind(this)('scroll', ...args);
+}
+
+
+
+// CONCATENATED MODULE: ./node_modules/swiper/js/swiper.esm.bundle.js
+/**
+ * Swiper 5.4.5
+ * Most modern mobile touch slider and framework with hardware accelerated transitions
+ * http://swiperjs.com
+ *
+ * Copyright 2014-2020 Vladimir Kharlampidi
+ *
+ * Released under the MIT License
+ *
+ * Released on: June 16, 2020
+ */
+
+
+
+
+const Methods = {
+  addClass: addClass,
+  removeClass: removeClass,
+  hasClass: hasClass,
+  toggleClass: toggleClass,
+  attr: attr,
+  removeAttr: removeAttr,
+  data: dom7_modular_data,
+  transform: dom7_modular_transform,
+  transition: transition,
+  on: on,
+  off: off,
+  trigger: trigger,
+  transitionEnd: transitionEnd,
+  outerWidth: dom7_modular_outerWidth,
+  outerHeight: dom7_modular_outerHeight,
+  offset: dom7_modular_offset,
+  css: css,
+  each: each,
+  html: dom7_modular_html,
+  text: dom7_modular_text,
+  is: is,
+  index: dom7_modular_index,
+  eq: eq,
+  append: append,
+  prepend: prepend,
+  next: next,
+  nextAll: nextAll,
+  prev: prev,
+  prevAll: prevAll,
+  parent: dom7_modular_parent,
+  parents: parents,
+  closest: closest,
+  find: find,
+  children: children,
+  filter: filter,
+  remove: remove,
+  add: add,
+  styles: styles,
+};
+
+Object.keys(Methods).forEach((methodName) => {
+  $.fn[methodName] = $.fn[methodName] || Methods[methodName];
+});
+
+const Utils = {
+  deleteProps(obj) {
+    const object = obj;
+    Object.keys(object).forEach((key) => {
+      try {
+        object[key] = null;
+      } catch (e) {
+        // no getter for object
+      }
+      try {
+        delete object[key];
+      } catch (e) {
+        // something got wrong
+      }
+    });
+  },
+  nextTick(callback, delay = 0) {
+    return setTimeout(callback, delay);
+  },
+  now() {
+    return Date.now();
+  },
+  getTranslate(el, axis = 'x') {
+    let matrix;
+    let curTransform;
+    let transformMatrix;
+
+    const curStyle = win.getComputedStyle(el, null);
+
+    if (win.WebKitCSSMatrix) {
+      curTransform = curStyle.transform || curStyle.webkitTransform;
+      if (curTransform.split(',').length > 6) {
+        curTransform = curTransform.split(', ').map((a) => a.replace(',', '.')).join(', ');
+      }
+      // Some old versions of Webkit choke when 'none' is passed; pass
+      // empty string instead in this case
+      transformMatrix = new win.WebKitCSSMatrix(curTransform === 'none' ? '' : curTransform);
+    } else {
+      transformMatrix = curStyle.MozTransform || curStyle.OTransform || curStyle.MsTransform || curStyle.msTransform || curStyle.transform || curStyle.getPropertyValue('transform').replace('translate(', 'matrix(1, 0, 0, 1,');
+      matrix = transformMatrix.toString().split(',');
+    }
+
+    if (axis === 'x') {
+      // Latest Chrome and webkits Fix
+      if (win.WebKitCSSMatrix) curTransform = transformMatrix.m41;
+      // Crazy IE10 Matrix
+      else if (matrix.length === 16) curTransform = parseFloat(matrix[12]);
+      // Normal Browsers
+      else curTransform = parseFloat(matrix[4]);
+    }
+    if (axis === 'y') {
+      // Latest Chrome and webkits Fix
+      if (win.WebKitCSSMatrix) curTransform = transformMatrix.m42;
+      // Crazy IE10 Matrix
+      else if (matrix.length === 16) curTransform = parseFloat(matrix[13]);
+      // Normal Browsers
+      else curTransform = parseFloat(matrix[5]);
+    }
+    return curTransform || 0;
+  },
+  parseUrlQuery(url) {
+    const query = {};
+    let urlToParse = url || win.location.href;
+    let i;
+    let params;
+    let param;
+    let length;
+    if (typeof urlToParse === 'string' && urlToParse.length) {
+      urlToParse = urlToParse.indexOf('?') > -1 ? urlToParse.replace(/\S*\?/, '') : '';
+      params = urlToParse.split('&').filter((paramsPart) => paramsPart !== '');
+      length = params.length;
+
+      for (i = 0; i < length; i += 1) {
+        param = params[i].replace(/#\S+/g, '').split('=');
+        query[decodeURIComponent(param[0])] = typeof param[1] === 'undefined' ? undefined : decodeURIComponent(param[1]) || '';
+      }
+    }
+    return query;
+  },
+  isObject(o) {
+    return typeof o === 'object' && o !== null && o.constructor && o.constructor === Object;
+  },
+  extend(...args) {
+    const to = Object(args[0]);
+    for (let i = 1; i < args.length; i += 1) {
+      const nextSource = args[i];
+      if (nextSource !== undefined && nextSource !== null) {
+        const keysArray = Object.keys(Object(nextSource));
+        for (let nextIndex = 0, len = keysArray.length; nextIndex < len; nextIndex += 1) {
+          const nextKey = keysArray[nextIndex];
+          const desc = Object.getOwnPropertyDescriptor(nextSource, nextKey);
+          if (desc !== undefined && desc.enumerable) {
+            if (Utils.isObject(to[nextKey]) && Utils.isObject(nextSource[nextKey])) {
+              Utils.extend(to[nextKey], nextSource[nextKey]);
+            } else if (!Utils.isObject(to[nextKey]) && Utils.isObject(nextSource[nextKey])) {
+              to[nextKey] = {};
+              Utils.extend(to[nextKey], nextSource[nextKey]);
+            } else {
+              to[nextKey] = nextSource[nextKey];
+            }
+          }
+        }
+      }
+    }
+    return to;
+  },
+};
+
+const swiper_esm_bundle_Support = (function Support() {
+  return {
+    touch: !!(('ontouchstart' in win) || (win.DocumentTouch && doc instanceof win.DocumentTouch)),
+
+    pointerEvents: !!win.PointerEvent && ('maxTouchPoints' in win.navigator) && win.navigator.maxTouchPoints >= 0,
+
+    observer: (function checkObserver() {
+      return ('MutationObserver' in win || 'WebkitMutationObserver' in win);
+    }()),
+
+    passiveListener: (function checkPassiveListener() {
+      let supportsPassive = false;
+      try {
+        const opts = Object.defineProperty({}, 'passive', {
+          // eslint-disable-next-line
+          get() {
+            supportsPassive = true;
+          },
+        });
+        win.addEventListener('testPassiveListener', null, opts);
+      } catch (e) {
+        // No support
+      }
+      return supportsPassive;
+    }()),
+
+    gestures: (function checkGestures() {
+      return 'ongesturestart' in win;
+    }()),
+  };
+}());
+
+class SwiperClass {
+  constructor(params = {}) {
+    const self = this;
+    self.params = params;
+
+    // Events
+    self.eventsListeners = {};
+
+    if (self.params && self.params.on) {
+      Object.keys(self.params.on).forEach((eventName) => {
+        self.on(eventName, self.params.on[eventName]);
+      });
+    }
+  }
+
+  on(events, handler, priority) {
+    const self = this;
+    if (typeof handler !== 'function') return self;
+    const method = priority ? 'unshift' : 'push';
+    events.split(' ').forEach((event) => {
+      if (!self.eventsListeners[event]) self.eventsListeners[event] = [];
+      self.eventsListeners[event][method](handler);
+    });
+    return self;
+  }
+
+  once(events, handler, priority) {
+    const self = this;
+    if (typeof handler !== 'function') return self;
+    function onceHandler(...args) {
+      self.off(events, onceHandler);
+      if (onceHandler.f7proxy) {
+        delete onceHandler.f7proxy;
+      }
+      handler.apply(self, args);
+    }
+    onceHandler.f7proxy = handler;
+    return self.on(events, onceHandler, priority);
+  }
+
+  off(events, handler) {
+    const self = this;
+    if (!self.eventsListeners) return self;
+    events.split(' ').forEach((event) => {
+      if (typeof handler === 'undefined') {
+        self.eventsListeners[event] = [];
+      } else if (self.eventsListeners[event] && self.eventsListeners[event].length) {
+        self.eventsListeners[event].forEach((eventHandler, index) => {
+          if (eventHandler === handler || (eventHandler.f7proxy && eventHandler.f7proxy === handler)) {
+            self.eventsListeners[event].splice(index, 1);
+          }
+        });
+      }
+    });
+    return self;
+  }
+
+  emit(...args) {
+    const self = this;
+    if (!self.eventsListeners) return self;
+    let events;
+    let data;
+    let context;
+    if (typeof args[0] === 'string' || Array.isArray(args[0])) {
+      events = args[0];
+      data = args.slice(1, args.length);
+      context = self;
+    } else {
+      events = args[0].events;
+      data = args[0].data;
+      context = args[0].context || self;
+    }
+    const eventsArray = Array.isArray(events) ? events : events.split(' ');
+    eventsArray.forEach((event) => {
+      if (self.eventsListeners && self.eventsListeners[event]) {
+        const handlers = [];
+        self.eventsListeners[event].forEach((eventHandler) => {
+          handlers.push(eventHandler);
+        });
+        handlers.forEach((eventHandler) => {
+          eventHandler.apply(context, data);
+        });
+      }
+    });
+    return self;
+  }
+
+  useModulesParams(instanceParams) {
+    const instance = this;
+    if (!instance.modules) return;
+    Object.keys(instance.modules).forEach((moduleName) => {
+      const module = instance.modules[moduleName];
+      // Extend params
+      if (module.params) {
+        Utils.extend(instanceParams, module.params);
+      }
+    });
+  }
+
+  useModules(modulesParams = {}) {
+    const instance = this;
+    if (!instance.modules) return;
+    Object.keys(instance.modules).forEach((moduleName) => {
+      const module = instance.modules[moduleName];
+      const moduleParams = modulesParams[moduleName] || {};
+      // Extend instance methods and props
+      if (module.instance) {
+        Object.keys(module.instance).forEach((modulePropName) => {
+          const moduleProp = module.instance[modulePropName];
+          if (typeof moduleProp === 'function') {
+            instance[modulePropName] = moduleProp.bind(instance);
+          } else {
+            instance[modulePropName] = moduleProp;
+          }
+        });
+      }
+      // Add event listeners
+      if (module.on && instance.on) {
+        Object.keys(module.on).forEach((moduleEventName) => {
+          instance.on(moduleEventName, module.on[moduleEventName]);
+        });
+      }
+
+      // Module create callback
+      if (module.create) {
+        module.create.bind(instance)(moduleParams);
+      }
+    });
+  }
+
+  static set components(components) {
+    const Class = this;
+    if (!Class.use) return;
+    Class.use(components);
+  }
+
+  static installModule(module, ...params) {
+    const Class = this;
+    if (!Class.prototype.modules) Class.prototype.modules = {};
+    const name = module.name || (`${Object.keys(Class.prototype.modules).length}_${Utils.now()}`);
+    Class.prototype.modules[name] = module;
+    // Prototype
+    if (module.proto) {
+      Object.keys(module.proto).forEach((key) => {
+        Class.prototype[key] = module.proto[key];
+      });
+    }
+    // Class
+    if (module.static) {
+      Object.keys(module.static).forEach((key) => {
+        Class[key] = module.static[key];
+      });
+    }
+    // Callback
+    if (module.install) {
+      module.install.apply(Class, params);
+    }
+    return Class;
+  }
+
+  static use(module, ...params) {
+    const Class = this;
+    if (Array.isArray(module)) {
+      module.forEach((m) => Class.installModule(m));
+      return Class;
+    }
+    return Class.installModule(module, ...params);
+  }
+}
+
+function updateSize () {
+  const swiper = this;
+  let width;
+  let height;
+  const $el = swiper.$el;
+  if (typeof swiper.params.width !== 'undefined') {
+    width = swiper.params.width;
+  } else {
+    width = $el[0].clientWidth;
+  }
+  if (typeof swiper.params.height !== 'undefined') {
+    height = swiper.params.height;
+  } else {
+    height = $el[0].clientHeight;
+  }
+  if ((width === 0 && swiper.isHorizontal()) || (height === 0 && swiper.isVertical())) {
+    return;
+  }
+
+  // Subtract paddings
+  width = width - parseInt($el.css('padding-left'), 10) - parseInt($el.css('padding-right'), 10);
+  height = height - parseInt($el.css('padding-top'), 10) - parseInt($el.css('padding-bottom'), 10);
+
+  Utils.extend(swiper, {
+    width,
+    height,
+    size: swiper.isHorizontal() ? width : height,
+  });
+}
+
+function updateSlides () {
+  const swiper = this;
+  const params = swiper.params;
+
+  const {
+    $wrapperEl, size: swiperSize, rtlTranslate: rtl, wrongRTL,
+  } = swiper;
+  const isVirtual = swiper.virtual && params.virtual.enabled;
+  const previousSlidesLength = isVirtual ? swiper.virtual.slides.length : swiper.slides.length;
+  const slides = $wrapperEl.children(`.${swiper.params.slideClass}`);
+  const slidesLength = isVirtual ? swiper.virtual.slides.length : slides.length;
+  let snapGrid = [];
+  const slidesGrid = [];
+  const slidesSizesGrid = [];
+
+  function slidesForMargin(slideIndex) {
+    if (!params.cssMode) return true;
+    if (slideIndex === slides.length - 1) {
+      return false;
+    }
+    return true;
+  }
+
+  let offsetBefore = params.slidesOffsetBefore;
+  if (typeof offsetBefore === 'function') {
+    offsetBefore = params.slidesOffsetBefore.call(swiper);
+  }
+
+  let offsetAfter = params.slidesOffsetAfter;
+  if (typeof offsetAfter === 'function') {
+    offsetAfter = params.slidesOffsetAfter.call(swiper);
+  }
+
+  const previousSnapGridLength = swiper.snapGrid.length;
+  const previousSlidesGridLength = swiper.snapGrid.length;
+
+  let spaceBetween = params.spaceBetween;
+  let slidePosition = -offsetBefore;
+  let prevSlideSize = 0;
+  let index = 0;
+  if (typeof swiperSize === 'undefined') {
+    return;
+  }
+  if (typeof spaceBetween === 'string' && spaceBetween.indexOf('%') >= 0) {
+    spaceBetween = (parseFloat(spaceBetween.replace('%', '')) / 100) * swiperSize;
+  }
+
+  swiper.virtualSize = -spaceBetween;
+
+  // reset margins
+  if (rtl) slides.css({ marginLeft: '', marginTop: '' });
+  else slides.css({ marginRight: '', marginBottom: '' });
+
+  let slidesNumberEvenToRows;
+  if (params.slidesPerColumn > 1) {
+    if (Math.floor(slidesLength / params.slidesPerColumn) === slidesLength / swiper.params.slidesPerColumn) {
+      slidesNumberEvenToRows = slidesLength;
+    } else {
+      slidesNumberEvenToRows = Math.ceil(slidesLength / params.slidesPerColumn) * params.slidesPerColumn;
+    }
+    if (params.slidesPerView !== 'auto' && params.slidesPerColumnFill === 'row') {
+      slidesNumberEvenToRows = Math.max(slidesNumberEvenToRows, params.slidesPerView * params.slidesPerColumn);
+    }
+  }
+
+  // Calc slides
+  let slideSize;
+  const slidesPerColumn = params.slidesPerColumn;
+  const slidesPerRow = slidesNumberEvenToRows / slidesPerColumn;
+  const numFullColumns = Math.floor(slidesLength / params.slidesPerColumn);
+  for (let i = 0; i < slidesLength; i += 1) {
+    slideSize = 0;
+    const slide = slides.eq(i);
+    if (params.slidesPerColumn > 1) {
+      // Set slides order
+      let newSlideOrderIndex;
+      let column;
+      let row;
+      if (params.slidesPerColumnFill === 'row' && params.slidesPerGroup > 1) {
+        const groupIndex = Math.floor(i / (params.slidesPerGroup * params.slidesPerColumn));
+        const slideIndexInGroup = i - params.slidesPerColumn * params.slidesPerGroup * groupIndex;
+        const columnsInGroup = groupIndex === 0
+          ? params.slidesPerGroup
+          : Math.min(Math.ceil((slidesLength - groupIndex * slidesPerColumn * params.slidesPerGroup) / slidesPerColumn), params.slidesPerGroup);
+        row = Math.floor(slideIndexInGroup / columnsInGroup);
+        column = (slideIndexInGroup - row * columnsInGroup) + groupIndex * params.slidesPerGroup;
+
+        newSlideOrderIndex = column + ((row * slidesNumberEvenToRows) / slidesPerColumn);
+        slide
+          .css({
+            '-webkit-box-ordinal-group': newSlideOrderIndex,
+            '-moz-box-ordinal-group': newSlideOrderIndex,
+            '-ms-flex-order': newSlideOrderIndex,
+            '-webkit-order': newSlideOrderIndex,
+            order: newSlideOrderIndex,
+          });
+      } else if (params.slidesPerColumnFill === 'column') {
+        column = Math.floor(i / slidesPerColumn);
+        row = i - (column * slidesPerColumn);
+        if (column > numFullColumns || (column === numFullColumns && row === slidesPerColumn - 1)) {
+          row += 1;
+          if (row >= slidesPerColumn) {
+            row = 0;
+            column += 1;
+          }
+        }
+      } else {
+        row = Math.floor(i / slidesPerRow);
+        column = i - (row * slidesPerRow);
+      }
+      slide.css(
+        `margin-${swiper.isHorizontal() ? 'top' : 'left'}`,
+        (row !== 0 && params.spaceBetween) && (`${params.spaceBetween}px`)
+      );
+    }
+    if (slide.css('display') === 'none') continue; // eslint-disable-line
+
+    if (params.slidesPerView === 'auto') {
+      const slideStyles = win.getComputedStyle(slide[0], null);
+      const currentTransform = slide[0].style.transform;
+      const currentWebKitTransform = slide[0].style.webkitTransform;
+      if (currentTransform) {
+        slide[0].style.transform = 'none';
+      }
+      if (currentWebKitTransform) {
+        slide[0].style.webkitTransform = 'none';
+      }
+      if (params.roundLengths) {
+        slideSize = swiper.isHorizontal()
+          ? slide.outerWidth(true)
+          : slide.outerHeight(true);
+      } else {
+        // eslint-disable-next-line
+        if (swiper.isHorizontal()) {
+          const width = parseFloat(slideStyles.getPropertyValue('width'));
+          const paddingLeft = parseFloat(slideStyles.getPropertyValue('padding-left'));
+          const paddingRight = parseFloat(slideStyles.getPropertyValue('padding-right'));
+          const marginLeft = parseFloat(slideStyles.getPropertyValue('margin-left'));
+          const marginRight = parseFloat(slideStyles.getPropertyValue('margin-right'));
+          const boxSizing = slideStyles.getPropertyValue('box-sizing');
+          if (boxSizing && boxSizing === 'border-box') {
+            slideSize = width + marginLeft + marginRight;
+          } else {
+            slideSize = width + paddingLeft + paddingRight + marginLeft + marginRight;
+          }
+        } else {
+          const height = parseFloat(slideStyles.getPropertyValue('height'));
+          const paddingTop = parseFloat(slideStyles.getPropertyValue('padding-top'));
+          const paddingBottom = parseFloat(slideStyles.getPropertyValue('padding-bottom'));
+          const marginTop = parseFloat(slideStyles.getPropertyValue('margin-top'));
+          const marginBottom = parseFloat(slideStyles.getPropertyValue('margin-bottom'));
+          const boxSizing = slideStyles.getPropertyValue('box-sizing');
+          if (boxSizing && boxSizing === 'border-box') {
+            slideSize = height + marginTop + marginBottom;
+          } else {
+            slideSize = height + paddingTop + paddingBottom + marginTop + marginBottom;
+          }
+        }
+      }
+      if (currentTransform) {
+        slide[0].style.transform = currentTransform;
+      }
+      if (currentWebKitTransform) {
+        slide[0].style.webkitTransform = currentWebKitTransform;
+      }
+      if (params.roundLengths) slideSize = Math.floor(slideSize);
+    } else {
+      slideSize = (swiperSize - ((params.slidesPerView - 1) * spaceBetween)) / params.slidesPerView;
+      if (params.roundLengths) slideSize = Math.floor(slideSize);
+
+      if (slides[i]) {
+        if (swiper.isHorizontal()) {
+          slides[i].style.width = `${slideSize}px`;
+        } else {
+          slides[i].style.height = `${slideSize}px`;
+        }
+      }
+    }
+    if (slides[i]) {
+      slides[i].swiperSlideSize = slideSize;
+    }
+    slidesSizesGrid.push(slideSize);
+
+
+    if (params.centeredSlides) {
+      slidePosition = slidePosition + (slideSize / 2) + (prevSlideSize / 2) + spaceBetween;
+      if (prevSlideSize === 0 && i !== 0) slidePosition = slidePosition - (swiperSize / 2) - spaceBetween;
+      if (i === 0) slidePosition = slidePosition - (swiperSize / 2) - spaceBetween;
+      if (Math.abs(slidePosition) < 1 / 1000) slidePosition = 0;
+      if (params.roundLengths) slidePosition = Math.floor(slidePosition);
+      if ((index) % params.slidesPerGroup === 0) snapGrid.push(slidePosition);
+      slidesGrid.push(slidePosition);
+    } else {
+      if (params.roundLengths) slidePosition = Math.floor(slidePosition);
+      if ((index - Math.min(swiper.params.slidesPerGroupSkip, index)) % swiper.params.slidesPerGroup === 0) snapGrid.push(slidePosition);
+      slidesGrid.push(slidePosition);
+      slidePosition = slidePosition + slideSize + spaceBetween;
+    }
+
+    swiper.virtualSize += slideSize + spaceBetween;
+
+    prevSlideSize = slideSize;
+
+    index += 1;
+  }
+  swiper.virtualSize = Math.max(swiper.virtualSize, swiperSize) + offsetAfter;
+  let newSlidesGrid;
+
+  if (
+    rtl && wrongRTL && (params.effect === 'slide' || params.effect === 'coverflow')) {
+    $wrapperEl.css({ width: `${swiper.virtualSize + params.spaceBetween}px` });
+  }
+  if (params.setWrapperSize) {
+    if (swiper.isHorizontal()) $wrapperEl.css({ width: `${swiper.virtualSize + params.spaceBetween}px` });
+    else $wrapperEl.css({ height: `${swiper.virtualSize + params.spaceBetween}px` });
+  }
+
+  if (params.slidesPerColumn > 1) {
+    swiper.virtualSize = (slideSize + params.spaceBetween) * slidesNumberEvenToRows;
+    swiper.virtualSize = Math.ceil(swiper.virtualSize / params.slidesPerColumn) - params.spaceBetween;
+    if (swiper.isHorizontal()) $wrapperEl.css({ width: `${swiper.virtualSize + params.spaceBetween}px` });
+    else $wrapperEl.css({ height: `${swiper.virtualSize + params.spaceBetween}px` });
+    if (params.centeredSlides) {
+      newSlidesGrid = [];
+      for (let i = 0; i < snapGrid.length; i += 1) {
+        let slidesGridItem = snapGrid[i];
+        if (params.roundLengths) slidesGridItem = Math.floor(slidesGridItem);
+        if (snapGrid[i] < swiper.virtualSize + snapGrid[0]) newSlidesGrid.push(slidesGridItem);
+      }
+      snapGrid = newSlidesGrid;
+    }
+  }
+
+  // Remove last grid elements depending on width
+  if (!params.centeredSlides) {
+    newSlidesGrid = [];
+    for (let i = 0; i < snapGrid.length; i += 1) {
+      let slidesGridItem = snapGrid[i];
+      if (params.roundLengths) slidesGridItem = Math.floor(slidesGridItem);
+      if (snapGrid[i] <= swiper.virtualSize - swiperSize) {
+        newSlidesGrid.push(slidesGridItem);
+      }
+    }
+    snapGrid = newSlidesGrid;
+    if (Math.floor(swiper.virtualSize - swiperSize) - Math.floor(snapGrid[snapGrid.length - 1]) > 1) {
+      snapGrid.push(swiper.virtualSize - swiperSize);
+    }
+  }
+  if (snapGrid.length === 0) snapGrid = [0];
+
+  if (params.spaceBetween !== 0) {
+    if (swiper.isHorizontal()) {
+      if (rtl) slides.filter(slidesForMargin).css({ marginLeft: `${spaceBetween}px` });
+      else slides.filter(slidesForMargin).css({ marginRight: `${spaceBetween}px` });
+    } else slides.filter(slidesForMargin).css({ marginBottom: `${spaceBetween}px` });
+  }
+
+  if (params.centeredSlides && params.centeredSlidesBounds) {
+    let allSlidesSize = 0;
+    slidesSizesGrid.forEach((slideSizeValue) => {
+      allSlidesSize += slideSizeValue + (params.spaceBetween ? params.spaceBetween : 0);
+    });
+    allSlidesSize -= params.spaceBetween;
+    const maxSnap = allSlidesSize - swiperSize;
+    snapGrid = snapGrid.map((snap) => {
+      if (snap < 0) return -offsetBefore;
+      if (snap > maxSnap) return maxSnap + offsetAfter;
+      return snap;
+    });
+  }
+
+  if (params.centerInsufficientSlides) {
+    let allSlidesSize = 0;
+    slidesSizesGrid.forEach((slideSizeValue) => {
+      allSlidesSize += slideSizeValue + (params.spaceBetween ? params.spaceBetween : 0);
+    });
+    allSlidesSize -= params.spaceBetween;
+    if (allSlidesSize < swiperSize) {
+      const allSlidesOffset = (swiperSize - allSlidesSize) / 2;
+      snapGrid.forEach((snap, snapIndex) => {
+        snapGrid[snapIndex] = snap - allSlidesOffset;
+      });
+      slidesGrid.forEach((snap, snapIndex) => {
+        slidesGrid[snapIndex] = snap + allSlidesOffset;
+      });
+    }
+  }
+
+  Utils.extend(swiper, {
+    slides,
+    snapGrid,
+    slidesGrid,
+    slidesSizesGrid,
+  });
+
+  if (slidesLength !== previousSlidesLength) {
+    swiper.emit('slidesLengthChange');
+  }
+  if (snapGrid.length !== previousSnapGridLength) {
+    if (swiper.params.watchOverflow) swiper.checkOverflow();
+    swiper.emit('snapGridLengthChange');
+  }
+  if (slidesGrid.length !== previousSlidesGridLength) {
+    swiper.emit('slidesGridLengthChange');
+  }
+
+  if (params.watchSlidesProgress || params.watchSlidesVisibility) {
+    swiper.updateSlidesOffset();
+  }
+}
+
+function updateAutoHeight (speed) {
+  const swiper = this;
+  const activeSlides = [];
+  let newHeight = 0;
+  let i;
+  if (typeof speed === 'number') {
+    swiper.setTransition(speed);
+  } else if (speed === true) {
+    swiper.setTransition(swiper.params.speed);
+  }
+  // Find slides currently in view
+  if (swiper.params.slidesPerView !== 'auto' && swiper.params.slidesPerView > 1) {
+    if (swiper.params.centeredSlides) {
+      swiper.visibleSlides.each((index, slide) => {
+        activeSlides.push(slide);
+      });
+    } else {
+      for (i = 0; i < Math.ceil(swiper.params.slidesPerView); i += 1) {
+        const index = swiper.activeIndex + i;
+        if (index > swiper.slides.length) break;
+        activeSlides.push(swiper.slides.eq(index)[0]);
+      }
+    }
+  } else {
+    activeSlides.push(swiper.slides.eq(swiper.activeIndex)[0]);
+  }
+
+  // Find new height from highest slide in view
+  for (i = 0; i < activeSlides.length; i += 1) {
+    if (typeof activeSlides[i] !== 'undefined') {
+      const height = activeSlides[i].offsetHeight;
+      newHeight = height > newHeight ? height : newHeight;
+    }
+  }
+
+  // Update Height
+  if (newHeight) swiper.$wrapperEl.css('height', `${newHeight}px`);
+}
+
+function updateSlidesOffset () {
+  const swiper = this;
+  const slides = swiper.slides;
+  for (let i = 0; i < slides.length; i += 1) {
+    slides[i].swiperSlideOffset = swiper.isHorizontal() ? slides[i].offsetLeft : slides[i].offsetTop;
+  }
+}
+
+function updateSlidesProgress (translate = (this && this.translate) || 0) {
+  const swiper = this;
+  const params = swiper.params;
+
+  const { slides, rtlTranslate: rtl } = swiper;
+
+  if (slides.length === 0) return;
+  if (typeof slides[0].swiperSlideOffset === 'undefined') swiper.updateSlidesOffset();
+
+  let offsetCenter = -translate;
+  if (rtl) offsetCenter = translate;
+
+  // Visible Slides
+  slides.removeClass(params.slideVisibleClass);
+
+  swiper.visibleSlidesIndexes = [];
+  swiper.visibleSlides = [];
+
+  for (let i = 0; i < slides.length; i += 1) {
+    const slide = slides[i];
+    const slideProgress = (
+      (offsetCenter + (params.centeredSlides ? swiper.minTranslate() : 0)) - slide.swiperSlideOffset
+    ) / (slide.swiperSlideSize + params.spaceBetween);
+    if (params.watchSlidesVisibility || (params.centeredSlides && params.autoHeight)) {
+      const slideBefore = -(offsetCenter - slide.swiperSlideOffset);
+      const slideAfter = slideBefore + swiper.slidesSizesGrid[i];
+      const isVisible = (slideBefore >= 0 && slideBefore < swiper.size - 1)
+                || (slideAfter > 1 && slideAfter <= swiper.size)
+                || (slideBefore <= 0 && slideAfter >= swiper.size);
+      if (isVisible) {
+        swiper.visibleSlides.push(slide);
+        swiper.visibleSlidesIndexes.push(i);
+        slides.eq(i).addClass(params.slideVisibleClass);
+      }
+    }
+    slide.progress = rtl ? -slideProgress : slideProgress;
+  }
+  swiper.visibleSlides = $(swiper.visibleSlides);
+}
+
+function updateProgress (translate) {
+  const swiper = this;
+  if (typeof translate === 'undefined') {
+    const multiplier = swiper.rtlTranslate ? -1 : 1;
+    // eslint-disable-next-line
+    translate = (swiper && swiper.translate && (swiper.translate * multiplier)) || 0;
+  }
+  const params = swiper.params;
+  const translatesDiff = swiper.maxTranslate() - swiper.minTranslate();
+  let { progress, isBeginning, isEnd } = swiper;
+  const wasBeginning = isBeginning;
+  const wasEnd = isEnd;
+  if (translatesDiff === 0) {
+    progress = 0;
+    isBeginning = true;
+    isEnd = true;
+  } else {
+    progress = (translate - swiper.minTranslate()) / (translatesDiff);
+    isBeginning = progress <= 0;
+    isEnd = progress >= 1;
+  }
+  Utils.extend(swiper, {
+    progress,
+    isBeginning,
+    isEnd,
+  });
+
+  if (params.watchSlidesProgress || params.watchSlidesVisibility || (params.centeredSlides && params.autoHeight)) swiper.updateSlidesProgress(translate);
+
+  if (isBeginning && !wasBeginning) {
+    swiper.emit('reachBeginning toEdge');
+  }
+  if (isEnd && !wasEnd) {
+    swiper.emit('reachEnd toEdge');
+  }
+  if ((wasBeginning && !isBeginning) || (wasEnd && !isEnd)) {
+    swiper.emit('fromEdge');
+  }
+
+  swiper.emit('progress', progress);
+}
+
+function updateSlidesClasses () {
+  const swiper = this;
+
+  const {
+    slides, params, $wrapperEl, activeIndex, realIndex,
+  } = swiper;
+  const isVirtual = swiper.virtual && params.virtual.enabled;
+
+  slides.removeClass(`${params.slideActiveClass} ${params.slideNextClass} ${params.slidePrevClass} ${params.slideDuplicateActiveClass} ${params.slideDuplicateNextClass} ${params.slideDuplicatePrevClass}`);
+
+  let activeSlide;
+  if (isVirtual) {
+    activeSlide = swiper.$wrapperEl.find(`.${params.slideClass}[data-swiper-slide-index="${activeIndex}"]`);
+  } else {
+    activeSlide = slides.eq(activeIndex);
+  }
+
+  // Active classes
+  activeSlide.addClass(params.slideActiveClass);
+
+  if (params.loop) {
+    // Duplicate to all looped slides
+    if (activeSlide.hasClass(params.slideDuplicateClass)) {
+      $wrapperEl
+        .children(`.${params.slideClass}:not(.${params.slideDuplicateClass})[data-swiper-slide-index="${realIndex}"]`)
+        .addClass(params.slideDuplicateActiveClass);
+    } else {
+      $wrapperEl
+        .children(`.${params.slideClass}.${params.slideDuplicateClass}[data-swiper-slide-index="${realIndex}"]`)
+        .addClass(params.slideDuplicateActiveClass);
+    }
+  }
+  // Next Slide
+  let nextSlide = activeSlide.nextAll(`.${params.slideClass}`).eq(0).addClass(params.slideNextClass);
+  if (params.loop && nextSlide.length === 0) {
+    nextSlide = slides.eq(0);
+    nextSlide.addClass(params.slideNextClass);
+  }
+  // Prev Slide
+  let prevSlide = activeSlide.prevAll(`.${params.slideClass}`).eq(0).addClass(params.slidePrevClass);
+  if (params.loop && prevSlide.length === 0) {
+    prevSlide = slides.eq(-1);
+    prevSlide.addClass(params.slidePrevClass);
+  }
+  if (params.loop) {
+    // Duplicate to all looped slides
+    if (nextSlide.hasClass(params.slideDuplicateClass)) {
+      $wrapperEl
+        .children(`.${params.slideClass}:not(.${params.slideDuplicateClass})[data-swiper-slide-index="${nextSlide.attr('data-swiper-slide-index')}"]`)
+        .addClass(params.slideDuplicateNextClass);
+    } else {
+      $wrapperEl
+        .children(`.${params.slideClass}.${params.slideDuplicateClass}[data-swiper-slide-index="${nextSlide.attr('data-swiper-slide-index')}"]`)
+        .addClass(params.slideDuplicateNextClass);
+    }
+    if (prevSlide.hasClass(params.slideDuplicateClass)) {
+      $wrapperEl
+        .children(`.${params.slideClass}:not(.${params.slideDuplicateClass})[data-swiper-slide-index="${prevSlide.attr('data-swiper-slide-index')}"]`)
+        .addClass(params.slideDuplicatePrevClass);
+    } else {
+      $wrapperEl
+        .children(`.${params.slideClass}.${params.slideDuplicateClass}[data-swiper-slide-index="${prevSlide.attr('data-swiper-slide-index')}"]`)
+        .addClass(params.slideDuplicatePrevClass);
+    }
+  }
+}
+
+function updateActiveIndex (newActiveIndex) {
+  const swiper = this;
+  const translate = swiper.rtlTranslate ? swiper.translate : -swiper.translate;
+  const {
+    slidesGrid, snapGrid, params, activeIndex: previousIndex, realIndex: previousRealIndex, snapIndex: previousSnapIndex,
+  } = swiper;
+  let activeIndex = newActiveIndex;
+  let snapIndex;
+  if (typeof activeIndex === 'undefined') {
+    for (let i = 0; i < slidesGrid.length; i += 1) {
+      if (typeof slidesGrid[i + 1] !== 'undefined') {
+        if (translate >= slidesGrid[i] && translate < slidesGrid[i + 1] - ((slidesGrid[i + 1] - slidesGrid[i]) / 2)) {
+          activeIndex = i;
+        } else if (translate >= slidesGrid[i] && translate < slidesGrid[i + 1]) {
+          activeIndex = i + 1;
+        }
+      } else if (translate >= slidesGrid[i]) {
+        activeIndex = i;
+      }
+    }
+    // Normalize slideIndex
+    if (params.normalizeSlideIndex) {
+      if (activeIndex < 0 || typeof activeIndex === 'undefined') activeIndex = 0;
+    }
+  }
+  if (snapGrid.indexOf(translate) >= 0) {
+    snapIndex = snapGrid.indexOf(translate);
+  } else {
+    const skip = Math.min(params.slidesPerGroupSkip, activeIndex);
+    snapIndex = skip + Math.floor((activeIndex - skip) / params.slidesPerGroup);
+  }
+  if (snapIndex >= snapGrid.length) snapIndex = snapGrid.length - 1;
+  if (activeIndex === previousIndex) {
+    if (snapIndex !== previousSnapIndex) {
+      swiper.snapIndex = snapIndex;
+      swiper.emit('snapIndexChange');
+    }
+    return;
+  }
+
+  // Get real index
+  const realIndex = parseInt(swiper.slides.eq(activeIndex).attr('data-swiper-slide-index') || activeIndex, 10);
+
+  Utils.extend(swiper, {
+    snapIndex,
+    realIndex,
+    previousIndex,
+    activeIndex,
+  });
+  swiper.emit('activeIndexChange');
+  swiper.emit('snapIndexChange');
+  if (previousRealIndex !== realIndex) {
+    swiper.emit('realIndexChange');
+  }
+  if (swiper.initialized || swiper.params.runCallbacksOnInit) {
+    swiper.emit('slideChange');
+  }
+}
+
+function updateClickedSlide (e) {
+  const swiper = this;
+  const params = swiper.params;
+  const slide = $(e.target).closest(`.${params.slideClass}`)[0];
+  let slideFound = false;
+  if (slide) {
+    for (let i = 0; i < swiper.slides.length; i += 1) {
+      if (swiper.slides[i] === slide) slideFound = true;
+    }
+  }
+
+  if (slide && slideFound) {
+    swiper.clickedSlide = slide;
+    if (swiper.virtual && swiper.params.virtual.enabled) {
+      swiper.clickedIndex = parseInt($(slide).attr('data-swiper-slide-index'), 10);
+    } else {
+      swiper.clickedIndex = $(slide).index();
+    }
+  } else {
+    swiper.clickedSlide = undefined;
+    swiper.clickedIndex = undefined;
+    return;
+  }
+  if (params.slideToClickedSlide && swiper.clickedIndex !== undefined && swiper.clickedIndex !== swiper.activeIndex) {
+    swiper.slideToClickedSlide();
+  }
+}
+
+var update = {
+  updateSize,
+  updateSlides,
+  updateAutoHeight,
+  updateSlidesOffset,
+  updateSlidesProgress,
+  updateProgress,
+  updateSlidesClasses,
+  updateActiveIndex,
+  updateClickedSlide,
+};
+
+function getTranslate (axis = this.isHorizontal() ? 'x' : 'y') {
+  const swiper = this;
+
+  const {
+    params, rtlTranslate: rtl, translate, $wrapperEl,
+  } = swiper;
+
+  if (params.virtualTranslate) {
+    return rtl ? -translate : translate;
+  }
+  if (params.cssMode) {
+    return translate;
+  }
+
+  let currentTranslate = Utils.getTranslate($wrapperEl[0], axis);
+  if (rtl) currentTranslate = -currentTranslate;
+
+  return currentTranslate || 0;
+}
+
+function setTranslate (translate, byController) {
+  const swiper = this;
+  const {
+    rtlTranslate: rtl, params, $wrapperEl, wrapperEl, progress,
+  } = swiper;
+  let x = 0;
+  let y = 0;
+  const z = 0;
+
+  if (swiper.isHorizontal()) {
+    x = rtl ? -translate : translate;
+  } else {
+    y = translate;
+  }
+
+  if (params.roundLengths) {
+    x = Math.floor(x);
+    y = Math.floor(y);
+  }
+
+  if (params.cssMode) {
+    wrapperEl[swiper.isHorizontal() ? 'scrollLeft' : 'scrollTop'] = swiper.isHorizontal() ? -x : -y;
+  } else if (!params.virtualTranslate) {
+    $wrapperEl.transform(`translate3d(${x}px, ${y}px, ${z}px)`);
+  }
+  swiper.previousTranslate = swiper.translate;
+  swiper.translate = swiper.isHorizontal() ? x : y;
+
+  // Check if we need to update progress
+  let newProgress;
+  const translatesDiff = swiper.maxTranslate() - swiper.minTranslate();
+  if (translatesDiff === 0) {
+    newProgress = 0;
+  } else {
+    newProgress = (translate - swiper.minTranslate()) / (translatesDiff);
+  }
+  if (newProgress !== progress) {
+    swiper.updateProgress(translate);
+  }
+
+  swiper.emit('setTranslate', swiper.translate, byController);
+}
+
+function minTranslate () {
+  return (-this.snapGrid[0]);
+}
+
+function maxTranslate () {
+  return (-this.snapGrid[this.snapGrid.length - 1]);
+}
+
+function translateTo (translate = 0, speed = this.params.speed, runCallbacks = true, translateBounds = true, internal) {
+  const swiper = this;
+
+  const {
+    params,
+    wrapperEl,
+  } = swiper;
+
+  if (swiper.animating && params.preventInteractionOnTransition) {
+    return false;
+  }
+
+  const minTranslate = swiper.minTranslate();
+  const maxTranslate = swiper.maxTranslate();
+  let newTranslate;
+  if (translateBounds && translate > minTranslate) newTranslate = minTranslate;
+  else if (translateBounds && translate < maxTranslate) newTranslate = maxTranslate;
+  else newTranslate = translate;
+
+  // Update progress
+  swiper.updateProgress(newTranslate);
+
+  if (params.cssMode) {
+    const isH = swiper.isHorizontal();
+    if (speed === 0) {
+      wrapperEl[isH ? 'scrollLeft' : 'scrollTop'] = -newTranslate;
+    } else {
+      // eslint-disable-next-line
+      if (wrapperEl.scrollTo) {
+        wrapperEl.scrollTo({
+          [isH ? 'left' : 'top']: -newTranslate,
+          behavior: 'smooth',
+        });
+      } else {
+        wrapperEl[isH ? 'scrollLeft' : 'scrollTop'] = -newTranslate;
+      }
+    }
+    return true;
+  }
+
+  if (speed === 0) {
+    swiper.setTransition(0);
+    swiper.setTranslate(newTranslate);
+    if (runCallbacks) {
+      swiper.emit('beforeTransitionStart', speed, internal);
+      swiper.emit('transitionEnd');
+    }
+  } else {
+    swiper.setTransition(speed);
+    swiper.setTranslate(newTranslate);
+    if (runCallbacks) {
+      swiper.emit('beforeTransitionStart', speed, internal);
+      swiper.emit('transitionStart');
+    }
+    if (!swiper.animating) {
+      swiper.animating = true;
+      if (!swiper.onTranslateToWrapperTransitionEnd) {
+        swiper.onTranslateToWrapperTransitionEnd = function transitionEnd(e) {
+          if (!swiper || swiper.destroyed) return;
+          if (e.target !== this) return;
+          swiper.$wrapperEl[0].removeEventListener('transitionend', swiper.onTranslateToWrapperTransitionEnd);
+          swiper.$wrapperEl[0].removeEventListener('webkitTransitionEnd', swiper.onTranslateToWrapperTransitionEnd);
+          swiper.onTranslateToWrapperTransitionEnd = null;
+          delete swiper.onTranslateToWrapperTransitionEnd;
+          if (runCallbacks) {
+            swiper.emit('transitionEnd');
+          }
+        };
+      }
+      swiper.$wrapperEl[0].addEventListener('transitionend', swiper.onTranslateToWrapperTransitionEnd);
+      swiper.$wrapperEl[0].addEventListener('webkitTransitionEnd', swiper.onTranslateToWrapperTransitionEnd);
+    }
+  }
+
+  return true;
+}
+
+var swiper_esm_bundle_translate = {
+  getTranslate,
+  setTranslate,
+  minTranslate,
+  maxTranslate,
+  translateTo,
+};
+
+function setTransition (duration, byController) {
+  const swiper = this;
+
+  if (!swiper.params.cssMode) {
+    swiper.$wrapperEl.transition(duration);
+  }
+
+  swiper.emit('setTransition', duration, byController);
+}
+
+function transitionStart (runCallbacks = true, direction) {
+  const swiper = this;
+  const { activeIndex, params, previousIndex } = swiper;
+  if (params.cssMode) return;
+  if (params.autoHeight) {
+    swiper.updateAutoHeight();
+  }
+
+  let dir = direction;
+  if (!dir) {
+    if (activeIndex > previousIndex) dir = 'next';
+    else if (activeIndex < previousIndex) dir = 'prev';
+    else dir = 'reset';
+  }
+
+  swiper.emit('transitionStart');
+
+  if (runCallbacks && activeIndex !== previousIndex) {
+    if (dir === 'reset') {
+      swiper.emit('slideResetTransitionStart');
+      return;
+    }
+    swiper.emit('slideChangeTransitionStart');
+    if (dir === 'next') {
+      swiper.emit('slideNextTransitionStart');
+    } else {
+      swiper.emit('slidePrevTransitionStart');
+    }
+  }
+}
+
+function swiper_esm_bundle_transitionEnd (runCallbacks = true, direction) {
+  const swiper = this;
+  const { activeIndex, previousIndex, params } = swiper;
+  swiper.animating = false;
+  if (params.cssMode) return;
+  swiper.setTransition(0);
+
+  let dir = direction;
+  if (!dir) {
+    if (activeIndex > previousIndex) dir = 'next';
+    else if (activeIndex < previousIndex) dir = 'prev';
+    else dir = 'reset';
+  }
+
+  swiper.emit('transitionEnd');
+
+  if (runCallbacks && activeIndex !== previousIndex) {
+    if (dir === 'reset') {
+      swiper.emit('slideResetTransitionEnd');
+      return;
+    }
+    swiper.emit('slideChangeTransitionEnd');
+    if (dir === 'next') {
+      swiper.emit('slideNextTransitionEnd');
+    } else {
+      swiper.emit('slidePrevTransitionEnd');
+    }
+  }
+}
+
+var swiper_esm_bundle_transition = {
+  setTransition,
+  transitionStart,
+  transitionEnd: swiper_esm_bundle_transitionEnd,
+};
+
+function slideTo (index = 0, speed = this.params.speed, runCallbacks = true, internal) {
+  const swiper = this;
+  let slideIndex = index;
+  if (slideIndex < 0) slideIndex = 0;
+
+  const {
+    params, snapGrid, slidesGrid, previousIndex, activeIndex, rtlTranslate: rtl, wrapperEl,
+  } = swiper;
+  if (swiper.animating && params.preventInteractionOnTransition) {
+    return false;
+  }
+
+  const skip = Math.min(swiper.params.slidesPerGroupSkip, slideIndex);
+  let snapIndex = skip + Math.floor((slideIndex - skip) / swiper.params.slidesPerGroup);
+  if (snapIndex >= snapGrid.length) snapIndex = snapGrid.length - 1;
+
+  if ((activeIndex || params.initialSlide || 0) === (previousIndex || 0) && runCallbacks) {
+    swiper.emit('beforeSlideChangeStart');
+  }
+
+  const translate = -snapGrid[snapIndex];
+
+  // Update progress
+  swiper.updateProgress(translate);
+
+  // Normalize slideIndex
+  if (params.normalizeSlideIndex) {
+    for (let i = 0; i < slidesGrid.length; i += 1) {
+      if (-Math.floor(translate * 100) >= Math.floor(slidesGrid[i] * 100)) {
+        slideIndex = i;
+      }
+    }
+  }
+  // Directions locks
+  if (swiper.initialized && slideIndex !== activeIndex) {
+    if (!swiper.allowSlideNext && translate < swiper.translate && translate < swiper.minTranslate()) {
+      return false;
+    }
+    if (!swiper.allowSlidePrev && translate > swiper.translate && translate > swiper.maxTranslate()) {
+      if ((activeIndex || 0) !== slideIndex) return false;
+    }
+  }
+
+  let direction;
+  if (slideIndex > activeIndex) direction = 'next';
+  else if (slideIndex < activeIndex) direction = 'prev';
+  else direction = 'reset';
+
+
+  // Update Index
+  if ((rtl && -translate === swiper.translate) || (!rtl && translate === swiper.translate)) {
+    swiper.updateActiveIndex(slideIndex);
+    // Update Height
+    if (params.autoHeight) {
+      swiper.updateAutoHeight();
+    }
+    swiper.updateSlidesClasses();
+    if (params.effect !== 'slide') {
+      swiper.setTranslate(translate);
+    }
+    if (direction !== 'reset') {
+      swiper.transitionStart(runCallbacks, direction);
+      swiper.transitionEnd(runCallbacks, direction);
+    }
+    return false;
+  }
+  if (params.cssMode) {
+    const isH = swiper.isHorizontal();
+    let t = -translate;
+    if (rtl) {
+      t = wrapperEl.scrollWidth - wrapperEl.offsetWidth - t;
+    }
+    if (speed === 0) {
+      wrapperEl[isH ? 'scrollLeft' : 'scrollTop'] = t;
+    } else {
+      // eslint-disable-next-line
+      if (wrapperEl.scrollTo) {
+        wrapperEl.scrollTo({
+          [isH ? 'left' : 'top']: t,
+          behavior: 'smooth',
+        });
+      } else {
+        wrapperEl[isH ? 'scrollLeft' : 'scrollTop'] = t;
+      }
+    }
+    return true;
+  }
+
+  if (speed === 0) {
+    swiper.setTransition(0);
+    swiper.setTranslate(translate);
+    swiper.updateActiveIndex(slideIndex);
+    swiper.updateSlidesClasses();
+    swiper.emit('beforeTransitionStart', speed, internal);
+    swiper.transitionStart(runCallbacks, direction);
+    swiper.transitionEnd(runCallbacks, direction);
+  } else {
+    swiper.setTransition(speed);
+    swiper.setTranslate(translate);
+    swiper.updateActiveIndex(slideIndex);
+    swiper.updateSlidesClasses();
+    swiper.emit('beforeTransitionStart', speed, internal);
+    swiper.transitionStart(runCallbacks, direction);
+    if (!swiper.animating) {
+      swiper.animating = true;
+      if (!swiper.onSlideToWrapperTransitionEnd) {
+        swiper.onSlideToWrapperTransitionEnd = function transitionEnd(e) {
+          if (!swiper || swiper.destroyed) return;
+          if (e.target !== this) return;
+          swiper.$wrapperEl[0].removeEventListener('transitionend', swiper.onSlideToWrapperTransitionEnd);
+          swiper.$wrapperEl[0].removeEventListener('webkitTransitionEnd', swiper.onSlideToWrapperTransitionEnd);
+          swiper.onSlideToWrapperTransitionEnd = null;
+          delete swiper.onSlideToWrapperTransitionEnd;
+          swiper.transitionEnd(runCallbacks, direction);
+        };
+      }
+      swiper.$wrapperEl[0].addEventListener('transitionend', swiper.onSlideToWrapperTransitionEnd);
+      swiper.$wrapperEl[0].addEventListener('webkitTransitionEnd', swiper.onSlideToWrapperTransitionEnd);
+    }
+  }
+
+  return true;
+}
+
+function slideToLoop (index = 0, speed = this.params.speed, runCallbacks = true, internal) {
+  const swiper = this;
+  let newIndex = index;
+  if (swiper.params.loop) {
+    newIndex += swiper.loopedSlides;
+  }
+
+  return swiper.slideTo(newIndex, speed, runCallbacks, internal);
+}
+
+/* eslint no-unused-vars: "off" */
+function slideNext (speed = this.params.speed, runCallbacks = true, internal) {
+  const swiper = this;
+  const { params, animating } = swiper;
+  const increment = swiper.activeIndex < params.slidesPerGroupSkip ? 1 : params.slidesPerGroup;
+  if (params.loop) {
+    if (animating) return false;
+    swiper.loopFix();
+    // eslint-disable-next-line
+    swiper._clientLeft = swiper.$wrapperEl[0].clientLeft;
+  }
+  return swiper.slideTo(swiper.activeIndex + increment, speed, runCallbacks, internal);
+}
+
+/* eslint no-unused-vars: "off" */
+function slidePrev (speed = this.params.speed, runCallbacks = true, internal) {
+  const swiper = this;
+  const {
+    params, animating, snapGrid, slidesGrid, rtlTranslate,
+  } = swiper;
+
+  if (params.loop) {
+    if (animating) return false;
+    swiper.loopFix();
+    // eslint-disable-next-line
+    swiper._clientLeft = swiper.$wrapperEl[0].clientLeft;
+  }
+  const translate = rtlTranslate ? swiper.translate : -swiper.translate;
+  function normalize(val) {
+    if (val < 0) return -Math.floor(Math.abs(val));
+    return Math.floor(val);
+  }
+  const normalizedTranslate = normalize(translate);
+  const normalizedSnapGrid = snapGrid.map((val) => normalize(val));
+  const normalizedSlidesGrid = slidesGrid.map((val) => normalize(val));
+
+  const currentSnap = snapGrid[normalizedSnapGrid.indexOf(normalizedTranslate)];
+  let prevSnap = snapGrid[normalizedSnapGrid.indexOf(normalizedTranslate) - 1];
+  if (typeof prevSnap === 'undefined' && params.cssMode) {
+    snapGrid.forEach((snap) => {
+      if (!prevSnap && normalizedTranslate >= snap) prevSnap = snap;
+    });
+  }
+  let prevIndex;
+  if (typeof prevSnap !== 'undefined') {
+    prevIndex = slidesGrid.indexOf(prevSnap);
+    if (prevIndex < 0) prevIndex = swiper.activeIndex - 1;
+  }
+  return swiper.slideTo(prevIndex, speed, runCallbacks, internal);
+}
+
+/* eslint no-unused-vars: "off" */
+function slideReset (speed = this.params.speed, runCallbacks = true, internal) {
+  const swiper = this;
+  return swiper.slideTo(swiper.activeIndex, speed, runCallbacks, internal);
+}
+
+/* eslint no-unused-vars: "off" */
+function slideToClosest (speed = this.params.speed, runCallbacks = true, internal, threshold = 0.5) {
+  const swiper = this;
+  let index = swiper.activeIndex;
+  const skip = Math.min(swiper.params.slidesPerGroupSkip, index);
+  const snapIndex = skip + Math.floor((index - skip) / swiper.params.slidesPerGroup);
+
+  const translate = swiper.rtlTranslate ? swiper.translate : -swiper.translate;
+
+  if (translate >= swiper.snapGrid[snapIndex]) {
+    // The current translate is on or after the current snap index, so the choice
+    // is between the current index and the one after it.
+    const currentSnap = swiper.snapGrid[snapIndex];
+    const nextSnap = swiper.snapGrid[snapIndex + 1];
+    if ((translate - currentSnap) > (nextSnap - currentSnap) * threshold) {
+      index += swiper.params.slidesPerGroup;
+    }
+  } else {
+    // The current translate is before the current snap index, so the choice
+    // is between the current index and the one before it.
+    const prevSnap = swiper.snapGrid[snapIndex - 1];
+    const currentSnap = swiper.snapGrid[snapIndex];
+    if ((translate - prevSnap) <= (currentSnap - prevSnap) * threshold) {
+      index -= swiper.params.slidesPerGroup;
+    }
+  }
+  index = Math.max(index, 0);
+  index = Math.min(index, swiper.slidesGrid.length - 1);
+
+  return swiper.slideTo(index, speed, runCallbacks, internal);
+}
+
+function slideToClickedSlide () {
+  const swiper = this;
+  const { params, $wrapperEl } = swiper;
+
+  const slidesPerView = params.slidesPerView === 'auto' ? swiper.slidesPerViewDynamic() : params.slidesPerView;
+  let slideToIndex = swiper.clickedIndex;
+  let realIndex;
+  if (params.loop) {
+    if (swiper.animating) return;
+    realIndex = parseInt($(swiper.clickedSlide).attr('data-swiper-slide-index'), 10);
+    if (params.centeredSlides) {
+      if (
+        (slideToIndex < swiper.loopedSlides - (slidesPerView / 2))
+        || (slideToIndex > (swiper.slides.length - swiper.loopedSlides) + (slidesPerView / 2))
+      ) {
+        swiper.loopFix();
+        slideToIndex = $wrapperEl
+          .children(`.${params.slideClass}[data-swiper-slide-index="${realIndex}"]:not(.${params.slideDuplicateClass})`)
+          .eq(0)
+          .index();
+
+        Utils.nextTick(() => {
+          swiper.slideTo(slideToIndex);
+        });
+      } else {
+        swiper.slideTo(slideToIndex);
+      }
+    } else if (slideToIndex > swiper.slides.length - slidesPerView) {
+      swiper.loopFix();
+      slideToIndex = $wrapperEl
+        .children(`.${params.slideClass}[data-swiper-slide-index="${realIndex}"]:not(.${params.slideDuplicateClass})`)
+        .eq(0)
+        .index();
+
+      Utils.nextTick(() => {
+        swiper.slideTo(slideToIndex);
+      });
+    } else {
+      swiper.slideTo(slideToIndex);
+    }
+  } else {
+    swiper.slideTo(slideToIndex);
+  }
+}
+
+var swiper_esm_bundle_slide = {
+  slideTo,
+  slideToLoop,
+  slideNext,
+  slidePrev,
+  slideReset,
+  slideToClosest,
+  slideToClickedSlide,
+};
+
+function loopCreate () {
+  const swiper = this;
+  const { params, $wrapperEl } = swiper;
+  // Remove duplicated slides
+  $wrapperEl.children(`.${params.slideClass}.${params.slideDuplicateClass}`).remove();
+
+  let slides = $wrapperEl.children(`.${params.slideClass}`);
+
+  if (params.loopFillGroupWithBlank) {
+    const blankSlidesNum = params.slidesPerGroup - (slides.length % params.slidesPerGroup);
+    if (blankSlidesNum !== params.slidesPerGroup) {
+      for (let i = 0; i < blankSlidesNum; i += 1) {
+        const blankNode = $(doc.createElement('div')).addClass(`${params.slideClass} ${params.slideBlankClass}`);
+        $wrapperEl.append(blankNode);
+      }
+      slides = $wrapperEl.children(`.${params.slideClass}`);
+    }
+  }
+
+  if (params.slidesPerView === 'auto' && !params.loopedSlides) params.loopedSlides = slides.length;
+
+  swiper.loopedSlides = Math.ceil(parseFloat(params.loopedSlides || params.slidesPerView, 10));
+  swiper.loopedSlides += params.loopAdditionalSlides;
+  if (swiper.loopedSlides > slides.length) {
+    swiper.loopedSlides = slides.length;
+  }
+
+  const prependSlides = [];
+  const appendSlides = [];
+  slides.each((index, el) => {
+    const slide = $(el);
+    if (index < swiper.loopedSlides) appendSlides.push(el);
+    if (index < slides.length && index >= slides.length - swiper.loopedSlides) prependSlides.push(el);
+    slide.attr('data-swiper-slide-index', index);
+  });
+  for (let i = 0; i < appendSlides.length; i += 1) {
+    $wrapperEl.append($(appendSlides[i].cloneNode(true)).addClass(params.slideDuplicateClass));
+  }
+  for (let i = prependSlides.length - 1; i >= 0; i -= 1) {
+    $wrapperEl.prepend($(prependSlides[i].cloneNode(true)).addClass(params.slideDuplicateClass));
+  }
+}
+
+function loopFix () {
+  const swiper = this;
+
+  swiper.emit('beforeLoopFix');
+
+  const {
+    activeIndex, slides, loopedSlides, allowSlidePrev, allowSlideNext, snapGrid, rtlTranslate: rtl,
+  } = swiper;
+  let newIndex;
+  swiper.allowSlidePrev = true;
+  swiper.allowSlideNext = true;
+
+  const snapTranslate = -snapGrid[activeIndex];
+  const diff = snapTranslate - swiper.getTranslate();
+
+  // Fix For Negative Oversliding
+  if (activeIndex < loopedSlides) {
+    newIndex = (slides.length - (loopedSlides * 3)) + activeIndex;
+    newIndex += loopedSlides;
+    const slideChanged = swiper.slideTo(newIndex, 0, false, true);
+    if (slideChanged && diff !== 0) {
+      swiper.setTranslate((rtl ? -swiper.translate : swiper.translate) - diff);
+    }
+  } else if (activeIndex >= slides.length - loopedSlides) {
+    // Fix For Positive Oversliding
+    newIndex = -slides.length + activeIndex + loopedSlides;
+    newIndex += loopedSlides;
+    const slideChanged = swiper.slideTo(newIndex, 0, false, true);
+    if (slideChanged && diff !== 0) {
+      swiper.setTranslate((rtl ? -swiper.translate : swiper.translate) - diff);
+    }
+  }
+  swiper.allowSlidePrev = allowSlidePrev;
+  swiper.allowSlideNext = allowSlideNext;
+
+  swiper.emit('loopFix');
+}
+
+function loopDestroy () {
+  const swiper = this;
+  const { $wrapperEl, params, slides } = swiper;
+  $wrapperEl.children(`.${params.slideClass}.${params.slideDuplicateClass},.${params.slideClass}.${params.slideBlankClass}`).remove();
+  slides.removeAttr('data-swiper-slide-index');
+}
+
+var loop = {
+  loopCreate,
+  loopFix,
+  loopDestroy,
+};
+
+function setGrabCursor (moving) {
+  const swiper = this;
+  if (swiper_esm_bundle_Support.touch || !swiper.params.simulateTouch || (swiper.params.watchOverflow && swiper.isLocked) || swiper.params.cssMode) return;
+  const el = swiper.el;
+  el.style.cursor = 'move';
+  el.style.cursor = moving ? '-webkit-grabbing' : '-webkit-grab';
+  el.style.cursor = moving ? '-moz-grabbin' : '-moz-grab';
+  el.style.cursor = moving ? 'grabbing' : 'grab';
+}
+
+function unsetGrabCursor () {
+  const swiper = this;
+  if (swiper_esm_bundle_Support.touch || (swiper.params.watchOverflow && swiper.isLocked) || swiper.params.cssMode) return;
+  swiper.el.style.cursor = '';
+}
+
+var grabCursor = {
+  setGrabCursor,
+  unsetGrabCursor,
+};
+
+function appendSlide (slides) {
+  const swiper = this;
+  const { $wrapperEl, params } = swiper;
+  if (params.loop) {
+    swiper.loopDestroy();
+  }
+  if (typeof slides === 'object' && 'length' in slides) {
+    for (let i = 0; i < slides.length; i += 1) {
+      if (slides[i]) $wrapperEl.append(slides[i]);
+    }
+  } else {
+    $wrapperEl.append(slides);
+  }
+  if (params.loop) {
+    swiper.loopCreate();
+  }
+  if (!(params.observer && swiper_esm_bundle_Support.observer)) {
+    swiper.update();
+  }
+}
+
+function prependSlide (slides) {
+  const swiper = this;
+  const { params, $wrapperEl, activeIndex } = swiper;
+
+  if (params.loop) {
+    swiper.loopDestroy();
+  }
+  let newActiveIndex = activeIndex + 1;
+  if (typeof slides === 'object' && 'length' in slides) {
+    for (let i = 0; i < slides.length; i += 1) {
+      if (slides[i]) $wrapperEl.prepend(slides[i]);
+    }
+    newActiveIndex = activeIndex + slides.length;
+  } else {
+    $wrapperEl.prepend(slides);
+  }
+  if (params.loop) {
+    swiper.loopCreate();
+  }
+  if (!(params.observer && swiper_esm_bundle_Support.observer)) {
+    swiper.update();
+  }
+  swiper.slideTo(newActiveIndex, 0, false);
+}
+
+function addSlide (index, slides) {
+  const swiper = this;
+  const { $wrapperEl, params, activeIndex } = swiper;
+  let activeIndexBuffer = activeIndex;
+  if (params.loop) {
+    activeIndexBuffer -= swiper.loopedSlides;
+    swiper.loopDestroy();
+    swiper.slides = $wrapperEl.children(`.${params.slideClass}`);
+  }
+  const baseLength = swiper.slides.length;
+  if (index <= 0) {
+    swiper.prependSlide(slides);
+    return;
+  }
+  if (index >= baseLength) {
+    swiper.appendSlide(slides);
+    return;
+  }
+  let newActiveIndex = activeIndexBuffer > index ? activeIndexBuffer + 1 : activeIndexBuffer;
+
+  const slidesBuffer = [];
+  for (let i = baseLength - 1; i >= index; i -= 1) {
+    const currentSlide = swiper.slides.eq(i);
+    currentSlide.remove();
+    slidesBuffer.unshift(currentSlide);
+  }
+
+  if (typeof slides === 'object' && 'length' in slides) {
+    for (let i = 0; i < slides.length; i += 1) {
+      if (slides[i]) $wrapperEl.append(slides[i]);
+    }
+    newActiveIndex = activeIndexBuffer > index ? activeIndexBuffer + slides.length : activeIndexBuffer;
+  } else {
+    $wrapperEl.append(slides);
+  }
+
+  for (let i = 0; i < slidesBuffer.length; i += 1) {
+    $wrapperEl.append(slidesBuffer[i]);
+  }
+
+  if (params.loop) {
+    swiper.loopCreate();
+  }
+  if (!(params.observer && swiper_esm_bundle_Support.observer)) {
+    swiper.update();
+  }
+  if (params.loop) {
+    swiper.slideTo(newActiveIndex + swiper.loopedSlides, 0, false);
+  } else {
+    swiper.slideTo(newActiveIndex, 0, false);
+  }
+}
+
+function removeSlide (slidesIndexes) {
+  const swiper = this;
+  const { params, $wrapperEl, activeIndex } = swiper;
+
+  let activeIndexBuffer = activeIndex;
+  if (params.loop) {
+    activeIndexBuffer -= swiper.loopedSlides;
+    swiper.loopDestroy();
+    swiper.slides = $wrapperEl.children(`.${params.slideClass}`);
+  }
+  let newActiveIndex = activeIndexBuffer;
+  let indexToRemove;
+
+  if (typeof slidesIndexes === 'object' && 'length' in slidesIndexes) {
+    for (let i = 0; i < slidesIndexes.length; i += 1) {
+      indexToRemove = slidesIndexes[i];
+      if (swiper.slides[indexToRemove]) swiper.slides.eq(indexToRemove).remove();
+      if (indexToRemove < newActiveIndex) newActiveIndex -= 1;
+    }
+    newActiveIndex = Math.max(newActiveIndex, 0);
+  } else {
+    indexToRemove = slidesIndexes;
+    if (swiper.slides[indexToRemove]) swiper.slides.eq(indexToRemove).remove();
+    if (indexToRemove < newActiveIndex) newActiveIndex -= 1;
+    newActiveIndex = Math.max(newActiveIndex, 0);
+  }
+
+  if (params.loop) {
+    swiper.loopCreate();
+  }
+
+  if (!(params.observer && swiper_esm_bundle_Support.observer)) {
+    swiper.update();
+  }
+  if (params.loop) {
+    swiper.slideTo(newActiveIndex + swiper.loopedSlides, 0, false);
+  } else {
+    swiper.slideTo(newActiveIndex, 0, false);
+  }
+}
+
+function removeAllSlides () {
+  const swiper = this;
+
+  const slidesIndexes = [];
+  for (let i = 0; i < swiper.slides.length; i += 1) {
+    slidesIndexes.push(i);
+  }
+  swiper.removeSlide(slidesIndexes);
+}
+
+var manipulation = {
+  appendSlide,
+  prependSlide,
+  addSlide,
+  removeSlide,
+  removeAllSlides,
+};
+
+const swiper_esm_bundle_Device = (function Device() {
+  const platform = win.navigator.platform;
+  const ua = win.navigator.userAgent;
+
+  const device = {
+    ios: false,
+    android: false,
+    androidChrome: false,
+    desktop: false,
+    iphone: false,
+    ipod: false,
+    ipad: false,
+    edge: false,
+    ie: false,
+    firefox: false,
+    macos: false,
+    windows: false,
+    cordova: !!(win.cordova || win.phonegap),
+    phonegap: !!(win.cordova || win.phonegap),
+    electron: false,
+  };
+
+  const screenWidth = win.screen.width;
+  const screenHeight = win.screen.height;
+
+  const android = ua.match(/(Android);?[\s\/]+([\d.]+)?/); // eslint-disable-line
+  let ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
+  const ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
+  const iphone = !ipad && ua.match(/(iPhone\sOS|iOS)\s([\d_]+)/);
+  const ie = ua.indexOf('MSIE ') >= 0 || ua.indexOf('Trident/') >= 0;
+  const edge = ua.indexOf('Edge/') >= 0;
+  const firefox = ua.indexOf('Gecko/') >= 0 && ua.indexOf('Firefox/') >= 0;
+  const windows = platform === 'Win32';
+  const electron = ua.toLowerCase().indexOf('electron') >= 0;
+  let macos = platform === 'MacIntel';
+
+  // iPadOs 13 fix
+  if (!ipad
+    && macos
+    && swiper_esm_bundle_Support.touch
+    && (
+      (screenWidth === 1024 && screenHeight === 1366) // Pro 12.9
+      || (screenWidth === 834 && screenHeight === 1194) // Pro 11
+      || (screenWidth === 834 && screenHeight === 1112) // Pro 10.5
+      || (screenWidth === 768 && screenHeight === 1024) // other
+    )
+  ) {
+    ipad = ua.match(/(Version)\/([\d.]+)/);
+    macos = false;
+  }
+
+  device.ie = ie;
+  device.edge = edge;
+  device.firefox = firefox;
+
+  // Android
+  if (android && !windows) {
+    device.os = 'android';
+    device.osVersion = android[2];
+    device.android = true;
+    device.androidChrome = ua.toLowerCase().indexOf('chrome') >= 0;
+  }
+  if (ipad || iphone || ipod) {
+    device.os = 'ios';
+    device.ios = true;
+  }
+  // iOS
+  if (iphone && !ipod) {
+    device.osVersion = iphone[2].replace(/_/g, '.');
+    device.iphone = true;
+  }
+  if (ipad) {
+    device.osVersion = ipad[2].replace(/_/g, '.');
+    device.ipad = true;
+  }
+  if (ipod) {
+    device.osVersion = ipod[3] ? ipod[3].replace(/_/g, '.') : null;
+    device.ipod = true;
+  }
+  // iOS 8+ changed UA
+  if (device.ios && device.osVersion && ua.indexOf('Version/') >= 0) {
+    if (device.osVersion.split('.')[0] === '10') {
+      device.osVersion = ua.toLowerCase().split('version/')[1].split(' ')[0];
+    }
+  }
+
+  // Webview
+  device.webView = !!((iphone || ipad || ipod) && (ua.match(/.*AppleWebKit(?!.*Safari)/i) || win.navigator.standalone))
+    || (win.matchMedia && win.matchMedia('(display-mode: standalone)').matches);
+  device.webview = device.webView;
+  device.standalone = device.webView;
+
+  // Desktop
+  device.desktop = !(device.ios || device.android) || electron;
+  if (device.desktop) {
+    device.electron = electron;
+    device.macos = macos;
+    device.windows = windows;
+    if (device.macos) {
+      device.os = 'macos';
+    }
+    if (device.windows) {
+      device.os = 'windows';
+    }
+  }
+
+  // Pixel Ratio
+  device.pixelRatio = win.devicePixelRatio || 1;
+
+  // Export object
+  return device;
+}());
+
+function onTouchStart (event) {
+  const swiper = this;
+  const data = swiper.touchEventsData;
+  const { params, touches } = swiper;
+
+  if (swiper.animating && params.preventInteractionOnTransition) {
+    return;
+  }
+  let e = event;
+  if (e.originalEvent) e = e.originalEvent;
+  const $targetEl = $(e.target);
+
+  if (params.touchEventsTarget === 'wrapper') {
+    if (!$targetEl.closest(swiper.wrapperEl).length) return;
+  }
+  data.isTouchEvent = e.type === 'touchstart';
+  if (!data.isTouchEvent && 'which' in e && e.which === 3) return;
+  if (!data.isTouchEvent && 'button' in e && e.button > 0) return;
+  if (data.isTouched && data.isMoved) return;
+  if (params.noSwiping && $targetEl.closest(params.noSwipingSelector ? params.noSwipingSelector : `.${params.noSwipingClass}`)[0]) {
+    swiper.allowClick = true;
+    return;
+  }
+  if (params.swipeHandler) {
+    if (!$targetEl.closest(params.swipeHandler)[0]) return;
+  }
+
+  touches.currentX = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
+  touches.currentY = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+  const startX = touches.currentX;
+  const startY = touches.currentY;
+
+  // Do NOT start if iOS edge swipe is detected. Otherwise iOS app cannot swipe-to-go-back anymore
+
+  const edgeSwipeDetection = params.edgeSwipeDetection || params.iOSEdgeSwipeDetection;
+  const edgeSwipeThreshold = params.edgeSwipeThreshold || params.iOSEdgeSwipeThreshold;
+  if (
+    edgeSwipeDetection
+    && ((startX <= edgeSwipeThreshold)
+    || (startX >= win.screen.width - edgeSwipeThreshold))
+  ) {
+    return;
+  }
+
+  Utils.extend(data, {
+    isTouched: true,
+    isMoved: false,
+    allowTouchCallbacks: true,
+    isScrolling: undefined,
+    startMoving: undefined,
+  });
+
+  touches.startX = startX;
+  touches.startY = startY;
+  data.touchStartTime = Utils.now();
+  swiper.allowClick = true;
+  swiper.updateSize();
+  swiper.swipeDirection = undefined;
+  if (params.threshold > 0) data.allowThresholdMove = false;
+  if (e.type !== 'touchstart') {
+    let preventDefault = true;
+    if ($targetEl.is(data.formElements)) preventDefault = false;
+    if (
+      doc.activeElement
+      && $(doc.activeElement).is(data.formElements)
+      && doc.activeElement !== $targetEl[0]
+    ) {
+      doc.activeElement.blur();
+    }
+
+    const shouldPreventDefault = preventDefault && swiper.allowTouchMove && params.touchStartPreventDefault;
+    if (params.touchStartForcePreventDefault || shouldPreventDefault) {
+      e.preventDefault();
+    }
+  }
+  swiper.emit('touchStart', e);
+}
+
+function onTouchMove (event) {
+  const swiper = this;
+  const data = swiper.touchEventsData;
+  const { params, touches, rtlTranslate: rtl } = swiper;
+  let e = event;
+  if (e.originalEvent) e = e.originalEvent;
+  if (!data.isTouched) {
+    if (data.startMoving && data.isScrolling) {
+      swiper.emit('touchMoveOpposite', e);
+    }
+    return;
+  }
+  if (data.isTouchEvent && e.type !== 'touchmove') return;
+  const targetTouch = e.type === 'touchmove' && e.targetTouches && (e.targetTouches[0] || e.changedTouches[0]);
+  const pageX = e.type === 'touchmove' ? targetTouch.pageX : e.pageX;
+  const pageY = e.type === 'touchmove' ? targetTouch.pageY : e.pageY;
+  if (e.preventedByNestedSwiper) {
+    touches.startX = pageX;
+    touches.startY = pageY;
+    return;
+  }
+  if (!swiper.allowTouchMove) {
+    // isMoved = true;
+    swiper.allowClick = false;
+    if (data.isTouched) {
+      Utils.extend(touches, {
+        startX: pageX,
+        startY: pageY,
+        currentX: pageX,
+        currentY: pageY,
+      });
+      data.touchStartTime = Utils.now();
+    }
+    return;
+  }
+  if (data.isTouchEvent && params.touchReleaseOnEdges && !params.loop) {
+    if (swiper.isVertical()) {
+      // Vertical
+      if (
+        (pageY < touches.startY && swiper.translate <= swiper.maxTranslate())
+        || (pageY > touches.startY && swiper.translate >= swiper.minTranslate())
+      ) {
+        data.isTouched = false;
+        data.isMoved = false;
+        return;
+      }
+    } else if (
+      (pageX < touches.startX && swiper.translate <= swiper.maxTranslate())
+      || (pageX > touches.startX && swiper.translate >= swiper.minTranslate())
+    ) {
+      return;
+    }
+  }
+  if (data.isTouchEvent && doc.activeElement) {
+    if (e.target === doc.activeElement && $(e.target).is(data.formElements)) {
+      data.isMoved = true;
+      swiper.allowClick = false;
+      return;
+    }
+  }
+  if (data.allowTouchCallbacks) {
+    swiper.emit('touchMove', e);
+  }
+  if (e.targetTouches && e.targetTouches.length > 1) return;
+
+  touches.currentX = pageX;
+  touches.currentY = pageY;
+
+  const diffX = touches.currentX - touches.startX;
+  const diffY = touches.currentY - touches.startY;
+  if (swiper.params.threshold && Math.sqrt((diffX ** 2) + (diffY ** 2)) < swiper.params.threshold) return;
+
+  if (typeof data.isScrolling === 'undefined') {
+    let touchAngle;
+    if ((swiper.isHorizontal() && touches.currentY === touches.startY) || (swiper.isVertical() && touches.currentX === touches.startX)) {
+      data.isScrolling = false;
+    } else {
+      // eslint-disable-next-line
+      if ((diffX * diffX) + (diffY * diffY) >= 25) {
+        touchAngle = (Math.atan2(Math.abs(diffY), Math.abs(diffX)) * 180) / Math.PI;
+        data.isScrolling = swiper.isHorizontal() ? touchAngle > params.touchAngle : (90 - touchAngle > params.touchAngle);
+      }
+    }
+  }
+  if (data.isScrolling) {
+    swiper.emit('touchMoveOpposite', e);
+  }
+  if (typeof data.startMoving === 'undefined') {
+    if (touches.currentX !== touches.startX || touches.currentY !== touches.startY) {
+      data.startMoving = true;
+    }
+  }
+  if (data.isScrolling) {
+    data.isTouched = false;
+    return;
+  }
+  if (!data.startMoving) {
+    return;
+  }
+  swiper.allowClick = false;
+  if (!params.cssMode && e.cancelable) {
+    e.preventDefault();
+  }
+  if (params.touchMoveStopPropagation && !params.nested) {
+    e.stopPropagation();
+  }
+
+  if (!data.isMoved) {
+    if (params.loop) {
+      swiper.loopFix();
+    }
+    data.startTranslate = swiper.getTranslate();
+    swiper.setTransition(0);
+    if (swiper.animating) {
+      swiper.$wrapperEl.trigger('webkitTransitionEnd transitionend');
+    }
+    data.allowMomentumBounce = false;
+    // Grab Cursor
+    if (params.grabCursor && (swiper.allowSlideNext === true || swiper.allowSlidePrev === true)) {
+      swiper.setGrabCursor(true);
+    }
+    swiper.emit('sliderFirstMove', e);
+  }
+  swiper.emit('sliderMove', e);
+  data.isMoved = true;
+
+  let diff = swiper.isHorizontal() ? diffX : diffY;
+  touches.diff = diff;
+
+  diff *= params.touchRatio;
+  if (rtl) diff = -diff;
+
+  swiper.swipeDirection = diff > 0 ? 'prev' : 'next';
+  data.currentTranslate = diff + data.startTranslate;
+
+  let disableParentSwiper = true;
+  let resistanceRatio = params.resistanceRatio;
+  if (params.touchReleaseOnEdges) {
+    resistanceRatio = 0;
+  }
+  if ((diff > 0 && data.currentTranslate > swiper.minTranslate())) {
+    disableParentSwiper = false;
+    if (params.resistance) data.currentTranslate = (swiper.minTranslate() - 1) + ((-swiper.minTranslate() + data.startTranslate + diff) ** resistanceRatio);
+  } else if (diff < 0 && data.currentTranslate < swiper.maxTranslate()) {
+    disableParentSwiper = false;
+    if (params.resistance) data.currentTranslate = (swiper.maxTranslate() + 1) - ((swiper.maxTranslate() - data.startTranslate - diff) ** resistanceRatio);
+  }
+
+  if (disableParentSwiper) {
+    e.preventedByNestedSwiper = true;
+  }
+
+  // Directions locks
+  if (!swiper.allowSlideNext && swiper.swipeDirection === 'next' && data.currentTranslate < data.startTranslate) {
+    data.currentTranslate = data.startTranslate;
+  }
+  if (!swiper.allowSlidePrev && swiper.swipeDirection === 'prev' && data.currentTranslate > data.startTranslate) {
+    data.currentTranslate = data.startTranslate;
+  }
+
+
+  // Threshold
+  if (params.threshold > 0) {
+    if (Math.abs(diff) > params.threshold || data.allowThresholdMove) {
+      if (!data.allowThresholdMove) {
+        data.allowThresholdMove = true;
+        touches.startX = touches.currentX;
+        touches.startY = touches.currentY;
+        data.currentTranslate = data.startTranslate;
+        touches.diff = swiper.isHorizontal() ? touches.currentX - touches.startX : touches.currentY - touches.startY;
+        return;
+      }
+    } else {
+      data.currentTranslate = data.startTranslate;
+      return;
+    }
+  }
+
+  if (!params.followFinger || params.cssMode) return;
+
+  // Update active index in free mode
+  if (params.freeMode || params.watchSlidesProgress || params.watchSlidesVisibility) {
+    swiper.updateActiveIndex();
+    swiper.updateSlidesClasses();
+  }
+  if (params.freeMode) {
+    // Velocity
+    if (data.velocities.length === 0) {
+      data.velocities.push({
+        position: touches[swiper.isHorizontal() ? 'startX' : 'startY'],
+        time: data.touchStartTime,
+      });
+    }
+    data.velocities.push({
+      position: touches[swiper.isHorizontal() ? 'currentX' : 'currentY'],
+      time: Utils.now(),
+    });
+  }
+  // Update progress
+  swiper.updateProgress(data.currentTranslate);
+  // Update translate
+  swiper.setTranslate(data.currentTranslate);
+}
+
+function onTouchEnd (event) {
+  const swiper = this;
+  const data = swiper.touchEventsData;
+
+  const {
+    params, touches, rtlTranslate: rtl, $wrapperEl, slidesGrid, snapGrid,
+  } = swiper;
+  let e = event;
+  if (e.originalEvent) e = e.originalEvent;
+  if (data.allowTouchCallbacks) {
+    swiper.emit('touchEnd', e);
+  }
+  data.allowTouchCallbacks = false;
+  if (!data.isTouched) {
+    if (data.isMoved && params.grabCursor) {
+      swiper.setGrabCursor(false);
+    }
+    data.isMoved = false;
+    data.startMoving = false;
+    return;
+  }
+  // Return Grab Cursor
+  if (params.grabCursor && data.isMoved && data.isTouched && (swiper.allowSlideNext === true || swiper.allowSlidePrev === true)) {
+    swiper.setGrabCursor(false);
+  }
+
+  // Time diff
+  const touchEndTime = Utils.now();
+  const timeDiff = touchEndTime - data.touchStartTime;
+
+  // Tap, doubleTap, Click
+  if (swiper.allowClick) {
+    swiper.updateClickedSlide(e);
+    swiper.emit('tap click', e);
+    if (timeDiff < 300 && (touchEndTime - data.lastClickTime) < 300) {
+      swiper.emit('doubleTap doubleClick', e);
+    }
+  }
+
+  data.lastClickTime = Utils.now();
+  Utils.nextTick(() => {
+    if (!swiper.destroyed) swiper.allowClick = true;
+  });
+
+  if (!data.isTouched || !data.isMoved || !swiper.swipeDirection || touches.diff === 0 || data.currentTranslate === data.startTranslate) {
+    data.isTouched = false;
+    data.isMoved = false;
+    data.startMoving = false;
+    return;
+  }
+  data.isTouched = false;
+  data.isMoved = false;
+  data.startMoving = false;
+
+  let currentPos;
+  if (params.followFinger) {
+    currentPos = rtl ? swiper.translate : -swiper.translate;
+  } else {
+    currentPos = -data.currentTranslate;
+  }
+
+  if (params.cssMode) {
+    return;
+  }
+
+  if (params.freeMode) {
+    if (currentPos < -swiper.minTranslate()) {
+      swiper.slideTo(swiper.activeIndex);
+      return;
+    }
+    if (currentPos > -swiper.maxTranslate()) {
+      if (swiper.slides.length < snapGrid.length) {
+        swiper.slideTo(snapGrid.length - 1);
+      } else {
+        swiper.slideTo(swiper.slides.length - 1);
+      }
+      return;
+    }
+
+    if (params.freeModeMomentum) {
+      if (data.velocities.length > 1) {
+        const lastMoveEvent = data.velocities.pop();
+        const velocityEvent = data.velocities.pop();
+
+        const distance = lastMoveEvent.position - velocityEvent.position;
+        const time = lastMoveEvent.time - velocityEvent.time;
+        swiper.velocity = distance / time;
+        swiper.velocity /= 2;
+        if (Math.abs(swiper.velocity) < params.freeModeMinimumVelocity) {
+          swiper.velocity = 0;
+        }
+        // this implies that the user stopped moving a finger then released.
+        // There would be no events with distance zero, so the last event is stale.
+        if (time > 150 || (Utils.now() - lastMoveEvent.time) > 300) {
+          swiper.velocity = 0;
+        }
+      } else {
+        swiper.velocity = 0;
+      }
+      swiper.velocity *= params.freeModeMomentumVelocityRatio;
+
+      data.velocities.length = 0;
+      let momentumDuration = 1000 * params.freeModeMomentumRatio;
+      const momentumDistance = swiper.velocity * momentumDuration;
+
+      let newPosition = swiper.translate + momentumDistance;
+      if (rtl) newPosition = -newPosition;
+
+      let doBounce = false;
+      let afterBouncePosition;
+      const bounceAmount = Math.abs(swiper.velocity) * 20 * params.freeModeMomentumBounceRatio;
+      let needsLoopFix;
+      if (newPosition < swiper.maxTranslate()) {
+        if (params.freeModeMomentumBounce) {
+          if (newPosition + swiper.maxTranslate() < -bounceAmount) {
+            newPosition = swiper.maxTranslate() - bounceAmount;
+          }
+          afterBouncePosition = swiper.maxTranslate();
+          doBounce = true;
+          data.allowMomentumBounce = true;
+        } else {
+          newPosition = swiper.maxTranslate();
+        }
+        if (params.loop && params.centeredSlides) needsLoopFix = true;
+      } else if (newPosition > swiper.minTranslate()) {
+        if (params.freeModeMomentumBounce) {
+          if (newPosition - swiper.minTranslate() > bounceAmount) {
+            newPosition = swiper.minTranslate() + bounceAmount;
+          }
+          afterBouncePosition = swiper.minTranslate();
+          doBounce = true;
+          data.allowMomentumBounce = true;
+        } else {
+          newPosition = swiper.minTranslate();
+        }
+        if (params.loop && params.centeredSlides) needsLoopFix = true;
+      } else if (params.freeModeSticky) {
+        let nextSlide;
+        for (let j = 0; j < snapGrid.length; j += 1) {
+          if (snapGrid[j] > -newPosition) {
+            nextSlide = j;
+            break;
+          }
+        }
+
+        if (Math.abs(snapGrid[nextSlide] - newPosition) < Math.abs(snapGrid[nextSlide - 1] - newPosition) || swiper.swipeDirection === 'next') {
+          newPosition = snapGrid[nextSlide];
+        } else {
+          newPosition = snapGrid[nextSlide - 1];
+        }
+        newPosition = -newPosition;
+      }
+      if (needsLoopFix) {
+        swiper.once('transitionEnd', () => {
+          swiper.loopFix();
+        });
+      }
+      // Fix duration
+      if (swiper.velocity !== 0) {
+        if (rtl) {
+          momentumDuration = Math.abs((-newPosition - swiper.translate) / swiper.velocity);
+        } else {
+          momentumDuration = Math.abs((newPosition - swiper.translate) / swiper.velocity);
+        }
+        if (params.freeModeSticky) {
+          // If freeModeSticky is active and the user ends a swipe with a slow-velocity
+          // event, then durations can be 20+ seconds to slide one (or zero!) slides.
+          // It's easy to see this when simulating touch with mouse events. To fix this,
+          // limit single-slide swipes to the default slide duration. This also has the
+          // nice side effect of matching slide speed if the user stopped moving before
+          // lifting finger or mouse vs. moving slowly before lifting the finger/mouse.
+          // For faster swipes, also apply limits (albeit higher ones).
+          const moveDistance = Math.abs((rtl ? -newPosition : newPosition) - swiper.translate);
+          const currentSlideSize = swiper.slidesSizesGrid[swiper.activeIndex];
+          if (moveDistance < currentSlideSize) {
+            momentumDuration = params.speed;
+          } else if (moveDistance < 2 * currentSlideSize) {
+            momentumDuration = params.speed * 1.5;
+          } else {
+            momentumDuration = params.speed * 2.5;
+          }
+        }
+      } else if (params.freeModeSticky) {
+        swiper.slideToClosest();
+        return;
+      }
+
+      if (params.freeModeMomentumBounce && doBounce) {
+        swiper.updateProgress(afterBouncePosition);
+        swiper.setTransition(momentumDuration);
+        swiper.setTranslate(newPosition);
+        swiper.transitionStart(true, swiper.swipeDirection);
+        swiper.animating = true;
+        $wrapperEl.transitionEnd(() => {
+          if (!swiper || swiper.destroyed || !data.allowMomentumBounce) return;
+          swiper.emit('momentumBounce');
+          swiper.setTransition(params.speed);
+          setTimeout(() => {
+            swiper.setTranslate(afterBouncePosition);
+            $wrapperEl.transitionEnd(() => {
+              if (!swiper || swiper.destroyed) return;
+              swiper.transitionEnd();
+            });
+          }, 0);
+        });
+      } else if (swiper.velocity) {
+        swiper.updateProgress(newPosition);
+        swiper.setTransition(momentumDuration);
+        swiper.setTranslate(newPosition);
+        swiper.transitionStart(true, swiper.swipeDirection);
+        if (!swiper.animating) {
+          swiper.animating = true;
+          $wrapperEl.transitionEnd(() => {
+            if (!swiper || swiper.destroyed) return;
+            swiper.transitionEnd();
+          });
+        }
+      } else {
+        swiper.updateProgress(newPosition);
+      }
+
+      swiper.updateActiveIndex();
+      swiper.updateSlidesClasses();
+    } else if (params.freeModeSticky) {
+      swiper.slideToClosest();
+      return;
+    }
+
+    if (!params.freeModeMomentum || timeDiff >= params.longSwipesMs) {
+      swiper.updateProgress();
+      swiper.updateActiveIndex();
+      swiper.updateSlidesClasses();
+    }
+    return;
+  }
+
+  // Find current slide
+  let stopIndex = 0;
+  let groupSize = swiper.slidesSizesGrid[0];
+  for (let i = 0; i < slidesGrid.length; i += (i < params.slidesPerGroupSkip ? 1 : params.slidesPerGroup)) {
+    const increment = (i < params.slidesPerGroupSkip - 1 ? 1 : params.slidesPerGroup);
+    if (typeof slidesGrid[i + increment] !== 'undefined') {
+      if (currentPos >= slidesGrid[i] && currentPos < slidesGrid[i + increment]) {
+        stopIndex = i;
+        groupSize = slidesGrid[i + increment] - slidesGrid[i];
+      }
+    } else if (currentPos >= slidesGrid[i]) {
+      stopIndex = i;
+      groupSize = slidesGrid[slidesGrid.length - 1] - slidesGrid[slidesGrid.length - 2];
+    }
+  }
+
+  // Find current slide size
+  const ratio = (currentPos - slidesGrid[stopIndex]) / groupSize;
+  const increment = (stopIndex < params.slidesPerGroupSkip - 1 ? 1 : params.slidesPerGroup);
+
+  if (timeDiff > params.longSwipesMs) {
+    // Long touches
+    if (!params.longSwipes) {
+      swiper.slideTo(swiper.activeIndex);
+      return;
+    }
+    if (swiper.swipeDirection === 'next') {
+      if (ratio >= params.longSwipesRatio) swiper.slideTo(stopIndex + increment);
+      else swiper.slideTo(stopIndex);
+    }
+    if (swiper.swipeDirection === 'prev') {
+      if (ratio > (1 - params.longSwipesRatio)) swiper.slideTo(stopIndex + increment);
+      else swiper.slideTo(stopIndex);
+    }
+  } else {
+    // Short swipes
+    if (!params.shortSwipes) {
+      swiper.slideTo(swiper.activeIndex);
+      return;
+    }
+    const isNavButtonTarget = swiper.navigation && (e.target === swiper.navigation.nextEl || e.target === swiper.navigation.prevEl);
+    if (!isNavButtonTarget) {
+      if (swiper.swipeDirection === 'next') {
+        swiper.slideTo(stopIndex + increment);
+      }
+      if (swiper.swipeDirection === 'prev') {
+        swiper.slideTo(stopIndex);
+      }
+    } else if (e.target === swiper.navigation.nextEl) {
+      swiper.slideTo(stopIndex + increment);
+    } else {
+      swiper.slideTo(stopIndex);
+    }
+  }
+}
+
+function onResize () {
+  const swiper = this;
+
+  const { params, el } = swiper;
+
+  if (el && el.offsetWidth === 0) return;
+
+  // Breakpoints
+  if (params.breakpoints) {
+    swiper.setBreakpoint();
+  }
+
+  // Save locks
+  const { allowSlideNext, allowSlidePrev, snapGrid } = swiper;
+
+  // Disable locks on resize
+  swiper.allowSlideNext = true;
+  swiper.allowSlidePrev = true;
+
+  swiper.updateSize();
+  swiper.updateSlides();
+
+  swiper.updateSlidesClasses();
+  if ((params.slidesPerView === 'auto' || params.slidesPerView > 1) && swiper.isEnd && !swiper.isBeginning && !swiper.params.centeredSlides) {
+    swiper.slideTo(swiper.slides.length - 1, 0, false, true);
+  } else {
+    swiper.slideTo(swiper.activeIndex, 0, false, true);
+  }
+
+  if (swiper.autoplay && swiper.autoplay.running && swiper.autoplay.paused) {
+    swiper.autoplay.run();
+  }
+  // Return locks after resize
+  swiper.allowSlidePrev = allowSlidePrev;
+  swiper.allowSlideNext = allowSlideNext;
+
+  if (swiper.params.watchOverflow && snapGrid !== swiper.snapGrid) {
+    swiper.checkOverflow();
+  }
+}
+
+function swiper_esm_bundle_onClick (e) {
+  const swiper = this;
+  if (!swiper.allowClick) {
+    if (swiper.params.preventClicks) e.preventDefault();
+    if (swiper.params.preventClicksPropagation && swiper.animating) {
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+    }
+  }
+}
+
+function onScroll () {
+  const swiper = this;
+  const { wrapperEl, rtlTranslate } = swiper;
+  swiper.previousTranslate = swiper.translate;
+  if (swiper.isHorizontal()) {
+    if (rtlTranslate) {
+      swiper.translate = ((wrapperEl.scrollWidth - wrapperEl.offsetWidth) - wrapperEl.scrollLeft);
+    } else {
+      swiper.translate = -wrapperEl.scrollLeft;
+    }
+  } else {
+    swiper.translate = -wrapperEl.scrollTop;
+  }
+  // eslint-disable-next-line
+  if (swiper.translate === -0) swiper.translate = 0;
+
+  swiper.updateActiveIndex();
+  swiper.updateSlidesClasses();
+
+  let newProgress;
+  const translatesDiff = swiper.maxTranslate() - swiper.minTranslate();
+  if (translatesDiff === 0) {
+    newProgress = 0;
+  } else {
+    newProgress = (swiper.translate - swiper.minTranslate()) / (translatesDiff);
+  }
+  if (newProgress !== swiper.progress) {
+    swiper.updateProgress(rtlTranslate ? -swiper.translate : swiper.translate);
+  }
+
+  swiper.emit('setTranslate', swiper.translate, false);
+}
+
+let dummyEventAttached = false;
+function dummyEventListener() {}
+
+function attachEvents() {
+  const swiper = this;
+  const {
+    params, touchEvents, el, wrapperEl,
+  } = swiper;
+
+  swiper.onTouchStart = onTouchStart.bind(swiper);
+  swiper.onTouchMove = onTouchMove.bind(swiper);
+  swiper.onTouchEnd = onTouchEnd.bind(swiper);
+  if (params.cssMode) {
+    swiper.onScroll = onScroll.bind(swiper);
+  }
+
+  swiper.onClick = swiper_esm_bundle_onClick.bind(swiper);
+
+  const capture = !!params.nested;
+
+  // Touch Events
+  if (!swiper_esm_bundle_Support.touch && swiper_esm_bundle_Support.pointerEvents) {
+    el.addEventListener(touchEvents.start, swiper.onTouchStart, false);
+    doc.addEventListener(touchEvents.move, swiper.onTouchMove, capture);
+    doc.addEventListener(touchEvents.end, swiper.onTouchEnd, false);
+  } else {
+    if (swiper_esm_bundle_Support.touch) {
+      const passiveListener = touchEvents.start === 'touchstart' && swiper_esm_bundle_Support.passiveListener && params.passiveListeners ? { passive: true, capture: false } : false;
+      el.addEventListener(touchEvents.start, swiper.onTouchStart, passiveListener);
+      el.addEventListener(touchEvents.move, swiper.onTouchMove, swiper_esm_bundle_Support.passiveListener ? { passive: false, capture } : capture);
+      el.addEventListener(touchEvents.end, swiper.onTouchEnd, passiveListener);
+      if (touchEvents.cancel) {
+        el.addEventListener(touchEvents.cancel, swiper.onTouchEnd, passiveListener);
+      }
+      if (!dummyEventAttached) {
+        doc.addEventListener('touchstart', dummyEventListener);
+        dummyEventAttached = true;
+      }
+    }
+    if ((params.simulateTouch && !swiper_esm_bundle_Device.ios && !swiper_esm_bundle_Device.android) || (params.simulateTouch && !swiper_esm_bundle_Support.touch && swiper_esm_bundle_Device.ios)) {
+      el.addEventListener('mousedown', swiper.onTouchStart, false);
+      doc.addEventListener('mousemove', swiper.onTouchMove, capture);
+      doc.addEventListener('mouseup', swiper.onTouchEnd, false);
+    }
+  }
+  // Prevent Links Clicks
+  if (params.preventClicks || params.preventClicksPropagation) {
+    el.addEventListener('click', swiper.onClick, true);
+  }
+  if (params.cssMode) {
+    wrapperEl.addEventListener('scroll', swiper.onScroll);
+  }
+
+  // Resize handler
+  if (params.updateOnWindowResize) {
+    swiper.on((swiper_esm_bundle_Device.ios || swiper_esm_bundle_Device.android ? 'resize orientationchange observerUpdate' : 'resize observerUpdate'), onResize, true);
+  } else {
+    swiper.on('observerUpdate', onResize, true);
+  }
+}
+
+function detachEvents() {
+  const swiper = this;
+
+  const {
+    params, touchEvents, el, wrapperEl,
+  } = swiper;
+
+  const capture = !!params.nested;
+
+  // Touch Events
+  if (!swiper_esm_bundle_Support.touch && swiper_esm_bundle_Support.pointerEvents) {
+    el.removeEventListener(touchEvents.start, swiper.onTouchStart, false);
+    doc.removeEventListener(touchEvents.move, swiper.onTouchMove, capture);
+    doc.removeEventListener(touchEvents.end, swiper.onTouchEnd, false);
+  } else {
+    if (swiper_esm_bundle_Support.touch) {
+      const passiveListener = touchEvents.start === 'onTouchStart' && swiper_esm_bundle_Support.passiveListener && params.passiveListeners ? { passive: true, capture: false } : false;
+      el.removeEventListener(touchEvents.start, swiper.onTouchStart, passiveListener);
+      el.removeEventListener(touchEvents.move, swiper.onTouchMove, capture);
+      el.removeEventListener(touchEvents.end, swiper.onTouchEnd, passiveListener);
+      if (touchEvents.cancel) {
+        el.removeEventListener(touchEvents.cancel, swiper.onTouchEnd, passiveListener);
+      }
+    }
+    if ((params.simulateTouch && !swiper_esm_bundle_Device.ios && !swiper_esm_bundle_Device.android) || (params.simulateTouch && !swiper_esm_bundle_Support.touch && swiper_esm_bundle_Device.ios)) {
+      el.removeEventListener('mousedown', swiper.onTouchStart, false);
+      doc.removeEventListener('mousemove', swiper.onTouchMove, capture);
+      doc.removeEventListener('mouseup', swiper.onTouchEnd, false);
+    }
+  }
+  // Prevent Links Clicks
+  if (params.preventClicks || params.preventClicksPropagation) {
+    el.removeEventListener('click', swiper.onClick, true);
+  }
+
+  if (params.cssMode) {
+    wrapperEl.removeEventListener('scroll', swiper.onScroll);
+  }
+
+  // Resize handler
+  swiper.off((swiper_esm_bundle_Device.ios || swiper_esm_bundle_Device.android ? 'resize orientationchange observerUpdate' : 'resize observerUpdate'), onResize);
+}
+
+var swiper_esm_bundle_events = {
+  attachEvents,
+  detachEvents,
+};
+
+function setBreakpoint () {
+  const swiper = this;
+  const {
+    activeIndex, initialized, loopedSlides = 0, params, $el,
+  } = swiper;
+  const breakpoints = params.breakpoints;
+  if (!breakpoints || (breakpoints && Object.keys(breakpoints).length === 0)) return;
+
+  // Get breakpoint for window width and update parameters
+  const breakpoint = swiper.getBreakpoint(breakpoints);
+
+  if (breakpoint && swiper.currentBreakpoint !== breakpoint) {
+    const breakpointOnlyParams = breakpoint in breakpoints ? breakpoints[breakpoint] : undefined;
+    if (breakpointOnlyParams) {
+      ['slidesPerView', 'spaceBetween', 'slidesPerGroup', 'slidesPerGroupSkip', 'slidesPerColumn'].forEach((param) => {
+        const paramValue = breakpointOnlyParams[param];
+        if (typeof paramValue === 'undefined') return;
+        if (param === 'slidesPerView' && (paramValue === 'AUTO' || paramValue === 'auto')) {
+          breakpointOnlyParams[param] = 'auto';
+        } else if (param === 'slidesPerView') {
+          breakpointOnlyParams[param] = parseFloat(paramValue);
+        } else {
+          breakpointOnlyParams[param] = parseInt(paramValue, 10);
+        }
+      });
+    }
+
+    const breakpointParams = breakpointOnlyParams || swiper.originalParams;
+    const wasMultiRow = params.slidesPerColumn > 1;
+    const isMultiRow = breakpointParams.slidesPerColumn > 1;
+    if (wasMultiRow && !isMultiRow) {
+      $el.removeClass(`${params.containerModifierClass}multirow ${params.containerModifierClass}multirow-column`);
+    } else if (!wasMultiRow && isMultiRow) {
+      $el.addClass(`${params.containerModifierClass}multirow`);
+      if (breakpointParams.slidesPerColumnFill === 'column') {
+        $el.addClass(`${params.containerModifierClass}multirow-column`);
+      }
+    }
+
+    const directionChanged = breakpointParams.direction && breakpointParams.direction !== params.direction;
+    const needsReLoop = params.loop && (breakpointParams.slidesPerView !== params.slidesPerView || directionChanged);
+
+    if (directionChanged && initialized) {
+      swiper.changeDirection();
+    }
+
+    Utils.extend(swiper.params, breakpointParams);
+
+    Utils.extend(swiper, {
+      allowTouchMove: swiper.params.allowTouchMove,
+      allowSlideNext: swiper.params.allowSlideNext,
+      allowSlidePrev: swiper.params.allowSlidePrev,
+    });
+
+    swiper.currentBreakpoint = breakpoint;
+
+    if (needsReLoop && initialized) {
+      swiper.loopDestroy();
+      swiper.loopCreate();
+      swiper.updateSlides();
+      swiper.slideTo((activeIndex - loopedSlides) + swiper.loopedSlides, 0, false);
+    }
+
+    swiper.emit('breakpoint', breakpointParams);
+  }
+}
+
+function getBreakpoint (breakpoints) {
+  // Get breakpoint for window width
+  if (!breakpoints) return undefined;
+  let breakpoint = false;
+
+  const points = Object.keys(breakpoints).map((point) => {
+    if (typeof point === 'string' && point.indexOf('@') === 0) {
+      const minRatio = parseFloat(point.substr(1));
+      const value = win.innerHeight * minRatio;
+      return { value, point };
+    }
+    return { value: point, point };
+  });
+
+  points.sort((a, b) => parseInt(a.value, 10) - parseInt(b.value, 10));
+  for (let i = 0; i < points.length; i += 1) {
+    const { point, value } = points[i];
+    if (value <= win.innerWidth) {
+      breakpoint = point;
+    }
+  }
+  return breakpoint || 'max';
+}
+
+var swiper_esm_bundle_breakpoints = { setBreakpoint, getBreakpoint };
+
+function addClasses () {
+  const swiper = this;
+  const {
+    classNames, params, rtl, $el,
+  } = swiper;
+  const suffixes = [];
+
+  suffixes.push('initialized');
+  suffixes.push(params.direction);
+
+  if (params.freeMode) {
+    suffixes.push('free-mode');
+  }
+  if (params.autoHeight) {
+    suffixes.push('autoheight');
+  }
+  if (rtl) {
+    suffixes.push('rtl');
+  }
+  if (params.slidesPerColumn > 1) {
+    suffixes.push('multirow');
+    if (params.slidesPerColumnFill === 'column') {
+      suffixes.push('multirow-column');
+    }
+  }
+  if (swiper_esm_bundle_Device.android) {
+    suffixes.push('android');
+  }
+  if (swiper_esm_bundle_Device.ios) {
+    suffixes.push('ios');
+  }
+
+  if (params.cssMode) {
+    suffixes.push('css-mode');
+  }
+
+  suffixes.forEach((suffix) => {
+    classNames.push(params.containerModifierClass + suffix);
+  });
+
+  $el.addClass(classNames.join(' '));
+}
+
+function removeClasses () {
+  const swiper = this;
+  const { $el, classNames } = swiper;
+
+  $el.removeClass(classNames.join(' '));
+}
+
+var classes = { addClasses, removeClasses };
+
+function loadImage (imageEl, src, srcset, sizes, checkForComplete, callback) {
+  let image;
+  function onReady() {
+    if (callback) callback();
+  }
+  const isPicture = $(imageEl).parent('picture')[0];
+
+  if (!isPicture && (!imageEl.complete || !checkForComplete)) {
+    if (src) {
+      image = new win.Image();
+      image.onload = onReady;
+      image.onerror = onReady;
+      if (sizes) {
+        image.sizes = sizes;
+      }
+      if (srcset) {
+        image.srcset = srcset;
+      }
+      if (src) {
+        image.src = src;
+      }
+    } else {
+      onReady();
+    }
+  } else {
+    // image already loaded...
+    onReady();
+  }
+}
+
+function preloadImages () {
+  const swiper = this;
+  swiper.imagesToLoad = swiper.$el.find('img');
+  function onReady() {
+    if (typeof swiper === 'undefined' || swiper === null || !swiper || swiper.destroyed) return;
+    if (swiper.imagesLoaded !== undefined) swiper.imagesLoaded += 1;
+    if (swiper.imagesLoaded === swiper.imagesToLoad.length) {
+      if (swiper.params.updateOnImagesReady) swiper.update();
+      swiper.emit('imagesReady');
+    }
+  }
+  for (let i = 0; i < swiper.imagesToLoad.length; i += 1) {
+    const imageEl = swiper.imagesToLoad[i];
+    swiper.loadImage(
+      imageEl,
+      imageEl.currentSrc || imageEl.getAttribute('src'),
+      imageEl.srcset || imageEl.getAttribute('srcset'),
+      imageEl.sizes || imageEl.getAttribute('sizes'),
+      true,
+      onReady
+    );
+  }
+}
+
+var swiper_esm_bundle_images = {
+  loadImage,
+  preloadImages,
+};
+
+function checkOverflow() {
+  const swiper = this;
+  const params = swiper.params;
+  const wasLocked = swiper.isLocked;
+  const lastSlidePosition = swiper.slides.length > 0 && (params.slidesOffsetBefore + (params.spaceBetween * (swiper.slides.length - 1)) + ((swiper.slides[0]).offsetWidth) * swiper.slides.length);
+
+  if (params.slidesOffsetBefore && params.slidesOffsetAfter && lastSlidePosition) {
+    swiper.isLocked = lastSlidePosition <= swiper.size;
+  } else {
+    swiper.isLocked = swiper.snapGrid.length === 1;
+  }
+
+  swiper.allowSlideNext = !swiper.isLocked;
+  swiper.allowSlidePrev = !swiper.isLocked;
+
+  // events
+  if (wasLocked !== swiper.isLocked) swiper.emit(swiper.isLocked ? 'lock' : 'unlock');
+
+  if (wasLocked && wasLocked !== swiper.isLocked) {
+    swiper.isEnd = false;
+    if (swiper.navigation) swiper.navigation.update();
+  }
+}
+
+var checkOverflow$1 = { checkOverflow };
+
+var defaults = {
+  init: true,
+  direction: 'horizontal',
+  touchEventsTarget: 'container',
+  initialSlide: 0,
+  speed: 300,
+  cssMode: false,
+  updateOnWindowResize: true,
+  //
+  preventInteractionOnTransition: false,
+
+  // To support iOS's swipe-to-go-back gesture (when being used in-app).
+  edgeSwipeDetection: false,
+  edgeSwipeThreshold: 20,
+
+  // Free mode
+  freeMode: false,
+  freeModeMomentum: true,
+  freeModeMomentumRatio: 1,
+  freeModeMomentumBounce: true,
+  freeModeMomentumBounceRatio: 1,
+  freeModeMomentumVelocityRatio: 1,
+  freeModeSticky: false,
+  freeModeMinimumVelocity: 0.02,
+
+  // Autoheight
+  autoHeight: false,
+
+  // Set wrapper width
+  setWrapperSize: false,
+
+  // Virtual Translate
+  virtualTranslate: false,
+
+  // Effects
+  effect: 'slide', // 'slide' or 'fade' or 'cube' or 'coverflow' or 'flip'
+
+  // Breakpoints
+  breakpoints: undefined,
+
+  // Slides grid
+  spaceBetween: 0,
+  slidesPerView: 1,
+  slidesPerColumn: 1,
+  slidesPerColumnFill: 'column',
+  slidesPerGroup: 1,
+  slidesPerGroupSkip: 0,
+  centeredSlides: false,
+  centeredSlidesBounds: false,
+  slidesOffsetBefore: 0, // in px
+  slidesOffsetAfter: 0, // in px
+  normalizeSlideIndex: true,
+  centerInsufficientSlides: false,
+
+  // Disable swiper and hide navigation when container not overflow
+  watchOverflow: false,
+
+  // Round length
+  roundLengths: false,
+
+  // Touches
+  touchRatio: 1,
+  touchAngle: 45,
+  simulateTouch: true,
+  shortSwipes: true,
+  longSwipes: true,
+  longSwipesRatio: 0.5,
+  longSwipesMs: 300,
+  followFinger: true,
+  allowTouchMove: true,
+  threshold: 0,
+  touchMoveStopPropagation: false,
+  touchStartPreventDefault: true,
+  touchStartForcePreventDefault: false,
+  touchReleaseOnEdges: false,
+
+  // Unique Navigation Elements
+  uniqueNavElements: true,
+
+  // Resistance
+  resistance: true,
+  resistanceRatio: 0.85,
+
+  // Progress
+  watchSlidesProgress: false,
+  watchSlidesVisibility: false,
+
+  // Cursor
+  grabCursor: false,
+
+  // Clicks
+  preventClicks: true,
+  preventClicksPropagation: true,
+  slideToClickedSlide: false,
+
+  // Images
+  preloadImages: true,
+  updateOnImagesReady: true,
+
+  // loop
+  loop: false,
+  loopAdditionalSlides: 0,
+  loopedSlides: null,
+  loopFillGroupWithBlank: false,
+
+  // Swiping/no swiping
+  allowSlidePrev: true,
+  allowSlideNext: true,
+  swipeHandler: null, // '.swipe-handler',
+  noSwiping: true,
+  noSwipingClass: 'swiper-no-swiping',
+  noSwipingSelector: null,
+
+  // Passive Listeners
+  passiveListeners: true,
+
+  // NS
+  containerModifierClass: 'swiper-container-', // NEW
+  slideClass: 'swiper-slide',
+  slideBlankClass: 'swiper-slide-invisible-blank',
+  slideActiveClass: 'swiper-slide-active',
+  slideDuplicateActiveClass: 'swiper-slide-duplicate-active',
+  slideVisibleClass: 'swiper-slide-visible',
+  slideDuplicateClass: 'swiper-slide-duplicate',
+  slideNextClass: 'swiper-slide-next',
+  slideDuplicateNextClass: 'swiper-slide-duplicate-next',
+  slidePrevClass: 'swiper-slide-prev',
+  slideDuplicatePrevClass: 'swiper-slide-duplicate-prev',
+  wrapperClass: 'swiper-wrapper',
+
+  // Callbacks
+  runCallbacksOnInit: true,
+};
+
+/* eslint no-param-reassign: "off" */
+
+const prototypes = {
+  update,
+  translate: swiper_esm_bundle_translate,
+  transition: swiper_esm_bundle_transition,
+  slide: swiper_esm_bundle_slide,
+  loop,
+  grabCursor,
+  manipulation,
+  events: swiper_esm_bundle_events,
+  breakpoints: swiper_esm_bundle_breakpoints,
+  checkOverflow: checkOverflow$1,
+  classes,
+  images: swiper_esm_bundle_images,
+};
+
+const extendedDefaults = {};
+
+class swiper_esm_bundle_Swiper extends SwiperClass {
+  constructor(...args) {
+    let el;
+    let params;
+    if (args.length === 1 && args[0].constructor && args[0].constructor === Object) {
+      params = args[0];
+    } else {
+      [el, params] = args;
+    }
+    if (!params) params = {};
+
+    params = Utils.extend({}, params);
+    if (el && !params.el) params.el = el;
+
+    super(params);
+
+    Object.keys(prototypes).forEach((prototypeGroup) => {
+      Object.keys(prototypes[prototypeGroup]).forEach((protoMethod) => {
+        if (!swiper_esm_bundle_Swiper.prototype[protoMethod]) {
+          swiper_esm_bundle_Swiper.prototype[protoMethod] = prototypes[prototypeGroup][protoMethod];
+        }
+      });
+    });
+
+    // Swiper Instance
+    const swiper = this;
+    if (typeof swiper.modules === 'undefined') {
+      swiper.modules = {};
+    }
+    Object.keys(swiper.modules).forEach((moduleName) => {
+      const module = swiper.modules[moduleName];
+      if (module.params) {
+        const moduleParamName = Object.keys(module.params)[0];
+        const moduleParams = module.params[moduleParamName];
+        if (typeof moduleParams !== 'object' || moduleParams === null) return;
+        if (!(moduleParamName in params && 'enabled' in moduleParams)) return;
+        if (params[moduleParamName] === true) {
+          params[moduleParamName] = { enabled: true };
+        }
+        if (
+          typeof params[moduleParamName] === 'object'
+          && !('enabled' in params[moduleParamName])
+        ) {
+          params[moduleParamName].enabled = true;
+        }
+        if (!params[moduleParamName]) params[moduleParamName] = { enabled: false };
+      }
+    });
+
+    // Extend defaults with modules params
+    const swiperParams = Utils.extend({}, defaults);
+    swiper.useModulesParams(swiperParams);
+
+    // Extend defaults with passed params
+    swiper.params = Utils.extend({}, swiperParams, extendedDefaults, params);
+    swiper.originalParams = Utils.extend({}, swiper.params);
+    swiper.passedParams = Utils.extend({}, params);
+
+    // Save Dom lib
+    swiper.$ = $;
+
+    // Find el
+    const $el = $(swiper.params.el);
+    el = $el[0];
+
+    if (!el) {
+      return undefined;
+    }
+
+    if ($el.length > 1) {
+      const swipers = [];
+      $el.each((index, containerEl) => {
+        const newParams = Utils.extend({}, params, { el: containerEl });
+        swipers.push(new swiper_esm_bundle_Swiper(newParams));
+      });
+      return swipers;
+    }
+
+    el.swiper = swiper;
+    $el.data('swiper', swiper);
+
+    // Find Wrapper
+    let $wrapperEl;
+    if (el && el.shadowRoot && el.shadowRoot.querySelector) {
+      $wrapperEl = $(el.shadowRoot.querySelector(`.${swiper.params.wrapperClass}`));
+      // Children needs to return slot items
+      $wrapperEl.children = (options) => $el.children(options);
+    } else {
+      $wrapperEl = $el.children(`.${swiper.params.wrapperClass}`);
+    }
+    // Extend Swiper
+    Utils.extend(swiper, {
+      $el,
+      el,
+      $wrapperEl,
+      wrapperEl: $wrapperEl[0],
+
+      // Classes
+      classNames: [],
+
+      // Slides
+      slides: $(),
+      slidesGrid: [],
+      snapGrid: [],
+      slidesSizesGrid: [],
+
+      // isDirection
+      isHorizontal() {
+        return swiper.params.direction === 'horizontal';
+      },
+      isVertical() {
+        return swiper.params.direction === 'vertical';
+      },
+      // RTL
+      rtl: (el.dir.toLowerCase() === 'rtl' || $el.css('direction') === 'rtl'),
+      rtlTranslate: swiper.params.direction === 'horizontal' && (el.dir.toLowerCase() === 'rtl' || $el.css('direction') === 'rtl'),
+      wrongRTL: $wrapperEl.css('display') === '-webkit-box',
+
+      // Indexes
+      activeIndex: 0,
+      realIndex: 0,
+
+      //
+      isBeginning: true,
+      isEnd: false,
+
+      // Props
+      translate: 0,
+      previousTranslate: 0,
+      progress: 0,
+      velocity: 0,
+      animating: false,
+
+      // Locks
+      allowSlideNext: swiper.params.allowSlideNext,
+      allowSlidePrev: swiper.params.allowSlidePrev,
+
+      // Touch Events
+      touchEvents: (function touchEvents() {
+        const touch = ['touchstart', 'touchmove', 'touchend', 'touchcancel'];
+        let desktop = ['mousedown', 'mousemove', 'mouseup'];
+        if (swiper_esm_bundle_Support.pointerEvents) {
+          desktop = ['pointerdown', 'pointermove', 'pointerup'];
+        }
+        swiper.touchEventsTouch = {
+          start: touch[0],
+          move: touch[1],
+          end: touch[2],
+          cancel: touch[3],
+        };
+        swiper.touchEventsDesktop = {
+          start: desktop[0],
+          move: desktop[1],
+          end: desktop[2],
+        };
+        return swiper_esm_bundle_Support.touch || !swiper.params.simulateTouch ? swiper.touchEventsTouch : swiper.touchEventsDesktop;
+      }()),
+      touchEventsData: {
+        isTouched: undefined,
+        isMoved: undefined,
+        allowTouchCallbacks: undefined,
+        touchStartTime: undefined,
+        isScrolling: undefined,
+        currentTranslate: undefined,
+        startTranslate: undefined,
+        allowThresholdMove: undefined,
+        // Form elements to match
+        formElements: 'input, select, option, textarea, button, video, label',
+        // Last click time
+        lastClickTime: Utils.now(),
+        clickTimeout: undefined,
+        // Velocities
+        velocities: [],
+        allowMomentumBounce: undefined,
+        isTouchEvent: undefined,
+        startMoving: undefined,
+      },
+
+      // Clicks
+      allowClick: true,
+
+      // Touches
+      allowTouchMove: swiper.params.allowTouchMove,
+
+      touches: {
+        startX: 0,
+        startY: 0,
+        currentX: 0,
+        currentY: 0,
+        diff: 0,
+      },
+
+      // Images
+      imagesToLoad: [],
+      imagesLoaded: 0,
+
+    });
+
+    // Install Modules
+    swiper.useModules();
+
+    // Init
+    if (swiper.params.init) {
+      swiper.init();
+    }
+
+    // Return app instance
+    return swiper;
+  }
+
+  slidesPerViewDynamic() {
+    const swiper = this;
+    const {
+      params, slides, slidesGrid, size: swiperSize, activeIndex,
+    } = swiper;
+    let spv = 1;
+    if (params.centeredSlides) {
+      let slideSize = slides[activeIndex].swiperSlideSize;
+      let breakLoop;
+      for (let i = activeIndex + 1; i < slides.length; i += 1) {
+        if (slides[i] && !breakLoop) {
+          slideSize += slides[i].swiperSlideSize;
+          spv += 1;
+          if (slideSize > swiperSize) breakLoop = true;
+        }
+      }
+      for (let i = activeIndex - 1; i >= 0; i -= 1) {
+        if (slides[i] && !breakLoop) {
+          slideSize += slides[i].swiperSlideSize;
+          spv += 1;
+          if (slideSize > swiperSize) breakLoop = true;
+        }
+      }
+    } else {
+      for (let i = activeIndex + 1; i < slides.length; i += 1) {
+        if (slidesGrid[i] - slidesGrid[activeIndex] < swiperSize) {
+          spv += 1;
+        }
+      }
+    }
+    return spv;
+  }
+
+  update() {
+    const swiper = this;
+    if (!swiper || swiper.destroyed) return;
+    const { snapGrid, params } = swiper;
+    // Breakpoints
+    if (params.breakpoints) {
+      swiper.setBreakpoint();
+    }
+    swiper.updateSize();
+    swiper.updateSlides();
+    swiper.updateProgress();
+    swiper.updateSlidesClasses();
+
+    function setTranslate() {
+      const translateValue = swiper.rtlTranslate ? swiper.translate * -1 : swiper.translate;
+      const newTranslate = Math.min(Math.max(translateValue, swiper.maxTranslate()), swiper.minTranslate());
+      swiper.setTranslate(newTranslate);
+      swiper.updateActiveIndex();
+      swiper.updateSlidesClasses();
+    }
+    let translated;
+    if (swiper.params.freeMode) {
+      setTranslate();
+      if (swiper.params.autoHeight) {
+        swiper.updateAutoHeight();
+      }
+    } else {
+      if ((swiper.params.slidesPerView === 'auto' || swiper.params.slidesPerView > 1) && swiper.isEnd && !swiper.params.centeredSlides) {
+        translated = swiper.slideTo(swiper.slides.length - 1, 0, false, true);
+      } else {
+        translated = swiper.slideTo(swiper.activeIndex, 0, false, true);
+      }
+      if (!translated) {
+        setTranslate();
+      }
+    }
+    if (params.watchOverflow && snapGrid !== swiper.snapGrid) {
+      swiper.checkOverflow();
+    }
+    swiper.emit('update');
+  }
+
+  changeDirection(newDirection, needUpdate = true) {
+    const swiper = this;
+    const currentDirection = swiper.params.direction;
+    if (!newDirection) {
+      // eslint-disable-next-line
+      newDirection = currentDirection === 'horizontal' ? 'vertical' : 'horizontal';
+    }
+    if ((newDirection === currentDirection) || (newDirection !== 'horizontal' && newDirection !== 'vertical')) {
+      return swiper;
+    }
+
+    swiper.$el
+      .removeClass(`${swiper.params.containerModifierClass}${currentDirection}`)
+      .addClass(`${swiper.params.containerModifierClass}${newDirection}`);
+
+    swiper.params.direction = newDirection;
+
+    swiper.slides.each((slideIndex, slideEl) => {
+      if (newDirection === 'vertical') {
+        slideEl.style.width = '';
+      } else {
+        slideEl.style.height = '';
+      }
+    });
+
+    swiper.emit('changeDirection');
+    if (needUpdate) swiper.update();
+
+    return swiper;
+  }
+
+  init() {
+    const swiper = this;
+    if (swiper.initialized) return;
+
+    swiper.emit('beforeInit');
+
+    // Set breakpoint
+    if (swiper.params.breakpoints) {
+      swiper.setBreakpoint();
+    }
+
+    // Add Classes
+    swiper.addClasses();
+
+    // Create loop
+    if (swiper.params.loop) {
+      swiper.loopCreate();
+    }
+
+    // Update size
+    swiper.updateSize();
+
+    // Update slides
+    swiper.updateSlides();
+
+    if (swiper.params.watchOverflow) {
+      swiper.checkOverflow();
+    }
+
+    // Set Grab Cursor
+    if (swiper.params.grabCursor) {
+      swiper.setGrabCursor();
+    }
+
+    if (swiper.params.preloadImages) {
+      swiper.preloadImages();
+    }
+
+    // Slide To Initial Slide
+    if (swiper.params.loop) {
+      swiper.slideTo(swiper.params.initialSlide + swiper.loopedSlides, 0, swiper.params.runCallbacksOnInit);
+    } else {
+      swiper.slideTo(swiper.params.initialSlide, 0, swiper.params.runCallbacksOnInit);
+    }
+
+    // Attach events
+    swiper.attachEvents();
+
+    // Init Flag
+    swiper.initialized = true;
+
+    // Emit
+    swiper.emit('init');
+  }
+
+  destroy(deleteInstance = true, cleanStyles = true) {
+    const swiper = this;
+    const {
+      params, $el, $wrapperEl, slides,
+    } = swiper;
+
+    if (typeof swiper.params === 'undefined' || swiper.destroyed) {
+      return null;
+    }
+
+    swiper.emit('beforeDestroy');
+
+    // Init Flag
+    swiper.initialized = false;
+
+    // Detach events
+    swiper.detachEvents();
+
+    // Destroy loop
+    if (params.loop) {
+      swiper.loopDestroy();
+    }
+
+    // Cleanup styles
+    if (cleanStyles) {
+      swiper.removeClasses();
+      $el.removeAttr('style');
+      $wrapperEl.removeAttr('style');
+      if (slides && slides.length) {
+        slides
+          .removeClass([
+            params.slideVisibleClass,
+            params.slideActiveClass,
+            params.slideNextClass,
+            params.slidePrevClass,
+          ].join(' '))
+          .removeAttr('style')
+          .removeAttr('data-swiper-slide-index');
+      }
+    }
+
+    swiper.emit('destroy');
+
+    // Detach emitter events
+    Object.keys(swiper.eventsListeners).forEach((eventName) => {
+      swiper.off(eventName);
+    });
+
+    if (deleteInstance !== false) {
+      swiper.$el[0].swiper = null;
+      swiper.$el.data('swiper', null);
+      Utils.deleteProps(swiper);
+    }
+    swiper.destroyed = true;
+
+    return null;
+  }
+
+  static extendDefaults(newDefaults) {
+    Utils.extend(extendedDefaults, newDefaults);
+  }
+
+  static get extendedDefaults() {
+    return extendedDefaults;
+  }
+
+  static get defaults() {
+    return defaults;
+  }
+
+  static get Class() {
+    return SwiperClass;
+  }
+
+  static get $() {
+    return $;
+  }
+}
+
+var Device$1 = {
+  name: 'device',
+  proto: {
+    device: swiper_esm_bundle_Device,
+  },
+  static: {
+    device: swiper_esm_bundle_Device,
+  },
+};
+
+var Support$1 = {
+  name: 'support',
+  proto: {
+    support: swiper_esm_bundle_Support,
+  },
+  static: {
+    support: swiper_esm_bundle_Support,
+  },
+};
+
+const swiper_esm_bundle_Browser = (function Browser() {
+  function isSafari() {
+    const ua = win.navigator.userAgent.toLowerCase();
+    return (ua.indexOf('safari') >= 0 && ua.indexOf('chrome') < 0 && ua.indexOf('android') < 0);
+  }
+  return {
+    isEdge: !!win.navigator.userAgent.match(/Edge/g),
+    isSafari: isSafari(),
+    isWebView: /(iPhone|iPod|iPad).*AppleWebKit(?!.*Safari)/i.test(win.navigator.userAgent),
+  };
+}());
+
+var Browser$1 = {
+  name: 'browser',
+  proto: {
+    browser: swiper_esm_bundle_Browser,
+  },
+  static: {
+    browser: swiper_esm_bundle_Browser,
+  },
+};
+
+var Resize = {
+  name: 'resize',
+  create() {
+    const swiper = this;
+    Utils.extend(swiper, {
+      resize: {
+        resizeHandler() {
+          if (!swiper || swiper.destroyed || !swiper.initialized) return;
+          swiper.emit('beforeResize');
+          swiper.emit('resize');
+        },
+        orientationChangeHandler() {
+          if (!swiper || swiper.destroyed || !swiper.initialized) return;
+          swiper.emit('orientationchange');
+        },
+      },
+    });
+  },
+  on: {
+    init() {
+      const swiper = this;
+      // Emit resize
+      win.addEventListener('resize', swiper.resize.resizeHandler);
+
+      // Emit orientationchange
+      win.addEventListener('orientationchange', swiper.resize.orientationChangeHandler);
+    },
+    destroy() {
+      const swiper = this;
+      win.removeEventListener('resize', swiper.resize.resizeHandler);
+      win.removeEventListener('orientationchange', swiper.resize.orientationChangeHandler);
+    },
+  },
+};
+
+const Observer = {
+  func: win.MutationObserver || win.WebkitMutationObserver,
+  attach(target, options = {}) {
+    const swiper = this;
+
+    const ObserverFunc = Observer.func;
+    const observer = new ObserverFunc((mutations) => {
+      // The observerUpdate event should only be triggered
+      // once despite the number of mutations.  Additional
+      // triggers are redundant and are very costly
+      if (mutations.length === 1) {
+        swiper.emit('observerUpdate', mutations[0]);
+        return;
+      }
+      const observerUpdate = function observerUpdate() {
+        swiper.emit('observerUpdate', mutations[0]);
       };
 
-      try {
-        embeddingSettigns = JSON.parse(hexDecode(p || "7B7D"));
-      } catch (e) {}
-
-      embeddingSettigns.openapi = true;
-      embeddingSettigns = _.extend(embeddingSettigns, additional);
-      elem.addClass('openapipnet');
-      app.platform.papi[action](id, elem, _clbk, embeddingSettigns, additional);
-      if (action == 'transaction') return false;
-      if (app.curation()) return false;
-      return true;
-    } else {
-      elem.innerHTML = self.renders.iframe(seed, action, id, p, additional);
-      if (typeof iFrameResize != 'undefined') var iframe = iFrameResize({
-        onResized: function () {
-          //window.requestAnimationFrame(function(){
-          if (resized) resized(); //s})
-        },
-        onBeforeResized: function () {
-          if (resized) resized(true);
-        }
-      }, '#pocketnet_iframe_' + seed);
-    }
-  };
-
-  self.url = function (url) {
-    var parsed_url = new URL(url);
-    var postid = parsed_url.searchParams.get('s') || parsed_url.searchParams.get('v');
-    var action = parsed_url.searchParams.get('commentid') ? 'comment' : postid ? 'lenta' : 'channel';
-    var id = action === 'channel' ? parsed_url.pathname.replace('/', '') : postid;
-    if (id == 'author' && action === 'channel') id = parsed_url.searchParams.get('address');
-    var connect = parsed_url.searchParams.get('connect');
-    var publicroom = parsed_url.searchParams.get('publicroom');
-    var additional = {
-      commentPs: {
-        commentid: parsed_url.searchParams.get('commentid'),
-        parentid: parsed_url.searchParams.get('parentid')
+      if (win.requestAnimationFrame) {
+        win.requestAnimationFrame(observerUpdate);
+      } else {
+        win.setTimeout(observerUpdate, 0);
       }
-    };
+    });
 
-    if (connect) {
-      action = 'connect';
-      id = connect;
+    observer.observe(target, {
+      attributes: typeof options.attributes === 'undefined' ? true : options.attributes,
+      childList: typeof options.childList === 'undefined' ? true : options.childList,
+      characterData: typeof options.characterData === 'undefined' ? true : options.characterData,
+    });
+
+    swiper.observer.observers.push(observer);
+  },
+  init() {
+    const swiper = this;
+    if (!swiper_esm_bundle_Support.observer || !swiper.params.observer) return;
+    if (swiper.params.observeParents) {
+      const containerParents = swiper.$el.parents();
+      for (let i = 0; i < containerParents.length; i += 1) {
+        swiper.observer.attach(containerParents[i]);
+      }
     }
+    // Observe container
+    swiper.observer.attach(swiper.$el[0], { childList: swiper.params.observeSlideChildren });
 
-    if (publicroom) {
-      action = 'publicroom';
-      id = publicroom;
-    }
-
-    var p = '7b22626c61636b223a66616c73652c22636f6d6d656e7473223a226e6f222c22726566223a2250503538325634375038764376586a645633696e77594e677853635a437554577371227d';
-    var txid = parsed_url.searchParams.get('stx');
-
-    if (txid) {
-      ///pocketnet://i?stx=txid
-      id = txid;
-      action = 'transaction';
-    }
-
-    return {
-      action: action,
-      id: id,
-      p: p,
-      additional
-    };
-  };
-
-  self.makefromurl = function (el, url, resized, additional, _clbk) {
-    var seed = Math.floor(Math.random() * 100000);
-    var h = '<div id="pocketnet_' + seed + '">';
-    h += '</div>';
-    el.innerHTML = h;
-    var ps = self.url(url);
-    ps.additional || (ps.additional = {});
-    ps.additional = _.extend(ps.additional, additional || {});
-    return self.make(seed, ps.action, ps.id, ps.p, true, el, resized, ps.additional, _clbk);
-  };
-
-  return self;
+    // Observe wrapper
+    swiper.observer.attach(swiper.$wrapperEl[0], { attributes: false });
+  },
+  destroy() {
+    const swiper = this;
+    swiper.observer.observers.forEach((observer) => {
+      observer.disconnect();
+    });
+    swiper.observer.observers = [];
+  },
 };
 
-window.PNWIDGETS = PNWIDGETS;
-/* harmony default export */ var widgets = (PNWIDGETS);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/metaMessage/matrixlink.vue?vue&type=template&id=15518517&scoped=true&
-var matrixlinkvue_type_template_id_15518517_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"matrixlink"}},[(_vm.idtype)?_c('div',[(_vm.idtype.type == 'publicroom')?_c('publicroom',{attrs:{"id":_vm.idtype.id}}):_vm._e(),(_vm.idtype.type == 'connect')?_c('div',{staticClass:"contactWrapper"},[_c('router-link',{attrs:{"to":'contact?id=' + _vm.idtype.href}},[_c('contactid',{attrs:{"id":_vm.idtype.id}})],1)],1):_vm._e()],1):_vm._e()])}
-var matrixlinkvue_type_template_id_15518517_scoped_true_staticRenderFns = []
-
-
-// CONCATENATED MODULE: ./src/components/events/event/metaMessage/matrixlink.vue?vue&type=template&id=15518517&scoped=true&
-
-// EXTERNAL MODULE: ./node_modules/vuex/dist/vuex.esm.js
-var vuex_esm = __webpack_require__("2f62");
-
-// EXTERNAL MODULE: ./src/components/chat/publicroom/index.vue + 4 modules
-var publicroom = __webpack_require__("5719");
-
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/contact/indexid.vue?vue&type=template&id=f329229a&scoped=true&
-var indexidvue_type_template_id_f329229a_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"contactid"}},[(_vm.contact)?_c('contact',{attrs:{"contact":_vm.contact}}):_vm._e()],1)}
-var indexidvue_type_template_id_f329229a_scoped_true_staticRenderFns = []
-
-
-// CONCATENATED MODULE: ./src/components/contact/indexid.vue?vue&type=template&id=f329229a&scoped=true&
-
-// EXTERNAL MODULE: ./src/components/contact/index.vue + 14 modules
-var components_contact = __webpack_require__("d3ff");
-
-// EXTERNAL MODULE: ./src/application/functions.js
-var functions = __webpack_require__("3139");
-
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/contact/indexid.vue?vue&type=script&lang=js&
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ var indexidvue_type_script_lang_js_ = ({
-  name: 'contactid',
-  props: {
-    id: ''
+var Observer$1 = {
+  name: 'observer',
+  params: {
+    observer: false,
+    observeParents: false,
+    observeSlideChildren: false,
   },
-  components: {
-    contact: components_contact["default"]
+  create() {
+    const swiper = this;
+    Utils.extend(swiper, {
+      observer: {
+        init: Observer.init.bind(swiper),
+        attach: Observer.attach.bind(swiper),
+        destroy: Observer.destroy.bind(swiper),
+        observers: [],
+      },
+    });
   },
-  computed: Object(vuex_esm["c" /* mapState */])({
-    auth: state => state.auth,
-    contact: function () {
-      if (this.id) {
-        var contact = this.$store.state.users[functions["a" /* default */].hexEncode(this.id)];
-        return contact;
+  on: {
+    init() {
+      const swiper = this;
+      swiper.observer.init();
+    },
+    destroy() {
+      const swiper = this;
+      swiper.observer.destroy();
+    },
+  },
+};
+
+const Virtual = {
+  update(force) {
+    const swiper = this;
+    const { slidesPerView, slidesPerGroup, centeredSlides } = swiper.params;
+    const { addSlidesBefore, addSlidesAfter } = swiper.params.virtual;
+    const {
+      from: previousFrom,
+      to: previousTo,
+      slides,
+      slidesGrid: previousSlidesGrid,
+      renderSlide,
+      offset: previousOffset,
+    } = swiper.virtual;
+    swiper.updateActiveIndex();
+    const activeIndex = swiper.activeIndex || 0;
+
+    let offsetProp;
+    if (swiper.rtlTranslate) offsetProp = 'right';
+    else offsetProp = swiper.isHorizontal() ? 'left' : 'top';
+
+    let slidesAfter;
+    let slidesBefore;
+    if (centeredSlides) {
+      slidesAfter = Math.floor(slidesPerView / 2) + slidesPerGroup + addSlidesBefore;
+      slidesBefore = Math.floor(slidesPerView / 2) + slidesPerGroup + addSlidesAfter;
+    } else {
+      slidesAfter = slidesPerView + (slidesPerGroup - 1) + addSlidesBefore;
+      slidesBefore = slidesPerGroup + addSlidesAfter;
+    }
+    const from = Math.max((activeIndex || 0) - slidesBefore, 0);
+    const to = Math.min((activeIndex || 0) + slidesAfter, slides.length - 1);
+    const offset = (swiper.slidesGrid[from] || 0) - (swiper.slidesGrid[0] || 0);
+
+    Utils.extend(swiper.virtual, {
+      from,
+      to,
+      offset,
+      slidesGrid: swiper.slidesGrid,
+    });
+
+    function onRendered() {
+      swiper.updateSlides();
+      swiper.updateProgress();
+      swiper.updateSlidesClasses();
+      if (swiper.lazy && swiper.params.lazy.enabled) {
+        swiper.lazy.load();
       }
     }
-  }),
-  methods: {},
-  mounted: function () {
-    if (this.id) this.core.user.usersInfo(this.id, true).then(r => {});
-  }
-});
-// CONCATENATED MODULE: ./src/components/contact/indexid.vue?vue&type=script&lang=js&
- /* harmony default export */ var contact_indexidvue_type_script_lang_js_ = (indexidvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
-var componentNormalizer = __webpack_require__("2877");
 
-// CONCATENATED MODULE: ./src/components/contact/indexid.vue
-
-
-
-function injectStyles (context) {
-  
-  
-}
-
-/* normalize component */
-
-var component = Object(componentNormalizer["a" /* default */])(
-  contact_indexidvue_type_script_lang_js_,
-  indexidvue_type_template_id_f329229a_scoped_true_render,
-  indexidvue_type_template_id_f329229a_scoped_true_staticRenderFns,
-  false,
-  injectStyles,
-  "f329229a",
-  null
-  ,true
-)
-
-/* harmony default export */ var indexid = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/metaMessage/matrixlink.vue?vue&type=script&lang=js&
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-/* harmony default export */ var matrixlinkvue_type_script_lang_js_ = ({
-  name: 'matrixlink',
-  props: {
-    url: String
-  },
-  components: {
-    publicroom: publicroom["a" /* default */],
-    contactid: indexid
-  },
-  computed: Object(vuex_esm["c" /* mapState */])({
-    auth: state => state.auth,
-    idtype: function () {
-      if (!this.url) return;
-      var u = new URL(this.url);
-
-      var _searchParams = u.search.replace('?', '').split('&');
-
-      var sp = {};
-
-      _.each(_searchParams, function (s) {
-        var ss = s.split('=');
-        sp[ss[0]] = ss[1];
+    if (previousFrom === from && previousTo === to && !force) {
+      if (swiper.slidesGrid !== previousSlidesGrid && offset !== previousOffset) {
+        swiper.slides.css(offsetProp, `${offset}px`);
+      }
+      swiper.updateProgress();
+      return;
+    }
+    if (swiper.params.virtual.renderExternal) {
+      swiper.params.virtual.renderExternal.call(swiper, {
+        offset,
+        from,
+        to,
+        slides: (function getSlides() {
+          const slidesToRender = [];
+          for (let i = from; i <= to; i += 1) {
+            slidesToRender.push(slides[i]);
+          }
+          return slidesToRender;
+        }()),
       });
-
-      if (sp.publicroom) {
-        return {
-          type: 'publicroom',
-          id: sp.publicroom
-        };
-      }
-
-      if (sp.connect) {
-        return {
-          type: 'connect',
-          id: sp.connect,
-          href: functions["a" /* default */].hexEncode(sp.connect)
-        };
+      onRendered();
+      return;
+    }
+    const prependIndexes = [];
+    const appendIndexes = [];
+    if (force) {
+      swiper.$wrapperEl.find(`.${swiper.params.slideClass}`).remove();
+    } else {
+      for (let i = previousFrom; i <= previousTo; i += 1) {
+        if (i < from || i > to) {
+          swiper.$wrapperEl.find(`.${swiper.params.slideClass}[data-swiper-slide-index="${i}"]`).remove();
+        }
       }
     }
-  }),
-  methods: {}
-});
-// CONCATENATED MODULE: ./src/components/events/event/metaMessage/matrixlink.vue?vue&type=script&lang=js&
- /* harmony default export */ var metaMessage_matrixlinkvue_type_script_lang_js_ = (matrixlinkvue_type_script_lang_js_); 
-// CONCATENATED MODULE: ./src/components/events/event/metaMessage/matrixlink.vue
+    for (let i = 0; i < slides.length; i += 1) {
+      if (i >= from && i <= to) {
+        if (typeof previousTo === 'undefined' || force) {
+          appendIndexes.push(i);
+        } else {
+          if (i > previousTo) appendIndexes.push(i);
+          if (i < previousFrom) prependIndexes.push(i);
+        }
+      }
+    }
+    appendIndexes.forEach((index) => {
+      swiper.$wrapperEl.append(renderSlide(slides[index], index));
+    });
+    prependIndexes.sort((a, b) => b - a).forEach((index) => {
+      swiper.$wrapperEl.prepend(renderSlide(slides[index], index));
+    });
+    swiper.$wrapperEl.children('.swiper-slide').css(offsetProp, `${offset}px`);
+    onRendered();
+  },
+  renderSlide(slide, index) {
+    const swiper = this;
+    const params = swiper.params.virtual;
+    if (params.cache && swiper.virtual.cache[index]) {
+      return swiper.virtual.cache[index];
+    }
+    const $slideEl = params.renderSlide
+      ? $(params.renderSlide.call(swiper, slide, index))
+      : $(`<div class="${swiper.params.slideClass}" data-swiper-slide-index="${index}">${slide}</div>`);
+    if (!$slideEl.attr('data-swiper-slide-index')) $slideEl.attr('data-swiper-slide-index', index);
+    if (params.cache) swiper.virtual.cache[index] = $slideEl;
+    return $slideEl;
+  },
+  appendSlide(slides) {
+    const swiper = this;
+    if (typeof slides === 'object' && 'length' in slides) {
+      for (let i = 0; i < slides.length; i += 1) {
+        if (slides[i]) swiper.virtual.slides.push(slides[i]);
+      }
+    } else {
+      swiper.virtual.slides.push(slides);
+    }
+    swiper.virtual.update(true);
+  },
+  prependSlide(slides) {
+    const swiper = this;
+    const activeIndex = swiper.activeIndex;
+    let newActiveIndex = activeIndex + 1;
+    let numberOfNewSlides = 1;
 
+    if (Array.isArray(slides)) {
+      for (let i = 0; i < slides.length; i += 1) {
+        if (slides[i]) swiper.virtual.slides.unshift(slides[i]);
+      }
+      newActiveIndex = activeIndex + slides.length;
+      numberOfNewSlides = slides.length;
+    } else {
+      swiper.virtual.slides.unshift(slides);
+    }
+    if (swiper.params.virtual.cache) {
+      const cache = swiper.virtual.cache;
+      const newCache = {};
+      Object.keys(cache).forEach((cachedIndex) => {
+        const $cachedEl = cache[cachedIndex];
+        const cachedElIndex = $cachedEl.attr('data-swiper-slide-index');
+        if (cachedElIndex) {
+          $cachedEl.attr('data-swiper-slide-index', parseInt(cachedElIndex, 10) + 1);
+        }
+        newCache[parseInt(cachedIndex, 10) + numberOfNewSlides] = $cachedEl;
+      });
+      swiper.virtual.cache = newCache;
+    }
+    swiper.virtual.update(true);
+    swiper.slideTo(newActiveIndex, 0);
+  },
+  removeSlide(slidesIndexes) {
+    const swiper = this;
+    if (typeof slidesIndexes === 'undefined' || slidesIndexes === null) return;
+    let activeIndex = swiper.activeIndex;
+    if (Array.isArray(slidesIndexes)) {
+      for (let i = slidesIndexes.length - 1; i >= 0; i -= 1) {
+        swiper.virtual.slides.splice(slidesIndexes[i], 1);
+        if (swiper.params.virtual.cache) {
+          delete swiper.virtual.cache[slidesIndexes[i]];
+        }
+        if (slidesIndexes[i] < activeIndex) activeIndex -= 1;
+        activeIndex = Math.max(activeIndex, 0);
+      }
+    } else {
+      swiper.virtual.slides.splice(slidesIndexes, 1);
+      if (swiper.params.virtual.cache) {
+        delete swiper.virtual.cache[slidesIndexes];
+      }
+      if (slidesIndexes < activeIndex) activeIndex -= 1;
+      activeIndex = Math.max(activeIndex, 0);
+    }
+    swiper.virtual.update(true);
+    swiper.slideTo(activeIndex, 0);
+  },
+  removeAllSlides() {
+    const swiper = this;
+    swiper.virtual.slides = [];
+    if (swiper.params.virtual.cache) {
+      swiper.virtual.cache = {};
+    }
+    swiper.virtual.update(true);
+    swiper.slideTo(0, 0);
+  },
+};
 
+var Virtual$1 = {
+  name: 'virtual',
+  params: {
+    virtual: {
+      enabled: false,
+      slides: [],
+      cache: true,
+      renderSlide: null,
+      renderExternal: null,
+      addSlidesBefore: 0,
+      addSlidesAfter: 0,
+    },
+  },
+  create() {
+    const swiper = this;
+    Utils.extend(swiper, {
+      virtual: {
+        update: Virtual.update.bind(swiper),
+        appendSlide: Virtual.appendSlide.bind(swiper),
+        prependSlide: Virtual.prependSlide.bind(swiper),
+        removeSlide: Virtual.removeSlide.bind(swiper),
+        removeAllSlides: Virtual.removeAllSlides.bind(swiper),
+        renderSlide: Virtual.renderSlide.bind(swiper),
+        slides: swiper.params.virtual.slides,
+        cache: {},
+      },
+    });
+  },
+  on: {
+    beforeInit() {
+      const swiper = this;
+      if (!swiper.params.virtual.enabled) return;
+      swiper.classNames.push(`${swiper.params.containerModifierClass}virtual`);
+      const overwriteParams = {
+        watchSlidesProgress: true,
+      };
+      Utils.extend(swiper.params, overwriteParams);
+      Utils.extend(swiper.originalParams, overwriteParams);
 
-function matrixlink_injectStyles (context) {
-  
-  var style0 = __webpack_require__("40d2")
-if (style0.__inject__) style0.__inject__(context)
+      if (!swiper.params.initialSlide) {
+        swiper.virtual.update();
+      }
+    },
+    setTranslate() {
+      const swiper = this;
+      if (!swiper.params.virtual.enabled) return;
+      swiper.virtual.update();
+    },
+  },
+};
 
+const Keyboard = {
+  handle(event) {
+    const swiper = this;
+    const { rtlTranslate: rtl } = swiper;
+    let e = event;
+    if (e.originalEvent) e = e.originalEvent; // jquery fix
+    const kc = e.keyCode || e.charCode;
+    const pageUpDown = swiper.params.keyboard.pageUpDown;
+    const isPageUp = pageUpDown && kc === 33;
+    const isPageDown = pageUpDown && kc === 34;
+    const isArrowLeft = kc === 37;
+    const isArrowRight = kc === 39;
+    const isArrowUp = kc === 38;
+    const isArrowDown = kc === 40;
+    // Directions locks
+    if (!swiper.allowSlideNext && ((swiper.isHorizontal() && isArrowRight) || (swiper.isVertical() && isArrowDown) || isPageDown)) {
+      return false;
+    }
+    if (!swiper.allowSlidePrev && ((swiper.isHorizontal() && isArrowLeft) || (swiper.isVertical() && isArrowUp) || isPageUp)) {
+      return false;
+    }
+    if (e.shiftKey || e.altKey || e.ctrlKey || e.metaKey) {
+      return undefined;
+    }
+    if (doc.activeElement && doc.activeElement.nodeName && (doc.activeElement.nodeName.toLowerCase() === 'input' || doc.activeElement.nodeName.toLowerCase() === 'textarea')) {
+      return undefined;
+    }
+    if (swiper.params.keyboard.onlyInViewport && (isPageUp || isPageDown || isArrowLeft || isArrowRight || isArrowUp || isArrowDown)) {
+      let inView = false;
+      // Check that swiper should be inside of visible area of window
+      if (swiper.$el.parents(`.${swiper.params.slideClass}`).length > 0 && swiper.$el.parents(`.${swiper.params.slideActiveClass}`).length === 0) {
+        return undefined;
+      }
+      const windowWidth = win.innerWidth;
+      const windowHeight = win.innerHeight;
+      const swiperOffset = swiper.$el.offset();
+      if (rtl) swiperOffset.left -= swiper.$el[0].scrollLeft;
+      const swiperCoord = [
+        [swiperOffset.left, swiperOffset.top],
+        [swiperOffset.left + swiper.width, swiperOffset.top],
+        [swiperOffset.left, swiperOffset.top + swiper.height],
+        [swiperOffset.left + swiper.width, swiperOffset.top + swiper.height],
+      ];
+      for (let i = 0; i < swiperCoord.length; i += 1) {
+        const point = swiperCoord[i];
+        if (
+          point[0] >= 0 && point[0] <= windowWidth
+          && point[1] >= 0 && point[1] <= windowHeight
+        ) {
+          inView = true;
+        }
+      }
+      if (!inView) return undefined;
+    }
+    if (swiper.isHorizontal()) {
+      if (isPageUp || isPageDown || isArrowLeft || isArrowRight) {
+        if (e.preventDefault) e.preventDefault();
+        else e.returnValue = false;
+      }
+      if (((isPageDown || isArrowRight) && !rtl) || ((isPageUp || isArrowLeft) && rtl)) swiper.slideNext();
+      if (((isPageUp || isArrowLeft) && !rtl) || ((isPageDown || isArrowRight) && rtl)) swiper.slidePrev();
+    } else {
+      if (isPageUp || isPageDown || isArrowUp || isArrowDown) {
+        if (e.preventDefault) e.preventDefault();
+        else e.returnValue = false;
+      }
+      if (isPageDown || isArrowDown) swiper.slideNext();
+      if (isPageUp || isArrowUp) swiper.slidePrev();
+    }
+    swiper.emit('keyPress', kc);
+    return undefined;
+  },
+  enable() {
+    const swiper = this;
+    if (swiper.keyboard.enabled) return;
+    $(doc).on('keydown', swiper.keyboard.handle);
+    swiper.keyboard.enabled = true;
+  },
+  disable() {
+    const swiper = this;
+    if (!swiper.keyboard.enabled) return;
+    $(doc).off('keydown', swiper.keyboard.handle);
+    swiper.keyboard.enabled = false;
+  },
+};
+
+var Keyboard$1 = {
+  name: 'keyboard',
+  params: {
+    keyboard: {
+      enabled: false,
+      onlyInViewport: true,
+      pageUpDown: true,
+    },
+  },
+  create() {
+    const swiper = this;
+    Utils.extend(swiper, {
+      keyboard: {
+        enabled: false,
+        enable: Keyboard.enable.bind(swiper),
+        disable: Keyboard.disable.bind(swiper),
+        handle: Keyboard.handle.bind(swiper),
+      },
+    });
+  },
+  on: {
+    init() {
+      const swiper = this;
+      if (swiper.params.keyboard.enabled) {
+        swiper.keyboard.enable();
+      }
+    },
+    destroy() {
+      const swiper = this;
+      if (swiper.keyboard.enabled) {
+        swiper.keyboard.disable();
+      }
+    },
+  },
+};
+
+function isEventSupported() {
+  const eventName = 'onwheel';
+  let isSupported = eventName in doc;
+
+  if (!isSupported) {
+    const element = doc.createElement('div');
+    element.setAttribute(eventName, 'return;');
+    isSupported = typeof element[eventName] === 'function';
+  }
+
+  if (!isSupported
+    && doc.implementation
+    && doc.implementation.hasFeature
+    // always returns true in newer browsers as per the standard.
+    // @see http://dom.spec.whatwg.org/#dom-domimplementation-hasfeature
+    && doc.implementation.hasFeature('', '') !== true
+  ) {
+    // This is the only way to test support for the `wheel` event in IE9+.
+    isSupported = doc.implementation.hasFeature('Events.wheel', '3.0');
+  }
+
+  return isSupported;
 }
-
-/* normalize component */
-
-var matrixlink_component = Object(componentNormalizer["a" /* default */])(
-  metaMessage_matrixlinkvue_type_script_lang_js_,
-  matrixlinkvue_type_template_id_15518517_scoped_true_render,
-  matrixlinkvue_type_template_id_15518517_scoped_true_staticRenderFns,
-  false,
-  matrixlink_injectStyles,
-  "15518517",
-  null
-  ,true
-)
-
-/* harmony default export */ var matrixlink = (matrixlink_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/metaMessage/index.vue?vue&type=script&lang=js&
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//import Player from '@/components/chat/player/Player.vue'
-
- //import imagesLoaded from "vue-images-loaded";
-
-/*import icons from './plyr.svg';*/
-
-/* harmony default export */ var metaMessagevue_type_script_lang_js_ = ({
-  components: {
-    //Player,
-    matrixlink: matrixlink
+const Mousewheel = {
+  lastScrollTime: Utils.now(),
+  lastEventBeforeSnap: undefined,
+  recentWheelEvents: [],
+  event() {
+    if (win.navigator.userAgent.indexOf('firefox') > -1) return 'DOMMouseScroll';
+    return isEventSupported() ? 'wheel' : 'mousewheel';
   },
-  directives: {//imagesLoaded,
-  },
-  props: {
-    title: String,
-    msg: String,
-    name: String,
-    description: String,
-    image: String,
-    video: String,
-    url: String,
-    h: Number,
-    w: Number,
-    initImageWidth: Number,
-    imageFactor: Number,
-    clientWidth: Number,
-    post: String,
-    type: String
-  },
-  data: () => {
+  normalize(e) {
+    // Reasonable defaults
+    const PIXEL_STEP = 10;
+    const LINE_HEIGHT = 40;
+    const PAGE_HEIGHT = 800;
+
+    let sX = 0;
+    let sY = 0; // spinX, spinY
+    let pX = 0;
+    let pY = 0; // pixelX, pixelY
+
+    // Legacy
+    if ('detail' in e) {
+      sY = e.detail;
+    }
+    if ('wheelDelta' in e) {
+      sY = -e.wheelDelta / 120;
+    }
+    if ('wheelDeltaY' in e) {
+      sY = -e.wheelDeltaY / 120;
+    }
+    if ('wheelDeltaX' in e) {
+      sX = -e.wheelDeltaX / 120;
+    }
+
+    // side scrolling on FF with DOMMouseScroll
+    if ('axis' in e && e.axis === e.HORIZONTAL_AXIS) {
+      sX = sY;
+      sY = 0;
+    }
+
+    pX = sX * PIXEL_STEP;
+    pY = sY * PIXEL_STEP;
+
+    if ('deltaY' in e) {
+      pY = e.deltaY;
+    }
+    if ('deltaX' in e) {
+      pX = e.deltaX;
+    }
+
+    if (e.shiftKey && !pX) { // if user scrolls with shift he wants horizontal scroll
+      pX = pY;
+      pY = 0;
+    }
+
+    if ((pX || pY) && e.deltaMode) {
+      if (e.deltaMode === 1) { // delta in LINE units
+        pX *= LINE_HEIGHT;
+        pY *= LINE_HEIGHT;
+      } else { // delta in PAGE units
+        pX *= PAGE_HEIGHT;
+        pY *= PAGE_HEIGHT;
+      }
+    }
+
+    // Fall-back if spin cannot be determined
+    if (pX && !sX) {
+      sX = (pX < 1) ? -1 : 1;
+    }
+    if (pY && !sY) {
+      sY = (pY < 1) ? -1 : 1;
+    }
+
     return {
-      link: "",
-      txt: String,
-      gotopn: false,
-      module: {}
+      spinX: sX,
+      spinY: sY,
+      pixelX: pX,
+      pixelY: pY,
     };
   },
-  computed: {
-    smallsize() {
-      if (this.url) {
-        var _u = new URL(this.url);
+  handleMouseEnter() {
+    const swiper = this;
+    swiper.mouseEntered = true;
+  },
+  handleMouseLeave() {
+    const swiper = this;
+    swiper.mouseEntered = false;
+  },
+  handle(event) {
+    let e = event;
+    const swiper = this;
+    const params = swiper.params.mousewheel;
 
-        if (_u.pathname && _u.pathname != "/") return false;
+    if (swiper.params.cssMode) {
+      e.preventDefault();
+    }
+
+    let target = swiper.$el;
+    if (swiper.params.mousewheel.eventsTarged !== 'container') {
+      target = $(swiper.params.mousewheel.eventsTarged);
+    }
+    if (!swiper.mouseEntered && !target[0].contains(e.target) && !params.releaseOnEdges) return true;
+
+    if (e.originalEvent) e = e.originalEvent; // jquery fix
+    let delta = 0;
+    const rtlFactor = swiper.rtlTranslate ? -1 : 1;
+
+    const data = Mousewheel.normalize(e);
+
+    if (params.forceToAxis) {
+      if (swiper.isHorizontal()) {
+        if (Math.abs(data.pixelX) > Math.abs(data.pixelY)) delta = -data.pixelX * rtlFactor;
+        else return true;
+      } else if (Math.abs(data.pixelY) > Math.abs(data.pixelX)) delta = -data.pixelY;
+      else return true;
+    } else {
+      delta = Math.abs(data.pixelX) > Math.abs(data.pixelY) ? -data.pixelX * rtlFactor : -data.pixelY;
+    }
+
+    if (delta === 0) return true;
+
+    if (params.invert) delta = -delta;
+
+    if (!swiper.params.freeMode) {
+      // Register the new event in a variable which stores the relevant data
+      const newEvent = {
+        time: Utils.now(),
+        delta: Math.abs(delta),
+        direction: Math.sign(delta),
+        raw: event,
+      };
+
+      // Keep the most recent events
+      const recentWheelEvents = swiper.mousewheel.recentWheelEvents;
+      if (recentWheelEvents.length >= 2) {
+        recentWheelEvents.shift(); // only store the last N events
+      }
+      const prevEvent = recentWheelEvents.length ? recentWheelEvents[recentWheelEvents.length - 1] : undefined;
+      recentWheelEvents.push(newEvent);
+
+      // If there is at least one previous recorded event:
+      //   If direction has changed or
+      //   if the scroll is quicker than the previous one:
+      //     Animate the slider.
+      // Else (this is the first time the wheel is moved):
+      //     Animate the slider.
+      if (prevEvent) {
+        if (newEvent.direction !== prevEvent.direction || newEvent.delta > prevEvent.delta || newEvent.time > prevEvent.time + 150) {
+          swiper.mousewheel.animateSlider(newEvent);
+        }
+      } else {
+        swiper.mousewheel.animateSlider(newEvent);
+      }
+
+      // If it's time to release the scroll:
+      //   Return now so you don't hit the preventDefault.
+      if (swiper.mousewheel.releaseScroll(newEvent)) {
         return true;
       }
-    },
+    } else {
+      // Freemode or scrollContainer:
 
-    imageWidth() {
-      return this.clientWidth < 650 ? this.imageFactor * this.initImageWidth : this.initImageWidth;
-    },
+      // If we recently snapped after a momentum scroll, then ignore wheel events
+      // to give time for the deceleration to finish. Stop ignoring after 500 msecs
+      // or if it's a new scroll (larger delta or inverse sign as last event before
+      // an end-of-momentum snap).
+      const newEvent = { time: Utils.now(), delta: Math.abs(delta), direction: Math.sign(delta) };
+      const { lastEventBeforeSnap } = swiper.mousewheel;
+      const ignoreWheelEvents = lastEventBeforeSnap
+        && newEvent.time < lastEventBeforeSnap.time + 500
+        && newEvent.delta <= lastEventBeforeSnap.delta
+        && newEvent.direction === lastEventBeforeSnap.direction;
+      if (!ignoreWheelEvents) {
+        swiper.mousewheel.lastEventBeforeSnap = undefined;
 
-    getUrl: function () {
-      var domain = window.pocketnetdomain || "pocketnet.app";
-      if (this.metaUrl) return new URL(this.metaUrl).hostname === domain;
-    },
+        if (swiper.params.loop) {
+          swiper.loopFix();
+        }
+        let position = swiper.getTranslate() + (delta * params.sensitivity);
+        const wasBeginning = swiper.isBeginning;
+        const wasEnd = swiper.isEnd;
 
-    imageHeight() {
-      const ratio = this.w / this.imageWidth;
-      return this.h / ratio || 300;
-    },
+        if (position >= swiper.minTranslate()) position = swiper.minTranslate();
+        if (position <= swiper.maxTranslate()) position = swiper.maxTranslate();
 
-    iframe() {
-      if (this.type === "pocketnet") {
-        return true;
-      }
-    },
+        swiper.setTransition(0);
+        swiper.setTranslate(position);
+        swiper.updateProgress();
+        swiper.updateActiveIndex();
+        swiper.updateSlidesClasses();
 
-    matrix() {
-      if (this.type === "matrix") {
-        return true;
+        if ((!wasBeginning && swiper.isBeginning) || (!wasEnd && swiper.isEnd)) {
+          swiper.updateSlidesClasses();
+        }
+
+        if (swiper.params.freeModeSticky) {
+          // When wheel scrolling starts with sticky (aka snap) enabled, then detect
+          // the end of a momentum scroll by storing recent (N=15?) wheel events.
+          // 1. do all N events have decreasing or same (absolute value) delta?
+          // 2. did all N events arrive in the last M (M=500?) msecs?
+          // 3. does the earliest event have an (absolute value) delta that's
+          //    at least P (P=1?) larger than the most recent event's delta?
+          // 4. does the latest event have a delta that's smaller than Q (Q=6?) pixels?
+          // If 1-4 are "yes" then we're near the end of a momuntum scroll deceleration.
+          // Snap immediately and ignore remaining wheel events in this scroll.
+          // See comment above for "remaining wheel events in this scroll" determination.
+          // If 1-4 aren't satisfied, then wait to snap until 500ms after the last event.
+          clearTimeout(swiper.mousewheel.timeout);
+          swiper.mousewheel.timeout = undefined;
+          const recentWheelEvents = swiper.mousewheel.recentWheelEvents;
+          if (recentWheelEvents.length >= 15) {
+            recentWheelEvents.shift(); // only store the last N events
+          }
+          const prevEvent = recentWheelEvents.length ? recentWheelEvents[recentWheelEvents.length - 1] : undefined;
+          const firstEvent = recentWheelEvents[0];
+          recentWheelEvents.push(newEvent);
+          if (prevEvent && (newEvent.delta > prevEvent.delta || newEvent.direction !== prevEvent.direction)) {
+            // Increasing or reverse-sign delta means the user started scrolling again. Clear the wheel event log.
+            recentWheelEvents.splice(0);
+          } else if (recentWheelEvents.length >= 15
+              && newEvent.time - firstEvent.time < 500
+              && firstEvent.delta - newEvent.delta >= 1
+              && newEvent.delta <= 6
+          ) {
+            // We're at the end of the deceleration of a momentum scroll, so there's no need
+            // to wait for more events. Snap ASAP on the next tick.
+            // Also, because there's some remaining momentum we'll bias the snap in the
+            // direction of the ongoing scroll because it's better UX for the scroll to snap
+            // in the same direction as the scroll instead of reversing to snap.  Therefore,
+            // if it's already scrolled more than 20% in the current direction, keep going.
+            const snapToThreshold = delta > 0 ? 0.8 : 0.2;
+            swiper.mousewheel.lastEventBeforeSnap = newEvent;
+            recentWheelEvents.splice(0);
+            swiper.mousewheel.timeout = Utils.nextTick(() => {
+              swiper.slideToClosest(swiper.params.speed, true, undefined, snapToThreshold);
+            }, 0); // no delay; move on next tick
+          }
+          if (!swiper.mousewheel.timeout) {
+            // if we get here, then we haven't detected the end of a momentum scroll, so
+            // we'll consider a scroll "complete" when there haven't been any wheel events
+            // for 500ms.
+            swiper.mousewheel.timeout = Utils.nextTick(() => {
+              const snapToThreshold = 0.5;
+              swiper.mousewheel.lastEventBeforeSnap = newEvent;
+              recentWheelEvents.splice(0);
+              swiper.slideToClosest(swiper.params.speed, true, undefined, snapToThreshold);
+            }, 500);
+          }
+        }
+
+        // Emit event
+        if (!ignoreWheelEvents) swiper.emit('scroll', e);
+
+        // Stop autoplay
+        if (swiper.params.autoplay && swiper.params.autoplayDisableOnInteraction) swiper.autoplay.stop();
+        // Return page scroll on edge positions
+        if (position === swiper.minTranslate() || position === swiper.maxTranslate()) return true;
       }
     }
 
+    if (e.preventDefault) e.preventDefault();
+    else e.returnValue = false;
+    return false;
   },
+  animateSlider(newEvent) {
+    const swiper = this;
+    // If the movement is NOT big enough and
+    // if the last time the user scrolled was too close to the current one (avoid continuously triggering the slider):
+    //   Don't go any further (avoid insignificant scroll movement).
+    if (newEvent.delta >= 6 && Utils.now() - swiper.mousewheel.lastScrollTime < 60) {
+      // Return false as a default
+      return true;
+    }
+    // If user is scrolling towards the end:
+    //   If the slider hasn't hit the latest slide or
+    //   if the slider is a loop and
+    //   if the slider isn't moving right now:
+    //     Go to next slide and
+    //     emit a scroll event.
+    // Else (the user is scrolling towards the beginning) and
+    // if the slider hasn't hit the first slide or
+    // if the slider is a loop and
+    // if the slider isn't moving right now:
+    //   Go to prev slide and
+    //   emit a scroll event.
+    if (newEvent.direction < 0) {
+      if ((!swiper.isEnd || swiper.params.loop) && !swiper.animating) {
+        swiper.slideNext();
+        swiper.emit('scroll', newEvent.raw);
+      }
+    } else if ((!swiper.isBeginning || swiper.params.loop) && !swiper.animating) {
+      swiper.slidePrev();
+      swiper.emit('scroll', newEvent.raw);
+    }
+    // If you got here is because an animation has been triggered so store the current time
+    swiper.mousewheel.lastScrollTime = (new win.Date()).getTime();
+    // Return false as a default
+    return false;
+  },
+  releaseScroll(newEvent) {
+    const swiper = this;
+    const params = swiper.params.mousewheel;
+    if (newEvent.direction < 0) {
+      if (swiper.isEnd && !swiper.params.loop && params.releaseOnEdges) {
+        // Return true to animate scroll on edges
+        return true;
+      }
+    } else if (swiper.isBeginning && !swiper.params.loop && params.releaseOnEdges) {
+      // Return true to animate scroll on edges
+      return true;
+    }
+    return false;
+  },
+  enable() {
+    const swiper = this;
+    const event = Mousewheel.event();
+    if (swiper.params.cssMode) {
+      swiper.wrapperEl.removeEventListener(event, swiper.mousewheel.handle);
+      return true;
+    }
+    if (!event) return false;
+    if (swiper.mousewheel.enabled) return false;
+    let target = swiper.$el;
+    if (swiper.params.mousewheel.eventsTarged !== 'container') {
+      target = $(swiper.params.mousewheel.eventsTarged);
+    }
+    target.on('mouseenter', swiper.mousewheel.handleMouseEnter);
+    target.on('mouseleave', swiper.mousewheel.handleMouseLeave);
+    target.on(event, swiper.mousewheel.handle);
+    swiper.mousewheel.enabled = true;
+    return true;
+  },
+  disable() {
+    const swiper = this;
+    const event = Mousewheel.event();
+    if (swiper.params.cssMode) {
+      swiper.wrapperEl.addEventListener(event, swiper.mousewheel.handle);
+      return true;
+    }
+    if (!event) return false;
+    if (!swiper.mousewheel.enabled) return false;
+    let target = swiper.$el;
+    if (swiper.params.mousewheel.eventsTarged !== 'container') {
+      target = $(swiper.params.mousewheel.eventsTarged);
+    }
+    target.off(event, swiper.mousewheel.handle);
+    swiper.mousewheel.enabled = false;
+    return true;
+  },
+};
 
-  beforeMount() {},
+var Mousewheel$1 = {
+  name: 'mousewheel',
+  params: {
+    mousewheel: {
+      enabled: false,
+      releaseOnEdges: false,
+      invert: false,
+      forceToAxis: false,
+      sensitivity: 1,
+      eventsTarged: 'container',
+    },
+  },
+  create() {
+    const swiper = this;
+    Utils.extend(swiper, {
+      mousewheel: {
+        enabled: false,
+        enable: Mousewheel.enable.bind(swiper),
+        disable: Mousewheel.disable.bind(swiper),
+        handle: Mousewheel.handle.bind(swiper),
+        handleMouseEnter: Mousewheel.handleMouseEnter.bind(swiper),
+        handleMouseLeave: Mousewheel.handleMouseLeave.bind(swiper),
+        animateSlider: Mousewheel.animateSlider.bind(swiper),
+        releaseScroll: Mousewheel.releaseScroll.bind(swiper),
+        lastScrollTime: Utils.now(),
+        lastEventBeforeSnap: undefined,
+        recentWheelEvents: [],
+      },
+    });
+  },
+  on: {
+    init() {
+      const swiper = this;
+      if (!swiper.params.mousewheel.enabled && swiper.params.cssMode) {
+        swiper.mousewheel.disable();
+      }
+      if (swiper.params.mousewheel.enabled) swiper.mousewheel.enable();
+    },
+    destroy() {
+      const swiper = this;
+      if (swiper.params.cssMode) {
+        swiper.mousewheel.enable();
+      }
+      if (swiper.mousewheel.enabled) swiper.mousewheel.disable();
+    },
+  },
+};
 
-  beforeDestroy() {
-    if (this.module.d) {
-      try {
-        this.module.d.destroy();
-      } catch (e) {}
+const Navigation = {
+  update() {
+    // Update Navigation Buttons
+    const swiper = this;
+    const params = swiper.params.navigation;
 
-      delete this.module.d;
+    if (swiper.params.loop) return;
+    const { $nextEl, $prevEl } = swiper.navigation;
+
+    if ($prevEl && $prevEl.length > 0) {
+      if (swiper.isBeginning) {
+        $prevEl.addClass(params.disabledClass);
+      } else {
+        $prevEl.removeClass(params.disabledClass);
+      }
+      $prevEl[swiper.params.watchOverflow && swiper.isLocked ? 'addClass' : 'removeClass'](params.lockClass);
+    }
+    if ($nextEl && $nextEl.length > 0) {
+      if (swiper.isEnd) {
+        $nextEl.addClass(params.disabledClass);
+      } else {
+        $nextEl.removeClass(params.disabledClass);
+      }
+      $nextEl[swiper.params.watchOverflow && swiper.isLocked ? 'addClass' : 'removeClass'](params.lockClass);
     }
   },
+  onPrevClick(e) {
+    const swiper = this;
+    e.preventDefault();
+    if (swiper.isBeginning && !swiper.params.loop) return;
+    swiper.slidePrev();
+  },
+  onNextClick(e) {
+    const swiper = this;
+    e.preventDefault();
+    if (swiper.isEnd && !swiper.params.loop) return;
+    swiper.slideNext();
+  },
+  init() {
+    const swiper = this;
+    const params = swiper.params.navigation;
+    if (!(params.nextEl || params.prevEl)) return;
 
-  mounted() {
-    if (this.type === "pocketnet" && this.$refs.iframe) {
-      let widget = new widgets();
-      if (this.$refs.iframe) this.gotopn = widget.makefromurl(this.$refs.iframe, this.url, before => {
-        this.updatedSize(before);
-      }, {
-        theme: this.core.vm.ctheme || this.$store.state.theme
-      }, (p, m) => {
-        this.module.d = m;
+    let $nextEl;
+    let $prevEl;
+    if (params.nextEl) {
+      $nextEl = $(params.nextEl);
+      if (
+        swiper.params.uniqueNavElements
+        && typeof params.nextEl === 'string'
+        && $nextEl.length > 1
+        && swiper.$el.find(params.nextEl).length === 1
+      ) {
+        $nextEl = swiper.$el.find(params.nextEl);
+      }
+    }
+    if (params.prevEl) {
+      $prevEl = $(params.prevEl);
+      if (
+        swiper.params.uniqueNavElements
+        && typeof params.prevEl === 'string'
+        && $prevEl.length > 1
+        && swiper.$el.find(params.prevEl).length === 1
+      ) {
+        $prevEl = swiper.$el.find(params.prevEl);
+      }
+    }
+
+    if ($nextEl && $nextEl.length > 0) {
+      $nextEl.on('click', swiper.navigation.onNextClick);
+    }
+    if ($prevEl && $prevEl.length > 0) {
+      $prevEl.on('click', swiper.navigation.onPrevClick);
+    }
+
+    Utils.extend(swiper.navigation, {
+      $nextEl,
+      nextEl: $nextEl && $nextEl[0],
+      $prevEl,
+      prevEl: $prevEl && $prevEl[0],
+    });
+  },
+  destroy() {
+    const swiper = this;
+    const { $nextEl, $prevEl } = swiper.navigation;
+    if ($nextEl && $nextEl.length) {
+      $nextEl.off('click', swiper.navigation.onNextClick);
+      $nextEl.removeClass(swiper.params.navigation.disabledClass);
+    }
+    if ($prevEl && $prevEl.length) {
+      $prevEl.off('click', swiper.navigation.onPrevClick);
+      $prevEl.removeClass(swiper.params.navigation.disabledClass);
+    }
+  },
+};
+
+var Navigation$1 = {
+  name: 'navigation',
+  params: {
+    navigation: {
+      nextEl: null,
+      prevEl: null,
+
+      hideOnClick: false,
+      disabledClass: 'swiper-button-disabled',
+      hiddenClass: 'swiper-button-hidden',
+      lockClass: 'swiper-button-lock',
+    },
+  },
+  create() {
+    const swiper = this;
+    Utils.extend(swiper, {
+      navigation: {
+        init: Navigation.init.bind(swiper),
+        update: Navigation.update.bind(swiper),
+        destroy: Navigation.destroy.bind(swiper),
+        onNextClick: Navigation.onNextClick.bind(swiper),
+        onPrevClick: Navigation.onPrevClick.bind(swiper),
+      },
+    });
+  },
+  on: {
+    init() {
+      const swiper = this;
+      swiper.navigation.init();
+      swiper.navigation.update();
+    },
+    toEdge() {
+      const swiper = this;
+      swiper.navigation.update();
+    },
+    fromEdge() {
+      const swiper = this;
+      swiper.navigation.update();
+    },
+    destroy() {
+      const swiper = this;
+      swiper.navigation.destroy();
+    },
+    click(e) {
+      const swiper = this;
+      const { $nextEl, $prevEl } = swiper.navigation;
+      if (
+        swiper.params.navigation.hideOnClick
+        && !$(e.target).is($prevEl)
+        && !$(e.target).is($nextEl)
+      ) {
+        let isHidden;
+        if ($nextEl) {
+          isHidden = $nextEl.hasClass(swiper.params.navigation.hiddenClass);
+        } else if ($prevEl) {
+          isHidden = $prevEl.hasClass(swiper.params.navigation.hiddenClass);
+        }
+        if (isHidden === true) {
+          swiper.emit('navigationShow', swiper);
+        } else {
+          swiper.emit('navigationHide', swiper);
+        }
+        if ($nextEl) {
+          $nextEl.toggleClass(swiper.params.navigation.hiddenClass);
+        }
+        if ($prevEl) {
+          $prevEl.toggleClass(swiper.params.navigation.hiddenClass);
+        }
+      }
+    },
+  },
+};
+
+const Pagination = {
+  update() {
+    // Render || Update Pagination bullets/items
+    const swiper = this;
+    const rtl = swiper.rtl;
+    const params = swiper.params.pagination;
+    if (!params.el || !swiper.pagination.el || !swiper.pagination.$el || swiper.pagination.$el.length === 0) return;
+    const slidesLength = swiper.virtual && swiper.params.virtual.enabled ? swiper.virtual.slides.length : swiper.slides.length;
+    const $el = swiper.pagination.$el;
+    // Current/Total
+    let current;
+    const total = swiper.params.loop ? Math.ceil((slidesLength - (swiper.loopedSlides * 2)) / swiper.params.slidesPerGroup) : swiper.snapGrid.length;
+    if (swiper.params.loop) {
+      current = Math.ceil((swiper.activeIndex - swiper.loopedSlides) / swiper.params.slidesPerGroup);
+      if (current > slidesLength - 1 - (swiper.loopedSlides * 2)) {
+        current -= (slidesLength - (swiper.loopedSlides * 2));
+      }
+      if (current > total - 1) current -= total;
+      if (current < 0 && swiper.params.paginationType !== 'bullets') current = total + current;
+    } else if (typeof swiper.snapIndex !== 'undefined') {
+      current = swiper.snapIndex;
+    } else {
+      current = swiper.activeIndex || 0;
+    }
+    // Types
+    if (params.type === 'bullets' && swiper.pagination.bullets && swiper.pagination.bullets.length > 0) {
+      const bullets = swiper.pagination.bullets;
+      let firstIndex;
+      let lastIndex;
+      let midIndex;
+      if (params.dynamicBullets) {
+        swiper.pagination.bulletSize = bullets.eq(0)[swiper.isHorizontal() ? 'outerWidth' : 'outerHeight'](true);
+        $el.css(swiper.isHorizontal() ? 'width' : 'height', `${swiper.pagination.bulletSize * (params.dynamicMainBullets + 4)}px`);
+        if (params.dynamicMainBullets > 1 && swiper.previousIndex !== undefined) {
+          swiper.pagination.dynamicBulletIndex += (current - swiper.previousIndex);
+          if (swiper.pagination.dynamicBulletIndex > (params.dynamicMainBullets - 1)) {
+            swiper.pagination.dynamicBulletIndex = params.dynamicMainBullets - 1;
+          } else if (swiper.pagination.dynamicBulletIndex < 0) {
+            swiper.pagination.dynamicBulletIndex = 0;
+          }
+        }
+        firstIndex = current - swiper.pagination.dynamicBulletIndex;
+        lastIndex = firstIndex + (Math.min(bullets.length, params.dynamicMainBullets) - 1);
+        midIndex = (lastIndex + firstIndex) / 2;
+      }
+      bullets.removeClass(`${params.bulletActiveClass} ${params.bulletActiveClass}-next ${params.bulletActiveClass}-next-next ${params.bulletActiveClass}-prev ${params.bulletActiveClass}-prev-prev ${params.bulletActiveClass}-main`);
+      if ($el.length > 1) {
+        bullets.each((index, bullet) => {
+          const $bullet = $(bullet);
+          const bulletIndex = $bullet.index();
+          if (bulletIndex === current) {
+            $bullet.addClass(params.bulletActiveClass);
+          }
+          if (params.dynamicBullets) {
+            if (bulletIndex >= firstIndex && bulletIndex <= lastIndex) {
+              $bullet.addClass(`${params.bulletActiveClass}-main`);
+            }
+            if (bulletIndex === firstIndex) {
+              $bullet
+                .prev()
+                .addClass(`${params.bulletActiveClass}-prev`)
+                .prev()
+                .addClass(`${params.bulletActiveClass}-prev-prev`);
+            }
+            if (bulletIndex === lastIndex) {
+              $bullet
+                .next()
+                .addClass(`${params.bulletActiveClass}-next`)
+                .next()
+                .addClass(`${params.bulletActiveClass}-next-next`);
+            }
+          }
+        });
+      } else {
+        const $bullet = bullets.eq(current);
+        const bulletIndex = $bullet.index();
+        $bullet.addClass(params.bulletActiveClass);
+        if (params.dynamicBullets) {
+          const $firstDisplayedBullet = bullets.eq(firstIndex);
+          const $lastDisplayedBullet = bullets.eq(lastIndex);
+          for (let i = firstIndex; i <= lastIndex; i += 1) {
+            bullets.eq(i).addClass(`${params.bulletActiveClass}-main`);
+          }
+          if (swiper.params.loop) {
+            if (bulletIndex >= bullets.length - params.dynamicMainBullets) {
+              for (let i = params.dynamicMainBullets; i >= 0; i -= 1) {
+                bullets.eq(bullets.length - i).addClass(`${params.bulletActiveClass}-main`);
+              }
+              bullets.eq(bullets.length - params.dynamicMainBullets - 1).addClass(`${params.bulletActiveClass}-prev`);
+            } else {
+              $firstDisplayedBullet
+                .prev()
+                .addClass(`${params.bulletActiveClass}-prev`)
+                .prev()
+                .addClass(`${params.bulletActiveClass}-prev-prev`);
+              $lastDisplayedBullet
+                .next()
+                .addClass(`${params.bulletActiveClass}-next`)
+                .next()
+                .addClass(`${params.bulletActiveClass}-next-next`);
+            }
+          } else {
+            $firstDisplayedBullet
+              .prev()
+              .addClass(`${params.bulletActiveClass}-prev`)
+              .prev()
+              .addClass(`${params.bulletActiveClass}-prev-prev`);
+            $lastDisplayedBullet
+              .next()
+              .addClass(`${params.bulletActiveClass}-next`)
+              .next()
+              .addClass(`${params.bulletActiveClass}-next-next`);
+          }
+        }
+      }
+      if (params.dynamicBullets) {
+        const dynamicBulletsLength = Math.min(bullets.length, params.dynamicMainBullets + 4);
+        const bulletsOffset = (((swiper.pagination.bulletSize * dynamicBulletsLength) - (swiper.pagination.bulletSize)) / 2) - (midIndex * swiper.pagination.bulletSize);
+        const offsetProp = rtl ? 'right' : 'left';
+        bullets.css(swiper.isHorizontal() ? offsetProp : 'top', `${bulletsOffset}px`);
+      }
+    }
+    if (params.type === 'fraction') {
+      $el.find(`.${params.currentClass}`).text(params.formatFractionCurrent(current + 1));
+      $el.find(`.${params.totalClass}`).text(params.formatFractionTotal(total));
+    }
+    if (params.type === 'progressbar') {
+      let progressbarDirection;
+      if (params.progressbarOpposite) {
+        progressbarDirection = swiper.isHorizontal() ? 'vertical' : 'horizontal';
+      } else {
+        progressbarDirection = swiper.isHorizontal() ? 'horizontal' : 'vertical';
+      }
+      const scale = (current + 1) / total;
+      let scaleX = 1;
+      let scaleY = 1;
+      if (progressbarDirection === 'horizontal') {
+        scaleX = scale;
+      } else {
+        scaleY = scale;
+      }
+      $el.find(`.${params.progressbarFillClass}`).transform(`translate3d(0,0,0) scaleX(${scaleX}) scaleY(${scaleY})`).transition(swiper.params.speed);
+    }
+    if (params.type === 'custom' && params.renderCustom) {
+      $el.html(params.renderCustom(swiper, current + 1, total));
+      swiper.emit('paginationRender', swiper, $el[0]);
+    } else {
+      swiper.emit('paginationUpdate', swiper, $el[0]);
+    }
+    $el[swiper.params.watchOverflow && swiper.isLocked ? 'addClass' : 'removeClass'](params.lockClass);
+  },
+  render() {
+    // Render Container
+    const swiper = this;
+    const params = swiper.params.pagination;
+    if (!params.el || !swiper.pagination.el || !swiper.pagination.$el || swiper.pagination.$el.length === 0) return;
+    const slidesLength = swiper.virtual && swiper.params.virtual.enabled ? swiper.virtual.slides.length : swiper.slides.length;
+
+    const $el = swiper.pagination.$el;
+    let paginationHTML = '';
+    if (params.type === 'bullets') {
+      const numberOfBullets = swiper.params.loop ? Math.ceil((slidesLength - (swiper.loopedSlides * 2)) / swiper.params.slidesPerGroup) : swiper.snapGrid.length;
+      for (let i = 0; i < numberOfBullets; i += 1) {
+        if (params.renderBullet) {
+          paginationHTML += params.renderBullet.call(swiper, i, params.bulletClass);
+        } else {
+          paginationHTML += `<${params.bulletElement} class="${params.bulletClass}"></${params.bulletElement}>`;
+        }
+      }
+      $el.html(paginationHTML);
+      swiper.pagination.bullets = $el.find(`.${params.bulletClass}`);
+    }
+    if (params.type === 'fraction') {
+      if (params.renderFraction) {
+        paginationHTML = params.renderFraction.call(swiper, params.currentClass, params.totalClass);
+      } else {
+        paginationHTML = `<span class="${params.currentClass}"></span>`
+        + ' / '
+        + `<span class="${params.totalClass}"></span>`;
+      }
+      $el.html(paginationHTML);
+    }
+    if (params.type === 'progressbar') {
+      if (params.renderProgressbar) {
+        paginationHTML = params.renderProgressbar.call(swiper, params.progressbarFillClass);
+      } else {
+        paginationHTML = `<span class="${params.progressbarFillClass}"></span>`;
+      }
+      $el.html(paginationHTML);
+    }
+    if (params.type !== 'custom') {
+      swiper.emit('paginationRender', swiper.pagination.$el[0]);
+    }
+  },
+  init() {
+    const swiper = this;
+    const params = swiper.params.pagination;
+    if (!params.el) return;
+
+    let $el = $(params.el);
+    if ($el.length === 0) return;
+
+    if (
+      swiper.params.uniqueNavElements
+      && typeof params.el === 'string'
+      && $el.length > 1
+    ) {
+      $el = swiper.$el.find(params.el);
+    }
+
+    if (params.type === 'bullets' && params.clickable) {
+      $el.addClass(params.clickableClass);
+    }
+
+    $el.addClass(params.modifierClass + params.type);
+
+    if (params.type === 'bullets' && params.dynamicBullets) {
+      $el.addClass(`${params.modifierClass}${params.type}-dynamic`);
+      swiper.pagination.dynamicBulletIndex = 0;
+      if (params.dynamicMainBullets < 1) {
+        params.dynamicMainBullets = 1;
+      }
+    }
+    if (params.type === 'progressbar' && params.progressbarOpposite) {
+      $el.addClass(params.progressbarOppositeClass);
+    }
+
+    if (params.clickable) {
+      $el.on('click', `.${params.bulletClass}`, function onClick(e) {
+        e.preventDefault();
+        let index = $(this).index() * swiper.params.slidesPerGroup;
+        if (swiper.params.loop) index += swiper.loopedSlides;
+        swiper.slideTo(index);
+      });
+    }
+
+    Utils.extend(swiper.pagination, {
+      $el,
+      el: $el[0],
+    });
+  },
+  destroy() {
+    const swiper = this;
+    const params = swiper.params.pagination;
+    if (!params.el || !swiper.pagination.el || !swiper.pagination.$el || swiper.pagination.$el.length === 0) return;
+    const $el = swiper.pagination.$el;
+
+    $el.removeClass(params.hiddenClass);
+    $el.removeClass(params.modifierClass + params.type);
+    if (swiper.pagination.bullets) swiper.pagination.bullets.removeClass(params.bulletActiveClass);
+    if (params.clickable) {
+      $el.off('click', `.${params.bulletClass}`);
+    }
+  },
+};
+
+var Pagination$1 = {
+  name: 'pagination',
+  params: {
+    pagination: {
+      el: null,
+      bulletElement: 'span',
+      clickable: false,
+      hideOnClick: false,
+      renderBullet: null,
+      renderProgressbar: null,
+      renderFraction: null,
+      renderCustom: null,
+      progressbarOpposite: false,
+      type: 'bullets', // 'bullets' or 'progressbar' or 'fraction' or 'custom'
+      dynamicBullets: false,
+      dynamicMainBullets: 1,
+      formatFractionCurrent: (number) => number,
+      formatFractionTotal: (number) => number,
+      bulletClass: 'swiper-pagination-bullet',
+      bulletActiveClass: 'swiper-pagination-bullet-active',
+      modifierClass: 'swiper-pagination-', // NEW
+      currentClass: 'swiper-pagination-current',
+      totalClass: 'swiper-pagination-total',
+      hiddenClass: 'swiper-pagination-hidden',
+      progressbarFillClass: 'swiper-pagination-progressbar-fill',
+      progressbarOppositeClass: 'swiper-pagination-progressbar-opposite',
+      clickableClass: 'swiper-pagination-clickable', // NEW
+      lockClass: 'swiper-pagination-lock',
+    },
+  },
+  create() {
+    const swiper = this;
+    Utils.extend(swiper, {
+      pagination: {
+        init: Pagination.init.bind(swiper),
+        render: Pagination.render.bind(swiper),
+        update: Pagination.update.bind(swiper),
+        destroy: Pagination.destroy.bind(swiper),
+        dynamicBulletIndex: 0,
+      },
+    });
+  },
+  on: {
+    init() {
+      const swiper = this;
+      swiper.pagination.init();
+      swiper.pagination.render();
+      swiper.pagination.update();
+    },
+    activeIndexChange() {
+      const swiper = this;
+      if (swiper.params.loop) {
+        swiper.pagination.update();
+      } else if (typeof swiper.snapIndex === 'undefined') {
+        swiper.pagination.update();
+      }
+    },
+    snapIndexChange() {
+      const swiper = this;
+      if (!swiper.params.loop) {
+        swiper.pagination.update();
+      }
+    },
+    slidesLengthChange() {
+      const swiper = this;
+      if (swiper.params.loop) {
+        swiper.pagination.render();
+        swiper.pagination.update();
+      }
+    },
+    snapGridLengthChange() {
+      const swiper = this;
+      if (!swiper.params.loop) {
+        swiper.pagination.render();
+        swiper.pagination.update();
+      }
+    },
+    destroy() {
+      const swiper = this;
+      swiper.pagination.destroy();
+    },
+    click(e) {
+      const swiper = this;
+      if (
+        swiper.params.pagination.el
+        && swiper.params.pagination.hideOnClick
+        && swiper.pagination.$el.length > 0
+        && !$(e.target).hasClass(swiper.params.pagination.bulletClass)
+      ) {
+        const isHidden = swiper.pagination.$el.hasClass(swiper.params.pagination.hiddenClass);
+        if (isHidden === true) {
+          swiper.emit('paginationShow', swiper);
+        } else {
+          swiper.emit('paginationHide', swiper);
+        }
+        swiper.pagination.$el.toggleClass(swiper.params.pagination.hiddenClass);
+      }
+    },
+  },
+};
+
+const Scrollbar = {
+  setTranslate() {
+    const swiper = this;
+    if (!swiper.params.scrollbar.el || !swiper.scrollbar.el) return;
+    const { scrollbar, rtlTranslate: rtl, progress } = swiper;
+    const {
+      dragSize, trackSize, $dragEl, $el,
+    } = scrollbar;
+    const params = swiper.params.scrollbar;
+
+    let newSize = dragSize;
+    let newPos = (trackSize - dragSize) * progress;
+    if (rtl) {
+      newPos = -newPos;
+      if (newPos > 0) {
+        newSize = dragSize - newPos;
+        newPos = 0;
+      } else if (-newPos + dragSize > trackSize) {
+        newSize = trackSize + newPos;
+      }
+    } else if (newPos < 0) {
+      newSize = dragSize + newPos;
+      newPos = 0;
+    } else if (newPos + dragSize > trackSize) {
+      newSize = trackSize - newPos;
+    }
+    if (swiper.isHorizontal()) {
+      $dragEl.transform(`translate3d(${newPos}px, 0, 0)`);
+      $dragEl[0].style.width = `${newSize}px`;
+    } else {
+      $dragEl.transform(`translate3d(0px, ${newPos}px, 0)`);
+      $dragEl[0].style.height = `${newSize}px`;
+    }
+    if (params.hide) {
+      clearTimeout(swiper.scrollbar.timeout);
+      $el[0].style.opacity = 1;
+      swiper.scrollbar.timeout = setTimeout(() => {
+        $el[0].style.opacity = 0;
+        $el.transition(400);
+      }, 1000);
+    }
+  },
+  setTransition(duration) {
+    const swiper = this;
+    if (!swiper.params.scrollbar.el || !swiper.scrollbar.el) return;
+    swiper.scrollbar.$dragEl.transition(duration);
+  },
+  updateSize() {
+    const swiper = this;
+    if (!swiper.params.scrollbar.el || !swiper.scrollbar.el) return;
+
+    const { scrollbar } = swiper;
+    const { $dragEl, $el } = scrollbar;
+
+    $dragEl[0].style.width = '';
+    $dragEl[0].style.height = '';
+    const trackSize = swiper.isHorizontal() ? $el[0].offsetWidth : $el[0].offsetHeight;
+
+    const divider = swiper.size / swiper.virtualSize;
+    const moveDivider = divider * (trackSize / swiper.size);
+    let dragSize;
+    if (swiper.params.scrollbar.dragSize === 'auto') {
+      dragSize = trackSize * divider;
+    } else {
+      dragSize = parseInt(swiper.params.scrollbar.dragSize, 10);
+    }
+
+    if (swiper.isHorizontal()) {
+      $dragEl[0].style.width = `${dragSize}px`;
+    } else {
+      $dragEl[0].style.height = `${dragSize}px`;
+    }
+
+    if (divider >= 1) {
+      $el[0].style.display = 'none';
+    } else {
+      $el[0].style.display = '';
+    }
+    if (swiper.params.scrollbar.hide) {
+      $el[0].style.opacity = 0;
+    }
+    Utils.extend(scrollbar, {
+      trackSize,
+      divider,
+      moveDivider,
+      dragSize,
+    });
+    scrollbar.$el[swiper.params.watchOverflow && swiper.isLocked ? 'addClass' : 'removeClass'](swiper.params.scrollbar.lockClass);
+  },
+  getPointerPosition(e) {
+    const swiper = this;
+    if (swiper.isHorizontal()) {
+      return ((e.type === 'touchstart' || e.type === 'touchmove') ? e.targetTouches[0].clientX : e.clientX);
+    }
+    return ((e.type === 'touchstart' || e.type === 'touchmove') ? e.targetTouches[0].clientY : e.clientY);
+  },
+  setDragPosition(e) {
+    const swiper = this;
+    const { scrollbar, rtlTranslate: rtl } = swiper;
+    const {
+      $el,
+      dragSize,
+      trackSize,
+      dragStartPos,
+    } = scrollbar;
+
+    let positionRatio;
+    positionRatio = ((scrollbar.getPointerPosition(e)) - $el.offset()[swiper.isHorizontal() ? 'left' : 'top']
+      - (dragStartPos !== null ? dragStartPos : dragSize / 2)) / (trackSize - dragSize);
+    positionRatio = Math.max(Math.min(positionRatio, 1), 0);
+    if (rtl) {
+      positionRatio = 1 - positionRatio;
+    }
+
+    const position = swiper.minTranslate() + ((swiper.maxTranslate() - swiper.minTranslate()) * positionRatio);
+
+    swiper.updateProgress(position);
+    swiper.setTranslate(position);
+    swiper.updateActiveIndex();
+    swiper.updateSlidesClasses();
+  },
+  onDragStart(e) {
+    const swiper = this;
+    const params = swiper.params.scrollbar;
+    const { scrollbar, $wrapperEl } = swiper;
+    const { $el, $dragEl } = scrollbar;
+    swiper.scrollbar.isTouched = true;
+    swiper.scrollbar.dragStartPos = (e.target === $dragEl[0] || e.target === $dragEl)
+      ? scrollbar.getPointerPosition(e) - e.target.getBoundingClientRect()[swiper.isHorizontal() ? 'left' : 'top'] : null;
+    e.preventDefault();
+    e.stopPropagation();
+
+    $wrapperEl.transition(100);
+    $dragEl.transition(100);
+    scrollbar.setDragPosition(e);
+
+    clearTimeout(swiper.scrollbar.dragTimeout);
+
+    $el.transition(0);
+    if (params.hide) {
+      $el.css('opacity', 1);
+    }
+    if (swiper.params.cssMode) {
+      swiper.$wrapperEl.css('scroll-snap-type', 'none');
+    }
+    swiper.emit('scrollbarDragStart', e);
+  },
+  onDragMove(e) {
+    const swiper = this;
+    const { scrollbar, $wrapperEl } = swiper;
+    const { $el, $dragEl } = scrollbar;
+
+    if (!swiper.scrollbar.isTouched) return;
+    if (e.preventDefault) e.preventDefault();
+    else e.returnValue = false;
+    scrollbar.setDragPosition(e);
+    $wrapperEl.transition(0);
+    $el.transition(0);
+    $dragEl.transition(0);
+    swiper.emit('scrollbarDragMove', e);
+  },
+  onDragEnd(e) {
+    const swiper = this;
+
+    const params = swiper.params.scrollbar;
+    const { scrollbar, $wrapperEl } = swiper;
+    const { $el } = scrollbar;
+
+    if (!swiper.scrollbar.isTouched) return;
+    swiper.scrollbar.isTouched = false;
+    if (swiper.params.cssMode) {
+      swiper.$wrapperEl.css('scroll-snap-type', '');
+      $wrapperEl.transition('');
+    }
+    if (params.hide) {
+      clearTimeout(swiper.scrollbar.dragTimeout);
+      swiper.scrollbar.dragTimeout = Utils.nextTick(() => {
+        $el.css('opacity', 0);
+        $el.transition(400);
+      }, 1000);
+    }
+    swiper.emit('scrollbarDragEnd', e);
+    if (params.snapOnRelease) {
+      swiper.slideToClosest();
+    }
+  },
+  enableDraggable() {
+    const swiper = this;
+    if (!swiper.params.scrollbar.el) return;
+    const {
+      scrollbar, touchEventsTouch, touchEventsDesktop, params,
+    } = swiper;
+    const $el = scrollbar.$el;
+    const target = $el[0];
+    const activeListener = swiper_esm_bundle_Support.passiveListener && params.passiveListeners ? { passive: false, capture: false } : false;
+    const passiveListener = swiper_esm_bundle_Support.passiveListener && params.passiveListeners ? { passive: true, capture: false } : false;
+    if (!swiper_esm_bundle_Support.touch) {
+      target.addEventListener(touchEventsDesktop.start, swiper.scrollbar.onDragStart, activeListener);
+      doc.addEventListener(touchEventsDesktop.move, swiper.scrollbar.onDragMove, activeListener);
+      doc.addEventListener(touchEventsDesktop.end, swiper.scrollbar.onDragEnd, passiveListener);
+    } else {
+      target.addEventListener(touchEventsTouch.start, swiper.scrollbar.onDragStart, activeListener);
+      target.addEventListener(touchEventsTouch.move, swiper.scrollbar.onDragMove, activeListener);
+      target.addEventListener(touchEventsTouch.end, swiper.scrollbar.onDragEnd, passiveListener);
+    }
+  },
+  disableDraggable() {
+    const swiper = this;
+    if (!swiper.params.scrollbar.el) return;
+    const {
+      scrollbar, touchEventsTouch, touchEventsDesktop, params,
+    } = swiper;
+    const $el = scrollbar.$el;
+    const target = $el[0];
+    const activeListener = swiper_esm_bundle_Support.passiveListener && params.passiveListeners ? { passive: false, capture: false } : false;
+    const passiveListener = swiper_esm_bundle_Support.passiveListener && params.passiveListeners ? { passive: true, capture: false } : false;
+    if (!swiper_esm_bundle_Support.touch) {
+      target.removeEventListener(touchEventsDesktop.start, swiper.scrollbar.onDragStart, activeListener);
+      doc.removeEventListener(touchEventsDesktop.move, swiper.scrollbar.onDragMove, activeListener);
+      doc.removeEventListener(touchEventsDesktop.end, swiper.scrollbar.onDragEnd, passiveListener);
+    } else {
+      target.removeEventListener(touchEventsTouch.start, swiper.scrollbar.onDragStart, activeListener);
+      target.removeEventListener(touchEventsTouch.move, swiper.scrollbar.onDragMove, activeListener);
+      target.removeEventListener(touchEventsTouch.end, swiper.scrollbar.onDragEnd, passiveListener);
+    }
+  },
+  init() {
+    const swiper = this;
+    if (!swiper.params.scrollbar.el) return;
+    const { scrollbar, $el: $swiperEl } = swiper;
+    const params = swiper.params.scrollbar;
+
+    let $el = $(params.el);
+    if (swiper.params.uniqueNavElements && typeof params.el === 'string' && $el.length > 1 && $swiperEl.find(params.el).length === 1) {
+      $el = $swiperEl.find(params.el);
+    }
+
+    let $dragEl = $el.find(`.${swiper.params.scrollbar.dragClass}`);
+    if ($dragEl.length === 0) {
+      $dragEl = $(`<div class="${swiper.params.scrollbar.dragClass}"></div>`);
+      $el.append($dragEl);
+    }
+
+    Utils.extend(scrollbar, {
+      $el,
+      el: $el[0],
+      $dragEl,
+      dragEl: $dragEl[0],
+    });
+
+    if (params.draggable) {
+      scrollbar.enableDraggable();
+    }
+  },
+  destroy() {
+    const swiper = this;
+    swiper.scrollbar.disableDraggable();
+  },
+};
+
+var Scrollbar$1 = {
+  name: 'scrollbar',
+  params: {
+    scrollbar: {
+      el: null,
+      dragSize: 'auto',
+      hide: false,
+      draggable: false,
+      snapOnRelease: true,
+      lockClass: 'swiper-scrollbar-lock',
+      dragClass: 'swiper-scrollbar-drag',
+    },
+  },
+  create() {
+    const swiper = this;
+    Utils.extend(swiper, {
+      scrollbar: {
+        init: Scrollbar.init.bind(swiper),
+        destroy: Scrollbar.destroy.bind(swiper),
+        updateSize: Scrollbar.updateSize.bind(swiper),
+        setTranslate: Scrollbar.setTranslate.bind(swiper),
+        setTransition: Scrollbar.setTransition.bind(swiper),
+        enableDraggable: Scrollbar.enableDraggable.bind(swiper),
+        disableDraggable: Scrollbar.disableDraggable.bind(swiper),
+        setDragPosition: Scrollbar.setDragPosition.bind(swiper),
+        getPointerPosition: Scrollbar.getPointerPosition.bind(swiper),
+        onDragStart: Scrollbar.onDragStart.bind(swiper),
+        onDragMove: Scrollbar.onDragMove.bind(swiper),
+        onDragEnd: Scrollbar.onDragEnd.bind(swiper),
+        isTouched: false,
+        timeout: null,
+        dragTimeout: null,
+      },
+    });
+  },
+  on: {
+    init() {
+      const swiper = this;
+      swiper.scrollbar.init();
+      swiper.scrollbar.updateSize();
+      swiper.scrollbar.setTranslate();
+    },
+    update() {
+      const swiper = this;
+      swiper.scrollbar.updateSize();
+    },
+    resize() {
+      const swiper = this;
+      swiper.scrollbar.updateSize();
+    },
+    observerUpdate() {
+      const swiper = this;
+      swiper.scrollbar.updateSize();
+    },
+    setTranslate() {
+      const swiper = this;
+      swiper.scrollbar.setTranslate();
+    },
+    setTransition(duration) {
+      const swiper = this;
+      swiper.scrollbar.setTransition(duration);
+    },
+    destroy() {
+      const swiper = this;
+      swiper.scrollbar.destroy();
+    },
+  },
+};
+
+const Parallax = {
+  setTransform(el, progress) {
+    const swiper = this;
+    const { rtl } = swiper;
+
+    const $el = $(el);
+    const rtlFactor = rtl ? -1 : 1;
+
+    const p = $el.attr('data-swiper-parallax') || '0';
+    let x = $el.attr('data-swiper-parallax-x');
+    let y = $el.attr('data-swiper-parallax-y');
+    const scale = $el.attr('data-swiper-parallax-scale');
+    const opacity = $el.attr('data-swiper-parallax-opacity');
+
+    if (x || y) {
+      x = x || '0';
+      y = y || '0';
+    } else if (swiper.isHorizontal()) {
+      x = p;
+      y = '0';
+    } else {
+      y = p;
+      x = '0';
+    }
+
+    if ((x).indexOf('%') >= 0) {
+      x = `${parseInt(x, 10) * progress * rtlFactor}%`;
+    } else {
+      x = `${x * progress * rtlFactor}px`;
+    }
+    if ((y).indexOf('%') >= 0) {
+      y = `${parseInt(y, 10) * progress}%`;
+    } else {
+      y = `${y * progress}px`;
+    }
+
+    if (typeof opacity !== 'undefined' && opacity !== null) {
+      const currentOpacity = opacity - ((opacity - 1) * (1 - Math.abs(progress)));
+      $el[0].style.opacity = currentOpacity;
+    }
+    if (typeof scale === 'undefined' || scale === null) {
+      $el.transform(`translate3d(${x}, ${y}, 0px)`);
+    } else {
+      const currentScale = scale - ((scale - 1) * (1 - Math.abs(progress)));
+      $el.transform(`translate3d(${x}, ${y}, 0px) scale(${currentScale})`);
+    }
+  },
+  setTranslate() {
+    const swiper = this;
+    const {
+      $el, slides, progress, snapGrid,
+    } = swiper;
+    $el.children('[data-swiper-parallax], [data-swiper-parallax-x], [data-swiper-parallax-y], [data-swiper-parallax-opacity], [data-swiper-parallax-scale]')
+      .each((index, el) => {
+        swiper.parallax.setTransform(el, progress);
+      });
+    slides.each((slideIndex, slideEl) => {
+      let slideProgress = slideEl.progress;
+      if (swiper.params.slidesPerGroup > 1 && swiper.params.slidesPerView !== 'auto') {
+        slideProgress += Math.ceil(slideIndex / 2) - (progress * (snapGrid.length - 1));
+      }
+      slideProgress = Math.min(Math.max(slideProgress, -1), 1);
+      $(slideEl).find('[data-swiper-parallax], [data-swiper-parallax-x], [data-swiper-parallax-y], [data-swiper-parallax-opacity], [data-swiper-parallax-scale]')
+        .each((index, el) => {
+          swiper.parallax.setTransform(el, slideProgress);
+        });
+    });
+  },
+  setTransition(duration = this.params.speed) {
+    const swiper = this;
+    const { $el } = swiper;
+    $el.find('[data-swiper-parallax], [data-swiper-parallax-x], [data-swiper-parallax-y], [data-swiper-parallax-opacity], [data-swiper-parallax-scale]')
+      .each((index, parallaxEl) => {
+        const $parallaxEl = $(parallaxEl);
+        let parallaxDuration = parseInt($parallaxEl.attr('data-swiper-parallax-duration'), 10) || duration;
+        if (duration === 0) parallaxDuration = 0;
+        $parallaxEl.transition(parallaxDuration);
+      });
+  },
+};
+
+var Parallax$1 = {
+  name: 'parallax',
+  params: {
+    parallax: {
+      enabled: false,
+    },
+  },
+  create() {
+    const swiper = this;
+    Utils.extend(swiper, {
+      parallax: {
+        setTransform: Parallax.setTransform.bind(swiper),
+        setTranslate: Parallax.setTranslate.bind(swiper),
+        setTransition: Parallax.setTransition.bind(swiper),
+      },
+    });
+  },
+  on: {
+    beforeInit() {
+      const swiper = this;
+      if (!swiper.params.parallax.enabled) return;
+      swiper.params.watchSlidesProgress = true;
+      swiper.originalParams.watchSlidesProgress = true;
+    },
+    init() {
+      const swiper = this;
+      if (!swiper.params.parallax.enabled) return;
+      swiper.parallax.setTranslate();
+    },
+    setTranslate() {
+      const swiper = this;
+      if (!swiper.params.parallax.enabled) return;
+      swiper.parallax.setTranslate();
+    },
+    setTransition(duration) {
+      const swiper = this;
+      if (!swiper.params.parallax.enabled) return;
+      swiper.parallax.setTransition(duration);
+    },
+  },
+};
+
+const Zoom = {
+  // Calc Scale From Multi-touches
+  getDistanceBetweenTouches(e) {
+    if (e.targetTouches.length < 2) return 1;
+    const x1 = e.targetTouches[0].pageX;
+    const y1 = e.targetTouches[0].pageY;
+    const x2 = e.targetTouches[1].pageX;
+    const y2 = e.targetTouches[1].pageY;
+    const distance = Math.sqrt(((x2 - x1) ** 2) + ((y2 - y1) ** 2));
+    return distance;
+  },
+  // Events
+  onGestureStart(e) {
+    const swiper = this;
+    const params = swiper.params.zoom;
+    const zoom = swiper.zoom;
+    const { gesture } = zoom;
+    zoom.fakeGestureTouched = false;
+    zoom.fakeGestureMoved = false;
+    if (!swiper_esm_bundle_Support.gestures) {
+      if (e.type !== 'touchstart' || (e.type === 'touchstart' && e.targetTouches.length < 2)) {
+        return;
+      }
+      zoom.fakeGestureTouched = true;
+      gesture.scaleStart = Zoom.getDistanceBetweenTouches(e);
+    }
+    if (!gesture.$slideEl || !gesture.$slideEl.length) {
+      gesture.$slideEl = $(e.target).closest(`.${swiper.params.slideClass}`);
+      if (gesture.$slideEl.length === 0) gesture.$slideEl = swiper.slides.eq(swiper.activeIndex);
+      gesture.$imageEl = gesture.$slideEl.find('img, svg, canvas, picture, .swiper-zoom-target');
+      gesture.$imageWrapEl = gesture.$imageEl.parent(`.${params.containerClass}`);
+      gesture.maxRatio = gesture.$imageWrapEl.attr('data-swiper-zoom') || params.maxRatio;
+      if (gesture.$imageWrapEl.length === 0) {
+        gesture.$imageEl = undefined;
+        return;
+      }
+    }
+    if (gesture.$imageEl) {
+      gesture.$imageEl.transition(0);
+    }
+    swiper.zoom.isScaling = true;
+  },
+  onGestureChange(e) {
+    const swiper = this;
+    const params = swiper.params.zoom;
+    const zoom = swiper.zoom;
+    const { gesture } = zoom;
+    if (!swiper_esm_bundle_Support.gestures) {
+      if (e.type !== 'touchmove' || (e.type === 'touchmove' && e.targetTouches.length < 2)) {
+        return;
+      }
+      zoom.fakeGestureMoved = true;
+      gesture.scaleMove = Zoom.getDistanceBetweenTouches(e);
+    }
+    if (!gesture.$imageEl || gesture.$imageEl.length === 0) return;
+    if (swiper_esm_bundle_Support.gestures) {
+      zoom.scale = e.scale * zoom.currentScale;
+    } else {
+      zoom.scale = (gesture.scaleMove / gesture.scaleStart) * zoom.currentScale;
+    }
+    if (zoom.scale > gesture.maxRatio) {
+      zoom.scale = (gesture.maxRatio - 1) + (((zoom.scale - gesture.maxRatio) + 1) ** 0.5);
+    }
+    if (zoom.scale < params.minRatio) {
+      zoom.scale = (params.minRatio + 1) - (((params.minRatio - zoom.scale) + 1) ** 0.5);
+    }
+    gesture.$imageEl.transform(`translate3d(0,0,0) scale(${zoom.scale})`);
+  },
+  onGestureEnd(e) {
+    const swiper = this;
+    const params = swiper.params.zoom;
+    const zoom = swiper.zoom;
+    const { gesture } = zoom;
+    if (!swiper_esm_bundle_Support.gestures) {
+      if (!zoom.fakeGestureTouched || !zoom.fakeGestureMoved) {
+        return;
+      }
+      if (e.type !== 'touchend' || (e.type === 'touchend' && e.changedTouches.length < 2 && !swiper_esm_bundle_Device.android)) {
+        return;
+      }
+      zoom.fakeGestureTouched = false;
+      zoom.fakeGestureMoved = false;
+    }
+    if (!gesture.$imageEl || gesture.$imageEl.length === 0) return;
+    zoom.scale = Math.max(Math.min(zoom.scale, gesture.maxRatio), params.minRatio);
+    gesture.$imageEl.transition(swiper.params.speed).transform(`translate3d(0,0,0) scale(${zoom.scale})`);
+    zoom.currentScale = zoom.scale;
+    zoom.isScaling = false;
+    if (zoom.scale === 1) gesture.$slideEl = undefined;
+  },
+  onTouchStart(e) {
+    const swiper = this;
+    const zoom = swiper.zoom;
+    const { gesture, image } = zoom;
+    if (!gesture.$imageEl || gesture.$imageEl.length === 0) return;
+    if (image.isTouched) return;
+    if (swiper_esm_bundle_Device.android && e.cancelable) e.preventDefault();
+    image.isTouched = true;
+    image.touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
+    image.touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+  },
+  onTouchMove(e) {
+    const swiper = this;
+    const zoom = swiper.zoom;
+    const { gesture, image, velocity } = zoom;
+    if (!gesture.$imageEl || gesture.$imageEl.length === 0) return;
+    swiper.allowClick = false;
+    if (!image.isTouched || !gesture.$slideEl) return;
+
+    if (!image.isMoved) {
+      image.width = gesture.$imageEl[0].offsetWidth;
+      image.height = gesture.$imageEl[0].offsetHeight;
+      image.startX = Utils.getTranslate(gesture.$imageWrapEl[0], 'x') || 0;
+      image.startY = Utils.getTranslate(gesture.$imageWrapEl[0], 'y') || 0;
+      gesture.slideWidth = gesture.$slideEl[0].offsetWidth;
+      gesture.slideHeight = gesture.$slideEl[0].offsetHeight;
+      gesture.$imageWrapEl.transition(0);
+      if (swiper.rtl) {
+        image.startX = -image.startX;
+        image.startY = -image.startY;
+      }
+    }
+    // Define if we need image drag
+    const scaledWidth = image.width * zoom.scale;
+    const scaledHeight = image.height * zoom.scale;
+
+    if (scaledWidth < gesture.slideWidth && scaledHeight < gesture.slideHeight) return;
+
+    image.minX = Math.min(((gesture.slideWidth / 2) - (scaledWidth / 2)), 0);
+    image.maxX = -image.minX;
+    image.minY = Math.min(((gesture.slideHeight / 2) - (scaledHeight / 2)), 0);
+    image.maxY = -image.minY;
+
+    image.touchesCurrent.x = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
+    image.touchesCurrent.y = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+
+    if (!image.isMoved && !zoom.isScaling) {
+      if (
+        swiper.isHorizontal()
+        && (
+          (Math.floor(image.minX) === Math.floor(image.startX) && image.touchesCurrent.x < image.touchesStart.x)
+          || (Math.floor(image.maxX) === Math.floor(image.startX) && image.touchesCurrent.x > image.touchesStart.x)
+        )
+      ) {
+        image.isTouched = false;
+        return;
+      } if (
+        !swiper.isHorizontal()
+        && (
+          (Math.floor(image.minY) === Math.floor(image.startY) && image.touchesCurrent.y < image.touchesStart.y)
+          || (Math.floor(image.maxY) === Math.floor(image.startY) && image.touchesCurrent.y > image.touchesStart.y)
+        )
+      ) {
+        image.isTouched = false;
+        return;
+      }
+    }
+    if (e.cancelable) {
+      e.preventDefault();
+    }
+    e.stopPropagation();
+
+    image.isMoved = true;
+    image.currentX = (image.touchesCurrent.x - image.touchesStart.x) + image.startX;
+    image.currentY = (image.touchesCurrent.y - image.touchesStart.y) + image.startY;
+
+    if (image.currentX < image.minX) {
+      image.currentX = (image.minX + 1) - (((image.minX - image.currentX) + 1) ** 0.8);
+    }
+    if (image.currentX > image.maxX) {
+      image.currentX = (image.maxX - 1) + (((image.currentX - image.maxX) + 1) ** 0.8);
+    }
+
+    if (image.currentY < image.minY) {
+      image.currentY = (image.minY + 1) - (((image.minY - image.currentY) + 1) ** 0.8);
+    }
+    if (image.currentY > image.maxY) {
+      image.currentY = (image.maxY - 1) + (((image.currentY - image.maxY) + 1) ** 0.8);
+    }
+
+    // Velocity
+    if (!velocity.prevPositionX) velocity.prevPositionX = image.touchesCurrent.x;
+    if (!velocity.prevPositionY) velocity.prevPositionY = image.touchesCurrent.y;
+    if (!velocity.prevTime) velocity.prevTime = Date.now();
+    velocity.x = (image.touchesCurrent.x - velocity.prevPositionX) / (Date.now() - velocity.prevTime) / 2;
+    velocity.y = (image.touchesCurrent.y - velocity.prevPositionY) / (Date.now() - velocity.prevTime) / 2;
+    if (Math.abs(image.touchesCurrent.x - velocity.prevPositionX) < 2) velocity.x = 0;
+    if (Math.abs(image.touchesCurrent.y - velocity.prevPositionY) < 2) velocity.y = 0;
+    velocity.prevPositionX = image.touchesCurrent.x;
+    velocity.prevPositionY = image.touchesCurrent.y;
+    velocity.prevTime = Date.now();
+
+    gesture.$imageWrapEl.transform(`translate3d(${image.currentX}px, ${image.currentY}px,0)`);
+  },
+  onTouchEnd() {
+    const swiper = this;
+    const zoom = swiper.zoom;
+    const { gesture, image, velocity } = zoom;
+    if (!gesture.$imageEl || gesture.$imageEl.length === 0) return;
+    if (!image.isTouched || !image.isMoved) {
+      image.isTouched = false;
+      image.isMoved = false;
+      return;
+    }
+    image.isTouched = false;
+    image.isMoved = false;
+    let momentumDurationX = 300;
+    let momentumDurationY = 300;
+    const momentumDistanceX = velocity.x * momentumDurationX;
+    const newPositionX = image.currentX + momentumDistanceX;
+    const momentumDistanceY = velocity.y * momentumDurationY;
+    const newPositionY = image.currentY + momentumDistanceY;
+
+    // Fix duration
+    if (velocity.x !== 0) momentumDurationX = Math.abs((newPositionX - image.currentX) / velocity.x);
+    if (velocity.y !== 0) momentumDurationY = Math.abs((newPositionY - image.currentY) / velocity.y);
+    const momentumDuration = Math.max(momentumDurationX, momentumDurationY);
+
+    image.currentX = newPositionX;
+    image.currentY = newPositionY;
+
+    // Define if we need image drag
+    const scaledWidth = image.width * zoom.scale;
+    const scaledHeight = image.height * zoom.scale;
+    image.minX = Math.min(((gesture.slideWidth / 2) - (scaledWidth / 2)), 0);
+    image.maxX = -image.minX;
+    image.minY = Math.min(((gesture.slideHeight / 2) - (scaledHeight / 2)), 0);
+    image.maxY = -image.minY;
+    image.currentX = Math.max(Math.min(image.currentX, image.maxX), image.minX);
+    image.currentY = Math.max(Math.min(image.currentY, image.maxY), image.minY);
+
+    gesture.$imageWrapEl.transition(momentumDuration).transform(`translate3d(${image.currentX}px, ${image.currentY}px,0)`);
+  },
+  onTransitionEnd() {
+    const swiper = this;
+    const zoom = swiper.zoom;
+    const { gesture } = zoom;
+    if (gesture.$slideEl && swiper.previousIndex !== swiper.activeIndex) {
+      if (gesture.$imageEl) {
+        gesture.$imageEl.transform('translate3d(0,0,0) scale(1)');
+      }
+      if (gesture.$imageWrapEl) {
+        gesture.$imageWrapEl.transform('translate3d(0,0,0)');
+      }
+
+      zoom.scale = 1;
+      zoom.currentScale = 1;
+
+      gesture.$slideEl = undefined;
+      gesture.$imageEl = undefined;
+      gesture.$imageWrapEl = undefined;
+    }
+  },
+  // Toggle Zoom
+  toggle(e) {
+    const swiper = this;
+    const zoom = swiper.zoom;
+
+    if (zoom.scale && zoom.scale !== 1) {
+      // Zoom Out
+      zoom.out();
+    } else {
+      // Zoom In
+      zoom.in(e);
+    }
+  },
+  in(e) {
+    const swiper = this;
+
+    const zoom = swiper.zoom;
+    const params = swiper.params.zoom;
+    const { gesture, image } = zoom;
+
+    if (!gesture.$slideEl) {
+      if (swiper.params.virtual && swiper.params.virtual.enabled && swiper.virtual) {
+        gesture.$slideEl = swiper.$wrapperEl.children(`.${swiper.params.slideActiveClass}`);
+      } else {
+        gesture.$slideEl = swiper.slides.eq(swiper.activeIndex);
+      }
+      gesture.$imageEl = gesture.$slideEl.find('img, svg, canvas, picture, .swiper-zoom-target');
+      gesture.$imageWrapEl = gesture.$imageEl.parent(`.${params.containerClass}`);
+    }
+    if (!gesture.$imageEl || gesture.$imageEl.length === 0) return;
+
+    gesture.$slideEl.addClass(`${params.zoomedSlideClass}`);
+
+    let touchX;
+    let touchY;
+    let offsetX;
+    let offsetY;
+    let diffX;
+    let diffY;
+    let translateX;
+    let translateY;
+    let imageWidth;
+    let imageHeight;
+    let scaledWidth;
+    let scaledHeight;
+    let translateMinX;
+    let translateMinY;
+    let translateMaxX;
+    let translateMaxY;
+    let slideWidth;
+    let slideHeight;
+
+    if (typeof image.touchesStart.x === 'undefined' && e) {
+      touchX = e.type === 'touchend' ? e.changedTouches[0].pageX : e.pageX;
+      touchY = e.type === 'touchend' ? e.changedTouches[0].pageY : e.pageY;
+    } else {
+      touchX = image.touchesStart.x;
+      touchY = image.touchesStart.y;
+    }
+
+    zoom.scale = gesture.$imageWrapEl.attr('data-swiper-zoom') || params.maxRatio;
+    zoom.currentScale = gesture.$imageWrapEl.attr('data-swiper-zoom') || params.maxRatio;
+    if (e) {
+      slideWidth = gesture.$slideEl[0].offsetWidth;
+      slideHeight = gesture.$slideEl[0].offsetHeight;
+      offsetX = gesture.$slideEl.offset().left;
+      offsetY = gesture.$slideEl.offset().top;
+      diffX = (offsetX + (slideWidth / 2)) - touchX;
+      diffY = (offsetY + (slideHeight / 2)) - touchY;
+
+      imageWidth = gesture.$imageEl[0].offsetWidth;
+      imageHeight = gesture.$imageEl[0].offsetHeight;
+      scaledWidth = imageWidth * zoom.scale;
+      scaledHeight = imageHeight * zoom.scale;
+
+      translateMinX = Math.min(((slideWidth / 2) - (scaledWidth / 2)), 0);
+      translateMinY = Math.min(((slideHeight / 2) - (scaledHeight / 2)), 0);
+      translateMaxX = -translateMinX;
+      translateMaxY = -translateMinY;
+
+      translateX = diffX * zoom.scale;
+      translateY = diffY * zoom.scale;
+
+      if (translateX < translateMinX) {
+        translateX = translateMinX;
+      }
+      if (translateX > translateMaxX) {
+        translateX = translateMaxX;
+      }
+
+      if (translateY < translateMinY) {
+        translateY = translateMinY;
+      }
+      if (translateY > translateMaxY) {
+        translateY = translateMaxY;
+      }
+    } else {
+      translateX = 0;
+      translateY = 0;
+    }
+    gesture.$imageWrapEl.transition(300).transform(`translate3d(${translateX}px, ${translateY}px,0)`);
+    gesture.$imageEl.transition(300).transform(`translate3d(0,0,0) scale(${zoom.scale})`);
+  },
+  out() {
+    const swiper = this;
+
+    const zoom = swiper.zoom;
+    const params = swiper.params.zoom;
+    const { gesture } = zoom;
+
+    if (!gesture.$slideEl) {
+      if (swiper.params.virtual && swiper.params.virtual.enabled && swiper.virtual) {
+        gesture.$slideEl = swiper.$wrapperEl.children(`.${swiper.params.slideActiveClass}`);
+      } else {
+        gesture.$slideEl = swiper.slides.eq(swiper.activeIndex);
+      }
+      gesture.$imageEl = gesture.$slideEl.find('img, svg, canvas, picture, .swiper-zoom-target');
+      gesture.$imageWrapEl = gesture.$imageEl.parent(`.${params.containerClass}`);
+    }
+    if (!gesture.$imageEl || gesture.$imageEl.length === 0) return;
+
+    zoom.scale = 1;
+    zoom.currentScale = 1;
+    gesture.$imageWrapEl.transition(300).transform('translate3d(0,0,0)');
+    gesture.$imageEl.transition(300).transform('translate3d(0,0,0) scale(1)');
+    gesture.$slideEl.removeClass(`${params.zoomedSlideClass}`);
+    gesture.$slideEl = undefined;
+  },
+  // Attach/Detach Events
+  enable() {
+    const swiper = this;
+    const zoom = swiper.zoom;
+    if (zoom.enabled) return;
+    zoom.enabled = true;
+
+    const passiveListener = swiper.touchEvents.start === 'touchstart' && swiper_esm_bundle_Support.passiveListener && swiper.params.passiveListeners ? { passive: true, capture: false } : false;
+    const activeListenerWithCapture = swiper_esm_bundle_Support.passiveListener ? { passive: false, capture: true } : true;
+
+    const slideSelector = `.${swiper.params.slideClass}`;
+
+    // Scale image
+    if (swiper_esm_bundle_Support.gestures) {
+      swiper.$wrapperEl.on('gesturestart', slideSelector, zoom.onGestureStart, passiveListener);
+      swiper.$wrapperEl.on('gesturechange', slideSelector, zoom.onGestureChange, passiveListener);
+      swiper.$wrapperEl.on('gestureend', slideSelector, zoom.onGestureEnd, passiveListener);
+    } else if (swiper.touchEvents.start === 'touchstart') {
+      swiper.$wrapperEl.on(swiper.touchEvents.start, slideSelector, zoom.onGestureStart, passiveListener);
+      swiper.$wrapperEl.on(swiper.touchEvents.move, slideSelector, zoom.onGestureChange, activeListenerWithCapture);
+      swiper.$wrapperEl.on(swiper.touchEvents.end, slideSelector, zoom.onGestureEnd, passiveListener);
+      if (swiper.touchEvents.cancel) {
+        swiper.$wrapperEl.on(swiper.touchEvents.cancel, slideSelector, zoom.onGestureEnd, passiveListener);
+      }
+    }
+
+    // Move image
+    swiper.$wrapperEl.on(swiper.touchEvents.move, `.${swiper.params.zoom.containerClass}`, zoom.onTouchMove, activeListenerWithCapture);
+  },
+  disable() {
+    const swiper = this;
+    const zoom = swiper.zoom;
+    if (!zoom.enabled) return;
+
+    swiper.zoom.enabled = false;
+
+    const passiveListener = swiper.touchEvents.start === 'touchstart' && swiper_esm_bundle_Support.passiveListener && swiper.params.passiveListeners ? { passive: true, capture: false } : false;
+    const activeListenerWithCapture = swiper_esm_bundle_Support.passiveListener ? { passive: false, capture: true } : true;
+
+    const slideSelector = `.${swiper.params.slideClass}`;
+
+    // Scale image
+    if (swiper_esm_bundle_Support.gestures) {
+      swiper.$wrapperEl.off('gesturestart', slideSelector, zoom.onGestureStart, passiveListener);
+      swiper.$wrapperEl.off('gesturechange', slideSelector, zoom.onGestureChange, passiveListener);
+      swiper.$wrapperEl.off('gestureend', slideSelector, zoom.onGestureEnd, passiveListener);
+    } else if (swiper.touchEvents.start === 'touchstart') {
+      swiper.$wrapperEl.off(swiper.touchEvents.start, slideSelector, zoom.onGestureStart, passiveListener);
+      swiper.$wrapperEl.off(swiper.touchEvents.move, slideSelector, zoom.onGestureChange, activeListenerWithCapture);
+      swiper.$wrapperEl.off(swiper.touchEvents.end, slideSelector, zoom.onGestureEnd, passiveListener);
+      if (swiper.touchEvents.cancel) {
+        swiper.$wrapperEl.off(swiper.touchEvents.cancel, slideSelector, zoom.onGestureEnd, passiveListener);
+      }
+    }
+
+    // Move image
+    swiper.$wrapperEl.off(swiper.touchEvents.move, `.${swiper.params.zoom.containerClass}`, zoom.onTouchMove, activeListenerWithCapture);
+  },
+};
+
+var Zoom$1 = {
+  name: 'zoom',
+  params: {
+    zoom: {
+      enabled: false,
+      maxRatio: 3,
+      minRatio: 1,
+      toggle: true,
+      containerClass: 'swiper-zoom-container',
+      zoomedSlideClass: 'swiper-slide-zoomed',
+    },
+  },
+  create() {
+    const swiper = this;
+    const zoom = {
+      enabled: false,
+      scale: 1,
+      currentScale: 1,
+      isScaling: false,
+      gesture: {
+        $slideEl: undefined,
+        slideWidth: undefined,
+        slideHeight: undefined,
+        $imageEl: undefined,
+        $imageWrapEl: undefined,
+        maxRatio: 3,
+      },
+      image: {
+        isTouched: undefined,
+        isMoved: undefined,
+        currentX: undefined,
+        currentY: undefined,
+        minX: undefined,
+        minY: undefined,
+        maxX: undefined,
+        maxY: undefined,
+        width: undefined,
+        height: undefined,
+        startX: undefined,
+        startY: undefined,
+        touchesStart: {},
+        touchesCurrent: {},
+      },
+      velocity: {
+        x: undefined,
+        y: undefined,
+        prevPositionX: undefined,
+        prevPositionY: undefined,
+        prevTime: undefined,
+      },
+    };
+
+    ('onGestureStart onGestureChange onGestureEnd onTouchStart onTouchMove onTouchEnd onTransitionEnd toggle enable disable in out').split(' ').forEach((methodName) => {
+      zoom[methodName] = Zoom[methodName].bind(swiper);
+    });
+    Utils.extend(swiper, {
+      zoom,
+    });
+
+    let scale = 1;
+    Object.defineProperty(swiper.zoom, 'scale', {
+      get() {
+        return scale;
+      },
+      set(value) {
+        if (scale !== value) {
+          const imageEl = swiper.zoom.gesture.$imageEl ? swiper.zoom.gesture.$imageEl[0] : undefined;
+          const slideEl = swiper.zoom.gesture.$slideEl ? swiper.zoom.gesture.$slideEl[0] : undefined;
+          swiper.emit('zoomChange', value, imageEl, slideEl);
+        }
+        scale = value;
+      },
+    });
+  },
+  on: {
+    init() {
+      const swiper = this;
+      if (swiper.params.zoom.enabled) {
+        swiper.zoom.enable();
+      }
+    },
+    destroy() {
+      const swiper = this;
+      swiper.zoom.disable();
+    },
+    touchStart(e) {
+      const swiper = this;
+      if (!swiper.zoom.enabled) return;
+      swiper.zoom.onTouchStart(e);
+    },
+    touchEnd(e) {
+      const swiper = this;
+      if (!swiper.zoom.enabled) return;
+      swiper.zoom.onTouchEnd(e);
+    },
+    doubleTap(e) {
+      const swiper = this;
+      if (swiper.params.zoom.enabled && swiper.zoom.enabled && swiper.params.zoom.toggle) {
+        swiper.zoom.toggle(e);
+      }
+    },
+    transitionEnd() {
+      const swiper = this;
+      if (swiper.zoom.enabled && swiper.params.zoom.enabled) {
+        swiper.zoom.onTransitionEnd();
+      }
+    },
+    slideChange() {
+      const swiper = this;
+      if (swiper.zoom.enabled && swiper.params.zoom.enabled && swiper.params.cssMode) {
+        swiper.zoom.onTransitionEnd();
+      }
+    },
+  },
+};
+
+const Lazy = {
+  loadInSlide(index, loadInDuplicate = true) {
+    const swiper = this;
+    const params = swiper.params.lazy;
+    if (typeof index === 'undefined') return;
+    if (swiper.slides.length === 0) return;
+    const isVirtual = swiper.virtual && swiper.params.virtual.enabled;
+
+    const $slideEl = isVirtual
+      ? swiper.$wrapperEl.children(`.${swiper.params.slideClass}[data-swiper-slide-index="${index}"]`)
+      : swiper.slides.eq(index);
+
+    let $images = $slideEl.find(`.${params.elementClass}:not(.${params.loadedClass}):not(.${params.loadingClass})`);
+    if ($slideEl.hasClass(params.elementClass) && !$slideEl.hasClass(params.loadedClass) && !$slideEl.hasClass(params.loadingClass)) {
+      $images = $images.add($slideEl[0]);
+    }
+    if ($images.length === 0) return;
+
+    $images.each((imageIndex, imageEl) => {
+      const $imageEl = $(imageEl);
+      $imageEl.addClass(params.loadingClass);
+
+      const background = $imageEl.attr('data-background');
+      const src = $imageEl.attr('data-src');
+      const srcset = $imageEl.attr('data-srcset');
+      const sizes = $imageEl.attr('data-sizes');
+      const $pictureEl = $imageEl.parent('picture');
+
+      swiper.loadImage($imageEl[0], (src || background), srcset, sizes, false, () => {
+        if (typeof swiper === 'undefined' || swiper === null || !swiper || (swiper && !swiper.params) || swiper.destroyed) return;
+        if (background) {
+          $imageEl.css('background-image', `url("${background}")`);
+          $imageEl.removeAttr('data-background');
+        } else {
+          if (srcset) {
+            $imageEl.attr('srcset', srcset);
+            $imageEl.removeAttr('data-srcset');
+          }
+          if (sizes) {
+            $imageEl.attr('sizes', sizes);
+            $imageEl.removeAttr('data-sizes');
+          }
+          if ($pictureEl.length) {
+            $pictureEl.children('source').each((sourceIndex, sourceEl) => {
+              const $source = $(sourceEl);
+
+              if ($source.attr('data-srcset')) {
+                $source.attr('srcset', $source.attr('data-srcset'));
+                $source.removeAttr('data-srcset');
+              }
+            });
+          }
+          if (src) {
+            $imageEl.attr('src', src);
+            $imageEl.removeAttr('data-src');
+          }
+        }
+
+        $imageEl.addClass(params.loadedClass).removeClass(params.loadingClass);
+        $slideEl.find(`.${params.preloaderClass}`).remove();
+        if (swiper.params.loop && loadInDuplicate) {
+          const slideOriginalIndex = $slideEl.attr('data-swiper-slide-index');
+          if ($slideEl.hasClass(swiper.params.slideDuplicateClass)) {
+            const originalSlide = swiper.$wrapperEl.children(`[data-swiper-slide-index="${slideOriginalIndex}"]:not(.${swiper.params.slideDuplicateClass})`);
+            swiper.lazy.loadInSlide(originalSlide.index(), false);
+          } else {
+            const duplicatedSlide = swiper.$wrapperEl.children(`.${swiper.params.slideDuplicateClass}[data-swiper-slide-index="${slideOriginalIndex}"]`);
+            swiper.lazy.loadInSlide(duplicatedSlide.index(), false);
+          }
+        }
+        swiper.emit('lazyImageReady', $slideEl[0], $imageEl[0]);
+        if (swiper.params.autoHeight) {
+          swiper.updateAutoHeight();
+        }
+      });
+
+      swiper.emit('lazyImageLoad', $slideEl[0], $imageEl[0]);
+    });
+  },
+  load() {
+    const swiper = this;
+    const {
+      $wrapperEl, params: swiperParams, slides, activeIndex,
+    } = swiper;
+    const isVirtual = swiper.virtual && swiperParams.virtual.enabled;
+    const params = swiperParams.lazy;
+
+    let slidesPerView = swiperParams.slidesPerView;
+    if (slidesPerView === 'auto') {
+      slidesPerView = 0;
+    }
+
+    function slideExist(index) {
+      if (isVirtual) {
+        if ($wrapperEl.children(`.${swiperParams.slideClass}[data-swiper-slide-index="${index}"]`).length) {
+          return true;
+        }
+      } else if (slides[index]) return true;
+      return false;
+    }
+
+    function slideIndex(slideEl) {
+      if (isVirtual) {
+        return $(slideEl).attr('data-swiper-slide-index');
+      }
+      return $(slideEl).index();
+    }
+
+    if (!swiper.lazy.initialImageLoaded) swiper.lazy.initialImageLoaded = true;
+    if (swiper.params.watchSlidesVisibility) {
+      $wrapperEl.children(`.${swiperParams.slideVisibleClass}`).each((elIndex, slideEl) => {
+        const index = isVirtual ? $(slideEl).attr('data-swiper-slide-index') : $(slideEl).index();
+        swiper.lazy.loadInSlide(index);
+      });
+    } else if (slidesPerView > 1) {
+      for (let i = activeIndex; i < activeIndex + slidesPerView; i += 1) {
+        if (slideExist(i)) swiper.lazy.loadInSlide(i);
+      }
+    } else {
+      swiper.lazy.loadInSlide(activeIndex);
+    }
+    if (params.loadPrevNext) {
+      if (slidesPerView > 1 || (params.loadPrevNextAmount && params.loadPrevNextAmount > 1)) {
+        const amount = params.loadPrevNextAmount;
+        const spv = slidesPerView;
+        const maxIndex = Math.min(activeIndex + spv + Math.max(amount, spv), slides.length);
+        const minIndex = Math.max(activeIndex - Math.max(spv, amount), 0);
+        // Next Slides
+        for (let i = activeIndex + slidesPerView; i < maxIndex; i += 1) {
+          if (slideExist(i)) swiper.lazy.loadInSlide(i);
+        }
+        // Prev Slides
+        for (let i = minIndex; i < activeIndex; i += 1) {
+          if (slideExist(i)) swiper.lazy.loadInSlide(i);
+        }
+      } else {
+        const nextSlide = $wrapperEl.children(`.${swiperParams.slideNextClass}`);
+        if (nextSlide.length > 0) swiper.lazy.loadInSlide(slideIndex(nextSlide));
+
+        const prevSlide = $wrapperEl.children(`.${swiperParams.slidePrevClass}`);
+        if (prevSlide.length > 0) swiper.lazy.loadInSlide(slideIndex(prevSlide));
+      }
+    }
+  },
+};
+
+var Lazy$1 = {
+  name: 'lazy',
+  params: {
+    lazy: {
+      enabled: false,
+      loadPrevNext: false,
+      loadPrevNextAmount: 1,
+      loadOnTransitionStart: false,
+
+      elementClass: 'swiper-lazy',
+      loadingClass: 'swiper-lazy-loading',
+      loadedClass: 'swiper-lazy-loaded',
+      preloaderClass: 'swiper-lazy-preloader',
+    },
+  },
+  create() {
+    const swiper = this;
+    Utils.extend(swiper, {
+      lazy: {
+        initialImageLoaded: false,
+        load: Lazy.load.bind(swiper),
+        loadInSlide: Lazy.loadInSlide.bind(swiper),
+      },
+    });
+  },
+  on: {
+    beforeInit() {
+      const swiper = this;
+      if (swiper.params.lazy.enabled && swiper.params.preloadImages) {
+        swiper.params.preloadImages = false;
+      }
+    },
+    init() {
+      const swiper = this;
+      if (swiper.params.lazy.enabled && !swiper.params.loop && swiper.params.initialSlide === 0) {
+        swiper.lazy.load();
+      }
+    },
+    scroll() {
+      const swiper = this;
+      if (swiper.params.freeMode && !swiper.params.freeModeSticky) {
+        swiper.lazy.load();
+      }
+    },
+    resize() {
+      const swiper = this;
+      if (swiper.params.lazy.enabled) {
+        swiper.lazy.load();
+      }
+    },
+    scrollbarDragMove() {
+      const swiper = this;
+      if (swiper.params.lazy.enabled) {
+        swiper.lazy.load();
+      }
+    },
+    transitionStart() {
+      const swiper = this;
+      if (swiper.params.lazy.enabled) {
+        if (swiper.params.lazy.loadOnTransitionStart || (!swiper.params.lazy.loadOnTransitionStart && !swiper.lazy.initialImageLoaded)) {
+          swiper.lazy.load();
+        }
+      }
+    },
+    transitionEnd() {
+      const swiper = this;
+      if (swiper.params.lazy.enabled && !swiper.params.lazy.loadOnTransitionStart) {
+        swiper.lazy.load();
+      }
+    },
+    slideChange() {
+      const swiper = this;
+      if (swiper.params.lazy.enabled && swiper.params.cssMode) {
+        swiper.lazy.load();
+      }
+    },
+  },
+};
+
+/* eslint no-bitwise: ["error", { "allow": [">>"] }] */
+
+const Controller = {
+  LinearSpline: function LinearSpline(x, y) {
+    const binarySearch = (function search() {
+      let maxIndex;
+      let minIndex;
+      let guess;
+      return (array, val) => {
+        minIndex = -1;
+        maxIndex = array.length;
+        while (maxIndex - minIndex > 1) {
+          guess = maxIndex + minIndex >> 1;
+          if (array[guess] <= val) {
+            minIndex = guess;
+          } else {
+            maxIndex = guess;
+          }
+        }
+        return maxIndex;
+      };
+    }());
+    this.x = x;
+    this.y = y;
+    this.lastIndex = x.length - 1;
+    // Given an x value (x2), return the expected y2 value:
+    // (x1,y1) is the known point before given value,
+    // (x3,y3) is the known point after given value.
+    let i1;
+    let i3;
+
+    this.interpolate = function interpolate(x2) {
+      if (!x2) return 0;
+
+      // Get the indexes of x1 and x3 (the array indexes before and after given x2):
+      i3 = binarySearch(this.x, x2);
+      i1 = i3 - 1;
+
+      // We have our indexes i1 & i3, so we can calculate already:
+      // y2 := ((x2−x1) × (y3−y1)) ÷ (x3−x1) + y1
+      return (((x2 - this.x[i1]) * (this.y[i3] - this.y[i1])) / (this.x[i3] - this.x[i1])) + this.y[i1];
+    };
+    return this;
+  },
+  // xxx: for now i will just save one spline function to to
+  getInterpolateFunction(c) {
+    const swiper = this;
+    if (!swiper.controller.spline) {
+      swiper.controller.spline = swiper.params.loop
+        ? new Controller.LinearSpline(swiper.slidesGrid, c.slidesGrid)
+        : new Controller.LinearSpline(swiper.snapGrid, c.snapGrid);
+    }
+  },
+  setTranslate(setTranslate, byController) {
+    const swiper = this;
+    const controlled = swiper.controller.control;
+    let multiplier;
+    let controlledTranslate;
+    function setControlledTranslate(c) {
+      // this will create an Interpolate function based on the snapGrids
+      // x is the Grid of the scrolled scroller and y will be the controlled scroller
+      // it makes sense to create this only once and recall it for the interpolation
+      // the function does a lot of value caching for performance
+      const translate = swiper.rtlTranslate ? -swiper.translate : swiper.translate;
+      if (swiper.params.controller.by === 'slide') {
+        swiper.controller.getInterpolateFunction(c);
+        // i am not sure why the values have to be multiplicated this way, tried to invert the snapGrid
+        // but it did not work out
+        controlledTranslate = -swiper.controller.spline.interpolate(-translate);
+      }
+
+      if (!controlledTranslate || swiper.params.controller.by === 'container') {
+        multiplier = (c.maxTranslate() - c.minTranslate()) / (swiper.maxTranslate() - swiper.minTranslate());
+        controlledTranslate = ((translate - swiper.minTranslate()) * multiplier) + c.minTranslate();
+      }
+
+      if (swiper.params.controller.inverse) {
+        controlledTranslate = c.maxTranslate() - controlledTranslate;
+      }
+      c.updateProgress(controlledTranslate);
+      c.setTranslate(controlledTranslate, swiper);
+      c.updateActiveIndex();
+      c.updateSlidesClasses();
+    }
+    if (Array.isArray(controlled)) {
+      for (let i = 0; i < controlled.length; i += 1) {
+        if (controlled[i] !== byController && controlled[i] instanceof swiper_esm_bundle_Swiper) {
+          setControlledTranslate(controlled[i]);
+        }
+      }
+    } else if (controlled instanceof swiper_esm_bundle_Swiper && byController !== controlled) {
+      setControlledTranslate(controlled);
+    }
+  },
+  setTransition(duration, byController) {
+    const swiper = this;
+    const controlled = swiper.controller.control;
+    let i;
+    function setControlledTransition(c) {
+      c.setTransition(duration, swiper);
+      if (duration !== 0) {
+        c.transitionStart();
+        if (c.params.autoHeight) {
+          Utils.nextTick(() => {
+            c.updateAutoHeight();
+          });
+        }
+        c.$wrapperEl.transitionEnd(() => {
+          if (!controlled) return;
+          if (c.params.loop && swiper.params.controller.by === 'slide') {
+            c.loopFix();
+          }
+          c.transitionEnd();
+        });
+      }
+    }
+    if (Array.isArray(controlled)) {
+      for (i = 0; i < controlled.length; i += 1) {
+        if (controlled[i] !== byController && controlled[i] instanceof swiper_esm_bundle_Swiper) {
+          setControlledTransition(controlled[i]);
+        }
+      }
+    } else if (controlled instanceof swiper_esm_bundle_Swiper && byController !== controlled) {
+      setControlledTransition(controlled);
+    }
+  },
+};
+var Controller$1 = {
+  name: 'controller',
+  params: {
+    controller: {
+      control: undefined,
+      inverse: false,
+      by: 'slide', // or 'container'
+    },
+  },
+  create() {
+    const swiper = this;
+    Utils.extend(swiper, {
+      controller: {
+        control: swiper.params.controller.control,
+        getInterpolateFunction: Controller.getInterpolateFunction.bind(swiper),
+        setTranslate: Controller.setTranslate.bind(swiper),
+        setTransition: Controller.setTransition.bind(swiper),
+      },
+    });
+  },
+  on: {
+    update() {
+      const swiper = this;
+      if (!swiper.controller.control) return;
+      if (swiper.controller.spline) {
+        swiper.controller.spline = undefined;
+        delete swiper.controller.spline;
+      }
+    },
+    resize() {
+      const swiper = this;
+      if (!swiper.controller.control) return;
+      if (swiper.controller.spline) {
+        swiper.controller.spline = undefined;
+        delete swiper.controller.spline;
+      }
+    },
+    observerUpdate() {
+      const swiper = this;
+      if (!swiper.controller.control) return;
+      if (swiper.controller.spline) {
+        swiper.controller.spline = undefined;
+        delete swiper.controller.spline;
+      }
+    },
+    setTranslate(translate, byController) {
+      const swiper = this;
+      if (!swiper.controller.control) return;
+      swiper.controller.setTranslate(translate, byController);
+    },
+    setTransition(duration, byController) {
+      const swiper = this;
+      if (!swiper.controller.control) return;
+      swiper.controller.setTransition(duration, byController);
+    },
+  },
+};
+
+const a11y = {
+  makeElFocusable($el) {
+    $el.attr('tabIndex', '0');
+    return $el;
+  },
+  makeElNotFocusable($el) {
+    $el.attr('tabIndex', '-1');
+    return $el;
+  },
+  addElRole($el, role) {
+    $el.attr('role', role);
+    return $el;
+  },
+  addElLabel($el, label) {
+    $el.attr('aria-label', label);
+    return $el;
+  },
+  disableEl($el) {
+    $el.attr('aria-disabled', true);
+    return $el;
+  },
+  enableEl($el) {
+    $el.attr('aria-disabled', false);
+    return $el;
+  },
+  onEnterKey(e) {
+    const swiper = this;
+    const params = swiper.params.a11y;
+    if (e.keyCode !== 13) return;
+    const $targetEl = $(e.target);
+    if (swiper.navigation && swiper.navigation.$nextEl && $targetEl.is(swiper.navigation.$nextEl)) {
+      if (!(swiper.isEnd && !swiper.params.loop)) {
+        swiper.slideNext();
+      }
+      if (swiper.isEnd) {
+        swiper.a11y.notify(params.lastSlideMessage);
+      } else {
+        swiper.a11y.notify(params.nextSlideMessage);
+      }
+    }
+    if (swiper.navigation && swiper.navigation.$prevEl && $targetEl.is(swiper.navigation.$prevEl)) {
+      if (!(swiper.isBeginning && !swiper.params.loop)) {
+        swiper.slidePrev();
+      }
+      if (swiper.isBeginning) {
+        swiper.a11y.notify(params.firstSlideMessage);
+      } else {
+        swiper.a11y.notify(params.prevSlideMessage);
+      }
+    }
+    if (swiper.pagination && $targetEl.is(`.${swiper.params.pagination.bulletClass}`)) {
+      $targetEl[0].click();
+    }
+  },
+  notify(message) {
+    const swiper = this;
+    const notification = swiper.a11y.liveRegion;
+    if (notification.length === 0) return;
+    notification.html('');
+    notification.html(message);
+  },
+  updateNavigation() {
+    const swiper = this;
+
+    if (swiper.params.loop || !swiper.navigation) return;
+    const { $nextEl, $prevEl } = swiper.navigation;
+
+    if ($prevEl && $prevEl.length > 0) {
+      if (swiper.isBeginning) {
+        swiper.a11y.disableEl($prevEl);
+        swiper.a11y.makeElNotFocusable($prevEl);
+      } else {
+        swiper.a11y.enableEl($prevEl);
+        swiper.a11y.makeElFocusable($prevEl);
+      }
+    }
+    if ($nextEl && $nextEl.length > 0) {
+      if (swiper.isEnd) {
+        swiper.a11y.disableEl($nextEl);
+        swiper.a11y.makeElNotFocusable($nextEl);
+      } else {
+        swiper.a11y.enableEl($nextEl);
+        swiper.a11y.makeElFocusable($nextEl);
+      }
+    }
+  },
+  updatePagination() {
+    const swiper = this;
+    const params = swiper.params.a11y;
+    if (swiper.pagination && swiper.params.pagination.clickable && swiper.pagination.bullets && swiper.pagination.bullets.length) {
+      swiper.pagination.bullets.each((bulletIndex, bulletEl) => {
+        const $bulletEl = $(bulletEl);
+        swiper.a11y.makeElFocusable($bulletEl);
+        swiper.a11y.addElRole($bulletEl, 'button');
+        swiper.a11y.addElLabel($bulletEl, params.paginationBulletMessage.replace(/\{\{index\}\}/, $bulletEl.index() + 1));
       });
     }
   },
+  init() {
+    const swiper = this;
 
-  methods: {
-    openlink: function (url) {
-      if (typeof window != "undefined" && typeof window.cordova != "undefined" && cordova.InAppBrowser) {
-        var ref = cordova.InAppBrowser.open(url, "_system");
-        return false;
-      } else {
-        window.open(url, "_blank");
+    swiper.$el.append(swiper.a11y.liveRegion);
+
+    // Navigation
+    const params = swiper.params.a11y;
+    let $nextEl;
+    let $prevEl;
+    if (swiper.navigation && swiper.navigation.$nextEl) {
+      $nextEl = swiper.navigation.$nextEl;
+    }
+    if (swiper.navigation && swiper.navigation.$prevEl) {
+      $prevEl = swiper.navigation.$prevEl;
+    }
+    if ($nextEl) {
+      swiper.a11y.makeElFocusable($nextEl);
+      swiper.a11y.addElRole($nextEl, 'button');
+      swiper.a11y.addElLabel($nextEl, params.nextSlideMessage);
+      $nextEl.on('keydown', swiper.a11y.onEnterKey);
+    }
+    if ($prevEl) {
+      swiper.a11y.makeElFocusable($prevEl);
+      swiper.a11y.addElRole($prevEl, 'button');
+      swiper.a11y.addElLabel($prevEl, params.prevSlideMessage);
+      $prevEl.on('keydown', swiper.a11y.onEnterKey);
+    }
+
+    // Pagination
+    if (swiper.pagination && swiper.params.pagination.clickable && swiper.pagination.bullets && swiper.pagination.bullets.length) {
+      swiper.pagination.$el.on('keydown', `.${swiper.params.pagination.bulletClass}`, swiper.a11y.onEnterKey);
+    }
+  },
+  destroy() {
+    const swiper = this;
+    if (swiper.a11y.liveRegion && swiper.a11y.liveRegion.length > 0) swiper.a11y.liveRegion.remove();
+
+    let $nextEl;
+    let $prevEl;
+    if (swiper.navigation && swiper.navigation.$nextEl) {
+      $nextEl = swiper.navigation.$nextEl;
+    }
+    if (swiper.navigation && swiper.navigation.$prevEl) {
+      $prevEl = swiper.navigation.$prevEl;
+    }
+    if ($nextEl) {
+      $nextEl.off('keydown', swiper.a11y.onEnterKey);
+    }
+    if ($prevEl) {
+      $prevEl.off('keydown', swiper.a11y.onEnterKey);
+    }
+
+    // Pagination
+    if (swiper.pagination && swiper.params.pagination.clickable && swiper.pagination.bullets && swiper.pagination.bullets.length) {
+      swiper.pagination.$el.off('keydown', `.${swiper.params.pagination.bulletClass}`, swiper.a11y.onEnterKey);
+    }
+  },
+};
+var A11y = {
+  name: 'a11y',
+  params: {
+    a11y: {
+      enabled: true,
+      notificationClass: 'swiper-notification',
+      prevSlideMessage: 'Previous slide',
+      nextSlideMessage: 'Next slide',
+      firstSlideMessage: 'This is the first slide',
+      lastSlideMessage: 'This is the last slide',
+      paginationBulletMessage: 'Go to slide {{index}}',
+    },
+  },
+  create() {
+    const swiper = this;
+    Utils.extend(swiper, {
+      a11y: {
+        liveRegion: $(`<span class="${swiper.params.a11y.notificationClass}" aria-live="assertive" aria-atomic="true"></span>`),
+      },
+    });
+    Object.keys(a11y).forEach((methodName) => {
+      swiper.a11y[methodName] = a11y[methodName].bind(swiper);
+    });
+  },
+  on: {
+    init() {
+      const swiper = this;
+      if (!swiper.params.a11y.enabled) return;
+      swiper.a11y.init();
+      swiper.a11y.updateNavigation();
+    },
+    toEdge() {
+      const swiper = this;
+      if (!swiper.params.a11y.enabled) return;
+      swiper.a11y.updateNavigation();
+    },
+    fromEdge() {
+      const swiper = this;
+      if (!swiper.params.a11y.enabled) return;
+      swiper.a11y.updateNavigation();
+    },
+    paginationUpdate() {
+      const swiper = this;
+      if (!swiper.params.a11y.enabled) return;
+      swiper.a11y.updatePagination();
+    },
+    destroy() {
+      const swiper = this;
+      if (!swiper.params.a11y.enabled) return;
+      swiper.a11y.destroy();
+    },
+  },
+};
+
+const History = {
+  init() {
+    const swiper = this;
+    if (!swiper.params.history) return;
+    if (!win.history || !win.history.pushState) {
+      swiper.params.history.enabled = false;
+      swiper.params.hashNavigation.enabled = true;
+      return;
+    }
+    const history = swiper.history;
+    history.initialized = true;
+    history.paths = History.getPathValues();
+    if (!history.paths.key && !history.paths.value) return;
+    history.scrollToSlide(0, history.paths.value, swiper.params.runCallbacksOnInit);
+    if (!swiper.params.history.replaceState) {
+      win.addEventListener('popstate', swiper.history.setHistoryPopState);
+    }
+  },
+  destroy() {
+    const swiper = this;
+    if (!swiper.params.history.replaceState) {
+      win.removeEventListener('popstate', swiper.history.setHistoryPopState);
+    }
+  },
+  setHistoryPopState() {
+    const swiper = this;
+    swiper.history.paths = History.getPathValues();
+    swiper.history.scrollToSlide(swiper.params.speed, swiper.history.paths.value, false);
+  },
+  getPathValues() {
+    const pathArray = win.location.pathname.slice(1).split('/').filter((part) => part !== '');
+    const total = pathArray.length;
+    const key = pathArray[total - 2];
+    const value = pathArray[total - 1];
+    return { key, value };
+  },
+  setHistory(key, index) {
+    const swiper = this;
+    if (!swiper.history.initialized || !swiper.params.history.enabled) return;
+    const slide = swiper.slides.eq(index);
+    let value = History.slugify(slide.attr('data-history'));
+    if (!win.location.pathname.includes(key)) {
+      value = `${key}/${value}`;
+    }
+    const currentState = win.history.state;
+    if (currentState && currentState.value === value) {
+      return;
+    }
+    if (swiper.params.history.replaceState) {
+      win.history.replaceState({ value }, null, value);
+    } else {
+      win.history.pushState({ value }, null, value);
+    }
+  },
+  slugify(text) {
+    return text.toString()
+      .replace(/\s+/g, '-')
+      .replace(/[^\w-]+/g, '')
+      .replace(/--+/g, '-')
+      .replace(/^-+/, '')
+      .replace(/-+$/, '');
+  },
+  scrollToSlide(speed, value, runCallbacks) {
+    const swiper = this;
+    if (value) {
+      for (let i = 0, length = swiper.slides.length; i < length; i += 1) {
+        const slide = swiper.slides.eq(i);
+        const slideHistory = History.slugify(slide.attr('data-history'));
+        if (slideHistory === value && !slide.hasClass(swiper.params.slideDuplicateClass)) {
+          const index = slide.index();
+          swiper.slideTo(index, speed, runCallbacks);
+        }
+      }
+    } else {
+      swiper.slideTo(0, speed, runCallbacks);
+    }
+  },
+};
+
+var History$1 = {
+  name: 'history',
+  params: {
+    history: {
+      enabled: false,
+      replaceState: false,
+      key: 'slides',
+    },
+  },
+  create() {
+    const swiper = this;
+    Utils.extend(swiper, {
+      history: {
+        init: History.init.bind(swiper),
+        setHistory: History.setHistory.bind(swiper),
+        setHistoryPopState: History.setHistoryPopState.bind(swiper),
+        scrollToSlide: History.scrollToSlide.bind(swiper),
+        destroy: History.destroy.bind(swiper),
+      },
+    });
+  },
+  on: {
+    init() {
+      const swiper = this;
+      if (swiper.params.history.enabled) {
+        swiper.history.init();
       }
     },
-    openlinkiframe: function (url) {
-      if (this.core.backtoapp) {
-        var pu = new URL(url);
-        this.core.backtoapp(pu.pathname.replace("/", "") + pu.search);
-      } else window.open(url, "_blank");
+    destroy() {
+      const swiper = this;
+      if (swiper.params.history.enabled) {
+        swiper.history.destroy();
+      }
     },
-    //imagesLoaded: function () {},
-    updatedSize: function (before) {}
-  }
-});
-// CONCATENATED MODULE: ./src/components/events/event/metaMessage/index.vue?vue&type=script&lang=js&
- /* harmony default export */ var event_metaMessagevue_type_script_lang_js_ = (metaMessagevue_type_script_lang_js_); 
-// CONCATENATED MODULE: ./src/components/events/event/metaMessage/index.vue
+    transitionEnd() {
+      const swiper = this;
+      if (swiper.history.initialized) {
+        swiper.history.setHistory(swiper.params.history.key, swiper.activeIndex);
+      }
+    },
+    slideChange() {
+      const swiper = this;
+      if (swiper.history.initialized && swiper.params.cssMode) {
+        swiper.history.setHistory(swiper.params.history.key, swiper.activeIndex);
+      }
+    },
+  },
+};
 
+const HashNavigation = {
+  onHashCange() {
+    const swiper = this;
+    swiper.emit('hashChange');
+    const newHash = doc.location.hash.replace('#', '');
+    const activeSlideHash = swiper.slides.eq(swiper.activeIndex).attr('data-hash');
+    if (newHash !== activeSlideHash) {
+      const newIndex = swiper.$wrapperEl.children(`.${swiper.params.slideClass}[data-hash="${newHash}"]`).index();
+      if (typeof newIndex === 'undefined') return;
+      swiper.slideTo(newIndex);
+    }
+  },
+  setHash() {
+    const swiper = this;
+    if (!swiper.hashNavigation.initialized || !swiper.params.hashNavigation.enabled) return;
+    if (swiper.params.hashNavigation.replaceState && win.history && win.history.replaceState) {
+      win.history.replaceState(null, null, (`#${swiper.slides.eq(swiper.activeIndex).attr('data-hash')}` || ''));
+      swiper.emit('hashSet');
+    } else {
+      const slide = swiper.slides.eq(swiper.activeIndex);
+      const hash = slide.attr('data-hash') || slide.attr('data-history');
+      doc.location.hash = hash || '';
+      swiper.emit('hashSet');
+    }
+  },
+  init() {
+    const swiper = this;
+    if (!swiper.params.hashNavigation.enabled || (swiper.params.history && swiper.params.history.enabled)) return;
+    swiper.hashNavigation.initialized = true;
+    const hash = doc.location.hash.replace('#', '');
+    if (hash) {
+      const speed = 0;
+      for (let i = 0, length = swiper.slides.length; i < length; i += 1) {
+        const slide = swiper.slides.eq(i);
+        const slideHash = slide.attr('data-hash') || slide.attr('data-history');
+        if (slideHash === hash && !slide.hasClass(swiper.params.slideDuplicateClass)) {
+          const index = slide.index();
+          swiper.slideTo(index, speed, swiper.params.runCallbacksOnInit, true);
+        }
+      }
+    }
+    if (swiper.params.hashNavigation.watchState) {
+      $(win).on('hashchange', swiper.hashNavigation.onHashCange);
+    }
+  },
+  destroy() {
+    const swiper = this;
+    if (swiper.params.hashNavigation.watchState) {
+      $(win).off('hashchange', swiper.hashNavigation.onHashCange);
+    }
+  },
+};
+var HashNavigation$1 = {
+  name: 'hash-navigation',
+  params: {
+    hashNavigation: {
+      enabled: false,
+      replaceState: false,
+      watchState: false,
+    },
+  },
+  create() {
+    const swiper = this;
+    Utils.extend(swiper, {
+      hashNavigation: {
+        initialized: false,
+        init: HashNavigation.init.bind(swiper),
+        destroy: HashNavigation.destroy.bind(swiper),
+        setHash: HashNavigation.setHash.bind(swiper),
+        onHashCange: HashNavigation.onHashCange.bind(swiper),
+      },
+    });
+  },
+  on: {
+    init() {
+      const swiper = this;
+      if (swiper.params.hashNavigation.enabled) {
+        swiper.hashNavigation.init();
+      }
+    },
+    destroy() {
+      const swiper = this;
+      if (swiper.params.hashNavigation.enabled) {
+        swiper.hashNavigation.destroy();
+      }
+    },
+    transitionEnd() {
+      const swiper = this;
+      if (swiper.hashNavigation.initialized) {
+        swiper.hashNavigation.setHash();
+      }
+    },
+    slideChange() {
+      const swiper = this;
+      if (swiper.hashNavigation.initialized && swiper.params.cssMode) {
+        swiper.hashNavigation.setHash();
+      }
+    },
+  },
+};
 
+/* eslint no-underscore-dangle: "off" */
 
-function metaMessage_injectStyles (context) {
-  
-  var style0 = __webpack_require__("d6fd")
-if (style0.__inject__) style0.__inject__(context)
-var style1 = __webpack_require__("14ac")
-if (style1.__inject__) style1.__inject__(context)
-var style2 = __webpack_require__("ab2a")
-if (style2.__inject__) style2.__inject__(context)
-var style3 = __webpack_require__("8e73")
-if (style3.__inject__) style3.__inject__(context)
+const Autoplay = {
+  run() {
+    const swiper = this;
+    const $activeSlideEl = swiper.slides.eq(swiper.activeIndex);
+    let delay = swiper.params.autoplay.delay;
+    if ($activeSlideEl.attr('data-swiper-autoplay')) {
+      delay = $activeSlideEl.attr('data-swiper-autoplay') || swiper.params.autoplay.delay;
+    }
+    clearTimeout(swiper.autoplay.timeout);
+    swiper.autoplay.timeout = Utils.nextTick(() => {
+      if (swiper.params.autoplay.reverseDirection) {
+        if (swiper.params.loop) {
+          swiper.loopFix();
+          swiper.slidePrev(swiper.params.speed, true, true);
+          swiper.emit('autoplay');
+        } else if (!swiper.isBeginning) {
+          swiper.slidePrev(swiper.params.speed, true, true);
+          swiper.emit('autoplay');
+        } else if (!swiper.params.autoplay.stopOnLastSlide) {
+          swiper.slideTo(swiper.slides.length - 1, swiper.params.speed, true, true);
+          swiper.emit('autoplay');
+        } else {
+          swiper.autoplay.stop();
+        }
+      } else if (swiper.params.loop) {
+        swiper.loopFix();
+        swiper.slideNext(swiper.params.speed, true, true);
+        swiper.emit('autoplay');
+      } else if (!swiper.isEnd) {
+        swiper.slideNext(swiper.params.speed, true, true);
+        swiper.emit('autoplay');
+      } else if (!swiper.params.autoplay.stopOnLastSlide) {
+        swiper.slideTo(0, swiper.params.speed, true, true);
+        swiper.emit('autoplay');
+      } else {
+        swiper.autoplay.stop();
+      }
+      if (swiper.params.cssMode && swiper.autoplay.running) swiper.autoplay.run();
+    }, delay);
+  },
+  start() {
+    const swiper = this;
+    if (typeof swiper.autoplay.timeout !== 'undefined') return false;
+    if (swiper.autoplay.running) return false;
+    swiper.autoplay.running = true;
+    swiper.emit('autoplayStart');
+    swiper.autoplay.run();
+    return true;
+  },
+  stop() {
+    const swiper = this;
+    if (!swiper.autoplay.running) return false;
+    if (typeof swiper.autoplay.timeout === 'undefined') return false;
 
+    if (swiper.autoplay.timeout) {
+      clearTimeout(swiper.autoplay.timeout);
+      swiper.autoplay.timeout = undefined;
+    }
+    swiper.autoplay.running = false;
+    swiper.emit('autoplayStop');
+    return true;
+  },
+  pause(speed) {
+    const swiper = this;
+    if (!swiper.autoplay.running) return;
+    if (swiper.autoplay.paused) return;
+    if (swiper.autoplay.timeout) clearTimeout(swiper.autoplay.timeout);
+    swiper.autoplay.paused = true;
+    if (speed === 0 || !swiper.params.autoplay.waitForTransition) {
+      swiper.autoplay.paused = false;
+      swiper.autoplay.run();
+    } else {
+      swiper.$wrapperEl[0].addEventListener('transitionend', swiper.autoplay.onTransitionEnd);
+      swiper.$wrapperEl[0].addEventListener('webkitTransitionEnd', swiper.autoplay.onTransitionEnd);
+    }
+  },
+};
+
+var Autoplay$1 = {
+  name: 'autoplay',
+  params: {
+    autoplay: {
+      enabled: false,
+      delay: 3000,
+      waitForTransition: true,
+      disableOnInteraction: true,
+      stopOnLastSlide: false,
+      reverseDirection: false,
+    },
+  },
+  create() {
+    const swiper = this;
+    Utils.extend(swiper, {
+      autoplay: {
+        running: false,
+        paused: false,
+        run: Autoplay.run.bind(swiper),
+        start: Autoplay.start.bind(swiper),
+        stop: Autoplay.stop.bind(swiper),
+        pause: Autoplay.pause.bind(swiper),
+        onVisibilityChange() {
+          if (document.visibilityState === 'hidden' && swiper.autoplay.running) {
+            swiper.autoplay.pause();
+          }
+          if (document.visibilityState === 'visible' && swiper.autoplay.paused) {
+            swiper.autoplay.run();
+            swiper.autoplay.paused = false;
+          }
+        },
+        onTransitionEnd(e) {
+          if (!swiper || swiper.destroyed || !swiper.$wrapperEl) return;
+          if (e.target !== this) return;
+          swiper.$wrapperEl[0].removeEventListener('transitionend', swiper.autoplay.onTransitionEnd);
+          swiper.$wrapperEl[0].removeEventListener('webkitTransitionEnd', swiper.autoplay.onTransitionEnd);
+          swiper.autoplay.paused = false;
+          if (!swiper.autoplay.running) {
+            swiper.autoplay.stop();
+          } else {
+            swiper.autoplay.run();
+          }
+        },
+      },
+    });
+  },
+  on: {
+    init() {
+      const swiper = this;
+      if (swiper.params.autoplay.enabled) {
+        swiper.autoplay.start();
+        document.addEventListener('visibilitychange', swiper.autoplay.onVisibilityChange);
+      }
+    },
+    beforeTransitionStart(speed, internal) {
+      const swiper = this;
+      if (swiper.autoplay.running) {
+        if (internal || !swiper.params.autoplay.disableOnInteraction) {
+          swiper.autoplay.pause(speed);
+        } else {
+          swiper.autoplay.stop();
+        }
+      }
+    },
+    sliderFirstMove() {
+      const swiper = this;
+      if (swiper.autoplay.running) {
+        if (swiper.params.autoplay.disableOnInteraction) {
+          swiper.autoplay.stop();
+        } else {
+          swiper.autoplay.pause();
+        }
+      }
+    },
+    touchEnd() {
+      const swiper = this;
+      if (swiper.params.cssMode && swiper.autoplay.paused && !swiper.params.autoplay.disableOnInteraction) {
+        swiper.autoplay.run();
+      }
+    },
+    destroy() {
+      const swiper = this;
+      if (swiper.autoplay.running) {
+        swiper.autoplay.stop();
+      }
+      document.removeEventListener('visibilitychange', swiper.autoplay.onVisibilityChange);
+    },
+  },
+};
+
+const Fade = {
+  setTranslate() {
+    const swiper = this;
+    const { slides } = swiper;
+    for (let i = 0; i < slides.length; i += 1) {
+      const $slideEl = swiper.slides.eq(i);
+      const offset = $slideEl[0].swiperSlideOffset;
+      let tx = -offset;
+      if (!swiper.params.virtualTranslate) tx -= swiper.translate;
+      let ty = 0;
+      if (!swiper.isHorizontal()) {
+        ty = tx;
+        tx = 0;
+      }
+      const slideOpacity = swiper.params.fadeEffect.crossFade
+        ? Math.max(1 - Math.abs($slideEl[0].progress), 0)
+        : 1 + Math.min(Math.max($slideEl[0].progress, -1), 0);
+      $slideEl
+        .css({
+          opacity: slideOpacity,
+        })
+        .transform(`translate3d(${tx}px, ${ty}px, 0px)`);
+    }
+  },
+  setTransition(duration) {
+    const swiper = this;
+    const { slides, $wrapperEl } = swiper;
+    slides.transition(duration);
+    if (swiper.params.virtualTranslate && duration !== 0) {
+      let eventTriggered = false;
+      slides.transitionEnd(() => {
+        if (eventTriggered) return;
+        if (!swiper || swiper.destroyed) return;
+        eventTriggered = true;
+        swiper.animating = false;
+        const triggerEvents = ['webkitTransitionEnd', 'transitionend'];
+        for (let i = 0; i < triggerEvents.length; i += 1) {
+          $wrapperEl.trigger(triggerEvents[i]);
+        }
+      });
+    }
+  },
+};
+
+var EffectFade = {
+  name: 'effect-fade',
+  params: {
+    fadeEffect: {
+      crossFade: false,
+    },
+  },
+  create() {
+    const swiper = this;
+    Utils.extend(swiper, {
+      fadeEffect: {
+        setTranslate: Fade.setTranslate.bind(swiper),
+        setTransition: Fade.setTransition.bind(swiper),
+      },
+    });
+  },
+  on: {
+    beforeInit() {
+      const swiper = this;
+      if (swiper.params.effect !== 'fade') return;
+      swiper.classNames.push(`${swiper.params.containerModifierClass}fade`);
+      const overwriteParams = {
+        slidesPerView: 1,
+        slidesPerColumn: 1,
+        slidesPerGroup: 1,
+        watchSlidesProgress: true,
+        spaceBetween: 0,
+        virtualTranslate: true,
+      };
+      Utils.extend(swiper.params, overwriteParams);
+      Utils.extend(swiper.originalParams, overwriteParams);
+    },
+    setTranslate() {
+      const swiper = this;
+      if (swiper.params.effect !== 'fade') return;
+      swiper.fadeEffect.setTranslate();
+    },
+    setTransition(duration) {
+      const swiper = this;
+      if (swiper.params.effect !== 'fade') return;
+      swiper.fadeEffect.setTransition(duration);
+    },
+  },
+};
+
+const Cube = {
+  setTranslate() {
+    const swiper = this;
+    const {
+      $el, $wrapperEl, slides, width: swiperWidth, height: swiperHeight, rtlTranslate: rtl, size: swiperSize,
+    } = swiper;
+    const params = swiper.params.cubeEffect;
+    const isHorizontal = swiper.isHorizontal();
+    const isVirtual = swiper.virtual && swiper.params.virtual.enabled;
+    let wrapperRotate = 0;
+    let $cubeShadowEl;
+    if (params.shadow) {
+      if (isHorizontal) {
+        $cubeShadowEl = $wrapperEl.find('.swiper-cube-shadow');
+        if ($cubeShadowEl.length === 0) {
+          $cubeShadowEl = $('<div class="swiper-cube-shadow"></div>');
+          $wrapperEl.append($cubeShadowEl);
+        }
+        $cubeShadowEl.css({ height: `${swiperWidth}px` });
+      } else {
+        $cubeShadowEl = $el.find('.swiper-cube-shadow');
+        if ($cubeShadowEl.length === 0) {
+          $cubeShadowEl = $('<div class="swiper-cube-shadow"></div>');
+          $el.append($cubeShadowEl);
+        }
+      }
+    }
+    for (let i = 0; i < slides.length; i += 1) {
+      const $slideEl = slides.eq(i);
+      let slideIndex = i;
+      if (isVirtual) {
+        slideIndex = parseInt($slideEl.attr('data-swiper-slide-index'), 10);
+      }
+      let slideAngle = slideIndex * 90;
+      let round = Math.floor(slideAngle / 360);
+      if (rtl) {
+        slideAngle = -slideAngle;
+        round = Math.floor(-slideAngle / 360);
+      }
+      const progress = Math.max(Math.min($slideEl[0].progress, 1), -1);
+      let tx = 0;
+      let ty = 0;
+      let tz = 0;
+      if (slideIndex % 4 === 0) {
+        tx = -round * 4 * swiperSize;
+        tz = 0;
+      } else if ((slideIndex - 1) % 4 === 0) {
+        tx = 0;
+        tz = -round * 4 * swiperSize;
+      } else if ((slideIndex - 2) % 4 === 0) {
+        tx = swiperSize + (round * 4 * swiperSize);
+        tz = swiperSize;
+      } else if ((slideIndex - 3) % 4 === 0) {
+        tx = -swiperSize;
+        tz = (3 * swiperSize) + (swiperSize * 4 * round);
+      }
+      if (rtl) {
+        tx = -tx;
+      }
+
+      if (!isHorizontal) {
+        ty = tx;
+        tx = 0;
+      }
+
+      const transform = `rotateX(${isHorizontal ? 0 : -slideAngle}deg) rotateY(${isHorizontal ? slideAngle : 0}deg) translate3d(${tx}px, ${ty}px, ${tz}px)`;
+      if (progress <= 1 && progress > -1) {
+        wrapperRotate = (slideIndex * 90) + (progress * 90);
+        if (rtl) wrapperRotate = (-slideIndex * 90) - (progress * 90);
+      }
+      $slideEl.transform(transform);
+      if (params.slideShadows) {
+        // Set shadows
+        let shadowBefore = isHorizontal ? $slideEl.find('.swiper-slide-shadow-left') : $slideEl.find('.swiper-slide-shadow-top');
+        let shadowAfter = isHorizontal ? $slideEl.find('.swiper-slide-shadow-right') : $slideEl.find('.swiper-slide-shadow-bottom');
+        if (shadowBefore.length === 0) {
+          shadowBefore = $(`<div class="swiper-slide-shadow-${isHorizontal ? 'left' : 'top'}"></div>`);
+          $slideEl.append(shadowBefore);
+        }
+        if (shadowAfter.length === 0) {
+          shadowAfter = $(`<div class="swiper-slide-shadow-${isHorizontal ? 'right' : 'bottom'}"></div>`);
+          $slideEl.append(shadowAfter);
+        }
+        if (shadowBefore.length) shadowBefore[0].style.opacity = Math.max(-progress, 0);
+        if (shadowAfter.length) shadowAfter[0].style.opacity = Math.max(progress, 0);
+      }
+    }
+    $wrapperEl.css({
+      '-webkit-transform-origin': `50% 50% -${swiperSize / 2}px`,
+      '-moz-transform-origin': `50% 50% -${swiperSize / 2}px`,
+      '-ms-transform-origin': `50% 50% -${swiperSize / 2}px`,
+      'transform-origin': `50% 50% -${swiperSize / 2}px`,
+    });
+
+    if (params.shadow) {
+      if (isHorizontal) {
+        $cubeShadowEl.transform(`translate3d(0px, ${(swiperWidth / 2) + params.shadowOffset}px, ${-swiperWidth / 2}px) rotateX(90deg) rotateZ(0deg) scale(${params.shadowScale})`);
+      } else {
+        const shadowAngle = Math.abs(wrapperRotate) - (Math.floor(Math.abs(wrapperRotate) / 90) * 90);
+        const multiplier = 1.5 - (
+          (Math.sin((shadowAngle * 2 * Math.PI) / 360) / 2)
+          + (Math.cos((shadowAngle * 2 * Math.PI) / 360) / 2)
+        );
+        const scale1 = params.shadowScale;
+        const scale2 = params.shadowScale / multiplier;
+        const offset = params.shadowOffset;
+        $cubeShadowEl.transform(`scale3d(${scale1}, 1, ${scale2}) translate3d(0px, ${(swiperHeight / 2) + offset}px, ${-swiperHeight / 2 / scale2}px) rotateX(-90deg)`);
+      }
+    }
+    const zFactor = (swiper_esm_bundle_Browser.isSafari || swiper_esm_bundle_Browser.isWebView) ? (-swiperSize / 2) : 0;
+    $wrapperEl
+      .transform(`translate3d(0px,0,${zFactor}px) rotateX(${swiper.isHorizontal() ? 0 : wrapperRotate}deg) rotateY(${swiper.isHorizontal() ? -wrapperRotate : 0}deg)`);
+  },
+  setTransition(duration) {
+    const swiper = this;
+    const { $el, slides } = swiper;
+    slides
+      .transition(duration)
+      .find('.swiper-slide-shadow-top, .swiper-slide-shadow-right, .swiper-slide-shadow-bottom, .swiper-slide-shadow-left')
+      .transition(duration);
+    if (swiper.params.cubeEffect.shadow && !swiper.isHorizontal()) {
+      $el.find('.swiper-cube-shadow').transition(duration);
+    }
+  },
+};
+
+var EffectCube = {
+  name: 'effect-cube',
+  params: {
+    cubeEffect: {
+      slideShadows: true,
+      shadow: true,
+      shadowOffset: 20,
+      shadowScale: 0.94,
+    },
+  },
+  create() {
+    const swiper = this;
+    Utils.extend(swiper, {
+      cubeEffect: {
+        setTranslate: Cube.setTranslate.bind(swiper),
+        setTransition: Cube.setTransition.bind(swiper),
+      },
+    });
+  },
+  on: {
+    beforeInit() {
+      const swiper = this;
+      if (swiper.params.effect !== 'cube') return;
+      swiper.classNames.push(`${swiper.params.containerModifierClass}cube`);
+      swiper.classNames.push(`${swiper.params.containerModifierClass}3d`);
+      const overwriteParams = {
+        slidesPerView: 1,
+        slidesPerColumn: 1,
+        slidesPerGroup: 1,
+        watchSlidesProgress: true,
+        resistanceRatio: 0,
+        spaceBetween: 0,
+        centeredSlides: false,
+        virtualTranslate: true,
+      };
+      Utils.extend(swiper.params, overwriteParams);
+      Utils.extend(swiper.originalParams, overwriteParams);
+    },
+    setTranslate() {
+      const swiper = this;
+      if (swiper.params.effect !== 'cube') return;
+      swiper.cubeEffect.setTranslate();
+    },
+    setTransition(duration) {
+      const swiper = this;
+      if (swiper.params.effect !== 'cube') return;
+      swiper.cubeEffect.setTransition(duration);
+    },
+  },
+};
+
+const Flip = {
+  setTranslate() {
+    const swiper = this;
+    const { slides, rtlTranslate: rtl } = swiper;
+    for (let i = 0; i < slides.length; i += 1) {
+      const $slideEl = slides.eq(i);
+      let progress = $slideEl[0].progress;
+      if (swiper.params.flipEffect.limitRotation) {
+        progress = Math.max(Math.min($slideEl[0].progress, 1), -1);
+      }
+      const offset = $slideEl[0].swiperSlideOffset;
+      const rotate = -180 * progress;
+      let rotateY = rotate;
+      let rotateX = 0;
+      let tx = -offset;
+      let ty = 0;
+      if (!swiper.isHorizontal()) {
+        ty = tx;
+        tx = 0;
+        rotateX = -rotateY;
+        rotateY = 0;
+      } else if (rtl) {
+        rotateY = -rotateY;
+      }
+
+      $slideEl[0].style.zIndex = -Math.abs(Math.round(progress)) + slides.length;
+
+      if (swiper.params.flipEffect.slideShadows) {
+        // Set shadows
+        let shadowBefore = swiper.isHorizontal() ? $slideEl.find('.swiper-slide-shadow-left') : $slideEl.find('.swiper-slide-shadow-top');
+        let shadowAfter = swiper.isHorizontal() ? $slideEl.find('.swiper-slide-shadow-right') : $slideEl.find('.swiper-slide-shadow-bottom');
+        if (shadowBefore.length === 0) {
+          shadowBefore = $(`<div class="swiper-slide-shadow-${swiper.isHorizontal() ? 'left' : 'top'}"></div>`);
+          $slideEl.append(shadowBefore);
+        }
+        if (shadowAfter.length === 0) {
+          shadowAfter = $(`<div class="swiper-slide-shadow-${swiper.isHorizontal() ? 'right' : 'bottom'}"></div>`);
+          $slideEl.append(shadowAfter);
+        }
+        if (shadowBefore.length) shadowBefore[0].style.opacity = Math.max(-progress, 0);
+        if (shadowAfter.length) shadowAfter[0].style.opacity = Math.max(progress, 0);
+      }
+      $slideEl
+        .transform(`translate3d(${tx}px, ${ty}px, 0px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`);
+    }
+  },
+  setTransition(duration) {
+    const swiper = this;
+    const { slides, activeIndex, $wrapperEl } = swiper;
+    slides
+      .transition(duration)
+      .find('.swiper-slide-shadow-top, .swiper-slide-shadow-right, .swiper-slide-shadow-bottom, .swiper-slide-shadow-left')
+      .transition(duration);
+    if (swiper.params.virtualTranslate && duration !== 0) {
+      let eventTriggered = false;
+      // eslint-disable-next-line
+      slides.eq(activeIndex).transitionEnd(function onTransitionEnd() {
+        if (eventTriggered) return;
+        if (!swiper || swiper.destroyed) return;
+        // if (!$(this).hasClass(swiper.params.slideActiveClass)) return;
+        eventTriggered = true;
+        swiper.animating = false;
+        const triggerEvents = ['webkitTransitionEnd', 'transitionend'];
+        for (let i = 0; i < triggerEvents.length; i += 1) {
+          $wrapperEl.trigger(triggerEvents[i]);
+        }
+      });
+    }
+  },
+};
+
+var EffectFlip = {
+  name: 'effect-flip',
+  params: {
+    flipEffect: {
+      slideShadows: true,
+      limitRotation: true,
+    },
+  },
+  create() {
+    const swiper = this;
+    Utils.extend(swiper, {
+      flipEffect: {
+        setTranslate: Flip.setTranslate.bind(swiper),
+        setTransition: Flip.setTransition.bind(swiper),
+      },
+    });
+  },
+  on: {
+    beforeInit() {
+      const swiper = this;
+      if (swiper.params.effect !== 'flip') return;
+      swiper.classNames.push(`${swiper.params.containerModifierClass}flip`);
+      swiper.classNames.push(`${swiper.params.containerModifierClass}3d`);
+      const overwriteParams = {
+        slidesPerView: 1,
+        slidesPerColumn: 1,
+        slidesPerGroup: 1,
+        watchSlidesProgress: true,
+        spaceBetween: 0,
+        virtualTranslate: true,
+      };
+      Utils.extend(swiper.params, overwriteParams);
+      Utils.extend(swiper.originalParams, overwriteParams);
+    },
+    setTranslate() {
+      const swiper = this;
+      if (swiper.params.effect !== 'flip') return;
+      swiper.flipEffect.setTranslate();
+    },
+    setTransition(duration) {
+      const swiper = this;
+      if (swiper.params.effect !== 'flip') return;
+      swiper.flipEffect.setTransition(duration);
+    },
+  },
+};
+
+const Coverflow = {
+  setTranslate() {
+    const swiper = this;
+    const {
+      width: swiperWidth, height: swiperHeight, slides, $wrapperEl, slidesSizesGrid,
+    } = swiper;
+    const params = swiper.params.coverflowEffect;
+    const isHorizontal = swiper.isHorizontal();
+    const transform = swiper.translate;
+    const center = isHorizontal ? -transform + (swiperWidth / 2) : -transform + (swiperHeight / 2);
+    const rotate = isHorizontal ? params.rotate : -params.rotate;
+    const translate = params.depth;
+    // Each slide offset from center
+    for (let i = 0, length = slides.length; i < length; i += 1) {
+      const $slideEl = slides.eq(i);
+      const slideSize = slidesSizesGrid[i];
+      const slideOffset = $slideEl[0].swiperSlideOffset;
+      const offsetMultiplier = ((center - slideOffset - (slideSize / 2)) / slideSize) * params.modifier;
+
+      let rotateY = isHorizontal ? rotate * offsetMultiplier : 0;
+      let rotateX = isHorizontal ? 0 : rotate * offsetMultiplier;
+      // var rotateZ = 0
+      let translateZ = -translate * Math.abs(offsetMultiplier);
+
+      let stretch = params.stretch;
+      // Allow percentage to make a relative stretch for responsive sliders
+      if (typeof stretch === 'string' && stretch.indexOf('%') !== -1) {
+        stretch = ((parseFloat(params.stretch) / 100) * slideSize);
+      }
+      let translateY = isHorizontal ? 0 : stretch * (offsetMultiplier);
+      let translateX = isHorizontal ? stretch * (offsetMultiplier) : 0;
+
+      let scale = 1 - (1 - params.scale) * Math.abs(offsetMultiplier);
+
+      // Fix for ultra small values
+      if (Math.abs(translateX) < 0.001) translateX = 0;
+      if (Math.abs(translateY) < 0.001) translateY = 0;
+      if (Math.abs(translateZ) < 0.001) translateZ = 0;
+      if (Math.abs(rotateY) < 0.001) rotateY = 0;
+      if (Math.abs(rotateX) < 0.001) rotateX = 0;
+      if (Math.abs(scale) < 0.001) scale = 0;
+
+      const slideTransform = `translate3d(${translateX}px,${translateY}px,${translateZ}px)  rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${scale})`;
+
+      $slideEl.transform(slideTransform);
+      $slideEl[0].style.zIndex = -Math.abs(Math.round(offsetMultiplier)) + 1;
+      if (params.slideShadows) {
+        // Set shadows
+        let $shadowBeforeEl = isHorizontal ? $slideEl.find('.swiper-slide-shadow-left') : $slideEl.find('.swiper-slide-shadow-top');
+        let $shadowAfterEl = isHorizontal ? $slideEl.find('.swiper-slide-shadow-right') : $slideEl.find('.swiper-slide-shadow-bottom');
+        if ($shadowBeforeEl.length === 0) {
+          $shadowBeforeEl = $(`<div class="swiper-slide-shadow-${isHorizontal ? 'left' : 'top'}"></div>`);
+          $slideEl.append($shadowBeforeEl);
+        }
+        if ($shadowAfterEl.length === 0) {
+          $shadowAfterEl = $(`<div class="swiper-slide-shadow-${isHorizontal ? 'right' : 'bottom'}"></div>`);
+          $slideEl.append($shadowAfterEl);
+        }
+        if ($shadowBeforeEl.length) $shadowBeforeEl[0].style.opacity = offsetMultiplier > 0 ? offsetMultiplier : 0;
+        if ($shadowAfterEl.length) $shadowAfterEl[0].style.opacity = (-offsetMultiplier) > 0 ? -offsetMultiplier : 0;
+      }
+    }
+
+    // Set correct perspective for IE10
+    if (swiper_esm_bundle_Support.pointerEvents || swiper_esm_bundle_Support.prefixedPointerEvents) {
+      const ws = $wrapperEl[0].style;
+      ws.perspectiveOrigin = `${center}px 50%`;
+    }
+  },
+  setTransition(duration) {
+    const swiper = this;
+    swiper.slides
+      .transition(duration)
+      .find('.swiper-slide-shadow-top, .swiper-slide-shadow-right, .swiper-slide-shadow-bottom, .swiper-slide-shadow-left')
+      .transition(duration);
+  },
+};
+
+var EffectCoverflow = {
+  name: 'effect-coverflow',
+  params: {
+    coverflowEffect: {
+      rotate: 50,
+      stretch: 0,
+      depth: 100,
+      scale: 1,
+      modifier: 1,
+      slideShadows: true,
+    },
+  },
+  create() {
+    const swiper = this;
+    Utils.extend(swiper, {
+      coverflowEffect: {
+        setTranslate: Coverflow.setTranslate.bind(swiper),
+        setTransition: Coverflow.setTransition.bind(swiper),
+      },
+    });
+  },
+  on: {
+    beforeInit() {
+      const swiper = this;
+      if (swiper.params.effect !== 'coverflow') return;
+
+      swiper.classNames.push(`${swiper.params.containerModifierClass}coverflow`);
+      swiper.classNames.push(`${swiper.params.containerModifierClass}3d`);
+
+      swiper.params.watchSlidesProgress = true;
+      swiper.originalParams.watchSlidesProgress = true;
+    },
+    setTranslate() {
+      const swiper = this;
+      if (swiper.params.effect !== 'coverflow') return;
+      swiper.coverflowEffect.setTranslate();
+    },
+    setTransition(duration) {
+      const swiper = this;
+      if (swiper.params.effect !== 'coverflow') return;
+      swiper.coverflowEffect.setTransition(duration);
+    },
+  },
+};
+
+const Thumbs = {
+  init() {
+    const swiper = this;
+    const { thumbs: thumbsParams } = swiper.params;
+    const SwiperClass = swiper.constructor;
+    if (thumbsParams.swiper instanceof SwiperClass) {
+      swiper.thumbs.swiper = thumbsParams.swiper;
+      Utils.extend(swiper.thumbs.swiper.originalParams, {
+        watchSlidesProgress: true,
+        slideToClickedSlide: false,
+      });
+      Utils.extend(swiper.thumbs.swiper.params, {
+        watchSlidesProgress: true,
+        slideToClickedSlide: false,
+      });
+    } else if (Utils.isObject(thumbsParams.swiper)) {
+      swiper.thumbs.swiper = new SwiperClass(Utils.extend({}, thumbsParams.swiper, {
+        watchSlidesVisibility: true,
+        watchSlidesProgress: true,
+        slideToClickedSlide: false,
+      }));
+      swiper.thumbs.swiperCreated = true;
+    }
+    swiper.thumbs.swiper.$el.addClass(swiper.params.thumbs.thumbsContainerClass);
+    swiper.thumbs.swiper.on('tap', swiper.thumbs.onThumbClick);
+  },
+  onThumbClick() {
+    const swiper = this;
+    const thumbsSwiper = swiper.thumbs.swiper;
+    if (!thumbsSwiper) return;
+    const clickedIndex = thumbsSwiper.clickedIndex;
+    const clickedSlide = thumbsSwiper.clickedSlide;
+    if (clickedSlide && $(clickedSlide).hasClass(swiper.params.thumbs.slideThumbActiveClass)) return;
+    if (typeof clickedIndex === 'undefined' || clickedIndex === null) return;
+    let slideToIndex;
+    if (thumbsSwiper.params.loop) {
+      slideToIndex = parseInt($(thumbsSwiper.clickedSlide).attr('data-swiper-slide-index'), 10);
+    } else {
+      slideToIndex = clickedIndex;
+    }
+    if (swiper.params.loop) {
+      let currentIndex = swiper.activeIndex;
+      if (swiper.slides.eq(currentIndex).hasClass(swiper.params.slideDuplicateClass)) {
+        swiper.loopFix();
+        // eslint-disable-next-line
+        swiper._clientLeft = swiper.$wrapperEl[0].clientLeft;
+        currentIndex = swiper.activeIndex;
+      }
+      const prevIndex = swiper.slides.eq(currentIndex).prevAll(`[data-swiper-slide-index="${slideToIndex}"]`).eq(0).index();
+      const nextIndex = swiper.slides.eq(currentIndex).nextAll(`[data-swiper-slide-index="${slideToIndex}"]`).eq(0).index();
+      if (typeof prevIndex === 'undefined') slideToIndex = nextIndex;
+      else if (typeof nextIndex === 'undefined') slideToIndex = prevIndex;
+      else if (nextIndex - currentIndex < currentIndex - prevIndex) slideToIndex = nextIndex;
+      else slideToIndex = prevIndex;
+    }
+    swiper.slideTo(slideToIndex);
+  },
+  update(initial) {
+    const swiper = this;
+    const thumbsSwiper = swiper.thumbs.swiper;
+    if (!thumbsSwiper) return;
+
+    const slidesPerView = thumbsSwiper.params.slidesPerView === 'auto'
+      ? thumbsSwiper.slidesPerViewDynamic()
+      : thumbsSwiper.params.slidesPerView;
+
+    const autoScrollOffset = swiper.params.thumbs.autoScrollOffset;
+    const useOffset = autoScrollOffset && !thumbsSwiper.params.loop;
+    if (swiper.realIndex !== thumbsSwiper.realIndex || useOffset) {
+      let currentThumbsIndex = thumbsSwiper.activeIndex;
+      let newThumbsIndex;
+      let direction;
+      if (thumbsSwiper.params.loop) {
+        if (thumbsSwiper.slides.eq(currentThumbsIndex).hasClass(thumbsSwiper.params.slideDuplicateClass)) {
+          thumbsSwiper.loopFix();
+          // eslint-disable-next-line
+          thumbsSwiper._clientLeft = thumbsSwiper.$wrapperEl[0].clientLeft;
+          currentThumbsIndex = thumbsSwiper.activeIndex;
+        }
+        // Find actual thumbs index to slide to
+        const prevThumbsIndex = thumbsSwiper.slides
+          .eq(currentThumbsIndex)
+          .prevAll(`[data-swiper-slide-index="${swiper.realIndex}"]`).eq(0)
+          .index();
+        const nextThumbsIndex = thumbsSwiper.slides
+          .eq(currentThumbsIndex)
+          .nextAll(`[data-swiper-slide-index="${swiper.realIndex}"]`).eq(0)
+          .index();
+        if (typeof prevThumbsIndex === 'undefined') newThumbsIndex = nextThumbsIndex;
+        else if (typeof nextThumbsIndex === 'undefined') newThumbsIndex = prevThumbsIndex;
+        else if (nextThumbsIndex - currentThumbsIndex === currentThumbsIndex - prevThumbsIndex) newThumbsIndex = currentThumbsIndex;
+        else if (nextThumbsIndex - currentThumbsIndex < currentThumbsIndex - prevThumbsIndex) newThumbsIndex = nextThumbsIndex;
+        else newThumbsIndex = prevThumbsIndex;
+        direction = swiper.activeIndex > swiper.previousIndex ? 'next' : 'prev';
+      } else {
+        newThumbsIndex = swiper.realIndex;
+        direction = newThumbsIndex > swiper.previousIndex ? 'next' : 'prev';
+      }
+      if (useOffset) {
+        newThumbsIndex += direction === 'next' ? autoScrollOffset : -1 * autoScrollOffset;
+      }
+
+      if (thumbsSwiper.visibleSlidesIndexes && thumbsSwiper.visibleSlidesIndexes.indexOf(newThumbsIndex) < 0) {
+        if (thumbsSwiper.params.centeredSlides) {
+          if (newThumbsIndex > currentThumbsIndex) {
+            newThumbsIndex = newThumbsIndex - Math.floor(slidesPerView / 2) + 1;
+          } else {
+            newThumbsIndex = newThumbsIndex + Math.floor(slidesPerView / 2) - 1;
+          }
+        } else if (newThumbsIndex > currentThumbsIndex) {
+          newThumbsIndex = newThumbsIndex - slidesPerView + 1;
+        }
+        thumbsSwiper.slideTo(newThumbsIndex, initial ? 0 : undefined);
+      }
+    }
+
+    // Activate thumbs
+    let thumbsToActivate = 1;
+    const thumbActiveClass = swiper.params.thumbs.slideThumbActiveClass;
+
+    if (swiper.params.slidesPerView > 1 && !swiper.params.centeredSlides) {
+      thumbsToActivate = swiper.params.slidesPerView;
+    }
+
+    if (!swiper.params.thumbs.multipleActiveThumbs) {
+      thumbsToActivate = 1;
+    }
+
+    thumbsToActivate = Math.floor(thumbsToActivate);
+
+    thumbsSwiper.slides.removeClass(thumbActiveClass);
+    if (thumbsSwiper.params.loop || (thumbsSwiper.params.virtual && thumbsSwiper.params.virtual.enabled)) {
+      for (let i = 0; i < thumbsToActivate; i += 1) {
+        thumbsSwiper.$wrapperEl.children(`[data-swiper-slide-index="${swiper.realIndex + i}"]`).addClass(thumbActiveClass);
+      }
+    } else {
+      for (let i = 0; i < thumbsToActivate; i += 1) {
+        thumbsSwiper.slides.eq(swiper.realIndex + i).addClass(thumbActiveClass);
+      }
+    }
+  },
+};
+var Thumbs$1 = {
+  name: 'thumbs',
+  params: {
+    thumbs: {
+      swiper: null,
+      multipleActiveThumbs: true,
+      autoScrollOffset: 0,
+      slideThumbActiveClass: 'swiper-slide-thumb-active',
+      thumbsContainerClass: 'swiper-container-thumbs',
+    },
+  },
+  create() {
+    const swiper = this;
+    Utils.extend(swiper, {
+      thumbs: {
+        swiper: null,
+        init: Thumbs.init.bind(swiper),
+        update: Thumbs.update.bind(swiper),
+        onThumbClick: Thumbs.onThumbClick.bind(swiper),
+      },
+    });
+  },
+  on: {
+    beforeInit() {
+      const swiper = this;
+      const { thumbs } = swiper.params;
+      if (!thumbs || !thumbs.swiper) return;
+      swiper.thumbs.init();
+      swiper.thumbs.update(true);
+    },
+    slideChange() {
+      const swiper = this;
+      if (!swiper.thumbs.swiper) return;
+      swiper.thumbs.update();
+    },
+    update() {
+      const swiper = this;
+      if (!swiper.thumbs.swiper) return;
+      swiper.thumbs.update();
+    },
+    resize() {
+      const swiper = this;
+      if (!swiper.thumbs.swiper) return;
+      swiper.thumbs.update();
+    },
+    observerUpdate() {
+      const swiper = this;
+      if (!swiper.thumbs.swiper) return;
+      swiper.thumbs.update();
+    },
+    setTransition(duration) {
+      const swiper = this;
+      const thumbsSwiper = swiper.thumbs.swiper;
+      if (!thumbsSwiper) return;
+      thumbsSwiper.setTransition(duration);
+    },
+    beforeDestroy() {
+      const swiper = this;
+      const thumbsSwiper = swiper.thumbs.swiper;
+      if (!thumbsSwiper) return;
+      if (swiper.thumbs.swiperCreated && thumbsSwiper) {
+        thumbsSwiper.destroy();
+      }
+    },
+  },
+};
+
+// Swiper Class
+
+const components = [
+  Device$1,
+  Support$1,
+  Browser$1,
+  Resize,
+  Observer$1,
+  Virtual$1,
+  Keyboard$1,
+  Mousewheel$1,
+  Navigation$1,
+  Pagination$1,
+  Scrollbar$1,
+  Parallax$1,
+  Zoom$1,
+  Lazy$1,
+  Controller$1,
+  A11y,
+  History$1,
+  HashNavigation$1,
+  Autoplay$1,
+  EffectFade,
+  EffectCube,
+  EffectFlip,
+  EffectCoverflow,
+  Thumbs$1
+];
+
+if (typeof swiper_esm_bundle_Swiper.use === 'undefined') {
+  swiper_esm_bundle_Swiper.use = swiper_esm_bundle_Swiper.Class.use;
+  swiper_esm_bundle_Swiper.installModule = swiper_esm_bundle_Swiper.Class.installModule;
 }
 
-/* normalize component */
+swiper_esm_bundle_Swiper.use(components);
 
-var metaMessage_component = Object(componentNormalizer["a" /* default */])(
-  event_metaMessagevue_type_script_lang_js_,
-  render,
-  staticRenderFns,
-  false,
-  metaMessage_injectStyles,
-  "cffb7280",
-  null
-  ,true
-)
+/* harmony default export */ var swiper_esm_bundle = __webpack_exports__["default"] = (swiper_esm_bundle_Swiper);
+//# sourceMappingURL=swiper.esm.bundle.js.map
 
-/* harmony default export */ var metaMessage = __webpack_exports__["default"] = (metaMessage_component.exports);
 
 /***/ }),
 
-/***/ "e512":
+/***/ "d7a6":
 /***/ (function(module, exports, __webpack_require__) {
 
-// style-loader: Adds some css to the DOM by adding a <style> tag
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {/*!
+ * vuex v3.6.2
+ * (c) 2021 Evan You
+ * @license MIT
+ */
 
-// load the styles
-var content = __webpack_require__("c2a2");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("4387f059", content, shadowRoot)
+
+function applyMixin (Vue) {
+  var version = Number(Vue.version.split('.')[0]);
+
+  if (version >= 2) {
+    Vue.mixin({ beforeCreate: vuexInit });
+  } else {
+    // override init and inject vuex init procedure
+    // for 1.x backwards compatibility.
+    var _init = Vue.prototype._init;
+    Vue.prototype._init = function (options) {
+      if ( options === void 0 ) options = {};
+
+      options.init = options.init
+        ? [vuexInit].concat(options.init)
+        : vuexInit;
+      _init.call(this, options);
+    };
+  }
+
+  /**
+   * Vuex init hook, injected into each instances init hooks list.
+   */
+
+  function vuexInit () {
+    var options = this.$options;
+    // store injection
+    if (options.store) {
+      this.$store = typeof options.store === 'function'
+        ? options.store()
+        : options.store;
+    } else if (options.parent && options.parent.$store) {
+      this.$store = options.parent.$store;
+    }
+  }
+}
+
+var target = typeof window !== 'undefined'
+  ? window
+  : typeof global !== 'undefined'
+    ? global
+    : {};
+var devtoolHook = target.__VUE_DEVTOOLS_GLOBAL_HOOK__;
+
+function devtoolPlugin (store) {
+  if (!devtoolHook) { return }
+
+  store._devtoolHook = devtoolHook;
+
+  devtoolHook.emit('vuex:init', store);
+
+  devtoolHook.on('vuex:travel-to-state', function (targetState) {
+    store.replaceState(targetState);
+  });
+
+  store.subscribe(function (mutation, state) {
+    devtoolHook.emit('vuex:mutation', mutation, state);
+  }, { prepend: true });
+
+  store.subscribeAction(function (action, state) {
+    devtoolHook.emit('vuex:action', action, state);
+  }, { prepend: true });
+}
+
+/**
+ * Get the first item that pass the test
+ * by second argument function
+ *
+ * @param {Array} list
+ * @param {Function} f
+ * @return {*}
+ */
+function find (list, f) {
+  return list.filter(f)[0]
+}
+
+/**
+ * Deep copy the given object considering circular structure.
+ * This function caches all nested objects and its copies.
+ * If it detects circular structure, use cached copy to avoid infinite loop.
+ *
+ * @param {*} obj
+ * @param {Array<Object>} cache
+ * @return {*}
+ */
+function deepCopy (obj, cache) {
+  if ( cache === void 0 ) cache = [];
+
+  // just return if obj is immutable value
+  if (obj === null || typeof obj !== 'object') {
+    return obj
+  }
+
+  // if obj is hit, it is in circular structure
+  var hit = find(cache, function (c) { return c.original === obj; });
+  if (hit) {
+    return hit.copy
+  }
+
+  var copy = Array.isArray(obj) ? [] : {};
+  // put the copy into cache at first
+  // because we want to refer it in recursive deepCopy
+  cache.push({
+    original: obj,
+    copy: copy
+  });
+
+  Object.keys(obj).forEach(function (key) {
+    copy[key] = deepCopy(obj[key], cache);
+  });
+
+  return copy
+}
+
+/**
+ * forEach for object
+ */
+function forEachValue (obj, fn) {
+  Object.keys(obj).forEach(function (key) { return fn(obj[key], key); });
+}
+
+function isObject (obj) {
+  return obj !== null && typeof obj === 'object'
+}
+
+function isPromise (val) {
+  return val && typeof val.then === 'function'
+}
+
+function assert (condition, msg) {
+  if (!condition) { throw new Error(("[vuex] " + msg)) }
+}
+
+function partial (fn, arg) {
+  return function () {
+    return fn(arg)
+  }
+}
+
+// Base data struct for store's module, package with some attribute and method
+var Module = function Module (rawModule, runtime) {
+  this.runtime = runtime;
+  // Store some children item
+  this._children = Object.create(null);
+  // Store the origin module object which passed by programmer
+  this._rawModule = rawModule;
+  var rawState = rawModule.state;
+
+  // Store the origin module's state
+  this.state = (typeof rawState === 'function' ? rawState() : rawState) || {};
 };
 
-/***/ }),
+var prototypeAccessors = { namespaced: { configurable: true } };
 
-/***/ "f155":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+prototypeAccessors.namespaced.get = function () {
+  return !!this._rawModule.namespaced
+};
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_1_id_ffacfd66_lang_sass_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("3023");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_1_id_ffacfd66_lang_sass_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_1_id_ffacfd66_lang_sass_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_1_id_ffacfd66_lang_sass_scoped_true___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_1_id_ffacfd66_lang_sass_scoped_true___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+Module.prototype.addChild = function addChild (key, module) {
+  this._children[key] = module;
+};
 
+Module.prototype.removeChild = function removeChild (key) {
+  delete this._children[key];
+};
+
+Module.prototype.getChild = function getChild (key) {
+  return this._children[key]
+};
+
+Module.prototype.hasChild = function hasChild (key) {
+  return key in this._children
+};
+
+Module.prototype.update = function update (rawModule) {
+  this._rawModule.namespaced = rawModule.namespaced;
+  if (rawModule.actions) {
+    this._rawModule.actions = rawModule.actions;
+  }
+  if (rawModule.mutations) {
+    this._rawModule.mutations = rawModule.mutations;
+  }
+  if (rawModule.getters) {
+    this._rawModule.getters = rawModule.getters;
+  }
+};
+
+Module.prototype.forEachChild = function forEachChild (fn) {
+  forEachValue(this._children, fn);
+};
+
+Module.prototype.forEachGetter = function forEachGetter (fn) {
+  if (this._rawModule.getters) {
+    forEachValue(this._rawModule.getters, fn);
+  }
+};
+
+Module.prototype.forEachAction = function forEachAction (fn) {
+  if (this._rawModule.actions) {
+    forEachValue(this._rawModule.actions, fn);
+  }
+};
+
+Module.prototype.forEachMutation = function forEachMutation (fn) {
+  if (this._rawModule.mutations) {
+    forEachValue(this._rawModule.mutations, fn);
+  }
+};
+
+Object.defineProperties( Module.prototype, prototypeAccessors );
+
+var ModuleCollection = function ModuleCollection (rawRootModule) {
+  // register root module (Vuex.Store options)
+  this.register([], rawRootModule, false);
+};
+
+ModuleCollection.prototype.get = function get (path) {
+  return path.reduce(function (module, key) {
+    return module.getChild(key)
+  }, this.root)
+};
+
+ModuleCollection.prototype.getNamespace = function getNamespace (path) {
+  var module = this.root;
+  return path.reduce(function (namespace, key) {
+    module = module.getChild(key);
+    return namespace + (module.namespaced ? key + '/' : '')
+  }, '')
+};
+
+ModuleCollection.prototype.update = function update$1 (rawRootModule) {
+  update([], this.root, rawRootModule);
+};
+
+ModuleCollection.prototype.register = function register (path, rawModule, runtime) {
+    var this$1 = this;
+    if ( runtime === void 0 ) runtime = true;
+
+  if ((false)) {}
+
+  var newModule = new Module(rawModule, runtime);
+  if (path.length === 0) {
+    this.root = newModule;
+  } else {
+    var parent = this.get(path.slice(0, -1));
+    parent.addChild(path[path.length - 1], newModule);
+  }
+
+  // register nested modules
+  if (rawModule.modules) {
+    forEachValue(rawModule.modules, function (rawChildModule, key) {
+      this$1.register(path.concat(key), rawChildModule, runtime);
+    });
+  }
+};
+
+ModuleCollection.prototype.unregister = function unregister (path) {
+  var parent = this.get(path.slice(0, -1));
+  var key = path[path.length - 1];
+  var child = parent.getChild(key);
+
+  if (!child) {
+    if ((false)) {}
+    return
+  }
+
+  if (!child.runtime) {
+    return
+  }
+
+  parent.removeChild(key);
+};
+
+ModuleCollection.prototype.isRegistered = function isRegistered (path) {
+  var parent = this.get(path.slice(0, -1));
+  var key = path[path.length - 1];
+
+  if (parent) {
+    return parent.hasChild(key)
+  }
+
+  return false
+};
+
+function update (path, targetModule, newModule) {
+  if ((false)) {}
+
+  // update target module
+  targetModule.update(newModule);
+
+  // update nested modules
+  if (newModule.modules) {
+    for (var key in newModule.modules) {
+      if (!targetModule.getChild(key)) {
+        if ((false)) {}
+        return
+      }
+      update(
+        path.concat(key),
+        targetModule.getChild(key),
+        newModule.modules[key]
+      );
+    }
+  }
+}
+
+var functionAssert = {
+  assert: function (value) { return typeof value === 'function'; },
+  expected: 'function'
+};
+
+var objectAssert = {
+  assert: function (value) { return typeof value === 'function' ||
+    (typeof value === 'object' && typeof value.handler === 'function'); },
+  expected: 'function or object with "handler" function'
+};
+
+var assertTypes = {
+  getters: functionAssert,
+  mutations: functionAssert,
+  actions: objectAssert
+};
+
+function assertRawModule (path, rawModule) {
+  Object.keys(assertTypes).forEach(function (key) {
+    if (!rawModule[key]) { return }
+
+    var assertOptions = assertTypes[key];
+
+    forEachValue(rawModule[key], function (value, type) {
+      assert(
+        assertOptions.assert(value),
+        makeAssertionMessage(path, key, type, value, assertOptions.expected)
+      );
+    });
+  });
+}
+
+function makeAssertionMessage (path, key, type, value, expected) {
+  var buf = key + " should be " + expected + " but \"" + key + "." + type + "\"";
+  if (path.length > 0) {
+    buf += " in module \"" + (path.join('.')) + "\"";
+  }
+  buf += " is " + (JSON.stringify(value)) + ".";
+  return buf
+}
+
+var Vue; // bind on install
+
+var Store = function Store (options) {
+  var this$1 = this;
+  if ( options === void 0 ) options = {};
+
+  // Auto install if it is not done yet and `window` has `Vue`.
+  // To allow users to avoid auto-installation in some cases,
+  // this code should be placed here. See #731
+  if (!Vue && typeof window !== 'undefined' && window.Vue) {
+    install(window.Vue);
+  }
+
+  if ((false)) {}
+
+  var plugins = options.plugins; if ( plugins === void 0 ) plugins = [];
+  var strict = options.strict; if ( strict === void 0 ) strict = false;
+
+  // store internal state
+  this._committing = false;
+  this._actions = Object.create(null);
+  this._actionSubscribers = [];
+  this._mutations = Object.create(null);
+  this._wrappedGetters = Object.create(null);
+  this._modules = new ModuleCollection(options);
+  this._modulesNamespaceMap = Object.create(null);
+  this._subscribers = [];
+  this._watcherVM = new Vue();
+  this._makeLocalGettersCache = Object.create(null);
+
+  // bind commit and dispatch to self
+  var store = this;
+  var ref = this;
+  var dispatch = ref.dispatch;
+  var commit = ref.commit;
+  this.dispatch = function boundDispatch (type, payload) {
+    return dispatch.call(store, type, payload)
+  };
+  this.commit = function boundCommit (type, payload, options) {
+    return commit.call(store, type, payload, options)
+  };
+
+  // strict mode
+  this.strict = strict;
+
+  var state = this._modules.root.state;
+
+  // init root module.
+  // this also recursively registers all sub-modules
+  // and collects all module getters inside this._wrappedGetters
+  installModule(this, state, [], this._modules.root);
+
+  // initialize the store vm, which is responsible for the reactivity
+  // (also registers _wrappedGetters as computed properties)
+  resetStoreVM(this, state);
+
+  // apply plugins
+  plugins.forEach(function (plugin) { return plugin(this$1); });
+
+  var useDevtools = options.devtools !== undefined ? options.devtools : Vue.config.devtools;
+  if (useDevtools) {
+    devtoolPlugin(this);
+  }
+};
+
+var prototypeAccessors$1 = { state: { configurable: true } };
+
+prototypeAccessors$1.state.get = function () {
+  return this._vm._data.$$state
+};
+
+prototypeAccessors$1.state.set = function (v) {
+  if ((false)) {}
+};
+
+Store.prototype.commit = function commit (_type, _payload, _options) {
+    var this$1 = this;
+
+  // check object-style commit
+  var ref = unifyObjectStyle(_type, _payload, _options);
+    var type = ref.type;
+    var payload = ref.payload;
+    var options = ref.options;
+
+  var mutation = { type: type, payload: payload };
+  var entry = this._mutations[type];
+  if (!entry) {
+    if ((false)) {}
+    return
+  }
+  this._withCommit(function () {
+    entry.forEach(function commitIterator (handler) {
+      handler(payload);
+    });
+  });
+
+  this._subscribers
+    .slice() // shallow copy to prevent iterator invalidation if subscriber synchronously calls unsubscribe
+    .forEach(function (sub) { return sub(mutation, this$1.state); });
+
+  if (
+    false
+  ) {}
+};
+
+Store.prototype.dispatch = function dispatch (_type, _payload) {
+    var this$1 = this;
+
+  // check object-style dispatch
+  var ref = unifyObjectStyle(_type, _payload);
+    var type = ref.type;
+    var payload = ref.payload;
+
+  var action = { type: type, payload: payload };
+  var entry = this._actions[type];
+  if (!entry) {
+    if ((false)) {}
+    return
+  }
+
+  try {
+    this._actionSubscribers
+      .slice() // shallow copy to prevent iterator invalidation if subscriber synchronously calls unsubscribe
+      .filter(function (sub) { return sub.before; })
+      .forEach(function (sub) { return sub.before(action, this$1.state); });
+  } catch (e) {
+    if ((false)) {}
+  }
+
+  var result = entry.length > 1
+    ? Promise.all(entry.map(function (handler) { return handler(payload); }))
+    : entry[0](payload);
+
+  return new Promise(function (resolve, reject) {
+    result.then(function (res) {
+      try {
+        this$1._actionSubscribers
+          .filter(function (sub) { return sub.after; })
+          .forEach(function (sub) { return sub.after(action, this$1.state); });
+      } catch (e) {
+        if ((false)) {}
+      }
+      resolve(res);
+    }, function (error) {
+      try {
+        this$1._actionSubscribers
+          .filter(function (sub) { return sub.error; })
+          .forEach(function (sub) { return sub.error(action, this$1.state, error); });
+      } catch (e) {
+        if ((false)) {}
+      }
+      reject(error);
+    });
+  })
+};
+
+Store.prototype.subscribe = function subscribe (fn, options) {
+  return genericSubscribe(fn, this._subscribers, options)
+};
+
+Store.prototype.subscribeAction = function subscribeAction (fn, options) {
+  var subs = typeof fn === 'function' ? { before: fn } : fn;
+  return genericSubscribe(subs, this._actionSubscribers, options)
+};
+
+Store.prototype.watch = function watch (getter, cb, options) {
+    var this$1 = this;
+
+  if ((false)) {}
+  return this._watcherVM.$watch(function () { return getter(this$1.state, this$1.getters); }, cb, options)
+};
+
+Store.prototype.replaceState = function replaceState (state) {
+    var this$1 = this;
+
+  this._withCommit(function () {
+    this$1._vm._data.$$state = state;
+  });
+};
+
+Store.prototype.registerModule = function registerModule (path, rawModule, options) {
+    if ( options === void 0 ) options = {};
+
+  if (typeof path === 'string') { path = [path]; }
+
+  if ((false)) {}
+
+  this._modules.register(path, rawModule);
+  installModule(this, this.state, path, this._modules.get(path), options.preserveState);
+  // reset store to update getters...
+  resetStoreVM(this, this.state);
+};
+
+Store.prototype.unregisterModule = function unregisterModule (path) {
+    var this$1 = this;
+
+  if (typeof path === 'string') { path = [path]; }
+
+  if ((false)) {}
+
+  this._modules.unregister(path);
+  this._withCommit(function () {
+    var parentState = getNestedState(this$1.state, path.slice(0, -1));
+    Vue.delete(parentState, path[path.length - 1]);
+  });
+  resetStore(this);
+};
+
+Store.prototype.hasModule = function hasModule (path) {
+  if (typeof path === 'string') { path = [path]; }
+
+  if ((false)) {}
+
+  return this._modules.isRegistered(path)
+};
+
+Store.prototype.hotUpdate = function hotUpdate (newOptions) {
+  this._modules.update(newOptions);
+  resetStore(this, true);
+};
+
+Store.prototype._withCommit = function _withCommit (fn) {
+  var committing = this._committing;
+  this._committing = true;
+  fn();
+  this._committing = committing;
+};
+
+Object.defineProperties( Store.prototype, prototypeAccessors$1 );
+
+function genericSubscribe (fn, subs, options) {
+  if (subs.indexOf(fn) < 0) {
+    options && options.prepend
+      ? subs.unshift(fn)
+      : subs.push(fn);
+  }
+  return function () {
+    var i = subs.indexOf(fn);
+    if (i > -1) {
+      subs.splice(i, 1);
+    }
+  }
+}
+
+function resetStore (store, hot) {
+  store._actions = Object.create(null);
+  store._mutations = Object.create(null);
+  store._wrappedGetters = Object.create(null);
+  store._modulesNamespaceMap = Object.create(null);
+  var state = store.state;
+  // init all modules
+  installModule(store, state, [], store._modules.root, true);
+  // reset vm
+  resetStoreVM(store, state, hot);
+}
+
+function resetStoreVM (store, state, hot) {
+  var oldVm = store._vm;
+
+  // bind store public getters
+  store.getters = {};
+  // reset local getters cache
+  store._makeLocalGettersCache = Object.create(null);
+  var wrappedGetters = store._wrappedGetters;
+  var computed = {};
+  forEachValue(wrappedGetters, function (fn, key) {
+    // use computed to leverage its lazy-caching mechanism
+    // direct inline function use will lead to closure preserving oldVm.
+    // using partial to return function with only arguments preserved in closure environment.
+    computed[key] = partial(fn, store);
+    Object.defineProperty(store.getters, key, {
+      get: function () { return store._vm[key]; },
+      enumerable: true // for local getters
+    });
+  });
+
+  // use a Vue instance to store the state tree
+  // suppress warnings just in case the user has added
+  // some funky global mixins
+  var silent = Vue.config.silent;
+  Vue.config.silent = true;
+  store._vm = new Vue({
+    data: {
+      $$state: state
+    },
+    computed: computed
+  });
+  Vue.config.silent = silent;
+
+  // enable strict mode for new vm
+  if (store.strict) {
+    enableStrictMode(store);
+  }
+
+  if (oldVm) {
+    if (hot) {
+      // dispatch changes in all subscribed watchers
+      // to force getter re-evaluation for hot reloading.
+      store._withCommit(function () {
+        oldVm._data.$$state = null;
+      });
+    }
+    Vue.nextTick(function () { return oldVm.$destroy(); });
+  }
+}
+
+function installModule (store, rootState, path, module, hot) {
+  var isRoot = !path.length;
+  var namespace = store._modules.getNamespace(path);
+
+  // register in namespace map
+  if (module.namespaced) {
+    if (store._modulesNamespaceMap[namespace] && ("production" !== 'production')) {
+      console.error(("[vuex] duplicate namespace " + namespace + " for the namespaced module " + (path.join('/'))));
+    }
+    store._modulesNamespaceMap[namespace] = module;
+  }
+
+  // set state
+  if (!isRoot && !hot) {
+    var parentState = getNestedState(rootState, path.slice(0, -1));
+    var moduleName = path[path.length - 1];
+    store._withCommit(function () {
+      if ((false)) {}
+      Vue.set(parentState, moduleName, module.state);
+    });
+  }
+
+  var local = module.context = makeLocalContext(store, namespace, path);
+
+  module.forEachMutation(function (mutation, key) {
+    var namespacedType = namespace + key;
+    registerMutation(store, namespacedType, mutation, local);
+  });
+
+  module.forEachAction(function (action, key) {
+    var type = action.root ? key : namespace + key;
+    var handler = action.handler || action;
+    registerAction(store, type, handler, local);
+  });
+
+  module.forEachGetter(function (getter, key) {
+    var namespacedType = namespace + key;
+    registerGetter(store, namespacedType, getter, local);
+  });
+
+  module.forEachChild(function (child, key) {
+    installModule(store, rootState, path.concat(key), child, hot);
+  });
+}
+
+/**
+ * make localized dispatch, commit, getters and state
+ * if there is no namespace, just use root ones
+ */
+function makeLocalContext (store, namespace, path) {
+  var noNamespace = namespace === '';
+
+  var local = {
+    dispatch: noNamespace ? store.dispatch : function (_type, _payload, _options) {
+      var args = unifyObjectStyle(_type, _payload, _options);
+      var payload = args.payload;
+      var options = args.options;
+      var type = args.type;
+
+      if (!options || !options.root) {
+        type = namespace + type;
+        if (false) {}
+      }
+
+      return store.dispatch(type, payload)
+    },
+
+    commit: noNamespace ? store.commit : function (_type, _payload, _options) {
+      var args = unifyObjectStyle(_type, _payload, _options);
+      var payload = args.payload;
+      var options = args.options;
+      var type = args.type;
+
+      if (!options || !options.root) {
+        type = namespace + type;
+        if (false) {}
+      }
+
+      store.commit(type, payload, options);
+    }
+  };
+
+  // getters and state object must be gotten lazily
+  // because they will be changed by vm update
+  Object.defineProperties(local, {
+    getters: {
+      get: noNamespace
+        ? function () { return store.getters; }
+        : function () { return makeLocalGetters(store, namespace); }
+    },
+    state: {
+      get: function () { return getNestedState(store.state, path); }
+    }
+  });
+
+  return local
+}
+
+function makeLocalGetters (store, namespace) {
+  if (!store._makeLocalGettersCache[namespace]) {
+    var gettersProxy = {};
+    var splitPos = namespace.length;
+    Object.keys(store.getters).forEach(function (type) {
+      // skip if the target getter is not match this namespace
+      if (type.slice(0, splitPos) !== namespace) { return }
+
+      // extract local getter type
+      var localType = type.slice(splitPos);
+
+      // Add a port to the getters proxy.
+      // Define as getter property because
+      // we do not want to evaluate the getters in this time.
+      Object.defineProperty(gettersProxy, localType, {
+        get: function () { return store.getters[type]; },
+        enumerable: true
+      });
+    });
+    store._makeLocalGettersCache[namespace] = gettersProxy;
+  }
+
+  return store._makeLocalGettersCache[namespace]
+}
+
+function registerMutation (store, type, handler, local) {
+  var entry = store._mutations[type] || (store._mutations[type] = []);
+  entry.push(function wrappedMutationHandler (payload) {
+    handler.call(store, local.state, payload);
+  });
+}
+
+function registerAction (store, type, handler, local) {
+  var entry = store._actions[type] || (store._actions[type] = []);
+  entry.push(function wrappedActionHandler (payload) {
+    var res = handler.call(store, {
+      dispatch: local.dispatch,
+      commit: local.commit,
+      getters: local.getters,
+      state: local.state,
+      rootGetters: store.getters,
+      rootState: store.state
+    }, payload);
+    if (!isPromise(res)) {
+      res = Promise.resolve(res);
+    }
+    if (store._devtoolHook) {
+      return res.catch(function (err) {
+        store._devtoolHook.emit('vuex:error', err);
+        throw err
+      })
+    } else {
+      return res
+    }
+  });
+}
+
+function registerGetter (store, type, rawGetter, local) {
+  if (store._wrappedGetters[type]) {
+    if ((false)) {}
+    return
+  }
+  store._wrappedGetters[type] = function wrappedGetter (store) {
+    return rawGetter(
+      local.state, // local state
+      local.getters, // local getters
+      store.state, // root state
+      store.getters // root getters
+    )
+  };
+}
+
+function enableStrictMode (store) {
+  store._vm.$watch(function () { return this._data.$$state }, function () {
+    if ((false)) {}
+  }, { deep: true, sync: true });
+}
+
+function getNestedState (state, path) {
+  return path.reduce(function (state, key) { return state[key]; }, state)
+}
+
+function unifyObjectStyle (type, payload, options) {
+  if (isObject(type) && type.type) {
+    options = payload;
+    payload = type;
+    type = type.type;
+  }
+
+  if ((false)) {}
+
+  return { type: type, payload: payload, options: options }
+}
+
+function install (_Vue) {
+  if (Vue && _Vue === Vue) {
+    if ((false)) {}
+    return
+  }
+  Vue = _Vue;
+  applyMixin(Vue);
+}
+
+/**
+ * Reduce the code which written in Vue.js for getting the state.
+ * @param {String} [namespace] - Module's namespace
+ * @param {Object|Array} states # Object's item can be a function which accept state and getters for param, you can do something for state and getters in it.
+ * @param {Object}
+ */
+var mapState = normalizeNamespace(function (namespace, states) {
+  var res = {};
+  if (false) {}
+  normalizeMap(states).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    res[key] = function mappedState () {
+      var state = this.$store.state;
+      var getters = this.$store.getters;
+      if (namespace) {
+        var module = getModuleByNamespace(this.$store, 'mapState', namespace);
+        if (!module) {
+          return
+        }
+        state = module.context.state;
+        getters = module.context.getters;
+      }
+      return typeof val === 'function'
+        ? val.call(this, state, getters)
+        : state[val]
+    };
+    // mark vuex getter for devtools
+    res[key].vuex = true;
+  });
+  return res
+});
+
+/**
+ * Reduce the code which written in Vue.js for committing the mutation
+ * @param {String} [namespace] - Module's namespace
+ * @param {Object|Array} mutations # Object's item can be a function which accept `commit` function as the first param, it can accept another params. You can commit mutation and do any other things in this function. specially, You need to pass anthor params from the mapped function.
+ * @return {Object}
+ */
+var mapMutations = normalizeNamespace(function (namespace, mutations) {
+  var res = {};
+  if (false) {}
+  normalizeMap(mutations).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    res[key] = function mappedMutation () {
+      var args = [], len = arguments.length;
+      while ( len-- ) args[ len ] = arguments[ len ];
+
+      // Get the commit method from store
+      var commit = this.$store.commit;
+      if (namespace) {
+        var module = getModuleByNamespace(this.$store, 'mapMutations', namespace);
+        if (!module) {
+          return
+        }
+        commit = module.context.commit;
+      }
+      return typeof val === 'function'
+        ? val.apply(this, [commit].concat(args))
+        : commit.apply(this.$store, [val].concat(args))
+    };
+  });
+  return res
+});
+
+/**
+ * Reduce the code which written in Vue.js for getting the getters
+ * @param {String} [namespace] - Module's namespace
+ * @param {Object|Array} getters
+ * @return {Object}
+ */
+var mapGetters = normalizeNamespace(function (namespace, getters) {
+  var res = {};
+  if (false) {}
+  normalizeMap(getters).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    // The namespace has been mutated by normalizeNamespace
+    val = namespace + val;
+    res[key] = function mappedGetter () {
+      if (namespace && !getModuleByNamespace(this.$store, 'mapGetters', namespace)) {
+        return
+      }
+      if (false) {}
+      return this.$store.getters[val]
+    };
+    // mark vuex getter for devtools
+    res[key].vuex = true;
+  });
+  return res
+});
+
+/**
+ * Reduce the code which written in Vue.js for dispatch the action
+ * @param {String} [namespace] - Module's namespace
+ * @param {Object|Array} actions # Object's item can be a function which accept `dispatch` function as the first param, it can accept anthor params. You can dispatch action and do any other things in this function. specially, You need to pass anthor params from the mapped function.
+ * @return {Object}
+ */
+var mapActions = normalizeNamespace(function (namespace, actions) {
+  var res = {};
+  if (false) {}
+  normalizeMap(actions).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    res[key] = function mappedAction () {
+      var args = [], len = arguments.length;
+      while ( len-- ) args[ len ] = arguments[ len ];
+
+      // get dispatch function from store
+      var dispatch = this.$store.dispatch;
+      if (namespace) {
+        var module = getModuleByNamespace(this.$store, 'mapActions', namespace);
+        if (!module) {
+          return
+        }
+        dispatch = module.context.dispatch;
+      }
+      return typeof val === 'function'
+        ? val.apply(this, [dispatch].concat(args))
+        : dispatch.apply(this.$store, [val].concat(args))
+    };
+  });
+  return res
+});
+
+/**
+ * Rebinding namespace param for mapXXX function in special scoped, and return them by simple object
+ * @param {String} namespace
+ * @return {Object}
+ */
+var createNamespacedHelpers = function (namespace) { return ({
+  mapState: mapState.bind(null, namespace),
+  mapGetters: mapGetters.bind(null, namespace),
+  mapMutations: mapMutations.bind(null, namespace),
+  mapActions: mapActions.bind(null, namespace)
+}); };
+
+/**
+ * Normalize the map
+ * normalizeMap([1, 2, 3]) => [ { key: 1, val: 1 }, { key: 2, val: 2 }, { key: 3, val: 3 } ]
+ * normalizeMap({a: 1, b: 2, c: 3}) => [ { key: 'a', val: 1 }, { key: 'b', val: 2 }, { key: 'c', val: 3 } ]
+ * @param {Array|Object} map
+ * @return {Object}
+ */
+function normalizeMap (map) {
+  if (!isValidMap(map)) {
+    return []
+  }
+  return Array.isArray(map)
+    ? map.map(function (key) { return ({ key: key, val: key }); })
+    : Object.keys(map).map(function (key) { return ({ key: key, val: map[key] }); })
+}
+
+/**
+ * Validate whether given map is valid or not
+ * @param {*} map
+ * @return {Boolean}
+ */
+function isValidMap (map) {
+  return Array.isArray(map) || isObject(map)
+}
+
+/**
+ * Return a function expect two param contains namespace and map. it will normalize the namespace and then the param's function will handle the new namespace and the map.
+ * @param {Function} fn
+ * @return {Function}
+ */
+function normalizeNamespace (fn) {
+  return function (namespace, map) {
+    if (typeof namespace !== 'string') {
+      map = namespace;
+      namespace = '';
+    } else if (namespace.charAt(namespace.length - 1) !== '/') {
+      namespace += '/';
+    }
+    return fn(namespace, map)
+  }
+}
+
+/**
+ * Search a special module from store by namespace. if module not exist, print error message.
+ * @param {Object} store
+ * @param {String} helper
+ * @param {String} namespace
+ * @return {Object}
+ */
+function getModuleByNamespace (store, helper, namespace) {
+  var module = store._modulesNamespaceMap[namespace];
+  if (false) {}
+  return module
+}
+
+// Credits: borrowed code from fcomb/redux-logger
+
+function createLogger (ref) {
+  if ( ref === void 0 ) ref = {};
+  var collapsed = ref.collapsed; if ( collapsed === void 0 ) collapsed = true;
+  var filter = ref.filter; if ( filter === void 0 ) filter = function (mutation, stateBefore, stateAfter) { return true; };
+  var transformer = ref.transformer; if ( transformer === void 0 ) transformer = function (state) { return state; };
+  var mutationTransformer = ref.mutationTransformer; if ( mutationTransformer === void 0 ) mutationTransformer = function (mut) { return mut; };
+  var actionFilter = ref.actionFilter; if ( actionFilter === void 0 ) actionFilter = function (action, state) { return true; };
+  var actionTransformer = ref.actionTransformer; if ( actionTransformer === void 0 ) actionTransformer = function (act) { return act; };
+  var logMutations = ref.logMutations; if ( logMutations === void 0 ) logMutations = true;
+  var logActions = ref.logActions; if ( logActions === void 0 ) logActions = true;
+  var logger = ref.logger; if ( logger === void 0 ) logger = console;
+
+  return function (store) {
+    var prevState = deepCopy(store.state);
+
+    if (typeof logger === 'undefined') {
+      return
+    }
+
+    if (logMutations) {
+      store.subscribe(function (mutation, state) {
+        var nextState = deepCopy(state);
+
+        if (filter(mutation, prevState, nextState)) {
+          var formattedTime = getFormattedTime();
+          var formattedMutation = mutationTransformer(mutation);
+          var message = "mutation " + (mutation.type) + formattedTime;
+
+          startMessage(logger, message, collapsed);
+          logger.log('%c prev state', 'color: #9E9E9E; font-weight: bold', transformer(prevState));
+          logger.log('%c mutation', 'color: #03A9F4; font-weight: bold', formattedMutation);
+          logger.log('%c next state', 'color: #4CAF50; font-weight: bold', transformer(nextState));
+          endMessage(logger);
+        }
+
+        prevState = nextState;
+      });
+    }
+
+    if (logActions) {
+      store.subscribeAction(function (action, state) {
+        if (actionFilter(action, state)) {
+          var formattedTime = getFormattedTime();
+          var formattedAction = actionTransformer(action);
+          var message = "action " + (action.type) + formattedTime;
+
+          startMessage(logger, message, collapsed);
+          logger.log('%c action', 'color: #03A9F4; font-weight: bold', formattedAction);
+          endMessage(logger);
+        }
+      });
+    }
+  }
+}
+
+function startMessage (logger, message, collapsed) {
+  var startMessage = collapsed
+    ? logger.groupCollapsed
+    : logger.group;
+
+  // render
+  try {
+    startMessage.call(logger, message);
+  } catch (e) {
+    logger.log(message);
+  }
+}
+
+function endMessage (logger) {
+  try {
+    logger.groupEnd();
+  } catch (e) {
+    logger.log('—— log end ——');
+  }
+}
+
+function getFormattedTime () {
+  var time = new Date();
+  return (" @ " + (pad(time.getHours(), 2)) + ":" + (pad(time.getMinutes(), 2)) + ":" + (pad(time.getSeconds(), 2)) + "." + (pad(time.getMilliseconds(), 3)))
+}
+
+function repeat (str, times) {
+  return (new Array(times + 1)).join(str)
+}
+
+function pad (num, maxLength) {
+  return repeat('0', maxLength - num.toString().length) + num
+}
+
+var index_cjs = {
+  Store: Store,
+  install: install,
+  version: '3.6.2',
+  mapState: mapState,
+  mapMutations: mapMutations,
+  mapGetters: mapGetters,
+  mapActions: mapActions,
+  createNamespacedHelpers: createNamespacedHelpers,
+  createLogger: createLogger
+};
+
+module.exports = index_cjs;
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__("c8ba")))
 
 /***/ })
 

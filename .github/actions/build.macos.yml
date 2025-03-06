@@ -12,7 +12,7 @@ runs:
     - name: Prepare building
       run: |
         npm i
-        npm run dev:bastyon
+        npm run dev:bastyon -- --sha=${{ steps.vars.outputs.sha_short }}
     - name: Prepare for app notarization
       run: |
         mkdir -p ~/private_keys/
@@ -30,7 +30,7 @@ runs:
         npm run distm
         ls -lh ./dist/
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: macos
         path: ./dist/BastyonSetup.dmg

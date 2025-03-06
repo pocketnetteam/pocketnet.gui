@@ -11,15 +11,22 @@ var Peertube = function (settings) {
 	const PEERTUBE_ID = 'peertube://';
 	const SLASH = '/';
 
+	var inited = false
+
 	var roys = {};
 	var statistic = new Statistic();
+	
+	self.instanses = {}
 
 	var parselink = function (link) {
 		var ch = link.replace(PEERTUBE_ID, '').split(SLASH);
 
+		var isStream = ch[ch.length - 1] === 'stream';
+
 		return {
 			host: ch[0],
 			id: ch[1],
+			isStream,
 		};
 	};
 
@@ -57,11 +64,15 @@ var Peertube = function (settings) {
 	};
 
 	self.request = function (method, data, host, parameters = {}) {
+		
 		var roy = getroy(host);
 
 		if (!roy) return Promise.reject('roy');
 
 		var responseTime = performance.now();
+
+		// Direct server call for streams
+		// if (data.isStream) parameters.host = host;
 
 		return roy
 			.request(method, data, parameters)
@@ -75,6 +86,7 @@ var Peertube = function (settings) {
 				return Promise.resolve(r);
 			})
 			.catch((e) => {
+
 				statistic.add({
 					code: e == 'failed' ? 501 : (e || {}).code || 500,
 					difference: performance.now() - responseTime,
@@ -87,10 +99,11 @@ var Peertube = function (settings) {
 
 	self.inner = {
 		video: function (parsed) {
+
 			if (!parsed.id) return Promise.reject('No id info received');
 
 			return self
-				.request('video', { id: parsed.id }, parsed.host)
+				.request('video', { id: parsed.id, isStream: parsed.isStream }, parsed.host)
 				.then((res) => {
 					return Promise.resolve(res);
 				})
@@ -120,6 +133,7 @@ var Peertube = function (settings) {
 				return c;
 			});
 
+
 			return keys[f.rand(0, keys.length - 1)];
 		},
 
@@ -128,6 +142,7 @@ var Peertube = function (settings) {
 				type = 'upload';
 				roy = null;
 			}
+			
 
 			if (!roy) roy = self.api.randroykey(type, special);
 
@@ -142,7 +157,7 @@ var Peertube = function (settings) {
 			return Promise.resolve(best.export());
 		},
 
-		video: function ({ url, fast }, cache) {
+		video: function ({ url, fast, update }, cache) {
 			var parsed = parselink(url);
 
 			if (!parsed.id) return Promise.reject('No id info received');
@@ -152,7 +167,7 @@ var Peertube = function (settings) {
 			var cacheparameters = _.clone(parsed);
 			var _waitstatus = '';
 
-			if (fast){
+			if (fast && !update){
 				var cached = cache.get(cachekey, cacheparameters, cachehash);
 
 				if (cached && !cached.error) {
@@ -164,6 +179,11 @@ var Peertube = function (settings) {
 			}
 
 			return new Promise((resolve, reject) => {
+
+				if (update){
+					return resolve('update')
+				}
+
 				cache.wait(
 					cachekey,
 					cacheparameters,
@@ -176,7 +196,7 @@ var Peertube = function (settings) {
 			.then((waitstatus) => {
 				_waitstatus = waitstatus;
 
-				var cached = cache.get(cachekey, cacheparameters, cachehash);
+				var cached = update ? null : cache.get(cachekey, cacheparameters, cachehash);
 
 				if (cached) {
 
@@ -192,6 +212,7 @@ var Peertube = function (settings) {
 				}
 
 				return self.inner.video(parsed).then((r) => {
+
 					var ontime = null;
 
 					var fr = null;
@@ -207,6 +228,8 @@ var Peertube = function (settings) {
 
 						if (fr && fr.isLive && (!fr.aspectRatio || fr.aspectRatio == '0'))
 							fr.aspectRatio = 1.78;
+
+						fr.aspectRatio = Number(fr.aspectRatio)
 					}
 
 					cache.set(cachekey, cacheparameters, r, null, ontime, cachehash);
@@ -215,6 +238,7 @@ var Peertube = function (settings) {
 				});
 			})
 			.catch((e) => {
+
 				if (!e) e = {};
 
 				var cachedone = false;
@@ -251,14 +275,15 @@ var Peertube = function (settings) {
 			});
 		},
 
-		videos: function ({ urls, fast }, cache) {
+		videos: function ({ urls, fast, update }, cache) {
+
 			var result = {};
 
 			return Promise.all(
 				_.map(urls, function (url) {
 
 					return self.api
-						.video({ url, fast }, cache)
+						.video({ url, fast, update }, cache)
 						.then((r) => {
 							if (r.data)
 								result[url] = r.data;
@@ -266,6 +291,7 @@ var Peertube = function (settings) {
 							return Promise.resolve();
 						})
 						.catch((e) => {
+
 							result.errors ? result.errors.push(url) : (result.errors = [url]);
 
 							return Promise.resolve();
@@ -277,6 +303,7 @@ var Peertube = function (settings) {
 					return Promise.resolve(result);
 				})
 				.catch((e = {}) => {
+
 					return Promise.reject({
 						error: e,
 						code: e.code || 500,
@@ -303,7 +330,18 @@ var Peertube = function (settings) {
 
 					return r.canupload();
 				});
+			
+			if (special) {
+				Object.keys(_roys)
+					.filter((roy) => _roys[roy].hasspecial())
+					.map((roy, index) => {
+						_roys[roy].best() ? (output[index] = _roys[roy].best().host) : null;
+					});
 
+				if (Object.keys(output).length > 0) return Promise.resolve(output);
+			}
+
+			
 			Object.keys(_roys).map((roy) => {
 				_roys[roy].best() ? (output[roy] = _roys[roy].best().host) : null;
 			});
@@ -408,6 +446,7 @@ var Peertube = function (settings) {
 	}
 
 	self.init = function ({ urls, roys }) {
+		
 		if (roys) {
 			_.each(roys, function (urls, i) {
 				self.addroy(urls, i);
@@ -418,34 +457,51 @@ var Peertube = function (settings) {
 
 		statistic.init();
 
+		self.logger.w('peertube', 'info', `peertube initing`)
+
+		inited = true
+
 		return Promise.resolve();
 	};
 
 	self.destroy = function () {
 		statistic.destroy();
+
+		_.each(roys, (roy) => {
+			roy.destroy()
+		})
+
+		roys = {}
+
+		return Promise.resolve()
 	};
 
 	self.extendApi = function (api, cache) {
-		_.each(self.api, function (f, i) {
+		_.each(self.api, function (fu, i) {
 			api[i] = {
 				path: '/peertube/' + i,
 
 				action: function (data) {
-					return f(data, cache)
-						.then((r) => {
-							return Promise.resolve({
-								data: r,
-								code: 200,
-							});
-						})
-						.catch((e) => {
-							if (!e) e = {};
 
-							return Promise.reject({
-								error: e,
-								code: e.code || 500,
-							});
+					return f.pretry(() => {
+						return inited
+					}).then(() => {
+
+						return fu(data, cache)
+					}).then((r) => {
+						return Promise.resolve({
+							data: r,
+							code: 200,
 						});
+					})
+					.catch((e) => {
+						if (!e) e = {};
+
+						return Promise.reject({
+							error: e,
+							code: e.code || 500,
+						});
+					});
 				},
 			};
 		});

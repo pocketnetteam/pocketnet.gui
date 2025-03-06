@@ -33,8 +33,11 @@ var Roy = function (parent) {
 		var can = true;
 
 		_.each(instances, function (instance) {
+
+
 			if (!instance.info().canuploading || instance.cantuploading) can = false;
 		});
+
 
 		return can && instances.length;
 	};
@@ -53,15 +56,34 @@ var Roy = function (parent) {
 		if (!url) return;
 		if (!options) options = {};
 
+		if (parent.instanses[url]){
+
+			parent.instanses[url].counter++ 
+
+			instances.push(parent.instanses[url].instance);
+
+			return parent.instanses[url].instance
+		}
+
 		var instance = new Instance(url, options.ip, self);
 
 		if (options.cantuploading) instance.cantuploading = true;
 		if (options.special) instance.special = true;
 		if (options.old) instance.old = true;
+		if (options.offline) instance.offline = true;
+		if (options.archiveDouble) instance.archiveDouble = true;
+		if (options.archived) instance.archived = true;
 
 		instance.init();
 
 		instances.push(instance);
+
+
+
+		parent.instanses[url] = {
+			instance,
+			counter : 1
+		}
 
 		return instance;
 	};
@@ -71,8 +93,24 @@ var Roy = function (parent) {
 	self.removeInstance = function (host) {
 		var instance = self.find(host);
 
+
 		if (instance) {
-			instance.destroy();
+
+			if (parent.instanses[host]){
+				parent.instanses[host].counter--
+
+				if (parent.instanses[host].counter <= 0){
+
+					instance.destroy();
+					delete parent.instanses[host]
+				}
+			}
+			else{
+				instance.destroy();
+			}
+			
+
+			
 		}
 
 		instances = _.filter(instances, function (instance) {
@@ -84,6 +122,7 @@ var Roy = function (parent) {
 
 	self.init = function (urls) {
 		inited = true;
+
 
 		_.each(urls, function (ins) {
 			var host = ins;
@@ -98,7 +137,7 @@ var Roy = function (parent) {
 
 			const splittedUrl = host.split('.');
 
-			if (splittedUrl.length != 3 && splittedUrl[0] !== 'test' && splittedUrl.length != 1 && splittedUrl.length != 2) return;
+			if (splittedUrl.length != 3 && splittedUrl[0] !== 'test' && splittedUrl.length != 1 && splittedUrl.length != 2 && splittedUrl.length != 4) return;
 
 			self.addInstance(host, s);
 		});
@@ -106,7 +145,22 @@ var Roy = function (parent) {
 
 	self.destroy = function () {
 		_.each(instances, function (instance) {
-			instance.destroy();
+			//instance.destroy();
+
+			var host = instance.host
+
+			if (parent.instanses[host]){
+				parent.instanses[host].counter--
+
+				if (parent.instanses[host].counter <= 0){
+
+					instance.destroy();
+					delete parent.instanses[host]
+				}
+			}
+			else{
+				instance.destroy();
+			}
 		});
 
 		instances = [];
@@ -123,6 +177,7 @@ var Roy = function (parent) {
 			return instance.canuse() || self.useall;
 		});
 
+
 		return _.sortBy(_instances, (instance) => {
 			return getBestByType[type]
 				? getBestByType[type].calculate(instance)
@@ -132,6 +187,7 @@ var Roy = function (parent) {
 
 	self.best = function (type = 'view') {
 		var bestlist = self.bestlist(type);
+
 
 		if (bestlist.length) return [...bestlist].pop();
 
@@ -195,24 +251,35 @@ var Roy = function (parent) {
 				if (instance) list = [instance];
 			} else {
 				list = self.bestlist();
+				
 			}
 		}
 
-		if (!list.length) return Promise.reject('failed');
+		if (!list.length) {
+			return Promise.reject('failed');
+		}
 
 		var index = 0;
 		var error = null;
+		
+	
 
 		var request = function (instance) {
 			return instance
 				.request(method, data, p)
 				.then((r) => {
+					if (r.data && r.data.status === 404 && !r.data.videoBrief) {
+						error = r.data;
+						return Promise.reject(r);
+					}
 					if (r.data) {
 						r.data.from = instance.host;
 					}
 					return Promise.resolve(r);
 				})
 				.catch((e) => {
+
+
 					if (e && e.status) {
 						if (e.status != 500) {
 							error = e;
@@ -245,17 +312,24 @@ var Roy = function (parent) {
 		});
 	};
 
-	self.info = function () {
+	self.info = function (compact) {
 		var info = {};
 
 		_.each(instances, function (instance) {
+
+			if (compact && (!instance.canuse() || !instance.info().canuploading || instance.cantuploading)){
+				return
+			}
+
 			var stats = instance.stats();
 
 			info[instance.host] = {
 				host: instance.host,
 				ip : instance.ip,
+				archived: !!instance.archived,
 				canuse: instance.canuse(),
-				stats
+				stats,
+				auto : self.auto
 			};
 			
 		});

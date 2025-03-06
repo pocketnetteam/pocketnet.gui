@@ -1,0 +1,6 @@
+<div class="progressCaptionWrapper">
+  <span class="progressNumbersWrapper"><%- completed %> / <%- total %> </span>
+  <% if (lastPendingServer) { %>
+  <span class="connectingToWrapper"><%- `(${e('connectingTo')} ${lastPendingServer}...)`%></span>
+  <% } %>
+</div>

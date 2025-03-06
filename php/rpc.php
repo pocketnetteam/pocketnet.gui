@@ -82,6 +82,17 @@ class RPC {
 
         return $this->send($action, $params);
     }
+  
+    public function getappbyid($id) {
+        $action = 'getapps';
+        $params = array(
+            'pageStart' => 0,
+            'pageSize' => 1,
+            'id' => $id
+        );
+
+        return $this->send($action, $params);
+    }
 
     public function authorbyname($name){
         $action = 'getuseraddress';
@@ -93,7 +104,7 @@ class RPC {
 
     public function author($author){
         $action = 'getuserprofile';
-        $params = array(array($author));
+        $params = array(array($author), '1');
 
         return $this->send($action, $params);
     }

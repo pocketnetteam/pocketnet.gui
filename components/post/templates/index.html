@@ -16,38 +16,44 @@ if(typeof share != 'undefined' && share){
 %>
 
 <div id="<%- ed.repost && !ed.postclass ? makeid() : module.map.id%>" class="poctelc <% if(!ed.repost) { %><% } %>  <% if(typeof recommendationsenabled != 'undefined' && recommendationsenabled) {%> recommendationsenabled <% } %> <% if(ed.video) {%> videomainpost <%- (aspectRatio <= 0.9) && (aspectRatio > 0) ? 'verticalVideo' : ''%>  <%- (aspectRatio > 0.9) && (aspectRatio < 1.25) ? 'squareVideo' : ''%> <% } %> <%-widthcontainer%>">
-	
-	
+
+
 	<% if(typeof notfound == 'undefined' || !notfound) {
-		
-		
+
+
 		%>
-	
+
 		<div class="postWrapper">
 
 			<div elementsid="openshare" class="share share_common postsharemain">
 			</div>
-			<% 
-			
-			
-			
+			<%
+
+
+
 			if(!ed.repost) {%>
 				<div class="recomandationsFromContent">
+					<div class="streambgwrapper">
+						<div class="stream-placeholder"></div>
+						<!--<div class="toggle-chat">
+							<a href="#" class="toggle"><%=e('hide')%> <%=e('startchat')%></a>
+						</div>-->
+					</div>
 					<div class="recomandationsbgwrapper">
-						
+
 					</div>
 				</div>
 			<% } %>
 
 		</div>
 
-	<% } else { %> 
+	<% } else { %>
 		<div class="empty allb">
 			<%=e('postNotFound')%>
 		</div>
-	<% } %> 
+	<% } %>
 
-	
+
 
 </div>
 

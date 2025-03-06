@@ -4,7 +4,7 @@ dplace = e('e13038');
 
 if (isMobile()) dplace = e('e13039')
 
-var deleted = typeof app.platform.sdk.user.myaccauntdeleted != 'undefined' && app.platform.sdk.user.myaccauntdeleted();
+var deleted = app.platform.sdk.user.myaccauntdeleted();
 
 	
 
@@ -19,16 +19,15 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted != 'undefined' && ap
 
 			<%
 
-				var src = deep(app, 'platform.sdk.users.storage.'+(essenseData.daddress || user.address.value)+'.image') || ''
+				var info = psdk.userInfo.get(essenseData.daddress || user.address.value) || {}
 				
-				var name = deep(app, 'platform.sdk.users.storage.'+(essenseData.daddress || user.address.value) +'.name') || '';
-
+				var src = info.image || ''
+				
+				var name = app.platform.api.clearname(info.name || user.address.value, true) || ''
+				
 				var letter = name ? name[0] : ''
 
-				if(!src){
-					src = deep(app, 'platform.sdk.user.storage.me.image') || ''
-				}
-
+			
 				if(deleted){
 					src = ''
 					letter = ''
@@ -69,13 +68,23 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted != 'undefined' && ap
 
 		<% } %>
 
+		<% if(answer) {%>
+
+			<div class="closeWrapper">
+				<div elementsid="comments_closeAnswer" class="closeAnswer">
+					<i class="far fa-times-circle"></i>
+				</div>
+			</div>
+	
+		<% } %>
+
 		<% 
 			
 			
 		
 		if((!state || !user.validate() || _.isEmpty(mestate) || (mestate.reputation >= -50)) && !deleted) { 
 			
-			var embedimage = app.platform.sdk.user.canuseimagesincomments(); 
+			var embedimage = window.testpocketnet || app.platform.sdk.user.canuseimagesincomments(); 
 			var hasdonate = sender && sender !== receiver
 			var hasemoji = !isMobile() && !isTablet()
 			
@@ -99,11 +108,7 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted != 'undefined' && ap
 					<% if(hasdonate) { %> 
 
 						<div elementsid="comments_embeddonate" class="embeddonate <%- embedimage ? 'right' : '' %>">
-							<img 
-								class="donateIcon"
-								src="img/logo20.svg" 
-								alt=""
-							>
+							<img class="donateIcon" src="img/logo20.svg" alt="" />
 						</div>
 
 					<% } %>
@@ -113,16 +118,20 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted != 'undefined' && ap
 						</div>
 					<% } %>
 
-				</div>
+					
 
-				<div class="limits"></div>
+				</div>
 
 				<% if(hasdonate) { %> 
 					<div class="newcommentdonate"></div>
 				<% } %>
+
 				<% if(embedimage) {%>
 					<div class="newcommentimages"></div>
 				<% } %>
+
+				<div class="limits"></div>
+				<div class="errormessage hidden"></div>
 				
 				
 			</div>
@@ -135,7 +144,7 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted != 'undefined' && ap
 							<div class="preloader5"><img src="./img/three-dots.svg"/></div>
 						</div>
 
-						<div class="icon">
+						<div class="icon tvfocusedzoom">
 							<i class="fas fa-paper-plane"></i>
 						</div>
 					</div>
@@ -150,12 +159,6 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted != 'undefined' && ap
 
 	</div>
 
-	<% if(answer) {%>
-
-		<div elementsid="comments_closeAnswer" class="closeAnswer">
-			<i class="far fa-times-circle"></i>
-		</div>
-
-	<% } %>
+	
 
 </div>

@@ -152,10 +152,6 @@ NSString* UITraitsClassString;
 - (void)onKeyboardWillShow:(NSNotification *)note
 {
 
-    if (self.keyboardResizes == ResizeNone) {
-        self.disableScroll = true;
-    }
-
     if (hideTimer != nil) {
         [hideTimer invalidate];
     }
@@ -186,9 +182,6 @@ NSString* UITraitsClassString;
     NSString *js = [NSString stringWithFormat:@"Keyboard.fireOnShow(%d);", (int)height];
     [self.commandDelegate evalJs:js];
 
-    if (self.keyboardResizes == ResizeNone) {
-        self.disableScroll = false;
-    }
 }
 
 - (void)onKeyboardDidHide:(NSNotification *)sender

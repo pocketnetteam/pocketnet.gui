@@ -11,7 +11,7 @@ var recommendedusers = (function(){
 		var el;
 		var addresses = [];
 
-		var me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'));
+		var me = self.psdk.userInfo.getmy()
 
 		var filterSubscribes = function(u){
 
@@ -310,7 +310,7 @@ var recommendedusers = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

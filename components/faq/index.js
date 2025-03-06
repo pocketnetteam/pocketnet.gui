@@ -4,7 +4,7 @@ var faq = (function(){
 
 	var essenses = {};
 
-	var Essense = function(p){https://youtu.be/l0IDybyHR4M
+	var Essense = function(p){
 
 		var primary = deep(p, 'history');
 
@@ -38,8 +38,8 @@ var faq = (function(){
 
 				var r = ''
 
-				if (self.app.platform.sdk.address.pnet()){
-					r = '&ref=' + self.app.platform.sdk.address.pnet().address
+				if (self.app.user.address.value){
+					r = '&ref=' + self.app.user.address.value
 					url = url + r
 				}
 
@@ -82,7 +82,7 @@ var faq = (function(){
 				//vt = slowMade(function(){
 
 					
-					var h = $(window).height() / 4
+					var h = self.app.el.window.height() / 4
 
 					var inv = inView(el.c.find('.faqcnt .group'), {
 						offsetTop : h,
@@ -164,32 +164,34 @@ var faq = (function(){
 
 				var k = self.app.localization.key;
 
-				var faqLangs = self.sdk.faqLangs.get();
+				self.sdk.faqLangs.get(function(faqLangs){
 				
-				if(!faqLangs[k]) k = 'en';
+					if(!faqLangs[k]) k = 'en';
 
-				var faqcontent = faqLangs[k];
-				
-				if (!window.cordova){
+					var faqcontent = faqLangs[k];
+					
+					if (!window.cordova){
 
-					faqcontent[0].group.splice(1, 0, {
-						id : 'downloadandroid',
-						q : self.app.localization.e('e14109'),
-						a : `<div><a elementsid="https://play.google.com/store/apps/details?id=pocketnet.app" href="https://play.google.com/store/apps/details?id=pocketnet.app">https://play.google.com/store/apps/details?id=pocketnet.app</a></div><div>${self.app.localization.e('e14110')}</div>`,
+						faqcontent[0].group.splice(1, 0, {
+							id : 'downloadandroid',
+							q : self.app.localization.e('e14109'),
+							a : `<div><a elementsid="https://play.google.com/store/apps/details?id=pocketnet.app" href="https://play.google.com/store/apps/details?id=pocketnet.app">https://play.google.com/store/apps/details?id=pocketnet.app</a></div><div>${self.app.localization.e('e14110')}</div>`,
+						})
+					}
+
+					_.each(faqcontent, function(f){
+						_.each(f.group, function(q){
+							mp[q.id] = q;
+						})
 					})
-				}
 
-				_.each(faqcontent, function(f){
-					_.each(f.group, function(q){
-						mp[q.id] = q;
-					})
-				})
+					var data = {
+						groups : faqcontent
+					};
 
-				var data = {
-					groups : faqcontent
-				};
+					clbk(data);
 
-				clbk(data);
+				});
 
 			},
 
@@ -242,7 +244,7 @@ var faq = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

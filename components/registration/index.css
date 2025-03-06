@@ -33,83 +33,48 @@
   margin-top: 0.5em;
 }
 #registration .upanelloader {
-  display: none;
+  /*display: none;*/
+  visibility: hidden;
+  opacity: 0;
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
-  z-index: 3000;
+  z-index: 1000;
   background: rgba(var(--background-total-theme));
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
 }
 #registration .upanelloader .table {
   width: 100%;
   height: 100%;
 }
 #registration .upanelloader .table > div {
-  vertical-align: middle;
   text-align: center;
   color: rgba(var(--color-txt-ac));
 }
+#registration.loading .stepsWrapper {
+  opacity: 0;
+}
 #registration.loading .upanelloader {
-  display: block;
+  visibility: visible;
+  opacity: 1;
+}
+#registration.loading .hasaccount {
+  display: none;
 }
 #registration .mWrapper {
   margin-top: 2em;
   position: relative;
 }
-#registration .mWrapper .panelWrapper {
-  margin-top: 2em;
-  padding: 1em;
-  padding-bottom: 5em;
-}
-#registration .mWrapper .panelWrapper .elpanel {
-  opacity: 0;
-  -moz-transition: 0.3s;
-  -o-transition: 0.3s;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
-}
-#registration .mWrapper .panelWrapper .elpanel.active {
-  opacity: 1;
-}
-#registration .mWrapper .panelWrapper .elpanel .lwrapper {
-  display: none;
-}
-#registration .mWrapper .panelWrapper.loading .elpanel {
-  opacity: 0.5;
-}
-#registration .mWrapper .panelWrapper.loading .elpanel .nlberl {
-  display: none;
-}
-#registration .mWrapper .panelWrapper.loading .elpanel .lwrapper {
-  display: inline;
-}
-#registration .mWrapper .panelWrapper .btn {
-  margin: 0 auto;
-  text-align: center;
-  width: 200px;
-  color: rgba(var(--text-on-bg-ac-color));
-  cursor: pointer;
-  background: rgba(var(--color-bg-orange));
-  padding: 0.5em 0;
-  border-radius: 2px;
-}
-#registration .mWrapper .panelWrapper .btn.save {
-  border-radius: 30px;
-  cursor: default;
-  background: rgba(var(--color-txt-orange));
-  -moz-transition: 0.3s;
-  -o-transition: 0.3s;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
-}
-#registration .mWrapper .panelWrapper.changes .btn.save {
-  background: rgba(var(--color-bg-orange));
-  color: rgba(var(--text-on-bg-ac-color));
-  cursor: pointer;
-}
 #registration .mWrapper .stepsWrapper {
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
   overflow: hidden;
 }
 #registration .mWrapper .stepsWrapper .stepsWrapperLine {
@@ -117,15 +82,10 @@
 }
 #registration .mWrapper .stepsWrapper .step {
   min-height: 1px;
-  float: left;
-  opacity: 0;
   -moz-transition: 0.3s;
   -o-transition: 0.3s;
   -webkit-transition: 0.3s;
   transition: 0.3s;
-}
-#registration .mWrapper .stepsWrapper .step.active {
-  opacity: 1;
 }
 #registration .mWrapper #test {
   background: rgb(var(--background-total-theme));
@@ -160,6 +120,7 @@
 #registration .mWrapper #test .parameter {
   display: flex;
   flex-direction: column-reverse;
+  margin: 0 auto;
 }
 #registration .mWrapper #test .parameter > div {
   width: 100%;
@@ -187,20 +148,24 @@
 }
 #registration .mWrapper #test .subcaption {
   text-align: center;
+  display: none;
 }
 #registration .mWrapper #test .uploadTable {
   width: auto;
   margin: 0 auto;
+  flex-direction: column;
 }
 #registration .mWrapper #test .uploadTable > div.label {
-  display: none;
+  margin-top: 1em;
+  margin-left: 0;
 }
 #registration .mWrapper #test .uploadTable > div.iconWrapper {
-  width: 60px;
-  position: relative;
+  width: 130px;
 }
-#registration .mWrapper #test .uploadTable > div.iconWrapper .plissingCnt {
-  left: 45px;
+#registration .mWrapper #test .uploadTable > div.iconWrapper .usericon {
+  width: 130px;
+  height: 130px;
+  line-height: 130px;
 }
 #registration .mWrapper #test .parameterMaketWrapper[parameter="about"],
 #registration .mWrapper #test .parameterMaketWrapper[parameter="site"],
@@ -223,19 +188,35 @@
 #registration .mWrapper #test .userPanel .pgroup {
   margin-bottom: 0.5em;
 }
-#registration .mWrapper #test .userPanel .uploadPhoto {
-  height: 130px;
-}
-#registration .mWrapper #test .userPanel .uploadTable > div.iconWrapper .usericon {
-  width: 130px;
-  height: 130px;
-  line-height: 130px;
-}
 #registration .mWrapper #test .parameterMaketWrapper[parameter="addresses"] {
   display: none;
 }
 #registration .mWrapper #test .parameterMaketWrapper[parameter="email"] {
   display: block;
+}
+#registration .mWrapper .filluser .elpanel {
+  margin-top: 2em;
+  padding: 1em;
+  padding-bottom: 3em;
+}
+#registration .mWrapper .filluser .elpanel .btn {
+  margin: 0 auto;
+  text-align: center;
+  width: 200px;
+  color: rgba(var(--text-on-bg-ac-color));
+  cursor: pointer;
+  background: rgba(var(--color-bg-orange));
+  padding: 0.5em 0;
+  border-radius: 2px;
+}
+#registration .mWrapper .filluser .elpanel .btn.save {
+  border-radius: 30px;
+  cursor: default;
+  background: rgba(var(--color-txt-orange));
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
 }
 #registration .mWrapper .ucaptcha {
   padding-top: 3em;
@@ -254,10 +235,10 @@
   font-size: 1.7em;
   font-weight: 300;
   text-align: center;
-  max-width: 600px;
+  max-width: 300px;
 }
 #registration .mWrapper .ucaptcha .inputWrapper {
-  max-width: 600px;
+  max-width: 300px;
   margin: 1.5em auto;
 }
 #registration .mWrapper .ucaptcha input {
@@ -268,6 +249,7 @@
   -o-transition: 0.3s;
   -webkit-transition: 0.3s;
   transition: 0.3s;
+  border-radius: 0;
   width: 100%;
   background: transparent;
   text-align: center;
@@ -537,6 +519,17 @@
 #registration .mWrapper .bloggers .welcome_text .name {
   color: rgb(var(--color-txt-ac));
 }
+#registration .mWrapper .bloggers .nextStepButtons {
+  position: sticky;
+  z-index: 1000;
+  bottom: 0;
+  height: 100px;
+  background: rgb(var(--background-hidden-layer));
+}
+#registration .mWrapper .bloggers .nextStepButtons .subc {
+  margin-top: 2em;
+  padding-top: 1em;
+}
 #registration .mWrapper .bloggers .usersHorizontal {
   margin-top: 20px;
   display: flex;
@@ -560,13 +553,35 @@
   -webkit-line-clamp: 6;
   line-clamp: 6;
 }
+#registration .mWrapper .bloggers .usersHorizontal .wrk .aboutWrapper {
+  padding: 0 1em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 12;
+  line-clamp: 12;
+  -webkit-box-orient: vertical;
+}
+#registration .mWrapper .bloggers .usersHorizontal .wrk .aboutWrapper.aboutWrapperShort {
+  padding: 0;
+  height: 38px;
+  max-width: 100%;
+  font-size: 0.9em;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
 #registration .mWrapper .bloggers .usersHorizontal .wrk .subscribeWrapper {
   margin-top: 16px;
+  width: 100%;
+}
+#registration .mWrapper .bloggers .usersHorizontal .wrk .subscribeWrapper > button {
+  min-width: 80px;
+  width: 100%;
+  max-width: 210px;
 }
 #registration .mWrapper .bloggers .usersHorizontal .wrk .subscribeWrapper .unsubscribeButton {
   display: none;
   font-size: 14px;
-  width: 140px;
   background: rgb(var(--color-good));
   border: 1px solid rgb(var(--color-good));
 }
@@ -576,13 +591,12 @@
 }
 #registration .mWrapper .bloggers .usersHorizontal .wrk .subscribeWrapper .subscribeButton {
   font-size: 14px;
-  width: 140px;
 }
 #registration .mWrapper .bloggers .usersHorizontal .wrk .subscribeWrapper.following .subscribeButton {
   display: none;
 }
 #registration .mWrapper .bloggers .usersHorizontal .wrk .subscribeWrapper.following .unsubscribeButton {
-  display: block;
+  display: inline-block;
 }
 #registration .mWrapper .bloggers .usersHorizontal .wrk .modal {
   display: none;
@@ -592,7 +606,7 @@
   cursor: default;
   width: 308px;
   position: absolute;
-  z-index: 9999;
+  z-index: 999;
   right: 180px;
   margin-top: 15px;
   background: rgb(var(--background-total-theme));
@@ -654,24 +668,13 @@
 #registration .mWrapper .bloggers .usersHorizontal .wrk .modal .subscribeWrapper.following .subscribe {
   display: none;
 }
-#registration .mWrapper .bloggers .usersHorizontal .wrk .modal .aboutWrapper {
-  padding: 0 1em;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 12;
-  line-clamp: 12;
-  -webkit-box-orient: vertical;
-}
-@media (pointer: fine) {
-  #registration .mWrapper .bloggers .usersHorizontal .wrk .iconWrapper:hover .modal {
-    display: block;
-  }
-}
 #registration .mWrapper .bloggers .usersHorizontal .user {
   padding: 1em;
   border: 1px solid rgba(var(--color-medium-theme), 0.3);
   border-radius: 12px;
+}
+#registration .mWrapper .bloggers .usersHorizontal .user.showMore .modal {
+  display: block;
 }
 #registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .iconWrapper {
   display: flex;
@@ -716,8 +719,6 @@
 }
 #registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .userbody .name {
   font-weight: 600;
-  font-size: 0.9em;
-  max-width: 100px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -794,6 +795,14 @@
   font-weight: 700;
   text-decoration: underline;
 }
+#registration .mWrapper .bloggers .showMoreAbout {
+  margin-top: 0.5em;
+  color: #00A4FF;
+  cursor: pointer;
+}
+#registration .mWrapper .bloggers .showMoreAbout:hover {
+  opacity: 0.6;
+}
 #registration .mWrapper .bloggers .subcaption {
   font-weight: 100;
   padding-top: 3em;
@@ -829,6 +838,33 @@
 #registration[step="bloggers"] .hasaccount {
   display: none;
 }
+#registration[step="bloggers"] .stepsWrapper {
+  overflow: visible;
+}
+#registration[step="bloggers"] .stepsWrapper .stepsWrapperLine {
+  overflow: visible;
+}
+.wnd.regwindow .wndcontent {
+  padding: 0;
+}
+.wnd.regwindow .wndinner {
+  max-width: 400px;
+  max-height: 670px;
+}
+.wnd.regwindow #registration .work {
+  padding-left: 0;
+  padding-right: 0;
+}
+.wnd.regwindow #registration .caption {
+  margin-top: 1em;
+  font-size: 1.5em;
+}
+.wnd.regwindow #registration .mWrapper .panelWrapper {
+  padding-bottom: 1em;
+}
+.wnd.regwindow #registration .mWrapper #test {
+  width: 100%;
+}
 .wndcontent #registration .categories .welcome_text {
   margin-top: 0.5em !important;
 }
@@ -847,6 +883,9 @@ html[theme="gray"] #registration .ucaptcha .captchaImage {
   #registration .mWrapper #test {
     width: 100%;
   }
+  #registration[step="bloggers"] .bloggers .nextStepButtons {
+    height: 150px;
+  }
   #registration .mWrapper .categories .cats {
     padding: 0.5em;
     justify-content: space-between;
@@ -858,10 +897,7 @@ html[theme="gray"] #registration .ucaptcha .captchaImage {
   #registration .mWrapper .cat {
     font-size: 0.8em !important;
   }
-  #registration .mWrapper .bloggers .subc {
-    margin-top: 2em;
-  }
-  .wndcontent #registration .categories .nextStepButtons {
+  .wndcontent #registration[step="categories"] .nextStepButtons {
     position: static;
   }
 }

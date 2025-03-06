@@ -1,9 +1,6 @@
-<% 
+<%
 
-var me = null;
-
-if(user.address.value)
-	me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
+var me = psdk.userInfo.getmy() 
 
 var telements = function(address){ %>
 
@@ -20,15 +17,15 @@ var telements = function(address){ %>
 		
 		<span class="subscribebuttonstop <%-_class%>">
 
-			<span elementsid="unsubscribe" class="unsubscribe funf">&middot; You are Following <i class="far fa-check-circle"></i></span>	
+			<span elementsid="unsubscribe" class="unsubscribe funf"><%=e('youarefollowing')%> <i class="far fa-check-circle"></i></span>	
 
 			<% if (me){ 
 				
 				var r = me.relation(address, 'subscribes') 
-				
+
 			%>
 
-				<span elementsid="notificationturn" class="notificationturn <% if(r && (r.private == 'true' || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
+				<span elementsid="notificationturn" class="notificationturn <% if(r && (r.private == 'true' || r.private == 1 || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
 			
 			<% } %>
 
@@ -54,6 +51,8 @@ _.each(addresses, function(address){
 	var _class=''
 
 	if (me && me.relation(address, 'blocking')){ _class="userblocking" }
+	
+	var sUserInfo = psdk.userInfo.getShortForm(address) 
 
 %>
 	<div class="wrk">
@@ -61,19 +60,20 @@ _.each(addresses, function(address){
 		<div class="user <%-_class%>" address="<%-address%>">
 			<div class="addressTable table" address="<%-address%>">
 				<div class="iconWrapper">
-					
+					<% if(!app.mobileview) {%>
 					<a elementsid="<%-app.platform.api.authorlink(address)%>" href="<%-app.platform.api.authorlink(address)%>">
-						<div class="icon">
+					<% } %>
+						<div class="icon" profile="<%-address%>">
 
 							<% 
 
-								var src = deep(app, 'platform.sdk.usersl.storage.'+address+'.image');  
-								var name = deep(app, 'platform.sdk.usersl.storage.'+address+'.name');
-								var letter = name ? name[0] : ''; 
+								var src = sUserInfo.image;  
+								var name = sUserInfo.name;
+								var letter = sUserInfo.letter; 
 
 							%>
 
-							<div class="usericon" image="<%-src || '*'%>">
+							<div class="usericon" ban=".gif" contain="none" image="<%-src || '*'%>">
 
 								<% if(!src && letter) {%>
 
@@ -81,34 +81,37 @@ _.each(addresses, function(address){
 										<%-letter.toUpperCase()%>
 									</span>
 			
-								<% } else if (!src) { %>
-			
-									<svg width="30" height="30" data-jdenticon-value="<%-address%>"></svg>
-			
+								<% } else if (!letter) { %>
+									<i class="far fa-user"></i>
 								<% } %>
+								<%= app.platform.ui.markUser(address)%>
 							</div>
 						</div>
+					<% if(!app.mobileview) {%>
 					</a>
+					<% } %>
 				</div>
 
 				<div class="label">
+					<% if(!app.mobileview) {%>
 					<a elementsid="userlistauthorlink" href="<%-app.platform.api.authorlink(address)%>">
+					<% } %>
 
-						<div class="name">						
-							<%- app.platform.api.name(address) || address %>							
+						<div class="name" profile="<%-address%>">						
+							<%- app.platform.api.clearname(sUserInfo.name, true) %>							
 						</div>
 
-						<% var r = deep(app, 'platform.sdk.users.storage.'+address+'.reputation'); %>
+						<% if (sUserInfo.reputation && (sUserInfo.reputation > 1 || sUserInfo.reputation < -1)) {%>
 
-						<% if (r) {%>
-
-							<div class="light">						
-								Reputation: <span class="reputation"> <%- Number(r).toFixed(0)  %> </span>						
+							<div class="light" profile="<%-address%>">						
+								Reputation: <span class="reputation"> <%- Number(sUserInfo.reputation).toFixed(0)  %> </span>						
 							</div>
 
 						<% } %>
 
-					</a>			
+					<% if(!app.mobileview) {%>
+					</a>
+					<% } %>			
 
 				</div>
 

@@ -34,7 +34,7 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import org.json.JSONObject;
 import androidx.core.app.NotificationCompat;
-
+import android.content.pm.ServiceInfo;
 import static android.os.PowerManager.PARTIAL_WAKE_LOCK;
 
 /**
@@ -53,7 +53,12 @@ public class ForegroundService extends Service {
 
     // Default text of the background notification
     private static final String NOTIFICATION_TEXT =
-            "Doing heavy tasks.";
+            "This allows you to upload videos in stealth mode, or listen videos with the screen off";
+
+    // Default text of the background notification
+    private static final String FOREGROUND_TYPE =
+            "mediaPlayback";
+            
 
     // Default icon of the background notification
     private static final String NOTIFICATION_ICON = "icon";
@@ -63,7 +68,7 @@ public class ForegroundService extends Service {
 
     // Partial wake lock to prevent the app from going to sleep when locked
     private PowerManager.WakeLock wakeLock;
-
+    public static int FOREGROUND_SERVICE_TYPE_MICROPHONE;
     /**
      * Allow clients to call on to the service.
      */
@@ -124,10 +129,33 @@ public class ForegroundService extends Service {
     {
         JSONObject settings = BackgroundMode.getSettings();
         boolean isSilent    = settings.optBoolean("silent", false);
+        String type    = settings.optString("foregroundType", FOREGROUND_TYPE);
 
         if (!isSilent) {
-            startForeground(NOTIFICATION_ID, makeNotification());
+            //startForeground(notification, FOREGROUND_SERVICE_TYPE_MICROPHONE);
+            //startForeground(NOTIFICATION_ID, makeNotification());
+         
+           if (Build.VERSION.SDK_INT >= 34) {
+                //LOG.d("My  debug","if");
+
+                int foreground_type = ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK;
+
+                if (type == "mediaPlayback"){
+                    foreground_type = ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK;
+                }
+
+                if (type == "mediaUploading"){
+                    foreground_type = ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC;
+                }
+
+                startForeground(NOTIFICATION_ID,  makeNotification(), foreground_type);
+
+            } else {
+                //LOG.d("My  debug","else");
+                startForeground(NOTIFICATION_ID, makeNotification());
+            }
         }
+     
 
         PowerManager pm = (PowerManager)getSystemService(POWER_SERVICE);
 
@@ -221,9 +249,9 @@ public class ForegroundService extends Service {
             notification.addAction(closeAction.build());
         }
 
-        if (settings.optBoolean("hidden", true)) {
+        /*if (settings.optBoolean("hidden", true)) {
             notification.setPriority(Notification.PRIORITY_MIN);
-        }
+        }*/
 
         if (bigText || text.contains("\n")) {
             notification.setStyle(
@@ -240,7 +268,7 @@ public class ForegroundService extends Service {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             PendingIntent contentIntent = PendingIntent.getActivity(
                     context, NOTIFICATION_ID, intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT & PendingIntent.FLAG_IMMUTABLE);
+                    PendingIntent.FLAG_UPDATE_CURRENT| PendingIntent.FLAG_IMMUTABLE);
 
 
             notification.setContentIntent(contentIntent);

@@ -5,6 +5,7 @@
 .vs
 .idea
 /dist
+
 messenger/server/cert/key.pem
 messenger/server/cert/cert.pem
 exported.less
@@ -32,6 +33,8 @@ pocketcoin/
 pocketcoind*/
 .env
 /index.html
+/external.js
+/examples.html
 /index.php
 /index_el.html
 /openapi.html
@@ -47,8 +50,12 @@ cordova/node_modules
 cordova/www
 cordova/config.xml
 cordova/build.json
+cordova/buildgfree.json
+cordova/package.json
+cordova/package-lock.json
 cordova/google-services.json
 cordova/GoogleService-Info.plist
+cordova/ul_web_hooks
 indexcordova.html
 **/.DS_Store
 **/.pgbomit
@@ -59,3 +66,8 @@ main.js
 docs/
 posts/
 ./main.js
+cordova/cert.keystore
+package.cordova.json
+dcs
+/proxy16/peertube-servers.json
+peertube-servers.json

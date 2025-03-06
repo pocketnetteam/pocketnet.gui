@@ -8,6 +8,15 @@
 	<% } %>
 
 	<div class="actions">
+
+		<% if(meta.application) {%>
+			<div class="buttonwrapper">
+				<a href="applications">
+					<button class="writesupport ghost" template="<%-meta.application.template%>"><%=e(meta.application.text || 'useapplication')%></button>
+				</a>
+			</div>
+		<% } %>
+
 		<% if(meta.support) {%>
 			<div class="buttonwrapper">
 				<button class="writesupport ghost" template="<%-meta.support.template%>"><%=e(meta.support.text || 'writesupport')%></button>

@@ -14,11 +14,12 @@ var main = (function(){
 		var roller = null, lenta = null, share = null, panel,leftpanel, uptimer = null, leftparallax = null;
 
 		var videomain = false,
-			readmain = false
+			readmain = false,
+			audiomain = false
 
 		var upbutton = null, upbackbutton = null, plissing = null, searchvalue = '', searchtags = null, result, fixedBlock, openedpost = null;
 
-		var currentMode = 'common', hsready = false, fixeddirection = null, external = null;
+		var currentMode = 'common', hsready = false, fixeddirection = null, external = null, externalsearchusers = null;
 
 		var lastscroll = 0
 
@@ -32,7 +33,8 @@ var main = (function(){
 			{
 				link : 'index',
 				label : () => self.app.localization.e('e13136'),
-				value : 'index'
+				value : 'index',
+				savesearch : true
 			},
 
 			{
@@ -47,19 +49,27 @@ var main = (function(){
 			{
 				link : "index?video=1",
 				label : () => self.app.localization.e('video'),
-				value : 'video'
+				value : 'video',
+				savesearch : true
 			},
 			{
 				link : "index?read=1",
 				label : () => self.app.localization.e('longreads'),
-				value : 'read'
+				value : 'read',
+				savesearch : true
+			},
+			{
+				link : "index?audio=1",
+				label : () => self.app.localization.e('audio'),
+				value : 'audio',
+				savesearch : true
 			},
 
 			{
 				link : "index?r=saved",
-				label : () => self.app.localization.e('downloaded'),
+				label : () => self.app.localization.e('saved'),
 				if : function(){
-					return self.app.savesupported()
+					return self.app.savesupported() || self.app.savesupportedForBrowser()
 				},
 				value : 'saved'
 			},
@@ -69,10 +79,20 @@ var main = (function(){
 				label : () => self.app.localization.e('discussed'),
 				value : 'recommended'
 			},
+			
 			{
 				link : "index?r=best",
 				label : () => self.app.localization.e('e13138'),
 				value : 'best'
+			},
+
+			{
+				link : "index?r=jury",
+				label : () => self.app.localization.e('jury'),
+				value : 'jury',
+				if : function(){
+					return app.platform.sdk.user.isjury()
+				}
 			},
 		]
 		
@@ -83,11 +103,15 @@ var main = (function(){
 				var pss = parameters()
 
 				var r = pss.r || 'index'
-				var video = pss.video || false
+				var video = pss.video || self.app.television || false
 				var read = pss.read || false
+				var audio = pss.audio || false
 
 				if(video) r = 'video'
 				if(read) r = 'read'
+				if(audio) r = 'audio'
+
+				console.log('currentModeKey', r)
 
 				return r
 			},
@@ -108,16 +132,20 @@ var main = (function(){
 
 					video : "index?video=1",
 
-					read : "index?read=1"
+					read : "index?read=1",
+
+					audio : "index?audio=1"
 				}
 
-				if (window.cordova) {
+				if (self.app.savesupported() || self.app.savesupportedForBrowser()) {
 					links.saved = "index?r=saved"
 				}
 
 				var r = actions.currentModeKey()
 
 				var value = _.find(_modes, (m) => m.value == r)
+
+				console.log('actions.currentModeKey', r ,value)
 
 				return {
 					value : value ? value.value : null,
@@ -152,7 +180,7 @@ var main = (function(){
 
 			addbuttonscroll  : function(){
 
-				if (self.app.lastScrollTop > 400){
+				if (self.app.lastScrollTop > 1200){
 					if(!addbuttonShowed)
 						el.addbutton.addClass('scrollactive')
 
@@ -202,9 +230,6 @@ var main = (function(){
 				actions.backtolentaClear()
 
 				self.app.actions.scroll(lastscroll || 0)
-				//_scrollTop(lastscroll, null, 5)
-				
-
 			},
 
 			backtolentaClear : function(){
@@ -213,18 +238,22 @@ var main = (function(){
 
 				if(!el.c) return
 
-				el.c.removeClass('opensvishowed')
 
+				el.c.removeClass('opensvishowedend')
+				el.c.addClass('opensvishowedWillremoved')
+				renders.upbutton()
+				actions.refreshSticky()
 				renders.post(null)
+				
+				setTimeout(() => {
+					el.c.removeClass('opensvishowed')
+				}, 300)
 
-				setTimeout(function(){
-
-					renders.upbutton()
-					
-					actions.refreshSticky()
-
+				setTimeout(() => {
+					el.c.removeClass('opensvishowedWillremoved')
 				}, 350)
 
+				
 				self.nav.api.changedclbks()
 
 				if(lenta && lenta.update) lenta.update()
@@ -245,7 +274,6 @@ var main = (function(){
 
 			up : function(){
 				self.app.actions.scroll(0)
-				//lastscroll = 0
 			}
 
 		}
@@ -288,7 +316,10 @@ var main = (function(){
 
 		var load = {
 			posts : function(clbk, start, count){
-				self.app.platform.sdk.search.get(searchvalue, 'posts', start, count, fixedBlock, function(r){
+
+				
+
+				self.app.platform.sdk.search.get(searchvalue, self.app.television ? 'videos' : 'posts', start, count, fixedBlock, function(r){
 
 					clbk(r.data);
 
@@ -329,7 +360,6 @@ var main = (function(){
 
 					//videomain && !readmain && !searchvalue && !searchtags
 
-					
 
 					self.shell({
 
@@ -341,7 +371,9 @@ var main = (function(){
 							tagsExcluded : self.app.platform.sdk.categories.gettagsexcluded().length,
 							tagsSelected : self.app.platform.sdk.categories.gettags().length,
 							tags : self.app.platform.sdk.categories.gettags(),
-							value, modes
+							value, modes,
+
+							searchenabled : searchvalue || searchtags
 						},
 
 					}, function(_p){
@@ -355,20 +387,26 @@ var main = (function(){
 
 						el.menu.find('.mode').on('click', function(){
 							var link = $(this).attr('link')
+							var savesearch = $(this).attr('savesearch')
 
 							self.nav.api.load({
 								open : true,
 								href : link,
 								history : true,
-								handler : true
+								handler : true,
+								saveparameters : savesearch ? ['sst', 'st', 'ss'] : null
 							})
 						})
 
 						el.menu.find('.selectwrapper').on('click', function(){
 
 							var items = []
+							var searchenabled = searchvalue || searchtags
 
 							_.each(modes, function(a){
+
+								if(searchenabled && !a.savesearch) return
+
 								items.push({
 									text : a.label(),
 									action : function (clbk) {
@@ -379,7 +417,8 @@ var main = (function(){
 											href : a.link,
 											history : true,
 											handler : true,
-											replace : true
+											replace : true,
+											saveparameters : a.savesearch ? ['sst', 'st', 'ss'] : null
 										})
 
 										d.destroy()
@@ -406,7 +445,7 @@ var main = (function(){
 			addpanel : function(){
 
 				self.app.user.isState(function(state){
-					if(state){
+					if(state && el.addbutton){
 
 						if(state && !isMobile()){
 							el.addbutton.addClass('active')
@@ -423,7 +462,7 @@ var main = (function(){
 			
 			share : function(){
 
-				if (!isMobile() && !videomain && !readmain && !searchvalue && !searchtags && !app.platform.sdk.user.myaccauntdeleted()){
+				if (!isMobile() && !videomain && !readmain && !audiomain && !searchvalue && !searchtags && !app.platform.sdk.user.myaccauntdeleted() && !self.app.television){
 
 					//el.c.removeClass('wshar')
 
@@ -458,12 +497,73 @@ var main = (function(){
 				}
 			},
 
+			searchusers: function (show) {
+
+				if(!el.searchusers) return
+				
+				if (show){
+					window.rifticker.add(() => {
+						el.searchusers.removeClass('hidden')
+					})
+
+					if (externalsearchusers) {
+						externalsearchusers.clearessense()
+					}
+					
+					self.app.platform.papi.horizontalSearchUsers(el.searchusers.find('.wrpcn'), function (e,p) {
+
+						externalsearchusers = p
+						actions.refreshSticky()
+
+					}, {
+						caption : self.app.localization.e("horizontalSearchUsers"),
+						count : 20,
+						value : searchvalue,
+						loaded : function(users = []){
+
+							if (!users.length && el.searchusers){
+
+								window.rifticker.add(() => {
+									el.searchusers.addClass('hidden')
+
+									if (externalsearchusers){
+										externalsearchusers.destroy()
+										externalsearchusers = null
+									}
+								})
+								
+							}
+							
+						}
+	
+					})
+				}
+
+				else{
+
+					if (externalsearchusers){
+						externalsearchusers.destroy()
+						externalsearchusers = null
+					}
+
+					if(el.searchusers){
+						window.rifticker.add(() => {
+							el.searchusers.find('.wrpcn').html('')
+							el.searchusers.addClass('hidden')
+						})
+					}
+					
+				}
+
+				
+			},
+
 			topvideos: function (show) {
 
 				if(!el.topvideos) return
 				
 				if (show){
-					window.requestAnimationFrame(() => {
+					window.rifticker.add(() => {
 						el.topvideos.removeClass('hidden')
 					})
 
@@ -480,9 +580,10 @@ var main = (function(){
 						caption : self.app.localization.e("Top videos") ,
 						video: true,
 						r : 'hot',
-						loaderkey : 'recommended',
+						loaderkey : 'best',
 						shuffle : true,
 						period : '4320',
+						filterTopAuthors : true,
 						page : 0,
 						count : 10,
 						openPostInWindowMobile : true,
@@ -501,8 +602,18 @@ var main = (function(){
 						},
 						hasshares : function(shares){
 
+
 							if (shares.length <= 2 && el.topvideos){
-								el.topvideos.addClass('hidden')
+
+								window.rifticker.add(() => {
+									el.topvideos.addClass('hidden')
+
+									if(external){
+										external.destroy()
+										external = null
+									}
+								})
+								
 							}
 							
 						},
@@ -521,7 +632,7 @@ var main = (function(){
 					}
 
 					if(el.topvideos){
-						window.requestAnimationFrame(() => {
+						window.rifticker.add(() => {
 							el.topvideos.find('.wrpcn').html('')
 							el.topvideos.addClass('hidden')
 						})
@@ -605,7 +716,7 @@ var main = (function(){
 					if (searchvalue){
 						self.app.platform.sdk.activity.addsearch(searchvalue)
 
-						self.app.platform.sdk.search.get(searchvalue, 'posts', 0, 10, null, function(r, block){
+						self.app.platform.sdk.search.get(searchvalue, self.app.television ? 'videos' : 'posts', 0, 10, null, function(r, block){
 
 							fixedBlock = block
 	
@@ -654,8 +765,16 @@ var main = (function(){
 
 				if(searchvalue){
 					loader = function(clbk){
-						var _clbk = function(data){
-							var shares = self.app.platform.sdk.node.shares.transform(data) 
+						var _clbk = function(shares){
+
+							shares = _.filter(shares, (s) => {return s})
+
+							self.app.psdk.share.insertFromResponseSmall(shares)
+
+							var shares = self.app.psdk.share.gets(_.map(shares, (s) => {
+								return s.txid
+							}))
+							
 
 							if (clbk)
 								clbk(shares, null, {
@@ -692,7 +811,7 @@ var main = (function(){
 						animation : false,
 
 						mid : 'main',
-
+						insertimmediately : true,
 						essenseData : {
 							hr : 'index?',
 							goback : p.goback,
@@ -700,17 +819,19 @@ var main = (function(){
 							search : searchvalue || searchtags ? true : false,
 							searchTags : searchtags,
 							read : readmain,
-							video :  videomain && !isMobile(),
-							videomobile : videomain && isMobile(),
+							audio : audiomain,
+							video :  videomain && (!isMobile() || self.app.television),
+							videomobile : videomain && isMobile() && !self.app.television,
 							observe : searchvalue || searchtags ? null : mode,
 							page : 0,
+							fixposition : true,
 
 							//recommendedUsers : self.app.mobileview,
 							//recommendedUsersCount : self.app.mobileview ? 15 : 3,
 
 							includerec : state && !searchvalue && !searchtags && (mode == 'index' /*|| mode == 'video' || mode == 'read'*/) ? true : false,
 							includesub : !searchvalue && !searchtags && (mode == 'index' /*|| mode == 'video' || mode == 'read'*/) ? true : false,
-							includeboost : !searchvalue && !searchtags && self.app.boost && !self.app.pkoindisable,
+							includeboost : !audiomain && !searchvalue && !searchtags && self.app.boost && !self.app.pkoindisable && mode != 'jury',
 
 							//optimize : self.app.mobileview,
 							extra : (self.app.test || self.app.platform.istest()) && state && isMobile() ? [
@@ -729,8 +850,9 @@ var main = (function(){
 							cancelsearch : function(){
 								var backlink = 'index'
 
-								if (parameters().video) backlink = 'index?video=1'
-								if (parameters().read) backlink = 'index?read=1'
+								if (parameters().video || self.app.television) backlink = 'index?video=1'
+								if (parameters().read && !self.app.television) backlink = 'index?read=1'
+								if (parameters().audio && !self.app.television) backlink = 'index?audio=1'
 
 
 								self.nav.api.load({
@@ -749,52 +871,69 @@ var main = (function(){
 
 								ed.page++
 							},
+
+							canloadmorescroll : function(){
+
+								if(openedpost) return false
+
+								return true
+							},
 							
 							opensvi : function(id){
 
 								lastscroll = self.app.lastScrollTop
 
-								el.c.addClass('opensvishowed')
+								events.up()
 
-								if (upbutton) upbutton.destroy()
+								window.rifticker.add(() => {
 								
-								if (upbackbutton) upbackbutton.destroy()
+									el.c.addClass('opensvishowed')
 
-								if(typeof _Electron == 'undefined' || !_Electron){
-									setTimeout(function(){
-									
-										upbackbutton = self.app.platform.api.upbutton(el.upbackbutton, {
-											top : function(){
-												return '65px'
-											},
-											rightEl : el.c.find('.lentacellsvi'),
-											scrollTop : 0,
-											click : function(a){
-												actions.backtolenta()
-											},
-	
-											icon : '<i class="fas fa-chevron-left"></i>',
-											class : 'bright',
-											text : 'Back'
-										})	
-									}, 50)
+									/*setTimeout(() => {
 										
-									setTimeout(function(){
-										upbackbutton.apply()
-									},300)
-								}
+									}, 500)*/
 
-								
-
-								renders.post(id)
-
-								self.nav.api.history.addParameters({
-									v : id
 								})
 
-								self.nav.api.changedclbks()
+								setTimeout(() => {
 
-								events.up()
+									if (upbutton) upbutton.destroy()
+								
+									if (upbackbutton) upbackbutton.destroy()
+
+										setTimeout(function(){
+										
+											upbackbutton = self.app.platform.api.upbutton(el.upbackbutton, {
+												top : function(){
+													return '65px'
+												},
+												rightEl : el.c.find('.lentacellsvi'),
+												scrollTop : 0,
+												click : function(a){
+													actions.backtolenta()
+												},
+		
+												icon : '<i class="fas fa-chevron-left"></i>',
+												class : 'bright',
+												text : 'Back'
+											})	
+										}, 50)
+											
+										setTimeout(function(){
+											upbackbutton.apply()
+										},300)
+
+									renders.post(id, function(){
+										el.c.addClass('opensvishowedend')
+									})
+
+									self.nav.api.history.addParameters({
+										v : id
+									})
+
+									self.nav.api.changedclbks()
+									
+								}, 400)
 							},
 
 							renderClbk : function(){
@@ -836,9 +975,13 @@ var main = (function(){
 					})	
 			},
 
-			post : function(id){
+			post : function(id, clbk){
 
-				if(!el || !el.c) return
+				if(!el || !el.c) {
+					if(clbk) clbk()
+
+						return
+				}
 
 				if (!id){
 
@@ -850,6 +993,8 @@ var main = (function(){
 
 					el.c.find('.renderposthere').html('')
 
+					if(clbk) clbk()
+
 				}
 
 				else{
@@ -857,30 +1002,34 @@ var main = (function(){
 					
 					self.app.platform.papi.post(id, el.c.find('.renderposthere'), function(e, p){
 						openedpost = p
+
+						if(clbk) clbk()
 					}, {
 						video : true,
 						showrecommendations : true,
 						autoplay : true,
 						nocommentcaption : true,
 						r : 'recommended',
-						
+						openapi : false,
 						opensvi : function(id){
 
 							if (openedpost){
 								openedpost.clearessense()
 								openedpost = null
 							}
+
+							events.up()
+
+							setTimeout(() => {
+								el.c.find('.renderposthere').html('')
+
+								renders.post(id)
+	
+								self.nav.api.history.addParameters({
+									v : id
+								})
+							}, 400)
 		
-							el.c.find('.renderposthere').html('')
-
-							renders.post(id)
-
-							self.nav.api.history.addParameters({
-								v : id
-							})
-
-							self.app.actions.scroll(0)
-							
 						}
 					})
 				}
@@ -936,7 +1085,7 @@ var main = (function(){
 						right : {
 							cancellable : true,				
 							basevalue : function(){
-								return - 0.9 * (self.app.width || $(window).width())
+								return - 0.9 * (self.app.width || self.app.el.window.width())
 							},
 
 							positionclbk : function(px){
@@ -980,13 +1129,13 @@ var main = (function(){
 						if (currentMode == 'common')
 						{
 							renders.share()
-							window.requestAnimationFrame(() => {
+							window.rifticker.add(() => {
 								el.c.find('.bgCaption').removeClass('hidden')
 							})
 						}
 						else
 						{
-							window.requestAnimationFrame(() => {
+							window.rifticker.add(() => {
 								el.share.html('')
 								el.c.find('.bgCaption').addClass('hidden')
 							})
@@ -1002,15 +1151,24 @@ var main = (function(){
 
 		var make = function(clbk, p){
 
-			localStorage['lentakey'] = parameters().r || 'index'
+			try {
+				localStorage['lentakey'] = parameters().r || 'index'
 			
-			if (parameters().video){
-				localStorage['lentakey'] = 'video'
-			}
+				if (parameters().video || self.app.television){
+					localStorage['lentakey'] = 'video'
+				}
 
-			if (parameters().read){
-				localStorage['lentakey'] = 'read'
+				if (parameters().read && !self.app.television){
+					localStorage['lentakey'] = 'read'
+				}
+
+				if (parameters().audio && !self.app.television){
+					localStorage['lentakey'] = 'audio'
+				}
 			}
+			catch (e) { }
+
+			
 
 			renders.lentawithsearch(clbk, p)
 
@@ -1019,16 +1177,8 @@ var main = (function(){
 			makePanel()
 
 			renders.menu()
-
-
-			if (currentMode == 'common' && !videomain && !readmain && !searchvalue && !searchtags)
-				renders.topvideos(true)
-			else{
-				renders.topvideos(false)
-			}
-
-			
-				
+			renders.topvideos(currentMode == 'common' && !videomain && !readmain && !audiomain && !searchvalue && !searchtags)
+			renders.searchusers(currentMode == 'common' && !videomain && !readmain && !audiomain && searchvalue && !searchtags)
 		}
 
 		var showCategories = function(t){
@@ -1073,7 +1223,11 @@ var main = (function(){
 				var nsearchvalue = parameters().ss || ''
 				var ncurrentMode = parameters().r || 'common';
 
-				var nlentakey = parameters().video ? 'video' : parameters().read ? 'read' : (parameters().r || 'index')
+				var nlentakey = parameters().video ? 'video' : parameters().read ? 'read' : parameters().audio ? 'audio' : (parameters().r || 'index')
+
+				if(self.app.television){
+					nlentakey = 'video'
+				}
 
 				self.app.Logger.info({
 					actionId: 'SELECT_FEED_SECTION',
@@ -1082,11 +1236,17 @@ var main = (function(){
 
 				var nvideomain = nlentakey == 'video'
 				var nreadmain = nlentakey == 'read'
+				var naudiomain = nlentakey == 'audio'
 				var page = parameters().page
 
 				var changes = false
 
-				localStorage['lentakey'] = nlentakey
+				try {
+					localStorage['lentakey'] = nlentakey
+				}
+				catch (e) { }
+
+				
 
 				if (currentMode != ncurrentMode){
 					currentMode = ncurrentMode; changes = true
@@ -1098,6 +1258,10 @@ var main = (function(){
 
 				if (readmain != nreadmain){
 					readmain = nreadmain; changes = true
+				}
+
+				if (audiomain != naudiomain){
+					audiomain = naudiomain; changes = true
 				}
 
 				if (searchvalue != nsearchvalue){
@@ -1136,7 +1300,14 @@ var main = (function(){
 						external = null
 					}
 
-					renders.topvideos(currentMode == 'common' && !videomain && !readmain && !searchvalue && !searchtags)
+					if (externalsearchusers) {
+						externalsearchusers.clearessense()
+						externalsearchusers = null
+					}
+
+					renders.topvideos(currentMode == 'common' && !videomain && !readmain && !audiomain && !searchvalue && !searchtags)
+
+					renders.searchusers(currentMode == 'common' && !videomain && !readmain && !audiomain && searchvalue && !searchtags)
 
 					if (lenta) {
 						lenta.clearessense()
@@ -1193,13 +1364,14 @@ var main = (function(){
 
 				beginmaterial = _s.s || _s.i || _s.v || null;
 
-				if((!beginmaterial && !_s.ss && !_s.sst && !p.state && (/*self.app.mobileview || */window.cordova || self.app.platform.matrixchat.connectWith))){
+				if((!beginmaterial && !_s.ss && !_s.sst && !p.state && (/*self.app.mobileview || window.cordova ||*/ self.app.platform.matrixchat.connectWith))){
 					
 					self.nav.api.load({
 						open : true,
 						href : 'welcome',
 						history : true,
-						replaceState : true
+						replaceState : true,
+						fade : self.app.el.content,
 					})
 
 					return
@@ -1211,7 +1383,8 @@ var main = (function(){
 						open : true,
 						href : 'userpage?pc=1',
 						history : true,
-						replaceState : true
+						replaceState : true,
+						fade : self.app.el.content
 					})
 
 					return
@@ -1219,14 +1392,15 @@ var main = (function(){
 
 				if((_s.v || _s.s) && (isMobile())){
 
-					self.nav.api.load({
+					/*self.nav.api.load({
 						open : true,
 						href : 'post?s=' + (_s.v || _s.s) + (_s.commentid ? '&commentid=' + _s.commentid : ''),
 						history : true,
-						replaceState : true
+						replaceState : true,
+						fade : self.app.el.content
 					})
 
-					return 
+					return */
 				}
 
 				if(p.state && primary && !self.app.user.validate()){
@@ -1235,7 +1409,8 @@ var main = (function(){
 						open : true,
 						href : 'userpage?id=test',
 						history : true,
-						replaceState : true
+						replaceState : true,
+						fade : self.app.el.content
 					})
 
 					return
@@ -1252,6 +1427,7 @@ var main = (function(){
 			},
 
 			destroy : function(){
+
 
 				showCategories(false)
 
@@ -1308,6 +1484,13 @@ var main = (function(){
 					external = null
 				}
 
+				if (externalsearchusers){
+					externalsearchusers.clearessense()
+					externalsearchusers = null
+				}
+
+				
+
 				if (leftpanel){
 					leftpanel.destroy()
 					leftpanel = null
@@ -1338,6 +1521,7 @@ var main = (function(){
 					})
 	
 				}
+
 			},
 
 			showCategories : function(show){
@@ -1346,7 +1530,6 @@ var main = (function(){
 			},
 			
 			init : function(p){
-				
 
 				roller = null
 				lenta = null
@@ -1367,6 +1550,7 @@ var main = (function(){
 				el.addbutton = el.c.find('.addbutton')
 				el.slwork = el.c.find('.maincntwrapper >div.work')
 				el.topvideos = el.c.find('.topvideosWrapper')
+				el.searchusers = el.c.find('.searchusersWrapper')
 				el.menu = el.c.find('.menuwrapper')
 
 				//self.app.el.footer.addClass('workstation')
@@ -1388,14 +1572,23 @@ var main = (function(){
 					result = {}
 				}
 
-				videomain = parameters().video ? true : false
+				videomain = (parameters().video || self.app.television) ? true : false
 				
-				readmain = parameters().read ? true : false
+				readmain = (parameters().read && !self.app.television) ? true : false
 
-				if(readmain) videomain = false
+				audiomain = (parameters().audio && !self.app.television) ? true : false
 
-				if(videomain && !isMobile()){
-					window.requestAnimationFrame(() => {
+				if(readmain) {
+					videomain = false
+					audiomain = false
+				}
+				if (audiomain) {
+					readmain = false
+					videomain = false
+				}
+
+				if(videomain && (!isMobile() || self.app.television)){
+					window.rifticker.add(() => {
 						el.c.addClass('videomain')
 					})
 				}

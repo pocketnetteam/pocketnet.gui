@@ -5,14 +5,15 @@
 
 		var src = image.csrc || image.src;
 
-		src = src.replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.', '')
+		if (src && src.indexOf('peertube') == -1) 
+			src = replaceArchiveInImage(src)
 
 	%>
 
 	
 		<div class="image unselectable">
 			<div class="imgWrapper">
-				<img elementsid="galleryImage" id="galleryImage" crossorigin="anonymous" save="<%-nameFromScr(src)%>" original="<%-src%>" src="<%-src%>">
+				<img elementsid="galleryImage" id="galleryImage" save="<%-nameFromScr(src)%>" original="<%-src%>" src="<%-src%>">
 			</div>
 		</div>
 

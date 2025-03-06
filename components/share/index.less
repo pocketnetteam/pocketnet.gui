@@ -36,7 +36,7 @@
 		bottom: 0;
 		padding :  3 * @rhythm 2 * @rhythm;
 		background: rgba(var(--background-secondary-theme), 0.9);
-		z-index: 150;
+		z-index: 6;
 	}
 
 	&.loading{
@@ -50,7 +50,7 @@
 	.tgsWrapperMain{
 
 		#taginput{
-			margin-top : @rhythm;
+			margin-top: @rhythm;
 
 			.mobsearch{
 				cursor: pointer;
@@ -65,6 +65,7 @@
 	}
 
 	.settingsWrapper{
+		
 		.visibilityWrapper{
 			.vc_valuecustom{
 				width: auto;
@@ -88,9 +89,65 @@
 					border : 0;
 				}
 			}
-
-			
 		}
+
+		.timewrapper{
+			margin-top: @rhythm;
+
+			.timelabel{
+				display: none;
+				margin-left: @rhythm;
+				cursor: pointer;
+				span{
+					text-decoration: underline;
+					color : rgb(var(--color-txt-ac));
+				}
+			}
+
+			.cleartimelabel{
+				display: none;
+				cursor: pointer;
+				padding : @rhythm;
+				width: 33px;
+				text-align: right;
+
+				i{
+					font-size: 0.8em;
+					.transition(0.3s);
+					color : rgb(var(--neutral-grad-2));
+				}
+
+				&:hover{
+					i{
+						color : rgb(var(--neutral-grad-4));
+					}
+				}
+
+			}
+		}
+
+		.wrpsflex{
+			display: flex;
+			align-items: center;
+		}
+
+		.settings{
+			&.showtimepicker{
+				.timechanger{
+					width: 50%;
+				}
+
+				.timelabel{
+					display: block;
+				}
+
+				.cleartimelabel{
+					display: block;
+				}
+			}
+		}
+
+		
 	}
 
 	.postlineWrapper{
@@ -151,6 +208,8 @@
 		}
 
 		.postpanel{
+			margin-left: auto;
+			width: auto;
 			>div{
 				&.postWrapper{
 					display: none;
@@ -170,7 +229,7 @@
 			bottom : 0;
 			opacity: 0.5;
 			padding : 0;
-			padding-top: @rhythm;
+			padding-top: 0;
 			left: 50%;
 
 			.panel>div{
@@ -600,13 +659,37 @@
 					}
 				}
 			}
-			
 
 		}
 
 		.urlhtmlcontent{
 			font-size: 0.8em;
 
+			.applicationCaption{
+				display: flex;
+				align-items: center;
+
+				.appicon{
+					width: 22px;
+
+					.bgimage{
+						width: 22px;
+						height: 22px;
+					}
+				}
+
+				.appname{
+					margin-left: @rhythm;
+					span{
+						font-weight: 700;
+					}
+				}
+
+				
+			}
+			.applicationButton{
+				margin-top: 2 * @rhythm;
+			}
 			.ogtable{
 				>div{
 					vertical-align: top;
@@ -728,6 +811,14 @@
 					display: block!important;
 				}
 			}
+			&.vjs-is-audio {
+				.vjs-poster {
+					display: none !important;
+				}
+				.vjs-control-bar {
+					display: flex !important;
+				}
+			}
 		}
 		.video-js:not(.vjs-is-mobile),
 		.video-js.vjs-is-mobile.vjs-paused:not(.vjs-has-started){
@@ -817,9 +908,15 @@
     
     .postlineWrapper{
 		margin-top : @rhythm;
+		display: flex;
+		align-items: center;
+
     }   
 
 	.postpanel{
+		display: flex;
+		align-items: center;
+		width: 100%;
 
 		.language{
 			font-weight: 700;
@@ -838,10 +935,11 @@
 		}
 		
 		>div{
-			vertical-align: middle;
+			align-items: center;
+			display: flex;
 
 			&.postWrapper{
-				width: 280px;
+				margin-left: auto;
 				padding-right : 0;
 				text-align: right;
 
@@ -872,7 +970,8 @@
 		}
 
 		.panel{
-			height: 35px;
+			align-items: center;
+			display: flex;
 	
 			.hide{
 				display: none;
@@ -883,15 +982,14 @@
 				height: 32px;
 				border-radius: 50%;
 				line-height: 32px;
-				color : rgb(var(--color-txt-gray-dark));
+				color : rgb(var(--color-txt-gray));
 			
-				float: left;
 				text-align: center;
 				font-size: 0.8em;
 				margin-right : 1 * @rhythm;
 				cursor: pointer;
 				.transition(0.3s);
-	
+
 				&.nowidth{
 					width: auto;
 					i{
@@ -964,12 +1062,19 @@
 
 
 
-.topvideosWrapper .peertube-server-hint {
-	bottom: 0;
-	font-size: 0.6em;
-}
+
 
 .sharedate{
+
+	
+	.selectDateWrapper{
+		select{
+			cursor: pointer;
+			border-radius: 3px;
+			background: rgb(var(--neutral-grad-1));
+		}
+	}
+
 	.selectDateTableWrapper{
 		width : 500px;
 		>div{
@@ -1001,6 +1106,8 @@
 		float: right;
 	}
 }
+
+
 
 .wnd.wndsharepost{
 
@@ -1097,6 +1204,8 @@
                 position: absolute;
 				padding-left: 2 * @rhythm;
 				bottom : @rhythm;
+				left : 0;
+				right : 0;
 				background: rgb(var(--background-secondary-theme));
 			}
 
@@ -1151,6 +1260,34 @@ html.mobileview{
 }
 
 /*t*/ @media only screen and (max-width: 768px){
+
+	.sharedate{
+
+		.selectDateWrapper{
+
+			select{
+				width: 100%;
+				text-align: center;
+				padding : 2 * @rhythm;
+			}
+
+			.selectDateTableWrapper{
+				width: 100%;
+
+				>div{
+					&.dateWrapper{
+						width : 47%;
+					}
+
+					&.dWrapper {
+						width: 10px;
+					}
+				}
+			}
+		
+			
+		}
+	}
 
 	.wnd.wndsharepost{
 
@@ -1298,7 +1435,7 @@ html.mobileview{
 
 		.repostShareWrapperInns{
 			border-radius: 5px;
-			border : 1px solid rgba(var(--neutral-grad-2), 0.5);
+			/*border : 1px solid rgba(var(--neutral-grad-2), 0.5);*/
 			background: rgb(var(--background-total-theme));
 			margin-bottom: @rhythm;
 
@@ -1312,15 +1449,26 @@ html.mobileview{
 			}
 
 			
+			
 		}	
 
 		.settingsWrapper{
+
+			
 			.settings{
-				background: rgb(var(--background-total-theme));
-				padding : 1.6 * @rhythm @rhythm;
+				
+				
 				margin-bottom: @rhythm;
 
+				.wrpsflex{
+					.timechanger{
+						flex-grow: 2;
+					}
+				}
+
 				.visibilityWrapper{
+					background: rgb(var(--background-total-theme));
+					padding : 1.6 * @rhythm @rhythm;
 					.vc_valuecustom{
 						width: auto;
 						padding-top : 0;
@@ -1842,6 +1990,7 @@ html.mobileview{
 					
 
 					.panel{
+						display: block;
 						height: auto;
 						.fileUploader ,
 						.elContent{

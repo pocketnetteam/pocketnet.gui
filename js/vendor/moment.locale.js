@@ -431,7 +431,7 @@ moment.defineLocale('ru', {
     relativeTime: {
         future: 'через %s',
         past: '%s назад',
-        s: 'несколько секунд',
+        s: 'секунду',
         ss: relativeTimeWithPlural$3,
         m: relativeTimeWithPlural$3,
         mm: relativeTimeWithPlural$3,

@@ -30,26 +30,9 @@ var Remote = function(app){
 	    return result;
 	}
 
-	var gethead = function(body){
-
-		if(!body) return ''
-		
-		var match = body.toLowerCase().match(/<head>[\s\S]*?<\/head>/gi)
-
-
-		if(match && match[0]){
-			return "<!DOCTYPE html><html>" + match[0] + "<body>abs</body></html>"
-		}
-
-		return ''
-	}
-
 	var load = {
 		
-
-
-
-		ogcache : function(uri, clbk){
+		ogcache : function(uri, clbk, p){
 			if(errors[uri]){
 
 				if (clbk)
@@ -87,42 +70,23 @@ var Remote = function(app){
 				ogloading[uri] = true
 
 				load.ogs(uri, function(og){
-					if(_.isEmpty(og)){
-						load.ogf(uri, function(og){
+					
 
-							if (ogcache.length > 3500){
-								ogcache = _.last(ogcache, 3000)
-							}
-		
-							delete ogloading[uri]
-		
-							ogcache.push({
-								url : uri,
-								og : og
-							})
-		
-							if (clbk)
-								clbk(og)	
-						})
+					if (ogcache.length > 3500){
+						ogcache = _.last(ogcache, 3000)
 					}
-					else{
-
-						if (ogcache.length > 3500){
-							ogcache = _.last(ogcache, 3000)
-						}
-		
-						delete ogloading[uri]
 	
-						ogcache.push({
-							url : uri,
-							og : og
-						})
+					delete ogloading[uri]
 
-						
-						if (clbk)
-							clbk(og)
-					}
-				})
+					ogcache.push({
+						url : uri,
+						og : og
+					})
+
+					
+					if (clbk)
+						clbk(og)
+				}, p)
 
 				
 			}
@@ -134,7 +98,7 @@ var Remote = function(app){
 			})
 		},
 
-		ogs : function(uri, clbk){
+		ogs : function(uri, clbk, p = {}){
 
 			if(!uri){
 				
@@ -146,12 +110,13 @@ var Remote = function(app){
 			}
 
 			request({
-				uri : nremotelink + '?url=' + uri + '&validate=false',
+				uri : nremotelink + '?url=' + uri + '&validate=false' + (p.bitchute ? '&bitchute=true' : ''),
 				timeout : 30000,
 				type : "POST"
 			}, function(error, response, body){
 
 				if (error){
+
 					errors[uri] = 'nc'
 
 					if (clbk){
@@ -191,20 +156,23 @@ var Remote = function(app){
 
 		ogf : function(uri, clbk){
 
-			if(!uri){
+			//if(!uri){
 
-				if (clbk){
-					clbk({})
-				}
 
-				return
+			if (clbk){
+				clbk({})
 			}
+
+			return
+			//}
+
 
 			request({
 				uri : 'https://pocketnet.app:8888/urlPreview?url=' + hexEncode(uri),
 				timeout : 30000,
 				type : "POST"
 			}, function(error, response, body){
+
 
 				if (error){
 					errors[uri] = 'nc'
@@ -233,14 +201,14 @@ var Remote = function(app){
 	}
 
 
-	self.nmake = function(url, clbk){
+	self.nmake = function(url, clbk, p){
 		load.ogcache(url, function(og){
 
 			if (clbk){
 				clbk(null, og)
 			}
 
-		})
+		}, p)
 	}
 
 	self.clear = function(){

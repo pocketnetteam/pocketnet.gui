@@ -12,7 +12,7 @@ var instance = function (host, ip, Roy) {
 	var inited = false;
 	var statistic = new Statistic()
 
-	const FREE_SPACE_PERC = 0.95;
+	const FREE_SPACE_PERC = 0.97;
 
 	var lastStat = null;
 
@@ -20,7 +20,7 @@ var instance = function (host, ip, Roy) {
 
 	var info = []
 	var infointerval = null
-	var infotime = 240000
+	var infotime = 1800000
 	var maxinfoevents = 20
 
 	var methods = {
@@ -100,8 +100,6 @@ var instance = function (host, ip, Roy) {
 
 		}).catch(e => {
 
-			//console.log("E", self.host, e)
-
 			return Promise.resolve()
 
 		})
@@ -141,38 +139,64 @@ var instance = function (host, ip, Roy) {
 
 		if (typeof url == 'function') url = url(data);
 
-		var timeout = p.timeout || Roy.parent.timeout() || 10000
-		return Roy.parent.transports.axios[p.type || 'get'](`http://${host}${url}`, { timeout }).then((result) => {
+		var timeout = p.timeout || Roy.parent.timeout() || 10000;
 
-			var meta = {
-				code : 200,
-				difference : performance.now() - responseTime,
-				method : method
-			}
+		//Roy.parent.logger.w('peertube', 'info', `Request http://${host}${url}/` + method)
 
-			statistic.add(meta);
+		if (self.offline) {
+			return Promise.reject('HOST_OFFLINE_MARKER');
+		}
 
-			return Promise.resolve({
-				data: result.data || {},
-				meta,
-				host,
+		try {
+			return Roy.parent.transports.fetch(`http://${host}${url}`, {
+				method: p.type || 'get',
+				timeout,
+			}).then(async (result) => {
+
+				const meta = {
+					code: 200,
+					difference: performance.now() - responseTime,
+					method: method,
+				};
+
+				statistic.add(meta);
+
+				let resultStr;
+
+				try {
+					resultStr = JSON.parse(await result.text());
+				} catch (err) {
+					resultStr = {};
+
+					return Promise.reject({})
+				}
+
+				return Promise.resolve({
+					data: resultStr,
+					meta,
+					host,
+				});
 			});
+		} catch(error) {
 
-		}).catch((error) => {
 
-			var meta = {
-				code : ((error || {}).response || {}).status || 500,
-				difference : performance.now() - responseTime,
-				method : method
+
+			const meta = {
+				code: ((error || {}).response || {}).status || 500,
+				difference: performance.now() - responseTime,
+				method: method,
+			};
+
+			//Roy.parent.logger.w('peertube', 'error', `http://${host}${url}/` + method + ' ('+code+'):' + (error && error.toString ? error.toString() : ''))
+
+			if (meta.code == 500) {
+				statistic.penalty.set(0.9, 30000, 500);
 			}
-
-			if (meta.code == 500) statistic.penalty.set(0.9, 30000, 500)
 
 			statistic.add(meta);
 
-			return Promise.reject((error || {}).response || {});
-
-		});
+			return Promise.reject(error || {});
+		}
 	};
 
 	self.availability = function(){

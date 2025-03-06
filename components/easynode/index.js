@@ -59,7 +59,7 @@ var easynode = (function(){
 
 				}
 
-				return amount / calc.netstakeweight() * 4.75 * 1440 * t
+				return amount / calc.netstakeweight() * 2.5 * 1440 * t
 
 			}
 
@@ -341,10 +341,16 @@ var easynode = (function(){
 
 					oss = self.app.platform.applications[ed.key || 'ui'];
 
-					faqLangs = self.sdk.faqLangs.get();
+				self.sdk.faqLangs.get(function(_faqLangs){
+
+					faqLangs = _faqLangs
+					
+					clbk(data);
+
+				});
 
 
-				clbk(data);
+				
 
 			},
 
@@ -377,7 +383,7 @@ var easynode = (function(){
 			},
 
 			wnd : {
-				class : 'wndeasynode withoutButtons normalizedmobile',
+				class : 'wndeasynode withoutButtons normalizedmobile maxheight',
 			}
 		}
 	};
@@ -401,7 +407,7 @@ var easynode = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

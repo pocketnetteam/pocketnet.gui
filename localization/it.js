@@ -1,5 +1,5 @@
+var appname = (window.project_config || {}).fullname || 'Bastyon'
 
-var appname = window.pocketnetproject || "Pocketnet"
 
 if(typeof loclib == "undefined" || !loclib)
 loclib = {};
@@ -191,12 +191,15 @@ _l.uwaitb = "Aspetta la conferma per salvare le informazioni";
 _l.uchanges = "Non ci sono modifiche";
 _l.uchangesvalid = "È necessario creare il nome utente";
 _l.uname = "Nome";
-_l.unickname = "Nickname";
+_l.unickname = "Create a Nickname";
 _l.ulanguage = "Lingua";
 _l.uabout = "Su di me";
 _l.uwebsite = "Sito web";
 _l.uaddresesd = "Indirizzi per le donazioni";
 _l.usavechanges = "Vuoi salvare le tue modifiche?";
+
+_l.settings_save = "Salva le modifiche";
+_l.settings_discard = "Azzera le modifiche";
 
 //ustate
 
@@ -426,6 +429,7 @@ _l.youarefollowing = "Stai seguendo";
 _l.follow = "Segui";
 _l.blocked = "Bloccato";
 _l.e13021 = "Mostra di più";
+_l.block = "Blocca";
 _l.blockuser = "Blocca utente";
 _l.unblockuser = "Sblocca Utente";
 _l.e13022 = "Vuoi davvero togliere il follow all'utente?";
@@ -518,7 +522,7 @@ _l.e13082 = "Cosa otterrai per la tua donazione oltre a sapere che hai sostenuto
 _l.e13083 = "Come segno della nostra gratitudine per la donazione, riceverai un regalo in una certa quantità di Pocketcoin";
 _l.e13084 = "Inoltre, quando costruiremo la chat di gruppo, sarai membro di un gruppo speciale di donatori che avranno accesso diretto al team di " + appname + ", anche quando la piattaforma crescerà";
 _l.e13085 = "Il link al tuo profilo" + appname + " sarà elencato di seguito portando più persone ai tuoi post (a meno che tu non ci chieda di non farlo)";
-_l.e13086 = "Supporta il web decentralizzato ora";
+_l.e13086 = "Supporta "+appname+" ora";
 _l.e13087 = "Bitcoin, Litecoin";
 
 _l.e13088 = "Membri "+appname+" che hanno donato per sostenere "+appname+"";
@@ -549,6 +553,8 @@ _l.e13107 = "La gestione dei nodi può essere effettuata con l'applicazione";
 _l.e13108 = "Non c'è connessione con l'interfaccia proxy Electron";
 
 _l.e13109 = "Inserisci le parole nell'immagine per ricevere PKOIN e continuare la registrazione";
+_l.e13109h = "Fai clic sugli esagoni per assemblare l'immagine, quindi inserisci il testo nell'immagine risultante"
+
 _l.e13110 = "Inserire le parole";
 _l.poll = "Crea sondaggio";
 _l.next = "Avanti";
@@ -651,7 +657,7 @@ _l.e13169 = "Collegamento diretto";
 _l.copy = "Copia";
 _l.e13170 = "Includere " + appname + " sign up call-to-action";
 _l.more = "Altro";
-_l.e13171 = 'Finalmente! Ho detto "basta" ai soliti social media e alle informazioni controllate! Entra anche tu in Bastyon.com e dì addio alla censura. Un social network libero e basato sulla blockchain. Clicca qui per iniziare!';
+_l.e13171 = 'Finalmente! Ho detto "basta" ai soliti social media e alle informazioni controllate! Entra anche tu in website e dì addio alla censura. Un social network libero e basato sulla blockchain. Clicca qui per iniziare!';
 _l.e13172 = "Ti voglio invitare ad un nuovo social network decentralizzato chiamato " + appname + " ! Troverai una tonnellata di cose interessanti e se ti iscrivi, entrambi otterremo un bonus in criptovaluta PKOIN!";
 _l.e13173 = "Invia per e-mail";
 _l.e13174 = "Condividi sui social";
@@ -660,7 +666,7 @@ _l.e13176 = "Tipo di indirizzo";
 _l.e13177 = "Carica foto";
 
 _l.requiredfields = "campi obbligatori";
-_l.e13178 = "Non collegato al tuo profilo";
+_l.e13178 = "Opzionale";
 _l.e13179 = "Elenco non utilizzato";
 _l.e13180 = "La tua fattura è stata creata con successo";
 _l.e13181 = "Si è verificato un errore durante il processo";
@@ -789,6 +795,7 @@ _l.e13285 = "Chiedi prima di postare da Telegram";
 _l.e13286 = "Chiedi prima di inviare a Telegram";
 _l.e13287 = "Invia al canale Telegram";
 _l.video = "Video";
+_l.audio = "Audio";
 _l.e13288 = "Pagina principale dei widget";
 _l.e13289 = "Integrazione con Telegram";
 
@@ -938,14 +945,14 @@ _l.e14069 = "Specifics of curation on "+appname+".";
 _l.e14070 = "When your reputation gets to 100 and you press on dots in the upper right of any post, you will see an option to Complain. If enough Complaints come in, the post will not be shown anymore. When someone has more than 2 posts that are voted off the platform in 24 hours, they cannot post for another 48 hours after the second post. Complain is completed when number of complaints is at least ⅓ of the number of 4 and 5 star ratings, subject to a minimum of 10 complaints (which will be adjusted over time in consultation with the community).";
 _l.e140701 = "We are extremely and passionately pro-speech. However, we do not want to turn "+appname+" into a marginal forum where lunatics reign. What would cause you to Complain?";
 _l.e140702 = "Do NOT complain about stuff that you simply don’t like or that offends you. That is not a high enough bar. Do not follow people who offend you, soon we will have a feature for not seeing their posts, but do not complain about them. Complain only about things that threaten long term viability of "+appname+" as a mass communication platform that intends to reach to all levels of society in many countries.";
-_l.e140703 = "We strongly recommend that you complain about porn of any kind. There are plenty of porn sites on the web, we do not want to mix our free speech endeavor with that. We strongly encourage the community to vote off porn. Secondly, any type of a direct threat should be voted off and clear examples of racism should too. If we allow MSM to tie us to racism or violence directly, "+appname+" will cease to exist before we can even get it out there. Just because MSM media cries wolf about fake racism, doesn’t mean we should prove them right by tolerating it in our platform. It will detract from what we are trying to achieve, which is to challenge new totalitarianism created by the unholy alliance of media, finance and corrupt government officials.";
+_l.e140703 = "We strongly recommend that you complain about porn/nudity of any kind. There are plenty of porn/nudity sites on the web, we do not want to mix our free speech endeavor with that. We strongly encourage the community to vote off porn/nudity. Secondly, any type of a direct threat should be voted off and clear examples of racism should too. If we allow MSM to tie us to racism or violence directly, "+appname+" will cease to exist before we can even get it out there. Just because MSM media cries wolf about fake racism, doesn’t mean we should prove them right by tolerating it in our platform. It will detract from what we are trying to achieve, which is to challenge new totalitarianism created by the unholy alliance of media, finance and corrupt government officials.";
 _l.e14071 = "Important Note on Racism.";
 _l.e14072 = "Free thought and free speech is under attack on mainstream social platforms and in the media. We need to speak the truth and this platform is non-corporate and decentralized for that very reason. But we ask everyone make your point without attacking people&rsquos nationality or race. You can make your point based on evidence. We cannot afford to turn "+appname+" into a marginal platform. Speak the truth, but please avoid racism and attacks against specific nationalities on the whole. We know that Silicon Valley and MSM has turned the issue of racism into their playing card and they constantly cry wolf. Even more the reason for us to be measured and evidence based and not let them smear us with that. If we are not, we are not allowing most of the population to weigh the evidence of MSM corruption presented on "+appname+". Please keep that in mind, so that free speech can thrive and we can beat the facebokks of the world.</div><div>Ultimately, it is the community that will determine the direction of the platform. Having a bunch of snowflakes that complain about stuff that offends them is equally as bad as when people want to voice direct violent threats. However, the first indication is that early users of the platform are generally intelligent and evidence based, so the future looks incredibly bright. "+appname+" team has noticed after a few days of the beta test, that we stopped reading even alternative news, because there was so much interesting content on "+appname+". Keep it up!</div><div>Please get involved in the discussion on these topics. This is a community platform. We are always eager to improve transparency of the platform and you should let us know how we can improve our content curation and policing. Use group chat or email support(at)pocketnet*dot*app or make full posts on this topic.";
 _l.e14073 = "Specifics of curation on " + appname + ".";
 _l.e14074 = "Is any content allowed on "+appname+"? If some content is not allowed, can the platform still be called free speech?";
 _l.e14075 = "Sometimes we can have a user who comes in with a specific purpose to attack "+appname+" by posting a series of vile images. To protect against that we have a following mechanism. If someone’s reputation reaches -50 (negative 50), their account is automatically blocked. Getting a reputation of -50 is equivalent to having 25 one star ratings and no four or five star ratings. This is nearly impossible to achieve without having lots of bad posts.";
 _l.e14076 = "Flagging a specific post";
-_l.e14077 = "When your reputation gets to 50 and you press on dots in the upper right of any post, you will see an option to Complain. If enough Complaints come in, the post will not be shown anymore. Complain is completed when number of complaints is at least ⅓ of the number of 4 and 5 star ratings, subject to a minimum of 10 complaints (which will be adjusted over time in consultation with the community).</div><div>We are extremely and passionately pro-speech. However, we do not want to turn " + appname + " into a marginal forum where lunatics reign. What would cause you to Complain?</div><div>Do NOT complain about stuff that you simply don’t like or that offends you. That is not a high enough bar. Do not follow people who offend you, soon we will have a feature for not seeing their posts, but do not complain about them. Complain only about things that threaten long term viability of "+appname+" as a mass communication platform that intends to reach to all levels of society in many countries.</div><div>We strongly recommend that you complain about porn of any kind. There are plenty of porn sites on the web, we do not want to mix our free speech endeavor with that. We strongly encourage the community to vote off porn. Secondly, any type of a direct threat should be voted off and clear examples of racism should too. If we allow MSM to tie us to racism or violence directly, "+appname+" will cease to exist before we can even get it out there. Just because MSM media cries wolf about fake racism, doesn’t mean we should prove them right by tolerating it in our platform. It will detract from what we are trying to achieve, which is to challenge new totalitarianism created by the unholy alliance of media, finance and corrupt government officials.";
+_l.e14077 = "When your reputation gets to 50 and you press on dots in the upper right of any post, you will see an option to Complain. If enough Complaints come in, the post will not be shown anymore. Complain is completed when number of complaints is at least ⅓ of the number of 4 and 5 star ratings, subject to a minimum of 10 complaints (which will be adjusted over time in consultation with the community).</div><div>We are extremely and passionately pro-speech. However, we do not want to turn " + appname + " into a marginal forum where lunatics reign. What would cause you to Complain?</div><div>Do NOT complain about stuff that you simply don’t like or that offends you. That is not a high enough bar. Do not follow people who offend you, soon we will have a feature for not seeing their posts, but do not complain about them. Complain only about things that threaten long term viability of "+appname+" as a mass communication platform that intends to reach to all levels of society in many countries.</div><div>We strongly recommend that you complain about porn/nudity of any kind. There are plenty of porn/nudity sites on the web, we do not want to mix our free speech endeavor with that. We strongly encourage the community to vote off porn/nudity. Secondly, any type of a direct threat should be voted off and clear examples of racism should too. If we allow MSM to tie us to racism or violence directly, "+appname+" will cease to exist before we can even get it out there. Just because MSM media cries wolf about fake racism, doesn’t mean we should prove them right by tolerating it in our platform. It will detract from what we are trying to achieve, which is to challenge new totalitarianism created by the unholy alliance of media, finance and corrupt government officials.";
 _l.e14078 = "How is "+appname+" different from...";
 _l.e14079 = "Twitter, Facebook, Reddit & other centralized platforms?";
 _l.e14080 = "There is no central authority or corporation. Platform is run by equal nodes on a blockchain. All revenue is split between node operators and content creators. Node operators stake Pocketcoin in order to mint blocks with rewards and transactions fees. Half of rewards in each block go to content creators based on ratings their content gathers from users.";
@@ -962,7 +969,7 @@ _l.e14090 = "What is Pocketcoin?";
 _l.e14091 = "Pocketcoin is a network token. It is used exclusively to buy advertising from " + appname + " contributors and to pay transaction fees for such payments. Pocketcoin emission depends on the number of users of "+appname+" and has inherent algorithmic factors tying its long term value to Annual Revenue Per User (ARPU). ARPU is a term in digital advertising which signifies the total amount of revenue platform receives for one active user per year. In Pocketent all of the revenue is split between content creators and nodes.";
 _l.e14092 = "How are content creators and node operators rewarded?";
 _l.e14093 = appname + " features unique Direct Marketplace where content creators can sell advertising to ad buyers. Content creators set their price and can accept mass-produced ads or can offer highly valued custom placements (creators pitching the product in their own way). Direct Marketplace is essentially an exchange for advertising that allows ad buyers target specific audiences without any intermediaries. All ad buys and ads themselves are linked on the blockchain, therefore ad buying is completely trustless.";
-_l.e14094 = "What if users post illegal content, pornography and SPAM?";
+_l.e14094 = "What if users post illegal content, porn/nudity and SPAM?";
 _l.e14095 = appname + " is not a darknet platform or some sort of pornhub. While it is decentralized and censorship resistant, it is policed by the users. Any illegal content is flagged and removed from the platform using the Wikipedia model. This means that users with highest reputation can police the platform. However, there are safeguards in place (within the open source code) from same or very similar group(s) of people repeatedly voting content off the platform. Also, users are explicitly encouraged to flag illegal content OR content that threatens mass adoption of "+appname+", not simply the content they find offensive. To make sure that "+appname+" is a free speech platform, we encourage you to start participate, grow your reputation and police the platform properly without the censorship currently prevalent in centralized social media.";
 _l.e14096 = "Who runs the "+appname+"?";
 _l.e14097 = "There is no corporate entity or single individual who owns or controls the " + appname + ".";
@@ -1193,28 +1200,77 @@ _l.ErrorLoadingRates = "Errore di caricamento";
 _l.userGuides = "Guide";
 _l.liveSreamingGuide = "Streaming dal vivo";
 
-_l.bastyonhelperTitle1 = "Pocketnet si è spostato,";
-_l.bastyonhelperTitle2 = "Bastyon, libertà di espressione";
-_l.bastyonhelperSubtitle1 = "Pocketnet è ora";
-_l.bastyonhelperSubtitle2 = "Per favore, segui il link qui sotto";
+_l.bhelperTitle1 = "Pocketnet si è spostato,";
+_l.bhelperTitle2 = ""+appname+", libertà di espressione";
+_l.bhelperSubtitle1 = "Pocketnet è ora";
+_l.bhelperSubtitle2 = "Per favore, segui il link qui sotto";
 
 _l.buy = 'Acquistare';
 
 
-_l.lowstar1 = "Il team di Bastyon sta implementando una moratoria temporanea sulle valutazioni a 1 e 2 stelle, ad eccezione dei contenuti vietati. I contenuti vietati sono:"
-_l.lowstar_reason_1 = "Porno"
+_l.lowstar1 = "Il team di "+appname+" sta implementando una moratoria temporanea sulle valutazioni a 1 e 2 stelle, ad eccezione dei contenuti vietati. I contenuti vietati sono:"
+_l.lowstar_reason_1 = "Erotico/porno"
 _l.lowstar_reason_2 = "Sfruttamento minorile"
 _l.lowstar_reason_3 = "Minaccia diretta di violenza"
 _l.lowstar_reason_4 = "Droghe illegali"
 _l.lowstar2 = "Non utilizzare valutazioni a 1 e 2 stelle per altri motivi. Dopo il rilascio della nuova moderazione a metà. Potresti essere in grado di utilizzare valutazioni basse per altri motivi"
 _l.lowstaragree = "Confermo che questo post contiene uno dei quattro tipi di contenuto proibito"
 
-_l.androidPopupTitle = "Ottieni informazioni non censurate nell'app mobile Bastyon"
+_l.androidPopupTitle = "Ottieni informazioni non censurate nell'app mobile "+appname+""
 _l.androidPopupAgree = "Passa all'app"
 _l.androidPopupDisagree = "Non ora"
 
-_l.desktopPopupTitle = "Ottieni informazioni non censurate nell'app desktop Bastyon"
+_l.desktopPopupTitle = "Ottieni informazioni non censurate nell'app desktop "+appname+""
 _l.desktopPopupAgree = "Scarica l'app"
 _l.desktopPopupDisagree = "Non ora"
 
+_l.copybuiltfrom = "Numero di montaggio copiato"
+
 _l.profanity_tag = 'volgarità'
+
+_l.saved = "Salvati"
+_l.savePost = "Salva il post"
+_l.postsaved = "Post salvato"
+_l.deleteSavedPost = "Elimina il post salvato"
+_l.doYouDownloadVideo = "Vuoi scaricare il video sul tuo dispositivo?"
+_l.gotosaved2 = "Vai a salvare"
+_l.yes = "Sì"
+_l.no = "No"
+
+_l.torusing_neveruse = "Mai";
+_l.torusing_auto = "Auto";
+_l.torusing_always = "Sempre";
+
+_l.torusing_directProxy = "Proxy integrato";
+_l.torusing_notdirectProxy = "Proxy esterno";
+
+_l.torusing_changedirectProxy = "Passare a un proxy esterno";
+_l.torusing_changenotdirectProxy = "Passare a un proxy integrato";
+
+_l.torusing_disclaimer = "Questa funzione funziona solo quando si utilizza un proxy integrato.";
+
+_l.torusing_Networking = "Rete";
+_l.torusing_proxyCaption = "Selezione di un server proxy";
+_l.torusing_useTor = "Usare TOR";
+_l.torusing_useSnowflakeBridge = "Usare Snowflake";
+
+_l.torusing_stat_currentbytesLength = "Ora, le richieste dirette"
+_l.torusing_stat_torbytesLength = "Ora, TOR richiama"
+_l.torusing_stat_directBytes = "Totale, richieste dirette"
+_l.torusing_stat_totalTorBytes = "Totale, TOR richiama"
+_l.torusing_settings = "Impostazioni TOR"
+_l.torusing_stats = "Statistiche della query"
+_l.torusing_proxychangequestion = "Sei sicuro di voler cambiare il proxy?"
+
+/** ↓ Component UpdateNotifier ↓ */
+_l.updateNotifier_topHeading1 = 'Versione';
+_l.updateNotifier_topHeading2 = 'Disponibile';
+_l.updateNotifier_mainHeading = 'Abbiamo aggiornato';
+_l.updateNotifier_mainText = 'Si consiglia di mantenere l\'applicazione aggiornata. Nuove funzionalità e migliori prestazioni vi aspettano!';
+_l.updateNotifier_button1 = 'Installa';
+_l.updateNotifier_button2 = 'Più tardi...';
+_l.updateNotifier_stateStart = 'Avvio...';
+_l.updateNotifier_stateDownload = 'Scaricato';
+_l.updateNotifier_stateError = 'Errore verificatosi';
+_l.updateNotifier_availableSilent = "Aggiornamento disponibile"
+/** ↑ Component UpdateNotifier ↑ */

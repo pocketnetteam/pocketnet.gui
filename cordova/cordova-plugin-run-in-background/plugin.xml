@@ -3,7 +3,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-background-mode"
-        version="0.8.0">
+        version="0.7.3">
 
     <name>BackgroundMode</name>
 
@@ -41,11 +41,11 @@
             </feature>
         </config-file>
 
-        <!--<config-file target="*-Info.plist" parent="UIBackgroundModes">
+        <config-file target="*-Info.plist" parent="UIBackgroundModes">
             <array>
                 <string>audio</string>
             </array>
-        </config-file>-->
+        </config-file>
 
         <resource-file src="appbeep.wav" />
 
@@ -70,8 +70,14 @@
             <preference name="KeepRunning" value="true" />
         </config-file>
 
+        
+
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
-            <service android:name="de.appplant.cordova.plugin.background.ForegroundService" />
+            <service
+              android:name="de.appplant.cordova.plugin.background.ForegroundService"
+              android:foregroundServiceType="dataSync|mediaPlayback"
+              android:exported="false">
+            </service>
         </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/manifest">
@@ -79,6 +85,10 @@
 			<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
             <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
             <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+            <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+            <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+
+            
         </config-file>
 
         <source-file
@@ -94,7 +104,6 @@
             target-dir="src/de/appplant/cordova/plugin/background" />
 
         <framework src="androidx.core:core:1.0.0" />
-		<dependency id="cordova-androidx-build" />
         <resource-file src="src/android/res/drawable/power.xml" target="res/drawable/power.xml" />
         <resource-file src="src/android/res/drawable-hdpi/power.png" target="res/drawable-hdpi/power.png" />
         <resource-file src="src/android/res/drawable-mdpi/power.png" target="res/drawable-mdpi/power.png" />

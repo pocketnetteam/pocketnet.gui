@@ -57,18 +57,34 @@ var P2PEvents = {
 }
 
 var getRtcConfig = function () {
+    const getList1=()=>{const list=["rel"+"ay2.expresstu"+"rn.com:443","rel"+"ay3.expresstu"+"rn.com:80","rel"+"ay3.expresstu"+"rn.com:443","rel"+"ay4.expresstu"+"rn.com:34"+"78","rel"+"ay5.expresstu"+"rn.com:34"+"78","rel"+"ay6.expresstu"+"rn.com:34"+"78","rel"+"ay7.expresstu"+"rn.com:34"+"78","rel"+"ay8.expresstu"+"rn.com:34"+"78",];return list.map(server=>({urls:"turn:"+server,username:"efP"+"U52"+"K4S"+"LOQ"+"34W"+"2QY",credential:"1TJ"+"PNF"+"xHK"+"XrZ"+"felz",}))};
+    const getList2=()=>{const list=["standard.rel"+"ay.met"+"ered.ca:443?trans"+"port=tcp", "standard.rel"+"ay.met"+"ered.ca:443", "standard.rel"+"ay.met"+"ered.ca:80?trans"+"port=tcp", "standard.rel"+"ay.met"+"ered.ca:80",];return list.map(server=>({urls:"turn:"+server,username:"604"+"3b1"+"571"+"1c8"+"1a9"+"40b"+"09b"+"977",credential:"RS3"+"nKg"+"8sY"+"Av0"+"QvcY",}))};
+
+    const getStuns = () => {
+        const list = [
+            "relay1.expressturn.com:443",
+            "relay2.expressturn.com:443",
+            "relay3.expressturn.com:443",
+            "relay1.expressturn.com:3478",
+            "relay2.expressturn.com:3478",
+            "relay4.expressturn.com:3478",
+            "relay5.expressturn.com:3478",
+            "relay6.expressturn.com:3478",
+            "relay8.expressturn.com:3478",
+            "relay1.expressturn.com:80",
+            "stun.relay.metered.ca:80",
+        ];
+
+        return list.map(server => ({
+            urls: "stun:"+server,
+        }))
+    }
+
     return {
         iceServers: [
-            {
-              urls: "stun:turn.pocketnet.app",
-              username: "stunuser",
-              credential: "q1w2e3r4t5ASD!@#",
-            },
-            {
-              urls: "turn:turn.pocketnet.app",
-              username: "stunuser",
-              credential: "q1w2e3r4t5ASD!@#",
-            },
+            ...getStuns(),
+            ...getList1(),
+            ...getList2(),
         ]
     }
 }

@@ -1,0 +1,133 @@
+@import "../../css/__cssvar";
+
+#transactionslist{
+
+    .caption{
+        position: sticky;
+        left: 0;
+        right: 0;
+        top: 0;
+        padding : 2 * @rhythm;
+        padding-top: 4 * @rhythm;
+        background: rgb(var(--background-total-theme));
+
+        span{
+            font-weight: 700;
+        }
+    }
+    .loadingwrapper{
+        display: none;
+    }
+
+    &.loading{
+        .loadingwrapper{
+            display: block;
+        }
+    }
+    
+    .txtable{
+        display: flex;
+        border-bottom: 1px solid rgb(var(--neutral-grad-2));
+        align-items: center;
+        cursor: pointer;
+
+        &:nth-last-child(1){
+            border-bottom: 0;
+        }
+
+        >div{
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            padding : 3 *@rhythm @rhythm;
+        }
+        
+        .direction{
+            text-align: center;
+
+            .fa-exchange-alt{
+                color : rgb(var(--neutral-grad-2))
+            }
+
+            .fa-arrow-right{
+                color : rgb(var(--color-bad));
+            }
+
+            .fa-arrow-left{
+                color : rgb(var(--color-good));
+            }
+        }
+
+        .value{
+            width: 100px;
+
+            .fa-minus{
+                color : rgb(var(--color-bad));
+            }
+
+            .fa-plus{
+                color : rgb(var(--color-good));
+            }
+        }
+
+        .txid{
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+            i{
+                color : rgb(var(--neutral-grad-2))
+            }
+
+            span{
+                margin-left: 0.5 * @rhythm;
+                margin-right: 0.5 * @rhythm;
+                font-size: 0.8em;
+            }
+        }
+
+        
+        span,i{
+            font-size: 0.8em;
+        }
+    }
+}
+
+
+
+#windowsContainer{
+    .wnd.transactionlistwnd{
+        .wndinner{
+            height: 80%;
+            width: 750px;
+
+            .wndcontent {
+                padding-top : 0;
+            }
+        }
+    }
+}
+
+/*t*/ @media only screen and (max-width: 768px){
+#transactionslist{
+    
+    
+    .txtable{
+       
+        
+
+        .txid{
+            .fa-hashtag{
+                display: none;
+            }
+            span{
+                display: none;
+            }
+        }
+
+        
+        span,i{
+            font-size: 1em;
+        }
+    }
+}
+
+}

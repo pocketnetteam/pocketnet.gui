@@ -1,4 +1,4 @@
-<div id="<%-module.map.id%>">
+<div id="<%-module.map.id%>" class="loading">
 
 	
 	
@@ -22,21 +22,19 @@
 		<div class="work">
 			<div class="stepsWrapper">
 				<div class="stepsWrapperLine">
-					<% _.each(steps, function(step){ %> 
 
-					<div class="step" step="<%-step.id%>">
+					<div class="step">
 						<div class="stepBody">
 							
 						</div>
 					</div>
 
-					<% }) %>
 				</div>
 			</div>
 
-			<div class="panelWrapper">
+			<!--<div class="panelWrapper">
 			
-			</div>
+			</div>-->
 
 		</div>
 
@@ -52,9 +50,6 @@
 	</div>
 
 	<div class="hidden hiddenqrcode"></div>
-
-
-
 
 	<% if (!state) {%>
 		<div class="">

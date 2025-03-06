@@ -3994,5 +3994,5 @@ _QRscanner = function(){
 
 	return self;
 }
-if(typeof qrscanner == 'undefined')
-	qrscanner = new _QRscanner();
+if(typeof bfqrscanner == 'undefined')
+	bfqrscanner = new _QRscanner();

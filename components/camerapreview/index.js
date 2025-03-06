@@ -69,7 +69,7 @@ var camerapreview = (function(){
                 if (window.cordova && window.cordova.plugins.photoLibrary && window.cordova.plugins.photoLibrary.saveImage ){
 
 					permissions.get().then(() => {
-						window.cordova.plugins.photoLibrary.saveImage(url, 'Bastyon', function (libraryItem) {
+						window.cordova.plugins.photoLibrary.saveImage(url, null, function (libraryItem) {
 							resolve(libraryItem)
 						}, (e) => {
 	
@@ -288,8 +288,6 @@ var camerapreview = (function(){
 
 								if(pid != libraryProcessId) return
 
-								console.log('photos', photos)
-
 								photos = photos.concat(result.library)
 
 								if(result.isLastChunk){
@@ -375,8 +373,6 @@ var camerapreview = (function(){
 						return Base64Helper.fromFile(data).then(base64 => {
 							images[id] = base64;
 
-							console.log('base64', base64)
-
 							resolve(images[id])
 						})
 
@@ -408,11 +404,16 @@ var camerapreview = (function(){
 				}
 			},
 			startcamera : function(){
+
+
 				if (data.cameraenabled && !data.gallery){
 					CameraPreview.startCamera(getcameraoptions());
 				}
 			},
 			stopcamera : function(){
+
+
+
 				if (data.cameraenabled){
 					CameraPreview.stopCamera();
 				}
@@ -440,6 +441,8 @@ var camerapreview = (function(){
 			},
 
 			takepicture : function(){
+
+
 				if (!data.cameraenabled){
 					data.current = eximw
 	
@@ -448,8 +451,9 @@ var camerapreview = (function(){
 				else{
 					CameraPreview.getSupportedPictureSizes((dimensions) => {
 
+
 						dimensions = _.filter(dimensions, function(d){
-							return d.width * d.height < 3 * 1000 * 1000
+							return d.width * d.height < (ed.mp || 3) * 1000 * 1000
 						})
 		
 						var maxdimension = _.max(dimensions, function(d){
@@ -465,8 +469,10 @@ var camerapreview = (function(){
 								renders.state()
 		
 							}, (e) => {
-		
+								console.error(e)
 							})
+					}, (e) => {
+						console.error(e)
 					})
 				}
 				
@@ -491,7 +497,7 @@ var camerapreview = (function(){
 
 					name :  'state',
 					el :   el.state,
-					data : data,
+					data : {...data},
 
 				}, function(p){
 
@@ -615,6 +621,9 @@ var camerapreview = (function(){
 		var initEvents = function(){
 			
 			el.c.find('.back').on('click', function(){
+
+				if(ed.onCancel) ed.onCancel()
+
 				self.stop()
 			})
 
@@ -643,6 +652,7 @@ var camerapreview = (function(){
 						restrict : true,
 						trueshold : 30,
 						clbk : function(){
+							if(ed.onCancel) ed.onCancel()
 
 							self.stop()
 
@@ -712,6 +722,28 @@ var camerapreview = (function(){
 				actions.stopcamera()
 			}
 
+
+			initUpload({
+				el : el.openexternal,
+				ext : ed.ext,
+				dropZone : el.c,
+				app : self.app,
+				multiple : ed.multiple,
+				action : ed.action,
+				onError : ed.onError,
+				onSuccess : function(){
+
+
+					if(ed.onSuccess) ed.onSuccess()
+
+
+					self.stop()
+				},
+				onFail : function(){
+					console.error('fail')
+				}
+			})
+
 			
 		}
 
@@ -720,9 +752,8 @@ var camerapreview = (function(){
 
 			getdata : function(clbk, p){
 				ed = p.settings.essenseData
-				var data = {};
 
-				clbk(data);
+				clbk({});
 
 			},
 
@@ -737,8 +768,11 @@ var camerapreview = (function(){
 	
 				prlx = null
 
-				window.requestAnimationFrame(() => {
-			
+				self.app.mobile.unsleep(false)
+
+
+				window.rifticker.add(() => {
+					self.app.mobile.statusbar.background()
 					app.el.html.addClass('cameraenabledend')
 					app.el.html.removeClass('cameraenabled')
 					app.el.html.removeClass('cameraenabledrun')
@@ -760,15 +794,12 @@ var camerapreview = (function(){
 
 					actions.stopcamera()
 
-					window.requestAnimationFrame(() => {
+					window.rifticker.add(() => {
 
-	
-						
-						
 						app.el.html.removeClass('cameraenabledend')
-	
-	
-						el.c.empty()
+						
+						if (el.c)
+							el.c.empty()
 	
 						el = {};
 						
@@ -783,15 +814,15 @@ var camerapreview = (function(){
 				imagesadding = false
 				photos = []
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 			
 					app.el.html.addClass('cameraenabledrun')
-
+					self.app.mobile.statusbar.gallerybackground()
 				})
 
 				setTimeout(() => {
 
-					window.requestAnimationFrame(() => {
+					window.rifticker.add(() => {
 
 						app.el.html.addClass('cameraenabled')
 						app.el.html.removeClass('cameraenabledrun')
@@ -800,7 +831,7 @@ var camerapreview = (function(){
 				}, 300)
 
 		
-
+				self.app.mobile.unsleep(true)
 
 				state.load();
 
@@ -811,25 +842,24 @@ var camerapreview = (function(){
 				el.wnds = $('.wnd')
 				el.state = el.c.find('.state')
 				el.galleryimages = el.c.find('.gallery .images')
+				el.openexternal = el.c.find('.openexternal')
 				initEvents();
 
 				p.clbk(null, p);
 
 				compute()
 
-				
-
-				getlibrary().then(() => {
-					data.gallery = true
-					renders.gallery()
-				}).catch((e) => {
+				getlibrary().catch(e => {
+					console.log(e)
+				}).then(() => {
 
 					data.gallery = true
 					renders.gallery()
 
 				}).then(() => {
+
 					renders.selectedButton()
-					actions.startcamera()
+					//actions.startcamera()
 					renders.state()
 
 					el.c.addClass('ready')
@@ -853,8 +883,7 @@ var camerapreview = (function(){
 
 		_.each(essenses, function(essense){
 
-				essense.destroy();
-	
+			essense.destroy();
 
 		})
 

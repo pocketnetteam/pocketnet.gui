@@ -8,35 +8,17 @@ var menu = (function(){
 
 		var el = {},
 			authorForSearch = null,
-			menusearch = null;
+			menusearch = null,
+		    torIntervalId = null,
+			controlTorElem = null,
+			networkStatsListenerId = null;
 
-		var loc = new Parameter({
-
-			type : "VALUES",
-			name : "Localization",
-			id : 'localization',
-			defaultValue : app.localization.current().name,
-			possibleValues : app.localization.availableMap('name'),
-			format : {
-				right : true
-			},
-
-			_onChange : function(value){
-				var a = app.localization.findByName(value);
-
-				if (a && a.key != app.localization.key)
-				{
-					app.localization.set(a.key);
-				}
-			}
-
-		})
 
 		var updateNew = function(){
 
 			var s = self.app.platform.sdk.newmaterials.storage
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 
 				if(!el.c) return
 				
@@ -95,7 +77,7 @@ var menu = (function(){
 
 			ah : function(el, c){
 
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					if (c > 0){
 						el.addClass('amountHave')
 					}
@@ -108,14 +90,21 @@ var menu = (function(){
 				})
 			},
 
-			
+			receiveNetworkStats : function(stats) {
+				if (stats.torUsed && controlTorElem) {
+					controlTorElem.addClass(stats.status);
+
+					setTimeout(() => {
+						controlTorElem.removeClass(stats.status);
+					}, 300);
+				}
+			}
 		}
 
 		var searchlickaction = function(link){
 			
-			var href = link.replace('https://', '').replace('http://', '').replace('bastyon://', '').replace('pocketnet/', '').replace('localhost/', '').replace('bastyon.com/', '').replace('pocketnet.app/', '')
+			var href = link.replace('https://', '').replace('http://', '').replace('bastyon://', '').replace('https//', '').replace('http//', '').replace('bastyon//', '').replace('pocketnet/', '').replace('localhost/', '').replace('bastyon.com/', '').replace('pocketnet.app/', '')
 
-			console.log("HREF", href)
 
 			var p = {
 				href : href,
@@ -166,6 +155,11 @@ var menu = (function(){
 
 				init : function(el){
 
+					
+					if (self.app.platform.matrixchat)
+						actions.ahnotify(el, self.app.platform.matrixchat.getNotificationsCount(), 'chat')
+
+
 					self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu = function(count){
 						actions.ahnotify(el, count, 'chat')
 					}
@@ -180,7 +174,13 @@ var menu = (function(){
 					self.app.user.isState(function(state){
 
 						//if(self.app.nav.get.pathname() != 'index'){
-							var k = localStorage['lentakey'] || 'index';
+
+							var k = 'index';
+							try {
+								k = localStorage['lentakey'] || 'index'
+							}
+							catch (e) { }
+							
 
 							if (parameters().r == k) k = 'index'
 
@@ -194,6 +194,9 @@ var menu = (function(){
 									if (k == 'read'){
 										k = 'index?read=1'
 									}
+									else if (k == 'audio'){
+										k = 'index?audio=1'
+									}
 									else{
 										k = 'index?r=' + k
 									}
@@ -204,6 +207,8 @@ var menu = (function(){
 							}
 
 							if(!state) k = 'index'
+
+							if(k == self.app.nav.current.completeHref) k = 'index'
 
 							if(self.app.curation()){
 								if(!state){
@@ -222,7 +227,8 @@ var menu = (function(){
 									href : k,
 									history : true,
 									open : true,
-									handler : parameters().video && parameters().v
+									handler : parameters().video && parameters().v,
+									fade : self.app.el.content
 								})
 							}, 50)
 
@@ -270,7 +276,7 @@ var menu = (function(){
 
 					self.app.platform.sdk.registrations.clbks.menu = function(){
 
-						window.requestAnimationFrame(() => {
+						window.rifticker.add(() => {
 
 							if (!self.app.platform.sdk.registrations.showprivate()){
 								
@@ -290,6 +296,8 @@ var menu = (function(){
 				}
 			},
 
+			
+
 			notifications : {
 				init : function(el){
 
@@ -306,9 +314,13 @@ var menu = (function(){
 
 							if(!m) return false
 							
-							var tpl = m.fastMessage(notification)
+							/*var tpl = m.fastMessage(notification)
 
-							if(!tpl) return false
+							if(!tpl) {
+								return false
+							}
+							else{
+							}*/
 
 
 							return true
@@ -324,7 +336,7 @@ var menu = (function(){
 
 					setTimeout(function(){
 
-						if(!isTablet()){
+						if(!isTablet() && !self.app.television){
 							self.nav.api.load({
 								eid : 'menu',
 								open : true,
@@ -345,12 +357,21 @@ var menu = (function(){
 					self.app.mobile.vibration.small(true)
 
 					if(isTablet()){
-
-
 						self.nav.api.go({
 							open : true,
 							href : 'notifications',
 							inWnd : true,
+							history : true,
+							essenseData : {
+							}
+						})
+					}
+					
+					if(self.app.television){
+
+						self.nav.api.go({
+							open : true,
+							href : 'notifications',
 							history : true,
 							essenseData : {
 							}
@@ -361,43 +382,50 @@ var menu = (function(){
 				}
 			},
 
-			
-			savecross : {
+			activities : {
 				init : function(el){
 
-					/*var n = deep(self.app, 'platform.sdk.user.storage.me.rc') || 0
-
-					actions.ah(el, n)
-
-					self.app.platform.ws.messages.event.clbks.menusave = function(d){
-						if(d.mesType == 'userInfo'){
-
-							var n = deep(self.app, 'platform.sdk.user.storage.me.rc') || 0
-
-							actions.ah(el, n)
-							
+					if(window.testpocketnet){
+						var gca = function(){
+							var account = self.app.platform.actions.getCurrentAccount()
+							var c = 0
+	
+							if (account){
+								c = account.getTempActions().length
+							}
+	
+							actions.ah(el, c)
 						}
-					}*/
-
+	
+						self.app.platform.actionListeners['menu_activies'] = function({type, alias, status}){
+							gca()
+						}
+	
+						gca()
+					}
 
 					
 
 				},
-				click : function(){
+
+				click : function(el){
+					self.app.mobile.vibration.small(true)
 
 
-					self.nav.api.load({
+					self.nav.api.go({
 						open : true,
-						href : 'socialshare',
-						history : true,
+						href : 'activities',
 						inWnd : true,
-
+						history : true,
 						essenseData : {
-							rescue : true
 						}
 					})
+
+
 				}
 			},
+
+
 
 			search : {
 				fast : true,
@@ -409,7 +437,7 @@ var menu = (function(){
 
 					if (menusearch) {
 						menusearch.setactive(true)
-						window.requestAnimationFrame(() => {
+						window.rifticker.add(() => {
 							menusearch.focus()
 
 						})
@@ -441,7 +469,67 @@ var menu = (function(){
 						if (electron)
 							electron.ipcRenderer.send('electron-refresh');
 					})
-					
+
+					controlTorElem = _el.find('.control-tor-state');
+
+					self.sdk.broadcaster.clbks['menu'] = function(data){
+						actions.receiveNetworkStats(data)
+					}
+
+					let proxyData;
+
+					if (torIntervalId) {
+						clearInterval(torIntervalId);
+					}
+
+					torIntervalId = setInterval(async () => {
+						const currentProxy = app.api.get.current();
+
+						if (!currentProxy.direct) {
+							controlTorElem.removeClass(['on', 'loading']);
+							controlTorElem.addClass('off');
+							controlTorElem.attr('title', app.localization.e('torHintStateDisabled'));
+
+							return;
+						}
+
+						proxyData = await currentProxy.get.info();
+
+						if (proxyData?.info.tor.state.status === 'started') {
+							controlTorElem.removeClass(['off', 'loading']);
+							controlTorElem.addClass('on');
+							controlTorElem.attr('title', app.localization.e('torHintStateEnabled'));
+						} else if (proxyData?.info.tor.state.status === 'running') {
+							controlTorElem.removeClass(['on', 'off']);
+							controlTorElem.addClass('loading');
+							controlTorElem.attr('title', app.localization.e('torHintStateLoading'));
+						} else if (proxyData?.info.tor.state.status === 'stopped') {
+							controlTorElem.removeClass(['on', 'loading']);
+							controlTorElem.addClass('off');
+							controlTorElem.attr('title', app.localization.e('torHintStateDisabled'));
+						}
+					}, 2000);
+
+					controlTorElem.on('click', () => {
+
+						self.nav.api.go({
+							open : true,
+							href : 'transportsmanagement',
+							inWnd : true,
+						})
+							
+						/*const isTorEnabled = (
+							proxyData?.info.tor.state.status === 'started' ||
+							proxyData?.info.tor.state.status === 'loading'
+						);
+
+						const currentProxy = app.api.get.current();
+
+						currentProxy.fetchauth('manage', {
+							action: isTorEnabled ? 'tor.stop' : 'tor.start',
+							data: {}
+						});*/
+					});
 				},
 				fast : true,
 			},
@@ -470,7 +558,7 @@ var menu = (function(){
 
 							clbk(tpl, function(el, helpers){
 
-								bgImages(el)
+								bgImagesCl(el)
 
 								self.app.nav.api.links(null, el, function(){
 
@@ -483,8 +571,6 @@ var menu = (function(){
 
 								el.find('.gotopage').on('click', function(){
 									var r = $(this).attr('link')
-
-									console.log("R", r)
 
 									searchlickaction(r)
 
@@ -501,7 +587,7 @@ var menu = (function(){
 									var name = $(this).attr('name')
 
 									self.nav.api.go({
-										href : name ? name.toLowerCase() : 'author?address=' + r,
+										href : name ? name.toLowerCase() : 'authorn?address=' + r,
 										history : true,
 										open : true
 									})
@@ -535,7 +621,7 @@ var menu = (function(){
 						placeholder : self.app.localization.e('e13139'),
 						icon : '<i class="fas fa-search"></i>',
 						app : self.app,
-						mobileSearch : self.app.width <= 768,
+						mobileSearch : self.app.width <= 768 || self.app.mobileview || self.app.television,
 
 
 						id : 'searchOnBastyon',
@@ -563,7 +649,7 @@ var menu = (function(){
 										_.each(c, function(v){
 											counts[v.type] || (counts[v.type] = 0)
 
-											if(counts[v.type] >= 7) return
+											if(counts[v.type] >= 6) return
 
 											counts[v.type]++
 
@@ -571,7 +657,7 @@ var menu = (function(){
 										})
 										
 									})
-
+									
 									r = _.uniq(r, function(d){
 										return d.type + d.index
 									})
@@ -579,6 +665,15 @@ var menu = (function(){
 									r = _.sortBy(r, function(r){
 										return -Number(r.date)
 									})
+
+									r = _.filter(r, (a) => {
+										return a.type != 'video'
+									})
+
+									var apps = self.app.apps.get.forsearch()
+
+									r = apps.concat(r)
+
 
 									return r
 								}
@@ -637,11 +732,15 @@ var menu = (function(){
 
 								self.app.platform.sdk.search.get(value, 'users', null, 7, 0, function(r){
 
+									
+
 									composeresult('user', r.data, r.count)
+									//composeresult('address', frommap, frommap.length)
 
 									render(getresults(), value, clbk, {
 										counts : counts
 									})
+
 								}, 'pocketnet', true)
 
 								
@@ -661,7 +760,6 @@ var menu = (function(){
 										menusearch.focus()
 									}
 
-									
 
 									return
 								}
@@ -727,8 +825,9 @@ var menu = (function(){
 							},
 
 							active : function(a){
+								
 
-								window.requestAnimationFrame(() => {
+								window.rifticker.add(() => {
 									if (a){
 										el.c.addClass('searchactive')
 									}
@@ -753,12 +852,59 @@ var menu = (function(){
 					
 				}
 			},
+
+			application : {
+				init : function(el){
+					/*var calculateMarketingLogo = function(currentLogo) {
+						var logosArr = ['fa-windows', 'fa-apple', 'fa-google-play'];
+			
+						return logosArr[(_.indexOf(logosArr, currentLogo) + 1) % logosArr.length];
+					}
+			
+					var changeLogo = function() {
+						var element = el.find('.changing-app-icon');
+
+						element.css('opacity', '1')
+			
+						var iconLogoClasses = _.find((element.attr('class') || '').split(' '), function(elem) {
+							return elem.indexOf('fa-') > -1;
+						});
+
+						element.removeClass(iconLogoClasses);
+						element.addClass(calculateMarketingLogo(iconLogoClasses));
+			
+						setTimeout(function() {
+							element.css('opacity', '0')
+						}, logotime - 1500)
+					}
+
+					changeLogoInterval = setInterval(changeLogo, logotime);
+
+					setTimeout(function(){
+						el.find('.changing-app-icon').css('opacity', '0')
+					}, logotime - 1000)*/
+
+				},
+
+				click : function(){
+
+					var wnd = isMobile() || isTablet()
+
+					self.nav.api.go({
+						open : true,
+						href : 'applications',
+						inWnd : wnd,
+						history : !wnd
+					})
+
+				}
+			},
 	
 			state : {
 				init : function(el){
 					
 					var action = function(){
-						window.requestAnimationFrame(() => {
+						window.rifticker.add(() => {
 							if(!_.isEmpty(self.app.errors.state)){
 								el.removeClass('hidden')
 							}
@@ -817,7 +963,6 @@ var menu = (function(){
 			},
 			wallets : {
 				click : function(){
-
 					
 					self.nav.api.go({
 						open : true,
@@ -838,70 +983,74 @@ var menu = (function(){
 
 						var c = 'good';
 
-						el.removeClass('hidden')
+						window.rifticker.add(() => {
+							el.removeClass('hidden')
 
-						if (add == 0){
-							al.text(self.app.platform.mp.coin(value))
-						}
-						else
-						{
-							al.animateNumber({
-						    	number: add,
+							if (add == 0){
+								al.text(self.app.platform.mp.coin(value))
+							}
+							else
+							{
+								al.animateNumber({
+									number: add,
+	
+									numberStep: function(now, tween) {
+	
+										var number = Number(value + now).toFixed(8),
+											target = $(tween.elem);
+	
+										window.rifticker.add(() => {
+											target.text(self.app.platform.mp.coin(number));
+										})
+	
+									},
+	
+								}, rand(400, 1200), function(){
+									window.rifticker.add(() => {
+										el.removeClass(c)
+									})
+								});
+							}
+						})
 
-						    	numberStep: function(now, tween) {
-
-									console.log('step')
-
-						        	var number = Number(value + now).toFixed(8),
-						            	target = $(tween.elem);
-
-						           
-						    		target.text(self.app.platform.mp.coin(number));
-
-						    	},
-
-						    }, rand(400, 1200), function(){
-						    	el.removeClass(c)
-						    });
-						}
-						
 					}
 
-					var setValue = function(){						
+					var setValue = function(){	
+						var account = self.app.platform.actions.getCurrentAccount()
 
-						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
+						if(!account){
+							set(0,0)
+						}
+						else{
+							var balance = account.actualBalance(account.allAddresses())
 
-							var t = self.app.platform.sdk.node.transactions.tempBalance()
-
-							amount = amount + t
-
-							var add = amount - current;
+							var add = balance.actual - current;
 
 							if (first) {
 								add = 0;
-								current = amount
+								current = balance.actual
 							}
+
+							if(!first && current == balance.actual) return
+
 
 							first = false;
 
 							set(current, add)
 
-							current = amount;
+							current = balance.actual
 
-							self.app.platform.sdk.wallet.drawSpendLine(el.find('.numberWrp'))
-						})
+							self.app.platform.sdk.wallet.drawSpendLineActions(el.find('.numberWrp'), balance)
+						}
 
-					}
-
-					var act = function(){
-
-						setValue()
 						
+
 					}
 
-					self.app.platform.sdk.node.transactions.clbks.menu = act;
+					self.app.platform.actions.clbk('change', 'menu', setValue)
 
-					act(0)
+
+					setValue()
 					
 				}
 			},
@@ -949,14 +1098,22 @@ var menu = (function(){
 
 		var initEvents = function(){
 
+			self.app.nav.clbks.history.menunavigation = function(href){
+				renders.menunavigation()
+			}
+
+			self.app.platform.sdk.registrations.clbks.menunavigation = function(){
+				renders.menunavigation()
+			}
+
 			self.app.events.resize.menu = function(){
-				if(self.app.width <= 768 && menusearch){
+				/*if(self.app.width <= 768 && menusearch){
 					events.searchinit.init()
 				}
 
 				if(self.app.width > 768 && !menusearch){
 					events.searchinit.init()
-				}
+				}*/
 			}
 
 			self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu2 = function(count){
@@ -992,6 +1149,7 @@ var menu = (function(){
 				})
 				
 			})
+
 
 			if (self.app.platform.sdk.newmaterials.clbks)
 				self.app.platform.sdk.newmaterials.clbks.update.menu = updateNew
@@ -1033,20 +1191,88 @@ var menu = (function(){
 
 			})
 
-			ParametersLive([loc], el.c);
+			self.app.platform.actionListeners['menu'] = function({type, alias, status}){
+
+				if (type == 'userInfo'){
+					renders.userinfo()
+				}
+
+				if (type == 'accDel'){
+					renders.userinfo()
+				}
+				
+			}
+
+			//ParametersLive([loc], el.c);
 		}
 
 		var renders = {
+			menunavigation : function(clbk){
+
+				if(self.app.mobileview && app.nav.current){
+
+					var pathname = app.nav.current.href
+
+					self.shell({
+						name :  'navicon',
+						data : {
+							pathname,
+							path : app.nav.current.completeHref
+						},
+
+						el : el.c.find('.naviconwrapper')
+
+					}, function(_p){
+
+						_p.el.find('.item').on('click', function(){
+							if (pathname == 'index'){
+
+								self.nav.api.go({
+									open : true,
+									href : 'share',
+									inWnd : true,
+									history : true,
+									
+									essenseData : {
+										rmhistory : true
+									}
+								})
+
+							}
+							else{
+								self.app.platform.ui.goback()
+							}
+						})
+
+						
+
+
+						if(clbk) clbk()
+					})
+
+				}
+				else{
+					if(clbk) clbk()
+				}
+
+
+			},
 			results : function(results, value, clbk, p){
 
 				if(!p) p = {}
+
+				var frommap = _.map(_.filter(self.app.map, (m) => {
+					return m.insearch && value == m.href
+				}), (m) => {
+					return ":" + m.href
+				})
 
 				self.shell({
 					name :  'results',
 					data : {
 						results : results,
-						value : value,
-						counts : p.counts || {}
+						value : (frommap.length ? ":" : "") + value,
+						counts : p.counts || {},
 					},
 
 				}, function(_p){
@@ -1054,20 +1280,36 @@ var menu = (function(){
 					if (clbk)
 						clbk(_p.rendered);
 				})
-			}
+			},
+
+			userinfo: function(clbk){
+
+				self.shell({
+					name :  'userinfo',
+					data : {
+						
+					},
+
+					el : el.userinfoWrapper
+
+				}, function(_p){
+					if(clbk) clbk()
+				})
+			},
+
+			
 		}
 
 		var make = function(){
 
-			self.app.user.isState(function(state){
-
-				
-			})
+			renders.userinfo()
+			renders.menunavigation()
 
 		}
 
 
 		var closesearch = function(){
+			
 			if (el.c) el.c.removeClass('searchactive')
 
 			if (menusearch){
@@ -1083,9 +1325,9 @@ var menu = (function(){
 
 				var data = {};
 
-					loc.value = app.localization.current().name;
+					//loc.value = app.localization.current().name;
 
-					data.loc = loc;
+					//data.loc = loc;
 					data._SEO = _SEO;
 					data.lkey = app.localization.current()
 					data.theme = self.app.platform.sdk.theme.current == "white" ? 'white' : 'black'
@@ -1094,17 +1336,17 @@ var menu = (function(){
 
 				if(p.state){
 
-					var addr = self.sdk.address.pnet().address
+					var addr = self.app.user.address.value
 
-					if (self.app.platform.sdk.registrations.showprivate()){
+					//if (self.app.platform.sdk.registrations.showprivate()){
 						data.key = true
-					}
+					//}
 
 					self.app.platform.sdk.users.getone(addr, function(){
 				
 						clbk(data)
 
-					})
+					}, true)
 					
 
 				}
@@ -1130,8 +1372,15 @@ var menu = (function(){
 
 				delete self.app.platform.sdk.newmaterials.clbks.update.menu
 
-				delete self.app.platform.sdk.node.transactions.clbks.menu
-				delete self.app.platform.ws.messages.event.clbks.menusave
+				delete self.app.platform.actionListeners['menu']
+
+				delete self.app.nav.clbks.history.menunavigation
+	
+				delete self.app.platform.sdk.registrations.clbks.menunavigation
+
+
+				self.app.platform.actions.clbk('change', 'menu', null)
+
 
 				delete self.app.platform.sdk.notifications.clbks.seen.menu
 				delete self.app.platform.sdk.notifications.clbks.added.menu
@@ -1142,6 +1391,9 @@ var menu = (function(){
 				delete self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu
 				delete self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu2
 
+				delete self.app.platform.actionListeners['menu_activies']
+
+
 				_.each(events, function(e){
 
 					delete e.el
@@ -1149,6 +1401,12 @@ var menu = (function(){
 					if (e.destroy)
 						e.destroy()
 				})
+
+				clearInterval(torIntervalId);
+
+				torIntervalId = null;
+				controlTorElem = null;
+				networkStatsListenerId = null;
 
 				//if (el.c) el.c.empty()
 
@@ -1175,7 +1433,7 @@ var menu = (function(){
 			},
 
 			showsearch : function(v){
-				window.requestAnimationFrame(() => {
+				window.rifticker.add(() => {
 					if (el.c){
 						if (v){
 							el.c.addClass('searchactive')
@@ -1197,18 +1455,10 @@ var menu = (function(){
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
-				el.cart = el.c.find('.cart');
-				el.likes = el.c.find('.favorites');
 
-				el.messagesCount = el.c.find('.dialogs .count');
-				el.notificationsCount = el.c.find('.notifications .count');
 
-				el.walletsAmount = el.c.find('.wallets .amount');
-				el.notactive = el.c.find('.notactive');
-				el.currency = el.c.find('.currencyWrapper');
 				el.postssearch =  el.c.find('.postssearch')
-				el.nav = el.c.find('.menutoppanel')
-
+				el.userinfoWrapper = el.c.find('.userinfoWrapper')
 				actions.ahnotifyclear()
 
 				initEvents();
@@ -1234,7 +1484,7 @@ var menu = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

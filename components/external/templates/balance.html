@@ -1,0 +1,11 @@
+<div class="amount">
+    <div class="numberWrp">
+        <% if(balanceMode == 'wallet') {%>
+            <i class="fas fa-wallet"></i>
+        <% } %>
+        <% if(balanceMode == 'user') {%>
+            <i class="fas fa-user"></i>
+        <% } %>
+        <span class="number"><%-formattedValue%></span> <span class="pkoinlabel">PKOIN</span>
+    </div>
+</div>

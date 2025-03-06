@@ -2,15 +2,71 @@
   text-align: center;
 }
 #channel .channel {
-  background: rgb(var(--background-total-theme));
-  padding: 0 0.5em;
+  max-width: 640px;
+  background: rgb(var(--background-secondary-theme));
+}
+#channel .channel .bgwallpaperWrapper {
+  overflow: hidden;
+  height: 135px;
+  z-index: 0;
+  position: relative;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  filter: brightness(90%);
+}
+#channel .channel .bgwallpaperWrapper .bgwallpaper {
+  width: 100%;
+  height: 100%;
+  background: #051b48;
+  opacity: 1!important;
+}
+#channel .channel .bgwallpaperWrapper .bgwallpaper[imageloaded="true"] [circle="circle"] {
+  opacity: 0;
+}
+#channel .channel .bgwallpaperWrapper .bgwallpaper [circle="circle"] {
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+#channel .channel .bgwallpaperWrapper .bgwallpaper.deleted,
+#channel .channel .bgwallpaperWrapper .bgwallpaper.blocked {
+  background: #48052b;
+}
+#channel .channel .bgwallpaperWrapper .bgwallpaper.deleted .grad,
+#channel .channel .bgwallpaperWrapper .bgwallpaper.blocked .grad {
+  background: #010101;
+  background: linear-gradient(180deg, rgba(236, 30, 215, 0.3), rgba(1, 1, 1, 0.1), rgba(1, 1, 1, 0.2));
+}
+#channel .channel .bgwallpaperWrapper .bgwallpaper.reputationBlocked {
+  background: #ff0090;
+}
+#channel .channel .bgwallpaperWrapper .bgwallpaper.reputationBlocked .grad {
+  background: #010101;
+  background: linear-gradient(180deg, rgba(255, 0, 123, 0.3), rgba(1, 1, 1, 0.1), rgba(1, 1, 1, 0.2));
+}
+#channel .channel .bgwallpaperWrapper .grad {
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  background: #010101;
+  background: linear-gradient(180deg, rgba(30, 141, 236, 0.3), rgba(1, 1, 1, 0.1), rgba(1, 1, 1, 0.2));
+  z-index: 0;
+  height: 100%;
 }
 #channel .channel .userinfo {
+  position: relative;
+  top: -35px;
   padding: 0.5em 0;
-  display: flex;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  border-radius: 12px;
+  background: rgb(var(--background-hidden-layer));
 }
 #channel .channel .userinfo .name {
-  font-size: 1.75em;
+  text-align: center;
   font-weight: 700;
   padding-bottom: 0.5em;
 }
@@ -21,53 +77,81 @@
   vertical-align: bottom;
   display: inline-block;
 }
-#channel .channel .userinfo .nameinfo {
-  padding-left: 1em;
-  flex-grow: 2;
-}
 #channel .channel .userinfo .openprofilebuttonwrapper {
+  text-align: center;
   padding-bottom: 1em;
 }
 #channel .channel .userinfo .openprofilebutton {
   min-width: 200px;
 }
 #channel .channel .userinfo .additional {
+  padding: 1em;
   margin-top: 0.5em;
   padding-top: 1em;
   padding-bottom: 1em;
   border-top: 1px solid rgb(var(--neutral-grad-0));
 }
 #channel .channel .panel {
-  margin: 0 auto;
-  max-width: 600px;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 }
-#channel .channel .panel .usermenuitem {
-  padding: 0.5em 0;
+#channel .channel .panel > div {
   cursor: pointer;
   white-space: nowrap;
+  margin-right: 0.5em;
+  margin-bottom: 0.5em;
+  border-radius: 12px;
+  padding: 0.5em 1em;
+  background: rgb(var(--background-secondary-theme));
+  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
 }
 #channel .channel .panel > div i {
   text-align: center;
   width: 30px;
   font-size: 0.8em;
 }
-#channel .channel .usericon {
-  width: 40px;
-  height: 40px;
-  line-height: 40px;
-  margin: 0 auto;
+#channel .channel .nameinfo {
+  padding-top: 4.5em;
 }
-#channel .channel .usericon.letter {
-  font-size: 1.5em;
+#channel .channel .usericon {
+  font-size: 2.5em;
+  border: 1px solid rgb(var(--background-total-theme));
+  position: absolute;
+  top: -1.25em;
+  left: 50%;
+  margin-left: -1.5em;
+}
+#channel .channel .uiwrapper {
+  position: relative;
 }
 #channel .channel .action {
   padding: 1em;
   text-align: center;
 }
-.wnd #channel {
-  padding-bottom: 3em;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
+#channel .channel .userinfo .blockWrapper {
+  padding-left: 1em;
+  padding-right: 1em;
+  margin-top: 1em;
+}
+#channel .channel .userinfo .blockWrapper span {
+  cursor: pointer;
+  text-decoration: underline;
+}
+#channel .channel .userinfo .blockWrapper .block {
+  color: rgb(var(--color-bad));
+}
+#channel .channel .userinfo .blockWrapper .unblock {
+  display: none;
+  color: rgb(var(--neutral-grad-4));
+}
+#channel .channel .userinfo.blocked .blockWrapper .block {
+  display: none;
+}
+#channel .channel .userinfo.blocked .blockWrapper .unblock {
+  display: inline;
+}
+.wnd.channelwnd .wndcontent {
+  padding-top: 0;
 }

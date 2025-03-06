@@ -2,17 +2,23 @@
 
 var http = require('http');
 var https = require('https');
-
+var axios = require('axios');
 function RpcClient(opts) {
     opts = opts || {};
     this.host = opts.host || '127.0.0.1';
+
     this.port = opts.port || 38081;
+    this.sport = opts.sport || 38881;
+
     this.portPrivate = opts.portPrivate || 37071;
     this.user = opts.user || '';
     this.pass = opts.pass || '';
     this.protocol = opts.protocol === 'http' ? http : https;
+    this.http = opts.protocol;
     this.batchedCalls = null;
     this.disableAgent = opts.disableAgent || false;
+
+    this.transports = opts.transports
 
     var isRejectUnauthorized = typeof opts.rejectUnauthorized !== 'undefined';
     this.rejectUnauthorized = isRejectUnauthorized ? opts.rejectUnauthorized : true;
@@ -70,7 +76,11 @@ const publics = {
     getuserstate: true,
     getaccountsetting: true,
     getaddressregistration: true,
-    
+
+    getusersubscribes: true,
+    getusersubscribers: true,
+    getuserblockings: true,
+
     signrawtransactionwithkey: true,
     getrecommendedposts: true,
     gettime: true,
@@ -85,10 +95,10 @@ const publics = {
     sendcomment: true,
     getnodeinfo: true,
     getaddressscores: true,
-    getaccountsetting : true,
     getnotifications: true,
     getpostscores:true,
     getpagescores:true,
+    getactivities: true,
     getrandomcontents : true,
     getrecomendedaccountsbysubscriptions : true,
     getrecomendedaccountsbyscoresonsimilaraccounts : true,
@@ -133,6 +143,30 @@ const publics = {
     gettopaccounts: true,
     getrecommendedaccountbyaddress: true,
     getcontentactions: true,    
+
+    getaccountearning : true,
+
+    // Barteron
+    getbarteronaccounts: true,
+    getbarteronoffersbyaddress: true,
+    getbarteronoffersbyroottxhashes: true,
+    getbarteronfeed: true,
+    getbarterondeals: true,
+    getbarteronoffersdetails: true,
+    getbarteroncomplexdeals: true,
+    getbarterongroups : true,
+    // Jury
+    getalljury: true,
+    getjuryassigned: true,
+    getjurymoderators: true,
+
+    getbans : true,
+    getfromtotransactions : true,
+
+    getapps : true,
+    getappscores : true,
+    getappcomments : true
+
 }
 
 const keepAliveAgent = new http.Agent({ keepAlive: true });
@@ -171,19 +205,19 @@ function rpc(request, callback, obj) {
     var self = obj;
 
 
-    try{
-        request = JSON.stringify(request);
-    }
-    catch(e){
+    var msg = false;
 
-        callback({
-            code : 499
-        });
+    if (request?.params && request?.params[1] && request?.params[1].msg){
 
-        return
+        msg = true;
     }
+
+
+    
+
     
     var signal = null
+    var bytimeout = false
 
     ///need to test
     if (typeof AbortController != 'undefined'){
@@ -198,6 +232,8 @@ function rpc(request, callback, obj) {
             }
 
             ac = null
+
+            bytimeout = true
 
         }, timeout)
     }
@@ -218,131 +254,144 @@ function rpc(request, callback, obj) {
             options[k] = self.httpOptions[k];
         }
     }
-
+    
     var called = false;
     var errorMessage = 'Bitcoin JSON-RPC: ';
 
-    
-   
-    var req = self.protocol.request(options, function(res) {
+    const url = self.http + '://' + options.host + ':' + options.port + options.path;
 
-        var buf = '';
-        var parsedBuf = null;
-        var exceededError = null
-
-        res.on('data', function(data) {
-            buf += data;
-
-        });
-
-        res.on('end', function() {
-
-            if (called) {
-                return;
-            }
-
-            if (res.statusCode === 401) {
-
-                exceededError = {
-                    error : errorMessage + 'Connection Rejected: 401 Unnauthorized',
-                    code : 401
-                } 
-
-            }
-
-            if (res.statusCode === 403) {
-
-                exceededError = {
-                    error : errorMessage + 'Connection Rejected: 403 Forbidden',
-                    code : 403
-                } 
-
-            }
-
-            if (res.statusCode === 500 && buf.toString('utf8') === 'Work queue depth exceeded') {
-
-                exceededError = {
-                    error : 'Bitcoin JSON-RPC: ' + buf.toString('utf8'),
-                    code : 429
-                } 
-
-            }
-
-            if(!exceededError){
-
-                try {
-                    parsedBuf = JSON.parse(buf);
-                } 
-                catch (e) {
-                    exceededError = {
-                        error : 'Error Parsing JSON: ' + e.message,
-                        code : res.statusCode || 500
-                    }   
-                }
-
-            }
-
-            if (exceededError){
-
-                if(lg) console.log("exceededError", self.host, m, exceededError, buf)
-
-                res.resume()
-
-                callback(exceededError);
-            }
-            else{
-                callback(parsedBuf.error, parsedBuf);
-            }
-            
-            buf = '';
-            parsedBuf = null;
-            exceededError = null;
-
-            called = true;
-
-        });
-
-    }).on('error', function(e) {
-
-        if(!called) {
-
-            if(lg) console.log("requesterror", self.host, m, e)
-            
-
-            callback({
-                code : 408,
-                error : 'requesterror'
-            });
-
-            called = true;
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept-Encoding': 'gzip, deflate, br',
         }
-        
-    }).setTimeout(timeout, function(){
-
-        if(!called) {
-
-            if(lg) console.log("timeout", self.host, m)
-
-            callback({
-                code : 408,
-                error : 'timeout'
-            });
-
-            called = true;
-        }
-
-        req.destroy()
-    })
-
-    req.setHeader('Content-Length', request.length);
-    req.setHeader('Content-Type', 'application/json');
-
-    if (prv) {
-        req.setHeader('Authorization', 'Basic ' + Base64Helper.encode(self.user + ':' + self.pass));
     }
 
-    req.write(request);
-    req.end();
+    if (prv){
+        config.headers['Authorization'] = 'Basic ' + Base64Helper.encode(self.user + ':' + self.pass)
+    }
+    
+    if (self.httpOptions) {
+        for (var k in self.httpOptions) {
+            config[k] = self.httpOptions[k];
+        }
+    }
+
+    var reqf = self.transports?.axios || axios
+
+    config.method = 'post'
+    //config.signal = signal
+    
+
+    try{
+
+        request = JSON.stringify(request);
+
+    }
+    catch(e){
+
+        callback({
+            code : 499
+        });
+
+        return
+    }
+
+    reqf({
+        
+        url, 
+        ...config, 
+        data : request
+
+    }).then((res) => {
+        var exceededError = null
+
+        if (res.status === 401) {
+
+            exceededError = {
+                error : errorMessage + 'Connection Rejected: 401 Unnauthorized',
+                code : 401
+            } 
+
+        }
+
+        if (res.status === 403) {
+
+            exceededError = {
+                error : errorMessage + 'Connection Rejected: 403 Forbidden',
+                code : 403
+            } 
+
+        }
+
+        
+
+        if (res.status === 408) {
+
+            exceededError = {
+                error : errorMessage + 'Connection Rejected: sql request timeout',
+                code : 408
+            } 
+
+        }
+        
+
+        const data = res?.data;
+
+        if (res.status === 500 && data?.error === 'Work queue depth exceeded') {
+
+            exceededError = {
+                error : 'Bitcoin JSON-RPC: ' + data.error,
+                code : 429
+            } 
+
+        }
+
+        if (exceededError){
+
+            callback(exceededError);
+
+        } else {
+
+            callback(data?.error, data);
+
+        }
+
+
+        exceededError = null;
+
+        called = true;
+
+        return;
+
+
+
+    })
+    .catch(err => {
+
+
+        called = true;
+
+        var error = err.response?.data?.error;
+
+        if(!error && err){
+
+
+            if(err.code == 'ECONNREFUSED'){
+                error = {
+                    code : 408,
+                    error : 'ECONNREFUSED'
+                }
+            }
+        }
+        
+        callback(error || {
+            code : 408,
+            error : bytimeout ? 'timeout' : 'requesterror'
+        });
+    })
+
+    
 }
 
 RpcClient.prototype.batch = function(batchCallback, resultCallback) {
@@ -397,7 +446,6 @@ RpcClient.callspec = {
     getTransaction: '',
     getTxOut: 'str int bool',
     getTxOutSetInfo: '',
-    getnotifications: 'obj',
     //getWalletInfo: '',
     getWork: '',
     help: '',
@@ -442,7 +490,7 @@ RpcClient.callspec = {
     getrecommendedposts: 'str',
     gettime: '',
     getmissedinfo: 'str int',
-    gethotposts: 'str str str str',
+    gethotposts: 'str int int str',
     getmostcommentedfeed: 'int str int str obj obj obj obj obj str int',
     getuseraddress: 'str int',
     search: 'str str str',
@@ -453,6 +501,7 @@ RpcClient.callspec = {
     getnodeinfo: '',
     getaddressscores: 'str',
     getaccountsetting : 'str',
+    getactivities : 'str int int obj',
     getpostscores: 'str',
     getpagescores: 'obj str',
 
@@ -478,6 +527,10 @@ RpcClient.callspec = {
     getstatistic: 'int int',
     getuserstatistic : 'str int int int int',
 
+    getusersubscribes: 'str str str str int',
+    getusersubscribers: 'str str str str int',
+    getuserblockings: 'str int str str str int',
+
     getrecomendedaccountsbysubscriptions : 'str',
     getrecomendedaccountsbyscoresonsimilaraccounts : 'str',
     getrecomendedaccountsbyscoresfromaddress : 'str',
@@ -486,7 +539,7 @@ RpcClient.callspec = {
     getrecommendedaccountbyaddress: 'str str obj str int',
 
     getcontentactions : 'str',  
-
+    getnotifications : 'int',
     
     getcompactblock: "str int",
     searchbyhash: "str",
@@ -499,6 +552,30 @@ RpcClient.callspec = {
     stop: '',
     dumpwallet: 'str',
     importwallet: 'str',
+
+    getaccountearning : 'str int int',
+
+    // Barteron
+    getbarteronaccounts: 'obj',
+    getbarteronoffersbyaddress: 'str',
+    getbarteronoffersbyroottxhashes: 'obj',
+    getbarteronfeed: 'obj',
+    getbarterondeals: 'obj',
+    getbarteronoffersdetails: 'obj',
+    getbarteroncomplexdeals: 'obj',
+    getbarterongroups: 'obj',
+    // Jury
+    getalljury: '',
+    getjuryassigned: 'str',
+    getjurymoderators: 'str',
+
+    getbans: 'str',
+
+    getapps : 'obj str int int int str bool',
+    getappscores : 'str int int int str bool',
+    getappcomments : 'str int int int str bool',
+    getfromtotransactions : 'str str int'
+
 };
 
 var slice = function(arr, start, end) {

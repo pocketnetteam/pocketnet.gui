@@ -61,6 +61,10 @@
 			padding : 4 * @rhythm 0;
 		}
 
+		.copyvalue{
+			cursor: pointer;
+		}
+
 
 		.pending{
 			padding : 2 * @rhythm 0;
@@ -80,9 +84,26 @@
 			padding : 4 * @rhythm 0;
 
 			span{
-				font-size: 0.9em;
+				font-size: 0.8em;
 			}
 		}
+
+		.cachePanel{
+			display: flex;
+			padding-bottom : 4 * @rhythm;
+			>div{
+				margin-right: 3 * @rhythm;
+				color: rgb(var(--color-bg-ac-bright));
+				cursor: pointer;
+
+				span{
+					font-size: 0.8em;
+				}
+			}
+
+			
+		}
+
 
 		.tx{
 			display: flex;

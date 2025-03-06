@@ -12,24 +12,37 @@ var Cache = function(p){
     var softclearTime = 10000
 
     var workerInterval = null
-    var workerTime = 200
+    var workerTime = 400
     var waittime = 8500
 
     var ckeys = {}
 
     var worker = function(){
 
-        _.each(waiting, function(w){
-            _.each(w, function(k, key){
-                executingWatcher(k, key)
+        for(var key in waiting) {
+            let w = waiting[key]
+
+            var removing = []
+
+            for(var key2 in w) {
+                let k = w[key2]
+
+                if(executingWatcher(k)){
+                    removing.push(key2)
+                    //delete w[key2]
+                }
+            }
+
+            _.each(removing, (key2) => {
+                delete w[key2]
             })
-        })
+        }
     }
 
-    var executingWatcher = function(k, key, ignoredate){
+    var executingWatcher = function(k, ignoredate){
 
         var itemswithattemp = []
-        var now = new Date()
+        var now = Date.now()
 
         _.each(k.clbks, function(c, waitid){
 
@@ -39,18 +52,19 @@ var Cache = function(p){
                     itemswithattemp.push([c,waitid])
 
                 if (k.executor == waitid){
+                    delete k.clbks[k.executor]
                     delete k.executor
                 }
             }
         })
 
-       
-        
         if (itemswithattemp.length){
 
             k.attemp++
 
             if (k.attemp >= 3){
+
+                k.attemp = 0
 
                 _.each(itemswithattemp, function(ce){
                     ce[0].action('attemps')
@@ -58,18 +72,15 @@ var Cache = function(p){
                 })
 
                 if(_.isEmpty(k.clbks)){
-                    delete k[key]
+                    return true
                 }
-
-                k.attemp = 0
-
             }
             else{
 
                 var newexecutor = itemswithattemp[f.rand(0, itemswithattemp.length - 1)]
 
-                _.each (itemswithattemp, function(ce){
-                    ce[0].date = f.date.addseconds(ce[0].date, waittime / 1000)
+                _.each(itemswithattemp, function(ce){
+                    ce[0].date = ce[0].date + waittime// f.date.addseconds(ce[0].date, waittime / 1000)
                 })
                 
                 k.executor = newexecutor[1]
@@ -77,9 +88,12 @@ var Cache = function(p){
 
                 delete k.clbks[k.executor]
 
-
             }
 
+        }
+
+        if(_.isEmpty(k.clbks)){
+            return true
         }
 
     }
@@ -102,9 +116,10 @@ var Cache = function(p){
                 block : 0
             },
 
-            // node + , add block
+
             getuseraddress : {
-                time : 82000
+                time : 82000,
+                stats : true
             },
 
             // node +
@@ -132,18 +147,21 @@ var Cache = function(p){
             getrawtransactionwithmessagebyid: {
                 time : 460,
                 block : 0,
+                stats : true
             },
             
             // node +
             getrawtransactionwithmessage: {
                 time : 460,
                 block : 0,
+                stats : true
             },
 
             // ?
             getrawtransaction: {
                 time : 460,
-                block : 0
+                block : 0,
+                stats : true
             },
 
             // node +
@@ -158,16 +176,10 @@ var Cache = function(p){
             },  
 
             getboostfeed: {
-                time : 460,
-                block : 0,
+                time : 1460,
             }, 
 
             getprofilefeed: {
-                time : 460,
-                block : 0,
-            }, 
-
-            gethierarchicalstrip: {
                 time : 460,
                 block : 0,
             }, 
@@ -180,6 +192,7 @@ var Cache = function(p){
             gethistoricalstrip: {
                 time : 460,
                 block : 0,
+                stats : true
                 /*smart : {
                     idin : '0',
                     idou : 'txid',
@@ -199,6 +212,21 @@ var Cache = function(p){
             },
 
             // node +
+
+            getusersubscribes: {
+                time : 560,
+                block : 0,
+            },
+
+            getusersubscribers: {
+                time : 560,
+                block : 0,
+            },
+
+            getuserblocking: {
+                time : 560,
+                block : 0,
+            },
             getuserprofile: {
                 time : 560,
                 block : 0,
@@ -234,6 +262,7 @@ var Cache = function(p){
             // node -
             peertubevideo: {
                 time : 600,
+                stats : true
             },
 
             // node ?
@@ -310,6 +339,50 @@ var Cache = function(p){
 
             getrecomendedcontentsbyscoresfromaddress : {
                 time : 3600
+            },
+
+            getaccountearning: {
+                time : 460,
+                block : 0,
+            }, 
+
+            //Jury
+            getalljury: {
+                time : 460,
+                block : 0,
+            }, 
+
+            getjuryassigned: {
+                time : 460,
+                block : 0,
+            }, 
+
+            getjurymoderators: {
+                time : 460,
+                block : 0,
+            }, 
+
+            getbans: {
+                time : 460,
+                block : 0,
+            },
+            
+            getstatisticcontentbydays : {
+                time : 3600
+            },
+
+            getstatisticbydays : {
+                time : 3600
+            },
+
+            getcoininfo: {
+                time : 460,
+                block : 0,
+            },
+
+            getfromtotransactions : {
+                time : 460,
+                block : 0,
             }
         }
     }
@@ -340,7 +413,11 @@ var Cache = function(p){
                 waiting[key] = {}
 
             if (waiting[key][k]){   
-                executingWatcher(waiting[key][k], key, true)
+                if(executingWatcher(waiting[key][k], true)){
+
+                    delete waiting[key][k]
+                }
+                
             }
 
         }
@@ -368,7 +445,7 @@ var Cache = function(p){
 
             storage[key][k] = {
                 data : data,
-                time : new Date()
+                time : Date.now()
             }
 
             self.setsmart(key, data)
@@ -408,6 +485,7 @@ var Cache = function(p){
             }
 
             if(!cachehash){
+
                 var ks = null
 
                 try{
@@ -422,12 +500,12 @@ var Cache = function(p){
 
             var k = cachehash || f.hash(ks)
 
-            var sd = f.deep(storage, key + "." + k)
+            var sd = storage[key] ? (storage[key][k] || null) : null
 
             if (sd){
-                var t = f.date.addseconds(sd.time, sd.ontime || ckeys[key].time)
+                var t = sd.time + 1000 * (sd.ontime || ckeys[key].time) //f.date.addseconds(sd.time, sd.ontime || ckeys[key].time)
 
-                if (t > new Date()){
+                if (t > Date.now()){
                     return sd.data
                 }
                 else{
@@ -454,7 +532,7 @@ var Cache = function(p){
 
             smart[storagekey][d[c.smart.idou]] = {
                 data : d,
-                date : new Date()
+                date : Date.now()
             }
 
         })
@@ -543,7 +621,7 @@ var Cache = function(p){
             waiting[key][k].executor = waitid
 
             waiting[key][k].clbks[waitid] = {
-                date : f.date.addseconds(new Date(), waittime / 1000)
+                date : Date.now() + waittime
             }
 
             clbk('execute')
@@ -553,7 +631,7 @@ var Cache = function(p){
 
         waiting[key][k].clbks[waitid] = {
             action : clbk,
-            date : f.date.addseconds(new Date(), waittime / 1000)
+            date : Date.now() + waittime
         }
 
         
@@ -567,11 +645,13 @@ var Cache = function(p){
 
                 if (k.block && k.block < block.height){
                     storage[key] = {}
+                    
 
                     if (k.smart){
                         smart[key] = {}
                     }
-                    //console.log("Invalidate cache", key, k.block, block.height)
+
+                    k.block = block.height
                 }
                     
             }
@@ -580,32 +660,43 @@ var Cache = function(p){
         f.gcwrapper()
     }
 
-    self.info = function(){
+    self.info = function(compact){
 
         var meta = {}
+        var wt = {}
+
+        if(!compact){
+            _.each(waiting, (w, k) => {
+                wt[k] = _.toArray(w).length
+            })
+        }
+        
 
         _.each(ckeys, function(c, key){
 
+            if(compact && !c.stats) return
+
             var size = 0;
             
-            
-            /*try{
-                size = JSON.stringify(storage[key] || "").length / 1024;
-            }
-            catch(e){}*/
+            var length = _.toArray(storage[key] || {}).length
+            var wl = 0
 
-            var length = _.toArray(storage[key] || {}).length /// ???
+            if(waiting[key]){
+                wl = _.toArray(waiting[key]).length
+            }
 
             meta[key] = {
                 block : c.block,
                 length : length,
-                size : size
+                size : size,
+                waiting : wl
             }
 
         })
 
         return {
             meta : meta,
+            wt : wt
         }
     }
     
@@ -617,7 +708,7 @@ var Cache = function(p){
 
     var softclear = function(){
 
-        var date = new Date()
+        var date = Date.now()
 
         _.each(storage, function(s, key){
 
@@ -633,7 +724,7 @@ var Cache = function(p){
 
                 if(sd.time){
 
-                    var t = f.date.addseconds(sd.time, 3 * (sd.ontime || c.time))
+                    var t = sd.time + 3 * (sd.ontime || c.time) * 1000// f.date.addseconds(sd.time, 3 * (sd.ontime || c.time))
 
                     if (t < date){
                         removekeys.push(lkey)
@@ -664,7 +755,7 @@ var Cache = function(p){
 
                 if(sd.time){
 
-                    var t = f.date.addseconds(sd.time, 3 * (time))
+                    var t = sd.time + 3 * (time) * 1000 ///f.date.addseconds(sd.time, 3 * (time))
 
                     if (t < date){
                         removekeys.push(lkey)

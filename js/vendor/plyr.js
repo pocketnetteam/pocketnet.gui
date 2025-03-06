@@ -1223,7 +1223,7 @@ typeof navigator === "object" && (function (global, factory) {
       var height = 240;
       var offset = (height - padding) / (height / 50);
       this.media.style.transform = "translateY(-".concat(offset, "%)");
-    } else if (this.isHTML5) {
+    } else if (this.isHTML5 || this.isIpfs) {
       this.elements.wrapper.classList.toggle(this.config.classNames.videoFixedRatio, ratio !== null);
     }
 
@@ -1376,6 +1376,10 @@ typeof navigator === "object" && (function (global, factory) {
       args[_key - 1] = arguments[_key];
     }
 
+    if (input.includes('/shorts/')) {
+      input.replace('/shorts/', '/embed/');
+    }
+
     if (is$1.empty(input)) {
       return input;
     }
@@ -1448,7 +1452,8 @@ typeof navigator === "object" && (function (global, factory) {
     airplay: 'AirPlay',
     html5: 'HTML5',
     vimeo: 'Vimeo',
-    youtube: 'YouTube'
+    youtube: 'YouTube',
+    ipfs: 'IPFS',
   };
   var i18n = {
     get: function get() {
@@ -3767,6 +3772,9 @@ typeof navigator === "object" && (function (global, factory) {
         api: 'https://noembed.com/embed?url=https://www.youtube.com/watch?v={0}' // 'https://www.googleapis.com/youtube/v3/videos?id={0}&key={1}&fields=items(snippet(title),fileDetails)&part=snippet',
 
       },
+      ipfs: {
+        source: 'https://cloudflare-ipfs.com/ipfs/{0}'
+      },
       googleIMA: {
         sdk: 'https://imasdk.googleapis.com/js/sdkloader/ima3.js'
       }
@@ -3961,7 +3969,8 @@ typeof navigator === "object" && (function (global, factory) {
   var providers = {
     html5: 'html5',
     youtube: 'youtube',
-    vimeo: 'vimeo'
+    vimeo: 'vimeo',
+    ipfs: 'ipfs',
   };
   var types = {
     audio: 'audio',
@@ -4303,6 +4312,10 @@ typeof navigator === "object" && (function (global, factory) {
         delete image.onerror;
         (image.naturalWidth >= minWidth ? resolve : reject)(image);
       };
+
+      if (src?.includes?.('/shorts/')) {
+        src = src.replace('/shorts/', '/embed/');
+      }
 
       Object.assign(image, {
         onload: handler,
@@ -5950,6 +5963,31 @@ typeof navigator === "object" && (function (global, factory) {
     }
   };
 
+  var ipfs = {
+    setup: function setup() {
+      ipfs.ready.call(this);
+    },
+    ready: function ready() {
+      const config = this.config;
+
+      const clearIpfsId = this.media.getAttribute('data-plyr-video-id');
+      var src = format(this.config.urls.ipfs.source, clearIpfsId);
+
+      const embedVideo = createElement('video');
+      embedVideo.setAttribute('src', src);
+      embedVideo.setAttribute('controls', '');
+      embedVideo.setAttribute('autoplay', '');
+
+      embedVideo.controls = true;
+
+      const player = this;
+
+      player.media = replaceElement(embedVideo, player.media);
+
+      ui.build.call(player);
+    }
+  };
+
   // ==========================================================================
 
   function parseId$1(url) {
@@ -6019,6 +6057,10 @@ typeof navigator === "object" && (function (global, factory) {
     getTitle: function getTitle(videoId) {
       var _this2 = this;
 
+      if (videoId.includes('/shorts/')) {
+        videoId = videoId.replace('/shorts/', '/embed/');
+      }
+
       var url = format(this.config.urls.youtube.api, videoId);
       fetch(url).then(function (data) {
         if (is$1.object(data)) {
@@ -6055,6 +6097,9 @@ typeof navigator === "object" && (function (global, factory) {
         source = player.media.getAttribute(this.config.attributes.embed.id);
       } // Replace the <iframe> with a <div> due to YouTube API issues
 
+      if (source?.includes?.('/shorts/')) {
+        source = source.replace('/shorts/', '/embed/');
+      }
 
       var videoId = parseId$1(source);
       var id = generateId(player.provider); // Get poster, if already set
@@ -6393,6 +6438,8 @@ typeof navigator === "object" && (function (global, factory) {
         youtube.setup.call(this);
       } else if (this.isVimeo) {
         vimeo.setup.call(this);
+      } else if (this.isIpfs) {
+        ipfs.setup.call(this);
       }
     }
   };
@@ -8491,7 +8538,7 @@ typeof navigator === "object" && (function (global, factory) {
     }, {
       key: "isEmbed",
       get: function get() {
-        return Boolean(this.isYouTube || this.isVimeo);
+        return Boolean(this.isYouTube || this.isVimeo || this.isIpfs);
       }
     }, {
       key: "isYouTube",
@@ -8502,6 +8549,11 @@ typeof navigator === "object" && (function (global, factory) {
       key: "isVimeo",
       get: function get() {
         return Boolean(this.provider === providers.vimeo);
+      }
+    }, {
+      key: "isIpfs",
+      get: function get() {
+        return Boolean(this.provider === providers.ipfs);
       }
     }, {
       key: "isVideo",
@@ -9191,6 +9243,8 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
 
       // Check if we have downloaded the video already
       var localVideo = options.app.platform.sdk.localshares.getVideo(parsed.id);
+      if (localVideo)
+        localVideo.infos = localVideo.infos || {};
 
       const isElectron = (typeof _Electron !== 'undefined');
       const isCordova = (typeof window.cordova != 'undefined');
@@ -9198,10 +9252,24 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
       let localTransport;
 
       if (isElectron) {
-
-
         localTransport = peertubeTransport(electron.ipcRenderer, localVideo);
-        localVideo = undefined;
+        //localVideo = undefined;
+      }
+
+      else{
+
+        var vs = '10'
+
+        if (typeof numfromreleasestring != 'undefined'){
+            vs = numfromreleasestring(window.packageversion) + '_' + (window.versionsuffix || "0")
+        }
+
+        importScripts([{src : 'peertube/video-embed.bundle.js?v=' + vs}], plyrrelations, function(){
+
+					//clbk();
+
+				}, null, null, options.app);
+
       }
 
       retry(function(){
@@ -9221,16 +9289,16 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
           localVideo : localVideo,
           start : options.startTime || 0,
           localTransport,
-          hlsError : options.hlsError,
+          error : options.error,
           light : options.light,
           pathfunction : options.app.peertubeHandler.helpers.url,
           mobile : options.mobile,
-
+          television: options.television,
           assetsStorage : localVideo ? null : deep(options, 'app.videotransport.assets'),
           segmentsStorage : localVideo ? null : deep(options, 'app.videotransport.segments')
 
         },{
-          hlsError : options.hlsError,
+          error : options.error,
           playbackStatusChange : function(status){
             
           },
@@ -9240,7 +9308,7 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
           pictureInPictureRequest: options.pictureInPictureRequest,
           play : options.play,
           pause : options.pause,
-          
+          ondestroy : options.ondestroy
 
   
         }).then(function(embed){
@@ -9253,6 +9321,7 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
   
           var api = embed.api
               api.mute()
+              api.player_id = makeid()
 
               api.el = $(target)
   
@@ -9294,44 +9363,40 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
 
         video_id = video_id.replace('/embed/', '/video/');
 
-        $.ajax({
-            url : 'https://pocketnet.app:8888/bitchute',
-            data : {
-                url : hexEncode(video_id)
-            },
-            type : 'POST',
-            success : function(response){
-                if (response.data.video && response.data.video.as) {
+        options.app.platform.sdk.remote.getnew(video_id, 'bitchute').then(og => {
 
-                    _plyr(decodeURIComponent(response.data.video.as), response.data.video.preview || '', response.data.video.title || '');
+          if (og.video && og.video.as) {
 
-                    var plyrPlayer = newPlyr(target, video_options);
+            _plyr(decodeURIComponent(og.video.as), og.video.preview || '', og.video.title || '');
 
-                      plyrPlayer.on('ready', readyCallback)
+            var plyrPlayer = newPlyr(target, video_options);
 
-                      plyrPlayer.on('volumechange', function(v){
-                        if(video_options.volumeChange) video_options.volumeChange(plyrPlayer.muted ? 0 : plyrPlayer.volume)
-                      })
+              plyrPlayer.on('ready', readyCallback)
 
-                      plyrPlayer.prepare = function(){
-                        return Promise.resolve()
-                      }
+              plyrPlayer.on('volumechange', function(v){
+                if(video_options.volumeChange) video_options.volumeChange(plyrPlayer.muted ? 0 : plyrPlayer.volume)
+              })
 
-                    if (clbk) clbk(plyrPlayer);
+              plyrPlayer.prepare = function(){
+                return Promise.resolve()
+              }
 
-                } else {
+              plyrPlayer.player_id = makeid()
 
-                  _error();
+            if (clbk) clbk(plyrPlayer);
 
-                }
+        } else {
 
-                clear()
-            },
+          _error();
 
-            error : function(){
-              _error();
-            }
-        });
+        }
+
+        clear()
+          
+      }).catch(e => {
+        _error();
+      })
+
 
     } else {
 
@@ -9345,6 +9410,8 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
             return Promise.resolve()
           }
 
+          plyrPlayer.player_id = makeid()
+
       if (clbk) clbk(plyrPlayer);
 
       clear()
@@ -9357,3 +9424,4 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
 }
 
 
+plyrrelations = {}

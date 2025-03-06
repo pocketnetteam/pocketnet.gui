@@ -2,79 +2,31 @@ if(typeof _Node == 'undefined') _Node = false;
 if(typeof _OpenApi == 'undefined') _OpenApi = false;
 if(typeof _SEO == 'undefined') 	_SEO = false;
 
+window.project_config || (window.project_config = {})
+
 if(!_Node)
-{	
+{
 
-	var _listofproxies =  [
+	var developapps = window.project_config.developapps || [] 
 	
-			
-		/*{
-			host : 'pocketnet.app',
-			port : 8899,
-			wss : 8099
-	    },*/
+	/*[{
+		"id" : "demo.pocketnet.app",
+		"version": "0.0.1",
+		"scope" : "localhost:8081",
+		"cantdelete" : true,
+		"name" : "Demo application",
+		"grantedPermissions" : ["account"],
+		"access" : ["PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82"]
+	}]*/
+
+	var servers = ((window.project_config || {}).servers || {})[window.testpocketnet ? 'test' : 'production'] || {}
+
+	var translateApiProxy = servers.translateProxy || null
 	
-	    {
-			host : '1.pocketnet.app',
-			port : 8899,
-			wss : 8099
-		},
+	var _listofproxies = servers.proxy || []
 
-		{
-			host : '2.pocketnet.app',
-			port : 8899,
-			wss : 8099
-		},
-
-		{
-			host : '3.pocketnet.app',
-			port : 8899,
-			wss : 8099
-		},
-
-		{
-			host : '4.pocketnet.app',
-			port : 8899,
-			wss : 8099
-		},
-
-
-		{
-			host : '5.pocketnet.app',
-			port : 8899,
-			wss : 8099
-		},
-
-		/*{
-			host : '6.pocketnet.app',
-			port : 8899,
-			wss : 8099
-		}*/
-
-	]
-
-	/* test */
-
-	if(window.cordova){
-		_listofproxies.push({
-			host : '6.pocketnet.app',
-			port : 8899,
-			wss : 8099
-		})
-	}
-
-
-	var matrix = 'matrix.pocketnet.app'
-
-	if (window.testpocketnet){
-		_listofproxies = [{
-			host : 'test.pocketnet.app',
-			port : 8899,
-			wss : 8099
-	    }]
-
-		matrix = 'test.matrix.pocketnet.app'
-	}
+	var matrix = servers.matrix || ""
+	var matrixMirrors = servers.matrixMirrors || []
 		
 	if (window.location.host === 'pre.pocketnet.app') {
 		_listofproxies = [
@@ -82,26 +34,27 @@ if(!_Node)
 				host : 'pre.pocketnet.app',
 				port : 8899,
 				wss : 8099
-			},
-			{
-				host : '6.pocketnet.app',
-				port : 8899,
-				wss : 8099
-			},
+			}
 		];
 
 	}
 
+	if(!_OpenApi){
+		if (window.parent.frames.length > 0) {
+			window.stop();
+		}
+	}
 
 	app = new Application({
 		listofproxies : _listofproxies,
-		matrix : matrix
+		matrix : matrix,
+		matrixMirrors,
+		developapps,
+		translateApiProxy,
+		monetization : servers.monetization
 	});
 
 	app.preapi()
-
-	// Prepare notifications
-	//app.notifications = new Notifications(app);
 
 	retry(function(){
 		return (window.pocketnetVendorLoaded && window.pocketnetJoinLoaded ) || (window.design && typeof window.Platform != 'undefined')
@@ -146,13 +99,17 @@ if(!_Node)
 					embeddingSettigns.openapi = true
 					
 					if (app.platform.papi[action] && (id || ids)){
-						app.platform.papi[action](id || ids.split(','), el, () => {
-							setTimeout(() => {
+						app.platform.papi[action](id || ids.split(','), el, function() {
+							setTimeout(function() {
 								$('html').addClass('openapiready')
 							}, 500)
 						}, embeddingSettigns)
 					}
 
+				}
+
+				else{
+					
 				}
 			}
 		});

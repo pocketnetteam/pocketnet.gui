@@ -257,7 +257,9 @@ var staking = (function(){
 								enabled: false
 							},
 							states: {
+								enableMouseTracking: false,
 								hover: {
+									enabled: false,
 									lineWidth: 1,
 									lineWidthPlus: 0,
 									marker: {
@@ -488,19 +490,19 @@ var staking = (function(){
 
 			el.c.find('.earnlabel').on('click', function(){
 
-				var url = 'https://'+self.app.options.url+''
-
-				var r = ''
-
-				if (self.app.platform.sdk.address.pnet()){
-					r = '?&ref=' + self.app.platform.sdk.address.pnet().address
-					url = url + r
-				}
-				
-
 				self.nav.api.load({
 					open : true,
 					href : 'easynode',
+					history : true,
+					inWnd : true
+				})
+			})
+
+			el.c.find('.boostlabel').on('click', function(){
+
+				self.nav.api.load({
+					open : true,
+					href : 'boost',
 					history : true,
 					inWnd : true
 				})
@@ -608,6 +610,10 @@ var staking = (function(){
 
 			destroy : function(){
 				delete self.iclbks.mainstacking;
+				if (graph){
+					graph.destroy()
+				}
+				
 				graph = null
 				charts = {}
 				el = {};
@@ -650,7 +656,7 @@ var staking = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

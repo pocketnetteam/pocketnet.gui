@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-photo-library" version="2.6.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>Photo Library</name>
+    <engines>
+      <engine name="cordova-ios" version=">=6.2.0" />
+      <engine name="cordova-android" version=">=10.0.0" />
+    </engines>
+    <js-module src="www/PhotoLibrary.js" name="PhotoLibrary">
+      <clobbers target="cordova.plugins.photoLibrary" />
+    </js-module>
+    <js-module src="www/async/dist/async.min.js" name="async" />
+    <js-module src="www/async/dist/async.min.map" name="async_map" />
+    <dependency id="cordova-plugin-device" />
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="PhotoLibrary" >
+                <param name="android-package" value="com.terikon.cordova.photolibrary.PhotoLibrary"/>
+                <param name="onload" value="true" />
+            </feature>
+            <allow-navigation href="cdvphotolibrary:*" />
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+        </config-file>
+        <framework src="src/android/build.gradle" custom="true" type="gradleReference"/>
+        <source-file src="src/android/PhotoLibrary.java" target-dir="src/com/terikon/cordova/photolibrary" />
+        <source-file src="src/android/PhotoLibraryService.java" target-dir="src/com/terikon/cordova/photolibrary" />
+        <source-file src="src/android/PhotoLibraryGetLibraryOptions.java" target-dir="src/com/terikon/cordova/photolibrary" />
+    </platform>
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="PhotoLibrary">
+                <param name="ios-package" value="PhotoLibrary" />
+                <param name="onload" value="true" />
+            </feature>
+        </config-file>
+        <preference name="PHOTO_LIBRARY_USAGE_DESCRIPTION" default=" "/>
+        <config-file target="*-Info.plist" parent="NSPhotoLibraryUsageDescription">
+            <string>$PHOTO_LIBRARY_USAGE_DESCRIPTION</string>
+        </config-file>
+        <source-file src="src/ios/PhotoLibrary.swift" />
+        <source-file src="src/ios/PhotoLibraryProtocol.swift" />
+        <source-file src="src/ios/PhotoLibraryService.swift" />
+        <source-file src="src/ios/PhotoLibraryGetLibraryOptions.swift" />
+        <source-file src="src/ios/PhotoLibraryInterceptor.swift" />
+    </platform>
+    <platform name="browser">
+        <config-file target="config.xml" parent="/*">
+              <feature name="PhotoLibrary">
+                  <param name="browser-package" value="PhotoLibrary" />
+              </feature>
+        </config-file>
+        <js-module src="src/browser/PhotoLibraryProxy.js" name="PhotoLibraryProxy">
+            <runs />
+        </js-module>
+    </platform>
+    <dependency id="cordova-plugin-file" />
+</plugin>

@@ -28,8 +28,12 @@ var toppanel = (function(){
 					links.video = "index?video=1"
 				}
 
-				if (self.app.savesupported()) {
+				if (self.app.savesupported() || app.savesupportedForBrowser()) {
 					links.saved = "index?r=saved"
+				}
+
+				if(app.platform.sdk.user.isjury()){
+					links.jury = "index?r=jury"
 				}
 
 				var vs = _.toArray(links)
@@ -45,8 +49,12 @@ var toppanel = (function(){
 					labels.push(self.app.localization.e('video'))
 				}
 
-				if ((window.cordova) || (typeof _Electron != 'undefined' && window.electron)) {
+				if (self.app.savesupported()) {
 					labels.push(self.app.localization.e('downloaded'));
+				}
+
+				if (self.app.platform.sdk.user.isjury()){
+					labels.push(self.app.localization.e('jury'));
 				}
 
 				var contents = new Parameter({
@@ -229,7 +237,7 @@ var toppanel = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

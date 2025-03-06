@@ -1,7 +1,7 @@
 
 <% 
 
-var user = deep(app, 'platform.sdk.users.storage.'+(address))
+var user = psdk.userInfo.get(address)
 
 if(user){ %>
 <div class="invitationcontent">

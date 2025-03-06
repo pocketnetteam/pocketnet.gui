@@ -5,7 +5,8 @@ loclib.kr = {};
 
 var _l = loclib.kr;
 
-var appname = window.pocketnetproject || "Pocketnet"
+var appname = (window.project_config || {}).fullname || 'Bastyon'
+
 //time
 
 _l.fewseconds = "몇 초 전";
@@ -189,6 +190,9 @@ _l.uabout = "내 정보";
 _l.uwebsite = "웹사이트";
 _l.uaddresesd = "기부 주소";
 _l.usavechanges = "변경 사항을 저장 하시겠습니까?";
+
+_l.settings_save = "변경 사항 저장";
+_l.settings_discard = "변경 사항 재설정";
 
 //ustate
 _l.sreps = "평판과 한계";
@@ -522,6 +526,8 @@ _l.e13107 = "노드 관리는 애플리케이션으로 수행할 수 있습니�
 _l.e13108 = "Electron 프록시 인터페이스와 연결되지 않았습니다."
 
 _l.e13109 = "Pocketcoin을 받고 등록을 계속하려면 그림에 있는 단어를 입력하십시오"
+_l.e13109h = "육각형을 클릭하여 그림을 조합한 다음 결과 이미지에 텍스트를 입력하세요."
+
 _l.e13110 = "단어 입력"
 _l.next = "다음"
 _l.refresh = "새로 고침"
@@ -624,7 +630,7 @@ _l.e13176 = "주소 유형"
 _l.e13177 = "사진 업로드"
 
 _l.requiredfields = "필수 필드"
-_l.e13178 = "프로필에 연결되지 않음"
+_l.e13178 = "선택 과목"
 _l.e13179 = "사용되지 않은 목록"
 _l.e13180 = "인보이스가 성공적으로 생성되었습니다."
 _l.e13181 = "오퍼 생성 프로세스 중에 오류가 발생했습니다."
@@ -752,6 +758,7 @@ _l.e13285 = "텔레그램에서 게시하기 전에 질문"
 _l.e13286 = "텔레그램으로 보내기 전에 확인"
 _l.e13287 = "텔레그램 채널로 보내기"
 _l.video = "비디오"
+_l.audio = "오디오"
 _l.e13288 = "메인 페이지 Vidgets"
 _l.e13289 = "텔레그램과 통합"
 
@@ -838,20 +845,69 @@ _l.noDownloadedVideos = "다운로드한 동영상이 없습니다.";
 
 _l.buy = '구입';
 
-_l.lowstar1 = "Bastyon 팀은 금지된 콘텐츠를 제외하고 별 1개 및 2개 등급에 대해 일시적인 유예 조치를 시행하고 있습니다. 금지된 콘텐츠는 다음과 같습니다."
-_l.lowstar_reason_1 = "포르노"
+_l.lowstar1 = ""+appname+" 팀은 금지된 콘텐츠를 제외하고 별 1개 및 2개 등급에 대해 일시적인 유예 조치를 시행하고 있습니다. 금지된 콘텐츠는 다음과 같습니다."
+_l.lowstar_reason_1 = "에로틱/포르노"
 _l.lowstar_reason_2 = "아동 착취"
 _l.lowstar_reason_3 = "직접적인 폭력 위협"
 _l.lowstar_reason_4 = "불법 마약"
 _l.lowstar2 = "다른 이유로 별점 1 및 2를 사용하지 마십시오. 새로운 중재가 중반에 릴리스된 후. 다른 이유로 낮은 평점을 사용할 수 있습니다."
 _l.lowstaragree = "이 게시물에는 4가지 유형의 금지된 콘텐츠 중 하나가 포함되어 있음을 확인합니다."
 
-_l.androidPopupTitle = "Bastyon 모바일 앱에서 무수정 정보 가져오기"
+_l.androidPopupTitle = ""+appname+" 모바일 앱에서 무수정 정보 가져오기"
 _l.androidPopupAgree = "앱으로 전환"
 _l.androidPopupDisagree = "지금은 아닙니다"
 
-_l.desktopPopupTitle = "Bastyon 데스크탑 앱에서 무수정 정보 가져오기"
+_l.desktopPopupTitle = ""+appname+" 데스크탑 앱에서 무수정 정보 가져오기"
 _l.desktopPopupAgree = "앱 다운로드"
 _l.desktopPopupDisagree = "지금은 아닙니다"
 
+_l.copybuiltfrom = "어셈블리 번호 복사 성공"
+
 _l.profanity_tag = '욕설'
+
+_l.saved = "저장됨"
+_l.savePost = "게시물 저장"
+_l.postsaved = "게시물이 저장되었습니다."
+_l.deleteSavedPost = "저장된 게시물 삭제"
+_l.doYouDownloadVideo = "당신은 당신의 장치에 비디오를 다운로드 하시겠습니까?"
+_l.gotosaved2 = "저장된 항목으로 이동"
+_l.yes = "예"
+_l.no = "아니"
+
+_l.torusing_neveruse = "절대로";
+_l.torusing_auto = "자동으로";
+_l.torusing_always = "항상";
+
+_l.torusing_directProxy = "기본 제공 프록시";
+_l.torusing_notdirectProxy = "외부 프록시";
+
+_l.torusing_changedirectProxy = "외부 프록시로 변경";
+_l.torusing_changenotdirectProxy = "기본 제공 프록시로 변경";
+
+_l.torusing_disclaimer = "이 기능은 기본 제공 프록시를 사용할 때만 작동합니다.";
+
+_l.torusing_Networking = "네트워크";
+_l.torusing_proxyCaption = "프록시 서버 선택";
+_l.torusing_useTor = "TOR 사용";
+_l.torusing_useSnowflakeBridge = "Snowflake 사용";
+
+_l.torusing_stat_currentbytesLength = "현재 순간, 직접 통화"
+_l.torusing_stat_torbytesLength = "지금 이 순간, TOR 통화"
+_l.torusing_stat_directBytes = "합계, 직접 통화"
+_l.torusing_stat_totalTorBytes = "합계, TOR 통화"
+_l.torusing_settings = "TOR 설정"
+_l.torusing_stats = "쿼리 통계"
+_l.torusing_proxychangequestion = "정말 프록시를 변경하시겠습니까?"
+
+/** ↓ Component UpdateNotifier ↓ */
+_l.updateNotifier_topHeading1 = '업데이트';
+_l.updateNotifier_topHeading2 = '사용 가능';
+_l.updateNotifier_mainHeading = '업데이트가 있습니다';
+_l.updateNotifier_mainText = '애플리케이션을 계속 업데이트하는 것이 좋습니다. 새로운 기능과 더 나은 성능이 여러분을 기다리고 있습니다!';
+_l.updateNotifier_button1 = '설치';
+_l.updateNotifier_button2 = '나중에...';
+_l.updateNotifier_stateStart = '시작...';
+_l.updateNotifier_stateDownload = '다운로드됨';
+_l.updateNotifier_stateError = '오류 발생';
+_l.updateNotifier_availableSilent = "업데이트 사용 가능"
+/** ↑ Component UpdateNotifier ↑ */

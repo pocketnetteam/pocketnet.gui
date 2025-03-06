@@ -119,7 +119,15 @@ var articlev = (function(){
 
 			trx : function(share){
 
+				return self.app.platform.actions.addActionAndSendIfCan(share).then(action => {
+					var alias = action.object
+
+					return Promise.resolve(alias)
+				})
+
 				return new Promise((resolve, reject) => {
+
+					
 				
 
 					self.sdk.node.transactions.create.commonFromUnspent(
@@ -523,45 +531,58 @@ var articlev = (function(){
 
 				self.app.platform.sdk.ustate.me(function(_mestate){
 
+					console.log("RENDER SETTINGS")
+
 					var u = _mestate
 
 					if(u.reputation > 50 || !u.trial) {
 
-						var selector = new Parameter({
+						self.sdk.paidsubscription.getcondition(self.app.user.address.value).then(value => {
 
-							type : "VALUES",
-							name : "Visibility",
-							possibleValues : ['0','1','2'],
-							possibleValuesLabels : [
+							var visvalues = ['0','1','2']
+							var visvaluesLabels = [
 								self.app.localization.e('visibletoeveryone'), 
 								self.app.localization.e('visibleonlytosubscribers'),
 								self.app.localization.e('visibleonlytoregistered')
-							],
-							defaultValue : '0',
-							value : (art.visibility || 0) + ''
+							]
 
-						})
-
-						self.shell({
-							name :  'settings',
-							el : el.settings,
-							turi : 'share',
-							data : {
-								selector : selector
-							},
-
-						}, function(p){
-
-							ParametersLive([selector], p.el)
-
-							selector._onChange = function(){
-								art.visibility = Number(selector.value)
-
-								actions.save()
+							if(value){
+								visvalues.push('3')
+								visvaluesLabels.push(self.app.localization.e('visibleonlytopaid'))
 							}
 
-							if (clbk)
-								clbk();
+							var selector = new Parameter({
+
+								type : "VALUES",
+								name : "Visibility",
+								possibleValues : visvalues,
+								possibleValuesLabels : visvaluesLabels,
+								defaultValue : '0',
+								value : (art.visibility || 0) + ''
+
+							})
+
+							self.shell({
+								name :  'settings',
+								el : el.settings,
+								turi : 'share',
+								data : {
+									selector : selector
+								},
+
+							}, function(p){
+
+								ParametersLive([selector], p.el)
+
+								selector._onChange = function(){
+									art.visibility = Number(selector.value)
+
+									actions.save()
+								}
+
+								if (clbk)
+									clbk();
+							})
 						})
 					}
 
@@ -579,7 +600,7 @@ var articlev = (function(){
 				if (art.cover){
 
 					el.cover.attr('image', art.cover)
-					bgImages(el.c)
+					bgImagesCl(el.c)
 
 					el.cover.addClass('hascover')
 					el.blackmatte.addClass('hascover')
@@ -838,7 +859,7 @@ var articlev = (function(){
 			initUpload({
 				el : el.c.find('.uploadcover'),
 	
-				ext : ['png', 'jpeg', 'jpg', 'gif', 'jfif', 'webp'],
+				ext : ['png', 'jpeg', 'jpg', 'gif', 'jfif', 'webp', 'avif'],
 
 				dropZone : el.c.find('.bgwrapper'),
 				app : self.app,
@@ -1148,7 +1169,7 @@ var articlev = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

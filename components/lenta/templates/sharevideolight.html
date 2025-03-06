@@ -6,84 +6,106 @@ var bigmessage = false
 
 if(typeof ed == 'undefined') ed = {}
 
-var reputation = 0
-
 if(share.address){
+
+	var userInfo = psdk.userInfo.get(share.address) || {}
+
+	var name = app.platform.api.clearname(userInfo.name || share.address, true)
 
 	var my = (user.address.value && share.address == user.address.value.toString('hex'))
 	var subscribed = '';
 
-	reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0
 
 	if(!my && user.address.value){
 
-		var me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
+		var me = psdk.userInfo.getmy()
+		
 		if (me && me.relation(share.address, 'subscribes')){
 			subscribed = 'subscribed'
 		}
 	}
 
-var view = 'post';
-var name = app.platform.api.name(share.address)
-var emptywithrepost = share.isEmpty() && share.repost
-var value = Number(share.score)
+	var view = 'post';
+	var emptywithrepost = share.isEmpty() && share.repost
+	var value = Number(share.score)
+
+var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share)
+var cview = 'video'
+var icondisplay = function(){ %>
 
 
-var metadisplay = function(){ %>
 
+	<% if(!emptywithrepost) {%>
 
+		<div class="metatable">
+			<div class="author">
+			<div class="authorTable">
+				<div class="iconWrapper">
+					
+					<% if(!app.television) {%>
+					<a elementsid="<%-app.platform.api.authorlink(share.address)%>" href="<%-app.platform.api.authorlink(share.address)%>">
+					<% } %>
 
-			<% if(!emptywithrepost) {%>
+						<% 
+							var src = userInfo.image;  
+							var letter = userInfo.letter;
 
-				<div class="author">
+						%>
 
-					<div class="authorTable">
-                        <div class="iconWrapper">
-                            <a elementsid="<%-app.platform.api.authorlink(share.address)%>" href="<%-app.platform.api.authorlink(share.address)%>">
-        
-        
-                                <% 
-									var src = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image');  
-									var name = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name');	
-									var letter = name ? name[0] : '';
+						<div class="icon">
+							<div elementsid="<%-src || 'usericon'%>"  contain="none" ban=".gif" class="usericon usericonsbsa another" image="<%-src || '*'%>">
+								
+								<% if (!src && letter) {%>
+									<span 
+										class="letter"
+									>
+										<%-letter.toUpperCase()%>
+									</span>
+								<% } %>
+	
+								<% if(app.platform.ui.markUser) {%>
 
-								%>
-        
-                                <div class="icon">
-                                    <div elementsid="<%-src || 'usericon'%>"  contain="none" ban=".gif" class="usericon usericonsbsa another" image="<%-src || '*'%>">
-                                     
-										<% if (!src && letter) {%>
-											<span 
-												class="letter"
-											>
-												<%-letter.toUpperCase()%>
-											</span>
-										<% } %>
-			
-										<% if(app.platform.ui.markUser) {%>
+									<%= app.platform.ui.markUser(share.address)%>
 
-											<%= app.platform.ui.markUser(share.address)%>
-		
-										<% } %>
+								<% } %>
 
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-						<% if(!ed.horizontal) {%>
-							<div class="authorCell">
-								<span class="adr"><%-(name || share.address) %></span><% if(reputation > 1 || reputation < -1) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
-							</div>		
-
-							<div class="datetime">
-								<% if(share.time) {%> <span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span><% } else { %> <span><%=e('e13019')%></span><% } %><% if(typeof boosted != 'undefined' && boosted) {%> <i class="fas fa-bolt boostedlabel"></i> <span class="boostedlabel"> Boosted</span> <% } %>
 							</div>
-						<% } %>
-						
+						</div>
+					<% if(!app.television) {%>
+					</a>
+					<% } %>
+				</div>
+				<% if(!ed.horizontal) {%>
+					<div class="authorCell">
+						<span class="adr"><%-(name) %></span><% if(userInfo.reputation > 1 || userInfo.reputation < -1) {%><sup class="spsp"><%-compressedNumber(userInfo.reputation, 1)%></sup><% } %>
+					</div>		
+
+					<div class="datetime">
+						<% if(share.time) {%> <span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span><% } else { %> <span><%=e('e13019')%></span><% } %><% if(typeof boosted != 'undefined' && boosted) {%> <i class="fas fa-bolt boostedlabel"></i> <% } %>
 					</div>
+				<% } %>
+
+				<% if(!ed.horizontal && !app.television) {%>
+
+				<div elementsid="lenta_metapanel" class="metapanel <%-share.txid%>">
+					<% if((typeof openapi == 'undefined' || !openapi)) {%>
+						<div class="metapanelitem metmenu tvfocusedzoom">
+							<i class="fas fa-ellipsis-h"></i>
+						</div>
+					<% } else { %> 
+						<div class="metapanelitem">
+							
+						</div>
+					<% } %>
+
 				</div>
 
-			<% } %> 
+				<% } %>
+
+			</div>
+		</div>
+
+	<% } %> 
 		
 	
 <% }
@@ -96,7 +118,6 @@ var metadisplay = function(){ %>
 
 		<% if(c) {
 
-			c = filterXSS(clearScripts(c))
 		%>
 				<div class="sharecaption canmark opensviurl" title="<%-nl2br(trimrn(c))%>">
 					<% if(ed.horizontal) {%><span class="adr"><%-name || share.address %>:</span><% } %>
@@ -117,7 +138,51 @@ var metadisplay = function(){ %>
 
 			var h = '' %>
 
-			<div class="url"></div>
+			<% if(!checkvisibility) {%>
+
+				<div class="url"></div>
+
+			<% } else {%> 
+				<div class="hiddenpost">
+				
+					<% if(checkvisibility == 'sub'){ %>
+
+						<div class="hiddenlabeltext">
+							<%=e('sharevisibilitylabel_sub_' + cview)%>
+						</div>
+
+						
+
+					<% } %>
+
+					<% if(checkvisibility == 'reg'){ %>
+
+						<div class="hiddenlabeltext">
+							<%=e('sharevisibilitylabel_reg_' + cview)%>
+						</div>
+
+
+					<% } %>
+
+					<% if(checkvisibility == 'paid'){ %>
+
+						<div class="hiddenlabeltext">
+							<%=e('sharevisibilitylabel_paid_' + cview)%>
+						</div>
+
+
+					<% } %>
+
+
+					<% if(!state) {%>
+
+						<div class="hiddenlabelaction">
+							<button elementsid="hrefregistration" class="orange small button toregistration"><%=e('signupmenu')%></button>
+						</div>
+
+					<% } %>
+				</div>
+			<% } %> 
 
 		<% } %>
 	<% },
@@ -130,12 +195,21 @@ var metadisplay = function(){ %>
 		<% 
 			var info = app.platform.sdk.videos.storage[share.url || "undefined"] || {}
 			var aspectRatio = deep(info, 'data.aspectRatio') || 0
+
+
+			var vcclass = ''
+
+			if((aspectRatio < 1.25) && (aspectRatio >= 0.9)) vcclass = 'squareVideo'
+			if((aspectRatio < 0.9) && (aspectRatio != 0)) vcclass = 'verticalVideo'
+
+			if(app.television){
+				vcclass = ''
+			}
 		%>
 
 		<div class="shareTable lighted <%-subscribed%> <%-view%> <% if(emptywithrepost) { %> emptywithrepost <% } else { %> truerepost <% } %>" address="<%-share.address%>" stxid="<%-share.txid%>">
 
-			<div class="cntswrk forurl <%- (aspectRatio > 0.9) && (aspectRatio < 1.25) ? 'squareVideo' : ''%> <%- (aspectRatio < 0.9) && (aspectRatio > 0) ? 'verticalVideo' : ''%>">
-
+			<div class="cntswrk forurl <%- vcclass %>">
 				<% var a = ["u"] %>
 
 				<% _.each(a, function(key, i){ %> 
@@ -146,7 +220,15 @@ var metadisplay = function(){ %>
 
 			</div>
 
+			<div class="coverbg"></div>
+
 			<div class="anothercntswrk">
+
+				<div class="cntswrk formeta">
+					<% icondisplay() %> 
+				</div>
+
+				
 
 				<div class="cntswrk">
 
@@ -160,9 +242,40 @@ var metadisplay = function(){ %>
 
 				</div>
 
-				<div class="cntswrk formeta">
-						<% metadisplay() %> 
-				</div>
+				
+
+
+				<% if(ed.horizontal) {%>
+
+					<div elementsid="lenta_metapanel" class="metapanel <%-share.txid%>">
+						<% if((typeof openapi == 'undefined' || !openapi)) {%>
+							<div class="metapanelitem metmenu tvfocusedzoom">
+								<i class="fas fa-ellipsis-h"></i>
+							</div>
+						<% } else { %> 
+							<div class="metapanelitem">
+								
+							</div>
+						<% } %>
+
+					</div>
+
+				<% } %>
+
+			</div>
+
+		</div>
+
+		<div class="blockAuthor">
+			<div class="blockCell">
+				<div class="label"><%=e('e13131')%></div>
+				<button class="button small unblockbutton">
+					<%=e('unblock')%>
+				</button>
+
+				<button class="button small ghost showblockedpost">
+					<%=e('showhiddenPost')%>
+				</button>
 			</div>
 		</div>
 		

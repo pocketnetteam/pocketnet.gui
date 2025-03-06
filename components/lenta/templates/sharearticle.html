@@ -1,6 +1,5 @@
 <%
 
-var cc = share.renders.captionclear();
 
 if(typeof ed == 'undefined') ed = {}
 
@@ -14,7 +13,7 @@ var subscribed = '';
 
 if(!my && user.address.value){
 
-    var me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
+    var me = psdk.userInfo.getmy()
 
     if (me && me.relation(share.address, 'subscribes')){
         subscribed = 'subscribed'
@@ -25,13 +24,22 @@ if(!my && user.address.value){
 
 var cview = 'article'
 
-var name = app.platform.api.name(share.address)
-
 var value = Number(share.score)
 
 var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share)
 
 var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
+
+var userInfo = psdk.userInfo.get(share.address) || {}
+
+var name = app.platform.api.clearname(userInfo.name || share.address, true)
+
+var translates = app.platform.sdk.translate.share.needtranslate(share.txid)
+var lang = app.platform.sdk.translate.share.lang(share.txid)
+var translated = app.platform.sdk.translate.share.get(share.txid) || {}
+
+var cc = share.renders.captionclear(translated.c);
+
 
 %> 
 
@@ -49,7 +57,9 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
             <% _.each(bycategories.categories, function(category){ %>
 
                 <div class="category">
-                    <span>@<%-category.name%></span><% if(category.new) {%>&nbsp;<span class="newlabel">New!</span><% } %> 
+                    <a elementsid="tagslink" href="index?sst=<%-category.tags.join(' ')%>">
+                        <span>@<%-category.name%></span><% if(category.new) {%>&nbsp;<span class="newlabel">New!</span><% } %> 
+                    </a>
                 </div>
 
             <% }) %>
@@ -61,7 +71,9 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
                 %>
 
                 <div class="tag">
-                    <span>#<%-tag%></span><% if(additional && additional.new) {%>&nbsp;<span class="newlabel">New!</span><% } %>
+                    <a elementsid="tagslink2" href="index?sst=<%-tag%>">
+                        <span>#<%-tag%></span><% if(additional && additional.new) {%>&nbsp;<span class="newlabel">New!</span><% } %>
+                    </a>
                 </div>
 
             <% }) %>
@@ -82,7 +94,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
                 <div class="itemwr table">
                     <div class="iconwr">
                         
-                        <div class="icon">
+                        <div class="icon tvfocusedopacity">
                             <i class="fas fa-share-alt"></i>
                         </div>
                     </div>
@@ -110,9 +122,9 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
     <% if((typeof repost == 'undefined' || !repost || fromempty)) {%>
         <div class="sys unselectablemobile">
-            <%if(share.pin){%>
-            <span class="pinnedLabel"><i class="fas fa-thumbtack"></i> <%=e('pinned').toLowerCase()%>,</span><%}%><% if(share.downloadedDate) {%> <span class="fas fa-cloud-download-alt"></span> <span class="realtime editedLabel" time="<%-share.downloadedDate%>"><%- app.reltime(share.downloadedDate) %></span><% } else { %> 
-            <% if(share.time) {%><span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span><% } else { %><span><%=e('e13019')%></span><% } %><% if(typeof boosted != 'undefined' && boosted) {%> <i class="fas fa-bolt boostedlabel"></i> <span class="boostedlabel"> Boosted</span><% } %> <% if(typeof fromrecommendations != 'undefined' && fromrecommendations) {%> <i class="fas fa-star fromrecommendationslabel"></i> <span class="fromrecommendationslabel"> <%=e('recommended')%></span><% } %><% if(share.edit == 'true') {%><span class="editedLabel">, <%=e('e13130').toLowerCase()%></span><% } %><% } %><% if(share.visibility()) {%><span class="visibilityLabel">, <%=e('sharevisibility_' + share.visibility()).toLowerCase()%></span><% } %>
+            <%if(typeof authorsettings != 'undefined' && authorsettings.pin == share.txid){%>
+            <span class="pinnedLabel"><i class="fas fa-thumbtack"></i> <%=e((authorsettings.temp || authorsettings.relay) ? 'pinning' :'pinned').toLowerCase()%>,</span><%}%><% if(share.downloadedDate) {%> <span class="fas fa-cloud-download-alt"></span> <span class="realtime editedLabel" time="<%-share.downloadedDate%>"><%- app.reltime(share.downloadedDate) %></span><% } else { %> 
+            <% if(share.time) {%><span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span><% } else { %><span><%=e('e13019')%></span><% } %><% if(typeof boosted != 'undefined' && boosted) {%> <i class="fas fa-bolt boostedlabel"></i> <span class="boostedlabel"> <%-e('boosted')%></span><% } %><% if(typeof fromrecommendations != 'undefined' && fromrecommendations) {%> <i class="fas fa-star fromrecommendationslabel"></i> <span class="fromrecommendationslabel"> <%=e('recommended')%></span><% } %><% if(share.edit == 'true') {%><span class="editedLabel">, <%=e('e13130').toLowerCase()%></span><% } %><% } %><% if(share.visibility()) {%><span class="visibilityLabel">, <%=e('sharevisibility_' + share.visibility()).toLowerCase()%></span><% } %>
         </div>
     <% } else { %> 
         <div class="sys unselectablemobile">
@@ -127,7 +139,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
     <% if((typeof repost == 'undefined' || !repost) && (typeof preview == 'undefined' || !preview) && !share.temp) { %>
 				
         <% if(!checkvisibility && (typeof openapi == 'undefined' || !openapi)) {%>
-            <div class="metapanelitem metmenu">
+            <div class="metapanelitem metmenu tvfocusedzoom">
                 <i class="fas fa-ellipsis-h"></i>
             </div>
         <% } else { %> 
@@ -143,15 +155,13 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
         <div class="author">
 
-            <% var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0 %>
-
-                <b><span class="adr gotouserprofile" address="<%-share.address%>" name="<%-name %>"><%-(name || share.address) %></span></b><%if(typeof preview == 'undefined' || !preview){%><% if(reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %><% } %>
+                <b><span class="adr gotouserprofile" address="<%-share.address%>" name="<%-name %>"><%-(name) %></span></b>
 
 
             <% if((!state || !my) && (typeof repost == 'undefined' || !repost) && (typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())) { %> 
 
                 <span elementsid="sbtnxs-follow" class="sbtnxs">
-                    &middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i>  <%=e('subi')%></span>
+                    &middot; <span class="subscribeLabel asubscribe tvfocusedopacity"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe tvfocusedopacity"><i class="far fa-check-circle"></i>  <%=e('subi')%></span>
                     
                     <% if(state && !my && user.address.value && me) {
                         
@@ -213,8 +223,17 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
                     <span><%-Number(value).toFixed(1)%></span> <i class="fas fa-star"></i> 
                 </div>	
 
-                <div class="iconwrapper">
+                <div class="iconwrapper gotocomments">
                     <span><%-compressedNumber(share.comments || 0)%></span> <i class="fas fa-comments"></i>
+                </div>
+
+                <div class="translateApi">
+                    <% _.each(translates, function(t){ %>
+                        <div class="translateto <% if(lang == t) {%> active <% } %>" dl="<%-t%>">
+                            <span><%-flb(t)%></span> <i class="fas fa-spinner fa-spin"></i>
+                        </div>
+                    <% }) %>
+                    
                 </div>
         
 	
@@ -262,7 +281,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
         <% if(typeof preview == 'undefined' || !preview) {%>
 
-        <div class="iconwrapper sharesocial">
+        <div class="iconwrapper sharesocial tvfocusedopacity">
             <i class="fas fa-share-alt"></i>
         </div>
 
@@ -274,7 +293,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
 <% var makeavatar = function(){
 
-    var src = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image');
+    var src = userInfo.image;
     var letter = name ? name[0] : ''; 
     
 %>
@@ -343,10 +362,47 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
             <% } %>
 
+            <% 
+            
+            console.log('checkvisibility', checkvisibility)
+            
+            
+            if(checkvisibility == 'paid' || checkvisibility == 'paid_check' || checkvisibility == 'paid_error'){ %>
+
+                <div class="hiddenlabeltext">
+                    <%=e('sharevisibilitylabel_paid_' + cview)%>
+                </div>
+
+                <% if(state) {%>
+
+                    <% if(checkvisibility == 'paid_check'){ %>
+                        <div class="hiddenlabelaction">
+                            <div class="preloader5"><img src="./img/three-dots.svg"/></div>
+                        </div>
+                    <% } %>
+
+                    <% if(checkvisibility == 'paid_error'){ %>
+                        <div class="hiddenlabelaction">
+                            <%=e('sharevisibilitylabel_paid_error')%>
+                        </div>
+                    <% } %>
+
+                    <% if(checkvisibility == 'paid'){ %>
+                        <div class="hiddenlabelaction">
+                            <button elementsid="hrefregistration" class="orange medium button getpaidsubscription"><%=e('getpaidsubscription')%></button>
+                        </div>
+                    <% } %>
+
+                    
+
+                <% } %>
+
+            <% } %>
+
             <% if(!state) {%>
 
                 <div class="hiddenlabelaction">
-                    <button elementsid="hrefregistration" class="orange small button toregistration"><%=e('signupmenu')%></button>
+                    <button elementsid="hrefregistration" class="orange medium button toregistration"><%=e('signupmenu')%></button>
                 </div>
 
             <% } %>
@@ -371,7 +427,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
     var txt = null
 
     try{
-        var message = edjs.apply(share.message, decodeURIComponent)
+        var message = edjs.apply(translated.m || share.message, articleDecodeTry)
         txt = edjs.parse(message)
     } catch(e){
         console.error(e)
@@ -456,16 +512,43 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
                                 <% makecaptionclear() %>
 
-                                <% if(!share.temp){
+                                <% if(!share.temp && !share.relay){
                                     
                                     var edjs = new edjsHTML(null, app)
-                                    var message = edjs.apply(share.message, decodeURIComponent)
+                                    var message = edjs.apply(translated.m || share.message, articleDecodeTry)
 				                    var words = edjs.words(message)
+
+                                    var textPreview = '';
+
+                                    if (message && message.blocks){
+                                        for (const b of message.blocks.slice()){
+                                            
+                                            if (b.type === 'paragraph' && b.data && b.data.text){
+                                                try{
+                                                    textPreview = filterXSS(clearScripts(findAndReplaceLink(b.data.text)))
+                                                } catch(err){
+                                                }
+                                                break;
+                                            }
+                                        }
+                                    }
                                     
                                     %>
 
                                     <div class="buttonOpenWrapper">
-                                        <div class="black articleclick readarticlebutton"><%= e('readarticle') %> <span>(<%-e('art_wordscount')%> <%-words%>)</span></div>
+                                        <div class="black articleclick readarticlebutton">
+                                            <% if (textPreview){ %>
+
+                                                <span class="textPreview">
+                                                    <%=textPreview%>
+                                                </span>
+
+                                            <% } else { %>
+
+                                                <%= e('readarticle') %> <span>(<%-e('art_wordscount')%> <%-words%>)</span>
+
+                                            <% } %>
+                                        </div>
                                     </div>
 
                                 <%} else{ %>
@@ -480,11 +563,10 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
                                 <%} %>
                                 
-
-                                <% maketags() %>  
+                                <% if(!share.temp && !share.relay){ %>
+                                    <% maketags() %>  
+                                <% } %>
         
-                                <% /* maketemp()*/%>
-
     
                             <% }  %> 
 
@@ -503,6 +585,19 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
                     </div>
                    
+                </div>
+
+                <div class="blockAuthor">
+                    <div class="blockCell">
+                        <div class="label"><%=e('e13131')%></div>
+                        <button class="button small unblockbutton">
+                            <%=e('unblock')%>
+                        </button>
+        
+                        <button class="button small ghost showblockedpost">
+                            <%=e('showhiddenPost')%>
+                        </button>
+                    </div>
                 </div>
 
             </div>

@@ -156,9 +156,6 @@
 #userpage #nodecontrol .maincaption {
   display: block;
 }
-#userpage .maketsWrapper {
-  overflow: hidden;
-}
 #userpage .maketsWrapper .maket.left {
   float: left;
   width: 150px;
@@ -167,8 +164,8 @@
   padding-left: 1em;
   margin-left: 150px;
 }
-#userpage .maketsWrapper .contents {
-  padding-top: 2em;
+#userpage .maketsWrapper .contents .registrationProgressIcon {
+  margin-top: 1em;
 }
 #userpage .maketsWrapper .contents .added {
   text-align: right;
@@ -211,6 +208,11 @@
   opacity: 0.5;
   font-weight: 500;
 }
+#userpage .maketsWrapper .contents .reportCaption .hasupdate {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
 #userpage .maketsWrapper .contents .addmenu .reportCaption {
   font-weight: 400;
 }
@@ -219,6 +221,16 @@
   text-align: center;
 }
 #userpage .maketsWrapper .contents .applicationupdatemodule .applicaitonversion {
+  cursor: pointer;
+}
+#userpage .maketsWrapper .contents .applicationupdatemodule .app-builtfrom {
+  padding: 2px 5px;
+  font-family: Consolas, "courier new";
+  font-weight: bold;
+  line-height: 1;
+  background: rgba(var(--color-txt-gray-dark), 0.1);
+  color: rgba(var(--text-on-main-bg-color), 0.7);
+  border-radius: 2px;
   cursor: pointer;
 }
 #userpage .maketsWrapper .contents .applicationupdatemodule .updatingprogress {
@@ -336,9 +348,6 @@
   padding-left: 0;
   padding-right: 0;
 }
-#userpage .maketsWrapper .report #statistic {
-  min-height: 600px;
-}
 #userpage .maketsWrapper .report #statistic .mwork {
   padding-bottom: 2em;
 }
@@ -411,9 +420,6 @@ html.mobileview #userpage .bgCaption {
 html.mobileview #userpage > div.work {
   padding: 0;
 }
-html.mobileview #userpage .maketsWrapper {
-  overflow: inherit;
-}
 html.mobileview #userpage .maketsWrapper .maket.left {
   width: 100%;
   float: none;
@@ -469,7 +475,7 @@ html.mobileview #userpage .maketsWrapper .contents .reportCaption[rid="followers
   padding-top: 1em;
   border-top: 1px solid rgb(var(--color-medium-theme));
 }
-html.mobileview #userpage .maketsWrapper .contents .reportCaption[rid="following"] {
+html.mobileview #userpage .maketsWrapper .contents .reportCaption[rid="blocking"] {
   margin-bottom: 0.5em;
   padding-bottom: 1em;
   border-bottom: 1px solid rgb(var(--color-medium-theme));

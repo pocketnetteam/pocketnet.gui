@@ -8,6 +8,7 @@ const { performance } = require('perf_hooks');
 ////////////
 var f = require('./functions');
 var svgCaptcha = require('svg-captcha');
+
 /*
 var WSS = require('./wss.js');
 const Firebase = require('../proxy/firebase');
@@ -16,9 +17,10 @@ var os = require('os');
 var Server = require('./server/https.js');
 var WSS = require('./server/wss.js');
 var Firebase = require('./server/firebase.js');
+var TranslateApi = require('./server/translateapi.js');
 var NodeControl = require('./node/control.js');
 var NodeManager = require('./node/manager.js');
-var TorControl = require('./node/tor-control.js');
+var TorControl = require('./node/torcontrol.js');
 var Pocketnet = require('./pocketnet.js');
 var Wallet = require('./wallet/wallet.js');
 var Remote = require('./remotelight.js');
@@ -26,25 +28,22 @@ var Proxies = require('./proxies.js');
 var Exchanges = require('./exchanges.js');
 var Peertube = require('./peertube/index.js');
 var Bots = require('./bots.js');
+var ATransactions = require('./atransactions.js');
 var SystemNotify = require('./systemnotify.js');
 var Notifications = require('./node/notifications')
 var Transports = require("./transports")
 var Applications = require('./node/applications');
 var bitcoin = require('./lib/btc16.js');
-var Slidemodule = require("./slidemodule") 
+var Slidemodule = require("./slidemodule")
 const Path = require("path");
 const child_process = require("child_process");
-const {unlink} = require("nedb/browser-version/browser-specific/lib/storage");
+
+const config = require('./config.json');
+const offlinePeertubeList = require('./peertube-servers.json');
 
 process.setMaxListeners(0);
 require('events').EventEmitter.defaultMaxListeners = 0
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-
-//////////////
-/*
-if (process.platform === 'win32') expectedExitCodes = [3221225477];
-
-console.log('expectedExitCodes' , expectedExitCodes)*/
 
 var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	var self = this;
@@ -52,10 +51,12 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		self.test = test
 		self.reverseproxy = reverseproxy
 
+
 	var server = new Server(settings.server, settings.admins, manage);
 	var wss = new WSS(settings.admins, manage);
 	var pocketnet = new Pocketnet();
 	var nodeControl = new NodeControl(settings.node, self);
+	var translateapi = new TranslateApi(settings.translateapi, self)
 	var nodeManager = new NodeManager(settings.nodes);
 	var firebase = new Firebase(settings.firebase);
 	var wallet = new Wallet(settings.wallet);
@@ -64,6 +65,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	var exchanges = new Exchanges()
 	var peertube = new Peertube(self)
 	var bots = new Bots(settings.bots)
+	var aTransactions = new ATransactions(settings.atransactions)
 	var systemnotify = new SystemNotify(settings.systemnotify)
 	var slidemodule = new Slidemodule(settings.slide)
 	slidemodule.init()
@@ -71,9 +73,11 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 	var torapplications = new TorControl(settings.tor, self)
 
-	var transports = new Transports(global.USE_PROXY_NODE);
+	var transports = new Transports();
+	var cachedInfo = null
 
 	var dump = {}
+	var status = 0
 
 	self.userDataPath = null
 	self.session = 'pocketnetproxy' //f.makeid()
@@ -85,13 +89,15 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		wss, server, pocketnet, nodeControl,
 		remote, firebase, nodeManager, wallet,
 		proxies, exchanges, peertube, bots,
+		aTransactions,
 		systemnotify, notifications,
 		logger,
+		translateapi,
 		proxy: self
 	})
 
 	var stats = [];
-	var statcount = 100;
+	var statcount = 60;
 	var statInterval = null;
 
 	var captchas = {};
@@ -99,9 +105,32 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 	var addStats = function () {
 
+		var info = self.kit.info(true, true)
+
+
+		try{
+			info = JSON.parse(JSON.stringify(info))
+		}catch(e){
+			return
+		}
+
+		var nn = {}
+
+		_.each(info.nodeManager.nodes, (n, k) => {
+			if (n.rating){
+				nn[k] = n
+			} 
+		})
+
+		info.nodeManager.nodes = nn
+
+		delete info.wallet.addresses
+		delete info.admins
+		delete info.nodeControl
+
 		var data = {
 			time: f.now(),
-			info: self.kit.info(true)
+			info: info
 		}
 
 		stats.push(data)
@@ -330,6 +359,24 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 	}
 
+	self.aTransactions = {
+		add: function (txid) {
+			return aTransactions.add(txid)
+		},
+		remove: function (txid) {
+			return aTransactions.remove(txid)
+		},
+		check: function (txid) {
+			return aTransactions.check(txid)
+		},
+		init: function () {
+			return aTransactions.init()
+		},
+		get: function () {
+			return aTransactions.get()
+		},
+	}
+
 	self.bots = {
 		add: function (address) {
 			return bots.add(address)
@@ -380,10 +427,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			return wallet.init()
 		},
 
-		addqueue: function (key, address, ip) {
-			return wallet.kit.addqueue(key, address, ip)
+		addqueue: function (key, address, ip, amount) {
+			return wallet.kit.addqueue(key, address, ip, amount)
 		},
-
 
 		destroy: function () {
 			return wallet.destroy()
@@ -409,17 +455,20 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			})
 		},
 
-		info: function () {
-			return wallet.info()
+		info: function (compact) {
+			return wallet.info(compact)
 		},
 
+		sendwithprivatekey: function ({ address, amount, key, feemode }) {
+			return wallet.kit.sendwithprivatekey(address, amount, key, feemode)
+		},
 
-		sendwithprivatekey: function ({ address, amount, key }) {
-			return wallet.kit.sendwithprivatekey(address, amount, key)
-		}
+		getunspentswithprivatekey: function ({ key }) {
+			return wallet.kit.getunspentswithprivatekey(key)
+		},
+
+		
 	}
-
-
 
 	self.systemnotify = {
 
@@ -549,8 +598,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			return nodeControl.kit
 		},
 
-		info: function () {
-			return nodeControl.info()
+		info: function (compact) {
+			return nodeControl.info(compact)
 		},
 
 
@@ -558,49 +607,32 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 	self.torapplications = {
 		init: function () {
-			if(!global.USE_PROXY_NODE) {
-				console.log('!global.USE_PROXY_NODE')
-				return Promise.resolve()
-			}
-
-			return torapplications.application.init().then(async r => {
-				return await torapplications.init();
-			})
+			return torapplications.init()
 		},
 
-		start: async ()=>{
-			if(!global.USE_PROXY_NODE) {
-				console.log('!global.USE_PROXY_NODE')
-				return Promise.resolve()
-			}
-
-			await torapplications.start();
+		settingChanged: function(settings){
+			return torapplications.settingChanged(settings)
 		},
 
-		info: (compact)=>{
+		info: (compact) => {
 			return torapplications.info(compact);
 		},
 
-		stop: async ()=>{
-			if(!global.USE_PROXY_NODE) {
-				console.log('!global.USE_PROXY_NODE')
-				return Promise.resolve()
-			}
-
-			await torapplications.stop();
+		destroy: () => {
+			return torapplications.destroy();
 		},
 
-		statusListener: async (callBack)=>{
-			if(!global.USE_PROXY_NODE) {
-				callBack?.('stopped')
-			}else {
-				torapplications.statusListener(callBack)
-			}
+		remove: () => {
+			return torapplications.remove();
 		},
 
-		destroy: async ()=>{
-			await torapplications.destroy();
+		install: () => {
+			return torapplications.installManual();
 		},
+
+		reinstall: () => {
+			return torapplications.reinstall();
+		}
 	}
 
 	const axiosTransport = (...args) => transports.axios(...args);
@@ -619,7 +651,11 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 		request: (option, callback)=>{
 			return transports.request(option, callback)
-		}
+		},
+
+		isAltTransportSet: (url) => {
+			return transports.isTorNeeded(url);
+		},
 	}
 
 	///
@@ -699,300 +735,26 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		},
 	}
 
+	self.translateapi = {
+		settingChanged : function(settings){
+			translateapi.settingChanged(settings)
+		}
+	}
+
 	var trustpeertube = []
 
 	self.peertube = {
-		init: function () {
+		init: async function () {
 
 			trustpeertube = []
 
-			var ins = {
-				1: [
-				  	{ host: 'pocketnetpeertube1.nohost.me', cantuploading: true, ip: '109.226.245.120'},
-					{ host: 'pocketnetpeertube2.nohost.me', cantuploading: true, ip: '94.73.223.24'},
-				],
-				5: [
-				  {
-					host: 'pocketnetpeertube5.nohost.me',
-					cantuploading: true,
-					ip: '95.217.209.217',
-				  },
-				  {
-					host: 'pocketnetpeertube7.nohost.me',
-					cantuploading: true,
-					ip: '188.187.45.218',
-				  },
-				],
-				6: [
-				  {
-					host: 'pocketnetpeertube4.nohost.me',
-					cantuploading: true,
-					ip: '135.181.108.193',
-				  },
-				  {
-					host: 'pocketnetpeertube6.nohost.me',
-					cantuploading: true,
-					ip: '159.69.127.9',
-				  },
-				],
-				8: [
-				  {
-					host: 'pocketnetpeertube8.nohost.me',
-					cantuploading: true,
-					old : true,
+			const targetNetwork = (test) ? "testnet" : "mainnet";
 
-					ip: '192.236.161.131',
-				  },
-				  {
-					host: 'pocketnetpeertube9.nohost.me',
-					cantuploading: true,
-					ip: '178.154.200.50',
-				  },
-				],
-
-				10: [
-				  {
-					host: 'pocketnetpeertube10.nohost.me',
-					cantuploading: true,
-					ip: '23.254.226.253',
-				  },
-				  {
-					host: 'pocketnetpeertube11.nohost.me',
-					cantuploading: true,
-					ip: '84.252.138.108',
-				  },
-				],
-
-				12: [
-				  {
-					host: 'bastyonmma.pocketnet.app',
-					cantuploading: true,
-					ip: '88.99.34.74',
-				  },
-				  {
-					host: 'bastyonmma.nohost.me',
-					cantuploading: true,
-					ip: '49.12.231.72',
-				  },
-				],
-
-				13: [
-				  { host: '01rus.nohost.me', ip: '178.217.159.227' },
-				  { host: '02rus.pocketnet.app', ip: '31.184.215.67' },
-				],
-
-				14: [
-				  { host: 'pocketnetpeertube12.nohost.me', ip: '104.168.248.113' },
-				  { host: 'pocketnetpeertube13.nohost.me', ip: '62.84.115.93' },
-				],
-
-				15: [
-					{
-						host: 'peertube14.pocketnet.app',
-						ip: '178.154.251.235',
-					},
-					{
-						host: 'peertube15.pocketnet.app',
-						ip: '192.236.199.174',
-					},
-				],
-
-				16: [
-					{
-						host : 'poketnetpeertube.space',
-						cantuploading: true,
-
-						old : true,
-						ip: '178.217.155.168',
-					},
-					{
-						host : 'poketnetpeertube.ru',
-						cantuploading: true,
-
-						old : true,
-						ip: '178.217.159.224',
-					}
-				],
-
-
-				17: [
-					{
-						host : 'bastynode.ru',
-						cantuploading: true,
-
-						old : true,
-						ip: '81.23.152.91',
-					},
-					{
-						host : 'storemi.ru',
-						cantuploading: true,
-
-						old : true,
-						ip: '93.100.117.108',
-					},
-				],
-
-				18: [
-					{
-						host : 'bastynode1.ru',
-						cantuploading: true,
-
-						old : true,
-						ip: '81.23.151.94',
-					},
-					{
-						host : 'gf110.ru',
-						cantuploading: true,
-
-						old : true,
-						ip: '46.175.123.16',
-					},
-				],
-
-				19: [
-					{
-						host : 'bastyonpeertube.ru',
-						cantuploading: true,
-						ip: '178.217.155.169',
-					},
-					{
-						host : 'bastyonpeertube.site',
-						cantuploading: true,
-						ip: '178.217.155.170',
-					},
-
-				],
-
-				20: [
-					{
-						host : 'peertube17.pocketnet.app',
-						ip: '51.250.104.218',
-					}
-				],
-
-				21: [
-					{
-						host : 'peertube18.pocketnet.app',
-						ip: '51.250.41.252',
-					}
-				],
-
-				22: [
-					{
-						host : 'peertube19.pocketnet.app',
-						ip: '51.250.73.97',
-					}
-				],
-
-				23: [
-					{
-						host : 'peertube17mirror.pocketnet.app',
-						ip: '64.235.40.47',
-					}
-				],
-
-				24: [
-					{
-						host : 'peertube18mirror.pocketnet.app',
-						ip: '64.235.42.75 ',
-					}
-				],
-
-				25: [
-					{
-						host : 'peertube19mirror.pocketnet.app',
-						ip: '64.235.50.17',
-					}
-				],
-
-				26: [
-					{
-						host : 'peertube20.pocketnet.app',
-						ip: '157.90.240.231',
-					}
-				],
-
-				27: [
-					{
-						host : 'peertube21.pocketnet.app',
-						ip: '116.203.16.185',
-					}
-				],
-
-				28: [
-					{
-						host : 'peertube22.pocketnet.app',
-						ip: '104.168.136.179',
-					}
-				],
-
-				29: [
-					{
-						host : 'peertube23.pocketnet.app',
-						ip: '23.254.201.237',
-					}
-				],
-
-				30: [
-					{
-						host : 'peertube24.pocketnet.app',
-						ip: '23.254.224.63',
-					}
-				],
-
-				31: [
-					{
-						host : 'peertube25.pocketnet.app',
-						ip: '95.217.212.144',
-					}
-				],
-
-				32: [
-					{
-						host : 'peertube26.pocketnet.app',
-						ip: '49.12.106.120',
-					}
-				],
-				
-				33: [
-					{
-						host : 'peertube27.pocketnet.app',
-						ip: '49.12.102.26',
-					}
-				],
-
-				34: [
-					{
-						host : 'peertube28.pocketnet.app',
-						ip: '138.201.91.156',
-					}
-				],
-
-				35: [
-					{
-						host : 'peertube29.pocketnet.app',
-						ip: '157.90.171.8',
-					}
-				],
-
-				36: [
-					{
-						host : 'peertube30.pocketnet.app',
-						ip: '95.217.165.102',
-					}
-				],
-      		};
-
-			if (test){
-				ins = {0 : [
-					{ host: 'test.peertube.pocketnet.app', ip: '65.108.83.132' },
-					{ host: 'test.peertube2.pocketnet.app', ip: '95.216.212.153' },
-				]}
-			}
+			const ins = await this.syncAndReadList(targetNetwork);
 
 			_.each(ins, function(r){
 				_.each(r, function(p){
-					if(!p.old){
+					if(!p.old && !p.offline){
 						trustpeertube.push(p.host)
 					}
 				})
@@ -1003,19 +765,77 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			})
 		},
 
+		syncAndReadList: async function (network) {
+			function toLegacyList(list) {
+				const testnet = (network === "testnet");
+
+				return Object.values(list.swarms)
+					.filter(s => !!s.testnet === testnet)
+					.map(s => {
+						const serversList = [...s.list];
+
+						serversList.forEach(s => {
+							s.offline = !s.online
+							s.cantuploading = !s.upload
+						});
+
+						if (s.archived) {
+							serversList.forEach(s => s.archived = true);
+
+							// FIXME: This is a temporary solution. Archive servers must be checked by order
+							if (s.archived.length === 2) {
+
+								var archiveS = {...list.archive[s.archived[0]], archiveDouble: true, cantuploading : true}
+
+								serversList.push({
+									...list.archive[s.archived[0]],
+									archiveDouble: true,
+								});
+								serversList.push(list.archive[s.archived[1]]);
+							} else {
+								serversList.push({...list.archive[s.archived[0]], cantuploading : true});
+							}
+						}
+
+						return serversList;
+					});
+			}
+
+			let fileRead = offlinePeertubeList;
+
+			try {
+				const res = await fetch(config.peertubesListLink);
+				fileRead = await res.json();
+			} catch (e) {
+				console.error('No peertube servers list!');
+			}
+
+			return toLegacyList(fileRead);
+		},
+
+		getArchivedServers: function() {
+			const peertubesData = peertube.info();
+			const peertubeList = peertubesData.instances;
+
+			return Object.values(peertubeList)
+				.filter(h => !!h.archived)
+				.map(h => h.host);
+		},
+
 		destroy: function () {
 			return peertube.destroy()
 		},
 
 		re: function () {
 			return this.destroy().then(r => {
-				this.init()
+				return this.init()
 			})
 		},
 
 		info: function (compact) {
 			return peertube.info(compact)
 		},
+
 
 		get kit() {
 			return peertube.kit
@@ -1045,7 +865,14 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		stats: function (n) {
 			return getStats(n)
 		},
-		info: function (compact) {
+		info: function (compact, wcached) {
+
+
+			if(cachedInfo && !wcached){
+				if(cachedInfo.time + 120000 > Date.now()){
+					return cachedInfo.data
+				}
+			}
 
 			var mem = process.memoryUsage()
 
@@ -1055,7 +882,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				mem[i] = v / (1024 * 1024)
 			})
 
-			return {
+			var info = {
 				status: status,
 				test : self.test,
 
@@ -1066,12 +893,14 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				wss: self.wss.info(compact),
 				wallet: self.wallet.info(compact),
 				remote: remote.info(compact),
-				admins: settings.admins,
+				admins: [...settings.admins],
+				
 				peertube : self.peertube.info(compact),
 				tor: self.torapplications.info(compact),
 				captcha: {
 					ip: _.toArray(captchaip).length,
-					all: _.toArray(captchas).length
+					all: _.toArray(captchas).length,
+					hexCaptcha : settings.server.hexCaptcha || false,
 				},
 
 				memory: mem,
@@ -1079,8 +908,17 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					'1' : loads[0],
 					'5' : loads[1],
 					'15' : loads[2]
-				}
+				},
+
+				translateapi : translateapi.info(compact)
 			}
+
+			cachedInfo = {
+				time : Date.now(),
+				data : JSON.parse(JSON.stringify(info))
+			}
+
+			return info
 		},
 
 		initlist: function (list) {
@@ -1091,10 +929,12 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				}
 			}
 
+
 			var promises = _.map(list, (i) => {
 				return self[i].init().catch(catchError(i)).then(() => {
 					return Promise.resolve()
 				})
+
 			})
 
 			return Promise.all(promises)
@@ -1123,12 +963,12 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			status = 1
 
-			return this.initlist(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'torapplications', 'exchanges', 'peertube', 'bots', 'notifications']).then(r => {
+			return this.initlist(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'torapplications', 'exchanges', 'peertube', 'bots', 'aTransactions', 'notifications']).then(r => {
 
 				status = 2
 
 				if (!statInterval)
-					statInterval = setInterval(addStats, 30000)
+					statInterval = setInterval(addStats, 60000)
 
 				return Promise.resolve()
 			})
@@ -1169,10 +1009,38 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				}
 			}
 
-			var promises = _.map(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'torapplications', 'exchanges', 'peertube', 'bots'], (i) => {
-				return self[i].destroy().catch(catchError(i)).then(() => {
-					return Promise.resolve()
+			var promises = _.map(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'torapplications', 'exchanges', 'peertube', 'bots', 'aTransactions'], (i) => {
+				
+				return new Promise((resolve, reject) => {
+					try{
+
+						if(!self[i].destroy){
+							resolve()
+
+							return
+						}
+
+						var destroy = self[i].destroy()
+
+						if(!destroy || !destroy.catch){
+							return resolve()
+						}
+
+						return destroy.catch(catchError(i)).then(() => {
+							return Promise.resolve()
+						}).then(resolve)
+
+					}catch(e){
+						console.log("ERROR",i)
+						console.log(e)
+
+						resolve()
+					}
 				})
+
+					
+
+				
 			})
 
 			return Promise.all(promises).then(r => {
@@ -1248,8 +1116,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			var result = null
 
-			console.log('method', method)
-
 
 			return rpc({ method, parameters, options, U }).then(r => {
 
@@ -1264,11 +1130,17 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					result = r
 
 				posts = _.filter(posts, p => {
-					return p
+					return p && p.txid
+				})
+				/// for brighteon not bastyon
+				_.each(posts, (p) => {
+					if(!self.aTransactions.check(p.txid)){
+						p.deleted = true
+					}
 				})
 
 				var withvideos = _.filter(posts, p => {
-					return p.type == 'video' && p.u
+					return (p.type == 'video' || p.type == 'audio') && p.u
 				})
 
 				videos = _.map(withvideos, function(p){
@@ -1281,12 +1153,10 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					})
 				})
 
-				if(method == 'gethierarchicalstrip' || method == 'getsubscribesfeed'  || method == 'getprofilefeed'){
+				if(method == 'gethierarchicalstrip' || method == 'getsubscribesfeed'  || method == 'getprofilefeed' || method == 'getmostcommentedfeed'){
 					users = _.map(posts, function(p){
-						return f.deep(p, 'lastComment.address')
+						return p?.lastComment?.address || null
 					})
-
-					console.log('users', users, method)
 
 					users = _.filter(users, u => {return u && !_.find(posts, function(p){
 						return p.address == u
@@ -1322,7 +1192,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				else{
 					videosPr = videosapi({
 						urls : videos,
-						fast : options.fastvideo
+						fast : true//options.fastvideo
 					}).then(videos => {
 
 						result.data.videos = videos.data
@@ -1354,6 +1224,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	self.rpcscenarios.getprofilefeed = self.rpcscenarios.gethierarchicalstrip
 	self.rpcscenarios.getsubscribesfeed = self.rpcscenarios.gethierarchicalstrip
 	self.rpcscenarios.gethotposts = self.rpcscenarios.gethierarchicalstrip
+	self.rpcscenarios.getmostcommentedfeed = self.rpcscenarios.gethierarchicalstrip
+	self.rpcscenarios.getmostcommentedfeed = self.rpcscenarios.getmostcommentedfeed
+	
 
 	self.checkSlideAdminHash = function(hash) {
 		return bitcoin.crypto.sha256(Buffer.from(hash, 'utf8')).toString('hex') == '7b4e4601c461d23919a34d8ea2d9e25b9ab95cf0a93c1e6eae51ba79c82fbcf3'
@@ -1363,7 +1236,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		node: {
 			rpcex : {
 				path: '/rpc-ex/*',
-				authorization: 'signaturelight',
+				//authorization: 'signaturelight',
 				action: function ({ method, parameters, options, U }) {
 					if (!method) {
 						return Promise.reject({
@@ -1382,7 +1255,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			},
 			rpc: {
 				path: '/rpc/*',
-				authorization: 'signaturelight',
+				//authorization: 'signaturelight',
 				action: function ({ method, parameters, options, U, cachehash, internal }, request) {
 					if (!method) {
 						return Promise.reject({
@@ -1412,10 +1285,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 					var cparameters = _.clone(parameters)
 
-					self.logger.w('rpc', 'debug', 'RPC REQUEST')
-
-
-
+					
 					return new Promise((resolve, reject) => {
 
 						if((options.locally && options.meta)){
@@ -1427,8 +1297,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						return nodeManager.waitreadywithrating().then(resolve).catch(reject)
 
 					}).then(() => {
-
-						self.logger.w('rpc', 'debug', 'AFTER WAITING NODEMANAGER')
 
 						time.preparing = performance.now() - timep
 
@@ -1461,16 +1329,14 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 							});
 						}
 
-						if(method == 'getnodeinfo') {
+						if (method == 'getnodeinfo') {
 							cparameters.push(node.key)
-							cachehash = null
+							cachehash = node.key
 						}
 
 						noderating = node.statistic.rating()
 
 						return new Promise((resolve, reject) => {
-
-							self.logger.w('rpc', 'debug', 'BEFORE CACHE')
 
 							if(!noderating && !options.cache) {
 
@@ -1495,8 +1361,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					})
 					.then((waitstatus) => {
 
-						self.logger.w('rpc', 'debug', 'AFTER CACHE:' + waitstatus)
-
 						time.cache = performance.now() - timep
 
 						_waitstatus = waitstatus
@@ -1520,6 +1384,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 								time : time
 							});
 						}
+						
 
 						if(waitstatus == 'attemps'){
 							return Promise.reject({
@@ -1528,6 +1393,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 							});
 						}
 
+
 						if (method == 'sendrawtransactionwithmessage') {
 							if (!bots.check(U)) {
 								return new Promise((resolve, reject) => {
@@ -1535,14 +1401,14 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 										resolve({
 											data: '319f9e3f40e7f82ee7d32224fe2f7c1247f7f8f390930574b8c627d0fed3c312',
 											code: 200,
-											node: node.exportsafe(),
+											node: {
+												key : node.key
+											},
 										});
 									}, f.rand(120, 1000));
 								});
 							}
 						}
-
-						self.logger.w('rpc', 'debug', 'BEFORE QUEUE')
 
 						return new Promise((resolve, reject) => {
 
@@ -1551,16 +1417,15 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 								b : timep
 							}
 
-							self.logger.w('rpc', 'debug', 'ADD TO QUEUE')
-
-							nodeManager.queue(node, method, parameters, direct, {resolve, reject}, time.node)
+							nodeManager.queue(node, method, parameters, direct || options.node ? true : false, {resolve, reject}, time.node)
 
 						})
 
 						.then((data) => {
 
+							// console.log('then', data, method, cparameters, data, node)
 							if (noderating || options.cache){
-								server.cache.set(method, cparameters, data, node.height());
+								server.cache.set(method, cparameters, data, node.height(), null, method == 'getnodeinfo' ? cachehash : null);
 							}
 
 							time.ready = performance.now() - timep
@@ -1570,7 +1435,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 							return Promise.resolve({
 								data: data,
 								code: 200,
-								node: node.exportsafe(),
+								node: {
+									key : node.key
+								},
 								time : time
 							});
 						});
@@ -1578,13 +1445,15 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					.catch((e) => {
 
 						if (_waitstatus == 'execute'){
-							server.cache.remove(method, cparameters);
+							server.cache.remove(method, cparameters, cachehash);
 						}
 
 						return Promise.reject({
 							error: e,
 							code: e.code,
-							node: node ? node.export() : null,
+							node: node ? {
+								key : node.key
+							} : null,
 						});
 					});
 				},
@@ -1804,15 +1673,49 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			},
 		},
 
+		notifications: {
+			stats: {
+				path: '/notifications/stats',
+				action: function ({A}) {
+					// if (!A) return Promise.reject('admin');
+					var data = notifications.statsInfo()
+
+					return Promise.resolve({ data });
+
+				},
+			},
+
+			users: {
+				path: '/notifications/users',
+				action: function ({A}) {
+					// if (!A) return Promise.reject('admin');
+					var data = notifications.userInfo()
+
+					return Promise.resolve({ data });
+
+				},
+			},
+		},
+
 		remote: {
 			bitchute: {
 				path: '/bitchute',
 				action: function ({ url }) {
 
 
-					return Promise.reject({
-						error : 'deprecated'
-					})
+					return new Promise((resolve, reject) => {
+						remote.nmake(url, function (err, data) {
+							if (!err) {
+								resolve({
+									data: data,
+								});
+							} else {
+								reject(err);
+							}
+						}, {
+							bitchute : true
+						});
+					});
 
 				},
 			},
@@ -1890,12 +1793,29 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						return self.kit.sinit()
 					}
 				},*/
-			info: {
-				path: '/info',
+			walletinfo : {
+				path: '/walletinfo',
 				action: function (message) {
 					return Promise.resolve({
 						data: {
-							info: self.kit.info(true),
+							wallet : self.wallet.info(true),
+							captcha: {
+								hexCaptcha : settings.server.hexCaptcha || false,
+							},
+						},
+					});
+				},
+			},
+			info: {
+				path: '/info',
+				action: function (message) {
+					const info = self.kit.info(true);
+
+					//info.captcha.hexCaptcha = true;
+					
+					return Promise.resolve({
+						data: {
+							info: info,
 						},
 					});
 				},
@@ -1920,7 +1840,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				authorization: 'signature',
 				action: function (message) {
 
-					if (!message.A)
+					return Promise.reject({ error: 'deprecated', code: 401 })
+
+					/*if (!message.A)
 						return Promise.reject({ error: 'Unauthorized', code: 401 });
 
 					var dumpdata = _.clone(dump)
@@ -2000,7 +1922,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 							result : 'error',
 							error :  err.toString ? err.toString() : err
 						});
-					}
+					}*/
 
 
 
@@ -2046,6 +1968,19 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						server.cache.clear()
 
 					return Promise.resolve('success');
+
+				},
+			},
+
+			cacheinfo: {
+				path: '/cacheinfo',
+				action: function (message) {
+
+					return Promise.resolve({
+						data : {
+							cache : server.cache.info()
+						}
+					});
 
 				},
 			},
@@ -2097,6 +2032,15 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				},
 			},
 
+			peertubeserversList: {
+				path: '/peertubeserversList',
+				action: async () => ({
+					data: {
+						archivedPeertubeServers: self.peertube.getArchivedServers(),
+					}
+				}),
+			},
+
 			nodes: {
 				path: '/nodes',
 				action: function () {
@@ -2109,14 +2053,16 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			},
 		},
 
-		
-
 		firebase: {
 			set: {
 				authorization: 'signature',
 				path: '/firebase/set',
 				action: function (data) {
-					return self.firebase.kit.addToken(data).then((r) => {
+					if(!self?.firebase?.info()?.inited) return Promise.reject('firebase not setup')
+
+					return self.firebase.kit.revokeToken(data).then(() => {
+						return self.firebase.kit.addToken(data)
+					}).then((r) => {
 						return Promise.resolve({ data: r });
 					}).catch(e => {
 						console.error(e)
@@ -2129,6 +2075,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				authorization: 'signature',
 				path: '/firebase/settings',
 				action: function (data) {
+					if(!self?.firebase?.info()?.inited) return Promise.reject('firebase not setup')
+
 					return self.firebase.kit.setSettings(data).then((r) => {
 						return Promise.resolve({ data: r });
 					}).catch(e => {
@@ -2141,7 +2089,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			test: {
 				path: '/firebase/test',
 				action: function (data) {
-
 					var _data = {
 						addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
 						addrFrom: "PJorG1HMRegp3SiLAFVp8R5Ef6d3nSrNxA",
@@ -2163,9 +2110,11 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				},
 			},
 
-			revokedevice: {
+			revoke: {
 				path: '/firebase/revoke',
 				action: function (data) {
+					if(!self?.firebase?.info()?.inited) return Promise.reject('firebase not setup')
+
 					return self.firebase.kit.revokeToken(data).then((r) => {
 						return Promise.resolve({ data: r });
 					}).catch(e => {
@@ -2179,6 +2128,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			revokedevice: {
 				path: '/firebase/revokedevice',
 				action: function (data) {
+					if(!self?.firebase?.info()?.inited) return Promise.reject('firebase not setup')
+
 					return self.firebase.kit.removeDevice(data).then((r) => {
 						return Promise.resolve({ data: r });
 					}).catch(e => {
@@ -2203,9 +2154,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				authorization: 'signature',
 				path: '/firebase/mytokens',
 				action: function (data) {
+					if(!self?.firebase?.info()?.inited) return Promise.reject('firebase not setup')
 
-
-					return self.firebase.kit.mytokens({address : data.U}).then((r) => {
+					return self.firebase.kit.mytokens({address : data.U, device: data.device}).then((r) => {
 						return Promise.resolve({ data: r });
 					});
 				},
@@ -2226,7 +2177,51 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		},
 
 		peertube: {
+			restart : {
+				authorization: 'signature',
+				path : '/peertube/restart',
+				action: function ({ A }) {
 
+					if(!A) return Promise.reject('none')
+
+					return self.peertube.re().then(() => {
+						return Promise.resolve({
+							data: 'success'
+						});
+					}).catch(e => {
+						return Promise.reject(e);
+					})
+				}
+			},
+		},
+
+		translate : {
+			share : {
+				authorization: 'signature',
+				path : '/translate/share',
+				action : function({txid, dl, txidEdit}){
+					return translateapi.translate.share(txid, dl, txidEdit).then((result) => {
+						return Promise.resolve({
+							data: result
+						});
+					}).catch((e) => {
+						return Promise.reject(e);
+					});
+				}
+			},
+			comment : {
+				authorization: 'signature',
+				path : '/translate/comment',
+				action : function({id, dl}){
+					return translateapi.translate.comment(id, dl).then((result) => {
+						return Promise.resolve({
+							data: result
+						});
+					}).catch((e) => {
+						return Promise.reject(e);
+					});
+				}
+			}
 		},
 
 		captcha: {
@@ -2269,18 +2264,81 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						data: {
 							id: captcha.id,
 							img: captcha.data,
-							result: self.test ? captcha.text : null, ///
+							result: null, //self.test ? captcha.text : null, ///
 							done: false,
 						},
 					});
 				},
 			},
+			
+			getHex: {
+				authorization: 'signature',
+				path: '/captchaHex',
+				
+				action: function ({ captcha, ip }) {
+					if (captcha && captchas[captcha]?.done) {
+						return Promise.resolve({
+							data: {
+								id: captchas[captcha].id,
+								done: true,
+								result: captchas[captcha].text,
+							},
+						});
+					}
+
+					var hexCaptcha = null
+
+					try{
+						hexCaptcha = require('hex-captcha');
+					}catch(e){
+						return Promise.reject('hex-captcha not setup')
+					}
+
+					
+					captchaip[ip] || (captchaip[ip] = 0);
+					captchaip[ip]++;
+					
+					captcha = hexCaptcha({
+						text: {
+							chars: 'ABCDEFGHJKMNPRSTUVWXZ23456789',
+							font : 'black 24px Monospace'
+						}
+					});
+
+					captcha.id = f.makeid();
+					
+					return new Promise((resolve, reject) => {
+						captcha.generate().then(({ frames, layers }) => {
+
+							captchas[captcha.id] = {
+								text: captcha.text.toLowerCase(),
+								angles: captcha.angles,
+								id: captcha.id,
+								done: false,
+								time: f.now(),
+							};
+							
+							resolve({
+								data: {
+									id: captcha.id,
+									frames: frames,
+									overlay: layers,
+									angles : null, //self.test ? captcha.angles : null,
+									result: null, //self.test ? captcha.text : null, ///
+									done: false,
+									hex : true
+								}
+							});
+						});
+					});
+				},
+			},
 
 			make: {
-				authorization: 'signaturelight',
+				authorization: 'signature',
 				path: '/makecaptcha',
 
-				action: function ({ captcha, ip, text }) {
+				action: function ({ captcha, ip, text, angles = [0,0,0,0,0,0,0] }) {
 
 					var _captcha = captcha
 
@@ -2299,7 +2357,26 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						});
 					}
 
+					if(captcha.angles && captcha.angles.length && captcha.angles.length == 7){
+
+						var check = angles.length && angles.length == 7 &&
+
+							angles[0] == -captcha.angles[0] &&
+							angles[1] == -captcha.angles[1] &&
+							angles[2] == -captcha.angles[2] &&
+							angles[3] == -captcha.angles[3] &&
+							angles[4] == -captcha.angles[4] &&
+							angles[5] == -captcha.angles[5] &&
+							angles[6] == -captcha.angles[6] 
+
+						if(!check)
+							return Promise.reject('captchanotequal_angles');
+					}
+
 					if (captcha.text == text.toLocaleLowerCase()) {
+
+						
+
 						captcha.done = true;
 
 						delete captchaip[ip];
@@ -2333,6 +2410,22 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		},
 
 		wallet: {
+			getunspentswithprivatekey: {
+				path: '/wallet/getunspentswithprivatekey',
+				authorization: false,
+				action: function (p) {
+					return self.wallet
+						.getunspentswithprivatekey(p)
+						.then((r) => {
+							return Promise.resolve({
+								data: r,
+							});
+						})
+						.catch((e) => {
+							return Promise.reject(e);
+						});
+				},
+			},
 			sendwithprivatekey: {
 				path: '/wallet/sendwithprivatekey',
 				authorization: false,
@@ -2354,14 +2447,14 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				authorization: self.test ? false : 'signature',
 				action: function ({ captcha, key, address, ip }) {
 
-					if (settings.server.captcha && !self.test) {
+					if (settings.server.captcha/* && !self.test*/) {
 						if (!captcha || !captchas[captcha] || !captchas[captcha].done) {
 							return Promise.reject('captcha');
 						}
 					}
 
 					return self.wallet
-						.addqueue(key || 'registration', address, ip)
+						.addqueue('registration', address, ip)
 						.then((r) => {
 
 							if (settings.server.captcha) {
@@ -2380,7 +2473,36 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				},
 			},
 
+			freebalance: {
+				path: '/free/balance',
+				authorization: self.test ? false : 'signature',
+				action: function ({ captcha, key, address, ip }) {
 
+					if (settings.server.captcha /*&& !self.test*/) {
+						if (!captcha || !captchas[captcha] || !captchas[captcha].done) {
+							return Promise.reject('captcha');
+						}
+					}
+
+					return self.wallet
+						.addqueue(key, address, ip)
+						.then((r) => {
+
+							if (settings.server.captcha) {
+								if (captcha) {
+									delete captchas[captcha]
+								}
+							}
+
+							return Promise.resolve({
+								data: r,
+							});
+						})
+						.catch((e) => {
+							return Promise.reject(e);
+						});
+				},
+			},
 
 			clearexecuting: {
 				path: '/wallet/clearexecuting',

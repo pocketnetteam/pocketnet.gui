@@ -1,0 +1,28 @@
+<% if(aTransactions.length) {%>
+
+    <div class="aTransactionslist">
+        <% _.each(aTransactions, function(txid){
+            
+            %>
+
+            <div class="aTransactioninlist">
+                <div>(<%-txid%>)</div> 
+                <div><i elementsid="removefromlist" aTransaction="<%-txid%>" class="far fa-times-circle removefromlist"></i></div>
+            </div>
+            
+        <% }) %>
+    </div>
+
+    <div class="exportpanel">
+        <button elementsid="exportlist" class="exportlist medium">Export aTransactions list</button>
+    </div>
+
+<% } else { %> 
+
+    <div class="emptyATransactions">
+        <span>
+            No aTransactions have been specified for this proxy yet
+        </span>
+    </div>
+    
+<% } %>

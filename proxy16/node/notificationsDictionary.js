@@ -1,13 +1,23 @@
 module.exports = (data = {user: "", amount: "", score: ""}) => {
     return {
-        boost: {
+        repost : {
             ru: {
-                title: `Повышение рейтинга Вашего комментария`,
-                body: `От пользователя ${data.user}`
+                title: `Был сделан репост вашей публикации`,
+                body: `${data.user}`
             },
             en: {
-                title: `Increasing the rating of your comment`,
+                title: `Your post has been reposted`,
                 body: `By ${data.user}`
+            }
+        },
+        boost: {
+            ru: {
+                title: `⚡️Ваш пост был поднят в ленте пользователем ${data.user}`,
+                body: `На сумму ${data.amount}`
+            },
+            en: {
+                title: `⚡️Your post have been boosted by ${data.user}`,
+                body: `Amount: ${data.amount} PKOIN`
             }
         },
         money: {
@@ -62,27 +72,27 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
         },
         comment: {
             ru: {
-                title: `Вам оставлен новый комментарий`,
-                body: `От пользователя ${data.user}`
+                title: `Комментарий`,
+                body: `${data.user} оставил Вам новый комментарий`
             },
             en: {
-                title: `You have a new comment`,
-                body: `By ${data.user}`
+                title: `Comment`,
+                body: `You have a new comment by ${data.user}`
             }
         },
         privatecontent: {
             ru: {
-                title: `Новая публикация`,
-                body: `От пользователя ${data.user}`
+                title: `Новая публикация от ${data.user}`,
+                body: ``
             },
             en: {
-                title: `New publication`,
-                body: `By ${data.user}`
+                title: `New publication by ${data.user}`,
+                body: ``
             }
         },
         commentDonate: {
             ru: {
-                title: `Ваш комментарий вознаградил пользователь ${data.user}`,
+                title: `Ваш комментарий вознаградил ${data.user}`,
                 body: `Сумма ${data.amount}`
             },
             en: {
@@ -92,17 +102,17 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
         },
         answer: {
             ru: {
-                title: `Оставлен ответ на Ваш комментарий`,
-                body: `От пользователя ${data.user}`
+                title: `Ответ`,
+                body: `${data.user} оставил ответ на ваш комментарий`
             },
             en: {
-                title: `Reply to your comment`,
-                body: `By ${data.user}`
+                title: `Reply`,
+                body: `Reply to your comment by ${data.user}`
             }
         },
         answerDonate: {
             ru: {
-                title: `Ваш ответ на комментарий вознаградил пользователь ${data.user}`,
+                title: `Ваш ответ на комментарий вознаградил ${data.user}`,
                 body: `Сумма ${data.amount}`
             },
             en: {
@@ -112,8 +122,8 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
         },
         subscriber: {
             ru: {
-                title: `У Вас новый подписчик`,
-                body: `Пользователь ${data.user}`
+                title: `У вас новый подписчик`,
+                body: `${data.user}`
             },
             en: {
                 title: `You have a new subscriber`,
@@ -122,7 +132,7 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
         },
         contentscore: {
             ru: {
-                title: `Пользователь ${data.user} поставил оценку Вашей публикации`,
+                title: `${data.user} оценил вашу публикацию`,
                 body: `Оценка ${data.score}`
             },
             en: {
@@ -132,7 +142,7 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
         },
         commentscore: {
             ru: {
-                title: `Пользователь ${data.user} поставил оценку Вашему комментарию`,
+                title: `${data.user} оценил ваш комментарий`,
                 body: `Оценка ${data.score}`
             },
             en: {
@@ -149,6 +159,20 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
                 title: `Notification`,
                 body: `You have notification`
             }
+        },
+        referal: {
+            ru: {
+                title: `У вас новый реферал`,
+                body: `${data.user}`
+            },
+            en: {
+                title: `You have a new referral`,
+                body: `User ${data.user}`
+            }
+        },
+        images: {
+            ru: "Изображения",
+            en: "Images"
         }
     }
 }

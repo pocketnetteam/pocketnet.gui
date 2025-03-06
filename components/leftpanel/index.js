@@ -18,6 +18,7 @@ var leftpanel = (function(){
 
 			_.each(s, function(v, k){
 
+
 				var _el = el.c.find('.lentaunseen[key="'+k+'"]')
 
 				if(v > 99) v = '99'
@@ -45,6 +46,7 @@ var leftpanel = (function(){
 
 				if (parameters().video) backlink = 'index?video=1'
 				if (parameters().read) backlink = 'index?read=1'
+				if (parameters().audio) backlink = 'index?audio=1'
 
 				self.shell({
 					name :  'currentsearch',
@@ -63,6 +65,10 @@ var leftpanel = (function(){
 			best : function(){
 
 				if(!el.c) return;
+
+				if(self.app.television){
+					return
+				}
 
 				self.shell({
 					name :  'best',
@@ -84,7 +90,7 @@ var leftpanel = (function(){
 							method = 'hierarchical';
 		
 						}
-		
+
 						self.sdk.lentaMethod.set(method)
 		
 					})
@@ -101,11 +107,15 @@ var leftpanel = (function(){
 
 				self.app.user.isState(function(state){
 
-					if(isMobile() && pathname != 'index'){
+					if((isMobile() && pathname != 'index')){
 						el.c.addClass('hidden')
 					}
 					else{
 						el.c.removeClass('hidden')
+
+						if(self.app.television){
+							return
+						}
 
 						self.shell({
 
@@ -189,6 +199,46 @@ var leftpanel = (function(){
 					el : el.footer
 
 				}, function(_p){
+
+					_p.el.find('.dapp').on('click', function(){
+
+						self.nav.api.go({
+							open : true,
+							href : 'application?id=barteron.pocketnet.app',
+							history : true
+						})
+					})
+
+					_p.el.find(".downloadapplication button").on('click', function(){
+						var wnd = isMobile() || isTablet()
+
+						self.nav.api.go({
+							open : true,
+							href : 'applications',
+							inWnd : wnd,
+							history : !wnd
+						})
+					})
+
+					_p.el.find(".donations button").on('click', function(){
+
+						self.nav.api.go({
+							open : true,
+							href : 'donations',
+							history : true
+						})
+					})
+
+					_p.el.find('.app-builtfrom').on('click', () => {
+						navigator.clipboard.writeText(`${packageversion}-${builtfromsha}`);
+						sitemessage(self.app.localization.e('copybuiltfrom'));
+					});
+
+
+					_p.el.find('.blockexplorer').on('click', () => {
+						self.app.apps.openInWndById('app.pocketnet.blockexplorer')
+					})
+
 					if(clbk) clbk()
 				})
 			},
@@ -415,7 +465,7 @@ var leftpanel = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

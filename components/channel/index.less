@@ -2,20 +2,91 @@
 
 #channel{
 
+    @rad: 12px;
+
     .emptychannel{
         text-align: center;
     }
     
     .channel{
-        background: rgb(var(--background-total-theme));
-        padding : 0 @rhythm;
+        max-width: 640px;
+        background: rgb(var(--background-secondary-theme));
+
+        .bgwallpaperWrapper{
+            overflow: hidden;
+            height: 135px;
+            z-index: 0;
+            position: relative;
+            border-bottom-left-radius: @rad;
+            border-bottom-right-radius: @rad;
+            filter: brightness(90%);
+            .bgwallpaper{
+                width: 100%;
+                height: 100%;
+                background: #051b48;
+                opacity: 1!important;
+
+
+                &[imageloaded="true"]{
+                    [circle="circle"]{
+                        opacity: 0;
+                    }
+                }
+    
+                [circle="circle"]{
+                    .transition(0.3s, opacity);
+                }
+                
+                &.deleted,
+                &.blocked{
+                    background: #48052b;
+                    .grad{
+                        
+                        background: rgba(1, 1, 1, 1);
+                        background: linear-gradient(180deg, rgba(236, 30, 215, 0.3), rgba(1, 1, 1, 0.1), rgba(1, 1, 1, 0.2));
+                        
+                    }
+    
+                    
+                }
+    
+                &.reputationBlocked{
+                    background: #ff0090;
+                    .grad{
+                        
+                        background: rgba(1, 1, 1, 1);
+                        background: linear-gradient(180deg, rgba(255, 0, 123, 0.3), rgba(1, 1, 1, 0.1), rgba(1, 1, 1, 0.2));
+                        
+                    }
+                }
+    
+            }
+    
+            .grad{
+                pointer-events: none;
+                position: absolute;
+                left : 0;
+                right: 0;
+                top : 0;
+                background: rgba(1, 1, 1, 1);
+                background: linear-gradient(180deg, rgba(30,141,236, 0.3), rgba(1, 1, 1, 0.1), rgba(1, 1, 1, 0.2));
+                z-index: 0;
+                height: 100%;
+            }
+        }
 
         .userinfo{
+            position: relative;
+            top : -35px;
             padding : @rhythm 0;
-            display: flex;
+            margin-left: @rhythm;
+            margin-right: @rhythm;
+            border-radius: @rad;
+            
+            background: rgb(var(--background-hidden-layer));
 
             .name{
-                font-size: 1.75em;
+                text-align: center;
                 font-weight: 700;
                 padding-bottom: @rhythm;
             }
@@ -28,12 +99,8 @@
                 display: inline-block;
             }
 
-            .nameinfo{
-                padding-left: 2 * @rhythm;
-                flex-grow: 2;
-            }
-
             .openprofilebuttonwrapper{
+                text-align: center;
                 padding-bottom : 2 * @rhythm;
                 
             }
@@ -43,6 +110,7 @@
             }
 
             .additional{
+                padding : 2 * @rhythm;
                 margin-top : @rhythm;
                 padding-top: 2 * @rhythm;
                 padding-bottom: 2 * @rhythm;
@@ -51,18 +119,20 @@
         }
 
         .panel{
-            margin : 0 auto;
-            max-width: 600px;
             display: flex;
-            flex-direction: column;
-
-            .usermenuitem{
-                padding : @rhythm 0;
-                cursor: pointer;
-                white-space: nowrap;
-            }
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
 
             >div{
+                cursor: pointer;
+                white-space: nowrap;
+                margin-right: @rhythm;
+                margin-bottom: @rhythm;
+                border-radius: @rad;
+                padding: @rhythm 2 * @rhythm;
+                background: rgb(var(--background-secondary-theme));
+                box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
                
                 i{
                     text-align: center;
@@ -72,28 +142,74 @@
             }
         }
 
-        .usericon{
-            width: 40px;
-            height: 40px;
-            line-height: 40px;
-            margin : 0 auto;
+        .nameinfo{
+            padding-top: 9 * @rhythm;
+        }
 
-            &.letter{
-                font-size: 1.5em;
-            }
+        .usericon{
+           font-size: 2.5em;
+           border: 1px solid rgb(var(--background-total-theme));
+           position: absolute;
+           top : -1.25em;
+           left: 50%;
+            margin-left: -1.5em;
+        }
+
+        .uiwrapper{
+            position: relative;
         }
 
         .action{
             padding : 2 * @rhythm;
             text-align: center;
         }
+
+        .userinfo{
+            .blockWrapper{
+                padding-left: 2 * @rhythm;
+                padding-right: 2 * @rhythm;
+                margin-top: 2 * @rhythm;
+    
+                span{
+                    cursor: pointer;
+                    text-decoration: underline;
+                }
+    
+                .block{
+                    color : rgb(var(--color-bad))
+                }
+    
+                .unblock{
+                    display: none;
+                    color : rgb(var(--neutral-grad-4));
+                }
+            }
+    
+            &.blocked{
+                .blockWrapper{
+                    .block{
+                        display: none;
+                    }
+    
+                    .unblock{
+                        display: inline;
+                    }
+                }
+            }
+        }
+
+        
+        
     }
 }
 
 .wnd{
     #channel{
-        padding-bottom: 6 * @rhythm;
-        padding-left: @rhythm;
-        padding-right: @rhythm;
+    }
+}
+
+.wnd.channelwnd{
+    .wndcontent{
+        padding-top: 0;
     }
 }

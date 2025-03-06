@@ -77,14 +77,14 @@ var userpage = (function(){
 
 
 			reports.push({
-				name :  self.app.localization.e('rstate'),
+				name :  self.app.localization.e('limits'),
 				id : 'ustate',
 				report : 'ustate',
 				mobile : true,
 
 			
 				if : function(){
-					
+
 					if(!self.app.curation() && !self.app.platform.sdk.user.myaccauntdeleted()) return true
 				},
 
@@ -124,6 +124,27 @@ var userpage = (function(){
 				}
 			})
 
+			if(!self.app.pkoindisable){
+				if(self.app.user.validate() && self.app.platform.sdk.users.checkMonetizationOpportunity(self.app.user.address.value)) {
+
+					
+
+					reports.push({
+						name :  self.app.localization.e('monetization_Monetization'),
+						id : 'earnings',
+						report : 'earnings',
+						//openReportPageMobile : true,
+						mobile : false,
+						if : function(){
+							return !self.app.platform.sdk.user.myaccauntdeleted()
+							
+						}
+					})
+
+				}
+			}
+
+			
 			reports.push({
 
 				name : self.app.localization.e('followers'),
@@ -137,17 +158,13 @@ var userpage = (function(){
 
 				add : function(){
 
-					var address = deep(self, 'app.user.address.value')
+					var me = self.psdk.userInfo.getmy() || {}
 
-					if (address){
-						var s = deep(self, 'sdk.users.storage.'+address+'.subscribers.length')
-
-						if (self.app.mobileview && s){
-							return s
-						}
-					}	
-
+					var s = deep(me, 'subscribers_count')
 					
+					if (self.app.mobileview && s){
+						return s
+					}
 
 				}
 			})
@@ -165,15 +182,37 @@ var userpage = (function(){
 
 				add : function(){
 
-					var address = deep(self, 'app.user.address.value')
+					var me = self.psdk.userInfo.getmy() || {}
 
-					if (address){
-						var s = deep(self, 'sdk.users.storage.'+address+'.subscribes.length')
-
-						if (self.app.mobileview && s){
-							return s
-						}
+					var s = deep(me, 'subscribes_count')
+					
+					if (self.app.mobileview && s){
+						return s
 					}	
+
+				}
+			})
+
+			reports.push({
+
+				name : self.app.localization.e('blockedusers'),
+				id : 'blocking',
+				report : 'blocking',
+				mobile : true,
+
+				if : function(){
+					return self.app.mobileview && !self.app.curation() && !self.app.platform.sdk.user.myaccauntdeleted()
+				},
+
+				add : function(){
+
+					var me = self.psdk.userInfo.getmy() || {}
+
+					var s = deep(me, 'blockings_count')
+					
+					if (self.app.mobileview && s){
+						return s
+					}
 
 				}
 			})
@@ -241,9 +280,9 @@ var userpage = (function(){
 					//openReportPageMobileInWindow : true
 				})
 			}
-			
 
-			if(self.app.user.validate() && !self.app.pkoindisable) {
+
+			if(self.app.user.validate()) {
 
 				reports.push({
 					name : self.app.localization.e('videoCabinet'),
@@ -253,9 +292,7 @@ var userpage = (function(){
 					openReportPageMobileInWindow : true,
 					if : function(){
 
-
-
-						if (self.app.curation() || self.app.platform.sdk.user.myaccauntdeleted()) return false
+						if (self.app.platform.sdk.user.myaccauntdeleted()) return false
 
 						if (window.testpocketnet) return true
 
@@ -267,8 +304,9 @@ var userpage = (function(){
 
 			}
 
+			
 
-
+			
 				
 		}
 
@@ -430,7 +468,7 @@ var userpage = (function(){
 		}
 
 		var actions = {
-			closeGroup : function(id){
+			/*closeGroup : function(id){
 
 				var group = helpers.findReport(id);
 
@@ -485,13 +523,15 @@ var userpage = (function(){
 						}
 					}
 				})
-			},
+			},*/
 
 			closeReport : function(){
-				el.report.html('')
-				el.c.removeClass('reportshowed')
+				window.rifticker.add(() => {
+					el.report.html('')
+					el.c.removeClass('reportshowed')
+				})
 
-				
+
 			},
 
 			openReport : function(id, addToHistory){
@@ -526,7 +566,6 @@ var userpage = (function(){
 						inWnd : true,
 						history : true
 					})
-
 					return
 				}
 				
@@ -535,9 +574,12 @@ var userpage = (function(){
 
 				el.c.find('[rid="'+id+'"]').addClass('active')
 
-				el.c.addClass('reportshowed')
+				window.rifticker.add(() => {
+					el.c.addClass('reportshowed')
+				})
+				
 
-				actions.openTree(id);
+				//actions.openTree(id);
 				renders.report(id);
 
 				if (report && report.rh) return
@@ -575,7 +617,7 @@ var userpage = (function(){
 				}
 
 				var so2 = function(){
-					if (self.app.platform.sdk.address.pnet()){
+					if (self.app.user.address.value){
 
 						if (self.app.platform.sdk.registrations.showprivate()){
 							
@@ -647,11 +689,11 @@ var userpage = (function(){
 		}
 
 		var events = {
-			closeGroup : function(){
+			/*closeGroup : function(){
 				var id = $(this).closest('[levelid]').attr('levelid')
 
 				actions.closeGroup(id);
-			},
+			},*/
 			openReport : function(){
 				var id = $(this).attr('rid');
 
@@ -672,6 +714,8 @@ var userpage = (function(){
 
 				if(!el || !el.bgcaption) return
 
+				if(!primary) return
+
 				if(!self.app.user.validate()) {
 					el.bgcaption.html('<div class="bgCaptionSpacer"></div>')
 				}
@@ -690,12 +734,14 @@ var userpage = (function(){
 
 							sitemessage(self.app.localization.e('successcopied'))
 						})
+
+						_p.el.find('.toblockexplorer').on(clickAction(), function(){
+							self.app.apps.openInWndById('app.pocketnet.blockexplorer', () => {}, hexEncode('address/'+ deep(self, 'app.user.address.value')))
+						})
 					})
 
 					
 				}
-
-				
 		
 			},
 			contents : function(clbk, id){
@@ -716,8 +762,12 @@ var userpage = (function(){
 						},
 	
 					}, function(_p){
+
+						_p.el.find('.toblockexplorer').on(clickAction(), function(){
+							self.app.apps.openInWndById('app.pocketnet.blockexplorer')
+						})
 	
-						_p.el.find('.groupNamePanelWrapper').on('click', events.closeGroup);
+						//_p.el.find('.groupNamePanelWrapper').on('click', events.closeGroup);
 						_p.el.find('.openReport').on('click', events.openReport);
 
 						_p.el.find('.changelang').on('click', function(){
@@ -764,7 +814,7 @@ var userpage = (function(){
 						if (primary){
 							self.app.actions.scroll(0)
 						}
-							
+
 						else{
 							el.c.closest('.customscroll:not(body)').scrollTop(0)
 						}
@@ -777,8 +827,11 @@ var userpage = (function(){
 							})
 						})
 
-	
-	
+						_p.el.find('.app-builtfrom').on('click', () => {
+							navigator.clipboard.writeText(`${packageversion}-${builtfromsha}`);
+							sitemessage(self.app.localization.e('copybuiltfrom'));
+						});
+
 						if (clbk)
 							clbk();
 					})
@@ -787,15 +840,16 @@ var userpage = (function(){
 				self.app.user.isState(function (state) { 
 
 					if(self.app.mobileview && state){
-						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
-							var temp = self.app.platform.sdk.node.transactions.tempBalance()
 
-							allbalance = amount + temp
-							
+						var account = self.app.platform.actions.getCurrentAccount()
 
-							r()
+						if (account){
+							allbalance = account.actualBalance().actual
+						}
+
+						r()
+
 						
-						})
 					}
 					else{
 						r()
@@ -833,29 +887,56 @@ var userpage = (function(){
 
 				var address = deep(self, 'app.user.address.value')
 
+				///
+
 				if (address){
 
-					var author = deep(self, 'sdk.users.storage.'+address)
+					var author = self.psdk.userInfo.get(address)
+					 
+						author.loadRelations(['subscribers'], self.app.platform.sdk.user.loadRelation).then(() => {
+						
+						var u = _.map(deep(author, 'subscribers') || [], function(a){
+							return a
+						})
 
-					var u = _.map(deep(author, 'subscribers') || [], function(a){
+						var blocked = deep(author, 'blocking') || []
+
+						u = _.filter(u, function(a){
+							return _.indexOf(blocked, a) == -1
+						})
+
+						var e = self.app.localization.e('anofollowers');
+
+						if(self.user.isItMe(author.address)){
+							e = self.app.localization.e('aynofollowers')
+						}
+
+						renders.userslist(_el, u, e, self.app.localization.e('followers'), clbk)
+
+					})
+				}
+				
+			},
+
+			blocking : function(_el, clbk){
+
+				var address = deep(self, 'app.user.address.value')
+
+				if (address){
+					var author = self.psdk.userInfo.get(address)
+					
+					var u = _.map(deep(author, 'blocking') || [], function(a){
 						return a
 					})
 
-					var blocked = deep(author, 'blocking') || []
-
-					u = _.filter(u, function(a){
-						return _.indexOf(blocked, a) == -1
-					})
-
-					var e = self.app.localization.e('anofollowers');
+					var e = self.app.localization.e('anoblocked');
 
 					if(self.user.isItMe(author.address)){
-						e = self.app.localization.e('aynofollowers')
+						e = self.app.localization.e('aynoblocked')
 					}
 
-					renders.userslist(_el, u, e, self.app.localization.e('followers'), clbk)
+					renders.userslist(_el, u, e, self.app.localization.e('blockedusers'), clbk)
 				}
-				
 			},
 
 			following : function(_el, clbk){
@@ -863,8 +944,8 @@ var userpage = (function(){
 				var address = deep(self, 'app.user.address.value')
 
 				if (address){
-					var author = deep(self, 'sdk.users.storage.'+address)
-
+					var author = self.psdk.userInfo.get(address)
+					
 					var u = _.map(deep(author, 'subscribes') || [], function(a){
 						return a.adddress
 					})
@@ -1068,7 +1149,6 @@ var userpage = (function(){
 						actions.openReport(id)
 					}
 					else{
-						console.log('closeReport')
 						actions.closeReport()
 					}
 
@@ -1131,13 +1211,10 @@ var userpage = (function(){
 
 				var p = parameters();
 
-				data.p2pkh = self.app.platform.sdk.address.pnet()
 
-				self.app.platform.sdk.ustate.me(function(_mestate){					
-
-					mestate = _mestate
-
+				self.app.platform.sdk.ustate.me(function(_mestate){			
 					
+					mestate = _mestate
 
 					clbk(data);
 
@@ -1208,7 +1285,7 @@ var userpage = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

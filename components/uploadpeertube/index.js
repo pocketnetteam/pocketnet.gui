@@ -19,7 +19,7 @@ var uploadpeertube = (function () {
 		var wndObj;
 		var errorcomp = null;
 
-		var uploader, uploading = false, cancel = null;
+		var uploader, uploading = false, cancel = null, hasAccess = false;
 
 
 		/*var events = {
@@ -40,6 +40,24 @@ var uploadpeertube = (function () {
 		};*/
 
 		var renders = {
+			quota : function(r){
+				if(r){
+					self.shell({
+
+						name: 'quota',
+						el: el.quota,
+						inner: html,
+						data: {
+							quota : r
+						},
+	
+					}, function (_p) {
+	
+	
+					})
+				}
+				
+			},
 			videoErrorContainer: function () {
 
 				var errorel = el.c.find('.videoErrorContainer')
@@ -67,6 +85,20 @@ var uploadpeertube = (function () {
 
 			},
 		};
+
+		var actions = {
+			getQuota : function(){
+				return self.app.peertubeHandler.api.videos.checkQuota().then((rme) => {
+					
+					return Promise.resolve(rme)
+				}).catch(e => {
+					console.error(e)
+
+					return Promise.resolve(null)
+
+				})
+			}
+		} 
 
 
 		var state = {
@@ -169,6 +201,30 @@ var uploadpeertube = (function () {
 				wasclbk : !_.isEmpty(self.added)
 			});
 
+			try {
+				var currentUnloadedVideos = JSON.parse(
+				localStorage.getItem('unpostedVideos') || '{}',
+				);
+
+				if (
+					currentUnloadedVideos[self.app.user.address.value] &&
+					typeof currentUnloadedVideos[self.app.user.address.value] === 'object'
+				) {
+					currentUnloadedVideos[self.app.user.address.value].push(v);
+				} else {
+					currentUnloadedVideos[self.app.user.address.value] = [v];
+				}
+
+				localStorage.setItem(
+					'unpostedVideos',
+					JSON.stringify(currentUnloadedVideos),
+				);
+			} catch (error) {
+				localStorage.setItem('unpostedVideos', JSON.stringify({
+					[self.app.user.address.value]: [v],
+				}));
+			}
+
 			_.each(self.added, function(a){
 				a(v)
 			})
@@ -219,19 +275,50 @@ var uploadpeertube = (function () {
 					return;
 				}
 
-				var videoInputFile = el.videoInput.prop('files');
+				let videoFile = evt.target.files[0];
 
-				if (!videoInputFile[0]) {
+				if (!videoFile) {
 					showerror('videoSelectError')
 					return;
 				}
 
-				if (!videoInputFile[0].type.includes('video')) {
+				let isMimeVideo = videoFile.type.includes('video')
+				let isMimeEmpty = (videoFile.type === '');
+
+				let isMkv = false;
+
+				/**
+				 * Matroska is still not in IANA, so it can
+				 * be empty in some browsers
+				 */
+				if (isMimeEmpty) {
+					isMkv = await isVideoFormatMatroska(videoFile)
+				}
+
+				let isAudio = videoFile.type.includes('audio')
+				let isVideo = isMimeVideo || isMkv
+
+				/**
+				 * When Matroska is uploaded, it's type may be empty.
+				 * In this case, wrapping original File into... yeah,
+				 * another File with overridden type property
+				 */
+				if (isMkv) {
+					/** Cordova has library for File class support */
+					const file = window.wFile || window.File;
+
+					videoFile = new file([videoFile], videoFile.name, {
+						type: 'video/x-matroska',
+						lastModified: videoFile.lastModified,
+					})
+				}
+
+				if (!isVideo && !isAudio) {
 					showerror('videoFormatError')
 					return;
 				}
 
-				if (videoInputFile[0].size > 4 * 1024 * 1024 * 1024) {
+				if (videoFile.size > 4 * 1024 * 1024 * 1024) {
 
 					showerror('videoSizeError')
 
@@ -244,7 +331,7 @@ var uploadpeertube = (function () {
 					uploading = false
 				}
 
-				var fileName = videoInputFile[0].name;
+				var fileName = videoFile.name;
 				//var hfname = fileName.slice(0, 20) + (fileName.length > 20 ? '...' : '')
 
 
@@ -252,7 +339,7 @@ var uploadpeertube = (function () {
 				//el.uploadButton.prop('disabled', true);
 
 				var data = {
-					video: videoInputFile[0],
+					video: videoFile,
 					title : fileName
 				};
 
@@ -267,6 +354,10 @@ var uploadpeertube = (function () {
 
 				let transcodingAllowed = (transcodeOption && transcodeOption.value);
 
+				// For audio files, disable the transcoding
+				if (isAudio)
+					transcodingAllowed = false;
+
 				let transcoded = null;
 
 
@@ -275,7 +366,7 @@ var uploadpeertube = (function () {
 
 				showerror()
 				processing(true)
-				loadProgress(0, 'uploadVideoProgress_start');
+				loadProgress(0, (isAudio) ? 'uploadAudioProgress_start' : 'uploadVideoProgress_start');
 
 				if (transcodingAllowed && typeof _Electron !== 'undefined') {
 					const file = evt.target.files[0];
@@ -410,10 +501,10 @@ var uploadpeertube = (function () {
 				}
 
 
-				loadProgress(0, 'uploadVideoProgress_uploading');
+				loadProgress(0, (isAudio) ? 'uploadAudioProgress_uploading' : 'uploadVideoProgress_uploading');
 
 				uploader.loadProgress = (percent) => {
-					loadProgress(percent, 'uploadVideoProgress_uploading');
+					loadProgress(percent, (isAudio) ? 'uploadAudioProgress_uploading' : 'uploadVideoProgress_uploading');
 				};
 
 				uploader.chunkScalingCalculator = ({ time, videoSize, chunkSize }, data) => {
@@ -440,18 +531,21 @@ var uploadpeertube = (function () {
 					 *       future. Must be tested...
 					 */
 
-					if (window.cordova || isDeviceMobile()) {
+					if (window.cordova || isMobile()) {
 						/** Mobile slow 3G chunking */
-						return 256 * 1024;
+						return 2 * 256 * 1024;
 					}
 
 					/** Regular internet (60 mbit/s) */
-					return 256 * 4096;
+					return 2 * 256 * 4096;
 				};
 
 				initCancelListener(() => {
 					uploader.cancel(); processing(false)
 				});
+
+				self.app.mobile.unsleep(true)
+				self.app.mobile.backgroundMode('mediaUploading')
 				
 				uploader.uploadChunked().then((response) => {
 
@@ -463,7 +557,8 @@ var uploadpeertube = (function () {
 						//processing(false)
 
 						uploading = false
-
+						
+						
 						add(response.videoLink);
 
 						wndObj.close();
@@ -474,13 +569,15 @@ var uploadpeertube = (function () {
 				})
 				.catch((e = {}) => {
 
-
 					processing(false)
 
 					self.app.Logger.error({
 						err: e.text || 'videoUploadError',
 						code: 401,
-						payload: e,
+						payload: {
+							...e,
+							host: self.app.peertubeHandler.active(),
+						},
 					});
 
 					if (!e.cancel) {
@@ -494,6 +591,8 @@ var uploadpeertube = (function () {
 					}
 
 				}).finally(() => {
+					self.app.mobile.unsleep(false)
+					self.app.mobile.backgroundMode(false)
 
 					if (el.videoInput)
 						el.videoInput.val('');
@@ -554,7 +653,10 @@ var uploadpeertube = (function () {
 
 							self.app.Logger.error({
 								err: e.text || 'videoImportError',
-								payload: e,
+								payload: {
+									...e,
+									host: self.app.peertubeHandler.active(),
+								},
 								code: 402,
 							});
 
@@ -575,6 +677,20 @@ var uploadpeertube = (function () {
 				});
 			});
 		};
+
+		var make = function(){
+			initEvents();
+
+			if (hasAccess){
+				actions.getQuota().then(r => {
+					renders.quota(r)
+				})
+			}
+			else{
+				renders.videoErrorContainer()
+			}
+			
+		}
 
 		return {
 			primary: primary,
@@ -617,6 +733,7 @@ var uploadpeertube = (function () {
 				var data = {
 					hasAccess: false,
 					increase: {},
+					isAudio: (typeof ed.isAudio != 'undefined' && ed.isAudio) ? true : false
 				};
 
 				error = false;
@@ -627,7 +744,15 @@ var uploadpeertube = (function () {
 				self.app.peertubeHandler.api.user
 					.me()
 					.then((res) => {
+						
+
+						if(res.isNewUser && (!window.cordova && typeof _Electron == 'undefined')){
+							return Promise.reject('onlyapplication')
+						}
+
 						data.hasAccess = true;
+						hasAccess = true
+						
 
 						clbk(data);
 					})
@@ -641,8 +766,11 @@ var uploadpeertube = (function () {
 
 						data.e = e.response || e;
 						error = true;
+						hasAccess = false
 
-						self.app.platform.sdk.ustate.canincrease(
+						clbk(data);
+
+						/*self.app.platform.sdk.ustate.canincrease(
 							{ template: 'video' },
 							function (r) {
 
@@ -653,12 +781,15 @@ var uploadpeertube = (function () {
 								if (r.trial || !(r.balance && r.reputation)) {
 									self.app.Logger.error({
 										err: 'PEERTIBE_AUTH_ERROR_VIDEOELEMENT',
-										payload: e,
+										payload: {
+											...e,
+											host: self.app.peertubeHandler.active(),
+										},
 										code: 501,
 									});
 								}
 							},
-						);
+						);*/
 					})
 					.then(() => {
 						globalpreloader(false);
@@ -680,6 +811,9 @@ var uploadpeertube = (function () {
 
 				uploading = false
 				cancel = null
+
+				self.app.mobile.unsleep(false)
+				self.app.mobile.backgroundMode(false)
 
 			},
 
@@ -710,16 +844,24 @@ var uploadpeertube = (function () {
 
 				el.header = el.c.find('.upload-header');
 
+				el.quota =  el.c.find('.quotafieldcontainer')
+
 				self.app.settings.delete('common', 'lastuploadedvideo');
 				//el.preloaderElement = el.c.find('.iconwr');
 
-				initEvents();
+				
 
-				renders.videoErrorContainer()
+				make()
+
+				
 
 				//if (error) el.c.closest('.wnd').addClass('witherror');
 
 				p.clbk(null, p);
+
+				self.app.mobile.unsleep(true)
+				
+
 			},
 
 			wnd: {
@@ -760,7 +902,7 @@ var uploadpeertube = (function () {
 
 	self.stop = function () {
 		_.each(essenses, function (essense) {
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 		});

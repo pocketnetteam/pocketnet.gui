@@ -6,10 +6,14 @@
 .bannerComment .bannerBody {
   display: none;
   justify-content: space-between;
+  min-width: 90%;
   padding: 1.2em;
   background-color: rgb(var(--background-secondary-theme));
   border: solid rgb(var(--neutral-grad-3)) 1px;
   border-radius: 7px;
+}
+.bannerComment .bannerBody.subscribeUser .iconWrapper {
+  width: 3em;
 }
 .bannerComment .bannerBody .bannerIcon {
   width: 64px;
@@ -28,20 +32,39 @@
   padding-right: 0;
 }
 .bannerComment .bannerBody .text {
+  width: 100%;
   color: rgb(var(--text-color));
 }
 .bannerComment .bannerBody .text .bannerDescription {
   padding-top: 0.5em;
 }
 .bannerComment .bannerBody .text .noShowAgain {
+  display: flex;
+  align-items: center;
   text-decoration: underline;
-  padding-top: 3%;
   color: rgb(var(--color-not-catchy-grey));
   font-size: 0.8em;
   cursor: pointer;
 }
 .bannerComment .bannerBody .text .noShowAgain:hover {
   color: rgb(var(--color-cc-blue));
+}
+.bannerComment .bannerBody .text .buttonsWrapper {
+  margin-top: 0.5em;
+  display: flex;
+}
+.bannerComment .bannerBody .text .buttonsWrapper .unsubscribe {
+  display: none;
+}
+.bannerComment .bannerBody .text .buttonsWrapper button {
+  margin-right: 1em;
+  padding-left: 0.5em;
+}
+.bannerComment .bannerBody .text .buttonsWrapper.following .unsubscribe {
+  display: block;
+}
+.bannerComment .bannerBody .text .buttonsWrapper.following .subscribe {
+  display: none;
 }
 .bannerComment .bannerBody .closeBannerBtn .container {
   display: flex;
@@ -68,5 +91,11 @@
   to {
     opacity: 1;
     transform: translate(0%, 0%);
+  }
+}
+/*t*/
+@media only screen and (max-width: 768px) {
+  .bannerComment.show {
+    padding: 0.5em;
   }
 }

@@ -108,6 +108,18 @@ var Server = function(settings, admins, manage){
             
         });
 
+        app.use('/proxylogs', express.static('logs', {
+            setHeaders : function(res){
+                res.setHeader('Access-Control-Allow-Origin', '*');
+            }
+        }));
+
+        app.use('/proxydb/nodes', express.static('data/nodes', {
+            setHeaders : function(res){
+                res.setHeader('Access-Control-Allow-Origin', '*');
+            }
+        }));
+
         if(!printstatsInterval)
             printstatsInterval = setInterval(function(){
                 middle.printstats()
@@ -253,7 +265,7 @@ var Server = function(settings, admins, manage){
         return {
             iplimiter : iplimiter.info(),
             middle : middle.info(compact),
-            cache : self.cache.info(),
+            cache : self.cache.info(compact),
             listening : self.listening,
             httplistening : self.httplistening,
             startedDate

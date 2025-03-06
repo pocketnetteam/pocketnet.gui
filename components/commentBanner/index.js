@@ -5,24 +5,134 @@ const commentBanner = (function() {
 	const Essense = function(p) {
 		const primary = deep(p, 'history');
 
-		let el, destroyDelay;
+		let el, destroyDelay, address, block;
 
 		const actions = {
-			dontShowAgain() {
-				renders.closeBanner();
-				localStorage.nextCommentBanner = -1;
+			dontShowAgainBlock(){
+
+				renders.closeBanner(true);
+
+				const blockBanner = JSON.parse(localStorage.blockBanner || '[]');
+				blockBanner.push(address);
+
+				
+				try {
+					localStorage.setItem('blockBanner', JSON.stringify(blockBanner));
+				}
+				catch (e) { }
 			},
+
+			dontShowAgain() {
+
+				renders.closeBanner();
+
+				const commentBanner = JSON.parse(localStorage.commentBanner || '{}');
+				commentBanner.count = -1;
+
+				try {
+					localStorage.setItem('commentBanner', JSON.stringify(commentBanner));
+				}
+				catch (e) { }
+			
+
+				
+			},
+			unsubscribe : function(address, clbk){
+
+				dialog({
+					html : self.app.localization.e('e13022'),
+					btn1text : self.app.localization.e('unsub'),
+					btn2text :  self.app.localization.e('ucancel'),
+
+					class : 'zindex',
+
+					success : function(){
+
+						self.app.platform.api.actions.unsubscribe(address, function(tx, err){
+
+							if(!tx){
+								self.app.platform.errorHandler(err, true)	
+							}
+							else{
+								renders.closeBanner();
+							}
+
+							if (clbk){
+								clbk();
+							}
+		
+						})
+
+					}
+				})
+
+				
+			},
+			subscribe : function(address, clbk){
+
+				self.app.platform.api.actions.notificationsTurnOn(address, function(tx, err){
+
+					if(!tx){
+
+						self.app.platform.errorHandler(err, true)
+					}else{
+						renders.closeBanner();
+					}
+
+
+					if (clbk){
+						clbk();
+					}
+
+				})
+				 
+			},
+			block : function(address, clbk){
+
+				self.app.platform.api.actions.blocking(address, function (tx, error) {
+					if (!tx) {
+						self.app.platform.errorHandler(error, true)
+					}else{
+						renders.closeBanner();
+					}
+
+					if (clbk){
+						clbk();
+					}
+				})
+			}
 		};
 
 		const events = {
+			unsubscribe : function(){
 
+				actions.unsubscribe(address)
+			},
+
+			subscribe : function(){
+				
+				actions.subscribe(address);
+			},
+
+			block : function(){
+
+				actions.block(address);
+
+			}
 		};
 
 		const renders = {
 			show() {
 				el.c.addClass('show')
 			},
-			closeBanner() {
+			closeBanner(block) {
+
+				if(!el.c) return
+
+				if (block){
+					el.c.closest('.share').removeClass('ultrablurred');
+				}
+				
 				el.c.removeClass('show');
 				destroyDelay = setTimeout(() => {
 					if (el.c) {
@@ -44,8 +154,20 @@ const commentBanner = (function() {
 		};
 
 		const initEvents = function() {
-			el.c.on('click', '.noShowAgain', actions.dontShowAgain)
+
+			el.c.on('click', '.noShowAgainComment', actions.dontShowAgain)
+			el.c.on('click', '.noShowAgainBlock', actions.dontShowAgainBlock)
 			el.c.on('click', '.closeBannerBtn', renders.closeBanner)
+
+			el.c.on('click', '.subscribe', events.subscribe);
+			el.c.on('click', '.unsubscribe', events.unsubscribe);
+
+			el.c.on('click', '.block', events.block);
+
+			if (block){
+				el.c.closest('.share').addClass('ultrablurred');
+			}
+
 		};
 
 		const destroyEvents = function() {
@@ -56,8 +178,16 @@ const commentBanner = (function() {
 		return {
 			primary: primary,
 
-			getdata: function(clbk) {
-				const data = {};
+			getdata: function(clbk, p) {
+				
+				address = p.settings.essenseData.address;
+				block = p.settings.essenseData.block;
+
+				const data = {
+					address: address, 
+					block: block
+				};
+
 
 				clbk(data);
 			},
@@ -81,6 +211,7 @@ const commentBanner = (function() {
 			},
 			
 			init: function(p) {
+
 				state.load();
 
 				el = {};
@@ -104,7 +235,7 @@ const commentBanner = (function() {
 
 	self.stop = function() {
 		essenses.forEach((essense) => {
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 		});

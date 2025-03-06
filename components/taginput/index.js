@@ -13,14 +13,12 @@ var taginput = (function(){
 		var actions = {
 			initsearch : function(){
 
-				console.log("SSS", s)
-
 				if(s) s.destroy()
 
 				s = mobsearch(el.tagSearch, {
 					placeholder : essenseData.placeholder || self.app.localization.e('addtagsCategories'),
 
-					mobileSearch : self.app.width <= 768,
+					mobileSearch : self.app.width <= 768 || isTablet(),
 
 					app : self.app,
 
@@ -216,8 +214,6 @@ var taginput = (function(){
 
 					var c = self.app.platform.sdk.categories.getbyid(category, actions.language())
 
-					console.log("C", c)
-
 					events.addTags(c.tags)
 					
 				}
@@ -353,6 +349,11 @@ var taginput = (function(){
 		return {
 			primary : primary,
 
+			focus : function(){
+				if (s)
+					s.focus()
+			},
+
 			getdata : function(clbk, p){
 
 				essenseData = p.settings.essenseData || {}
@@ -402,7 +403,7 @@ var taginput = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

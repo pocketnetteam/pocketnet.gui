@@ -1,9 +1,36 @@
 @import "../../css/__cssvar";
 
 #wallet{
-	min-height: 600px;
+	min-height: 100vh;
 	padding-bottom: 8 * @rhythm;
 	position: relative;
+
+	.qrcodescannericon{
+		position: absolute;
+		left: 0;
+		top : 0;
+		padding : 2 * @rhythm;
+		cursor: pointer;
+		.transition(0.3s);
+		color : rgb(var(--neutral-grad-3));
+		&:hover{
+			color : rgb(var(--color-txt-ac));
+		}
+	}
+
+	.transactionsHistoryIcon{
+		position: absolute;
+		right: 0;
+		top : 0;
+		padding : 2 * @rhythm;
+		cursor: pointer;
+		.transition(0.3s);
+		color : rgb(var(--neutral-grad-3));
+
+		&:hover{
+			color : rgb(var(--color-txt-ac));
+		}
+	}
 
 	.pkoindisabledisclaimer{
 		padding : 6 * @rhythm;
@@ -778,7 +805,7 @@
 		}
 	}
 
-	.buypkoin{
+	.buypkoin, .stakepkoin{
 		background: rgb(var(--background-total-theme));
 		padding : 3 * @rhythm 0;
 		border-radius: 6px;
@@ -789,11 +816,28 @@
 		.ways{
 			display : flex;
 			align-items: flex-start;
+			margin-bottom: 2 * @rhythm;
+
+			.subcaption{
+				color: rgb(var(--color-txt-ac));
+			}
+			
+
+			&:nth-child(2n){
+				background: rgba(var(--color-medium-theme), 0.3);
+				padding-top: 2 * @rhythm;
+				padding-bottom: 2 * @rhythm;
+			}
 
 			>div{
 				flex-shrink: 1;
   				flex-basis: 0;
 				flex-grow: 1;
+			}
+
+			.actionbutton{
+				margin-top : 2 * @rhythm;
+				margin-bottom: 2 * @rhythm;
 			}
 
 			
@@ -844,7 +888,6 @@
 			>div{
 				
 				padding : @rhythm 2 * @rhythm;
-				text-align: center;
 				min-width: 60px;
 				
 				.clogo{
@@ -905,6 +948,10 @@
 					color : rgb(var(--color-txt-gray-dark));
 					font-weight : 700;
 				}
+
+				.cell{
+					text-align: center;
+				}
 			}
 		}
 
@@ -920,6 +967,115 @@
 			}
 
 			
+		}
+	}
+
+	.stats{
+		.captionTable{
+			>div{
+				padding : 2 *@rhythm @rhythm;
+				span{
+					font-weight: 700;
+					font-size : 0.8em;
+				}
+			}
+		}
+
+		.statsTable{
+			border-bottom: 1px solid rgb(var(--neutral-grad-2));
+			cursor: pointer;
+
+			>div{
+				vertical-align: top;
+				padding : 3 *@rhythm @rhythm;
+
+				&.name{
+					padding-left: 4 * @rhythm;
+					white-space: nowrap;
+				}
+
+				&.value{
+					width: 200px;
+					font-weight: 700;
+					white-space: nowrap;
+					text-align: right;
+				}
+
+				span{
+					font-size: 0.9em;
+				}
+			}
+		}
+
+		.showtransactionhistoryWrapper{
+			padding-left: 4 * @rhythm;
+			padding-top: 2 * @rhythm;
+
+			.transactionhistory{
+				cursor: pointer;
+				text-decoration: underline;
+				color : rgb(var(--color-txt-ac));
+			}
+		}
+	}
+
+	.payments{
+
+		.captionTable{
+			>div{
+				padding : 2 *@rhythm @rhythm;
+				span{
+					font-weight: 700;
+					font-size : 0.8em;
+				}
+			}
+		}
+
+		.paymentTable{
+			border-bottom: 1px solid rgb(var(--neutral-grad-2));
+			cursor: pointer;
+
+			>div{
+				vertical-align: top;
+				padding : 3 *@rhythm @rhythm;
+
+				&.date{
+					padding-left: 4 * @rhythm;
+					font-weight: 500;
+					white-space: nowrap;
+				}
+
+				&.value{
+					width: 100px;
+					font-weight: 700;
+				}
+
+				&.info{
+					width: 25%;
+				}
+
+				&.panel{
+					padding-right: 4 * @rhythm;
+					width: 110px;
+				}
+
+				&:nth-last-child(1){
+					padding-right: 4 * @rhythm;
+					text-align: right;
+				}
+
+				span{
+					font-size: 0.9em;
+				}
+
+				.removePayment{
+					cursor: pointer;
+					.transition(0.3s);
+					&:hover{
+						color : rgb(var(--color-bad));
+					}
+				}
+			}
 		}
 	}
 
@@ -943,6 +1099,7 @@
 				&.name{
 					padding-left: 4 * @rhythm;
 					font-weight: 500;
+					white-space: nowrap;
 
 					.alabel{
 						font-weight: 300;
@@ -1152,6 +1309,14 @@
 		._stepback{
 			display: none!important;
 		}
+
+		.qrcodescannericon{
+			display: none;
+		}
+
+		.transactionsHistoryIcon{
+			display: none;
+		}
 	}
 
 	&.loading{
@@ -1207,7 +1372,7 @@
 	
 		
 		.slide{
-			margin-top: 2 * @rhythm;
+			margin-top: 0;
 			padding-top : 2 * @rhythm;
 
 			.subcaptionWrapperTable{
@@ -1294,13 +1459,13 @@
 				
 			}
 	
-			._stepclose{
+			/*._stepclose{
 				display: none;
-			}
+			}*/
 	
-			._stepback{
+			/*._stepback{
 				display: none;
-			}
+			}*/
 	
 			._subcaptionlevel{
 				padding-left : @rhythm;
@@ -1311,18 +1476,36 @@
 				padding-top : 0;
 				margin-top : 0;
 			}
+
+			&:nth-last-child(1){
+				padding-bottom : 0;
+			}
 		}
 	
 	
 		.total{
 			padding : 0;
 			overflow : hidden;
+			overflow-x: scroll;
+			scroll-behavior: smooth;
+			scrollbar-width: none;
+			scroll-snap-type: x mandatory;
+			&::-webkit-scrollbar{
+				display: none!important;
+			}
+
+			.tttl{
+				display: flex;
+				align-items: center;
+				width: 300%;
+			}
 	
 			.totalItem{
+				scroll-snap-align: center;
 				padding : 0 2 * @rhythm;
 				padding-bottom: @rhythm;
-				float: left;
-				width: 100%;
+				float: none;
+				width: 33%;
 	
 				.canvasWrapper{
 					width: 100%;
@@ -1414,8 +1597,11 @@
 			}
 		}
 
-		.buypkoin{
+		.buypkoin, .stakepkoin{
 			padding : @rhythm;
+			border-top: 0;
+
+			
 	
 			.ways{
 				display : flex;
@@ -1424,10 +1610,12 @@
 	
 				>div{
 					flex-shrink: 1;
-					  flex-basis: content;
+					flex-basis: content;
 					flex-grow: 1;
 					padding-bottom: 6 * @rhythm;
 				}
+
+				
 			}
 			
 			.row{
@@ -1477,6 +1665,8 @@
 						margin-top : 2 * @rhythm;
 					}
 				}
+
+				
 	
 				&.table{
 					display: block;
@@ -1560,6 +1750,7 @@
 						font-weight: 500;
 						overflow: hidden;
 						text-overflow: ellipsis;
+						
 	
 						
 					}
@@ -1755,7 +1946,7 @@
 
 	}
 
-	.buypkoin{
+	.buypkoin, .stakepkoin{
 		padding : @rhythm;
 
 		.ways{
@@ -1768,6 +1959,14 @@
   				flex-basis: content;
 				flex-grow: 1;
 				padding-bottom: 6 * @rhythm;
+			}
+
+			.subcaption{
+				text-align: center;
+			}
+
+			.wrp{
+				width: 100%;
 			}
 		}
 		
@@ -1932,6 +2131,65 @@
 			}
 
 			
+		}
+	}
+	.stats{
+		.statsTable{
+			>div{
+				vertical-align: top;
+				padding : 3 * @rhythm @rhythm;
+
+				&.name{
+					padding-left: @rhythm;
+				}
+
+				&.value{
+					width: 33%;
+					font-weight: 700;
+				}
+
+				&:nth-last-child(1){
+					padding-right: @rhythm;
+				}
+				
+			}
+		}
+
+		.showtransactionhistoryWrapper{
+			padding-left: @rhythm;
+		}
+	}
+	.payments{
+
+
+		.paymentTable{
+			>div{
+				vertical-align: top;
+				padding : 3 * @rhythm @rhythm;
+
+				&.date{
+					padding-left: @rhythm;
+				}
+
+				&.value{
+					width: 33%;
+					font-weight: 700;
+				}
+
+				&.info{
+					display: none;
+				}
+
+				&.panel{
+					padding-right: @rhythm;
+				}
+
+				&:nth-last-child(1){
+					padding-right: @rhythm;
+				}
+
+				
+			}
 		}
 	}
 

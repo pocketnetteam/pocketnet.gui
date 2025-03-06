@@ -110,6 +110,8 @@ var nodecontrol = (function(){
 			},
 		}
 
+		var rif = null
+
 		var actions = {
 			refreshsystem : function(){
 				return proxy.system.api.get.settings().then(s => {
@@ -132,15 +134,7 @@ var nodecontrol = (function(){
 				renders.all()
 			},
 			tick : function(state){
-
-				//var laststate = info
-
-					info = state
-
-				//if(!laststate || (new Date(laststate.time)).addSeconds(10) < new Date() ){
-				
-				//}
-				
+				info = state
 			},
 			ticksettings : function(settings, s, changed){
 
@@ -148,11 +142,20 @@ var nodecontrol = (function(){
 					system = settings
 				}
 
-				renders.all()
+				if (rif){
+					rifticker.cancel(rif)
+                    ///cancelAnimationFrame(rif)
+                }
+
+				rif = rifticker.add(() => {
+					rif = null
+					renders.all()
+				})
+				
 			},
 			admin : function(){
 
-				var address = self.app.platform.sdk.address.pnet()
+				var address = self.app.user.address.value
 
 				if(!address) return false
 
@@ -431,6 +434,10 @@ var nodecontrol = (function(){
 				}
 			},
 			nodelanding : function(elc, clbk){
+
+				if(!info){
+					return
+				}
 
 				self.shell({
 					inner : html,
@@ -711,9 +718,8 @@ var nodecontrol = (function(){
 							el : p.el.find('.applicationscontainer'),
 
 							essenseData : {
-								filter : function(os){
-									return os.node
-								}
+								key  :'node',
+								
 							}
 						})
 
@@ -757,12 +763,14 @@ var nodecontrol = (function(){
 
 			info = null
 
+
 			if (proxy) {
 
 				proxy.system.clbks.tick.components_nodecontrol = actions.ticksettings
 				proxy.clbks.tick.components_nodecontrol = actions.tick
 			
 				proxy.get.info().then(r => {
+
 
 					info = r.info
 
@@ -776,6 +784,8 @@ var nodecontrol = (function(){
 					}
 				}).then(() => {
 					renders.all()
+				}).catch(e => {
+					console.error(e)
 				})
 			}
 
@@ -848,7 +858,7 @@ var nodecontrol = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

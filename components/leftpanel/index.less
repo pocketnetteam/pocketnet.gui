@@ -1,9 +1,26 @@
 @import "../../css/__cssvar";
 
 #leftpanel{
+
+	
 	padding-right: 16px;
 	color : rgb(var(--text-on-main-bg-color));
 	padding-top: 15px;
+
+	.dapp, .downloadapplication, .donations{
+		width: 150px;
+
+		button{
+			width: 100%;
+		}
+	}
+	.dapp{
+		margin-bottom: @rhythm;
+	}
+	.donations{
+		margin-top: @rhythm;
+		margin-bottom: @rhythm * 2;
+	}
 
 	>div{
 		.wrp{
@@ -253,13 +270,18 @@
 		span{
 			font-size: 0.8em;
 		}
-
+		.likelink,
 		a{
+			white-space: nowrap;
 			.transition(0.3s);
-			
+		}
+
+		.likelink{
+			cursor: pointer;
 		}
 
 		@media (pointer:fine) {
+			.likelink,
 			a{
 				&:hover{
 					color : rgb(var(--color-txt-ac));
@@ -270,25 +292,70 @@
 		.rightbottomlinks {
 			margin-top: 1em;
 			padding-top: @rhythm;
+
+			button{
+				padding-left: 0;
+				padding-right: 0;
+				font-size: 0.85em;
+				width: 150px;
+			}
+
+			.download-button{
+				margin-bottom: @rhythm;
+
+				
+			}
+		
 		}
 
 		.copyright {
 			display: flex;
 			justify-content: flex-start;
-			align-items: center;
 			margin-top: 4 * @rhythm;
 
-			.copy_logo {
+			.app-logo {
 				width: 14px;
 				height: 14px;
+				margin-top: 3px;
+				background-image: url('../../img/logotypes/bastyon_logo_black.svg');
+				background-size: cover;
+				background-repeat: no-repeat;
+				filter: grayscale(1) brightness(1.8) contrast(0.5);
 			}
 
-			img{
-				opacity: 0.5;
-			}
-
-			.copyright_text {
+			.text {
 				margin-left: @rhythm;
+			}
+
+			.app-name,
+			.app-version,
+			.app-builtfrom {
+				display: inline-block;
+			}
+
+			.app-builtfrom {
+				position: absolute;
+				margin-left: 5px;
+				padding: 2px 5px;
+				font-family: Consolas, "courier new";
+				font-weight: bold;
+				line-height: 1;
+				background: rgba(var(--color-txt-gray-dark), 0.1);
+				color: rgba(var(--text-on-main-bg-color), 0.7);
+				border-radius: 2px;
+				cursor: pointer;
+			}
+
+			.app-update-available {
+				display: none;
+				margin: 3px 0px;
+				color: rgb(var(--color-bg-ac-bright));
+
+				i {
+					font-size: 1em;
+					color: rgb(var(--color-bg-ac-bright));
+					vertical-align: middle;
+				}
 			}
 		}
 	}

@@ -1,0 +1,20 @@
+
+
+<div class="work">
+    <div class="yearWrapper">
+        <div class="year">
+            <span><%- advertisingParameters.currentYear %></span> 
+            <% if(advertisingParameters.currentYear > advertisingParameters.years[0]) {%>
+            <i class="fas fa-angle-left yearleft"></i> 
+            <% } %>
+        
+            <% if(advertisingParameters.currentYear < advertisingParameters.years[1]) {%>
+                <i class="fas fa-angle-right yearright"></i>
+            <% } %>
+        </div>
+    </div>
+
+    <div class="groupping">
+        <label><%-e('grouping')%></label><span><%-e('groupBy_' + advertisingParameters.groupBy)%></span> <i class="fas fa-angle-down"></i>
+    </div>
+</div>

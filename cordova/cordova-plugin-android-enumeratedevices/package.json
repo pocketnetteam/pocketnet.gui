@@ -1,0 +1,27 @@
+{
+  "name": "cordova-plugin-android-enumeratedevices",
+  "version": "0.0.1",
+  "description": "Cordova Android plugin exposing the audio and video devices connected",
+  "cordova": {
+    "id": "cordova-plugin-android-enumeratedevices",
+    "platforms": [
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OpenVidu/cordova-plugin-android-enumeratedevices.git"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "enumeratedevices",
+    "android"
+  ],
+  "author": "OpenVidu",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/OpenVidu/cordova-plugin-android-enumeratedevices/issues"
+  },
+  "homepage": "https://github.com/OpenVidu/cordova-plugin-android-enumeratedevices#readme"
+}

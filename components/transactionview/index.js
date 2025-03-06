@@ -8,7 +8,9 @@ var transactionview = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, txid, tx = {};
+		var el, txid, tx = {}, node = null, ed = {};
+
+		var checkautoCounter = 0, checkautoTimeout;
 
 		var types = {
 			'7570766f74655368617265': 'Score to Post',
@@ -174,7 +176,10 @@ var transactionview = (function(){
 					name : 'tx',
 					data : {
 						tx : tx,
-						type
+						type,
+						checkauto : ed.checkauto,
+						checkautoCounter,
+						ed
 					},
 					el : el.c.find('.txcnt')
 				},
@@ -190,6 +195,14 @@ var transactionview = (function(){
 						sitemessage(self.app.localization.e('successcopied'))
 					})
 
+					p.el.find('.shareWrapper').on('click', () => {
+						self.app.platform.ui.socialshare('transactionview?stx=' + txid)
+					})
+
+					p.el.find('.toblockexplorer').on('click', () => {
+						self.app.apps.openInWndById('app.pocketnet.blockexplorer', () => {}, hexEncode('transaction/'+ txid))
+					})
+
 					if(clbk) clbk()
 					
 				})
@@ -198,14 +211,37 @@ var transactionview = (function(){
 
 		var make = function(){
 
+			if (checkautoTimeout) clearTimeout(checkautoTimeout)
+
 			self.app.platform.sdk.node.transactions.get.tx(txid, function(_tx){
 
 				if(_.isArray(_tx) && _tx.length) _tx = _tx[0]
 
 				tx = _tx
 
+				if(tx && ed.verify && !ed.verify(tx)){
+
+					console.error('verify')
+					return
+				}
+
+
 				if(!tx){
 					renders.tx()
+
+					if(ed.checkauto){
+
+						if (checkautoCounter < 10){
+							checkautoCounter ++
+
+							checkautoTimeout = setTimeout(() => {
+								make()
+							}, 10000)
+						}
+
+						
+
+					}
 				}
 				else{
 					actions.usersinfo(function(){
@@ -218,6 +254,9 @@ var transactionview = (function(){
 
 				
 
+			}, {
+				node : node,
+				auto : node ? true : false
 			})
 		}
 
@@ -236,7 +275,11 @@ var transactionview = (function(){
 
 			getdata : function(clbk, p){
 
-				txid = (p.settings.essenseData || {}).txid || parameters().txid
+				txid = (p.settings.essenseData || {}).txid || parameters().txid || parameters().stx
+
+				node = (p.settings.essenseData || {}).node || null
+
+				ed = p.settings.essenseData || {}
 
 				if(!txid){
 
@@ -249,7 +292,7 @@ var transactionview = (function(){
 					return
 				}
 
-				var data = {};
+				var data = {ed};
 					
 				clbk(data);
 
@@ -257,6 +300,12 @@ var transactionview = (function(){
 
 			destroy : function(){
 				el = {};
+				ed = {}
+
+				if (checkautoTimeout){
+					clearTimeout(checkautoTimeout)
+					checkautoTimeout = null
+				}
 			},
 			
 			init : function(p){
@@ -268,7 +317,15 @@ var transactionview = (function(){
 
 				make()
 
+				checkautoCounter = 0
+
 				p.clbk(null, p);
+			},
+			wnd : {
+				showbetter : true,
+			
+				class: 'transactionviewwnd normalizedmobile withoutButtons',
+				
 			}
 		}
 	};
@@ -287,7 +344,7 @@ var transactionview = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

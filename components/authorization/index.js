@@ -24,13 +24,8 @@ var authorization = (function(){
 
 		//var codeReader = new ZXing.BrowserQRCodeReader();
 
-		var stayH = function(){
-
-			localStorage['stay'] = '0';
-			localStorage['mnemonic'] || '';
-
-			self.app.user.stay = 0;
-
+		var stayH = function(v){
+			self.app.user.setstay(v);
 		}
 
 
@@ -43,6 +38,8 @@ var authorization = (function(){
 			name : self.app.localization.e('e13027'),
 
 			_onChange : function(v){
+
+				stayH(v)
 
 				if(v){
 
@@ -65,7 +62,7 @@ var authorization = (function(){
 				}
 				else
 				{
-					stayH()
+					
 				}
 			}
 		})
@@ -85,7 +82,11 @@ var authorization = (function(){
 
 				var mnemonicKey = trim(el.login.val());
 
-				localStorage['stay'] = boolToNumber(stay.value).toString()
+				try {
+					localStorage['stay'] = boolToNumber(stay.value).toString()
+				}
+				catch (e) { }
+				
 
 				self.user.stay = stay.value
 
@@ -99,8 +100,6 @@ var authorization = (function(){
 
 						sitemessage(self.app.localization.e('e13028'))
 
-						
-
 						return;
 					}
 				
@@ -110,8 +109,7 @@ var authorization = (function(){
 
 					_p.href = essenseData.successHref;
 
-					if(!_p.href && primary)
-
+					if(!_p.href && primary){
 						_p.href = function(){
 
 							if(self.app.user.validate()){
@@ -137,37 +135,33 @@ var authorization = (function(){
 							}
 
 						}
+					}
 
-						_p.nav = essenseData.nav || {};		
+					if(_p.href == '_this') delete _p.href
+
+					_p.nav = essenseData.nav || {};		
+
+					if(typeof _p.nav.reload == 'undefined') _p.nav.reload = false
+
+					_p.clbk = function(){
+
+						self.closeContainer()
+
+						if (essenseData.signInClbk)
+							essenseData.signInClbk();
+					}
+
+					setTimeout(function(){
+						self.app.reload(_p);
+					}, 30)
 
 
-						if(typeof _p.nav.reload == 'undefined')
-							_p.nav.reload = false
-
-						_p.clbk = function(){
-							topPreloader(100);
-
-							var close = deep(initialParameters, 'container.close')
-
-							if (close)
-								close();
-
-							
-
-							if (essenseData.signInClbk)
-								essenseData.signInClbk();
-						}
-
-
-					if(deep(essenseData, 'successHref') == '_this'){
+					/*if(deep(essenseData, 'successHref') == '_this'){
 
 						self.app.reloadModules(function(){
 
 							if(self.app.user.validate()){
-								var close = deep(initialParameters, 'container.close')
-
-								if (close)
-									close();
+								self.closeContainer()
 
 								if (essenseData.signInClbk)
 									essenseData.signInClbk();
@@ -187,7 +181,7 @@ var authorization = (function(){
 							self.app.reload(_p);
 						}, 30)
 						
-					}
+					}*/
 
 					
 
@@ -236,9 +230,9 @@ var authorization = (function(){
 						
 
 						grayscaleImage(file.base64, function(image){
-							qrscanner.q.debug = true
+							bfqrscanner.q.debug = true
 
-							qrscanner.q.callback = function(data){
+							bfqrscanner.q.callback = function(data){
 
 
 								if(data == 'error decoding QR Code'){
@@ -252,7 +246,7 @@ var authorization = (function(){
 								}
 							}
 
-							qrscanner.q.decode(image)
+							bfqrscanner.q.decode(image)
 						})
 
 						
@@ -431,9 +425,11 @@ var authorization = (function(){
 
 					stay.value = numberToBool(self.app.user.stay)
 
-					var mnemonic = localStorage['mnemonic'] || '';
+					var mnemonic = ''
+					
+					//localStorage['mnemonic'] || '';
 
-					/*if(!stay.value) */mnemonic = ''
+					/*if(!stay.value) *///mnemonic = ''
 
 					var data = {
 						stay : stay,
@@ -478,7 +474,7 @@ var authorization = (function(){
 				initEvents(p);
 
 				make();
-		
+
 				p.clbk(null, p);
 
 			},
@@ -515,7 +511,7 @@ var authorization = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

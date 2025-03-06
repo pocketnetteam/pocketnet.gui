@@ -10,6 +10,8 @@ var tagcloud = (function(){
 
 		var actions = {
 			showhideclear : function(){
+				if(!el.cleartags) return
+				
 				var hasc = self.app.platform.sdk.categories.gettags(null, 'onlytags').length
 
 				if (hasc){
@@ -298,7 +300,7 @@ var tagcloud = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

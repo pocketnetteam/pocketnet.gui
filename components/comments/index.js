@@ -14,10 +14,10 @@ var comments = (function(){
 		var primary = false;
 
 		var el = {}, txid, ed, currents = {}, caption, _in, top, eid, preview = false, listpreview = false, showedall = false, receiver;
+		var share = null
+		var authblock = false, setFocus = false;
 
-		var authblock = false;
-
-		var paginationcount = 10;
+		var paginationcount = 25;
 
 		var errors = {
 			content : self.app.localization.e('e13029'),
@@ -35,7 +35,6 @@ var comments = (function(){
 
 		var sortby = self.sdk.usersettings.meta.commentsOrder.value || 'interesting';
 
-		var isotopes = {}
 		
 
 		var clbks = {
@@ -43,17 +42,18 @@ var comments = (function(){
 
 				if(!comment) return
 
-				if (comment.txid != txid) return
+				if (comment.postid != txid) return
 
 				var _el = el.c.find('#' + comment.id);
 
 				var d_el = _el.find(">div.commentPaddingWrapper>div.commentWrapper>div.commentBody>div.cbodyWrapper");
 
-				if (address == self.app.platform.sdk.address.pnet().address){
+				if (address == self.app.user.address.value){
 
 					if(!value){
 
 						if(err != 40){
+
 							_el.removeClass('rated')
 							d_el.find('.scoreUp').removeClass('ratedScore')
 							d_el.find('.scoreDown').removeClass('ratedScore')
@@ -76,133 +76,132 @@ var comments = (function(){
 				}
 
 				var cs = {
-					scoreUp : (comment.scoreUp || 0) + ((temp && value > 0) ? 1 : 0),
-					scoreDown : (comment.scoreDown || 0) + ((temp && value < 0) ? 1 : 0)
+					scoreUp : (comment.scoreUp || 0),
+					scoreDown : (comment.scoreDown || 0)
 				}
 
-				d_el.find('.scoreUp .commentScore').html(comment.scoreUp ? compressedNumber(cs.scoreUp, 1) : '')
+				d_el.find('.scoreUp .commentScore').html(cs.scoreUp ? compressedNumber(cs.scoreUp, 1) : '')
 				d_el.find('.scoreDown .commentScore').html(cs.scoreDown ? compressedNumber(cs.scoreDown, 1) : '')
 			},
 
-			post : function(err, alias, _txid, pid, aid, editid, id, manual){
+			post : function(comment, optype){
+
+				if(txid){
+					share = self.psdk.share.get(txid)
+				}
 				
-				if(_txid != txid) return
 
-				el.c.find('.sending').removeClass('sending')
+				actions.showhideLabel()
 
-				if (err){
+				var p = {
+					//newcomments : 'newcomments'
+				}
+
+
+				if(optype == 'comment' || optype == 'commentEdit' || optype == 'commentDelete'){
+
+					var _el = el.c.find('#' + comment.id + ',#' + comment.actionId);
+
+					if(!comment.parentid){
+						p.class = "firstcomment"
+					}
+
+					if((!showedall && !comment.parentid) || optype == 'commentEdit' || optype == 'commentDelete' || _el.length){
+
+						p.comments = [comment]
+
+						if(_el.length){
+							p.replace = true
+							p.el = _el
+
+							if (comment.parentid){
+								actions.repliesCount(comment.parentid)
+							}
+						}
+						else{
+							if (optype == 'commentEdit' || optype == 'commentDelete'){
+								return
+							}
+						}
+
+						/*if ((optype == 'commentEdit' || optype == 'commentDelete') && comment.rejected){
+							return
+						}*/
+
+						if(setFocus || actions.findCurrentText()) return
+
+						renders.list(p)
+
+					}
+					else{
+
+						if (comment.parentid){
+
+							actions.repliesCount(comment.parentid)
+
+							var parent = el.c.find("#" + comment.parentid)
+
+							p.el = parent.find('.answers')
+
+						}
+						
+							
+						load.level(comment.parentid, function(comments){
+
+							p.comments = comments
+							p.add = comment.id
+
+							if(setFocus || actions.findCurrentText()) return
+	
+							renders.list(p, null, comment.parentid)
+	
+						})
+					}
+
 					return
 				}
 
-				state.save()
+				
+			},
 
-				el.c.find('.emojionearea-editor').blur();
+			commentDelete : function(commentDelete){
 
-				el.c.find('.att').html('');
-
-				var p = {}
-
-				if (editid || !showedall){
-					p.comments = [alias]
-				}
-				else{
-					p.comments = self.app.platform.sdk.comments.storage[_txid][pid || '0']
-					p.add = alias.id
-				}
-
-
-				if (listpreview){
-					ed.lastComment = self.app.platform.sdk.comments.toLastComment(alias)
-				}
-
-				delete currents[id]
-
-
-				if (id == '0'){
-					p.class = "firstcomment"
-				}
-
-				if (id == '0')
-				{
-
-
-					if (areas[id])
-
-						areas[id].setText('');
-
-					el.c.find('.post .newcommentimages').html('');
-					el.c.find('.post .newcommentdonate').html('');
-				}
-
-				else
-				{
-
-					var _el = el.c.find('#' + id);
-
-					if (editid){
-
-						_el.find('.edit').html('');
-
-						alias.timeUpd = alias.timeUpd.addMinutes(1)
-
-						if(!alias.parentid) p.class = "firstcomment"
-
-						delete areas[id]
-
-						delete rendered[id]
-
-						_el.removeClass('editing')
-
-						p.replace = true
-						p.el = _el
-
-					}
-					else
-					{
-						_el.find('.answer').html('');
-
-						_el.find('.repliescount').html(Number(_el.find('.repliescount').html() || "0") + 1)
-
-						_el.find('.replies').removeClass('hidden')
-
-						p.el = el.c.find("#" + id + ' .answers')
-
-						delete areas[id]
-					}								
-					
-				}
-
-				p.newcomments = 'newcomments'
-
-
-
-				/////// ADD COMMENT
-
-				//todo
-
-				renders.list(p, function(){
-
-					if (manual){
-						actions.tocomment(alias.id)
-					}
-					
-				})
-
-				if (!editid && ed.send){
-					ed.send(alias, self.app.platform.sdk.comments.toLastComment(alias))
-				}
-
-				if(!editid){
-
-					if(ed.comments) ed.comments++
-
-					actions.showhideLabel()
-
-				}
 			}
 		}
 
 		var actions = {
+
+			findCurrentText : function(){
+				return _.find(currents, (c) => {
+					return c.message.v
+				})
+			},
+
+			removeSending : function(wrapper){
+				setTimeout(() => {
+					wrapper.removeClass('sending')
+				}, 400)
+			},
+
+			repliesCount: function(parentid){
+				var parent = el.c.find("#" + parentid)
+				var panel = parent.find('.commentpanel[comment="'+parentid+'"]')
+
+				var parentcomment = self.psdk.comment.get(parentid) || {}
+
+				//p.el = parent.find('.answers')
+
+				panel.find('.repliescount').html(parentcomment.children || 0)
+
+				if (parentcomment.children){
+					panel.find('.replies').removeClass('hidden')
+				}
+				else{
+					panel.find('.replies').addClass('hidden')
+
+					//actions.replies(id, false);
+				}
+			},
 
 			removeDonate : function(id, p){
 
@@ -225,13 +224,15 @@ var comments = (function(){
 			
 				var storage = currents[id].export(true)
 			
-				var sender = self.sdk.address.pnet().address;
+				var sender = self.app.user.address.value;
 			
 				if (sender === receiver){
 			
 					sitemessage(self.app.localization.e('donateself'));
 			
 				} else {
+
+					var prevdonatevalue = deep(storage, 'donate.0.amount') || 0
 
 					self.nav.api.load({
 						open : true,
@@ -242,21 +243,26 @@ var comments = (function(){
 							type : 'donate',
 							sender: sender, 
 							receiver: receiver,
-							value : storage.donate,
+							value : prevdonatevalue,
 							storage,
+							donatemode : true,
 							clbk  : function(value){
 
 								value = Number(value);
-		
-								var result = Boolean(value);
+	
+								if(!value){
+									currents[id].donate.remove();
+									renders.donate(id, p)
+									return
+								}
 
-								if (value < 0.5){
-									sitemessage(self.app.localization.e('minPkoin', 0.5))
+								if (value < 0.1){
+									sitemessage(self.app.localization.e('minPkoin', 0.1))
 									return;
 								}
-					
 	
-								if(!_.isArray(value)) value = [value]
+								if(!_.isArray(value)) 
+									value = [value]
 	
 								currents[id].donate.remove();
 	
@@ -265,20 +271,18 @@ var comments = (function(){
 									amount: Number(value)
 								})
 	
-								if(!result && errors[type]){
+								/*if(!result && errors[type]){
 	
 									sitemessage(errors[type])
 	
-								}
-	
-	
-								if (result){
-	
+								}*/
+
+								if(!window.cordova){
 									new Audio('sounds/donate.mp3').play();
-	
-									renders.donate(id, p)
-	
-								}	
+								}
+
+								renders.donate(id, p)
+
 								
 							}
 						},
@@ -288,75 +292,6 @@ var comments = (function(){
 						}
 					})
 			
-					/*self.nav.api.load({
-						open : true,
-						id : 'embeding',
-						inWnd : true,
-			
-						essenseData : {
-							type : 'donate',
-							storage : storage,
-							sender: sender, 
-							receiver: receiver,
-							balance: p.balance,
-							total: p.total,
-							on : {
-			
-								added : function(value){
-
-									value = Number(value);
-			
-									var result = Boolean(value);
-
-									if (value < 0.5){
-										sitemessage(self.app.localization.e('minPkoin', 0.5))
-										return;
-									}
-						
-									if (value < p.balance){
-			
-										if(!_.isArray(value)) value = [value]
-			
-										currents[id].donate.remove();
-			
-										currents[id].donate.set({
-											address: receiver,
-											amount: Number(value)
-										})
-			
-										if(!result && errors[type]){
-			
-											sitemessage(errors[type])
-			
-										}
-			
-			
-										if (result){
-			
-											new Audio('sounds/donate.mp3').play();
-			
-											renders.donate(id, p)
-			
-										}	
-			
-								
-			
-									} else {
-			
-										sitemessage(self.app.localization.e('incoins'))
-									}
-			
-				
-			
-								}
-							}
-						},
-			
-						clbk : function(s, p){
-							external = p
-						}
-					})*/
-			
 				}
 			
 			}, 
@@ -364,16 +299,10 @@ var comments = (function(){
 			
 			pkoin : function(id, format){
 
-				var share = self.app.platform.sdk.node.shares.storage.trx[id];
-
-				if (share){
 					
 					actions.stateAction(function(){
 
-						var userinfo = deep(app, 'platform.sdk.usersl.storage.' + share.address) || {
-							address : share.address,
-							addresses : [],
-						}
+						var userinfo = self.psdk.userInfo.getShortForm(share.address)
 
 						self.nav.api.load({
 							open : true,
@@ -391,7 +320,6 @@ var comments = (function(){
 	
 					}, share.txid)	
 
-				}
 
 			},
 
@@ -410,15 +338,6 @@ var comments = (function(){
 						}
 					})
 				}
-				/*else{
-					self.nav.api.load({
-						open : true,
-						href : 'author?address=' + address,
-						history : true
-					})
-				}*/
-
-				
 			},
 			lightarea : function(id, c){
 
@@ -431,6 +350,34 @@ var comments = (function(){
 				else
 					c.removeClass('hastext')
 			},
+
+			checkBanned : function(p){
+
+				if(!self.app.user.address.value){
+					return Promise.resolve(null)
+				}
+
+				//var cmtsTo = _.filter([self.psdk.comment.get(p.pid), self.psdk.comment.get(p.aid)], (c) => c)
+				var authors = share ? [share.address] : []
+
+				/*_.each(cmtsTo, (c) => {
+					authors.push(c.address)
+				})*/
+
+
+				return self.psdk.userInfo.load(authors).then(() => {
+
+					var block = _.find(authors, (address) => {
+
+						var user = self.psdk.userInfo.get(address)
+
+						return user && user.relation(self.app.user.address.value, 'blocking')
+					})
+
+					if(block) return Promise.resolve(self.psdk.userInfo.get(block))
+				})
+			},
+
 			complain : function(comment){
 				self.nav.api.load({
 					open : true,
@@ -452,10 +399,12 @@ var comments = (function(){
 			},
 			myscores : function(){
 				_.each(rendered, function(c, id){
-					var comment = deep(self.app.platform.sdk, 'comments.storage.all.' + id)
+					var comment = self.psdk.comment.get(id)
+					
+					//deep(self.app.platform.sdk, 'comments.storage.all.' + id)
 
 					if (comment){
-						clbks.upvote(null, comment, Number(comment.myScore), self.app.platform.sdk.address.pnet().address)
+						clbks.upvote(null, comment, Number(comment.myScore), self.app.user.address.value)
 					}
 				})	
 			},
@@ -557,13 +506,7 @@ var comments = (function(){
 					
 				})
 
-				var f = m; /*_.filter(m, function(f){
-					if(f.original.indexOf('data:image') > -1){
-						return true;
-					}
-				})
-*/
-				focusfixed = true;
+				var f = m;
 
 				self.nav.api.load({
 					open : true,
@@ -618,9 +561,9 @@ var comments = (function(){
 					}
 				})
 
-				var elimages = p.el.find('.imagesEmbWr')
+				//var elimages = p.el.find('.imagesEmbWr')
 
-				elimages.isotope()
+				//elimages.isotope()
 
 				actions.lightarea(id, p.el.find('.postbody'))
 
@@ -666,9 +609,33 @@ var comments = (function(){
 
 					app.platform.ui.uploadImage({
 						multiple : true,
-						
-						onSuccess : function(imgs){
-							_.each(imgs, added)
+						action : (image, clbk) => {
+
+							var ext = fkit.extensionBase64(image.base64)
+
+
+							if (ext == 'gif'){
+								added(image.base64)
+
+								clbk()
+							}
+							else{
+								resizePromise(image.base64, 1080, 1080).then((img) => {
+									added(img)
+
+									clbk()
+								})
+							}
+
+						},
+						onSuccess : function(){
+
+						},
+						onError : function(e){
+							console.log(e)
+						},
+						onFail : function(){
+							console.log("Fail")
 						}
 					})
 
@@ -704,34 +671,46 @@ var comments = (function(){
 			removeForm : function(id){
 
 				delete areas[id]
+				delete currents[id]
+
 
 				el.c.find("#" + id + ' .answer').html('')
 				el.c.find("#" + id + ' .edit').html('')
 			},
-			post : function(id, pid, aid, editid){
+			post : function(id, pid, aid, editid, wrapper){
 
 				id || (id = '0')
 
 				var current = currents[id];
 
+
 				if (current){
 					var e = current.validation();
 
-					if (e){
 
-						el.c.find('.sending').removeClass('sending')
+					if (e){
+						actions.removeSending(wrapper)
 						sitemessage(errors[e])
 
 					}
 					else
 					{
-						var post = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid)
+						var post = self.psdk.share.get(txid)
 
-						var address = (self.app.platform.sdk.address.pnet() || {}).address
+						var address = self.app.user.address.value
+
+						if (self.app.platform.sdk.user.reputationBlockedMe()){
+
+							sitemessage(self.app.localization.e('lockedaccount'))
+		
+							actions.removeSending(wrapper)
+		
+							return
+						}
 
 						if (post.address && address && post.address != address && self.app.platform.sdk.user.scamcriteria()){
 
-							el.c.find('.sending').removeClass('sending')
+							actions.removeSending(wrapper)
 	
 							new dialog({
 								html : self.app.localization.e('ratings123'),
@@ -750,57 +729,86 @@ var comments = (function(){
 
 						if(current.loading) return;
 						
+						//current.loading = true;
 
-						current.loading = true;
+						current.answerid = aid;
+                		current.parentid = pid;
 
-						current.uploadImages(self.app, function(){
+						if (editid) {
+							current.id = editid
+						}
 
-							actions.send(current, function(error, alias){
+						var fxc = currents[id]
 
-								current.loading = false;
+						delete currents[id]
+
+						self.app.platform.sdk.comments.send(current, function(error, alias){
+
+							if(!editid && ed.send){
+								ed.send(alias, alias)
+							}
+
+							if(!error){
+								successCheck()
+							}
+							else{
+
+								currents[id] = fxc
+
+								if(error == 'actions_noinputs_wait') error = 'actions_noinputs_wait_comment'
+
+								self.app.platform.errorHandler(error, true)
+							}
+
+							state.save()
+
+							window.rifticker.add(() => {
+								wrapper.find('.emojionearea-editor').blur();
+								actions.removeSending(wrapper)
 
 								if(!error){
-									successCheck()
+
+									delete currents[id]
+	
+									wrapper.find('.newcommentimages').html('');
+									wrapper.find('.newcommentdonate').html('');
+
+									renders.donate(id, {
+										el : wrapper
+									})
+
+									window.rifticker.add(() => {
+
+										if (areas[id]) {
+											areas[id].setText('');
+
+											if (areas[id].editor.closest('.answer').length){
+
+												
+												areas[id].editor.closest('.answer').html('')
+												areas[id].destroy()
+												
+												delete areas[id]
+												
+											}
+										}
+									})
 								}
-							
-							}, pid, aid, editid, id)
-						})
+							})
+
+						}, pid, aid, editid, id)
 							
 					}
 				}
 				else{
-					el.c.find('.sending').removeClass('sending')
+					actions.removeSending(wrapper)
+
 					sitemessage(errors['content'])
 				}
 
 				
 			},
-			send : function(comment, clbk, pid, aid, editid, id){	
-
-				self.app.platform.sdk.comments.send(txid, comment, pid, aid, function(err, alias){
-					if (el.c)
-						el.c.find('.sending').removeClass('sending')
-
-					if(!err){
-						if (clbk)
-							clbk(null, alias)
-					}
-
-					else
-					{
-						self.app.platform.errorHandler(err, true)
-
-						if (clbk){
-							clbk(err, null)
-
-							if (err === 'tosmallamount'){
-								actions.removeDonate(id, p)
-							}
-						}
-					}
-
-				}, editid, id)
-			},
+			
 			links : function(id, text){
 
 				id || (id = '0')
@@ -839,8 +847,9 @@ var comments = (function(){
 
 				id || (id = '0')
 
+
 				if (currents[id])
-					currents[id].message.set(v)
+					currents[id].message.set(findAndReplaceLinkClearReverse(v.replace('⠀', ' ')))
 
 				state.save()
 
@@ -861,15 +870,16 @@ var comments = (function(){
 				if(reply){
 					actions.replies(reply.parentid || reply.answerid, true, function(){
 
-						if(!reply.noaction)
-
+						if(!reply.noaction){
 							actions.reply(reply.parentid || reply.answerid, reply.answerid)
+						}
 
 						else
 						{
-							actions.tocomment(reply.parentid || reply.answerid)
 
-							var cel = el.c.find("#" + (reply.parentid || reply.answerid))
+							actions.tocomment(reply.answerid || reply.parentid)
+
+							var cel = el.c.find("#" + (reply.answerid || reply.parentid))
 
 							cel.addClass('newcommentsn')
 
@@ -898,13 +908,16 @@ var comments = (function(){
 
 						if (aid != id) pid = id
 
-						var address = self.app.platform.sdk.comments.address(txid, aid, pid) || deep(ed, 'lastComment.address')
+						var comment = self.psdk.comment.get(aid || id)
 
-						var name = (deep(self.app, 'platform.sdk.usersl.storage.'+address+'.name') || address)
+						var address = comment.address
 
-						var str = '@' + name + '  '
+						var name = self.psdk.userInfo.getShortForm(address).name
 
-						if(address == self.app.platform.sdk.address.pnet().address || !name) str = ''
+
+						var str = '@' + name + ',⠀'
+
+						if(address == self.app.user.address.value || !name) str = ''
 
 						area.setText(str)
 
@@ -930,17 +943,18 @@ var comments = (function(){
 				})
 			},
 			hideallReplies : function(){
-				_.each(deep(self, 'app.platform.sdk.comments.storage.'+txid + '.0'), function(r, id){
+				/*_.each(deep(self, 'app.platform.sdk.comments.storage.'+txid + '.0'), function(r, id){
 
 					actions.replies(id, false)
 
 				})
 				
 				if (ed.lastComment)
-					actions.replies(ed.lastComment.id, false)
+					actions.replies(ed.lastComment.id, false)*/
 				
 			},
 			replies : function(id, show, clbk, _p){
+
 
 				if(!_p) _p = {}
 
@@ -968,50 +982,76 @@ var comments = (function(){
 					else
 					{
 						show = true;
-
-						c.find('.repliesloaderWrapper').removeClass('hidden')
+						
 					}
 				}
 
 				if (show){
-					load.level(id, function(comments){
 
-						
-
-						p.comments = self.app.platform.sdk.comments.storage[txid][id]
-						
+					window.rifticker.add(() => {
 						c.addClass('showedreplies')
+						c.find('.repliesloaderWrapper').removeClass('hidden')
+					})
 
-						renders.list(p, function(){
+					setTimeout(() => {
 
-							c.find('.repliesloaderWrapper').addClass('hidden')
+						load.level(id, function(comments){
 
-							if(!caption)
-								renders.caption()
+							p.comments = comments
 
-							if (clbk)
-								clbk()
+							if(!comments.length){
+								c.removeClass('showedreplies')
+								delete currentstate.levels[id]
+
+								if (clbk)
+									clbk()
+							}
+							else{
+
+								renders.list(p, function(){
+
+									window.rifticker.add(() => {
+										c.find('.repliesloaderWrapper').addClass('hidden')
+									})
+	
+									if(!caption)
+										renders.caption()
+	
+									if (clbk)
+										clbk()
+									
+	
+								}, id)
+
+							}
+
 							
 
-						}, id)
+						
 
-					}, currentstate.levels[id] ? true : false)
+						}, currentstate.levels[id] ? _.filter(_.map(currentstate.levels[id].comments, (commentid) => {
+							return self.psdk.comment.get(commentid)
+						}), (c) => {return c}) : null)
+
+					}, 300)
+
 				}
 				else
 				{
 
 					delete currentstate.levels[id]
 
-					/*if (self.app.platform.sdk.comments.storage[txid])
-						_.each(self.app.platform.sdk.comments.storage[txid][id], function(c){
-							delete rendered[c.id]
-						})*/
-
-					c.removeClass('showedreplies')
-
 					actions.removeForm(id)
 
-					p.el.html('')
+					window.rifticker.add(() => {
+						c.removeClass('showedreplies')
+						p.el.html('')
+					})
+
+					if (clbk)
+						clbk()
+
+					
 				}
 
 			
@@ -1050,6 +1090,7 @@ var comments = (function(){
 			tocomment : function(id){
 				
 				if(ed.openapi) return
+				if(ed.jury) return
 
 				_scrollTo(el.c.find("#" + id), _in)
 			},
@@ -1064,7 +1105,7 @@ var comments = (function(){
 			delete : function(comment, clbk){
 				var ct = comment.delete()
 
-				self.app.platform.sdk.comments.delete(txid, ct, function(err, alias){
+				self.app.platform.sdk.comments.delete(ct, function(err, alias){
 
 					if(!err){
 						if (clbk)
@@ -1089,15 +1130,15 @@ var comments = (function(){
 
 				if(pid) _el = el.c.find("#" + pid + ' .answers')
 
-					else{
+				else{
 
-						p.class = "firstcomment"
+					p.class = "firstcomment"
 
-						_el = el.c.find('.list')
-					}
+					_el = el.c.find('.list')
+				}
 
 				load.level(pid, function(comments){
-					_el.html('')
+					//_el.html('')
 
 					p.comments = comments;
 
@@ -1115,33 +1156,48 @@ var comments = (function(){
 					
 				}
 			},
+			hideall : function(){
+
+				listpreview = true;
+				showedall = false;
+				ed.showall = false;
+
+				window.rifticker.add(() => {
+
+					el.c.removeClass('showedall')	
+					el.c.addClass('listpreview')
+					actions.showhideLabel()
+
+				})
+
+				makePreview(() => {
+					
+				})
+			},
 			showall : function(){
 
 				showedall = true;
-
-				el.c.addClass('showedall')	
-							
-				actions.showhideLabel()	
 				
 				ed.showall = true
 
 				if (listpreview){
 
-					el.c.removeClass('listpreview')
-
-					el.c.find('.loaderWrapper').removeClass('hidden')
-
+					window.rifticker.add(() => {
+						el.preloader.removeClass('hidden')
+					})
+				
 					load.level(null, function(comments, e){
 
 						if(e){
 							self.app.platform.errorHandler(e, true)
 
-							el.c.addClass('listpreview')
+							window.rifticker.add(() => {
+								el.preloader.addClass('hidden')
 
-							el.c.find('.loaderWrapper').addClass('hidden')
+							})
 
 							showedall = false;
-							el.c.removeClass('showedall')				
+							
 							actions.showhideLabel()
 
 							return
@@ -1149,20 +1205,25 @@ var comments = (function(){
 
 						listpreview = false;
 
-						renders.caption()
-
 						rendered = {}
 
 						var p = {}
 
-						p.comments = self.app.platform.sdk.comments.storage[txid]['0']
+						p.comments = comments
 						p.class = "firstcomment"
 						p.inner = html
 
 						renders.list(p, function(){
-							el.c.find('.loaderWrapper').addClass('hidden')
+							window.rifticker.add(() => {
+								actions.showhideLabel()	
+								el.c.addClass('showedall')	
+								el.c.removeClass('listpreview')
+								el.preloader.addClass('hidden')
+							})
 						})
+
 					})
+
 				}
 
 				else
@@ -1171,14 +1232,19 @@ var comments = (function(){
 				}
 			},
 
-
 			showhideLabel : function(){
 
 				if(!el.showall) return
 
-				var counts = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid + '.comments') || 0;
+				if(!share) return
 
-				var lastchildren = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid + '.lastComment.children') || 0;
+				var counts = share.comments || 0
+
+				var lastComment = self.psdk.comment.get(share.lastComment) || {}
+				
+				var lastchildren = lastComment.children || 0
+				
+				//deep(share, 'lastComment.children') || 0;
 
 				var needtoshow = false
 
@@ -1188,17 +1254,24 @@ var comments = (function(){
 					needtoshow = true
 				}
 
-				if (showedall){
-					el.showall.addClass('hidden')
-				}
-				else{
-					if (needtoshow ){
-						el.showall.removeClass('hidden')
+				window.rifticker.add(() => {
+					if (showedall){
+						if(!el.showall.hasClass('hidden'))
+							el.showall.addClass('hidden')
 					}
 					else{
-						el.showall.addClass('hidden')
+						if (needtoshow){
+							if (el.showall.hasClass('hidden'))
+								el.showall.removeClass('hidden')
+						}
+						else{
+							if(!el.showall.hasClass('hidden'))
+								el.showall.addClass('hidden')
+						}
 					}
-				}
+				})
+
+				
 
 				
 			},
@@ -1240,11 +1313,20 @@ var comments = (function(){
 
 				actions.stateAction(function(){
 
-					var comment = deep(self.app.platform.sdk, 'comments.storage.all.' + id)
+					var comment = self.psdk.comment.get(id) 
+					
 
 					if(!comment) return
+
+					if(comment.relay || comment.temp) return
 					
-					if (comment.address == self.app.platform.sdk.address.pnet().address){
+					if (comment.address == self.app.user.address.value){
+						return
+					}
+
+					if (self.app.platform.sdk.user.reputationBlockedMe()){
+						sitemessage(self.app.localization.e('lockedaccount'))
+	
 						return
 					}
 
@@ -1268,7 +1350,6 @@ var comments = (function(){
 
 					self.app.platform.sdk.comments.upvote(upvoteComment, function(err, alias){
 
-						
 						if (err){
 							self.app.platform.errorHandler(err, true)	
 						}
@@ -1282,13 +1363,19 @@ var comments = (function(){
 			scrollToComment : function(el) {
 
 				if (ed.openapi) return
+				if (ed.jury) return
 
-
-				if (el && el.length > 0 && el[0].scrollIntoView && isMobile()) {
+				if (el && el.length > 0 && isMobile()) {
 
 					//if(el.closest('.fullScreenVideo').length > 0) return
 
+					self.app.blockscroll = true
+
 					_scrollTo(el, _in, 0)
+
+					setTimeout(() => {
+						self.app.blockscroll = false
+					}, 200)
 				}
 			}
 		}
@@ -1335,7 +1422,7 @@ var comments = (function(){
 			if(my) p = p * 20
 
 
-			var me = deep(self.app, 'platform.sdk.users.storage.' + (self.user.address.value || ''))
+			var me = self.psdk.userInfo.getmy()
 
 			if (!my && me){
 
@@ -1344,7 +1431,7 @@ var comments = (function(){
 
 			}
 
-			var post = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid)
+			var post = self.psdk.share.get(txid)
 
 			if (post && post.address == comment.address) p = p * 50
 
@@ -1382,16 +1469,26 @@ var comments = (function(){
 	
 				}
 
+				try{
+
+				
+		
 				var oldest = (_.min(comments, function(c){return c.time}).time).getTime() / 1000
 				var newest = (_.max(comments, function(c){return c.time}).time).getTime() / 1000
+
+				}catch(e){
+					console.error(e)
+				}
 
 				var cbyauthors = group(comments, function(c){ return c.address })
 	
 				comments = _.sortBy(comments, function(c){
 
-					if (self.app.platform.sdk.comments.blocked[c.address]) {
+					if(c.temp || c.relay) return 10000000000 * 100
+
+					/*if (self.app.platform.sdk.comments.blocked[c.address]) {
 						return 0
-					}
+					}*/
 
 
 					var ms = (c.time || new Date()) / 1000
@@ -1402,6 +1499,47 @@ var comments = (function(){
 
 					return - (commentPoint(c) + (timec * 3000) ) / count
 				}) 
+
+				/*var answerOrderedComments = []
+
+				for(var i = 0; i < comments.length; i++){
+					var c = comments[i]
+
+					if (c.answerid){
+
+						var i = _.findIndex(comments, (cc) => {
+							return c.answerid == cc.id
+						})
+
+						if (i == -1){
+							answerOrderedComments.push(c)
+						}
+						else{
+							var j = _.findIndex(answerOrderedComments, (cc) => {
+								return c.id == cc.id
+							})
+
+							if (j > -1){
+								answerOrderedComments.splice(j + 1, 0, c)
+							}
+							else{
+								var k = _.findIndex(answerOrderedComments, (cc) => {
+									return c.answerid == cc.id
+								})
+
+								if (k > -1){
+									answerOrderedComments.splice(k, 0, c)
+								}
+								else{
+									answerOrderedComments.push(c)
+								}
+							}
+						}
+					}
+					else{
+						answerOrderedComments.push(c)
+					}
+				}*/
 
 				return comments
 			}
@@ -1456,6 +1594,9 @@ var comments = (function(){
 				var parent = _el.closest('.comment');
 
 				parent.removeClass('hiddenComment')
+				parent.removeClass('hiddenBlockedUserComment')
+				
+				
 			},
 
 			showBlockedUserComment: function(){
@@ -1476,11 +1617,13 @@ var comments = (function(){
 				var id = parent.attr('id')
 				var pid = parent.attr('pid')
 
-				var comment = self.app.platform.sdk.comments.find(txid, id, pid)
+				var comment = self.psdk.comment.get(id) //self.app.platform.sdk.comments.find(txid, id, pid)
 
-				if (!comment && listpreview && ed.lastComment){
-					comment = self.app.platform.sdk.comments.ini([ed.lastComment])[0]
-				}
+				/*if (!comment && listpreview && ed.lastComment){
+					comment = ed.lastComment
+					
+					//self.app.platform.sdk.comments.ini([ed.lastComment])[0]
+				}*/
 
 
 				actions.openGallery(comment, _el.attr('i'))
@@ -1493,13 +1636,22 @@ var comments = (function(){
 				var _id = cf.attr('id')
 				var _aid = c.attr('id')
 
-				
+				var comment = self.psdk.comment.get(id)
 
-				actions.replies(id, true, function() {
-					// Scroll comment section to top of the screen
-					actions.scrollToComment(el.list.find('.answer.active'));
+				if (comment && !comment.children){
+
+					
 					actions.reply(_id, _aid)
-				});
+				}
+				else{
+					actions.replies(id, true, function() {
+						// Scroll comment section to top of the screen
+						actions.scrollToComment(el.list.find('.answer.active'));
+						actions.reply(_id, _aid)
+					});
+				}
+
+				
 
 				
 			},
@@ -1552,23 +1704,25 @@ var comments = (function(){
 				var parent = _el.closest('.comment');
 				var localParent = _el.closest('.commentBody')
 
+				var post = self.psdk.share.get(txid);
+
 				var id = parent.attr('id')
 				var pid = parent.attr('pid')
 
-				var comment = self.app.platform.sdk.comments.find(txid, id, pid)
+				var comment = self.psdk.comment.get(id)/// self.app.platform.sdk.comments.find(txid, id, pid)
 
 				var d = {
 					address : self.app.user.address.value,
-					caddress : self.app.platform.sdk.comments.address(txid, id, pid),
-					txid : id
+					caddress : comment.address,
+					txid : id,
+					paddress: post.address,
+					comment
 				};
 
-				if (listpreview && ed.lastComment && !pid){
-
-					comment = self.app.platform.sdk.comments.ini([ed.lastComment])[0]
-
+				/*if (listpreview && ed.lastComment && !pid){
+					comment = ed.lastComment
 					d.caddress = comment.address
-				}
+				}*/
 
 				self.fastTemplate('metmenu', function(rendered, template){
 
@@ -1595,22 +1749,36 @@ var comments = (function(){
 
 						__el.find('.block').on('click', function(){
 
-							self.app.platform.api.actions.blocking(d.caddress, function (tx, error) {
-                                if (!tx) {
-                                    self.app.platform.errorHandler(error, true)
-                                }
-								else
-								{
-									parent.addClass('hiddenBlockedUserComment');
-									var hiddenCommentLabel = $('<div></div>').html(self.app.localization.e('blockedbymeHiddenCommentLabel')).addClass('hiddenCommentLabel')
-									var ghostButton = $('<div></div>').append($('<button></button>').html(self.app.localization.e('showhiddenComment')).addClass('ghost showBlockedUserComment'))
-									var commentContentTable = localParent.find('.cbodyWrapper > .commentcontenttable')
-									commentContentTable.append(hiddenCommentLabel)
-									commentContentTable.append(ghostButton)
-								}
 
+							new dialog({
+                                class : 'zindex',
+                                html : self.app.localization.e('blockUserQ'),
+                                btn1text : self.app.localization.e('dyes'),
+                                btn2text : self.app.localization.e('dno'),
+                                success : function(){
+
+                                    self.app.platform.api.actions.blocking(d.caddress, function (tx, error) {
+										if (!tx) {
+											self.app.platform.errorHandler(error, true)
+										}
+										else
+										{
+											parent.addClass('hiddenBlockedUserComment');
+											var hiddenCommentLabel = $('<div></div>').html(self.app.localization.e('blockedbymeHiddenCommentLabel')).addClass('hiddenCommentLabel')
+											var ghostButton = $('<div class="showBlockedUserCommentWrapper"></div>').append($('<button></button>').html(self.app.localization.e('showhiddenComment')).addClass('ghost showBlockedUserComment'))
+											var commentContentTable = localParent.find('.cbodyWrapper > .commentcontenttable')
+											commentContentTable.append(hiddenCommentLabel)
+											commentContentTable.append(ghostButton)
+										}
+		
+									})
+
+                                }
                             })
-								close()
+
+							
+
+							close()
 
 							
 						})
@@ -1629,6 +1797,7 @@ var comments = (function(){
 							close()
 						})
 
+
 						__el.find('.remove').on('click', function(){
 
 							new dialog({
@@ -1639,22 +1808,22 @@ var comments = (function(){
 
 										if(!err)
 										{
-
-											var c = el.c.find('#' + comment.id);
+											/*var c = el.c.find('#' + comment.id);
 
 											c.addClass('deleted')
-											el.c.find('#' + comment.id + ' >div.commentPaddingWrapper .commentmessage div').html("<div>"+self.app.localization.e('e13033')+"</div>")
+											el.c.find('#' + comment.id + ' >div.commentPaddingWrapper .commentmessage').html("<div>"+self.app.localization.e('e13033')+"</div>")
 
 											c.find('.panel').remove()
 											c.find('.commentimages').remove()
-											c.find('.reply').remove()
+											c.find('.reply').remove()*/
 										}
 											
 									})
 
 								},
 								btn1text : self.app.localization.e('e13034'),
-								btn2text : self.app.localization.e('e13035')
+								btn2text : self.app.localization.e('e13035'),
+								class : 'zindex',
 							})
 
 							close()
@@ -1744,23 +1913,10 @@ var comments = (function(){
 					'emojibtn.click' : events.emessage,
 					change : events.emessage,
 					click : events.emessage,
-					keydown : function(editor, e){
-						/*if (e.ctrlKey && e.keyCode == 13) {
-
-							if (c.hasClass('sending')) return
-
-								c.addClass('sending')
-
-							actions.post(p.id || '0', p.pid, p.aid, p.editid)
-
-							e.preventDefault()
-
-							return false;
-						}*/
-					},
+					
 					keydown : function(editor, e){
 						if(e.keyCode == 13){
-							if (isMobile()){
+							if (e.ctrlKey){
 
 								setTimeout(() => {
 									if (c.hasClass('sending')) return
@@ -1768,7 +1924,7 @@ var comments = (function(){
 
 									_p.el.removeClass('active')
 
-									actions.post(p.id || '0', p.pid, p.aid, p.editid)
+									actions.post(p.id || '0', p.pid, p.aid, p.editid, c)
 								}, 100)
 								
 								e.preventDefault()
@@ -1797,23 +1953,29 @@ var comments = (function(){
 						renders.limits(c, text)
 
 						actions.lightarea(p.id || '0', c)
+
+						
 					},
 
 					focus : function() {
 						// Scroll comment section to top of the screen
 
-						if(!isios())
-							actions.scrollToComment(_p.el);
+						setFocus = true
+
+					
+						if(window.cordova){
+							setTimeout(() => {
+								actions.scrollToComment(_p.el);
+							}, 300)
+						}
 						else{
-							if(window.cordova){
-								setTimeout(() => {
-									actions.scrollToComment(_p.el);
-								}, 300)
-							}
+							actions.scrollToComment(_p.el);
 						}
 					},
 
 					blur : function(){
+						setFocus = false
+
 					},
 
 					onLoad : function(c, d){
@@ -1831,11 +1993,10 @@ var comments = (function(){
 
 						if (p.value) {
 							this.setText(p.value)
-
-							
 						}
 
-						if (p.donation && p.amount && p.editid){
+
+						if (p.amount && p.editid){
 
 							var comment = currents[p.editid]
 							comment.amount.set(p.amount);
@@ -1893,7 +2054,7 @@ var comments = (function(){
 				if (c.hasClass('sending')) return
 					c.addClass('sending')
 
-				actions.post(p.id || '0', p.pid, p.aid, p.editid)
+				actions.post(p.id || '0', p.pid, p.aid, p.editid, c)
 
 			})
 
@@ -1947,61 +2108,70 @@ var comments = (function(){
 
 			}).on('pasteImageError', function(ev, data){
 
-				 topPreloader(100)
+				topPreloader(100)
 
 			})
 
+			setTimeout(() => {
+				actions.checkBanned(p).then((user) => {
+					if (user){
+	
+						var info = self.psdk.userInfo.getShortForm(user.address)
+	
+						if (info){
+							_p.el.find('.errormessage').removeClass('hidden').html(self.app.localization.e('commentBannedWarning', info.name))
+	
+						}
+					}
+				})
+			}, 500)
+			
 
 		}
-
-		var clears = {
-			isotope : function(){
-
-				try{
-
-					_.each(isotopes, function(i){
-						
-							i.isotope('destroy')
-						
-						
-					})
-
-					isotopes = {}
-
-				}
-				catch(e){
-
-				}
-			}
-		}
+		
 
 		var renders = {
 
 			donate : function(id, p){
 
 				var comment = currents[id];
-				var donate = comment.donate.v[0];
+				var __el = p.el.find('.embeddonate')
 
-				self.shell({
-					name :  'donate',
-					turi : 'embeding',
-					inner : html,
-					el : p.el.find('.newcommentdonate'),
-					data : {
-						donate : donate && donate.amount
-					},
+				if(comment){
+					var donate = comment.donate.v[0];
 
-				}, function(_p){
+					if (donate && donate.amount){
+						self.shell({
+							name :  'donate',
+							inner : html,
+							el : __el,//p.el.find('.newcommentdonate'),
+							data : {
+								donate : donate && donate.amount
+							},
+		
+						}, function(_p){
+		
+							_p.el.find('.removedonate').on('click', function(){
+								actions.removeDonate(id, p)
+							})
 
-					_p.el.find('.removedonate').on('click', function(){
 
-						actions.removeDonate(id, p)
-					})
-
-
-				})
+							p.el.find('.lcpp').addClass('donateactive')
+		
+		
+						})
 
 
+						return
+					}
+
+				}
+
+				p.el.find('.lcpp').removeClass('donateactive')
+
+				__el.html('<img class="donateIcon" src="img/logo20.svg" alt=""></img>')
+
+				
 
 			},
 
@@ -2064,11 +2234,11 @@ var comments = (function(){
 						})
 					})
 
-					_p.el.find('.image').imagesLoadedPN({ imageAttr: true }, function(image) {
+					//_p.el.find('.image').imagesLoadedPN({ imageAttr: true }, function(image) {
 
-						if(!el.c) return
+						//if(!el.c) return
 
-						var elimages = _p.el.find('.imagesEmbWr')
+						/*var elimages = _p.el.find('.imagesEmbWr')
 
 						elimages.isotope({
 
@@ -2089,9 +2259,9 @@ var comments = (function(){
 
 						});
 
-						elimages.isotope()
+						elimages.isotope()*/
 						
-					}, self.app);
+					//}, self.app);
 
 					
 				})
@@ -2099,7 +2269,7 @@ var comments = (function(){
 
 			limits : function(el, message){
 
-				var l = 1000 - message.length;
+				var l = 915 - message.length;
 
 				el.find('.limits').removeClass('bad')
 
@@ -2123,7 +2293,7 @@ var comments = (function(){
 				
 			},
 
-			cpreview : function(h){
+			/*cpreview : function(h){
 				if(!h){
 					h = ed.caption
 				}
@@ -2133,60 +2303,15 @@ var comments = (function(){
 				el.caption.find('.captionPreview').html(h)
 
 				bgImages(el.caption.find('.captionPreview'))
-			},
+			},*/
 
 			caption : function(clbk){
 
 				if(isMobile() && _in) return
 
-				var cl = deep(self.app.platform.sdk.comments.storage, txid + '.0.length') || 0
-
-				if(ed.caption && cl > 5){
-					self.shell({
-						name :  'caption',
-						el : el.caption,
-						data : {
-							ed : ed
-						},
-
-					}, function(p){
-
-						renders.cpreview()
-
-						caption = new Caption({
-							container: el.c,
-							caption: el.c.find('.captionfwrapper'),
-							offset: [top, -100],
-							removeSpacer : true,
-							zIndex : 105,
-							iniHeight : true,
-							_in : _in
-						}).init();
-
-						p.el.find('.close .cact').on('click', function(){
-							if (ed.close)
-								ed.close()
-						})
-
-						p.el.find('.top .cact').on('click', function(){
-
-							_scrollToTop(el.c.find('.list'), _in, undefined, -150)
-						
-						})
-
-						p.el.find('.bottom .cact').on('click', function(){
-
-							_scrollToBottom(el.c.find('.list'), _in, undefined, -150)
-
-						})
-
-
-						if (clbk)
-							clbk();
-						
-					})
-				}
-
+				var cl = el.c.find('.comment').length
+				
+				
 			},
 
 			edit : function(el, comment){
@@ -2205,7 +2330,7 @@ var comments = (function(){
 					id : comment.id,
 					editid : comment.id,
 					amount: comment.amount,
-					donation: comment.donation
+					//donation: comment.donation
 				}
 
 				renders.post(function(area, el){
@@ -2224,7 +2349,7 @@ var comments = (function(){
 
 			post : function(clbk, p){
 
-				if (ed.openapi || ed.cantsend) {
+				if (ed.jury || ed.openapi || ed.cantsend) {
 					if(clbk) clbk()
 
 					return
@@ -2248,14 +2373,14 @@ var comments = (function(){
 					self.shell({
 						name :  'post',
 						el : p.el,
-
+						insertimmediately : true,
 						data : {
 							placeholder : p.placeholder || '',
 							answer : p.answer || '',
 							edit : p.edit || '',
 							preview : _preview,
 							mestate : mestate,
-							sender : self.app.platform.sdk.address.pnet() ? self.app.platform.sdk.address.pnet().address : null,
+							sender : self.app.user.address.value,
 							receiver: receiver
 						},
 
@@ -2308,9 +2433,6 @@ var comments = (function(){
 						})
 
 						_p.el.find('.embeddonate').off('click').on('click', function(){
-
-									
-							
 
 							if(state){
 
@@ -2451,11 +2573,9 @@ var comments = (function(){
 				var commentslength
 				var comments = p.comments
 				var sort = null
-				
+
 				if(!preview || showedall)
 					sort = new sortParameter()
-
-				clears.isotope()
 
 				if(!p.replace){
 
@@ -2470,16 +2590,22 @@ var comments = (function(){
 					commentslength = comments.length
 	
 					if (pid){
-						currentstate.levels[pid] = pid
+						currentstate.levels[pid] = {
+							id : pid,
+							comments : _.map(comments, (c) => {
+								return c.id
+							})
+						}
 					}
 	
 					currentstate.pagination[ pid || '0' ] || (currentstate.pagination[ pid || '0' ] = 1)
 	
 					var pg = currentstate.pagination[ pid || '0' ]
 
+
 					if(!ed.commentPs && !ed.reply){
 
-						comments = _.filter(comments , function(c, i){
+						comments = _.filter(comments, function(c, i){
 							if(i < pg * paginationcount && c.id != p.add){
 								return true
 							}
@@ -2514,7 +2640,8 @@ var comments = (function(){
 						el : p.el,
 
 						inner : p.replace ? replaceWith : html,
-
+						fast : p.fast,
+						insertimmediately : true,
 						//inner : p.inner || _in, /// html
 						
 						data : {
@@ -2553,17 +2680,23 @@ var comments = (function(){
 						if(!p.replace){
 						
 							if(!pid){
-								makeCurrentLevels()
+								
 
 								_p.el.find('.refresh-comments').on('click', (e) => {
-									$(e.currentTarget).addClass('refreshing');
-
+									window.rifticker.add(() => {
+										$(e.currentTarget).addClass('refreshing');
+									})
+									
 									setTimeout(() => {
 										$(e.currentTarget).removeClass('refreshing');
 
 										actions.update();
 									}, 300);
 								});
+
+								_p.el.find('.close-comments').on('click', (e) => {
+									actions.hideall()
+								});	
 
 								if (sort){
 									sort._onChange = function(v){
@@ -2576,6 +2709,8 @@ var comments = (function(){
 
 									ParametersLive([sort], _p.el)
 								}
+
+								makeCurrentLevels()
 									
 							}
 
@@ -2609,6 +2744,22 @@ var comments = (function(){
 					})
 
 				})
+			},
+
+			showStreamLink : function(post){
+				el.c.prepend(`
+					<div class="streamLink">
+						<button class="button">${ self.app.localization.e('watchstream') }</button>
+					</div>
+				`);
+
+				el.c.find('.streamLink button').click(function() {
+					self.nav.api.go({
+						href : `index?video=1&v=${ post.txid }`,
+						history : true,
+						open : true
+					})
+				});
 			}
 		}
 
@@ -2618,108 +2769,57 @@ var comments = (function(){
 				actions.showall()
 			})
 
-			self.app.platform.sdk.comments.sendclbks[eid] = clbks.post
-			self.app.platform.sdk.comments.upvoteClbks[eid] = clbks.upvote
+			//self.app.platform.sdk.comments.sendclbks[eid] = clbks.post
+			//self.app.platform.sdk.comments.upvoteClbks[eid] = clbks.upvote
 
-			self.app.platform.ws.messages.comment.clbks[eid] = function(data){
+		
 
-
-				return //// TODO
-
-				if (data.posttxid == txid){
-					
-					var p = {};
-						p.comments = [data.comment]
-
-					if (data.parentid) {
-
-						var par = el.c.find('#' + data.parentid);
-							p.el = par.find('.answers');
+			/*self.app.platform.ws.messages.cScore.clbks[eid] = function(data){
 
 
-						par.find('.repliescount').html(Number(par.find('.repliescount').html() || "0") + 1)
-						par.find('.replies').removeClass('hidden')
-
-						if(!par.hasClass('showedreplies')){
-
-							return
-
-						}
-
-					}
-					else
-					{	
-						p.el = el.c.find(".list")
-						p.class = 'firstcomment'
-					}
-
-					renders.list(p)
-				}
-			
-			}
-
-			self.app.platform.ws.messages.cScore.clbks[eid] = function(data){
-
-
-				if (data.comment.txid == txid){
+				if (data.comment.postid == txid){
 
 					clbks.upvote(null, data.comment, data.upvoteVal || data.value, data.addrFrom)
 				}
 			
+			}*/
+
+			self.app.psdk.updatelisteners[eid] = self.app.platform.actionListeners[eid] = function({type, alias, status}){
+
+				if(type == 'comment'){
+					var comment = alias
+
+					if (comment.postid == txid){
+
+						if(currents[comment.id]) return 
+						
+						clbks.post(self.psdk.comment.get(comment.id) || comment, comment.optype)
+						
+					}
+				}
+
+				if(type == 'cScore'){
+
+					var comment = self.psdk.comment.getclear(alias.comment.v)
+
+					if (comment){
+						if(comment.postid == txid){
+							clbks.upvote(status == 'rejected' ? 'rejected' : null, self.psdk.comment.get(alias.comment.v), status == 'rejected' ? 0 : alias.value.v, alias.actor)
+						}
+					}
+
+				}
+				
 			}
 
 
 			el.c.on('click', '.upvoteComment', events.upvoteComment)
 		}
 
-		var reloadCurrents = function(clbk){
-
-			var lc = function(){
-				var lvls = _.map(currentstate.levels, function(id){
-					return id
-				})
-	
-				if(lvls.length){
-	
-					lazyEach({
-						array : lvls,
-						action : function(p){
-	
-							var id = p.item;
-	
-							load.level(id, function(comments){
-								p.success()
-							})
-						},
-	
-						all : {
-							success : function(){
-								if(clbk) clbk()
-							}
-						}
-					})
-	
-				}
-				else{
-					if(clbk) clbk()
-				}
-			}
-
-			if (preview && !showedall){
-				lc()
-			}
-			else{
-				load.level(null, function(){
-					lc()
-				})	
-			}
-
-			
-		}
-
 		var makeCurrentLevels = function(clbk){
-			var lvls = _.map(currentstate.levels, function(id){
-				return id
+
+			var lvls = _.map(currentstate.levels, function(lv){
+				return lv.id
 			})
 
 			if(lvls.length){
@@ -2746,56 +2846,6 @@ var comments = (function(){
 			else{
 				if(clbk) clbk()
 			}
-		}
-
-		var makeCurrents = function(clbk){
-
-			currents = {};
-			rendered = {};
-
-			areas = {};
-
-			var f = make
-
-			if (preview && !showedall){
-				f = makePreview
-			}	
-		
-			f(function(){
-
-				var lvls = _.map(currentstate.levels, function(id){
-					return id
-				})
-
-				if(lvls.length){
-
-					lazyEach({
-						array : lvls,
-						action : function(p){
-	
-							var id = p.item;
-	
-							actions.replies(id, true, p.success, {
-								in : html
-							})
-						},
-	
-						all : {
-							success : function(){
-								if(clbk) clbk()
-							}
-						}
-					})
-
-				}
-				else{
-					if(clbk) clbk()
-				}
-
-				
-
-
-			})
 		}
 
 		var makePreview = function(clbk){	
@@ -2835,7 +2885,7 @@ var comments = (function(){
 
 			load.level(null, function(comments){
 
-				p.comments = self.app.platform.sdk.comments.storage[txid]['0']
+				p.comments = comments//self.app.platform.sdk.comments.storage[txid]['0']
 				p.class = "firstcomment"
 
 				actions.showhideLabel()	
@@ -2847,11 +2897,12 @@ var comments = (function(){
 
 					if(!el.c) return
 
-					el.c.find('.loaderWrapper').addClass('hidden')
-
+					window.rifticker.add(() => {
+						if(!el.preloader.hasClass('hidden'))
+							el.preloader.addClass('hidden')
+					})
 
 					renders.post(function(area){
-						
 
 						if (ed.reply){
 							actions.fastreply(ed.reply)
@@ -2885,8 +2936,8 @@ var comments = (function(){
 			preview : function(clbk){
 				var comments = [];
 
-				if (ed.lastComment){
-					comments = self.app.platform.sdk.comments.ini([ed.lastComment])
+				if (share.lastComment){
+					comments = [self.psdk.comment.get(share.lastComment)]//self.app.platform.sdk.comments.ini([ed.lastComment])
 				}
 
 				self.sdk.comments.users(comments, function(){
@@ -2896,22 +2947,29 @@ var comments = (function(){
 
 				})
 			},	
-			level : function(pid, clbk, ccha){
+			level : function(pid, clbk, comments){
+
+
+				if(comments){
+					
+					if (clbk) clbk(comments)
+
+					return
+				}
 
 				self.app.platform.sdk.comments.getclear(txid, pid || "", function(comments, e){
+
 
 					if (clbk)
 						clbk(comments, e)
 
-				}, ccha)
+				})
 
 			}
 		}
 
 		var state = {
 			save : function(){
-
-				return
 
 				if (currents['0']){
 					self.app.settings.set(self.map.id, txid, currents['0'].export());
@@ -2954,11 +3012,13 @@ var comments = (function(){
 				preview = ed.preview || false;
 				listpreview = ed.listpreview || false;
 
-				showedall = false;
+				showedall = !listpreview;
 
 				txid = ed.txid || null
 
 				currents['0'] = new Comment(txid);
+
+				share = self.psdk.share.get(txid)
 
 				if (txid){
 					//state.load()
@@ -3005,16 +3065,29 @@ var comments = (function(){
 							if(!el.c) return
 
 							el.c.find('.leaveCommentPreview').css('opacity', '')
+
+							
+
 						}, 100)
 					}, 100)
 				}
+
+				setTimeout(function(){
+
+					if(!el.c) return
+
+					el.c.find('.post').removeClass('attention')
+					
+				}, 1300)
 			},
 
 			showBanner : function(c) {
 				let alredyCommented;
 
-				if (c.essenseData && c.essenseData.lastComment) {
-					const address = c.essenseData.lastComment.address;
+				var lastComment = self.psdk.comment.get(share.lastComment)
+
+				if (lastComment) {
+					const address = lastComment.address;
 					const me = app.platform.sdk.user.me();
 
 					const firstLikeIsMine = (address == me.address);
@@ -3054,7 +3127,7 @@ var comments = (function(){
 
 				app.platform.ui.showCommentBanner(el.c, (c) => {
 					bannerComment = c
-				});
+				}, c.essenseData.receiver);
 			},
 
 			authclbk : function(){
@@ -3080,15 +3153,26 @@ var comments = (function(){
 
 			destroy : function(){
 
-				clears.isotope()
 
-				delete self.app.platform.sdk.comments.sendclbks[eid]
+				/*delete self.app.platform.sdk.comments.sendclbks[eid]
 				delete self.app.platform.ws.messages.comment.clbks[eid]
 				
 				delete self.app.platform.sdk.comments.upvoteClbks[eid]
-				delete self.app.platform.ws.messages.cScore.clbks[eid]
+				delete self.app.platform.ws.messages.cScore.clbks[eid]*/
+
+				delete self.app.platform.actionListeners[eid]
+				delete self.app.psdk.updatelisteners[eid]
 
 				authblock = false
+
+				share = null
+				setFocus = false
+
+				currentstate = {
+					reply : null,
+					levels : {},
+					pagination : {}
+				}
 
 				/*_.each(areas, function(a){
 				})*/
@@ -3110,7 +3194,6 @@ var comments = (function(){
 
 				el = {};
 				ed = {};
-				
 
 				_in = null
 			},
@@ -3129,19 +3212,21 @@ var comments = (function(){
 				el.caption = el.c.find('.captionCnt')
 				el.showall = el.c.find('.showall')
 
+				el.preloader = el.c.find('.loaderWrapper')
 				_in = el.c.closest('.wndcontent');
 
 				if(!_in.length) {
 					_in = el.c.closest('.fullScreenVideo .sharecnt');
 				}
 
-				el.list.on('click', '.reply', events.reply);
+				
+				el.list.on('click', '.reply', events.replyandreplies);
 				el.list.on('click', '.replies', events.replies);
 				el.list.on('click', '.panel', events.metmenu);
 				el.list.on('click', '.tocomment', events.tocomment)
 				el.list.on('click', '.imageCommentOpen', events.openGallery)
-				el.list.on('click', '.hiddenCommentLabel', events.showHiddenComment)
-				el.list.on('click', '.showBlockedUserComment', events.showBlockedUserComment)
+				el.list.on('click', '.hiddenCommentLabel button', events.showHiddenComment)
+				//el.list.on('click', '.showBlockedUserComment', events.showBlockedUserComment)
 				el.list.on('click', '[profile]', events.showprofile)
 
 				if(!_in.length) {
@@ -3159,25 +3244,46 @@ var comments = (function(){
 					top = 0
 				}
 
-				
+				var post = share;
 
 				if (listpreview){
 					makePreview(() => {
 						if(ed.previewClbk) ed.previewClbk()
 					})
-				}
-				else{
+				} else{
 					make();
-
 					
 					if (ed.showall){
 						actions.showall()
 					}
 				}
 
-				
-
 				initEvents();
+
+				/* !Post with stream */
+				/*if (!post || !post.settings.c) {
+					if (listpreview){
+						makePreview(() => {
+							if(ed.previewClbk) ed.previewClbk()
+						})
+					} else{
+						make();
+						
+						if (ed.showall){
+							actions.showall()
+						}
+					}
+
+					initEvents();
+				} else {
+					const holder = el.c.parents('.commentsWrapperHb');
+					if (listpreview) {
+						renders.showStreamLink(post);
+						holder.show();
+					} else {
+						holder.hide();
+					}
+				}*/
 
 				p.clbk(null, p);
 			},
@@ -3189,6 +3295,9 @@ var comments = (function(){
 			},
 
 			hideall : function(preview){
+				throw 'deprecated'
+
+				return
 
 				showedall = false;
 
@@ -3277,7 +3386,7 @@ var comments = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

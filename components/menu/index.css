@@ -15,12 +15,34 @@
 #menu .sitenamelabel {
   text-transform: uppercase;
 }
+#menu .icon a {
+  display: block;
+}
+#menu .menuspace {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: calc(165px + var(--app-margin-top));
+  contain: strict;
+  background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0) 100%);
+  display: none;
+  z-index: 19;
+  opacity: 0;
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
 #menu .menuWrapper {
+  /*-webkit-app-region: drag;*/
   width: 100%;
   position: fixed;
   left: 0;
   right: 0;
   top: 0;
+  min-height: 65px;
   height: calc(65px + var(--app-margin-top));
   padding-top: var(--app-margin-top);
   z-index: 20;
@@ -36,8 +58,15 @@
 			  }
 		}*/
 }
+#menu .menuWrapper .onlyblackallcontent {
+  display: none;
+}
 #menu .usericon {
   position: relative;
+}
+#menu .changing-app-icon {
+  opacity: 1;
+  transition: all 0.5s;
 }
 #menu.static .menuWrapper {
   position: absolute;
@@ -76,6 +105,10 @@
   bottom: auto;
   white-space: nowrap;
   font-size: 0.9em;
+}
+#menu .navicon .fa-plus-circle {
+  font-size: 1.2em;
+  color: #0026ff;
 }
 #menu.searchactive .sections .items.searchWrapper {
   display: block;
@@ -134,6 +167,7 @@
   justify-content: space-between;
 }
 #menu .sections .section {
+  min-height: 65px;
   height: 100%;
   padding: 0 1em;
   display: flex;
@@ -143,6 +177,7 @@
 }
 #menu .sections .section.right {
   padding-right: 0;
+  min-width: 200px;
 }
 #menu .sections .section.centerpart {
   padding-right: 0;
@@ -176,6 +211,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  z-index: 999;
   color: rgb(var(--neutral-grad-1));
   box-sizing: border-box;
   padding: 0 0.5em;
@@ -187,6 +224,50 @@
 }
 #menu .sections .items.control-app > div:hover {
   color: rgb(var(--color-txt-gray));
+}
+#menu .sections .items.control-app.control-left {
+  padding-right: 1.5em;
+}
+#menu .sections .items.control-app.control-right {
+  padding-left: 1.5em;
+}
+#menu .sections .items.control-app .control-tor-state {
+  position: relative;
+}
+#menu .sections .items.control-app .control-tor-state i::after {
+  position: absolute;
+}
+#menu .sections .items.control-app .control-tor-state.on {
+  color: rgb(var(--color-good));
+}
+#menu .sections .items.control-app .control-tor-state.on::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  display: block;
+  width: 3px;
+  height: 3px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+#menu .sections .items.control-app .control-tor-state.on.failed::before {
+  background: rgb(var(--color-bad));
+}
+#menu .sections .items.control-app .control-tor-state.on.success::before {
+  background: rgb(var(--color-good));
+}
+#menu .sections .items.control-app .control-tor-state.off {
+  color: rgb(var(--neutral-grad-1));
+}
+#menu .sections .items.control-app .control-tor-state.loading {
+  color: rgb(var(--neutral-grad-1));
+  animation: torPulse 2s linear infinite;
+}
+@keyframes torPulse {
+  50% {
+    color: rgb(var(--color-txt-ac));
+  }
 }
 #menu .sections .items.notificationsWrapper {
   margin-right: 0.5em;
@@ -259,11 +340,10 @@
   padding-right: 0.125em;
   padding-left: 0.125em;
   padding-bottom: 0.25em;
-  opacity: 0.6;
   cursor: pointer;
 }
-#menu .sections .items .item.changeaccount .icon:hover {
-  opacity: 1;
+#menu .sections .items .item.application {
+  color: rgb(var(--color-bg-orange));
 }
 #menu .sections .items .item.user .icon {
   padding-right: 0;
@@ -286,8 +366,21 @@
 #menu .sections .items .item.onlyicon .icon {
   padding: 0.5em;
 }
+#menu .sections .items .item.onlyicon .icon .icn {
+  display: flex;
+}
+#menu .sections .items .item.onlyicon .icon .icn img {
+  height: 18px;
+}
 #menu .sections .items .item.onlyicon .count {
   color: rgb(var(--color-bg-ac-2));
+}
+#menu .sections .items .item .icon .icn img {
+  height: 18px;
+}
+#menu .sections .items .item .icon .icn svg {
+  height: 23px;
+  width: 23px;
 }
 #menu .sections .items .item.navWrapperItem {
   display: none;
@@ -440,7 +533,6 @@
 #menu .sections .items .item.wallets {
   font-size: 0.8em;
   font-weight: 700;
-  color: rgb(var(--color-txt-gray));
   margin-right: 1.5em;
   cursor: pointer;
   -moz-transition: 0.3s;
@@ -454,7 +546,6 @@
 #menu .sections .items .item.wallets .icon {
   width: 30px;
   opacity: 0;
-  color: rgb(var(--color-txt-gray));
 }
 #menu .sections .items .item.wallets.good .number {
   color: rgb(var(--color-good));
@@ -510,6 +601,13 @@
 #menu .searchFastResultWrapper .user:hover {
   color: rgb(var(--color-txt-ac));
 }
+#menu .searchFastResultWrapper .appicon {
+  width: 44px;
+  height: 44px;
+  border-radius: 6px;
+  background: rgb(var(--background-secondary-theme));
+  position: relative;
+}
 #menu .searchFastResultWrapper .searchbywrapper .caption {
   padding-bottom: 0.5em;
 }
@@ -517,6 +615,17 @@
   font-weight: 700;
   color: rgb(var(--color-txt-ac));
   font-size: 0.9em;
+}
+#menu .searchFastResultWrapper .searchbywrapper .searchby .swra {
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+#menu .searchFastResultWrapper .searchbywrapper .searchby .swra > div.label {
+  font-weight: 700;
+  text-align: left;
 }
 #menu .searchFastResultWrapper .searchbywrapper .searchby .swrp {
   width: 100%;
@@ -609,6 +718,7 @@
   min-height: 33px;
 }
 #menu .postssearch :placeholder-shown {
+  text-align: center;
   color: rgba(var(--color-txt-gray-dark), 0.5);
 }
 #menu .postssearch .searchIconLabel,
@@ -617,12 +727,20 @@
   background: rgb(var(--background-main));
   border: 0;
 }
+#menu .postssearch .searchInputWrapper {
+  position: relative;
+  z-index: 1;
+}
 #menu .postssearch .searchIconLabel {
+  position: relative;
+  z-index: 1;
   width: 38px;
   -webkit-transition: none;
   transition: none;
 }
 #menu .postssearch .searchPanel {
+  position: relative;
+  z-index: 1;
   width: 2em;
   font-size: 0.8em;
   text-align: center;
@@ -647,200 +765,189 @@
 #menu .signup {
   margin-left: 2em;
 }
-/*t*/
-@media only screen and (max-width: 768px) {
-  #menu {
-    z-index: 4;
-  }
-  #menu .signup {
-    margin-left: 1em;
-    margin-right: 1em;
-  }
-  #menu .sections {
-    width: 100%;
-    max-width: none;
-    padding: 0 1em;
-    padding-right: 0;
-  }
-  #menu .sections .section {
-    padding: 0;
-    width: auto;
-  }
-  #menu .sections .section.leftpart {
-    min-width: 0;
-  }
-  #menu .sections .section.right {
-    padding-right: 0;
-  }
-  #menu .sections .section.centerpart {
-    margin-left: auto;
-  }
-  #menu .sections .section:nth-child(1) {
-    padding-left: 0;
-  }
-  #menu .sections .items {
-    float: left;
-    height: 100%;
-  }
-  #menu .sections .items.sitenames {
-    width: auto;
-  }
-  #menu .sections .items.searchWrapper {
-    padding-right: 1.5em;
-  }
-  #menu .sections .items.searchWrapper .item {
-    min-width: 0;
-  }
-  #menu .sections .items .item.signout,
-  #menu .sections .items .item.signin {
-    text-align: right;
-    padding-right: 1em;
-  }
-  #menu .sections .items .item.signin {
-    display: none;
-  }
-  #menu .sections .items .item.sitename .label {
-    text-align: center;
-  }
-  #menu .sections .items .item.user {
-    margin-right: 0.5em;
-  }
-  #menu .sections .items .item.user .userpic {
-    float: right;
-    width: 34px;
-    height: 34px;
-    line-height: 34px;
-    font-size: 0.9em;
-  }
-  #menu .searchFastResultWrapper .fastsearch {
-    padding-left: 40px;
-  }
-  #menu .searchFastResultWrapper .users {
-    padding-left: 0px;
-  }
-  #menu:not(.searchactive) .postssearch .searchPanel,
-  #menu:not(.searchactive) .postssearch .searchInputWrapper {
-    display: none;
-  }
-  #menu:not(.searchactive) .postssearch .searchInput {
-    background: transparent!important;
-    border: 1px solid transparent!important;
-  }
-  #menu:not(.searchactive) .postssearch input {
-    color: rgb(var(--text-color));
-    background: transparent;
-  }
-  #menu:not(.searchactive) .postssearch .searchIconLabel,
-  #menu:not(.searchactive) .postssearch .searchPanel {
-    color: rgb(var(--text-color));
-    background: transparent;
-  }
-  #menu:not(.searchactive) .postssearch .searchFastResultWrapper {
-    display: none;
-  }
-  #menu:not(.searchactive) .sections .items.searchWrapper {
-    max-width: 40px;
-  }
-  #menu .postssearch input {
-    padding: 0;
-  }
-  #menu .sections .items .item.user {
-    margin-right: 0;
-  }
-  #menu .sections .items .item.user .icon {
-    padding-right: 0.5em;
-  }
-  #menu .sections .items.searchWrapper .postssearch .searchIconLabel {
-    width: 40px;
-  }
-  #menu .sections .items.searchWrapper .postssearch .searchPanel {
-    width: 40px;
-  }
-  #menu .sections .items.searchWrapper .postssearch .searchPanel .searchPanelWrapper > div[event=clear] {
-    display: block!important;
-  }
-  #menu .sections .items.navWrapper {
-    display: none!important;
-  }
-  #menu {
-    /*.postssearch{
-			font-size: 1.2em;
-		}*/
-    /*&.searchactive{
-
-			.sections{
-				padding : 0;
-
-				.section{
-					width : 100%;
-					&.right{
-						width : 100%;
-					}
-					
-					.items.searchWrapper{
-						width : 100%;
-
-						.item{
-							width : 100%;
-						}
-
-						.postssearch{
-							width : 100%;
-						}
-					}
-
-					&.leftpart{
-						display: none;
-					}
-
-					&.right{
-						display: none;
-					}
-				}
-
-
-				.items{
-					&.searchWrapper{
-						width: 100%;
-						max-width: none;
-						padding-right: 0;
-
-						.postssearchwrapper{
-							padding : 1.5 * @rhythm 1.5 * @rhythm;
-						}
-					}
-				}
-			}
-		}*/
-  }
-  html.allcontent #menu .menuWrapper {
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
-    background: transparent;
-  }
-  html.allcontent #menu .menuWrapper .searchIconLabel i,
-  html.allcontent #menu .menuWrapper .icon i {
-    color: rgba(var(--color-bg-ac-bright), 0.9);
-  }
-  html.allcontent #menu .menuWrapper .sitename .label {
-    display: none;
-  }
-  html.allcontent #menu .mobsearch i {
-    color: rgba(var(--color-bg-ac-bright), 0.9);
-  }
-  html.allcontent #menu .walletsWrapper,
-  html.allcontent #menu .keyexportWrapper,
-  html.allcontent #menu .notificationsWrapper {
-    display: none!important;
-  }
-  html.allcontent #menu .usericon {
-    box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
-  }
-  html.allcontent #menu .far.fa-comment {
-    font-weight: 700;
-  }
-  html.allcontent #menu .sitenames {
-    overflow: hidden;
-    width: 24px!important;
-  }
+html.allcontent #menu .menuWrapper .postssearch .searchInput input {
+  background: transparent;
+}
+html.allcontent #menu .menuWrapper .postssearch .searchIconLabel,
+html.allcontent #menu .menuWrapper .postssearch .searchPanel {
+  background: transparent;
+}
+html.allcontent #menu .usericon {
+  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
+}
+html.allcontent #menu .far.fa-comment {
+  font-weight: 700;
+}
+html.television #menu,
+html.mobileview #menu {
+  z-index: 4;
+}
+html.television #menu .signup,
+html.mobileview #menu .signup {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+html.television #menu .menuspace,
+html.mobileview #menu .menuspace {
+  height: calc(95px + var(--app-margin-top));
+}
+html.television #menu .sections,
+html.mobileview #menu .sections {
+  width: 100%;
+  max-width: none;
+  padding: 0 1em;
+  padding-right: 0;
+}
+html.television #menu .sections .section,
+html.mobileview #menu .sections .section {
+  padding: 0;
+  width: auto;
+}
+html.television #menu .sections .section.leftpart,
+html.mobileview #menu .sections .section.leftpart {
+  min-width: 0;
+}
+html.television #menu .sections .section.right,
+html.mobileview #menu .sections .section.right {
+  min-width: 0;
+  padding-right: 0;
+}
+html.television #menu .sections .section.centerpart,
+html.mobileview #menu .sections .section.centerpart {
+  margin-left: auto;
+}
+html.television #menu .sections .section:nth-child(1),
+html.mobileview #menu .sections .section:nth-child(1) {
+  padding-left: 0;
+}
+html.television #menu .sections .items,
+html.mobileview #menu .sections .items {
+  float: left;
+  height: 100%;
+}
+html.television #menu .sections .items.sitenames,
+html.mobileview #menu .sections .items.sitenames {
+  width: auto;
+}
+html.television #menu .sections .items.searchWrapper,
+html.mobileview #menu .sections .items.searchWrapper {
+  padding-right: 1em;
+}
+html.television #menu .sections .items.searchWrapper .item,
+html.mobileview #menu .sections .items.searchWrapper .item {
+  min-width: 0;
+}
+html.television #menu .sections .items .item.signout,
+html.mobileview #menu .sections .items .item.signout,
+html.television #menu .sections .items .item.signin,
+html.mobileview #menu .sections .items .item.signin {
+  text-align: right;
+  padding-right: 1em;
+}
+html.television #menu .sections .items .item.wallets,
+html.mobileview #menu .sections .items .item.wallets {
+  margin-right: 0.5em;
+}
+html.television #menu .sections .items .item.wallets .pkoinlabel,
+html.mobileview #menu .sections .items .item.wallets .pkoinlabel {
+  font-size: 0.7em;
+}
+html.television #menu .sections .items .item.signin,
+html.mobileview #menu .sections .items .item.signin {
+  display: none;
+}
+html.television #menu .sections .items .item.sitename .label,
+html.mobileview #menu .sections .items .item.sitename .label {
+  text-align: center;
+}
+html.television #menu .sections .items .item.user,
+html.mobileview #menu .sections .items .item.user {
+  margin-right: 0.5em;
+}
+html.television #menu .sections .items .item.user .userpic,
+html.mobileview #menu .sections .items .item.user .userpic {
+  float: right;
+  width: 34px;
+  height: 34px;
+  line-height: 34px;
+  font-size: 0.9em;
+}
+html.television #menu .searchFastResultWrapper .fastsearch,
+html.mobileview #menu .searchFastResultWrapper .fastsearch {
+  padding-left: 40px;
+}
+html.television #menu .searchFastResultWrapper .users,
+html.mobileview #menu .searchFastResultWrapper .users {
+  padding-left: 0px;
+}
+html.television #menu:not(.searchactive) .postssearch .searchPanel,
+html.mobileview #menu:not(.searchactive) .postssearch .searchPanel,
+html.television #menu:not(.searchactive) .postssearch .searchInputWrapper,
+html.mobileview #menu:not(.searchactive) .postssearch .searchInputWrapper {
+  display: none;
+}
+html.television #menu:not(.searchactive) .postssearch .searchInput,
+html.mobileview #menu:not(.searchactive) .postssearch .searchInput {
+  background: transparent!important;
+  border: 1px solid transparent!important;
+}
+html.television #menu:not(.searchactive) .postssearch input,
+html.mobileview #menu:not(.searchactive) .postssearch input {
+  color: rgb(var(--text-color));
+  background: transparent;
+}
+html.television #menu:not(.searchactive) .postssearch .searchIconLabel,
+html.mobileview #menu:not(.searchactive) .postssearch .searchIconLabel,
+html.television #menu:not(.searchactive) .postssearch .searchPanel,
+html.mobileview #menu:not(.searchactive) .postssearch .searchPanel {
+  color: rgb(var(--text-color));
+  background: transparent;
+}
+html.television #menu:not(.searchactive) .postssearch .searchFastResultWrapper,
+html.mobileview #menu:not(.searchactive) .postssearch .searchFastResultWrapper {
+  display: none;
+}
+html.television #menu:not(.searchactive) .sections .items.searchWrapper,
+html.mobileview #menu:not(.searchactive) .sections .items.searchWrapper {
+  max-width: 40px;
+}
+html.television #menu .postssearch input,
+html.mobileview #menu .postssearch input {
+  padding: 0;
+}
+html.television #menu .sections .items .item.user,
+html.mobileview #menu .sections .items .item.user {
+  margin-right: 0;
+}
+html.television #menu .sections .items .item.user .icon,
+html.mobileview #menu .sections .items .item.user .icon {
+  padding-right: 0.5em;
+}
+html.television #menu .sections .items.searchWrapper .postssearch .searchIconLabel,
+html.mobileview #menu .sections .items.searchWrapper .postssearch .searchIconLabel {
+  width: 40px;
+}
+html.television #menu .sections .items.searchWrapper .postssearch .searchPanel,
+html.mobileview #menu .sections .items.searchWrapper .postssearch .searchPanel {
+  width: 40px;
+}
+html.television #menu .sections .items.searchWrapper .postssearch .searchPanel .searchPanelWrapper > div[event=clear],
+html.mobileview #menu .sections .items.searchWrapper .postssearch .searchPanel .searchPanelWrapper > div[event=clear] {
+  display: block!important;
+}
+html.television #menu .sections .items.navWrapper,
+html.mobileview #menu .sections .items.navWrapper {
+  display: none!important;
+}
+html.television html.allcontent #menu .sitenames,
+html.mobileview html.allcontent #menu .sitenames {
+  overflow: hidden;
+  width: 24px!important;
+}
+html.television #menu .sections .items .item.signin {
+  display: flex;
+}
+html[theme="black"] #menu .sections .items .item .icn svg,
+html[theme="gray"] #menu .sections .items .item .icn svg {
+  fill: rgb(var(--text-color));
 }

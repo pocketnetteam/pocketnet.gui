@@ -9,7 +9,7 @@ var system16 = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, api = null, proxy = null, chain = null, info = null, stats = [], system = null, bots = [];
+		var el, api = null, proxy = null, chain = null, info = null, stats = [], system = null, bots = [], aTransactions = [];
 
 		var graphs = {}
 
@@ -35,6 +35,11 @@ var system16 = (function(){
 				},
 				wallets : {
 					type : 'distribution'
+				},
+
+				translateapi : {
+					type : 'count',
+					showed : true
 				},
 
 				peertube : {
@@ -160,14 +165,87 @@ var system16 = (function(){
 
 				renders.webserveradmin(el.c)
 			},
-			'torenabled' : function(_el){
-				changes.server.enabledtor = !JSON.parse(_el.attr('value'))
-				if(changes.server.enabledtor == system.tor.enabled) delete changes.server.enabledtor
+			'hexCaptcha' : function(_el){
+				changes.server.hexCaptcha = !JSON.parse(_el.attr('value'))
+				if(changes.server.hexCaptcha == system.server.hexCaptcha) delete changes.server.hexCaptcha
+
 				renders.webserveradmin(el.c)
+			},
+			
+			'torenabled2' : function(_el){
+
+				var values = ['neveruse', 'auto', 'always']
+				
+				changes.server.torenabled2 = nextElCircle(values, _el.attr('value'))
+				 
+				if(changes.server.torenabled2 == system.tor.enabled2) delete changes.server.torenabled2
+				renders.webserveradmin(el.c)
+			},
+			'useSnowFlake' : function(_el){
+				changes.server.useSnowFlake = !JSON.parse(_el.attr('value'))
+				if(changes.server.useSnowFlake == system.tor.useSnowFlake) delete changes.server.useSnowFlake
+
+				renders.webserveradmin(el.c)
+			},
+			'customObfs4' : function(){
+				var v = system.tor.customObfs4 || changes.server?.customObfs4;
+
+				var d = inputDialogNew({
+					caption : "OBFS4 settings",
+					wrap : true,
+					values : [{
+						defValue : (Array.isArray(v)) ? v.join('\n') : undefined,
+						label : "OBFS4 bridges list",
+						placeholder : "Use TOR project syntax",
+						text : 'None',
+					}],
+
+					success : function(v){
+						if (v[0].length === 0) {
+							sitemessage('OBFS4 bridges are unloaded');
+							changes.server.customObfs4 = undefined;
+							renders.webserveradmin(el.c);
+							return true;
+						}
+
+						const bridgeParser = /obfs4\s((?:[0-9]{1,3}\.){3}[0-9]{1,3}:\d+)\s([A-Z0-9]{40})\scert=([A-z0-9+\/]{70})\siat-mode=\d$/gm;
+
+						const bridgeList = v[0].match(bridgeParser);
+
+						if (!bridgeList.length) {
+							sitemessage('Invalid OBFS4 bridges format');
+							return false;
+						}
+
+						changes.server.customObfs4 = bridgeList;
+
+						renders.webserveradmin(el.c);
+						return true;
+					}
+				})
+
 			},
 		}
 
+		var rif = null
+
 		var actions = {
+			getTxidFromString : function(txidString){
+				if (txidString.length == 16 * 4){
+					return txidString
+				}
+
+				try{
+					var u = new URL(txidString)
+
+					var ps = parameters(u.search, true)
+
+					return ps.s || ps.v || ''
+				}
+				catch(e){
+					return ''
+				}
+			},
 			convertTime : function(stats){
 				_.each(stats, function(s){
 					s.time = fromutc(new Date(s.time))
@@ -177,11 +255,14 @@ var system16 = (function(){
 		
 			admin : function(){
 
-				var address = self.app.platform.sdk.address.pnet()
+				var address = self.app.user.address.value
+				
 
 				if(!address) return false
+
+
 				if (proxy && info){
-					return proxy.direct || _.indexOf(info.admins, address.address) > -1
+					return proxy.direct || _.indexOf(info.admins, address) > -1
 				}
 			},
 
@@ -201,6 +282,34 @@ var system16 = (function(){
 					})
 
 					renders.botscontent(el.c)
+
+					topPreloader(100);
+
+				}).catch(e => {
+
+
+					sitemessage(self.app.localization.e('e13293'))
+
+					topPreloader(100);
+
+				})
+			},
+
+			removeATransaction : function(txid){
+				topPreloader(30);
+
+				proxy.fetchauth('manage', {
+					action : 'atransactions.remove',
+					data : {
+						txid : txid
+					}
+				}).then(r => {
+
+					aTransactions = _.filter(aTransactions, function(b){
+						return b != txid
+					})
+
+					renders.aTransactionsContent(el.c)
 
 					topPreloader(100);
 
@@ -291,18 +400,30 @@ var system16 = (function(){
 
 					stats = lastelements(stats, 1000)
 
-
-					if (el.c){
-						renders.nodescontenttable(el.c)
-						renders.peertubeinstancestable(el.c)
-						renders.webadminscontent(el.c)
-						renders.webdistributionwallets(el.c)
-						renders.webserverstatus(el.c)
+					if (rif){
+						//cancelAnimationFrame(rif)
+						rifticker.cancel(rif)
 					}
 	
-					setTimeout(function(){
-						makers.stats(true)
-					}, 200)
+					rif = rifticker.add(() => {
+						rif = null
+						
+						if (el.c){
+							renders.nodescontenttable(el.c)
+							//renders.notificationcontenttable(el.c)
+							//renders.notificationuserstable(el.c)
+							renders.peertubeinstancestable(el.c)
+							renders.webadminscontent(el.c)
+							renders.webdistributionwallets(el.c)
+							renders.webserverstatus(el.c)
+							renders.translateapicontent(el.c)
+						}
+		
+						setTimeout(function(){
+							makers.stats(true)
+						}, 200)
+					})
+
 				}
 
 				
@@ -365,7 +486,7 @@ var system16 = (function(){
 						type : "STRING",
 						name : self.app.localization.e('e13065'),
 						id : 'nodename',
-						defaultValue : (_node.nodename || ((self.app.platform.api.clearname(deep(app, 'platform.sdk.user.storage.me.name')) || "New") + ' node')).replace(/\+/g, ' '),
+						defaultValue : (_node.nodename || ((self.app.platform.api.clearname((self.psdk.userInfo.getmy() || {}).name) || "New") + ' node')).replace(/\+/g, ' '),
 						placeholder : self.app.localization.e('e13066'),
 						require : true
 					
@@ -647,9 +768,24 @@ var system16 = (function(){
 
 
 					windows.proxieslist(use, "Select Proxy that using Interface", function(selected){
+						function onSettingsReceived(settings) {
+							if (settings.tor.enabled) {
+								selected.fetchauth('manage', {
+									action: 'tor.start',
+									data: { persistence: false },
+								});
+							}
+						}
+
+						if (!selected.direct) {
+							use.fetchauth('manage', {
+								action: 'tor.stop',
+								data: { persistence: false },
+							});
+						}
 
 						api.set.currentwithnode(selected.id, true).then(r => {
-							make(api.get.current())
+							make(api.get.current(), { onSettingsReceived })
 						})
 
 					})
@@ -1266,6 +1402,32 @@ var system16 = (function(){
 						}
 					]
 				},
+			},
+
+			translateapi : {
+				count : {
+					caption : "Texts count",
+
+					series : [
+						{
+							path : 'translateapi.meta.texts',
+							name : "Texts count",
+							id : 'texts'
+						}
+					]
+				},
+
+				symbols : {
+					caption : "Symbols count",
+					objects : 'translateapi.meta.symbols',
+					series : [
+						{
+							path : 'c',
+							name : "Symbols count",
+							id : 'symbols'
+						}
+					]
+				},
 			}
 		}
 
@@ -1445,6 +1607,7 @@ var system16 = (function(){
 					objects = deep(info, meta.objects)
 				}
 
+
 				_.each(objects, function(object, key){
 
 					var ekey = key ? key + "." : ''
@@ -1453,7 +1616,6 @@ var system16 = (function(){
 
 					_.each(meta.series, function(smeta){
 
-						
 						series[smeta.id + key] = {
 
 							name : smeta.name + (key ? (": " + key) : ''),
@@ -1636,7 +1798,60 @@ var system16 = (function(){
 					meta : lmeta,
 					series : series
 				}
-			}
+			},
+
+			translateapi : function(data){
+
+				var subtype = settings.charts.translateapi.type
+
+				var meta = cpsub.translateapi[subtype]
+
+				var lmeta = {
+					type : 'spline',
+					xtype : 'datetime',
+					caption : meta.caption
+				}
+
+				var series = {}
+				var i = 0
+
+				var objects = [info]
+
+				if (meta.objects){
+					objects = deep(info, meta.objects)
+				}
+
+
+				_.each(objects, function(object, key){
+
+					var ekey = key ? key + "." : ''
+
+					if(meta.objects) ekey = meta.objects + '.' + ekey
+
+					_.each(meta.series, function(smeta){
+
+						series[smeta.id + key] = {
+
+							name : smeta.name + (key ? (": " + key) : ''),
+							path : ekey + smeta.path,
+							color : colors[ i % colors.length ],
+							type : smeta.type
+	
+						}
+	
+						i++
+					})
+
+					
+				})
+
+
+
+				return {
+					meta : lmeta,
+					series : series
+				}
+			},
 		}
 
 		var helpers = {
@@ -2223,6 +2438,118 @@ var system16 = (function(){
 
 				
 			},
+
+			///
+
+			addATransactionslist: function(){
+				var d = inputDialogNew({
+					caption : "Add TXIDs to Proxy ATransactions List",
+					class : 'addressdialog',
+					wrap : true,
+	        		values : [{
+	        			defValue : '',
+	        			validate : 'empty',
+	        			placeholder : ""+self.app.meta.fullname+" TXIDs",
+	        			label : "Transactions",
+						text : true
+	        		}],
+
+	        		success : function(v){
+
+						var txids = v[0].split(/[ \t\n\r]+/g)
+
+						txids = _.map(txids, (tx) => {
+							return actions.getTxidFromString(tx)
+						})
+
+						if(!txids.length){
+							sitemessage("TXID is not valid")
+
+							return false
+						}
+
+	        			topPreloader(30);
+
+						proxy.fetchauth('manage', {
+							action : 'atransactions.addlist',
+							data : {
+								txids : txids
+							}
+						}).then(r => {
+							_.each(txids, function(txid){
+								aTransactions.push(txid)
+							})
+
+							renders.aTransactionsContent(el.c)
+
+							d.destroy();
+
+	        				topPreloader(100);
+
+						}).catch(e => {
+							sitemessage(self.app.localization.e('e13293'))
+
+							topPreloader(100);
+
+						})
+
+
+	        		}
+	        	})
+			},
+			addATransaction : function(){
+				var d = inputDialogNew({
+					caption : "Add TXID to ATransaction List",
+					class : 'addressdialog',
+					wrap : true,
+	        		values : [{
+	        			defValue : '',
+	        			validate : 'empty',
+	        			placeholder : ""+self.app.meta.fullname+" TXID",
+	        			label : "Transaction"
+	        		}],
+
+	        		success : function(v){
+
+						var txid = actions.getTxidFromString(v[0])
+
+						if(!txid){
+							sitemessage("TXID is not valid")
+
+							return false
+						}
+
+	        			topPreloader(30);
+
+						proxy.fetchauth('manage', {
+							action : 'atransactions.add',
+							data : {
+								txid : txid
+							}
+						}).then(r => {
+
+							aTransactions.push(txid)
+
+							renders.aTransactionsContent(el.c)
+
+							d.destroy();
+
+	        				topPreloader(100);
+
+						}).catch(e => {
+							sitemessage(self.app.localization.e('e13293'))
+
+							topPreloader(100);
+
+						})
+
+
+	        		}
+	        	})
+			},
+
+
+			///
 			addbotlist: function(){
 				var d = inputDialogNew({
 					caption : "Add Address to Proxy Bot List",
@@ -2439,7 +2766,7 @@ var system16 = (function(){
 						using : use,
 						error : errors[error] || errors['undefinedError']
 					},
-
+					insertimmediately : true,
 					el : el
 
 				},
@@ -2472,7 +2799,7 @@ var system16 = (function(){
 							admin : actions.admin(),
 							electron : typeof _Electron != 'undefined' ? _Electron : false
 						},
-	
+						insertimmediately : true,
 						el : el.proxycontent
 	
 					},
@@ -2481,8 +2808,12 @@ var system16 = (function(){
 						renders.proxyservers(p.el)
 						renders.servercontent(p.el)
 						renders.nodescontent(p.el)
+
+						if(actions.admin()) renders.notificationcontent(p.el)
+
 						renders.chaincontent(p.el)
 						renders.peertubecontent(el.c)
+						renders.translateapicontent(el.c)
 						renders.nodecontent(p.el)
 						renders.bots(p.el)
 
@@ -2493,11 +2824,91 @@ var system16 = (function(){
 
 				
 			},
+
+			///
+
+			aTransactions : function(elc, clbk){
+
+				if (actions.admin() && window.project_config.adminTools){
+				
+					self.shell({
+						inner : html,
+						name : 'webatransactions',
+						data : {
+							admin : actions.admin()
+						},
+						el : elc.find('.aTransactionsWrapper'),
+						insertimmediately : true,
+					},
+					function(p){
+
+						p.el.find('.addATransaction').on('click', windows.addATransaction)
+						p.el.find('.addATransactions').on('click', windows.addATransactionslist)
+
+						renders.aTransactionsContent(elc)
+
+						if (clbk)
+							clbk()
+					})
+
+				}
+			},
+			
+			aTransactionsContent : function(elc, clbk){
+
+
+				self.shell({
+					inner : html,
+					name : 'webATransactionsContent',
+					data : {
+						admin : actions.admin(),
+						aTransactions : aTransactions
+					},
+					insertimmediately : true,
+					el : elc.find('.webATransactionsContentWrapper')
+
+				},
+				function(p){
+
+					p.el.find('.exportlist').on('click', function(){
+
+						text = aTransactions.join('\r\n')
+
+						copycleartext(text)
+
+						sitemessage(self.app.localization.e('successcopied'))
+					})
+
+					p.el.find('.removefromlist').on('click', function(){
+						var txid = $(this).attr('aTransaction')
+
+						if (txid){
+
+							var t = 'Do you really want to remove selected TXID from Proxy server aTransactions list?'
+
+							new dialog({
+								class : 'zindex',
+								html : t,
+								btn1text : self.app.localization.e('dyes'),
+								btn2text : self.app.localization.e('dno'),
+								success : function(){	
+									actions.removeATransaction(txid)
+								}
+							})
+							
+						}
+					})
+
+					if (clbk)
+						clbk()
+				})
+
+			},
+
+			///
 			bots : function(elc, clbk){
 
-				if(actions.admin()){
-
-				
+				if(actions.admin() && window.project_config.adminTools){
 				
 					self.shell({
 						inner : html,
@@ -2505,8 +2916,8 @@ var system16 = (function(){
 						data : {
 							admin : actions.admin()
 						},
-						el : elc.find('.botsWrapper')
-
+						el : elc.find('.botsWrapper'),
+						insertimmediately : true,
 					},
 					function(p){
 
@@ -2521,6 +2932,7 @@ var system16 = (function(){
 
 				}
 			},
+
 			botscontent : function(elc, clbk){
 
 				self.app.platform.sdk.users.get(bots || [], function(){
@@ -2532,7 +2944,7 @@ var system16 = (function(){
 							admin : actions.admin(),
 							bots : bots
 						},
-
+						insertimmediately : true,
 						el : elc.find('.webbotsContentWrapper')
 
 					},
@@ -2588,7 +3000,7 @@ var system16 = (function(){
 						using : use,
 						admin : actions.admin()
 					},
-
+					insertimmediately : true,
 					el : elc.find('.proxyServers')
 
 				},
@@ -2617,7 +3029,7 @@ var system16 = (function(){
 						proxy : proxy,
 						admin : actions.admin()
 					},
-
+					insertimmediately : true,
 					el : elc.find('.serverWrapper')
 
 				},
@@ -2646,7 +3058,7 @@ var system16 = (function(){
 						proxy : proxy,
 						admin : actions.admin()
 					},
-
+					insertimmediately : true,
 					el : elc.find('.webserverstatusWrapper')
 
 				},
@@ -2671,7 +3083,7 @@ var system16 = (function(){
 						proxy : proxy,
 						admin : actions.admin()
 					},
-
+					insertimmediately : true,
 					el : elc.find('.webServerWrapper')
 
 				},
@@ -2819,8 +3231,7 @@ var system16 = (function(){
 			},
 			webserveradmin : function(elc, clbk){
 
-				if(actions.admin() && system){
-
+				if(actions.admin() && system && info){
 					self.shell({
 						inner : html,
 						name : 'webserveradmin',
@@ -2828,9 +3239,10 @@ var system16 = (function(){
 							admin : actions.admin(),
 							system : system,
 							proxy : proxy,
-							changes : changes.server
+							changes : changes.server,
+							info : info
 						},
-
+						insertimmediately : true,
 						el : elc.find('.adminPanelWrapper')
 
 					},
@@ -2877,47 +3289,28 @@ var system16 = (function(){
 
 							var _make = function(){
 								globalpreloader(true)
-								if(typeof changes.server.enabledtor != 'undefined') {
-									proxy.fetchauth('manage', {
-										action: changes.server.enabledtor ? 'tor.start' : 'tor.stop',
-										data: {}
-									}).catch(e => {
-										globalpreloader(false)
-										return Promise.resolve()
-
-									}).then(r => {
-										delete changes.server.enabledtor;
-										make(proxy || api.get.current());
-
-										globalpreloader(false)
-
-										topPreloader(100);
-
-									})
-								}
 								
 								proxy.fetchauth('manage', {
 									action: 'set.server.settings',
 									data: {
 										settings: changes.server
 									}
-								}).catch(e => {
-									globalpreloader(false)
-									return Promise.resolve()
-		
 								}).then(r => {
+
 									changes.server = {}
 		
 									make(proxy || api.get.current());
-
+		
+								}).catch(e => {
+									console.error(e)
+								}).finally(() => {
 									globalpreloader(false)
 				
 									topPreloader(100);
-		
 								})
 							}
 							
-							if(typeof changes.server.enabledtor != 'undefined' || typeof changes.server.enabled != 'undefined' || changes.server.https || changes.server.wss || changes.server.ssl){
+							if(typeof changes.server.torenabled2 != 'undefined' || typeof changes.server.enabled != 'undefined' || changes.server.https || changes.server.wss || changes.server.ssl){
 								new dialog({
 									class : 'zindex',
 									html : "Do you really want to change this settings?",
@@ -3031,6 +3424,53 @@ var system16 = (function(){
 							renders.webserveradmin(elc)
 						})
 
+						p.el.find('.reinstalltor').on('click', function(){
+
+							topPreloader(20);
+
+							proxy.fetchauth('manage', {
+								action : 'tor.reinstall',
+								data : {
+								}
+							}).then(torinfo => {
+
+								info.tor = torinfo
+
+								renders.webserveradmin(elc)
+	
+								topPreloader(100);
+	
+							}).catch(e => {
+	
+								sitemessage(self.app.localization.e('e13293'))
+	
+								topPreloader(100);
+	
+							})
+						})
+
+						p.el.find('.installtor').on('click', function(){
+							proxy.fetchauth('manage', {
+								action : 'tor.install',
+								data : {
+								}
+							}).then(torinfo => {
+
+								info.tor = torinfo
+
+								renders.webserveradmin(elc)
+	
+								topPreloader(100);
+	
+							}).catch(e => {
+	
+								sitemessage(self.app.localization.e('e13293'))
+	
+								topPreloader(100);
+	
+							})
+						})
+
 						if (clbk)
 							clbk()
 					})
@@ -3055,7 +3495,7 @@ var system16 = (function(){
 							proxy : proxy,
 							admin : actions.admin()
 						},
-	
+						insertimmediately : true,
 						el : elc.find('.webAdminsWrapper')
 	
 					},
@@ -3071,7 +3511,7 @@ var system16 = (function(){
 
 								var t = 'Do you really want to remove selected admin from Proxy server admin list?'
 
-								if(address == self.app.platform.sdk.address.pnet().address){
+								if(address == self.app.user.address.value){
 									t = 'Do you really want to remove Your account from Proxy server admin list?'
 								}
 
@@ -3106,7 +3546,7 @@ var system16 = (function(){
 						proxy : proxy,
 						admin : actions.admin()
 					},
-
+					insertimmediately : true,
 					el : elc.find('.webdistributionwalletsWrapper')
 
 				},
@@ -3283,7 +3723,7 @@ var system16 = (function(){
 						proxy : proxy,
 						admin : actions.admin()
 					},
-
+					insertimmediately : true,
 					el : elc.find('.webDistributionWrapper')
 
 				},
@@ -3331,19 +3771,149 @@ var system16 = (function(){
 						admin : actions.admin(),
 						
 					},
-
+					insertimmediately : true,
 					el : elc.find('.peertubeWrapper')
 
 				},
-				function(){
+				function(_p){
 
 
 					renders.peertubeinstancestable(elc)
+
+					if(actions.admin()){
+						_p.el.find('.restartcomponent').on('click', function(){
+							new dialog({
+								class : 'zindex',
+								html : "Do you really want to restart peertube component?",
+								btn1text : self.app.localization.e('dyes'),
+								btn2text : self.app.localization.e('dno'),
+								success : function(){	
+
+									globalpreloader(true)
+									proxy.fetchauth('peertube/restart', {
+									
+										data : {}
+		
+									}).catch(e => {
+										
+										return Promise.resolve()
+			
+									}).then(r => {
+
+										topPreloader(100);
+
+										setTimeout(() => {
+											globalpreloader(false)
+
+											actions.refresh()
+										}, 4000)
+										
+
+										//renders.peertubecontent(el.c)
+					
+										
+			
+									})
+
+									
+															
+								}
+							})
+						})
+					}
+
+						
+
+					
 
 					if (clbk)
 						clbk()
 				})
 			},
+
+			translateapicontent : function(elc, clbk){
+
+				if(!info || !info.translateapi){
+					if(clbk) clbk()
+
+					return
+				}
+
+				self.shell({
+					inner : html,
+					name : 'translateapi',
+					data : {
+						info : info,
+						proxy : proxy,
+						admin : actions.admin(),
+						
+					},
+					insertimmediately : true,
+					el : elc.find('.translateapiWrapper')
+
+				},
+				function(p){
+
+					var meta = info.translateapi.meta
+
+					p.el.find('.settings').on('click', function(){
+					
+						var d = inputDialogNew({
+							caption : "Edit Translate Api settings",
+							class : 'addressdialog',
+							wrap : true,
+							values : [{
+								defValue : meta.api || '',
+								validate : 'empty',
+								placeholder : "",
+								label : "Api service"
+							},{
+								defValue : '',
+								validate : 'empty',
+								placeholder : "Enter Api key",
+								label : "Api key"
+							}],
+		
+							success : function(v){
+		
+								var s = {}
+
+								s.api = v[0]
+								s.key = v[1]
+		
+								topPreloader(30);
+		
+								proxy.fetchauth('manage', {
+									action : 'set.translateapi.settings',
+									data : s
+								}).then(r => {
+		
+									actions.refresh()
+		
+									d.destroy();
+		
+									topPreloader(100);
+		
+								}).catch(e => {
+		
+									sitemessage(self.app.localization.e('e13293'))
+		
+									topPreloader(100);
+		
+								})
+		
+							}
+						})
+					})
+
+					if(el.c)
+						chart.make('translateapi', stats, null, false)
+
+					if (clbk)
+						clbk()
+				})
+			},
+
 			peertubeinstancestable : function(elc, clbk){
 								
 				self.shell({
@@ -3357,7 +3927,7 @@ var system16 = (function(){
 						currentinstance : null,
 						//peertubePerformance,
 					},
-
+					insertimmediately : true,
 					el : elc.find('.peertubeWrapper .instances')
 
 				},
@@ -3403,6 +3973,7 @@ var system16 = (function(){
 						clbk()
 				})
 			},
+
 			chaincontent: function(elc, clbk){
 
 				if(!info){
@@ -3420,7 +3991,7 @@ var system16 = (function(){
 						proxy : proxy,
 						admin : actions.admin(),
 					},
-
+					insertimmediately : true,
 					el : elc.find('.chainWrapper')
 
 				},
@@ -3440,6 +4011,107 @@ var system16 = (function(){
 						clbk()
 				})
 			},
+
+			notificationcontent : function(elc, clbk){
+
+				if(!info){
+					if(clbk) clbk()
+
+					return
+				}
+
+
+
+				self.shell({
+						inner : html,
+						name : 'notificationcontent',
+						data : {
+							info : info,
+							manager : info.nodeManager,
+							proxy : proxy,
+							admin : actions.admin(),
+
+						},
+						insertimmediately : true,
+						el : elc.find('.notificationsWrapper')
+
+					},
+					function(){
+						renders.notificationcontenttable(elc)
+						//renders.notificationuserstable(elc)
+
+						if (clbk)
+							clbk()
+					})
+			},
+
+
+			notificationcontenttable : async function(elc, clbk){
+
+				var use = api.get.current()
+				var currentnode = null
+
+				if (use.id == proxy.id && proxy.current){
+					currentnode = proxy.current.key
+				}
+
+				const stats = await proxy.fetchauth('notifications/stats')
+
+				self.shell({
+					inner : html,
+					name : 'notificationcontenttable',
+					data : {
+						info : info,
+						stats : stats,
+						proxy : proxy,
+						admin : actions.admin(),
+					},
+					insertimmediately : true,
+					el : elc.find('.notificationsWrapper .notifications')
+
+				},
+				function(p){
+
+					p.el.find('.button').on('click', function(){
+						var href = $(this).attr('href')
+						$(this).attr('href', href.replaceAll("https://", ""))
+					})
+
+					if (clbk)
+						clbk()
+				})
+			},
+
+			notificationuserstable : async function(elc, clbk){
+
+				var use = api.get.current()
+				var currentnode = null
+
+				if (use.id == proxy.id && proxy.current){
+					currentnode = proxy.current.key
+				}
+
+				const users = await proxy.fetchauth('notifications/users')
+
+				self.shell({
+						inner : html,
+						name : 'notificationuserstable',
+						data : {
+							info : info,
+							users : users,
+							proxy : proxy,
+							admin : actions.admin(),
+						},
+						insertimmediately : true,
+						el : elc.find('.notificationsWrapper .notifications-users')
+
+					},
+					function(p){
+						if (clbk)
+							clbk()
+					})
+			},
+
 			nodescontent : function(elc, clbk){
 
 				if(!info){
@@ -3460,7 +4132,7 @@ var system16 = (function(){
 						admin : actions.admin(),
 						
 					},
-
+					insertimmediately : true,
 					el : elc.find('.nodesWrapper')
 
 				},
@@ -3492,6 +4164,7 @@ var system16 = (function(){
 						clbk()
 				})
 			},
+
 			nodescontenttable : function(elc, clbk){
 
 				var use = api.get.current() 
@@ -3512,7 +4185,7 @@ var system16 = (function(){
 						currentnode : currentnode,
 						fixednode : api.get.fixednode()
 					},
-
+					insertimmediately : true,
 					el : elc.find('.nodesWrapper .nodes')
 
 				},
@@ -3568,7 +4241,7 @@ var system16 = (function(){
 
 							new dialog({
 								class : 'zindex',
-								html : "Do you really want reconnect to selected "+self.app.meta.fullname+" Node?",
+								html : self.app.localization.e('selectnode', self.app.meta.fullname),
 								btn1text : self.app.localization.e('dyes'),
 								btn2text : self.app.localization.e('dno'),
 								success : function(){	
@@ -3698,7 +4371,7 @@ var system16 = (function(){
 						data : {
 							direct : direct
 						},
-	
+						insertimmediately : true,
 						el : elc.find('.localnodeWrapper')
 	
 					},
@@ -3743,6 +4416,7 @@ var system16 = (function(){
 			panel : function(){
 				if(el.c){
 					renders.nodescontenttable(el.c)
+					//renders.notificationcontenttable(el.c)
 					renders.peertubeinstancestable(el.c)
 					renders.webadminscontent(el.c)
 					renders.webdistributionwallets(el.c)
@@ -3758,6 +4432,7 @@ var system16 = (function(){
 					chart.make('nodes', stats, null, update)
 					chart.make('wallets', stats, null,  update)
 					chart.make('peertube', stats, null, update)
+					chart.make('translateapi', stats, null, update)
 				}
 
 				
@@ -3791,7 +4466,7 @@ var system16 = (function(){
 			}
 		}
 
-		var make = function(prx){
+		var make = function(prx, callbacks){
 
 			destroy()
 
@@ -3801,12 +4476,14 @@ var system16 = (function(){
 			info = null
 			stats = []
 			bots = []
+			aTransactions = []
 
 			graphs = {}
 
 			var expanded = el.c.find('.collapsepart').map(function(){
 				return $(this).hasClass('expanded')
 			})
+			
 
 			if (proxy) {
 
@@ -3839,6 +4516,10 @@ var system16 = (function(){
 
 				}).then(data => {
 
+					el.c.find('.collapsepart').each(function (i) {
+						if (expanded[i]) $(this).addClass('expanded');
+					});
+
 
 					stats = data.stats
 
@@ -3869,26 +4550,38 @@ var system16 = (function(){
 						.then(() => proxy.system.request('get.settings'))*/
 						.then((r) => {
 						  system = r;
-		  
+							
+						  if(callbacks){
+							callbacks.onSettingsReceived?.(r);
+						  }
+						  
+
 						  return Promise.resolve();
 						})
 						.then((r) => {
 						  return proxy.system.request('bots.get');
 						})
 						.then((r) => {
-							
+
 						  bots = r.bots || [];
 						  renders.bots(el.c);
-		  
-						  el.c.find('.collapsepart').each(function (i) {
-							if (expanded[i]) $(this).addClass('expanded');
-						  });
-						  
+
+						}).then((r) => {
+							return proxy.system.request('atransactions.get');
+						})
+						.then((r) => {
+
+							aTransactions = r.atransactions || [];
+							renders.aTransactions(el.c);
+
+						}).catch(e => {
+							console.error(e)
 						});
 
 					}
 
 				}).catch(e => {
+					console.error(e)
 					makers.proxycontent()
 				})
 			}
@@ -3969,7 +4662,7 @@ var system16 = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

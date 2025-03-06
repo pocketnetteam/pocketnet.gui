@@ -21,8 +21,10 @@ var terms = (function(){
 		var renders = {
 			terms : function(){
 
+				var key = self.app.localization.key;
+
 				self.shell({
-					name :  'en',
+					name :  key === 'ru' ? 'ru' : 'en',
 					el :   el.c.find('.textWrapper'),
 					data : {
 						
@@ -112,7 +114,7 @@ var terms = (function(){
 
 		_.each(essenses, function(essense){
 
-			window.requestAnimationFrame(() => {
+			window.rifticker.add(() => {
 				essense.destroy();
 			})
 

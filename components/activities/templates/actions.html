@@ -1,0 +1,48 @@
+<% if(actions.length) {%>
+
+<% _.each(actions, function(action){ 
+    
+    %>
+    <div class="action" aid="<%-action.id%>">
+
+        <div class="typeRow">
+            <div class="type">
+                <span><%-e('object_' + action.object.type)%></span>
+            </div>
+
+            <div class="dateWr">
+                <span class="date realtime" time="<%-action.added%>"><%- app.reltime(action.added) %></span>
+            </div>
+        </div>
+
+        <div class="previewRow">
+            <% if(action.object.type == 'comment') {%>
+                <div class="actioncomment">
+                    <span><%-action.object.message.v%></span>
+                </div>
+            <% } %>
+        </div>
+
+        <div class="statusRow">
+
+            <div class="status">
+                <span><%-e(action.currentState)%></span>
+            </div>
+            
+            <% if(!action.transaction) { %>
+                <div>
+                    <button class="button small cancel">Cancel</button>
+                </div>
+            <% } %>
+        </div>
+
+        
+    </div>
+
+<% }) %>
+
+<% } else { %> 
+    <div class="empty">
+        <span><%-e('actions_no_pending_actions')%></span>
+    </div>
+<% } %>

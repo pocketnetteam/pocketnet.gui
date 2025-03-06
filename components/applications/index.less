@@ -1,6 +1,13 @@
 @import "../../css/__cssvar";
 
 #applications{
+
+    .disclaimerWrapper{
+        padding : 2 * @rhythm;
+        text-align: center;
+        background: rgba(var(--color-bg-ac-bright));
+        color : rgb(var(--text-on-bg-shadow-color));
+    }
     
     .oss{
         margin-top : 4 * @rhythm;
@@ -207,7 +214,15 @@
     }
 }
 
-
+.applicationWnd.wnd{
+    .wndinner{
+        height: 90%;
+        max-width: 800px;
+    }
+    .wndcontent{
+        padding : 0;
+    }
+}
 
 /*t*/ @media only screen and (max-width: 768px){
     #applications{
@@ -220,6 +235,7 @@
                 height: 600px;
                 grid-column: span 1;
                 grid-row: span 2;
+                
     
                 &:nth-child(2){
                     grid-column: span 1;
@@ -249,7 +265,6 @@
         .mainos{
             .os{
                 height: 750px;
-    
                 .osimage{
                     left : 0;
                     right: 0;
@@ -265,6 +280,8 @@
                 .data{
                     left: 10%;
                     top : 10%;
+                    right: 2 * @rhythm;
+
                 }
     
                 .subcaption{

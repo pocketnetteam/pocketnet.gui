@@ -10,17 +10,22 @@
 				</span>
 			</div>-->
 
-			<% if(app.thislink(value)) {%>
+			<% if(app.thislink(value) || value.indexOf(":") == 0) {%>
 
-				<div class="searchby gotopage" link="<%-value%>">
+				<div class="searchby gotopage" link="<%-value.replace(":", "")%>">
 					<div class="swrp managebutton">
 						<div class="rsicon">
 							<i class="fas fa-link"></i>
 						</div>
 						<div class="label">
 							<span>
-								<%=e('gotopage')%>
+								<%- e('gotopage')%>
 							</span>
+							<% if(value.indexOf(":") == 0) {%>
+							<span>
+								<%- value.replace(":", "") %>
+							</span>
+							<% } %>
 						</div>
 					</div>
 				</div>
@@ -29,7 +34,7 @@
 
 				<% if(value.indexOf("#") == -1) {%>
 
-					<a elementsid="index?ss=<%-value%>" href="index?ss=<%-value%>">
+					<a elementsid="index?ss=<%-value%>" href="index?ss=<%-value.replace(/[,.!?;:()\n\r]/g, '')%>">
 						<div class="searchby searchbyvalue">
 					
 							<div class="swrp managebutton">
@@ -101,8 +106,9 @@
 
 			var c = 6
 			var filteredResults = results.filter(user => {
-			if (self.app.platform.sdk.user.isNotAllowedName(user)) return false
-			else return true
+				if (self.app.platform.sdk.user.isNotAllowedName(user)) return false
+				if (user.deleted) return false
+				return true
 			})
 
 			if(isMobile()) c = 12
@@ -122,7 +128,7 @@
 
 						%>
 
-						<div class="user" elementsid="<%- user.address %>_open" address="<%- user.address %>" name="<%- decodeURIComponent(user.name) %>">
+						<div class="user tvfocusedopacity" elementsid="<%- user.address %>_open" address="<%- user.address %>" name="<%- decodeURIComponent(user.name) %>">
 							<div class="userTable">
 								<div class="iconWrapper">
 									<div class="usicon">
@@ -167,7 +173,7 @@
 								</div>
 
 								<div class="label">
-									<%- decodeURIComponent(user.name || user.address) %>
+									<%- app.platform.api.clearname(decodeURIComponent(user.name || user.address), true) %>
 								</div>
 							</div>
 						</div>
@@ -224,6 +230,31 @@
 										</div>
 										<div class="label">
 											<%- r.data.value.replace(/#/g, '').split(' ').join(', ') %>
+										</div>
+									</div>
+								</div>
+							</a>
+					
+						</div>
+
+					<% } %>
+
+					<% if(r.type == 'application') {%>
+
+						<div class="searchbywrapper small">
+							<a href="<%-r.url%>">
+								<div class="searchby searchbyusers">
+									<div class="swra">
+										<div class="appicon" contain="none" image="<%-r.icon || '*'%>">
+											<div class="appiconsmall">
+												<span class="fa-stack fa-2x real">
+													<i class="fas fa-certificate fa-stack-2x"></i>
+													<i class="fas fa-play fa-stack-1x"></i>
+												</span>
+											</div>
+										</div>
+										<div class="label">
+											<%- r.name %>
 										</div>
 									</div>
 								</div>
