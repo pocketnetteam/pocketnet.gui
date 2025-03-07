@@ -2260,7 +2260,6 @@ resizeFit = function (srcData, width, height, clbk, format, quality) {
 }
 
 resize = function (srcData, width, height, clbk, format, quality) {
-
 	/**/
 
 	var imageObj = new Image(),
@@ -2284,8 +2283,8 @@ resize = function (srcData, width, height, clbk, format, quality) {
 		newWidth = imageObj.width;
 
 		if (newHeight <= height && newWidth <= width && !quality) {
-			// clbk(srcData);
-			// return
+			clbk(srcData);
+			return
 		}
 		else {
 			if (newWidth > width) {
@@ -8396,7 +8395,6 @@ initUpload = function (p) {
 					}
 
 					readFile(reader, error, file, files, function (fileObject) {
-
 						imageresize(file, fileObject.base64, function (base64) {
 
 							fileObject.base64 = base64;
