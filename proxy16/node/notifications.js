@@ -341,14 +341,16 @@ class Notifications{
     }
 
     transaction(notification, address){
+
+        let amount = 0
+
         switch (notification.type) {
             case 'money':
                 if (notification.outputs.length && !notification.outputs?.[0]?.addresshash){
                     notification.cointype = this.proxy.pocketnet.kit.getCoibaseType(notification.outputs[0])
                 }
-                    
 
-                let amount = notification?.outputs?.find(el => el.addresshash === address)?.value;
+                amount = notification?.outputs?.find(el => el.addresshash === address)?.value;
 
                 notification.amount = amount ? amount / 100000000 : 0
 

@@ -290,20 +290,11 @@ var Cache = function(p){
                 block : 0,
             },
 
-            getstatisticbydays : {
-                time : 5600,
-                block : 0,
-            },
-
             getstatisticcontentbyhours : {
                 time : 560,
                 block : 0,
             },
 
-            getstatisticcontentbydays : {
-                time : 5600,
-                block : 0,
-            },
 
             gettopfeed : {
                 time : 3600
@@ -454,7 +445,7 @@ var Cache = function(p){
                 storage[key][k].ontime = ontime
             }
 
-            if (block && typeof ckeys[key].block != undefined){
+            if (block && typeof ckeys[key].block != 'undefined'){
                 ckeys[key].block = block
             }
 

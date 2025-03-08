@@ -43,7 +43,7 @@ const offlinePeertubeList = require('./peertube-servers.json');
 
 process.setMaxListeners(0);
 require('events').EventEmitter.defaultMaxListeners = 0
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+//process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	var self = this;
