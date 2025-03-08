@@ -87,7 +87,6 @@ var share = (function(){
 			},
 
 			resizeImage : function(base64, settings){
-
 				if(!settings) settings = {}
 
 				var images = [{
@@ -114,7 +113,6 @@ var share = (function(){
 							},
 					
 							success : function(i, editclbk){
-
 								resize(images[0].original, 1920, 1080, function(resized){
 									var r = resized.split(',');
 					
@@ -129,7 +127,7 @@ var share = (function(){
 										reject("error")
 									}
 								
-								})
+								}, null, settings.qualityForThumbnail || null)
 
 				
 						  	},
@@ -148,7 +146,9 @@ var share = (function(){
 					thumbnailfile: image,
 				};
 
-				var settingsObject = {}
+				var settingsObject = {
+					qualityForThumbnail: 0.95,
+				}
 
 				var urlMeta = self.app.peertubeHandler.parselink(shareUrl);
 
