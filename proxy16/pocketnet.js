@@ -80,10 +80,6 @@ var Pocketnet = function(){
 
                     if(!_.isArray(addresses)) addresses = [addresses]
 
-                    delete pkbuffer
-                    delete hash
-                    delete hashtrue
-
                     return verify && _.indexOf(addresses, signature.address) > -1
                 }
 
