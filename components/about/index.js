@@ -254,7 +254,7 @@ var about = (function(){
 				var group = helpers.findReport(id);
 
 				if (group){
-					group.active = !!!group.active;
+					group.active = group.active ? false : true;
 
 					var _el = el.c.find('[levelid="'+id+'"]');
 
