@@ -10,17 +10,13 @@ User = function(app, p) {
 
 	var self = this;
 
-	var ajax = app.ajax || null,
-		prefix = app.options.name || "",
-		settings = app.settings || null,
-		s = "Xxsa4612caC#xa09uyqSSRd676555uYY!u765alLLom()jculloLjanbtallloYSDxuYYuY55we7",
-		tokenExpired = null,
+	var settings = app.settings || null,
 		tokenDialog = null,		
 		state = 0; 
 
 	self.imgur = {
-		clientId : '61175058f8e21f4',
-		secret : 'ea4020d8024dfb78d372d1cd21c2f3215c72ead4'
+		clientId : '',
+		secret : ''
 	};
 
 	var keys = {

@@ -69,6 +69,7 @@ var Server = function(settings, admins, manage){
         app.use(express.json({limit: '5mb'})) 
         app.use(express.urlencoded({ extended: true, limit: '5mb' }))
         app.use(compression({ filter: shouldCompress }))
+        app.disable('x-powered-by')
 
         startedDate = new Date()
 
