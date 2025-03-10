@@ -107,6 +107,7 @@
         "tree-kill": "^1.2.2",
         "underscore": "",
         "winston": "^3.3.3",
+        "winston-transport": "^4.7.0",
         "ws": "^8.16.0"
     },
     "build": {
