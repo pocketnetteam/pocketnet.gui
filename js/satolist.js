@@ -25981,25 +25981,25 @@ Platform = function (app, listofnodes) {
                 }
             })
 
+            electron.ipcRenderer.on('open-chat', function (event, data) {
+                if (data.roomid) {
+    
+                    var chatLink = '/chat?id=' + data.roomid;
+    
+                    return self.app.platform.matrixchat.wait().then((core) => {
+                        if (self.app.mobileview) {
+                            core.apptochat(chatLink)
+                        } else {
+                            core.gopage(chatLink)
+                        }
+    
+                        return Promise.resolve()
+    
+                    })
+                }
+            })
+
         }
-
-        electron.ipcRenderer.on('open-chat', function (event, data) {
-            if (data.roomid) {
-
-                var chatLink = '/chat?id=' + data.roomid;
-
-                return self.app.platform.matrixchat.wait().then((core) => {
-                    if (self.app.mobileview) {
-                        core.apptochat(chatLink)
-                    } else {
-                        core.gopage(chatLink)
-                    }
-
-                    return Promise.resolve()
-
-                })
-            }
-        })
 
         if (window.cordova && typeof universalLinks != 'undefined') {
 
