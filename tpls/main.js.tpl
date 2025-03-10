@@ -612,6 +612,9 @@ function createWindow() {
             destroyBadge()
             
         } else {
+            // Close all system notifications
+            notificationsClose()
+
             destroyBadge()
             destroyTray()
             win = null
@@ -687,16 +690,20 @@ function createWindow() {
         delete global.activeNotifications[id];
     }
 
-    ipcMain.on('electron-notification-close', (e, notificationId) => {
+    const notificationsClose = (id = 'all') => {
         if (global.activeNotifications) {
-            if (notificationId === 'all') {
+            if (id === 'all') {
                 _.each(global.activeNotifications, (n, id) => {
                     notificationClose(id, n);
                 });
-            } else if (global.activeNotifications[notificationId]) {
-                notificationClose(notificationId, global.activeNotifications[notificationId]);
+            } else if (global.activeNotifications[id]) {
+                notificationClose(id, global.activeNotifications[id]);
             }
         }
+    }
+
+    ipcMain.on('electron-notification-close', (e, notificationId) => {
+        notificationsClose(notificationId)
     })
 
     ipcMain.on('quitAndInstall', function(e) {

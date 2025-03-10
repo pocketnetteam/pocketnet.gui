@@ -10746,9 +10746,8 @@ Platform = function (app, listofnodes) {
                 })
 
                 // Close all system OS notifications
-                if (typeof electron !== 'undefined') {
+                if (electron)
                     electron.ipcRenderer.send('electron-notification-close', 'all');
-                }
 
                 n.save()
 
@@ -25449,6 +25448,10 @@ Platform = function (app, listofnodes) {
                 }
 
             }
+
+            // When focused clear all system notifications
+            if (electron)
+                electron.ipcRenderer.send('electron-notification-close', 'all');
 
             if (time > 120 && window.cordova) {
 
