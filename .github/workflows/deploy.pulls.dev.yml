@@ -47,7 +47,7 @@ jobs:
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
       - name: Prepare
         run: |
           tar xzf repo.tgz
@@ -69,7 +69,7 @@ jobs:
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
       - name: Prepare
         run: |
           tar xzf repo.tgz
@@ -162,7 +162,7 @@ jobs:
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 20
       - name: Prepare building
         run: |
           npm i
@@ -203,7 +203,7 @@ jobs:
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 20
       - name: Prepare building
         run: |
           apt update && apt install -y binutils rpm
@@ -236,7 +236,7 @@ jobs:
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 20
       - name: Prepare building
         run: |
           npm i
@@ -269,7 +269,7 @@ jobs:
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 20
       - name: Install Cordova
         run: |
           npm i -g cordova@10
@@ -331,7 +331,7 @@ jobs:
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 20
       - name: Install Cordova
         run: |
           npm i -g cordova@10
@@ -380,6 +380,8 @@ jobs:
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
+      - name: Remove old artifacts
+        run: rm -rf /data/dev/binaries/dev/*
       - name: Copy artifacts
         run: cp ./**/Bastyon* /data/dev/binaries/dev/
       - name: Copy HEAD information
