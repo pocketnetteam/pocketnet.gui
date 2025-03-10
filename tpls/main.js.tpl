@@ -643,13 +643,32 @@ function createWindow() {
 
         if (!is.windows()) {
             const n = new Notification({ title : p.title, body: p.body, silent :true, icon: pathImage})
-            n.onclick = function(){
 
-                if (win) {
-                    win.show();
-                    win.webContents.send('nav-message', { msg: 'userpage?id=notifications&report=notifications', type: 'action'})
-                }
+            // Save chat info
+            if (p.roomid) {
+                n.roomid = p.roomid
             }
+
+            n.on('click', () => {
+
+                if (!win)
+                    return
+
+                if (win.isMinimized()) win.restore()
+                win.focus()
+                win.show()
+
+                if (!n.roomid) {
+                    win.webContents.send('nav-message', { 
+                        msg: 'userpage?id=notifications&report=notifications', 
+                        type: 'action'
+                    })
+                } else {
+                    win.webContents.send('open-chat', { 
+                        roomid: n.roomid
+                    })
+                }
+            })
 
             n.show()
             
