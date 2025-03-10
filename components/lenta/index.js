@@ -4086,7 +4086,8 @@ var lenta = (function(){
 						index : p.index || 0,
 						video : video || essenseData.videomobile,
 						boosted : p.boosted,
-						recommended
+						recommended,
+						ed : essenseData
 					},
 					animation : false,
 					delayRender : isotopeinited,
@@ -5133,11 +5134,6 @@ var lenta = (function(){
 								if (pr.blocknumber) fixedblock = pr.blocknumber
 								//if (pr.txid) actions.fixposition(pr.txid)
 								
-								
-								if (essenseData.shuffle) {
-									shares = _.shuffle(shares)
-								}
-
 								if (essenseData.filterTopAuthors) {
 									shares = _.filter(shares, (s) => {
 										if(!_.find(sharesInview, (s2) => {
@@ -5147,6 +5143,10 @@ var lenta = (function(){
 											console.log("filtered by authors")
 										}
 									})
+								}
+
+								if (essenseData.shuffle) {
+									shares = _.shuffle(shares)
 								}
 
 								load.sstuff(shares, error, pr, clbk, bshares, includingsub)				

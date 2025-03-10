@@ -479,7 +479,7 @@ var Action = function(account, object, priority, settings){
 
         _.each(inputs, (input, index) => {
             seqnumber++
-            txb.addInput(input.txid, input.vout, delayedNtime ? seqnumber : null, Buffer.from(input.scriptPubKey, 'hex'))
+            txb.addInput(input.txid, input.vout, delayedNtime ? 4294967294 : null, Buffer.from(input.scriptPubKey, 'hex'))
         })
 
         if(opreturnData){
