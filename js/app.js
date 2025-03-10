@@ -144,13 +144,14 @@ Application = function (p) {
 	self.margintop = 0
 	
 	self.caneditdelaypost = false
+	self.delaypost = true
 
 
 	if (self.test) {
 		self.publishapps = true
 	}
 
-	if (self.test) {
+	/*if (self.test) {
 		self.delaypost = true
 	}
 
@@ -161,7 +162,7 @@ Application = function (p) {
 		
 	}catch(e){
 
-	}
+	}*/
 
 	self.options = {
 
