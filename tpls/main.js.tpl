@@ -654,19 +654,15 @@ function createWindow() {
                 if (!win)
                     return
 
-                if (win.isMinimized()) win.restore()
+                if (win.isMinimized())
+                    win.restore()
                 win.focus()
                 win.show()
 
                 if (!n.roomid) {
-                    win.webContents.send('nav-message', { 
-                        msg: 'userpage?id=notifications&report=notifications', 
-                        type: 'action'
-                    })
+                    win.webContents.send('nav-message', { msg: 'userpage?id=notifications&report=notifications', type: 'action' })
                 } else {
-                    win.webContents.send('open-chat', { 
-                        roomid: n.roomid
-                    })
+                    win.webContents.send('open-chat', { roomid: n.roomid })
                 }
             })
 
@@ -684,15 +680,25 @@ function createWindow() {
                     title: p.title,
                     message: p.body,
                     icon: pathImage, // Absolute path (doesn't work on balloons)
-                    wait: true // Wait with callback, until user action is taken against notification, does not apply to Windows Toasters as they always wait or notify-send as it does not support the wait option
+                    wait: true, // Wait with callback, until user action is taken against notification, does not apply to Windows Toasters as they always wait or notify-send as it does not support the wait option
+                    roomid: p.roomid
                 },
                 function (err, response, metadata) {
 
                     if (response != 'timeout' && !_.isEmpty(metadata))
 
                         if (win) {
-                            win.show();
-                            win.webContents.send('nav-message', { msg: 'userpage?id=notifications&report=notifications', type: 'action'})
+                            if (win.isMinimized())
+                                win.restore()
+
+                            win.focus()
+                            win.show()
+
+                            if (!n.roomid) {
+                                win.webContents.send('nav-message', { msg: 'userpage?id=notifications&report=notifications', type: 'action'})
+                            } else {
+                                win.webContents.send('open-chat', { roomid: n.roomid })
+                            }
                         }
                 }
             );
