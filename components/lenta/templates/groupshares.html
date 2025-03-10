@@ -24,9 +24,17 @@ if (typeof recommended == 'undefined' || recommended != 'hot'){
 	})
 }
 
+if (typeof ed != 'undefined' && ed.shuffle) {
+	groupshares = _.shuffle(groupshares)
+}
+
 var me = app.platform.sdk.user.me()
 
-_.each(groupshares, function(gs, address){ 	%>
+_.each(groupshares, function(gs, address){ 	
+	
+	var address = gs[0].address
+	
+	%>
 
 	<div class="authorgroup <% if(me && me.relation(address, 'blocking')) {%>blocking<% } %>" l="<%- gs.length %>">
 
