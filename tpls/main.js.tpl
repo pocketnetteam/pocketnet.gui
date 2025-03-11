@@ -654,10 +654,8 @@ function createWindow() {
                 if (!win)
                     return
 
-                if (win.isMinimized())
-                    win.restore()
-                win.focus()
                 win.show()
+                win.focus()
 
                 if (!n.roomid) {
                     win.webContents.send('nav-message', { msg: 'userpage?id=notifications&report=notifications', type: 'action' })

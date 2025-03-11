@@ -25987,12 +25987,7 @@ Platform = function (app, listofnodes) {
                     var chatLink = '/chat?id=' + data.roomid;
     
                     return self.app.platform.matrixchat.wait().then((core) => {
-                        if (self.app.mobileview) {
-                            core.apptochat(chatLink)
-                        } else {
-                            core.gopage(chatLink)
-                        }
-    
+                        core.gopage(chatLink)    
                         return Promise.resolve()
     
                     })
