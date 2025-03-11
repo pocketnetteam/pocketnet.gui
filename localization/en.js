@@ -3217,7 +3217,7 @@ _l.getpaidsubscription_paidsuccess_removecodition_text = "The author has disable
 
 
 _l.buypkoinexchnage='Buy from an exchanger';
-_l.buypkoinexchnage_info='Buy from a trusted p2p exchanger via the PKOIN Exchange mini app';
+_l.buypkoinexchnage_info='Buy peer-to-peer through mini-app';
 _l.buypkoinexchnagep2p='Buy via PKOIN Exchange';
 
 _l.appsdisclaimer='Every app is already a wallet for pcoin. Except for the IOS';
