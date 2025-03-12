@@ -44,16 +44,19 @@
   line-height: 34px;
 }
 #donate .transaction .coinsWrapper .receiver input {
-  width: 72%;
-  margin-left: 0;
+  width: 58%;
+  margin-left: auto;
   border: 0;
-  text-align: right;
+  text-align: left;
   padding: 0;
   padding-right: 5px;
   height: 34px;
   line-height: 34px;
   color: rgb(var(--text-on-bg-shadow-color));
   background: transparent;
+}
+#donate .transaction .coinsWrapper .receiver .text {
+  margin-right: 14px;
 }
 #donate .transaction .coinsWrapper .chevron-right {
   box-sizing: border-box;
