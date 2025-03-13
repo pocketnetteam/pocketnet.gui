@@ -2063,6 +2063,7 @@ _l.downloadDesctApp = "Download "+appname+" for desktop"
 _l.downloadMobileApp = "Install Mobile Application"
 
 
+_l.easyNode_learnPkoin = "Learn more about PKOIN";
 _l.easyNode_e10000 = "Node"
 _l.easyNode_e10001 = "Download and install node"
 _l.easyNode_e10002 = ""+appname+" Node"
