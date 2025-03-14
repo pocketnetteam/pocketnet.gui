@@ -19551,7 +19551,7 @@ Platform = function (app, listofnodes) {
                             throw 'window.project_config.firebaseweb'
                         }
 
-                        firebase.initializeApp(window.project_config.firebaseweb);
+                        firebase.initializeApp(JSON.parse(hexDecode(window.project_config.firebaseweb)));
                     }
 
                     const messaging = firebase.messaging();
