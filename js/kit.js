@@ -2336,6 +2336,7 @@ brtOffer = function(){
 	self.images = [];
 	self.geohash = '';
 	self.currencyPrice = {};
+	self.delivery = {};
 	self.price = 0;
 	self.published = 'published';
 
@@ -2363,7 +2364,8 @@ brtOffer = function(){
 						a: self.tags,
 						c: self.condition,
 						p: self.published,
-						f: self.currencyPrice
+						f: self.currencyPrice,
+						d: self.delivery
 					 }) +
 					 JSON.stringify(self.images) +
 					 self.geohash +
@@ -2384,6 +2386,7 @@ brtOffer = function(){
 				images: self.images,
 				geohash: self.geohash,
 				currencyPrice: self.currencyPrice,
+				delivery: self.delivery,
 				price: self.price,
 				published: self.published
 			};
@@ -2401,7 +2404,8 @@ brtOffer = function(){
 					a: self.tags,
 					c: self.condition,
 					p: self.published,
-					f: self.currencyPrice
+					f: self.currencyPrice,
+					d: self.delivery
 				}),
 				s5: JSON.stringify(self.images),
 				s6: self.geohash,
@@ -2422,6 +2426,7 @@ brtOffer = function(){
 		self.images = d.images;
 		self.geohash = d.geohash;
 		self.currencyPrice = d.currencyPrice;
+		self.delivery = d.delivery;
 		self.price = d.price;
 		self.published = d.published;
 	}
