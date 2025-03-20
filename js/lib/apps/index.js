@@ -810,7 +810,24 @@ var BastyonApps = function (app) {
 
             }
         },
-
+        channel: {
+            parameters: ['address'],
+            action: function ({
+                data,
+            }) {
+                self.nav.api.load({
+                    open: true,
+                    id: 'channel',
+                    inWnd: true,
+                    history: true,
+                    essenseData: {
+                        id: data.address,
+                        openprofilebutton: true
+                    }
+                })
+                return Promise.resolve('channel:opened')
+            }
+        },
         images: {
             upload: {
                 authorization: true,
