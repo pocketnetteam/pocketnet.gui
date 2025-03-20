@@ -2420,6 +2420,9 @@ _l.permissions_descriptions_mobilecamera = "Дать приложению воз
 _l.permissions_name_zaddress = "Получить один из адресов кошелька"
 _l.permissions_descriptions_zaddress = "Показывает миниприложению один из адресов вашего кошелька"
 
+_l.permissions_name_notifications = "Получение уведомлений";
+_l.permissions_descriptions_notifications = "Разрешите приложению отправлять важные обновления и предупреждения";
+
 _l.permissions_ask = "запрашивает разрешение"
 _l.permissions_allow = "Разрешить"
 _l.permissions_allow_once = "Разрешить только сейчас"

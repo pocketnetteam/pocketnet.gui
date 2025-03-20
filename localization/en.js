@@ -2620,6 +2620,8 @@ _l.permissions_descriptions_mobilecamera = "Allow the app to open the mobile gal
 _l.permissions_name_zaddress = "Get one of the wallet addresses"
 _l.permissions_descriptions_zaddress = "Shows the widget one of your wallet addresses"
 
+_l.permissions_name_notifications = "Receive Notifications";
+_l.permissions_descriptions_notifications = "Allow the app to send you important updates and alerts";
 
 _l.permissions_ask = "asks for permission"
 _l.permissions_allow = "Allow"
