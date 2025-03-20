@@ -228,6 +228,8 @@ _l.uabout = "About myself";
 _l.uwebsite = "Web Site";
 _l.uaddresesd = "Addresses for Donations";
 _l.usavechanges = "Do you want to save your changes?";
+_l.uimageUrl = "Profile image url";
+_l.uimageUrlPlaceholder = "Enter your image or ipfs link";
 
 _l.settings_save = "Save changes";
 _l.settings_discard = "Discard changes";
