@@ -32,7 +32,7 @@
         {
 		    "id": "barteron.pocketnet.app",
 		    "version": "1.0.0",
-		    "scope": "barteron.club",
+		    "scope": "test.barter.pocketnet.app",
 		    "cantdelete": true,
 		    "develop": true,
 		    "install": true,
