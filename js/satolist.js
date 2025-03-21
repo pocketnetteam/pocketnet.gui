@@ -19546,21 +19546,26 @@ Platform = function (app, listofnodes) {
 
                 try {
                     if (!firebase.apps.length) {
-                        firebase.initializeApp({
-                            messagingSenderId: "1020521924918",
-                            projectId: 'pocketnet',
-                            apiKey: 'AIzaSyC_Jeet2gpKRZp44iATwlFFA7iGNYsabkk',
-                            appId: '1:1020521924918:ios:ab35cc84f0d10d86aacb97',
-                        });
+
+                        if(!window.project_config.firebaseweb){
+                            throw 'window.project_config.firebaseweb'
+                        }
+
+                        firebase.initializeApp(JSON.parse(hexDecode(window.project_config.firebaseweb)));
                     }
+
                     const messaging = firebase.messaging();
+
+
                     messaging.getToken().then(token => {
                         currenttoken = token
                         platform.fcmtoken = token
                         platform.matrixchat.changeFcm()
                         self.events()
+
                         if (clbk)
                             clbk(token)
+
                     }).catch(e => {
                         console.log("E", e)
                     })

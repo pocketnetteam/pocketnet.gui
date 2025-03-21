@@ -1863,7 +1863,7 @@ _l.invalidformat = "Неверный формат картинки. Разреш
 _l.downloadDesctApp = "Загрузить "+appname+" для персонального компьютера"
 _l.downloadMobileApp = "Установить мобильное приложение"
 
-
+_l.easyNode_learnPkoin = "Узнать больше о PKOIN";
 _l.easyNode_e10000 = "Нода"
 _l.easyNode_e10001 = "Скачать и установить Ноду"
 _l.easyNode_e10002 = "Нода "+appname+""
@@ -1936,7 +1936,6 @@ _l.downloadNode = "Скачать Ноду для Windows";
 _l.months = "месяцев";
 _l.year = "год";
 _l.stakingCalculator = "Калькулятор стейкинга - расчитайте, сколько вы можете заработать, используя Покеткоин (PKOIN) внутри Ноды";
-
 
 _l.easyNode_e2000 = "Защищайте Свободу Слова и ";
 _l.easyNode_e2000_1 = "Зарабатывайте ";
