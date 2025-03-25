@@ -4828,7 +4828,7 @@ var lenta = (function(){
 
 								var me = self.psdk.userInfo.getmy()
 
-								if(!essenseData.allowblocked){
+								if(!essenseData.allowblocked && recommended != 'jury'){
 									shares = _.filter(shares, function(share){
 
 										if(!me) return true 
