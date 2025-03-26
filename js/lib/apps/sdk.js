@@ -491,8 +491,8 @@ var BastyonSdk = function(settings = {}){
             return action('registration', {})
         },
       
-        channel: function(){
-            return action('channel', {})
+        channel: function(address){
+            return action('channel', {address})
         },
 
         userstate : function(){
