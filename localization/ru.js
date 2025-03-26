@@ -224,6 +224,8 @@ _l.uabout = "О себе";
 _l.uwebsite = "Веб сайт";
 _l.uaddresesd = "Адреса для пожертвований";
 _l.usavechanges = "Вы хотите сохранить изменения?";
+_l.uimageUrl = "Url иконки пользователя";
+_l.uimageUrlPlaceholder = "Url иконки или ipfs хеш";
 
 _l.settings_save = "Сохранить изменения";
 _l.settings_discard = "Сбросить изменения";
