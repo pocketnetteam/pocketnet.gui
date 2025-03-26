@@ -411,6 +411,10 @@ var BastyonSdk = function(settings = {}){
     self.openExternalLink = function(url){
         return action('openExternalLink', {url})
     }
+ 
+    self.registerForNotifications = function(){
+        return action('registerForNotifications')
+    }
 
     self.barteron = {
         account : function(data){
