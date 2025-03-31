@@ -130,7 +130,7 @@ FAQLANGS = function(app){
                     {
                         id : 'earnbastyon1en',
                         q : '',
-                        a : 'Requirements: <br /> <br />•	Your machine is not running any other Bastyon/Pocketnet node software <br />•	Your hard drive is SSD (not HDD) <br />•	Your computer has at least 50 GB empty space on your SSD<br />•	Your computer has at least 2 GB free RAM <br />•	Your internet speed is at least 10 Mb/sec',
+                        a : 'Requirements: <br /> <br />•	Your machine is not running any other Bastyon/Pocketnet node software <br />•	Your hard drive is SSD (not HDD) <br />•	Your computer has at least 150 GB empty space on your SSD<br />•	Your computer has at least 2 GB free RAM <br />•	Your internet speed is at least 10 Mb/sec',
                         img: ''
                     },
                     {
@@ -837,7 +837,7 @@ FAQLANGS = function(app){
                         {
                             id : 'earnbastyon1',
                             q : '',
-                            a : 'Требования: <br />- На вашем компьютере не установлено другое программное обеспечение Bastyon/Pocketnet node<br />- Накопитель SSD (не жесткий диск HDD)<br />- На SSD должно быть свободно не менее 50 ГБ<br />- Не менее 2 ГБ свободной оперативной памяти<br />- Скорость интернет соединения составляет не менее 10 Мбит/сек',
+                            a : 'Требования: <br />- На вашем компьютере не установлено другое программное обеспечение Bastyon/Pocketnet node<br />- Накопитель SSD (не жесткий диск HDD)<br />- На SSD должно быть свободно не менее 150 ГБ<br />- Не менее 2 ГБ свободной оперативной памяти<br />- Скорость интернет соединения составляет не менее 10 Мбит/сек',
                             img: ''
                         },
                         {
