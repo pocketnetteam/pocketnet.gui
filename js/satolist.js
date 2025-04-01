@@ -16091,7 +16091,7 @@ Platform = function (app, listofnodes) {
                     }
 
                     self.app.platform.actions.addActionAndSendIfCan(comment, 2, null, {
-                        rejectIfError: true
+                        rejectIfError: ['actions_noinputs_wait']
                     }).then(action => {
 
                         var alias = action.get()

@@ -1197,12 +1197,14 @@ var Action = function(account, object, priority, settings){
             if(rejectIfError){
                 if(
                     error == 'actions_inputs_not_updated' ||
-                    error == 'actions_noinputs_wait' || 
+                    //error == 'actions_noinputs_wait' || 
                     error == 'actions_userInteractive' || 
                     error == 'actions_waitUserInteractive' || 
                     error == 'actions_waitUserStatus' || 
                     error == 'actions_tryingsend' || 
-                    error == 'actions_checkFail' 
+                    error == 'actions_checkFail' || 
+
+                    (_.isArray(rejectIfError) && rejectIfError.indexOf(error) > -1)
                     
                     // || errorCodesAndActions[error]
 
