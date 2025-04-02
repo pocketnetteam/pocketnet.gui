@@ -1043,7 +1043,7 @@ var BastyonApps = function (app) {
 
             trigger('changestate', {
 
-                application: application.manifest.id,
+                application: application.id || application.manifest.id,
                 data: {
                     value: data.data.value,
                     replace: data.data.replace,
@@ -1053,9 +1053,9 @@ var BastyonApps = function (app) {
             }, source)
         },
 
-        loaded: function (application, data, source) {
+        loaded: function (application, data, source) {            
             trigger('loaded', {
-                application: application.manifest.id,
+                application: application.id || application.manifest.id,
                 data
             }, source)
         }
@@ -1153,9 +1153,7 @@ var BastyonApps = function (app) {
         if (getresources[application.id]) return getresources[application.id]
 
         if (application.develop) {
-            application.path = application.scope ? ('https://' + application.scope) : ('https://' + application.id + '.localhost/pocketnet/apps/_develop/' + application.id)
-
-
+            application.path = 'https://' + (application.scope || application.tscope)
         } else {
             application.path = 'https://' + application.scope
         }
@@ -1346,8 +1344,25 @@ var BastyonApps = function (app) {
 
     var listener = function (event) {
         var application = _.find(installed, (application) => {
-            return application.manifest.scope.indexOf(event.origin) == 0
+           const _scope = application.scope || application.manifest.scope;
+
+           if (!_scope || !event.origin) {
+             return false; 
+           }
+
+           const normalizedScope = self.normalizeScopeUrl(_scope);
+
+           const normalizedTscope = application.tscope
+             ? self.normalizeScopeUrl(application.tscope)
+             : null;
+
+           const isOriginMatch =
+             normalizedScope.startsWith(event.origin) ||
+             normalizedTscope?.startsWith(event.origin);
+
+           return isOriginMatch;
         })
+        
         if (!application) return
 
         windows[application.manifest.id] = event.source
@@ -1710,6 +1725,12 @@ var BastyonApps = function (app) {
 
     };
 
+    self.normalizeScopeUrl = function (url) {
+      if (!url.startsWith("https://")) {
+        return "https://" + url;
+      }
+      return url;
+    };
 
     self.editAppInConfig = function (app) {
         const existingApp = loadAppFromLocalhost(app.id);
@@ -1733,10 +1754,7 @@ var BastyonApps = function (app) {
         if (existingApp) {
             return Promise.reject(new Error('conflict:id_already_exists'));
         }
-
-        if (!app.id || !app.name || !app.scope) {
-            return Promise.reject(new Error('missing:required_fields'));
-        }
+        
         try {
 
             app.develop = true;
@@ -2428,7 +2446,7 @@ var BastyonApps = function (app) {
 
     }
 
-    self.on = function (key, action) {
+    self.on = function (key, action) {        
         if (!clbks[key]) clbks[key] = []
 
         clbks[key].push(action)

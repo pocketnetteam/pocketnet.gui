@@ -11,66 +11,86 @@
     </div>
 <% } %>-->
 <div class="captionRow <%if(app.electronview){%>electronstyle<%}%>">
-    <div class="captionRowWrapper">
-        <% if(!app.mobileview || !state || app.electronview) {%>
-            <div class="back iconwrapper filterIcon">
-                <div class="icon">
-                    <% if(app.electronview) {%>
-                        <i class="fas fa-chevron-left"></i>
-                    <% } else { %> 
-                        <i class="fas fa-times"></i>
-                    <% } %>
-                    
-                </div>
-            </div>
+  <div class="captionRowWrapper">
+      <% if(!app.mobileview || !state || app.electronview) {%>
+      <div class="back iconwrapper filterIcon">
+          <div class="icon">
+              <% if(app.electronview) {%>
+              <i class="fas fa-chevron-left"></i>
+              <% } else { %>
+              <i class="fas fa-times"></i>
+              <% } %>
+          </div>
+      </div>
 
-            <% if(app.electronview) {%>
+    <% if(app.electronview) {%>
 
-                <div class="forward iconwrapper filterIcon missicon">
-                    <div class="icon">
-                        <i class="fas fa-chevron-right"></i>
-                    </div>
-                </div>
-
-                <div class="refresh iconwrapper filterIcon missicon">
-                    <div class="icon">
-                        <i class="fas fa-redo-alt"></i>
-                    </div>
-                </div>
-
-            <% } %>
-
-        <% } else { %> 
-            <div class="chat iconwrapper">
-                <div class="icon">
-                    <div class="icn">
-                        <svg id="l" data-name="l 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 135.45 81.46"><title>l</title><path d="M135.45,40.73c0-.1,0-.21,0-.31a4,4,0,0,0-.08-.53s0,0,0-.07v0a4,4,0,0,0-2.07-2.65L61,.43a4,4,0,0,0-5.81,3.45l-.7,23.38L40.18,37.46a4,4,0,0,0-1.63,2.68s0,.09,0,.13a3.31,3.31,0,0,0,0,.93s0,.09,0,.13A4,4,0,0,0,40.18,44L54.47,54.2l.7,23.38A4,4,0,0,0,61,81l72.3-36.72a4,4,0,0,0,2.07-2.65v0s0,0,0-.07a4,4,0,0,0,.08-.53C135.45,40.94,135.45,40.84,135.45,40.73ZM60.73,32.62a4,4,0,0,0,1.67-3.14L63,10.42l51.78,26.29H55ZM63,71,62.41,52a4,4,0,0,0-1.67-3.14L55,44.75h59.76Z"/><path d="M14.7,26.6H37.08a4,4,0,0,0,0-8H14.7a4,4,0,0,0,0,8Z"/><path d="M37.08,54.58H14.7a4,4,0,1,0,0,8H37.08a4,4,0,0,0,0-8Z"/><path d="M32.34,40.59a4,4,0,0,0-4-4H4a4,4,0,0,0,0,8H28.34A4,4,0,0,0,32.34,40.59Z"/></svg>
-                    </div>
-                    <div class="amount">
-                        
-                    </div>
-                </div>
-            </div>
-        <% }%>
-        <div class="caption">
-            <span><%-application.manifest.name%></span>
-        </div>
-        <% if(app.mobileview || app.electronview) {%>
-            <div class="settings iconwrapper filterIcon">
-                <div class="icon">
-                    <i class="fas fa-ellipsis-v"></i>
-                </div>
-            </div>
-        <% } else { %> 
-            <div class="info iconwrapper filterIcon">
-                <div class="icon">
-                    <i class="fas fa-cog"></i>
-                </div>
-            </div>
-        <% } %>
+    <div class="forward iconwrapper filterIcon missicon">
+      <div class="icon">
+        <i class="fas fa-chevron-right"></i>
+      </div>
     </div>
 
-    <!--
+    <div class="refresh iconwrapper filterIcon missicon">
+      <div class="icon">
+        <i class="fas fa-redo-alt"></i>
+      </div>
+    </div>
+
+    <% } %> <% } else { %>
+    <div class="chat iconwrapper">
+      <div class="icon">
+        <div class="icn">
+          <svg
+            id="l"
+            data-name="l 1"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 135.45 81.46"
+          >
+            <title>l</title>
+            <path
+              d="M135.45,40.73c0-.1,0-.21,0-.31a4,4,0,0,0-.08-.53s0,0,0-.07v0a4,4,0,0,0-2.07-2.65L61,.43a4,4,0,0,0-5.81,3.45l-.7,23.38L40.18,37.46a4,4,0,0,0-1.63,2.68s0,.09,0,.13a3.31,3.31,0,0,0,0,.93s0,.09,0,.13A4,4,0,0,0,40.18,44L54.47,54.2l.7,23.38A4,4,0,0,0,61,81l72.3-36.72a4,4,0,0,0,2.07-2.65v0s0,0,0-.07a4,4,0,0,0,.08-.53C135.45,40.94,135.45,40.84,135.45,40.73ZM60.73,32.62a4,4,0,0,0,1.67-3.14L63,10.42l51.78,26.29H55ZM63,71,62.41,52a4,4,0,0,0-1.67-3.14L55,44.75h59.76Z"
+            />
+            <path d="M14.7,26.6H37.08a4,4,0,0,0,0-8H14.7a4,4,0,0,0,0,8Z" />
+            <path d="M37.08,54.58H14.7a4,4,0,1,0,0,8H37.08a4,4,0,0,0,0-8Z" />
+            <path
+              d="M32.34,40.59a4,4,0,0,0-4-4H4a4,4,0,0,0,0,8H28.34A4,4,0,0,0,32.34,40.59Z"
+            />
+          </svg>
+        </div>
+        <div class="amount"></div>
+      </div>
+    </div>
+    <% }%>
+    <div class="caption">
+      <span><%-application.manifest.name%></span>
+    <% if(tscope && scope) {%>
+    <div class="domain-toggle">
+        <span id="toggle-label"><%= e('miniApp_devModeLabel') %></span>
+        <label class="switch">
+            <input value="<%-isInDevMode%>" type="checkbox" id="domain-switch"
+              <%= Boolean(isInDevMode) ? "checked" : "" %>>
+            <span class="slider"></span>
+        </label>
+    </div>
+    <% } %>
+    </div>
+    <% if(app.mobileview || app.electronview) {%>
+    <div class="settings iconwrapper filterIcon">
+      <div class="icon">
+        <i class="fas fa-ellipsis-v"></i>
+      </div>
+    </div>
+    <% } else { %>
+    <div class="info iconwrapper filterIcon">
+      <div class="icon">
+        <i class="fas fa-cog"></i>
+      </div>
+    </div>
+    <% } %>
+  </div>
+
+  <!--
     <div class="abssettings iconwrapper">
         <div class="icon">
             <i class="fas fa-ellipsis-h"></i>

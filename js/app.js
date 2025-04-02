@@ -630,7 +630,7 @@ Application = function (p) {
 				address,
 				json,
 				template,
-				lang: localization.key
+				lang: app.localization.key
 			}
 
 			_p.Action || (_p.Action = 'ADDTOMAILLIST');
