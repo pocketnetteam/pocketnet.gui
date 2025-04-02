@@ -124,7 +124,7 @@ var devapplication = (function () {
           id: application.id,
           hash: "",
           address: application.manifest?.author,
-          name: application.manifest?.name,
+          name: application?.name || application.manifest?.name,
           scope: application.scope,
           tscope: application.tscope ?? "",
           description:
@@ -165,7 +165,7 @@ var devapplication = (function () {
           html: self.app.localization.e("miniApp_publishConfirmation"),
           btn1text: self.app.localization.e("miniApp_yesButton"),
           btn2text: self.app.localization.e("miniApp_noButton"),
-          success: actions.publish
+          success: actions.publish,
         });
       },
       goToIndex: function () {
@@ -533,6 +533,7 @@ var devapplication = (function () {
           typeof description === "string"
             ? description
             : description?.[app.localization.key] ?? description?.["en"];
+
         self.shell(
           {
             name: "miniAppDetail",
@@ -540,7 +541,7 @@ var devapplication = (function () {
             data: {
               icon: application?.icon,
               id: application.manifest?.id,
-              name: application.manifest?.name,
+              name: application?.name || application.manifest?.name,
               appStatus: app.apps.get.appStatusById(applicationId),
               author: application.manifest?.author,
               tags: application.tags?.join(", ") || [],
@@ -550,19 +551,19 @@ var devapplication = (function () {
               description: localizedDescription,
             },
           },
-        },
-        function (_p) {
-          _p.el.find(".edit-app-btn").on("click", actions.toggleEdit);
-          _p.el.find(".publish-app-btn").on("click", actions.confirmPublish);
-          _p.el.find(".delete-app-btn").on("click", actions.confirmDeletion);
-          _p.el.find("#goToApp").on("click", actions.goToApp);
-        }
-      );
+          function (_p) {
+            _p.el.find(".edit-app-btn").on("click", actions.toggleEdit);
+            _p.el.find(".publish-app-btn").on("click", actions.confirmPublish);
+            _p.el.find(".delete-app-btn").on("click", actions.confirmDeletion);
+            _p.el.find("#goToApp").on("click", actions.goToApp);
+          }
+        );
+      },
     };
 
     var loadMiniApp = function (targetApplication) {
       userAddress = self.app.user.address.value;
-
+      
       if (targetApplication) return renders.miniAppView(targetApplication);
 
       if (!applicationId) {
@@ -575,7 +576,7 @@ var devapplication = (function () {
         .application(applicationId)
         .then(function (response) {
           application = response.application || response.appdata?.data;
-
+          
           if (
             !application ||
             (application.installing && !application.installed)
