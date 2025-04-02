@@ -150,6 +150,24 @@ var devapplication = (function () {
       goToApp: function () {
         navigateToApp();
       },
+      confirmDeletion: function () {
+        new dialog({
+          class: "zindex",
+          html: self.app.localization.e("miniApp_deleteConfirmation"),
+          btn1text: self.app.localization.e("miniApp_yesButton"),
+          btn2text: self.app.localization.e("miniApp_noButton"),
+          success: actions.delete,
+        });
+      },
+      confirmPublish: function () {
+        new dialog({
+          class: "zindex",
+          html: self.app.localization.e("miniApp_publishConfirmation"),
+          btn1text: self.app.localization.e("miniApp_yesButton"),
+          btn2text: self.app.localization.e("miniApp_noButton"),
+          success: actions.publish
+        });
+      },
       goToIndex: function () {
         self.nav.api.go({
           open: true,
@@ -165,7 +183,22 @@ var devapplication = (function () {
         });
       },
       delete: function () {
-        confirmDeletion();
+        app.apps
+          .deleteApp({
+            id: applicationId,
+            hash: application?.hash,
+          })
+          .then(() => {
+            this.sitemessage(
+              self.app.localization.e("miniApp_deleteSuccessMessage")
+            );
+            actions.goToIndex();
+          })
+          .catch(() => {
+            this.sitemessage(
+              self.app.localization.e("miniApp_deleteErrorMessage")
+            );
+          });
       },
     };
 
@@ -271,33 +304,6 @@ var devapplication = (function () {
         href: "application?id=" + applicationId,
         inWnd: true,
         history: true,
-      });
-    };
-
-    var confirmDeletion = function () {
-      new dialog({
-        class: "zindex",
-        html: self.app.localization.e("miniApp_deleteConfirmation"),
-        btn1text: self.app.localization.e("miniApp_yesButton"),
-        btn2text: self.app.localization.e("miniApp_noButton"),
-        success: function () {
-          app.apps
-            .deleteApp({
-              id: applicationId,
-              hash: application?.hash,
-            })
-            .then(() => {
-              this.sitemessage(
-                self.app.localization.e("miniApp_deleteSuccessMessage")
-              );
-              actions.goToIndex();
-            })
-            .catch(() => {
-              this.sitemessage(
-                self.app.localization.e("miniApp_deleteErrorMessage")
-              );
-            });
-        },
       });
     };
 
@@ -544,14 +550,14 @@ var devapplication = (function () {
               description: localizedDescription,
             },
           },
-          function (_p) {
-            _p.el.find(".edit-app-btn").on("click", actions.toggleEdit);
-            _p.el.find(".publish-app-btn").on("click", actions.publish);
-            _p.el.find(".delete-app-btn").on("click", actions.delete);
-            _p.el.find("#goToApp").on("click", actions.goToApp);
-          }
-        );
-      },
+        },
+        function (_p) {
+          _p.el.find(".edit-app-btn").on("click", actions.toggleEdit);
+          _p.el.find(".publish-app-btn").on("click", actions.confirmPublish);
+          _p.el.find(".delete-app-btn").on("click", actions.confirmDeletion);
+          _p.el.find("#goToApp").on("click", actions.goToApp);
+        }
+      );
     };
 
     var loadMiniApp = function (targetApplication) {
