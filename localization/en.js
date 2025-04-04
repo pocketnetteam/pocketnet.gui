@@ -2620,6 +2620,8 @@ _l.permissions_descriptions_mobilecamera = "Allow the app to open the mobile gal
 _l.permissions_name_zaddress = "Get one of the wallet addresses"
 _l.permissions_descriptions_zaddress = "Shows the widget one of your wallet addresses"
 
+_l.permissions_name_notifications = "Receive Notifications";
+_l.permissions_descriptions_notifications = "Allow the app to send you important updates and alerts";
 
 _l.permissions_ask = "asks for permission"
 _l.permissions_allow = "Allow"
@@ -2986,6 +2988,7 @@ _l.monet_footer_2 = `*Email <a href="mailto:support@bastyon.com">support@bastyon
 _l.miniApp_publishMessage = "Publishing the mini-app: {0}";
 _l.miniApp_requiredMessage = "This field cannot be empty";
 _l.miniApp_deleteConfirmation = "Are you sure you want to delete this mini-app?";
+_l.miniApp_publishConfirmation = "Are you sure you want to publish the application? If you are not in the test network, a fee of 50 will be charged.";
 _l.miniApp_yesButton = "Yes";
 _l.miniApp_noButton = "Cancel";
 _l.miniApp_deleteSuccessMessage = "The mini-app has been successfully deleted.";
@@ -2993,7 +2996,12 @@ _l.miniApp_deleteErrorMessage = "Failed to delete the app. Please try again late
 _l.miniApp_loadErrorMessage = "Failed to edit the application. Please try again later.";
 _l.miniApp_editErrorMessage = "Не удалось отредактировать приложение. Попробуйте ещё раз позже.";
 
+_l.miniApp_guideLink = "Guide to Bastyon Mini-Applications";
+
+_l.miniApp_supportLinkText = "Questions or improvement ideas? Contact support";
+
 _l.miniApp_iconAltText = "App Icon";
+_l.miniApp_iconErrorMessage = "The icon could not be loaded. Please check the availability of the file on your domain:";
 _l.miniApp_publishButton = "Publish";
 _l.miniApp_editButton = "Edit";
 _l.miniApp_deleteButton = "Delete";
@@ -3045,10 +3053,10 @@ _l.miniApp_publishOnlyTestNetworkMessage = "Currently, publishing is only availa
 _l.miniApp_localhostScopeWarningMessage = "Publishing an application with a local scope ('localhost') is not allowed. Please change the scope in the editing tab.";
 _l.miniApp_createTitle = "Create a New Mini-Application";
 _l.miniApp_tagsRequiredMessage = "Please specify tags for the application.";
-_l.miniApp_scopeInvalidMessage = "The scope field must follow a subdomain format, such as app.pocketnet. Use only lowercase letters, numbers, and dots, without https:// or www prefixes.";
+_l.miniApp_scopeInvalidMessage = "This field must be in the format of a subdomain, for example, app.pocketnet. Use only lowercase letters, numbers, and dots without https:// or www prefixes.";
 _l.miniApp_extendedTags = "The maximum number of tags you can add is ";
 
-
+_l.miniApp_devModeLabel = "Development Environment:";
 _l.miniApp_documentationButtonLabel = "Documentation";
 _l.miniApp_createButtonLabel = "Create Mini App";
 _l.miniApp_myAppsButtonLabel = "Created by Me";
@@ -3078,21 +3086,33 @@ _l.miniApp_instructionsFilesNeeded = "To ensure a successful deployment, make su
 _l.miniApp_instructionsManifest = "b_manifest - JSON file containing information about the application.";
 _l.miniApp_instructionsIcon = "b_icon.png - the application icon in PNG format, available at the URL: https://[scope]/b_icon.png, where scope is your domain.";
 _l.miniApp_instructionsManifestExample = "Example content of the b_manifest file:";
-_l.miniApp_instructionsDataMatch = "Important: all form data (id, name) must match the corresponding fields in the b_manifest file exactly. The author field must match the current user adding the application. The scope field specifies the domain where the application is hosted. For testing, you can use a local address such as localhost:3333. This address can later be replaced with your domain, e.g., example.com.";
+_l.miniApp_instructionsDataMatch = 
+  "Important: all data from the form (id, name) must exactly match the corresponding fields in the b_manifest file. " +
+  "The 'author' field must match the current user adding the application. " +
+  "If the 'Development Domain' field is filled in, the 'Domain' field can be left empty during creation. " +
+  "The application can initially run in the test environment on the development domain, and the main domain can be specified later through the edit tab for publication. " +
+  "'Domain' specifies the main address available to all users, while 'Development Domain' is intended for testing (e.g., 'localhost:3333' or 'test.example.com'). " +
+  "The development domain is only accessible to the application author, and environment switching is performed within the application itself.";
 _l.miniApp_instructionsDevMode = "After saving, your mini-application will be created in development mode (dev mode). It will only be available to you locally. Later, you can publish the application for all users through the management panel.";
 
 _l.miniApp_nameLabel = "Name";
 _l.miniApp_scopeLabel = "Domain";
+_l.miniApp_tScopeLabel = "Development domain";
 _l.miniApp_tagsLabel = "Tags";
 
 _l.miniApp_idInstructions = "The ID must be in domain name format, such as app.pocketnet or example.app. Use only lowercase letters and at least one dot.";
 _l.miniApp_nameInstructions = "Enter a clear name that users will see (e.g., Demo).";
 _l.miniApp_scopeDescription = 
-  "Enter the domain name without the protocol (for example, 'example.com'). " +
-  "The application must support the HTTPS protocol, which means if you specify 'example.com', " +
+  "Enter the domain name without a protocol (e.g., 'example.com'). " +
+  "The application must support the HTTPS protocol, so if you enter 'example.com', " +
   "it should be accessible at https://example.com. " +
-  "Do not include 'https://' or any other prefixes. Only lowercase letters, " +
-  "digits, and dots are allowed (for example, 'my-app.bastyonapps.com' or 'subdomain.example.com').";
+  "Do not include 'https://' or other prefixes. Only lowercase letters, " +
+  "numbers, and dots are allowed (e.g., 'my-app.bastyonapps.com' or 'subdomain.example.com').";
+_l.miniApp_tScopeInstructions = 
+  "This domain is used only for developing or testing your application. " +
+  "Specify a local domain (e.g., 'localhost:8080') or a test domain (e.g., 'test.example.com'). " +
+  "If you want to test the application first, use only the 'Development Domain'. " +
+  "The main domain can be specified later for publishing the application.";
 
 _l.miniApp_iconInstructions = "In the display section, you configure the appearance of your application. The icon is automatically loaded from the URL https://[scope]/b_icon.png, where [scope] is the domain of your application (e.g., example.com). Ensure the b_icon.png file is accessible and in PNG format.";
 _l.miniApp_iconLabelInstructions = "After entering the domain, you will see a preview of the loaded icon. If the file is missing or the domain is incorrect, an error message will appear.";
@@ -3107,6 +3127,7 @@ _l.miniApp_cancelButton = "Cancel";
 _l.miniApp_placeholderId = "For example: example.app";
 _l.miniApp_placeholderName = "For example: My Super App";
 _l.miniApp_placeholderScope = "For example: demo.bastyonapps.com";
+_l.miniApp_placeholderTScope = "For example: localhost:8080 или test.example.com";
 _l.miniApp_infoSectionTitle = "Information";
 _l.miniApp_deploymentSectionTitle = "Deployment";
 _l.miniApp_displaySectionTitle = "Display";

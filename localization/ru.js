@@ -2420,6 +2420,9 @@ _l.permissions_descriptions_mobilecamera = "Дать приложению воз
 _l.permissions_name_zaddress = "Получить один из адресов кошелька"
 _l.permissions_descriptions_zaddress = "Показывает миниприложению один из адресов вашего кошелька"
 
+_l.permissions_name_notifications = "Получение уведомлений";
+_l.permissions_descriptions_notifications = "Разрешите приложению отправлять важные обновления и предупреждения";
+
 _l.permissions_ask = "запрашивает разрешение"
 _l.permissions_allow = "Разрешить"
 _l.permissions_allow_once = "Разрешить только сейчас"
@@ -2790,6 +2793,7 @@ _l.monet_footer_2 = `*Напишите на <a href="mailto:support@bastyon.com"
 _l.miniApp_requiredMessage = "Это поле не может быть пустым";
 _l.miniApp_publishMessage = "Публикация мини-приложения: {0}";
 _l.miniApp_deleteConfirmation = "Вы уверены, что хотите удалить мини-приложение?";
+_l.miniApp_publishConfirmation = "Вы действительно желаете опубликовать приложение? Если вы не находитесь в тестовой сети, будет взиматься взнос в размере 50.";
 _l.miniApp_yesButton = "Да";
 _l.miniApp_noButton = "Отмена";
 _l.miniApp_deleteSuccessMessage = "Приложение было успешно удалено.";
@@ -2797,7 +2801,12 @@ _l.miniApp_deleteErrorMessage = "Не удалось удалить прилож
 _l.miniApp_loadErrorMessage = "Не удалось загрузить данные приложения.";
 _l.miniApp_editErrorMessage = "Не удалось отредактировать приложение. Попробуйте ещё раз позже.";
 
+_l.miniApp_guideLink = "Руководство по мини-приложениям Bastyon";
+
+_l.miniApp_supportLinkText = "Вопросы или идеи для улучшения? Обратитесь в поддержку";
+
 _l.miniApp_iconAltText = "Иконка приложения";
+_l.miniApp_iconErrorMessage = "Иконка не может быть загружена. Пожалуйста, проверьте доступность файла на вашем домене:";
 _l.miniApp_publishButton = "Публиковать";
 _l.miniApp_editButton = "Редактировать";
 _l.miniApp_deleteButton = "Удалить";
@@ -2847,10 +2856,11 @@ _l.miniApp_localhostScopeWarningMessage = "Публикация приложен
 _l.miniApp_createTitle = "Создание нового мини-приложения";
 _l.miniApp_tagsRequiredMessage = "Укажите два тега для приложения.";
 _l.miniApp_idInvalidMessage = "ID должен быть в формате доменного имени, например, app.pocketnet или example.app. Используйте только буквы в нижнем регистре и хотя бы одну точку.";
-_l.miniApp_scopeInvalidMessage = "Поле scope должно быть в формате поддомена, например, app.pocketnet. Используйте только строчные буквы, цифры и точки без префиксов https:// или www."
+_l.miniApp_scopeInvalidMessage = "Это поле должно быть в формате поддомена, например, app.pocketnet. Используйте только строчные буквы, цифры и точки без префиксов https:// или www."
 _l.miniApp_extendedTags = "Максимальное количество тегов, которое вы можете добавить, — ";
 
 
+_l.miniApp_devModeLabel = "Окружение разработки:";
 _l.miniApp_documentationButtonLabel = "Документация";
 _l.miniApp_createButtonLabel = "Создать приложение";
 _l.miniApp_myAppsButtonLabel = "Созданные мной";
@@ -2881,11 +2891,19 @@ _l.miniApp_instructionsFilesNeeded = "Для успешного размещен
 _l.miniApp_instructionsManifest = "b_manifest - JSON-файл с информацией о приложении.";
 _l.miniApp_instructionsIcon = "b_icon.png - иконка приложения в формате PNG, доступная по адресу: https://[scope]/b_icon.png, где scope – ваш домен.";
 _l.miniApp_instructionsManifestExample = "Пример содержимого файла b_manifest:";
-_l.miniApp_instructionsDataMatch = "Важно: все данные из формы (id, name) должны точно совпадать с соответствующими полями в файле b_manifest. Поле author должно совпадать с текущим пользователем, который добавляет приложение. Поле scope указывает домен размещения приложения. Для тестирования можно использовать локальный адрес, например localhost:3333. Впоследствии этот адрес можно будет заменить на ваш домен, например example.com.";
+_l.miniApp_instructionsDataMatch = 
+  "Важно: все данные из формы (id, name) должны точно совпадать с соответствующими полями в файле b_manifest. " +
+  "Поле author должно совпадать с текущим пользователем, который добавляет приложение. " +
+  "Если заполнено поле 'Домен разработки', поле 'Домен' можно оставить пустым на этапе создания. " +
+  "Приложение можно сначала запустить в тестовом окружении на домене разработки и позже указать основной домен через вкладку редактирования для публикации. " +
+  "'Домен' указывает основной адрес для всех пользователей, а 'Домен разработки' предназначен для тестирования (например, 'localhost:3333' или 'test.example.com'). " +
+  "Домен разработки доступен только автору приложения, а переключение окружений выполняется в самом приложении.";
+
 _l.miniApp_instructionsDevMode = "После сохранения ваше миниприложение будет создано в режиме разработки (dev-режим). Оно будет доступно только вам локально. Позже вы сможете опубликовать приложение для всех пользователей через панель управления.";
 
 _l.miniApp_nameLabel = "Название";
 _l.miniApp_scopeLabel = "Домен";
+_l.miniApp_tScopeLabel = "Домен разработки";
 _l.miniApp_tagsLabel = "Теги";
 
 _l.miniApp_idInstructions = "ID должен быть в формате доменного имени, например app.pocketnet или example.app. Используйте только строчные буквы и точку.";
@@ -2896,6 +2914,14 @@ _l.miniApp_scopeDescription =
   "оно должно открываться по адресу https://example.com. " +
   "Не указывайте 'https://' или другие префиксы. Допустимы только строчные буквы, " +
   "цифры и точки (например, 'my-app.bastyonapps.com' или 'subdomain.example.com').";
+
+_l.miniApp_tScopeInstructions = 
+  "Этот домен используется только для разработки или тестирования вашего приложения. " +
+  "Укажите локальный домен (например, 'localhost:8080') или тестовый домен (например, 'test.example.com'). " +
+  "Если вы хотите сначала протестировать приложение, используйте только 'Домен разработки'. " +
+  "Основной домен можно будет указать позже для публикации приложения.";
+
+
 
 
 _l.miniApp_iconInstructions = "В разделе отображения вы настраиваете внешний вид вашего приложения. Иконка загружается автоматически с адреса https://[scope]/b_icon.png, где [scope] — это домен вашего приложения (например, example.com). Убедитесь, что файл b_icon.png доступен и соответствует формату PNG.";
@@ -2911,6 +2937,7 @@ _l.miniApp_cancelButton = "Отмена";
 _l.miniApp_placeholderId = "Например: example.app";
 _l.miniApp_placeholderName = "Например: Мое супер-приложение";
 _l.miniApp_placeholderScope = "Например: demo.bastyonapps.com";
+_l.miniApp_placeholderTScope = "Например: localhost:8080 или test.example.com";
 _l.miniApp_infoSectionTitle = "Информация";
 _l.miniApp_deploymentSectionTitle = "Размещение";
 _l.miniApp_displaySectionTitle = "Отображение";

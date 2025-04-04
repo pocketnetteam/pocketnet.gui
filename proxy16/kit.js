@@ -261,7 +261,9 @@ var defaultSettings = {
 		dbpath : 'data/firebase',
 		id : ''
 	},
-
+	miniapp : {
+		dbpath : 'data/firebase',
+	},
 	wallet : {
 		dbpath : 'data/wallet',
 		addresses : {
