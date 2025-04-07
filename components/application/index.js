@@ -8,7 +8,7 @@ var application = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, ed, application, appdata, curpath, userAddress, isUserAuthor;
+		var el, ed, application, appdata, curpath, userAddress, isUserAuthor, grantedPermissions;
 
 		var actions = {
 			install : function(){
@@ -320,6 +320,23 @@ var application = (function(){
 					src = src + '?testnetwork=true'
 				}*/
 
+				const buildIframeAllowAttr = (permissions = []) => {					
+          const map = {
+            mobilecamera: "camera",
+            geolocation: "geolocation",
+            notifications: "notifications",
+            microphone: "microphone",
+          };
+
+          return permissions
+            .map((p) => map[p?.id])
+            .filter(Boolean)
+            .join("; ");
+        };
+
+        const iframeAllowAttr = buildIframeAllowAttr(grantedPermissions || []);
+
+				
 				self.shell({
 
 					name :  'frameremote',
@@ -327,6 +344,7 @@ var application = (function(){
 					
 					data : {
 						application,
+						iframeAllowAttr,
 						isInDevMode: _scope === tscope,
 						tscope: isUserAuthor && tscope,
 						scope: appdata.scope,
@@ -399,7 +417,6 @@ var application = (function(){
 
 				if (f){
 					application = f.application
-					
 					appdata = f.appdata?.data
 				}
 
@@ -471,7 +488,6 @@ var application = (function(){
 				
 				}
 			},
-
 			getdata : function(clbk, p){
 
 				ed = p.settings.essenseData || {}
@@ -496,6 +512,7 @@ var application = (function(){
 						application = f.application
 						
 						appdata = f.appdata?.data
+						grantedPermissions = f.appdata?.permissions?.filter(permission => permission.state === 'granted')
 						isUserAuthor = appdata && appdata.address === userAddress;
 
 						if (ed.application){
