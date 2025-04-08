@@ -84,6 +84,13 @@ var application = (function(){
 			}
 		}
 
+		const iframePermissionMap = {
+			mobilecamera: "camera",
+			geolocation: "geolocation",
+			notifications: "notifications",
+			microphone: "microphone",
+		};
+
 		var events = {
 			pageevents : function(p, s){
 
@@ -135,6 +142,31 @@ var application = (function(){
 
 					curpath = actions.getpath()
 					
+				}
+			},
+
+			permissionsChanged: function (p = {}) {
+				const allowedStates = ['granted', 'forbid'];
+				if (!allowedStates.includes(p.state)) return;
+
+				if (!application || !appdata) return;
+				if (p.application !== appdata.id) return;
+
+				if (iframePermissionMap[p.permission]) {
+					grantedPermissions = grantedPermissions || [];
+
+					if (p.state === 'granted') {
+						if (!grantedPermissions.find(perm => perm.id === p.permission)) {
+							grantedPermissions.push({
+								id: p.permission,
+								state: 'granted'
+							});
+						}
+					} else {
+						grantedPermissions = grantedPermissions.filter(perm => perm.id !== p.permission);
+					}
+
+					renders.frameremote();
 				}
 			},
 
@@ -321,15 +353,9 @@ var application = (function(){
 				}*/
 
 				const buildIframeAllowAttr = (permissions = []) => {					
-          const map = {
-            mobilecamera: "camera",
-            geolocation: "geolocation",
-            notifications: "notifications",
-            microphone: "microphone",
-          };
 
           return permissions
-            .map((p) => map[p?.id])
+            .map((p) => iframePermissionMap[p?.id])
             .filter(Boolean)
             .join("; ");
         };
@@ -403,6 +429,7 @@ var application = (function(){
 			self.app.apps.on('changestate', events.changestate)
 
 			self.app.apps.on('installed', events.installed)
+			self.app.apps.on('permissions:changed', events.permissionsChanged)
 			self.app.apps.on('removed', events.removed)
 
 
@@ -570,6 +597,8 @@ var application = (function(){
 
 				self.app.apps.off('loaded', events.loaded)
 				self.app.apps.off('changestate', events.changestate)
+
+				self.app.apps.off('permissions:changed', events.permissionsChanged)
 
 				self.app.apps.off('installed', events.installed)
 				self.app.apps.off('removed', events.removed)
