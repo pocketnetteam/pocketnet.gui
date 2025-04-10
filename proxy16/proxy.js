@@ -63,6 +63,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	var nodeManager = new NodeManager(settings.nodes);
 	var firebase = new Firebase(settings.firebase);
 	var wallet = new Wallet(settings.wallet);
+	var miniapp = new MiniApp(settings.miniapp)
 	var remote = new Remote();
 	var proxies = new Proxies(settings.proxies)
 	var exchanges = new Exchanges()
