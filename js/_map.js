@@ -325,17 +325,7 @@ __map =  {
 	
 	},
 
-	aboutContentCreators : {
-		uri : "aboutContentCreators",
-		href : "aboutContentCreators",
-		add : {
-			el : 'content'
-		},
-		anonimus : true,
 
-		ignoreMinimize : true
-	
-	},
 
 	aboutHIW : {
 		uri : "aboutHIW",
