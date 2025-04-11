@@ -61,7 +61,8 @@ var donate = (function(){
 
 				}).catch(e => {
 
-					sitemessage(e)
+					self.app.platform.errorHandler(e, true)
+					//sitemessage(e)
 
 					if(onerror) onerror(e)
 
