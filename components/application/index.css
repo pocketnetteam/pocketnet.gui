@@ -112,6 +112,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  pointer-events: all;
+  flex-direction: column;
   text-align: center;
   flex-grow: 2;
   color: #fff;
@@ -281,6 +283,74 @@
   border: 0;
   outline: 0;
 }
+
+#applicationfx  .domain-toggle {
+  display: flex;
+  align-items: center;
+  color: rgb(var(--color-cc-white));
+  font-size: 0.9em;
+}
+
+#applicationfx .domain-toggle #toggle-label {
+  font-weight: 500;
+}
+
+#applicationfx .domain-toggle .switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+}
+
+#applicationfx .domain-toggle .switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+#applicationfx .domain-toggle .switch .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(var(--color-cc-grey));
+  transition: background-color 0.3s ease;
+  border-radius: 20px;
+}
+
+#applicationfx
+  .domain-toggle
+  .switch
+  .slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
+  background-color: rgb(var(--color-cc-white));
+  transition: transform 0.3s ease;
+  border-radius: 50%;
+}
+
+#applicationfx
+  .domain-toggle
+  .switch
+  input:checked
+  + .slider {
+  background-color: rgb(var(--color-bg-ac));
+}
+
+#applicationfx
+  .domain-toggle
+  .switch
+  input:checked
+  + .slider:before {
+  transform: translateX(20px);
+}
+
 .wnd.appwindow ._close {
   display: none;
 }

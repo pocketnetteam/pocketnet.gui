@@ -9,15 +9,13 @@
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid var(--color-gray-border);
-  padding-bottom: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   flex-wrap: wrap;
 }
 
 #devapplication .miniapp-container .header .icon-name {
   display: flex;
-  align-items: center;
-  gap: 20px;
+  flex-direction: column;
 }
 
 #devapplication .miniapp-container .header .icon-name .app-icon {
@@ -175,7 +173,7 @@
   display: none;
 }
 
-#devapplication .miniapp-container .app-link {
+#devapplication .miniapp-container .details-app-link {
   color: var(--color-txt-ac);
   font-weight: bold;
   cursor: pointer;
@@ -185,13 +183,13 @@
   transition: color 0.3s, border-color 0.3s;
 }
 
-#devapplication .miniapp-container .app-link:hover {
+#devapplication .miniapp-container .details-app-link:hover {
   color: var(--color-bg-ac);
   border-color: var(--color-bg-ac);
   text-decoration: underline;
 }
 
-#devapplication .miniapp-container .app-link:active {
+#devapplication .miniapp-container .details-app-link:active {
   color: var(--color-txt-ac-1);
 }
 
@@ -272,7 +270,22 @@
   padding: 20px;
 }
 
+#devapplication .miniapp-container .miniapp-link {
+  color: rgb(var(--color-txt-ac));
+  text-decoration: underline;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s, text-decoration 0.3s;
+}
 
+#devapplication .miniapp-container .miniapp-link:hover {
+  color: rgb(var(--color-bg-ac));
+  text-decoration: none;
+}
+
+#devapplication .miniapp-container .miniapp-link:active {
+  color: rgb(var(--color-txt-ac-1));
+}
 
 @media (max-width: 768px) {
   #devapplication .miniapp-container {

@@ -19,6 +19,7 @@ var os = require('os');
 var Server = require('./server/https.js');
 var WSS = require('./server/wss.js');
 var Firebase = require('./server/firebase.js');
+var MiniApp = require('./server/miniapp.js');
 var TranslateApi = require('./server/translateapi.js');
 var NodeControl = require('./node/control.js');
 var NodeManager = require('./node/manager.js');
@@ -62,6 +63,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	var nodeManager = new NodeManager(settings.nodes);
 	var firebase = new Firebase(settings.firebase);
 	var wallet = new Wallet(settings.wallet);
+	var miniapp = new MiniApp(settings.miniapp)
 	var remote = new Remote();
 	var proxies = new Proxies(settings.proxies)
 	var exchanges = new Exchanges()
@@ -91,7 +93,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		wss, server, pocketnet, nodeControl,
 		remote, firebase, nodeManager, wallet,
 		proxies, exchanges, peertube, bots,
-		aTransactions,
+		aTransactions, miniapp,
 		systemnotify, notifications,
 		logger,
 		translateapi,
@@ -2054,7 +2056,104 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				},
 			},
 		},
+		miniapp: {
+			addToken: {
+				path: '/miniapp/addToken',
+				authorization: 'signature',
+				action: function ({
+					appId,
+					address
+				}) {
+					return self.miniapp.createToken({
+							appId,
+							address
+						})
+						.then((r) => {
+							return Promise.resolve({
+								data: r
+							});
+						})
+						.catch((e) => {
+							return Promise.reject(e);
+						});
+				},
+			},
 
+			removeTokens: {
+				path: '/miniapp/removeTokens',
+				authorization: 'signature',
+				action: function ({
+					address,
+					appId
+				}) {
+					return self.miniapp.removeTokens({
+							address,
+							appId
+						})
+						.then((r) => {
+							return Promise.resolve({
+								data: {
+									removed: r
+								}
+							});
+						})
+						.catch((e) => {
+							return Promise.reject(e);
+						});
+				},
+			},
+
+			checkToken: {
+				path: '/miniapp/checkToken',
+				authorization: 'signature',
+				action: function ({
+					address,
+					appId
+				}) {
+					return self.miniapp.getToken({
+							address,
+							appId
+						})
+						.then((r) => {
+							return Promise.resolve({
+								data: {
+									exists: !!r
+								}
+							});
+						})
+						.catch((e) => {
+							return Promise.reject(e);
+						});
+				},
+			},
+
+			sendNotification: {
+				path: '/miniapp/sendNotification',
+				action: function ({
+					address,
+					appId,
+					url,
+					header
+				}) {
+					return self.miniapp.sendNotification({
+							address,
+							appId,
+							url,
+							header
+						})
+						.then((r) => {
+							return Promise.resolve({
+								data: {
+									success: true
+								}
+							});
+						})
+						.catch((e) => {
+							return Promise.reject(e);
+						});
+				},
+			},
+		},
 		firebase: {
 			set: {
 				authorization: 'signature',
