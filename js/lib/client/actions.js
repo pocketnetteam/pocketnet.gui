@@ -1041,13 +1041,17 @@ var Action = function(account, object, priority, settings){
 
         if (self.rejected){
 
-            if (self.rejectWait && self.rejectWait > new Date()){
+            if (self.rejectWait){
+                if (self.rejectWait > new Date()){
                 
+                }
+                else{
+                    
+                    self.rejectWait = null
+                    self.rejected = null
+                }
             }
-            else{
-                self.rejectWait = null
-                self.rejected = null
-            }
+            
 
             if (self.rejected)
                 return Promise.reject(self.rejected)
@@ -1187,12 +1191,9 @@ var Action = function(account, object, priority, settings){
 
         
         if (error && tryresolve){
-
-
             error = await account.actionRejectedWithTriggers(self, error)
         }
         else{
-
 
             if(rejectIfError){
                 if(
@@ -2759,7 +2760,7 @@ var Actions = function(app, api, storage = localStorage){
                 return Promise.resolve(action)
             }).catch(e => {
 
-                if (p.rejectIfError){
+                if (p.rejectIfError && !action.rejected){
                     action.rejected = 'cantsendnow'
                     return Promise.reject(e)
                 }

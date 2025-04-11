@@ -1105,7 +1105,7 @@ var Api = function(app){
                 //}
             }
 
-            if (app.Logger) {
+            /*if (app.Logger) {
                 app.Logger.error({
                     err: typeof e === 'string' ? e : (e.text || 'RPC_DEFAULT_ERROR'),
                     payload: {
@@ -1114,7 +1114,7 @@ var Api = function(app){
                     },
                     code: e.code || 423,
                 });
-            }
+            }*/
 
             if (e.code != 700){
 
