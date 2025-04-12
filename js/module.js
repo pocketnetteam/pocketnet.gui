@@ -1,785 +1,762 @@
-nModule = function(){
-	var self = this;
+nModule = function () {
+  var self = this;
 
-	var loading = {
-		templates : {}
-	}
+  var loading = {
+    templates: {}
+  }
 
-	self.storage = {
-		els : {},
-		templates : {} 
-	} 
+  self.storage = {
+    els: {},
+    templates: {}
+  }
 
-	self.options = {};
+  self.options = {};
 
-	self.api = {};
+  self.api = {};
 
-	self.map = {};
+  self.map = {};
 
-	self.essenses = {};
+  self.essenses = {};
 
-	self.iclbks = {
+  self.iclbks = {
 
-	}
+  }
 
+  self.inserts = {
+    wnd: {
+      obj: wnd,
+      storageKey: 'wnd',
+      after: true
+    },
+    tooltip: {
+      obj: tooltip,
+      storageKey: 'tooltip',
+      after: true
+    }
+  }
 
-	self.inserts = {
-		wnd : {
-			obj : wnd,
-			storageKey : 'wnd',
-			after : true
-		},
-		tooltip : {
-			obj : tooltip,
-			storageKey : 'tooltip',
-			after : true
-		}
-	}
+  self.anonimus = function (clbk, p) {
 
-	self.anonimus = function(clbk, p){
 
-	
-		if(!self.map.anonimus)
-		{
-			self.user.isState(
+    if (!self.map.anonimus) {
+      self.user.isState(
 
-				function(state){
+        function (state) {
 
-					if(state)
-					{
-						if(!self.user.validate()){
-							var href = deep(self, "map.redirect.validate");
+          if (state) {
+            if (!self.user.validate()) {
+              var href = deep(self, "map.redirect.validate");
 
-							if (href){
+              if (href) {
 
-								self.redirect(p, href)
+                self.redirect(p, href)
 
-								clbk(false)
+                clbk(false)
 
-								return
+                return
 
-							}
+              }
 
-						}
-						
+            }
 
-						clbk(true)
-					}
-					else
-					{
 
+            clbk(true)
+          }
+          else {
 
-						var href = deep(self, "map.redirect.auth");
 
-						if (href){
+            var href = deep(self, "map.redirect.auth");
 
-							self.redirect(p, href)
+            if (href) {
 
-						}
+              self.redirect(p, href)
 
-						clbk(false)
-					}
+            }
 
-				}
-			)
-		}
+            clbk(false)
+          }
 
-		else
-		{
-			clbk(true)
-		}
-	}
+        }
+      )
+    }
 
-	
+    else {
+      clbk(true)
+    }
+  }
 
-	self.shell = function(p, clbk, fromModule){
+  self.shell = function (p, clbk, fromModule) {
 
-		if(!p) p = {};
+    if (!p) p = {};
 
-		delete p.animation
+    delete p.animation
 
-		
-		var completeClbk = function(p){
 
+    var completeClbk = function (p) {
 
-			if (p.el && !p.ignorelinksandimages)
-			{
-				self.nav.api.links(null, p.el, p.additionalActions || null);
 
-				if(p.inner == replaceWith){
-					bgImagesCl(p.el.parent(), p.bgImages)
-				}
-				else{
-					bgImagesCl(p.el, p.bgImages)
-				}
+      if (p.el && !p.ignorelinksandimages) {
+        self.nav.api.links(null, p.el, p.additionalActions || null);
 
-				
-			}
+        if (p.inner == replaceWith) {
+          bgImagesCl(p.el.parent(), p.bgImages)
+        }
+        else {
+          bgImagesCl(p.el, p.bgImages)
+        }
 
-			if (typeof clbk  === 'function'){
-				clbk(p);
-			}
-			
-		}
 
-		p.completeClbk = completeClbk;
+      }
 
-		self.loadTemplate(p, function(template){
+      if (typeof clbk === 'function') {
+        clbk(p);
+      }
 
-			self.renderTemplate(template, function(html){
+    }
 
+    p.completeClbk = completeClbk;
 
-				var inserted = false;
+    self.loadTemplate(p, function (template) {
 
-				if(!_.isObject(p.el) || p.insert)
-				{
+      self.renderTemplate(template, function (html) {
 
-					var insert = self.inserts[p.insert];
 
-					if (insert)
-					{
-						var options = p[insert.storageKey] || {};
+        var inserted = false;
 
-							options.content = html;
-							options.el = p.el;
-							options.app = self.app
+        if (!_.isObject(p.el) || p.insert) {
 
-						if (insert.after)
-						{
-							options.clbk = function(_p){
+          var insert = self.inserts[p.insert];
 
-								if(!_p) _p = {};
+          if (insert) {
+            var options = p[insert.storageKey] || {};
 
-								p = _.extend(p, _p)
+            options.content = html;
+            options.el = p.el;
+            options.app = self.app
 
-								completeClbk(p)
+            if (insert.after) {
+              options.clbk = function (_p) {
 
-							}
-							
-						}
+                if (!_p) _p = {};
 
-						options.destroy = function(key){
+                p = _.extend(p, _p)
 
-							var r = null
+                completeClbk(p)
 
-							if (p){
+              }
 
-								if (key != 'auto'){
-									
-									if(p.history)
-										self.app.nav.api.history.removeParameters(['m' + p.id].concat(p.clearparameters || []),{
-											replaceState : true,
-											removefromback : false
-										})
-									
-									try{
-										self.app.nav.api.changedclbks()
-									}
-									catch(e){
-										console.error(e)
-									}
+            }
 
-								}
-								
-								if (p.destroy) {
-									r = p.destroy(key)
+            options.destroy = function (key) {
 
-									if(!r && p.clearessense)
-										p.clearessense()
-								}
-							}
+              var r = null
 
+              if (p) {
 
-							if (!r && p.inWnd){
-								delete self.app.nav.wnds[p.id]
+                if (key != 'auto') {
 
-								if (p.clearessense)
-									p.clearessense()
-							}
+                  if (p.history)
+                    self.app.nav.api.history.removeParameters(['m' + p.id].concat(p.clearparameters || []), {
+                      replaceState: true,
+                      removefromback: false
+                    })
 
-							//p = null
+                  try {
+                    self.app.nav.api.changedclbks()
+                  }
+                  catch (e) {
+                    console.error(e)
+                  }
 
-							return r
+                }
 
-						};
+                if (p.destroy) {
+                  r = p.destroy(key)
 
-						var type = p.essenseData && p.essenseData.type
+                  if (!r && p.clearessense)
+                    p.clearessense()
+                }
+              }
 
-						if (type){
 
-							options.type = type;
+              if (!r && p.inWnd) {
+                delete self.app.nav.wnds[p.id]
 
-						}
+                if (p.clearessense)
+                  p.clearessense()
+              }
 
-						self .container = new insert.obj(options);
-							p.container = self.container;
+              //p = null
 
-						self.container.essenseDestroy = options.destroy
-						
-						if (insert.after) 
-						{
-							topPreloader(100);
-							return;
-						}
+              return r
 
-						if (self.container && self.container.el ){
-							p.el = self.container.el;
-						}
+            };
 
-						inserted = true;
+            var type = p.essenseData && p.essenseData.type
 
-					}
-					else
-					{
-						if (self.app.el[p.el]) p.el = self.app.el[p.el];
-					}
+            if (type) {
 
-				}
+              options.type = type;
 
-				var c = function(){
-					if(typeof p.el == 'function') p.el = p.el();
-			
-					if(!inserted)
-					{
-						if (p.el) {
-							self.insertTemplate(p, html);
-						}
-					}
+            }
 
-					if(!p.animation)
-					{
-						completeClbk(p);
-					}
-				}
+            self.container = new insert.obj(options);
+            p.container = self.container;
 
-				//c()
-				
-				if(p.insertimmediately){
-					c()
-				}
-				else{
-					window.rifticker.add(() => {
-						c()
-					})
-				}
+            self.container.essenseDestroy = options.destroy
 
-				
+            if (insert.after) {
+              topPreloader(100);
+              return;
+            }
 
-			} ,p)
+            if (self.container && self.container.el) {
+              p.el = self.container.el;
+            }
 
-		})
+            inserted = true;
 
-	}
+          }
+          else {
+            if (self.app.el[p.el]) p.el = self.app.el[p.el];
+          }
 
-	self.insertTemplate = function(p, _html){
+        }
 
-		p.inner || (p.inner = html);	
+        var c = function () {
+          if (typeof p.el == 'function') p.el = p.el();
 
-		var nel = p.inner(p.el, _html);
+          if (!inserted) {
+            if (p.el) {
+              self.insertTemplate(p, html);
+            }
+          }
 
-		if (nel) {
-			p.el = nel
-		}
+          if (!p.animation) {
+            completeClbk(p);
+          }
+        }
 
-		if (p.display){
-			p.el.css("display", p.display)
-		}
+        //c()
 
-		if (p.postAnimation)
-			p.postAnimation();
-	}
+        if (p.insertimmediately) {
+          c()
+        }
+        else {
+          window.rifticker.add(() => {
+            c()
+          })
+        }
 
-	self.renderTemplate = function(template, clbk, p){
-		if(!p) p = {};
 
-		self.user.isState(function(state){	
 
-			p.data || (p.data = {});
+      }, p)
 
-			p.data.app = self.app;	
-			p.data.e = self.app.localization.e;
-			p.data.state = state;
-			p.data.module = self;	
-			p.data.user	= self.user;
-			p.data.essenseData = p.essenseData || {};
-			p.data.psdk = self.app.platform.psdk
+    })
 
-			try{
-				p.rendered = template(p.data);
-			}
-			catch(e){
-				console.log(p)
-				console.error(e)
-				p.rendered = ''
-			}
-			
+  }
 
-			if (p.clear)
-				p.rendered = "";
+  self.insertTemplate = function (p, _html) {
 
+    p.inner || (p.inner = html);
 
-			
+    var nel = p.inner(p.el, _html);
 
-			if (clbk){
-				clbk(p.rendered)
-			}
-				
+    if (nel) {
+      p.el = nel
+    }
 
-		})
-	}
+    if (p.display) {
+      p.el.css("display", p.display)
+    }
 
-	self.loadTemplate = function(p, clbk){
+    if (p.postAnimation)
+      p.postAnimation();
+  }
 
-		if(!p) p = {};
+  self.renderTemplate = function (template, clbk, p) {
+    if (!p) p = {};
 
-		p.name || (p.name = 'index');
+    self.user.isState(function (state) {
 
-		if(loading.templates[p.name]){
+      p.data || (p.data = {});
 
-			loading.templates[p.name].then(() => {
-				if (clbk)
-					clbk(self.storage.templates[p.name]);
-			}).catch(e => {
-				if (p.fail){
-					p.fail()
-				}
-			})
+      p.data.app = self.app;
+      p.data.e = self.app.localization.e;
+      p.data.state = state;
+      p.data.module = self;
+      p.data.user = self.user;
+      p.data.essenseData = p.essenseData || {};
+      p.data.psdk = self.app.platform.psdk
 
-			return
-		}
+      try {
+        p.rendered = template(p.data);
+      }
+      catch (e) {
+        console.log(p)
+        console.error(e)
+        p.rendered = ''
+      }
 
-		if (self.storage.templates[p.name] || p.clear)
-		{			
-			if (clbk)
-				clbk(self.storage.templates[p.name]);
-		}
-		else
-		{
 
-			if (self.map && self.map.id){
-				var pretemplate = deep(window, 'pocketnetTemplates.' + (p.turi || self.map.uri) + '.' + p.name)
+      if (p.clear)
+        p.rendered = "";
 
-				if (pretemplate){
 
-					try{
-						self.storage.templates[p.name] = _.template(pretemplate);
-					}
-					catch(e){
-						console.error(e)
-					}
-					
-	
-					if (clbk)
-						clbk(self.storage.templates[p.name] || '');
-		
-					return
-				}
 
-				
-			}
 
-			loading.templates[p.name] = new Promise((resolve, reject) => {
+      if (clbk) {
+        clbk(p.rendered)
+      }
 
-				var url;
-				var appPath = (self.map.pathtpl || self.map.path || "");	
 
-				if (_Node){
-					appPath = 'https://bastyon.com/'
-				}		
+    })
+  }
 
-				if(p.common){
+  self.loadTemplate = function (p, clbk) {
 
-					url = appPath + 'common';
+    if (!p) p = {};
 
-				}
-				else
-				{
-					url = appPath + (self.componentsPath || "") + (p.turi || self.map.uri)
-				}
+    p.name || (p.name = 'index');
 
-				var vs = '131'
+    if (loading.templates[p.name]) {
 
-				if (typeof numfromreleasestring != 'undefined'){
-					vs = numfromreleasestring(window.packageversion) + '_' + (window.versionsuffix || "0")
-				}
+      loading.templates[p.name].then(() => {
+        if (clbk)
+          clbk(self.storage.templates[p.name]);
+      }).catch(e => {
+        if (p.fail) {
+          p.fail()
+        }
+      })
 
-				url += '/templates/' + p.name + '.html?v=' + vs;
+      return
+    }
 
-				
-				self.ajax.run({
-					url : url,
-					type : 'GET',
-					dataType : 'html',
-					success : function(tpl){
+    if (self.storage.templates[p.name] || p.clear) {
+      if (clbk)
+        clbk(self.storage.templates[p.name]);
+    }
+    else {
 
-						try{
-							self.storage.templates[p.name] = _.template(tpl);
-							loading.templates[p.name] = null;
-						}
+      if (self.map && self.map.id) {
+        var pretemplate = deep(window, 'pocketnetTemplates.' + (p.turi || self.map.uri) + '.' + p.name)
 
-						catch(e){
-							console.error(e)
-							console.log(p)
+        if (pretemplate) {
 
-							if (p.fail){
-								p.fail()
-							}
-	
-							reject()
+          try {
+            self.storage.templates[p.name] = _.template(pretemplate);
+          }
+          catch (e) {
+            console.error(e)
+          }
 
-							return
-						}
 
-						
+          if (clbk)
+            clbk(self.storage.templates[p.name] || '');
 
-						if (clbk) clbk(self.storage.templates[p.name]);
+          return
+        }
 
-						resolve()
-						
 
-					},
-					fail : function(){
+      }
 
-						if (p.fail){
-							p.fail()
-						}
+      loading.templates[p.name] = new Promise((resolve, reject) => {
 
-						reject()
+        var url;
+        var appPath = (self.map.pathtpl || self.map.path || "");
 
-					}
-				});
+        if (_Node) {
+          appPath = 'https://bastyon.com/'
+        }
 
-			})
+        if (p.common) {
 
-			
-		}
-	}
+          url = appPath + 'common';
 
-	self.fastTemplate = function(name, clbk, data, turi){
+        }
+        else {
+          url = appPath + (self.componentsPath || "") + (p.turi || self.map.uri)
+        }
 
-		self.loadTemplate({
-			name : name,
-			turi : turi || "",
-		}, function(template){
+        var vs = '131'
 
-			self.renderTemplate(template, function(html){
+        if (typeof numfromreleasestring != 'undefined') {
+          vs = numfromreleasestring(window.packageversion) + '_' + (window.versionsuffix || "0")
+        }
 
-				if (clbk)
-					clbk(html, template)
+        url += '/templates/' + p.name + '.html?v=' + vs;
 
-			}, {
-				
-				data : (data || null)
-			})
-		})
-	}
 
-	var primary = function(p){
-		return p.history && p.el
-	}
+        self.ajax.run({
+          url: url,
+          type: 'GET',
+          dataType: 'html',
+          success: function (tpl) {
 
-	var beforegetdata = function(settings, clbk){
+            try {
+              self.storage.templates[p.name] = _.template(tpl);
+              loading.templates[p.name] = null;
+            }
 
-		if (self.map.preshell && settings.el && isMobile()){
+            catch (e) {
+              console.error(e)
+              console.log(p)
 
-			self.shell({
+              if (p.fail) {
+                p.fail()
+              }
 
-				name :  'preshell',
-				el :   settings.el,
-				data : {},
+              reject()
 
-				animation: settings.animation,
-				fast : settings.fast,
+              return
+            }
 
-			},
 
-			function(p){
 
-				if (primary(settings) && !settings.inWnd && !settings.noscroll && !settings.goback) {
-					self.app.actions.scrollToTop()
-				}
+            if (clbk) clbk(self.storage.templates[p.name]);
 
-				delete settings.animation
+            resolve()
 
-				settings.fast = true
-				settings.waspreshell = true
-				settings.insertimmediately = true
 
-				if (clbk)
-					clbk()
+          },
+          fail: function () {
 
-			}, true)
+            if (p.fail) {
+              p.fail()
+            }
 
-		}
-		else{
+            reject()
 
-			window.rifticker.add(() => {
+          }
+        });
 
-				if (clbk)
-					clbk()
-			})
+      })
 
-		}
-	}
 
-	self.add = function(_settings, p){
+    }
+  }
 
-		topPreloader(10);
+  self.fastTemplate = function (name, clbk, data, turi) {
 
-		var settings = _.clone(_settings);
+    self.loadTemplate({
+      name: name,
+      turi: turi || "",
+    }, function (template) {
 
-		var add = self.map.add;
-		var frommodule = true;
-		var globalpreloaderTimer = p.globalpreloaderTimer || null
+      self.renderTemplate(template, function (html) {
 
-		var rmpreloader = function(){
-			if(globalpreloaderTimer){
+        if (clbk)
+          clbk(html, template)
 
-				globalpreloader(false)
+      }, {
 
-				clearTimeout(globalpreloaderTimer)
-			}
-		}
+        data: (data || null)
+      })
+    })
+  }
 
+  var primary = function (p) {
+    return p.history && p.el
+  }
 
-		if (p.restartModule) {
-			frommodule = false
-			settings.fast = true
-		}
+  var beforegetdata = function (settings, clbk) {
 
-		if (typeof add == 'function')
+    if (self.map.preshell && settings.el && isMobile()) {
 
-			add = add(settings, p);
+      self.shell({
 
-		settings = _.extend(settings, add);
-		settings = _.extend(settings, p);	
+        name: 'preshell',
+        el: settings.el,
+        data: {},
 
+        animation: settings.animation,
+        fast: settings.fast,
 
-		beforegetdata(settings, function(){
+      },
 
+        function (p) {
 
-			if (settings.fade && (!settings.waspreshell || settings.replaceState)){
-				window.rifticker.add(() => {
-					settings.fade.addClass('shell_fadefast')
-				})
-			}
+          if (primary(settings) && !settings.inWnd && !settings.noscroll && !settings.goback) {
+            self.app.actions.scrollToTop()
+          }
 
-			
-			self.user.isState(function(state){	
-				settings.getdata(function(data, err){
+          delete settings.animation
 
-					topPreloader(100);
+          settings.fast = true
+          settings.waspreshell = true
+          settings.insertimmediately = true
 
-					rmpreloader()
+          if (clbk)
+            clbk()
 
-					if (err){
-						return
-					}
+        }, true)
 
-					settings.data = data || {};
+    }
+    else {
 
-					if(p.preshell) p.preshell();
+      window.rifticker.add(() => {
 
-					self.shell(settings, function(p){
+        if (clbk)
+          clbk()
+      })
 
-						rmpreloader()
+    }
+  }
 
+  self.add = function (_settings, p) {
 
-						p.clbk = addToFunction(p.clbk, function(){
+    topPreloader(10);
 
-							if (primary(p) && !p.inWnd && !p.noscroll && !p.goback) {
-								self.app.actions.scrollToTop()
-							}
+    var settings = _.clone(_settings);
 
-							if (settings.auto){
-								settings.auto(p)
-							}
+    var add = self.map.add;
+    var frommodule = true;
+    var globalpreloaderTimer = p.globalpreloaderTimer || null
 
-							//p = null
+    var rmpreloader = function () {
+      if (globalpreloaderTimer) {
 
-						})				
+        globalpreloader(false)
 
+        clearTimeout(globalpreloaderTimer)
+      }
+    }
 
-						if (settings.init)
-							settings.init(p)
 
+    if (p.restartModule) {
+      frommodule = false
+      settings.fast = true
+    }
 
+    if (typeof add == 'function')
 
-						if (settings.fade && (!settings.waspreshell || settings.replaceState)){
-							setTimeout(() => {
-								window.rifticker.add(() => {
-									settings.fade.addClass('shell_fadein')
-								})
-							}, 100)
+      add = add(settings, p);
 
-							setTimeout(() => {
-								window.rifticker.add(() => {
-									settings.fade.removeClass('shell_fadefast')
-									settings.fade.removeClass('shell_fadein')
-								})
-							}, 400)
-						}
+    settings = _.extend(settings, add);
+    settings = _.extend(settings, p);
 
-					}, frommodule)
 
-					
+    beforegetdata(settings, function () {
 
-					
 
-				}, {
-					state : state,
-					settings : settings
-				});	
+      if (settings.fade && (!settings.waspreshell || settings.replaceState)) {
+        window.rifticker.add(() => {
+          settings.fade.addClass('shell_fadefast')
+        })
+      }
 
 
+      self.user.isState(function (state) {
+        settings.getdata(function (data, err) {
 
-			})
-		})
+          topPreloader(100);
 
-	}
+          rmpreloader()
 
-	self.init = function(settings, p){
+          if (err) {
+            return
+          }
 
-		p || (p = {});
-		settings || (settings = {});
+          settings.data = data || {};
 
-		self.anonimus(function(result){
+          if (p.preshell) p.preshell();
 
-			if(result){
+          self.shell(settings, function (p) {
 
-				self.inited = true;
+            rmpreloader()
 
-				self.add(settings, p);
 
-			}
-			else{
+            p.clbk = addToFunction(p.clbk, function () {
 
-				if (p.globalpreloaderTimer){
+              if (primary(p) && !p.inWnd && !p.noscroll && !p.goback) {
+                self.app.actions.scrollToTop()
+              }
 
-					globalpreloader(false)
-					
-					clearTimeout(p.globalpreloaderTimer)
-				}
+              if (settings.auto) {
+                settings.auto(p)
+              }
 
-				if (p.el) p.el.html('')
+              //p = null
 
-				if (p.clbk)
-					p.clbk('anonimus')
-			}
+            })
 
-			p = null
 
-		}, p)
-	}
+            if (settings.init)
+              settings.init(p)
 
-	self.redirect = function(p, href){
 
-		var _p = {};
 
-			_p.href = href;
-			_p.history = true;
-			_p.open = true;
-			_p.replaceState = true
-			_p.preshell = p.preshell;
-			_p.clbk = p.clbk;
+            if (settings.fade && (!settings.waspreshell || settings.replaceState)) {
+              setTimeout(() => {
+                window.rifticker.add(() => {
+                  settings.fade.addClass('shell_fadein')
+                })
+              }, 100)
 
-		self.nav.api.load(_p)
+              setTimeout(() => {
+                window.rifticker.add(() => {
+                  settings.fade.removeClass('shell_fadefast')
+                  settings.fade.removeClass('shell_fadein')
+                })
+              }, 400)
+            }
 
+          }, frommodule)
 
-	}
 
-	self.restart = function(p){
 
 
-		if (self.user){
-			if(!p) p = {};
 
-			p.restartModule = true
+        }, {
+          state: state,
+          settings: settings
+        });
 
-			self.stop(p);
-			self.run(p);
-		}	
-		
-	}
 
-	self.addEssense = function(essenses, Essense, p){
-		////// ??
-		self.essenses = essenses
 
-		var essense = new Essense(p);
+      })
+    })
 
-		var id = essense.id || p.eid || 'secondary';
+  }
 
-		if (p.primary || p.loadDefault) essense.primary = true;
+  self.init = function (settings, p) {
 
-		if (essense.primary) id = 'primary';
+    p || (p = {});
+    settings || (settings = {});
 
-		if(!essenses[id]){
+    self.anonimus(function (result) {
 
-			essenses[id] = essense;
+      if (result) {
 
-		}
-		else
-		{
-			//essense = null
-		}
+        self.inited = true;
 
-		essenses[id].destroyed = false;
-	
+        self.add(settings, p);
 
-		p.clearessense = essense.clearessense = function(){
-			self.removeEssense(essenses, id)
-		}
+      }
+      else {
 
-		essense = null
+        if (p.globalpreloaderTimer) {
 
-		return essenses[id];
-	}
+          globalpreloader(false)
 
-	self.removeEssense = function(essenses, id){
-		if (essenses[id])
-		{
-			essenses[id].destroy();
-			essenses[id].destroyed = true
+          clearTimeout(p.globalpreloaderTimer)
+        }
 
-			delete essenses[id];
-		}
-	}
+        if (p.el) p.el.html('')
 
-	self.closeContainer = function(key){
+        if (p.clbk)
+          p.clbk('anonimus')
+      }
 
-		var close = deep(self, 'container.close')
+      p = null
 
-		if (close){
+    }, p)
+  }
 
-			close(null, key);
+  self.redirect = function (p, href) {
 
-			return true
-		}
-	}
+    var _p = {};
 
-	self.clearCanvas = function(p){
+    _p.href = href;
+    _p.history = true;
+    _p.open = true;
+    _p.replaceState = true
+    _p.preshell = p.preshell;
+    _p.clbk = p.clbk;
 
-		p.clear = true;
+    self.nav.api.load(_p)
 
-		self.shell(p)
 
-	}
+  }
 
-	self.parametersHandler = function(){
-		_.each(self.essenses, function(e){
+  self.restart = function (p) {
 
-			if (e.parametersHandler)
-				e.parametersHandler()
-		})
-	}
 
-	
+    if (self.user) {
+      if (!p) p = {};
 
-	return self;
+      p.restartModule = true
+
+      self.stop(p);
+      self.run(p);
+    }
+
+  }
+
+  self.addEssense = function (essenses, Essense, p) {
+    ////// ??
+    self.essenses = essenses
+
+    var essense = new Essense(p);
+
+    var id = essense.id || p.eid || 'secondary';
+
+    if (p.primary || p.loadDefault) essense.primary = true;
+
+    if (essense.primary) id = 'primary';
+
+    if (!essenses[id]) {
+
+      essenses[id] = essense;
+
+    }
+    else {
+      //essense = null
+    }
+
+    essenses[id].destroyed = false;
+
+
+    p.clearessense = essense.clearessense = function () {
+      self.removeEssense(essenses, id)
+    }
+
+    essense = null
+
+    return essenses[id];
+  }
+
+  self.removeEssense = function (essenses, id) {
+    if (essenses[id]) {
+      essenses[id].destroy();
+      essenses[id].destroyed = true
+
+      delete essenses[id];
+    }
+  }
+
+  self.closeContainer = function (key) {
+
+    var close = deep(self, 'container.close')
+
+    if (close) {
+
+      close(null, key);
+
+      return true
+    }
+  }
+
+  self.clearCanvas = function (p) {
+
+    p.clear = true;
+
+    self.shell(p)
+
+  }
+
+  self.parametersHandler = function () {
+    _.each(self.essenses, function (e) {
+
+      if (e.parametersHandler)
+        e.parametersHandler()
+    })
+  }
+
+  return self;
 }
 
-if(typeof module != "undefined")
-{
-	module.exports = nModule;
+if (typeof module != "undefined") {
+  module.exports = nModule;
 }
