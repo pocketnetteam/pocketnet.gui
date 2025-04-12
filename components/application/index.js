@@ -8,7 +8,7 @@ var application = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, ed, application, appdata, curpath, userAddress, isUserAuthor;
+		var el, ed, application, appdata, curpath, userAddress, isUserAuthor, grantedPermissions;
 
 		var actions = {
 			install : function(){
@@ -84,6 +84,13 @@ var application = (function(){
 			}
 		}
 
+		const iframePermissionMap = {
+			mobilecamera: "camera",
+			geolocation: "geolocation",
+			notifications: "notifications",
+			microphone: "microphone",
+		};
+
 		var events = {
 			pageevents : function(p, s){
 
@@ -135,6 +142,31 @@ var application = (function(){
 
 					curpath = actions.getpath()
 					
+				}
+			},
+
+			permissionsChanged: function (p = {}) {
+				const allowedStates = ['granted', 'forbid'];
+				if (!allowedStates.includes(p.state)) return;
+
+				if (!application || !appdata) return;
+				if (p.application !== appdata.id) return;
+
+				if (iframePermissionMap[p.permission]) {
+					grantedPermissions = grantedPermissions || [];
+
+					if (p.state === 'granted') {
+						if (!grantedPermissions.find(perm => perm.id === p.permission)) {
+							grantedPermissions.push({
+								id: p.permission,
+								state: 'granted'
+							});
+						}
+					} else {
+						grantedPermissions = grantedPermissions.filter(perm => perm.id !== p.permission);
+					}
+
+					renders.frameremote();
 				}
 			},
 
@@ -320,6 +352,17 @@ var application = (function(){
 					src = src + '?testnetwork=true'
 				}*/
 
+				const buildIframeAllowAttr = (permissions = []) => {					
+
+          return permissions
+            .map((p) => iframePermissionMap[p?.id])
+            .filter(Boolean)
+            .join("; ");
+        };
+
+        const iframeAllowAttr = buildIframeAllowAttr(grantedPermissions || []);
+
+				
 				self.shell({
 
 					name :  'frameremote',
@@ -327,6 +370,7 @@ var application = (function(){
 					
 					data : {
 						application,
+						iframeAllowAttr,
 						isInDevMode: _scope === tscope,
 						tscope: isUserAuthor && tscope,
 						scope: appdata.scope,
@@ -385,6 +429,7 @@ var application = (function(){
 			self.app.apps.on('changestate', events.changestate)
 
 			self.app.apps.on('installed', events.installed)
+			self.app.apps.on('permissions:changed', events.permissionsChanged)
 			self.app.apps.on('removed', events.removed)
 
 
@@ -399,7 +444,6 @@ var application = (function(){
 
 				if (f){
 					application = f.application
-					
 					appdata = f.appdata?.data
 				}
 
@@ -471,7 +515,6 @@ var application = (function(){
 				
 				}
 			},
-
 			getdata : function(clbk, p){
 
 				ed = p.settings.essenseData || {}
@@ -496,6 +539,7 @@ var application = (function(){
 						application = f.application
 						
 						appdata = f.appdata?.data
+						grantedPermissions = f.appdata?.permissions?.filter(permission => permission.state === 'granted')
 						isUserAuthor = appdata && appdata.address === userAddress;
 
 						if (ed.application){
@@ -553,6 +597,8 @@ var application = (function(){
 
 				self.app.apps.off('loaded', events.loaded)
 				self.app.apps.off('changestate', events.changestate)
+
+				self.app.apps.off('permissions:changed', events.permissionsChanged)
 
 				self.app.apps.off('installed', events.installed)
 				self.app.apps.off('removed', events.removed)
