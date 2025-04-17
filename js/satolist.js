@@ -10750,6 +10750,10 @@ Platform = function (app, listofnodes) {
                         notification.seen = self.app.platform.currentTime()
                 })
 
+                // Close all system OS notifications
+                if (electron)
+                    electron.ipcRenderer.send('electron-notification-close', 'all');
+
                 n.save()
 
                 _.each(n.clbks.seen, function (f) {
@@ -22709,9 +22713,6 @@ Platform = function (app, listofnodes) {
                                             });
 
                                         })
-
-
-
                                     }
 
                                 } else {
@@ -25049,7 +25050,7 @@ Platform = function (app, listofnodes) {
                     var _el = $(self.matrixchat.notify.tpl(matrixevent))
 
                     var title = _el.find('.caption').text()
-                    var body = _el.find('.tips').text()
+                    var body = _el.find('.tips').text().trim()
                     var image = _el.find('[image]').attr('image')
                     _el = null
 
@@ -25058,14 +25059,11 @@ Platform = function (app, listofnodes) {
                         electron.ipcRenderer.send('electron-notification-small', {
                             title,
                             body,
-                            image
+                            image,
+                            roomid: matrixevent.roomId
                         });
 
                     })
-
-
-
-
                 }
             }
         },
@@ -25523,6 +25521,10 @@ Platform = function (app, listofnodes) {
                 }
 
             }
+
+            // When focused clear all system notifications
+            if (electron)
+                electron.ipcRenderer.send('electron-notification-close', 'all');
 
             if (time > 120 && window.cordova) {
 
@@ -26044,10 +26046,23 @@ Platform = function (app, listofnodes) {
         }
 
         if (electron && _Electron) {
-
+            
             electron.ipcRenderer.on('nav-message', function (event, data) {
                 if (data.type == 'action') {
                     routing(data.msg)
+                }
+            })
+
+            electron.ipcRenderer.on('open-chat', function (event, data) {
+                if (data.roomid) {
+    
+                    var chatLink = '/chat?id=' + data.roomid;
+    
+                    return self.app.platform.matrixchat.wait().then((core) => {
+                        core.gopage(chatLink)    
+                        return Promise.resolve()
+    
+                    })
                 }
             })
 
