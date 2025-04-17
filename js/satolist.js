@@ -471,7 +471,11 @@ Platform = function (app, listofnodes) {
         'P8tNMA6QtBooqxw8EieKcL5uP1cTpt9vi9': true,
         'PFCSYXEc5fmVKNoPEtEg1NFezh4bym6e12': true,
         'PUH33LTfznPMgAWuyT1KqinYE8f9B4sRk9': true,
-        'PGrXFgpLYXVBgBPrhAeGRLnSpYE6Jwpt5Z': true
+        'PGrXFgpLYXVBgBPrhAeGRLnSpYE6Jwpt5Z': true,
+        'PLwWXrGBvVxWfujrDxgGHa7oCVtyw9F3Du': true,
+        'PBsnRLRRafnjDEHVaTyreFS1SRKavVFXHZ': true,
+        'PWMSN4XByB3sKXrsBnmP9LPYFFBo2PUQ1R': true,
+        'PDdwKn4ZNSMyeSyQ6F9zf4ttVd6jC1arvn': true
     }
 
     self.bch = {
@@ -5593,6 +5597,7 @@ Platform = function (app, listofnodes) {
                 miniapp.address = data.address
                 miniapp.name = data.name
                 miniapp.description = data.description
+                miniapp.tscope = data.tscope
                 miniapp.tags = data.tags
                 miniapp.scope = data.scope
 
@@ -16095,7 +16100,7 @@ Platform = function (app, listofnodes) {
                     }
 
                     self.app.platform.actions.addActionAndSendIfCan(comment, 2, null, {
-                        rejectIfError: true
+                        rejectIfError: ['actions_noinputs_wait']
                     }).then(action => {
 
                         var alias = action.get()
@@ -19258,6 +19263,30 @@ Platform = function (app, listofnodes) {
         }
 
         self.api = {
+            addMiniappToken: function (appId, address, proxy) {
+                if (!self.isFirebaseConfigured) return Promise.reject('firebase:not_configured')
+                return self.request.addMiniappToken(appId, address, proxy)
+                    .then(r => {
+                        const port = proxy.port ? `:${proxy.port}` : ''
+                        return Promise.resolve({
+                            token: r.token,
+                            address: r.address,
+                            proxy: `https://${proxy.host}${port}`
+                        });
+                    })
+                    .catch(e => {
+                        return Promise.reject(e);
+                    });
+            },
+            checkMiniappToken: function (appId, address, proxy) {
+                return self.request.checkMiniappToken(appId, address, proxy)
+                    .then(r => {
+                        return Promise.resolve(r);
+                    })
+                    .catch(e => {
+                        return Promise.reject(e);
+                    });
+            },
             revoke: function (token, proxy) {
 
                 var address = getaddress()
@@ -19365,7 +19394,10 @@ Platform = function (app, listofnodes) {
 
             return self.request.revokeall()
         }
-
+        self.isFirebaseConfigured = async function () {
+            const tokensData = self.storage.data[appid] || {};
+            return Object.keys(tokensData).length > 0;
+        }
         self.set = function (proxy) {
             if (!currenttoken) return Promise.reject('emptytoken')
 
@@ -19389,6 +19421,26 @@ Platform = function (app, listofnodes) {
                 return Promise.resolve()
             })
 
+        }
+
+        self.getNotificationsProxy = async function () {
+            let current = null;
+            for (const proxy of platform.app.api.get.proxies()) {
+                const {
+                    info
+                } = await proxy.get.info();
+                
+                if (info.firebase.useNotifications && info.firebase.inited) {   
+                    current = proxy;
+                }
+            }
+            if (current) {
+                return self.api.checkProxy(current).then(r => {
+                    return Promise.resolve(current)
+                })
+            } else {
+                return Promise.reject('none')
+            }
         }
 
         self.settings = async function (current) {
@@ -19417,7 +19469,22 @@ Platform = function (app, listofnodes) {
         }
 
         self.request = {
-
+            addMiniappToken: function (appId, address, proxy) {
+                return platform.app.api.fetchauth('miniapp/addToken', {
+                    appId: appId,
+                    address: address
+                }, {
+                    proxy: proxy
+                });
+            },
+            checkMiniappToken: function (appId, address, proxy) {
+                return platform.app.api.fetchauth('miniapp/checkToken', {
+                    appId: appId,
+                    address: address
+                }, {
+                    proxy: proxy
+                });
+            },
             revokeall: function () {
 
                 return platform.app.api.fetchauthall('firebase/revokedevice', {
@@ -19550,21 +19617,26 @@ Platform = function (app, listofnodes) {
 
                 try {
                     if (!firebase.apps.length) {
-                        firebase.initializeApp({
-                            messagingSenderId: "1020521924918",
-                            projectId: 'pocketnet',
-                            apiKey: 'AIzaSyC_Jeet2gpKRZp44iATwlFFA7iGNYsabkk',
-                            appId: '1:1020521924918:ios:ab35cc84f0d10d86aacb97',
-                        });
+
+                        if(!window.project_config.firebaseweb){
+                            throw 'window.project_config.firebaseweb'
+                        }
+
+                        firebase.initializeApp(JSON.parse(hexDecode(window.project_config.firebaseweb)));
                     }
+
                     const messaging = firebase.messaging();
+
+
                     messaging.getToken().then(token => {
                         currenttoken = token
                         platform.fcmtoken = token
                         platform.matrixchat.changeFcm()
                         self.events()
+
                         if (clbk)
                             clbk(token)
+
                     }).catch(e => {
                         console.log("E", e)
                     })

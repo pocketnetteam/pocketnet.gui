@@ -1041,13 +1041,17 @@ var Action = function(account, object, priority, settings){
 
         if (self.rejected){
 
-            if (self.rejectWait && self.rejectWait > new Date()){
+            if (self.rejectWait){
+                if (self.rejectWait > new Date()){
                 
+                }
+                else{
+                    
+                    self.rejectWait = null
+                    self.rejected = null
+                }
             }
-            else{
-                self.rejectWait = null
-                self.rejected = null
-            }
+            
 
             if (self.rejected)
                 return Promise.reject(self.rejected)
@@ -1187,22 +1191,21 @@ var Action = function(account, object, priority, settings){
 
         
         if (error && tryresolve){
-
-
             error = await account.actionRejectedWithTriggers(self, error)
         }
         else{
 
-
             if(rejectIfError){
                 if(
                     error == 'actions_inputs_not_updated' ||
-                    error == 'actions_noinputs_wait' || 
+                    //error == 'actions_noinputs_wait' || 
                     error == 'actions_userInteractive' || 
                     error == 'actions_waitUserInteractive' || 
                     error == 'actions_waitUserStatus' || 
                     error == 'actions_tryingsend' || 
-                    error == 'actions_checkFail' 
+                    error == 'actions_checkFail' || 
+
+                    (_.isArray(rejectIfError) && rejectIfError.indexOf(error) > -1)
                     
                     // || errorCodesAndActions[error]
 
@@ -2757,7 +2760,7 @@ var Actions = function(app, api, storage = localStorage){
                 return Promise.resolve(action)
             }).catch(e => {
 
-                if (p.rejectIfError){
+                if (p.rejectIfError && !action.rejected){
                     action.rejected = 'cantsendnow'
                     return Promise.reject(e)
                 }

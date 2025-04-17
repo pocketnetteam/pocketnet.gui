@@ -884,6 +884,10 @@ html[theme="gray"] #registration .ucaptcha .captchaImage {
     width: 100%;
   }
   #registration[step="bloggers"] .bloggers .nextStepButtons {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
     height: 150px;
   }
   #registration .mWrapper .categories .cats {

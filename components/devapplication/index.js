@@ -6,7 +6,7 @@ var devapplication = (function () {
   var Essense = function (p) {
     var primary = deep(p, "history");
     var el, applicationId, application;
-    var currentStatus = "view";
+    var currentStatus = "manager";
 
     var handleAppError = function (error) {
       if (error && error.message) {
@@ -31,7 +31,13 @@ var devapplication = (function () {
         clearErrors();
 
         const updatedData = prepareAppData();
-        if (!validateAppData(updatedData)) {
+
+        const hasValidatedAppData = validateAppData({
+          ...updatedData,
+          scope: updatedData.scope || (application.hash && "Not Filled"),
+        });
+
+        if (!hasValidatedAppData) {
           currentStatus = "view";
           return globalpreloader(false);
         }
@@ -106,7 +112,7 @@ var devapplication = (function () {
           );
         }
 
-        if (application.scope.includes("localhost")) {
+        if (!application.scope || application.scope.includes("localhost")) {
           return sitemessage(
             self.app.localization.e("miniApp_localhostScopeWarningMessage")
           );
@@ -118,8 +124,9 @@ var devapplication = (function () {
           id: application.id,
           hash: "",
           address: application.manifest?.author,
-          name: application.manifest?.name,
+          name: application?.name || application.manifest?.name,
           scope: application.scope,
+          tscope: application.tscope ?? "",
           description:
             application.manifest?.description ||
             application.manifest.descriptions?.["en"],
@@ -143,16 +150,54 @@ var devapplication = (function () {
       goToApp: function () {
         navigateToApp();
       },
+      confirmDeletion: function () {
+        new dialog({
+          class: "zindex",
+          html: self.app.localization.e("miniApp_deleteConfirmation"),
+          btn1text: self.app.localization.e("miniApp_yesButton"),
+          btn2text: self.app.localization.e("miniApp_noButton"),
+          success: actions.delete,
+        });
+      },
+      confirmPublish: function () {
+        new dialog({
+          class: "zindex",
+          html: self.app.localization.e("miniApp_publishConfirmation"),
+          btn1text: self.app.localization.e("miniApp_yesButton"),
+          btn2text: self.app.localization.e("miniApp_noButton"),
+          success: actions.publish,
+        });
+      },
       goToIndex: function () {
         self.nav.api.go({
           open: true,
-          href: "index",
-          inWnd: true,
+          href: "devapplications",
           history: true,
         });
       },
+      openSupport: function () {
+        app.platform.ui.support("common", {
+          error: "",
+          additionalData: {},
+        });
+      },
       delete: function () {
-        confirmDeletion();
+        app.apps
+          .deleteApp({
+            id: applicationId,
+            hash: application?.hash,
+          })
+          .then(() => {
+            this.sitemessage(
+              self.app.localization.e("miniApp_deleteSuccessMessage")
+            );
+            actions.goToIndex();
+          })
+          .catch(() => {
+            this.sitemessage(
+              self.app.localization.e("miniApp_deleteErrorMessage")
+            );
+          });
       },
     };
 
@@ -161,6 +206,7 @@ var devapplication = (function () {
         id: el.c.find("#app-id").val(),
         version: el.c.find("#app-version").val(),
         scope: el.c.find("#app-scope").val(),
+        tscope: el.c.find("#app-tscope").val(),
         name: el.c.find("#app-name").val(),
         tags: el.c
           .find(".tag")
@@ -183,12 +229,9 @@ var devapplication = (function () {
           selector: "#app-scope",
           message: self.app.localization.e("miniApp_scopeInvalidMessage"),
           condition: (value) => {
-            const localhostPattern = /^localhost:\d+$/;
+            if (!value) return true;
             const domainPattern = /^[a-zA-Z0-9.-]+$/;
-            return (
-              localhostPattern.test(value) ||
-              (domainPattern.test(value) && value.indexOf("https") === -1)
-            );
+            return domainPattern.test(value) && value.indexOf("https") === -1;
           },
         },
         {
@@ -203,10 +246,32 @@ var devapplication = (function () {
           message: self.app.localization.e("miniApp_idInvalidMessage"),
           condition: (value) => /^[a-z0-9]+(\.[a-z0-9]+)+$/.test(value),
         },
+        {
+          value: appData.tscope,
+          selector: "#app-tscope",
+          message: self.app.localization.e("miniApp_tScopeInvalidMessage"),
+          condition: (value) => {
+            if (!value) return true;
+            const localhostPattern = /^localhost:\d+$/;
+            const domainPattern = /^[a-zA-Z0-9.-]+$/;
+            return (
+              localhostPattern.test(value) ||
+              (domainPattern.test(value) && value.indexOf("https") === -1)
+            );
+          },
+        },
       ];
 
       var hasErrors = validationRules.some(validateField);
       return !hasErrors;
+    }
+
+    function addAssetsLoadHandler(_p, selector) {
+      _p.el.find(selector).on("blur", function () {
+        if (!this.value) return;
+        renders.appIconPreview(this.value);
+        renders.showManifestButton(this.value);
+      });
     }
 
     var validateField = function ({
@@ -241,34 +306,35 @@ var devapplication = (function () {
       });
     };
 
-    var confirmDeletion = function () {
-      new dialog({
-        class: "zindex",
-        html: self.app.localization.e("miniApp_deleteConfirmation"),
-        btn1text: self.app.localization.e("miniApp_yesButton"),
-        btn2text: self.app.localization.e("miniApp_noButton"),
-        success: function () {
-          app.apps
-            .deleteApp({
-              id: applicationId,
-              hash: application?.hash,
-            })
-            .then(() => {
-              this.sitemessage(
-                self.app.localization.e("miniApp_deleteSuccessMessage")
-              );
-              actions.goToIndex();
-            })
-            .catch(() => {
-              this.sitemessage(
-                self.app.localization.e("miniApp_deleteErrorMessage")
+    var renders = {
+      miniAppDocsLink: function () {
+        self.shell(
+          {
+            name: "miniAppDocsLink",
+            el: el.c.find("#miniAppDocsLink"),
+          },
+          function (_p) {
+            _p.el.find("#navigateToMiniAppDocs").on("click", () => {
+              self.app.apps.openInWndById(
+                "app.pocketnet.docs",
+                null,
+                "6465762f617070732f6d696e69617070732f6765742d737461727465642e68746d6c"
               );
             });
-        },
-      });
-    };
-
-    var renders = {
+          }
+        );
+      },
+      supportLink: function () {
+        self.shell(
+          {
+            name: "supportLink",
+            el: el.c.find("#supportLink"),
+          },
+          function (_p) {
+            _p.el.find("#openSupport").on("click", actions.openSupport);
+          }
+        );
+      },
       appIconPreview: function (scope) {
         self.shell(
           {
@@ -281,7 +347,9 @@ var devapplication = (function () {
           function (_p) {
             _p.el.find(".app-icon-preview").on("error", function () {
               $(this).replaceWith(
-                `<span class="icon-error-message" style="color: red;">Иконка не может быть загружена. Проверьте доступность <code>b_icon.png</code> на вашем домене.</span>`
+                `<span class="icon-error-message" style="color: red;">${self.app.localization.e(
+                  "miniApp_iconErrorMessage"
+                )}: <code>b_icon.png</code></span>`
               );
             });
           }
@@ -298,14 +366,15 @@ var devapplication = (function () {
             _p.el.find(".save-btn").on("click", actions.createApp);
             _p.el.find(".cancel-btn").on("click", actions.goToIndex);
 
-            ["#app-name", "#app-scope", "#app-id"].forEach((selector) =>
-              _p.el.find(selector).on("input", () => clearErrors(selector))
+            ["#app-name", "#app-scope", "#app-id", "#app-tscope"].forEach(
+              (selector) =>
+                _p.el.find(selector).on("input", () => clearErrors(selector))
             );
-            _p.el.find("#app-scope").on("blur", function () {
-              renders.appIconPreview(this.value);
-              renders.showManifestButton(this.value);
-            });
+            addAssetsLoadHandler(_p, "#app-scope");
+            addAssetsLoadHandler(_p, "#app-tscope");
+            renders.miniAppDocsLink();
             renders.deploymentInstructions();
+            renders.supportLink();
             renders.tagInput({
               tags: [],
               _p,
@@ -331,7 +400,9 @@ var devapplication = (function () {
           })
           .catch(() => {
             el.c.find("#manifestButtonContainer").empty();
-            handleAppError({ message: "import:manifest" });
+            handleAppError({
+              message: "import:manifest",
+            });
           });
       },
       deploymentInstructions: function () {
@@ -363,14 +434,19 @@ var devapplication = (function () {
           }
         );
       },
-      miniAppDetail: function (application) {
+      miniAppView: function (application) {
         el.c.find(".content").html("");
 
-        if (currentStatus === "edit") {
-          renderEditForm(application);
-        } else {
-          renderDetails(application);
-        }
+        const renderActions = {
+          manager: renders.miniAppManager,
+          edit: renders.editForm,
+          default: renders.miniAppManager,
+        };
+
+        const renderFunction =
+          renderActions[currentStatus] || renderActions.default;
+
+        renderFunction(application);
       },
       tagInput: function ({ tags, _p }) {
         let _tags = [...tags];
@@ -415,77 +491,79 @@ var devapplication = (function () {
           },
         });
       },
-    };
-
-    var renderEditForm = function (application) {
-      self.shell(
-        {
-          name: "miniAppEditForm",
-          el: el.c.find(".content"),
-          data: {
-            id: application?.id,
-            name: application?.name,
-            version: application?.version,
-            scope: application?.scope?.replace(/^https?:\/\//, ""),
+      editForm: function (application) {
+        self.shell(
+          {
+            name: "miniAppEditForm",
+            el: el.c.find(".content"),
+            data: {
+              id: application?.id,
+              name: application?.name,
+              version: application?.version,
+              scope: application?.scope?.replace(/^https?:\/\//, ""),
+              tscope: application?.tscope?.replace(/^https?:\/\//, ""),
+            },
           },
-        },
-        function (_p) {
-          renders.appIconPreview(application.scope);
-          _p.el.find(".save-btn").on("click", actions.editApp);
-          _p.el.find(".cancel-btn").on("click", actions.cancelEdit);
-          _p.el.find("#app-scope").on("blur", function () {
-            renders.appIconPreview(this.value);
-            renders.showManifestButton(this.value);
-          });
-          renders.deploymentInstructions();
-          ["#app-name", "#app-version", "#app-scope"].forEach((selector) =>
-            _p.el.find(selector).on("input", () => clearErrors(selector))
-          );
-          renders.tagInput({
-            tags: application.tags || [],
-            _p,
-          });
-        }
-      );
-    };
+          function (_p) {
+            renders.appIconPreview(application.scope);
+            _p.el.find(".save-btn").on("click", actions.editApp);
+            _p.el.find(".cancel-btn").on("click", actions.cancelEdit);
+            addAssetsLoadHandler(_p, "#app-scope");
+            addAssetsLoadHandler(_p, "#app-tscope");
+            renders.deploymentInstructions();
+            renders.miniAppDocsLink();
+            renders.supportLink();
+            ["#app-name", "#app-version", "#app-scope", "#app-tscope"].forEach(
+              (selector) =>
+                _p.el.find(selector).on("input", () => clearErrors(selector))
+            );
+            renders.tagInput({
+              tags: application.tags || [],
+              _p,
+            });
+          }
+        );
+      },
+      miniAppManager: function (application) {
+        const description =
+          application.manifest?.description ||
+          application.manifest.descriptions;
+        const localizedDescription =
+          typeof description === "string"
+            ? description
+            : description?.[app.localization.key] ?? description?.["en"];
 
-    var renderDetails = function (application) {
-      const description =
-        application.manifest?.description || application.manifest.descriptions;
-      const localizedDescription =
-        typeof description === "string"
-          ? description
-          : description?.[app.localization.key] ?? description?.["en"];
-      self.shell(
-        {
-          name: "miniAppDetail",
-          el: el.c.find(".content"),
-          data: {
-            icon: application?.icon,
-            id: application.manifest?.id,
-            name: application.manifest?.name,
-            appStatus: app.apps.get.appStatusById(applicationId),
-            author: application.manifest?.author,
-            tags: application.tags?.join(", ") || [],
-            permissions: application.manifest?.permissions?.join(", "),
-            version: application.manifest?.versiontxt,
-            scope: application.manifest.scope,
-            description: localizedDescription,
+        self.shell(
+          {
+            name: "miniAppDetail",
+            el: el.c.find(".content"),
+            data: {
+              icon: application?.icon,
+              id: application.manifest?.id,
+              name: application?.name || application.manifest?.name,
+              appStatus: app.apps.get.appStatusById(applicationId),
+              author: application.manifest?.author,
+              tags: application.tags?.join(", ") || [],
+              permissions: application.manifest?.permissions?.join(", "),
+              version: application.manifest?.versiontxt,
+              scope: application.manifest.scope,
+              description: localizedDescription,
+            },
           },
-        },
-        function (_p) {
-          _p.el.find(".edit-app-btn").on("click", actions.toggleEdit);
-          _p.el.find(".publish-app-btn").on("click", actions.publish);
-          _p.el.find(".delete-app-btn").on("click", actions.delete);
-          _p.el.find("#goToApp").on("click", actions.goToApp);
-        }
-      );
+          function (_p) {
+            _p.el.find(".edit-app-btn").on("click", actions.toggleEdit);
+            _p.el.find(".publish-app-btn").on("click", actions.confirmPublish);
+            _p.el.find(".delete-app-btn").on("click", actions.confirmDeletion);
+            _p.el.find("#goToApp").on("click", actions.goToApp);
+          }
+        );
+      },
     };
 
     var loadMiniApp = function (targetApplication) {
       userAddress = self.app.user.address.value;
-
-      if (targetApplication) return renders.miniAppDetail(targetApplication);
+      
+      if (targetApplication) return renders.miniAppView(targetApplication);
 
       if (!applicationId) {
         renders.createForm();
@@ -497,7 +575,7 @@ var devapplication = (function () {
         .application(applicationId)
         .then(function (response) {
           application = response.application || response.appdata?.data;
-
+          
           if (
             !application ||
             (application.installing && !application.installed)
@@ -524,7 +602,7 @@ var devapplication = (function () {
             return;
           }
 
-          renders.miniAppDetail(application);
+          renders.miniAppView(application);
         })
         .catch(function (e) {
           console.error(e);
