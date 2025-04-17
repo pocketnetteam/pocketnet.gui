@@ -171,8 +171,7 @@ var devapplication = (function () {
       goToIndex: function () {
         self.nav.api.go({
           open: true,
-          href: "index",
-          inWnd: true,
+          href: "devapplications",
           history: true,
         });
       },
@@ -319,7 +318,7 @@ var devapplication = (function () {
               self.app.apps.openInWndById(
                 "app.pocketnet.docs",
                 null,
-                "72752f6465762f6170692f617070732f6d696e69617070732f6765742d737461727465642e68746d6c"
+                "6465762f617070732f6d696e69617070732f6765742d737461727465642e68746d6c"
               );
             });
           }
