@@ -2958,7 +2958,7 @@ _l.juryCaptionUser = "Нарушает ли канал автора правил
 _l.juryCaptionReason = "Причина"
 _l.juryYes = "Да, нарушает"
 _l.juryNo = "Нет, не нарушает"
-_l.makePost = "Сделать публикацию"
+_l.shareOnBastyon = "Поделиться в Bastyon"
 
 
 _l.askdefaultapplink = function(appname){ return "Открыть ли данную ссылку в миниприложении " + appname + "?"};

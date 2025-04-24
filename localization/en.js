@@ -3150,7 +3150,7 @@ _l.juryCaptionReason = "Reason"
 _l.juryYes = "Yes, it does"
 _l.juryNo = "No, it does not violate"
 
-_l.makePost = "Make a publication"
+_l.shareOnBastyon = "Share on Bastyon"
 
 _l.askdefaultapplink = function(appname){ return "Should I open this link in the "+ appname + " mini-app?"};
 _l.nomoreaskdefaultapplink = function({name, scope}){ return "Always open "+scope+" links in the "+name+" mini app"};
