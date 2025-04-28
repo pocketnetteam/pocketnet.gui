@@ -679,6 +679,34 @@ var BastyonApps = function (app) {
             }
         },
 
+        shareOnBastyon: {
+            permissions: [],
+            parameters: [],
+            action: function ({
+                data,
+                application
+            }) {
+
+                if (!data.url) data.withouturl = true
+                if (data.url) data.url = findAndReplaceLinkClear(data.url)
+
+                if (typeof data.canmakepost == 'undefined') data.canmakepost = true
+
+                if (data.sharing){
+                    data.sharing.tags || (data.sharing.tags = [])
+                    data.sharing.tags.push(application.manifest.name)
+                }
+                
+
+                const p = app.platform.ui.getSocialsharePostParams(data)
+
+                app.platform.ui.share(p)
+
+                return Promise.resolve()
+
+            }
+        },
+
         chat: {
 
             openRoom: {

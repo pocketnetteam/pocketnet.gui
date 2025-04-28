@@ -503,22 +503,27 @@ var BastyonSdk = function(settings = {}){
             return action('userstate', {})
         },
 
-        share: function(data){
+        share: function(data, options = { shareOnBastyon: false }){
 
             /*
             
             data.path
             data.sharing
-            
+            options.shareOnBastyon
+
             */
 
             if (data.path){
                 data.url = self.get.applink(data.path)
             }
 
-            
+            const actionName = options?.shareOnBastyon ? 'shareOnBastyon' : 'share';
 
-            return action('share', data)
+            return action(actionName, data)
+        },
+
+        shareOnBastyon: function(data){
+            self.helpers.share(data, { shareOnBastyon: true })
         },
     }
 

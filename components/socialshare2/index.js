@@ -759,37 +759,7 @@ var socialshare2 = (function(){
 
 				self.app.platform.sdk.user.stateAction(() => {
 
-					var p = {dontsave : true}
-
-					p.description = '' 
-					
-
-					if (ed.sharing){
-
-						if (ed.sharing.title){
-							p.description = p.description + superXSS(ed.sharing.title) + '\n'
-						}
-
-						if (ed.sharing.text && ed.sharing.text.body){
-							p.description = p.description + superXSS(ed.sharing.text.body) + '\n'
-						}
-
-						p.images = ed.sharing.image ? [ed.sharing.image] : ed.sharing.images || []
-
-						p.images = _.map(p.images, (im) => {
-							return superXSS(im)
-						})
-
-						p.tags = ed.sharing.tags || []
-					}
-					
-					if (ed.url){
-						p.url = self.app.nav.api.history.removeParametersFromHref(superXSS(ed.url), ['ref'])
-
-						if(p.description != '') p.description = p.description + '\n'
-
-						p.description = p.description + p.url
-					}
+					var p = self.app.platform.ui.getSocialsharePostParams(ed)
 
 					self.app.platform.ui.share(p)
 
