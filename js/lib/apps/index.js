@@ -637,30 +637,6 @@ var BastyonApps = function (app) {
                 application
             }) {
 
-                //url, sharing {images, }, embeding
-                /*
-
-                    {
-                        url : string,
-                        sharing : {
-                            image : '', //url
-							images : [], //base64
-							title : '', 
-							html : {
-								body : '',
-								preview : ''
-							},
-
-							text : {
-								body : '',
-								preview : ''
-							}
-                        }
-                    }
-
-                */
-
-
                 if (!data.url) data.withouturl = true
                 if (data.url) data.url = findAndReplaceLinkClear(data.url)
 
