@@ -4263,6 +4263,44 @@ Platform = function (app, listofnodes) {
 
         },
 
+        getSocialsharePostParams: function(ed) {
+
+            var p = {dontsave : true}
+
+            p.description = '' 
+            
+
+            if (ed.sharing){
+
+                if (ed.sharing.title){
+                    p.description = p.description + superXSS(ed.sharing.title) + '\n'
+                }
+
+                if (ed.sharing.text && ed.sharing.text.body){
+                    p.description = p.description + superXSS(ed.sharing.text.body) + '\n'
+                }
+
+                p.images = ed.sharing.image ? [ed.sharing.image] : ed.sharing.images || []
+
+                p.images = _.map(p.images, (im) => {
+                    return superXSS(im)
+                })
+
+                p.tags = ed.sharing.tags || []
+            }
+            
+            if (ed.url){
+                p.url = self.app.nav.api.history.removeParametersFromHref(superXSS(ed.url), ['ref'])
+
+                if(p.description != '') p.description = p.description + '\n'
+
+                p.description = p.description + p.url
+            }
+
+            return p
+
+        },
+
         socialshare: function (url, p) {
             if (!p) p = {}
 
@@ -4295,6 +4333,7 @@ Platform = function (app, listofnodes) {
 
             const {
                 name,
+                images,
                 description,
                 tags,
                 url
@@ -4322,6 +4361,7 @@ Platform = function (app, listofnodes) {
                         repost: p.repost,
                         videoLink: p.videoLink,
                         name,
+                        images,
                         description,
                         tags,
                         url,
