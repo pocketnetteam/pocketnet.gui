@@ -955,6 +955,34 @@ var share = (function(){
 
 								var alias = action.object
 
+								try{
+								
+									if (action.transaction){
+										if(action.object.delayed()){
+
+											var __parameters = {
+												actionId: 'POST_CREATED_SUCCESS',
+												actionValue: action.transaction,
+												payload : {
+													post : action.object.export(),
+													inputs : action.inputs,
+													outputs : action.outputs
+												}
+
+											}
+
+											self.app.Logger.info(__parameters);
+										}
+										
+									}
+
+								}catch(e){
+									console.log('log error delayed')
+									console.error(e)
+								}
+
+								/**/
+
 
 								if (alias.itisvideo() || alias.itisaudio() || alias.itisstream()) {
 									var unpostedVideos;
