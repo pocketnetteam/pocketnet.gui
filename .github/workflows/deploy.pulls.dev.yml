@@ -254,7 +254,7 @@ jobs:
 
   build-app-android:
     needs: merge
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
@@ -316,7 +316,7 @@ jobs:
 
   build-app-android-gf:
     needs: merge
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4

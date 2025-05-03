@@ -166,7 +166,7 @@ jobs:
 
   build-android:
     needs: prepare
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
@@ -228,7 +228,7 @@ jobs:
 
   build-android-gf:
     needs: prepare
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
