@@ -46,8 +46,8 @@
         "@babel/preset-env": "^7.23.8",
         "@types/grunt": "^0.4.31",
         "babel-plugin-remove-use-strict": "^1.0.1",
-        "electron": "^22.3.27",
-        "electron-builder": "^24.9.1",
+        "electron": "^34.3.0",
+        "electron-builder": "^25.1.8",
         "electron-builder-notarize": "^1.5.1",
         "electron-notarize": "",
         "grunt": "^1.6.1",
@@ -107,6 +107,7 @@
         "tree-kill": "^1.2.2",
         "underscore": "",
         "winston": "^3.3.3",
+        "winston-transport": "^4.7.0",
         "ws": "^8.16.0"
     },
     "build": {
