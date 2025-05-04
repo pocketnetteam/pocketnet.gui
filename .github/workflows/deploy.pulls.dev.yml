@@ -7,7 +7,7 @@ jobs:
 
   # Merge all 'deploy.dev' PRs to master branch
   merge:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout git repository
         uses: actions/checkout@v3
@@ -83,7 +83,7 @@ jobs:
   # Build & Deploy proxy services
   build-proxy:
     needs: merge
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
@@ -192,7 +192,7 @@ jobs:
 
   build-app-unix:
     needs: merge
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
@@ -254,7 +254,7 @@ jobs:
 
   build-app-android:
     needs: merge
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
@@ -316,7 +316,7 @@ jobs:
 
   build-app-android-gf:
     needs: merge
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
