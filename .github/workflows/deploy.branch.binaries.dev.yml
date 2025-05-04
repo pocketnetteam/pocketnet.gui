@@ -42,7 +42,7 @@ jobs:
           path: ./dist/BastyonSetup.dmg
 
   build-app-unix:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout git repository
         uses: actions/checkout@v3
@@ -94,7 +94,7 @@ jobs:
           path: ./dist/BastyonSetup.exe
 
   build-app-android:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout git repository
         uses: actions/checkout@v3
@@ -152,7 +152,7 @@ jobs:
           path: ./cordova/platforms/android/app/build/outputs/apk/release/Bastyon.apk
 
   build-app-android-gf:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout git repository
         uses: actions/checkout@v3
