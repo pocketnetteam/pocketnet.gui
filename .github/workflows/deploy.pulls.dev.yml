@@ -7,14 +7,14 @@ jobs:
 
   # Merge all 'deploy.dev' PRs to master branch
   merge:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout git repository
         uses: actions/checkout@v3
         with:
           ref: master
           fetch-depth: 0 # We need a complete history for merging branches
-      - uses: bobvanderlinden/combine-pull-requests@v4
+      - uses: andyoknen/combine-pull-requests@v5
         with:
           label: deploy.dev
           repo-token: ${{ secrets.GITHUB_TOKEN }}
@@ -47,7 +47,7 @@ jobs:
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
       - name: Prepare
         run: |
           tar xzf repo.tgz
@@ -69,7 +69,7 @@ jobs:
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
       - name: Prepare
         run: |
           tar xzf repo.tgz
@@ -83,7 +83,7 @@ jobs:
   # Build & Deploy proxy services
   build-proxy:
     needs: merge
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
@@ -162,7 +162,7 @@ jobs:
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 20
       - name: Prepare building
         run: |
           npm i
@@ -192,7 +192,7 @@ jobs:
 
   build-app-unix:
     needs: merge
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
@@ -203,7 +203,7 @@ jobs:
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 20
       - name: Prepare building
         run: |
           apt update && apt install -y binutils rpm
@@ -236,7 +236,7 @@ jobs:
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 20
       - name: Prepare building
         run: |
           npm i
@@ -254,7 +254,7 @@ jobs:
 
   build-app-android:
     needs: merge
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
@@ -269,7 +269,7 @@ jobs:
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 20
       - name: Install Cordova
         run: |
           npm i -g cordova@10
@@ -316,7 +316,7 @@ jobs:
 
   build-app-android-gf:
     needs: merge
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
@@ -331,7 +331,7 @@ jobs:
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 20
       - name: Install Cordova
         run: |
           npm i -g cordova@10
@@ -380,6 +380,8 @@ jobs:
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
+      - name: Remove old artifacts
+        run: rm -rf /data/dev/binaries/dev/*
       - name: Copy artifacts
         run: cp ./**/Bastyon* /data/dev/binaries/dev/
       - name: Copy HEAD information

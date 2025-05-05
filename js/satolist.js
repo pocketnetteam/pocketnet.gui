@@ -256,7 +256,6 @@ Platform = function (app, listofnodes) {
         'PDSkBPfxgX25RTde3VzoZ1Wz8yTeUaYAvM': true,
         'PFkCWH4zuAYtVJSQn6rvgEiSsMjHvN8dwE': true,
         'PLYPuTA1HUD8iXBsqTmLUwNhySbJgYja55': true,
-        'PXZGt2EaVyRDrXCWMTiH2Tvh5eP7RZhhxF': true,
         'PCtDTH7XznLBCTHhKFeeg8ezSa7WJtYiMJ': true,
         'PUK1GND45D8yVx5WoJKvCMHLfNLNih5MYH': true,
         'PAGt5jHaFFdhNtgUN9zHygCcmpmooWiLPK': true,
@@ -471,11 +470,33 @@ Platform = function (app, listofnodes) {
         'P8tNMA6QtBooqxw8EieKcL5uP1cTpt9vi9': true,
         'PFCSYXEc5fmVKNoPEtEg1NFezh4bym6e12': true,
         'PUH33LTfznPMgAWuyT1KqinYE8f9B4sRk9': true,
-        'PGrXFgpLYXVBgBPrhAeGRLnSpYE6Jwpt5Z': true,
         'PLwWXrGBvVxWfujrDxgGHa7oCVtyw9F3Du': true,
         'PBsnRLRRafnjDEHVaTyreFS1SRKavVFXHZ': true,
         'PWMSN4XByB3sKXrsBnmP9LPYFFBo2PUQ1R': true,
-        'PDdwKn4ZNSMyeSyQ6F9zf4ttVd6jC1arvn': true
+        'PDdwKn4ZNSMyeSyQ6F9zf4ttVd6jC1arvn': true,
+        "PCZtNtn7b4m2BYYLNKiJGsquqQ4k5qSa45" : true,
+        "PU2BEjFmbEjAc9PnAcLZtJLQC3uqqAy3io" : true,
+        "PBvEaZDUYmHzT6pZ3ByaUTyPajx2tgzp1k" : true,
+        "PW1gF9Jm5TjqEdDT8mBNDBq2H7zh7CQDUp" : true,
+        "PPhcg2DRQ9DQtEQHZ2KgNq7L75BK8hiueU" : true,
+        "PBCzbfUhpVCx4rUoKQg4YKdM3AaPc8vfRK" : true,
+        "PQb6pDXHTt3xsUsgPVy3mb7xqt9Q9Kzt8F" : true,
+        "PUBxem8UZ17SJWjJ2rP6TDAshGr5hNZ4Kj" : true,
+        "PUFyVgmpsjTcMuoDAw5H9ktzdqUSa9qFb3" : true,
+        "PXniv1ebpG1kjLDnhc2M26dyEsg9CXjvpd" : true,
+        "PHN3UprgHjMPQsiXkqEju9bAqCmD73H6B9" : true,
+        "PXirXfZmypofgk4qXgHsxu3wA4cyecqJFn" : true,
+        "PFYMkD2kF8xcoFRQKNYht1Hb4mhekYLnQq" : true,
+        "PKxmKHnngyXsrvsLMYVwb3Hxq6Jnzbse8c" : true,
+        "PEL45oK7ppFhB69G6GSsMLxHatNu5FJc5P" : true,
+        "PSF42Hi3xTjLTcpBNhpC1GRxoHPynoeUxP" : true,
+        "PUKcVWfMB4nkHHxtveVLKWTYSSvm1jQXda" : true,
+        "PMBw57GmUzZqWJ5nSjoE3QXqjYJ6tsD87M" : true,
+        "PU1L46uyV2bNXcU9q8U3sV7MvMCUySZEFH" : true,
+        "PSFC4gwWJ9rTnedFgSWdUVfdZhA9xda11c" : true,
+        'PGrXFgpLYXVBgBPrhAeGRLnSpYE6Jwpt5Z': true,
+        'PA2mkqDV1CU7ZHtneYVPMkB3u4WdzKz4t7': true,
+        'PNXh7Qnc1HpYjypyG2UjyHd3xZVbWPcszQ': true
     }
 
     self.bch = {
@@ -10789,6 +10810,10 @@ Platform = function (app, listofnodes) {
                     if (!notification.seen)
                         notification.seen = self.app.platform.currentTime()
                 })
+
+                // Close all system OS notifications
+                if (electron)
+                    electron.ipcRenderer.send('electron-notification-close', 'all');
 
                 n.save()
 
@@ -22749,9 +22774,6 @@ Platform = function (app, listofnodes) {
                                             });
 
                                         })
-
-
-
                                     }
 
                                 } else {
@@ -25089,7 +25111,7 @@ Platform = function (app, listofnodes) {
                     var _el = $(self.matrixchat.notify.tpl(matrixevent))
 
                     var title = _el.find('.caption').text()
-                    var body = _el.find('.tips').text()
+                    var body = _el.find('.tips').text().trim()
                     var image = _el.find('[image]').attr('image')
                     _el = null
 
@@ -25098,14 +25120,11 @@ Platform = function (app, listofnodes) {
                         electron.ipcRenderer.send('electron-notification-small', {
                             title,
                             body,
-                            image
+                            image,
+                            roomid: matrixevent.roomId
                         });
 
                     })
-
-
-
-
                 }
             }
         },
@@ -25563,6 +25582,10 @@ Platform = function (app, listofnodes) {
                 }
 
             }
+
+            // When focused clear all system notifications
+            if (electron)
+                electron.ipcRenderer.send('electron-notification-close', 'all');
 
             if (time > 120 && window.cordova) {
 
@@ -26084,10 +26107,23 @@ Platform = function (app, listofnodes) {
         }
 
         if (electron && _Electron) {
-
+            
             electron.ipcRenderer.on('nav-message', function (event, data) {
                 if (data.type == 'action') {
                     routing(data.msg)
+                }
+            })
+
+            electron.ipcRenderer.on('open-chat', function (event, data) {
+                if (data.roomid) {
+    
+                    var chatLink = '/chat?id=' + data.roomid;
+    
+                    return self.app.platform.matrixchat.wait().then((core) => {
+                        core.gopage(chatLink)    
+                        return Promise.resolve()
+    
+                    })
                 }
             })
 
