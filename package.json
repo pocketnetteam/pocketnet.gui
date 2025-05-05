@@ -38,9 +38,11 @@
         "minimize:bastyon:test": "node minimize.js -prodaction=true -vendor=30069 -test=true -path=/ -project=Bastyon",
         "dev:bastyon": "node minimize.js -prodaction=false -path=/pocketnet/ -project=Bastyon",
         "dev:bastyon:store": "node minimize.js -prodaction=false -path=/pocketnet/ -project=Bastyon -silentupdate=true",
-        "dev:bastyon:win7": "node minimize.js -prodaction=false -path=/pocketnet/ -project=Bastyon -win7=true",
+        "dev:bastyon:win7": "npm run setup:win7 && node minimize.js -prodaction=false -path=/pocketnet/ -project=Bastyon -win7=true",
         "dev:bastyon:test": "node minimize.js -prodaction=false -test=true -path=/pocketnet/ -project=Bastyon",
-        "node:embedding": "node minimize.js -prodaction=true -vendor=30069 -path=/web/"
+        "dev:bastyon:test:win7": "npm run setup:win7 && node minimize.js -prodaction=false -test=true -path=/pocketnet/ -project=Bastyon -win7=true",
+        "node:embedding": "node minimize.js -prodaction=true -vendor=30069 -path=/web/",
+        "setup:win7": "npm install electron@22.3.27 electron-builder@24.9.1"
     },
     "devDependencies": {
         "@babel/core": "^7.23.7",
