@@ -29,7 +29,14 @@ const FetchHandler = require('./js/transports2/fetch/handler.js');
 const Badge = require('./js/vendor/electron-windows-badge.js');
 
 // AutoUpdate --------------------------------------
+
+
+<% if(win7) {%>
+const { autoUpdater } = require("electron-updater-patch-win7");
+<% } else {%> 
 const { autoUpdater } = require("electron-updater");
+<%}%>
+
 const log = require('electron-log');
 const is = require('electron-is');
 const fs = require('fs');
