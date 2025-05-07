@@ -1952,6 +1952,7 @@ var BastyonApps = function (app) {
     }
 
     self.init = function () {
+        window.addEventListener("message", listener)
 
         var promises = []
         const developApps = app.developapps || [];
@@ -2060,7 +2061,6 @@ var BastyonApps = function (app) {
 
             self.inited = true
 
-            window.addEventListener("message", listener)
 
         }).catch(e => {
             console.error(e)
