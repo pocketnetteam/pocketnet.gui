@@ -1074,7 +1074,8 @@ var BastyonApps = function (app) {
         },
         locale: {},
         theme: {},
-        changestate: {}
+        changestate: {},
+        permissionchange: {} 
     }
 
     var events = {
@@ -1576,6 +1577,19 @@ var BastyonApps = function (app) {
         })
     }
 
+    var notifyPermissionChange = function ({
+        application,
+        permission,
+        state
+    }) {
+        const applicationId = application.manifest.id;
+        emit('permissionchange', {
+            application: applicationId,
+            permission: permission,
+            state: state
+        }, applicationId);
+    };
+
     var givePermission = function (application, permission) {
         if (!this.clearPermission(application, permission)) return false
 
@@ -1589,6 +1603,12 @@ var BastyonApps = function (app) {
         })
 
         savelocaldata()
+
+        notifyPermissionChange({
+            application,
+            permission,
+            state: 'granted'
+        });
 
         return true
 
@@ -1609,6 +1629,12 @@ var BastyonApps = function (app) {
             return _permission.id != permission
         })
 
+        notifyPermissionChange({
+            application,
+            permission,
+            state: 'cleared'
+        })
+
         return true
     }
 
@@ -1625,6 +1651,12 @@ var BastyonApps = function (app) {
         })
 
         savelocaldata()
+
+        notifyPermissionChange({
+            application,
+            permission,
+            state: 'forbid'
+        });
 
         return true
 
