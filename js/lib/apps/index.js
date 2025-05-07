@@ -1074,7 +1074,8 @@ var BastyonApps = function (app) {
         },
         locale: {},
         theme: {},
-        changestate: {}
+        changestate: {},
+        permissionchange: {}
     }
 
     var events = {
@@ -1576,12 +1577,23 @@ var BastyonApps = function (app) {
         })
     }
     
-    var notifyPermissionChange = function (application, permission, state) {
-        trigger('permissions:changed', {
-            application: application.manifest.id,
+    var notifyPermissionChange = function ({
+        application,
+        permission,
+        state
+    }) {
+        const applicationId = application.manifest.id;
+        const notifyData = {
+            application: applicationId,
             permission,
             state
-        });
+        }
+
+        trigger('permissions:changed', notifyData);
+        emit(
+            'permissionchange', notifyData,
+            applicationId
+        );
     }
 
     var givePermission = function (application, permission) {
@@ -1596,7 +1608,11 @@ var BastyonApps = function (app) {
             state: 'granted'
         })
 
-        notifyPermissionChange(application, permission, 'granted')
+        notifyPermissionChange({
+            application,
+            permission,
+            state: 'granted'
+        })
 
         savelocaldata()
 
@@ -1619,7 +1635,11 @@ var BastyonApps = function (app) {
             return _permission.id != permission
         })
 
-        notifyPermissionChange(application, permission, 'cleared')
+        notifyPermissionChange({
+            application,
+            permission,
+            state: 'cleared'
+        })
 
         return true
     }
@@ -1636,7 +1656,11 @@ var BastyonApps = function (app) {
             state: 'forbid'
         })
 
-        notifyPermissionChange(application, permission, 'forbid')
+        notifyPermissionChange({
+            application,
+            permission,
+            state: 'forbid'
+        })
 
         savelocaldata()
 
@@ -1667,7 +1691,11 @@ var BastyonApps = function (app) {
 
         savelocaldata()
 
-        notifyPermissionChange(application, permission, 'granted')
+        notifyPermissionChange({
+            application,
+            permission,
+            state: 'granted'
+        })
 
         return Promise.resolve()
     }
@@ -1685,7 +1713,11 @@ var BastyonApps = function (app) {
                     savelocaldata()
                 }
 
-                notifyPermissionChange(application, permission, 'granted')
+                notifyPermissionChange({
+                    application,
+                    permission,
+                    state: 'granted'
+                })
 
                 return Promise.resolve()
             }
@@ -1702,7 +1734,11 @@ var BastyonApps = function (app) {
 
                 savelocaldata()
 
-                notifyPermissionChange(application, permission, 'forbid')
+                notifyPermissionChange({
+                    application,
+                    permission,
+                    state: 'forbid'
+                })
             }
 
             return Promise.reject(appsError('permission:denied:' + permission + '/' + state))
