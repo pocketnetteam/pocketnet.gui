@@ -140,7 +140,7 @@ var devapplication = (function () {
             sitemessage(
               self.app.localization.e("miniApp_publishSuccessMessage")
             );
-            await app.apps.removeAppFromConfig(applicationId);
+            await app.apps.removeAppFromLocalhost(applicationId);
             loadMiniApp();
           } else {
             sitemessage(self.app.localization.e("miniApp_publishErrorMessage"));
