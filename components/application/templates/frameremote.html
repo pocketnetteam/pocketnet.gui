@@ -100,7 +100,7 @@
 </div>
 
 <div class="iframewrapper remote">
-    <iframe src="<%-src%>" sandbox="allow-scripts allow-same-origin allow-forms" allow="clipboard-write"></iframe>
+    <iframe src="<%-src%>" sandbox="allow-scripts allow-same-origin allow-forms" allow="clipboard-write<% if (iframeAllowAttr) { %>; <%- iframeAllowAttr %><% } %>" allowfullscreen></iframe>
     <div class="loadingIcon">
         <div class="appicon" image="<%-application.icon%>">
         </div>
