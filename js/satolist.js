@@ -24475,6 +24475,9 @@ Platform = function (app, listofnodes) {
                 self.app.peertubeHandler.api.proxy.roys({
                     type: 'upload'
                 }).then((ptServers) => {
+
+                    console.log('ptServers', ptServers)
+
                     try {
                         if (ptServers)
                             self.app.options.peertubeServer = ptServers[_.sample(Object.keys(ptServers))];
