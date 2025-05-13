@@ -2569,6 +2569,7 @@ var BastyonApps = function (app) {
     self.clearPermission = clearPermission
     self.install = install
     self.remove = remove
+    self.removeAppFromLocalhost = removeAppFromLocalhost
 
     return self
 }
