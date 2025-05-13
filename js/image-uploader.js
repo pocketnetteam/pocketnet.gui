@@ -84,7 +84,7 @@ ImageUploader = function(app) {
                 app.peertubeHandler.api.proxy.bestIfNeed().finally(() => {
 
                     if(!app.options.peertubeServer){
-                        reject()
+                        reject('peertubeServer')
 
                         return
                     }

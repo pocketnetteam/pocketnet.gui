@@ -531,7 +531,7 @@ var application = (function(){
 				application = null
 				appdata = null
 
-      	userAddress = self.app.user.address.value;
+      			userAddress = self.app.user.address.value;
 				self.app.apps.get.application(id).then((f) => {
 
 					if (f){
