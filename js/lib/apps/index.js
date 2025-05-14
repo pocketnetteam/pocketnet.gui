@@ -1188,8 +1188,12 @@ var BastyonApps = function (app) {
             return html
         })
     }
-    var resources = function (application, cached = {}) {
 
+    
+    var resources = function (application, cached = {}) {
+        var RESOURCE_TTL = 2 * 60 * 60 * 1000
+        var resourceTsKey = (appId, fileId) => 'res_ts_' + appId + '_' + fileId
+        
         if (allresources[application.id]) return Promise.resolve(allresources[application.id])
         if (getresources[application.id]) return getresources[application.id]
 
@@ -1207,8 +1211,14 @@ var BastyonApps = function (app) {
         promises = promises.concat(Promise.all(_.map(appfiles, (file) => {
 
             return new Promise((resolve, reject) => {
+                var useCached = file.cache && cached[file.id]
 
-                if (file.cache && cached[file.id]) {
+                if (useCached) {
+                    var ts = parseInt(localStorage[resourceTsKey(application.id, file.id)] || '0', 10)
+                    if (Date.now() - ts > RESOURCE_TTL) useCached = false
+                }
+                    
+                if (useCached) {
                     result[file.id] = cached[file.id]
                     result.fromcache[file.id] = true
                     resolve()
@@ -1217,6 +1227,8 @@ var BastyonApps = function (app) {
                         result[file.id] = data
 
                         delete result.fromcache[file.id]
+                        
+                        if (file.cache) localStorage[resourceTsKey(application.id, file.id)] = Date.now().toString()
 
                         resolve()
                     }).catch(reject)
