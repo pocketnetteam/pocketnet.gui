@@ -1066,6 +1066,17 @@ var main = (function(){
 
 			el.addbutton.on('click', actions.addbutton)
 
+			el.c.find('.barteronbanner').on('click', function(){
+
+				console.log('asd')
+
+				self.nav.api.go({
+					open : true,
+					href : 'application?id=barteron.pocketnet.app',
+					history : true
+				})
+			})
+
 			if(!self.app.mobileview){
 
 				if(!videomain) initstick()
@@ -1106,6 +1117,7 @@ var main = (function(){
 				}).init()
 				
 			}
+
 			
 
 		}

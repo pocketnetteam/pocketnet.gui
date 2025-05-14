@@ -2,6 +2,25 @@
   background: rgb(var(--background-main));
   min-height: 1200px;
 }
+#main .barteronbanner {
+  height: 44px;
+  background: #009fff;
+  text-align: center;
+  position: relative;
+  color: #fff;
+}
+#main .barteronbanner .rightchatspacer {
+  height: 100%;
+}
+#main .barteronbanner .work {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#main .barteronbanner span {
+  font-weight: 700;
+}
 #main.wshar .bgCaption {
   display: none;
 }
