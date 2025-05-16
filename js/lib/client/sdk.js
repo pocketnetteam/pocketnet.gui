@@ -2675,8 +2675,6 @@ var pSDK = function ({ app, api, actions }) {
 
                 return api.rpc('getrawtransaction', [ids[0], 1], {rpc : p}).then(d => {
 
-                    console.log("getrawtransaction D", d)
-
                     if(_.isEmpty(d)) {
                         return []
                     }

@@ -29,7 +29,7 @@
                 <span><%-e(action.currentState)%></span>
             </div>
             
-            <% if(!action.transaction) { %>
+            <% if(!action.transaction && !action.ttxid) { %>
                 <div>
                     <button class="button small cancel">Cancel</button>
                 </div>

@@ -22,7 +22,7 @@
                     %>
 
                     <div class="tx">
-                        <div class="txid copyvalue"><span><b><%-e('object_' + action.object.type)%></b>.<%-action.transaction ? action.transaction : 'pending'%></span></div>
+                        <div class="txid copyvalue"><span><b><%-e('object_' + action.object.type)%></b>.<%-action.transaction ? action.transaction : ' ' + e(action.currentState)%></span></div>
                         <div class="date">
                             <span class="realtime" time="<%-action.added%>"><%- app.reltime(action.added) %></span>
                         </div>
