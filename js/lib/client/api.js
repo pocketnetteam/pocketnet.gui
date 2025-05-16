@@ -113,9 +113,6 @@ var ProxyRequest = function(app = {}, proxy){
                 time = time * 4
             }
 
-            if(data && data.method == 'sendrawtransaction'){
-                time = 10000
-            }
 
             //if(!isonline()) time = 3000
     
