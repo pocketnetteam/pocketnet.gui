@@ -40,7 +40,7 @@ var donate = (function(){
 			},
 			send : function(amount, receiver, clbk, onerror){
 
-				globalpreloader(true)
+				globalpreloader(true, null, true)
 
 				var transaction = actions.getTransaction(amount, receiver)
 

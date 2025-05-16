@@ -385,7 +385,6 @@ var menu = (function(){
 			activities : {
 				init : function(el){
 
-					if(window.testpocketnet){
 						var gca = function(){
 							var account = self.app.platform.actions.getCurrentAccount()
 							var c = 0
@@ -402,7 +401,6 @@ var menu = (function(){
 						}
 	
 						gca()
-					}
 
 					
 

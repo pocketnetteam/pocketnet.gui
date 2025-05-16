@@ -8580,7 +8580,7 @@ initUpload = function (p) {
 /* EVENTS */
 	globalpreloaderid = null;
 	
-	globalpreloader = function(show, dark){
+	globalpreloader = function(show, dark, noremove){
 
 		if(typeof window == 'undefined') return
 
@@ -8603,11 +8603,14 @@ initUpload = function (p) {
 
 				el.addClass('show')
 
-				setTimeout(() => {
-					if (globalpreloaderid == thisid){
-						globalpreloader(false)
-					}
-				}, 7000)
+				if(!noremove){
+					setTimeout(() => {
+						if (globalpreloaderid == thisid){
+							globalpreloader(false)
+						}
+					}, 7000)
+				}
+				
 			}
 			else{
 				el.removeClass('show')

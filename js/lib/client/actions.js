@@ -289,6 +289,7 @@ var Action = function(account, object, priority, settings){
         e.until = self.until
         e.sent = self.sent
         e.sending = self.sending
+        e.ttxid = self.ttxid
         e.checkedUntil = self.checkedUntil
         e.checkConfirmationUntil = self.checkConfirmationUntil
         e.inputs = _.clone(self.inputs)
@@ -335,6 +336,9 @@ var Action = function(account, object, priority, settings){
 
         if (e.sending)
             self.sending = new Date(e.sending)
+
+        if (e.ttxid)
+            self.ttxid = e.ttxid
 
         if (e.rejectWait) 
             self.rejectWait = new Date(e.rejectWait)
@@ -792,6 +796,11 @@ var Action = function(account, object, priority, settings){
         }
 
         var hex = tx.toHex();
+        var ttxid = tx.getId()
+
+        console.log('ttxid', ttxid)
+
+            
 
         if(!send){
             return Promise.resolve({tx, calculatedFee})
@@ -808,6 +817,8 @@ var Action = function(account, object, priority, settings){
         }
 
         self.sending = new Date()
+        self.ttxid = ttxid
+
         self.inputs = inputs
         self.outputs = outputs
 
@@ -821,7 +832,39 @@ var Action = function(account, object, priority, settings){
             sendPromise = account.parent.api.rpc(method, parameters)
         
 
-        return sendPromise.then(transaction => {
+        return sendPromise.catch(e => {
+
+            var code = e.code
+
+            if (code == 2000 && method == 'sendrawtransaction'){
+
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+
+                        account.parent.app.platform.sdk.node.transactions.get.tx(ttxid,  (data, error) => {
+
+                            console.log('error', error, e, ttxid)
+
+                            if(error){
+                                reject(e)
+                            }
+                            else{
+                                resolve(ttxid)
+                            }
+
+                        })
+
+                    }, 10000)
+                })
+                
+                return Promise.resolve(ttxid)
+            }
+
+            return Promise.reject(code)
+
+        }).then(transaction => {
+
+            console.log("THEN")
 
             self.transaction = transaction
 
@@ -837,6 +880,7 @@ var Action = function(account, object, priority, settings){
             }
 
             delete self.sending
+            delete self.ttxid
 
             self.sent = new Date()
 
@@ -849,10 +893,11 @@ var Action = function(account, object, priority, settings){
         }).catch((e = {}) => {
 
             var code = e.code
-
+            
             delete self.inputs
             delete self.outputs
             delete self.sending
+            delete self.ttxid
 
             if((code == -26 || code == -25 || code == 16 || code == 261)){
 
@@ -912,6 +957,8 @@ var Action = function(account, object, priority, settings){
                 getfun(self.transaction, (data, error = {}) => {
 
                     data || (data = {})
+
+                    console.log('error.code', error)
 
                     if (error.code == -5 || error.code == -8){
 
@@ -1076,8 +1123,28 @@ var Action = function(account, object, priority, settings){
             return Promise.reject('actions_alreadySent')
         }
 
+
         if (self.sending && (new Date()).addSeconds(-120) < self.sending){
             return Promise.reject('actions_alreadySending')
+        }
+
+        if (self.ttxid){
+            return new Promise((resolve, reject) => {
+            
+                account.parent.app.platform.sdk.node.transactions.get.tx(self.ttxid,  (data, error) => {
+
+                    if (error){
+                        delete self.ttxid
+
+                        reject()
+                    }
+                    else{
+                        checkTransaction().then(resolve).catch(reject)
+                    }
+
+                })
+
+            })
         }
 
         if (self.tryingsend && self.tryingsend > new Date()){

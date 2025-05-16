@@ -94,11 +94,6 @@
     "servers" : {
         "production" : {
             "proxy" : [
-                {
-                    "host" : "1.pocketnet.app",
-                    "port" : 8899,
-                    "wss" : 8099
-                },
                 
                 {
                     "host" : "2.pocketnet.app",
@@ -180,6 +175,11 @@
             "windows" : {
                 "github" : {
                     "name": "BastyonSetup.exe",
+                    "url": "https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest"
+                },
+                "githubalt" : {
+                    "label" : "windows7",
+                    "name": "BastyonSetup-win7.exe",
                     "url": "https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest"
                 }
             },

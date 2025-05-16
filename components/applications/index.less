@@ -101,10 +101,13 @@
 
         .buttonWrapper{
             margin-top : 2 * @rhythm;
+            display: flex;
+            align-items: center;
             
 
             >div{
                 margin-bottom : 2 * @rhythm;
+                margin-right: 2 * @rhythm;
             }
             
         }
@@ -126,6 +129,7 @@
             text-align: center;
         }
         
+        .downloadOsStyleAlt,
         .downloadOsStyle{
             border-radius: 30px;
             padding-left : 4 * @rhythm;
@@ -138,6 +142,17 @@
 
             &:hover{
                 background: rgb(var(--color-bg-orange));
+                border-color: rgb(var(--color-bg-orange));
+            }
+        }
+
+        .downloadOsStyleAlt{
+            background: transparent;
+            color : rgb(var(--color-bg-orange));
+            border-color: transparent;
+
+            &:hover{
+                background: transparent;
                 border-color: rgb(var(--color-bg-orange));
             }
         }
