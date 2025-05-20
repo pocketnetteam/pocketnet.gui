@@ -105,6 +105,7 @@ class Notifications{
 
                 this.statsShort.success++;
             } catch (e) {
+                console.log(e)
                 if(!item.reRequest){
                     item.reRequest = true;
                     this.queue.push(item)
