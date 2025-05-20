@@ -257,11 +257,11 @@ var defaultSettings = {
 
 	firebase : {
 		key : "",
-		dbpath : 'data/firebase',
+		dbpath : 'data/firebase_a',
 		id : ''
 	},
 	miniapp : {
-		dbpath : 'data/firebase',
+		dbpath : 'data/firebase_ma',
 	},
 	wallet : {
 		dbpath : 'data/wallet',
