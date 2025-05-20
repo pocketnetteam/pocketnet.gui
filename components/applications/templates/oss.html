@@ -40,6 +40,15 @@
                             <button elementsid="download<%- os.text.name %>" class=" downloadOs downloadOsStyle"><%- e(os.githublabel || 'download') %></button>
                         </div>
                     <% } %>
+
+                    <% if(os.githubalt) {%>
+                        <div>
+                            <button elementsid="download<%- os.text.name %>" class="downloadOs  githubalt downloadOsStyleAlt"><%- e(os.githubalt.label || os.githublabel || 'download') %></button>
+                        </div>
+                    <% } %>
+
+
+                    
                     
                 </div>
             </div>

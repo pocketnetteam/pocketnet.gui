@@ -69,6 +69,8 @@ var ProxyRequest = function(app = {}, proxy){
         return new Promise((resolve, reject) => {
             const timer = setTimeout(() => {
 
+                if(!ms) return
+
                 if (controller.signal.dontabortable){
                     return
                 }
@@ -106,9 +108,11 @@ var ProxyRequest = function(app = {}, proxy){
                 time = time * 1.5
             }
 
-            if(data && data.method == 'sendrawtransactionwithmessage') {
+
+            if(data && (data.method == 'sendrawtransactionwithmessage' || data.method == 'sendrawtransaction')) {
                 time = time * 4
             }
+
 
             //if(!isonline()) time = 3000
     
@@ -584,6 +588,7 @@ var Proxy16 = function(meta, app, api){
             if (options.fnode && e) e.code = 700
 
             if ((e.code == 408 || e.code == 429 || e.code == -28 || e.code == -1 || (e.code == 2000 && freshping())) && options.node && trying < 2 && !options.fnode){
+
 
                 //if(isonline()){
                     return self.api.nodes.canchange(options.node).then(r => {
@@ -1093,28 +1098,13 @@ var Api = function(app){
 
             if((!e.code || e.code == 2000) && trying < 2){
 
-                //// api.nodes.canchange
+                return self.changeProxyIfNeedWithDirect().then(r => {
 
-                //if(isonline()){
-                    return self.changeProxyIfNeedWithDirect().then(r => {
+                    trying++
 
-                        trying++
-
-                        return self.rpc(method, parameters, options, trying)
-                    })
-                //}
+                    return self.rpc(method, parameters, options, trying)
+                })
             }
-
-            /*if (app.Logger) {
-                app.Logger.error({
-                    err: typeof e === 'string' ? e : (e.text || 'RPC_DEFAULT_ERROR'),
-                    payload: {
-                        ...e,
-                        proxyHost: deep(selectedProxy, 'host'),
-                    },
-                    code: e.code || 423,
-                });
-            }*/
 
             if (e.code != 700){
 

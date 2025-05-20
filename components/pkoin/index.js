@@ -268,7 +268,7 @@ var pkoin = (function(){
 			},
 			liftUp : function(booster, clbk){	
 
-				globalpreloader(true);
+				globalpreloader(true, null, true)
 
 				self.app.platform.actions.addActionAndSendIfCan(booster).then(action => {
                   

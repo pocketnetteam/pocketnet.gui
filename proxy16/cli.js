@@ -10,9 +10,6 @@ var readline = require('readline');
 
 //process.env.NODE_ENV = 'production'
 
-
-
-
 var destroy = function (repeat) {
 
     return kit.destroy().catch(e => {

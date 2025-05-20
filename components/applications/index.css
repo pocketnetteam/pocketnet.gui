@@ -74,9 +74,12 @@
 }
 #applications .os .buttonWrapper {
   margin-top: 1em;
+  display: flex;
+  align-items: center;
 }
 #applications .os .buttonWrapper > div {
   margin-bottom: 1em;
+  margin-right: 1em;
 }
 #applications .os .data {
   position: absolute;
@@ -93,6 +96,7 @@
   right: 0;
   text-align: center;
 }
+#applications .os .downloadOsStyleAlt,
 #applications .os .downloadOsStyle {
   border-radius: 30px;
   padding-left: 2em;
@@ -103,8 +107,18 @@
   color: rgb(var(--background-main));
   border-color: rgb(var(--background-main-contrast));
 }
+#applications .os .downloadOsStyleAlt:hover,
 #applications .os .downloadOsStyle:hover {
   background: rgb(var(--color-bg-orange));
+  border-color: rgb(var(--color-bg-orange));
+}
+#applications .os .downloadOsStyleAlt {
+  background: transparent;
+  color: rgb(var(--color-bg-orange));
+  border-color: transparent;
+}
+#applications .os .downloadOsStyleAlt:hover {
+  background: transparent;
   border-color: rgb(var(--color-bg-orange));
 }
 #applications .os .osimage {

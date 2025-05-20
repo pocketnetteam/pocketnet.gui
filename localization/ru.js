@@ -3055,3 +3055,4 @@ _l.buypkoinexchnagep2p='Купить через PKOIN Exchange';
 _l.appsdisclaimer='Каждое приложение уже является кошельком для pkoin. За исключением приложения для IOS';
 
 _l.BarteronOffer = "Бартерон - 0% комиссий"
+_l.windows7 = "Загрузить для Windows 7"
