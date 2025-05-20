@@ -85,6 +85,7 @@ _l.next = "Next";
 _l.welcome = "Welcome";
 _l.welcometopocketnet = "Welcome to "+appname+"";
 _l.continue = "continue";
+_l.continuewithbarteron="Continue with Barteron"
 
 _l.chooseThemes = "Choose interesting themes";
 _l.bloggers = "Bloggers";
