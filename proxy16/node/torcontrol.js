@@ -232,10 +232,13 @@ class TorControl {
 
                 "UseBridges 1",
                 `ClientTransportPlugin snowflake exec ${getSettingsPath("pluggable_transports", this.helpers.bin_name("snowflake-client"))}`,
-                `Bridge snowflake 192.0.2.3:80 2B280B23E1107BB62ABFC40DDCC8824814F80A72 fingerprint=2B280B23E1107BB62ABFC40DDCC8824814F80A72 url=https://snowflake-broker.azureedge.net/ fronts=ajax.aspnetcdn.com ice=stun:stun.l.google.com:19302,stun:stun.antisip.com:3478,stun:stun.bluesip.net:3478,stun:stun.dus.net:3478,stun:stun.epygi.com:3478,stun:stun.sonetel.com:3478,stun:stun.uls.co.za:3478,stun:stun.voipgate.com:3478,stun:stun.voys.nl:3478 utls-imitate=hellorandomizedalpn`,
-                `Bridge snowflake 192.0.2.4:80 8838024498816A039FCBBAB14E6F40A0843051FA fingerprint=8838024498816A039FCBBAB14E6F40A0843051FA url=https://snowflake-broker.azureedge.net/ fronts=ajax.aspnetcdn.com ice=stun:stun.l.google.com:19302,stun:stun.antisip.com:3478,stun:stun.bluesip.net:3478,stun:stun.dus.net:3478,stun:stun.epygi.com:3478,stun:stun.sonetel.net:3478,stun:stun.uls.co.za:3478,stun:stun.voipgate.com:3478,stun:stun.voys.nl:3478 utls-imitate=hellorandomizedalpn`
+                `Bridge snowflake 192.0.2.4:80 8838024498816A039FCBBAB14E6F40A0843051FA fingerprint=8838024498816A039FCBBAB14E6F40A0843051FA url=https://snowflake-broker.torproject.net/ ampcache=https://cdn.ampproject.org/ fronts=http://www.google.com,http://cdn.ampproject.org utls-imitate=hellorandomizedalpn ice=stun:http://stun.nextcloud.com:443,stun:http://stun.sipgate.net:10000,stun:http://stun.epygi.com:3478,stun:http://stun.uls.co.za:3478,stun:http://stun.voipgate.com:3478,stun:http://stun.bethesda.net:3478,stun:http://stun.mixvoip.com:3478,stun:http://stun.voipia.net:3478`,
+                `Bridge snowflake 192.0.2.3:80 2B280B23E1107BB62ABFC40DDCC8824814F80A72 fingerprint=2B280B23E1107BB62ABFC40DDCC8824814F80A72 url=https://snowflake-broker.torproject.net/ ampcache=https://cdn.ampproject.org/ fronts=http://www.google.com,http://cdn.ampproject.org utls-imitate=hellorandomizedalpn ice=stun:http://stun.nextcloud.com:443,stun:http://stun.sipgate.net:10000,stun:http://stun.epygi.com:3478,stun:http://stun.uls.co.za:3478,stun:http://stun.voipgate.com:3478,stun:http://stun.bethesda.net:3478,stun:http://stun.mixvoip.com:3478,stun:http://stun.voipia.net:3478
+`
             )
 
+
+            
 
             /*
 
