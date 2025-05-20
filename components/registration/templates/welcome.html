@@ -6,4 +6,23 @@
 	<div class="subc">
 		<button elementsid="buttoncontinue" class="continue ghost"><%=e('continue').toUpperCase()%></button>
 	</div>
+
+
+	<% 
+
+	var dapp = _.find(app.developapps, (da) => {
+		return da.id == 'barteron.pocketnet.app'
+	})
+	
+	if (dapp && !(window.cordova && isios())) {%>
+
+			<div class="subcv2">
+				<button elementsid="buttoncontinue" class="continueToBarteron button"><%=e('continuewithbarteron').toUpperCase()%></button>
+			</div>
+
+
+	<% } %>
+	
+	
+
 </div>
