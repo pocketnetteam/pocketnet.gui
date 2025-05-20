@@ -149,8 +149,6 @@ var instance = function (host, ip, Roy) {
 
 		try {
 
-			console.log(host, self.ip)
-
 			return Roy.parent.transports.fetch(`http://${self.ip || host}${url}`, {
 				method: p.type || 'get',
 				timeout,
@@ -180,8 +178,6 @@ var instance = function (host, ip, Roy) {
 					host,
 				});
 			}).catch(e => {
-				console.log("error", e)
-				console.log("host", host, self.ip)
 
 				return Promise.reject(e)
 			})
