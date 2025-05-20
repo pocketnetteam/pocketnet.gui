@@ -360,7 +360,7 @@ var application = (function(){
             .join("; ");
         };
 
-				p.el.find('#miniappscnt').hide();
+				self.app.el.miniapps.hide();
 
         const iframeAllowAttr = buildIframeAllowAttr(grantedPermissions || []);
 
@@ -602,7 +602,7 @@ var application = (function(){
 
 				self.app.apps.off('permissions:changed', events.permissionsChanged)
 				
-				$('#miniappscnt').show();
+				self.app.el.miniapps.show();
 
 				self.app.apps.off('installed', events.installed)
 				self.app.apps.off('removed', events.removed)
