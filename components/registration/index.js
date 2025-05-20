@@ -397,13 +397,14 @@ var registration = (function(){
 
 					var c = false
 
-					var clbk = function(){
+					var clbk = function(redirect){
 
 						if(c) return
 
 						c = true
+						
 
-						if (deep(essenseData, 'successHref') == '_this'){
+						if (!redirect && deep(essenseData, 'successHref') == '_this'){
 
 							var close = deep(initialParameters, 'container.close')
 
@@ -418,7 +419,7 @@ var registration = (function(){
 						{
 						
 							self.nav.api.go({
-								href : self.app.platform.sdk.registrations.redirect || 'index',
+								href : redirect || self.app.platform.sdk.registrations.redirect || 'index',
 								history : true,
 								open : true
 							})	
@@ -449,13 +450,20 @@ var registration = (function(){
 
 						clbk()
 
-					}, 1500)
+					}, 6500)
 
-					el.find('.welcome').on('click', function(){
+					el.find('.continue').on('click', function(){
 
 						clbk()
 						
 					})
+
+					el.find('.continueToBarteron').on('click', function(){
+
+						clbk('application?id=barteron.pocketnet.app')
+						
+					})
+					
 				}
 
 
