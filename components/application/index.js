@@ -360,6 +360,8 @@ var application = (function(){
             .join("; ");
         };
 
+				self.app.el.miniapps.hide();
+
         const iframeAllowAttr = buildIframeAllowAttr(grantedPermissions || []);
 
 				
@@ -599,12 +601,13 @@ var application = (function(){
 				self.app.apps.off('changestate', events.changestate)
 
 				self.app.apps.off('permissions:changed', events.permissionsChanged)
+				
+				self.app.el.miniapps.show();
 
 				self.app.apps.off('installed', events.installed)
 				self.app.apps.off('removed', events.removed)
 
-				delete self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.application
-
+					delete self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.application
 			},
 			
 			init : function(p){
