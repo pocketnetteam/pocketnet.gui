@@ -65,6 +65,11 @@ var Firebase = function(p){
 
             db.loadDatabase(err => {
 
+                if(err){
+                    console.log(err)
+                }
+                
+
                 db.ensureIndex({ fieldName: 'key', unique: true });
 
                 resolve()
@@ -76,6 +81,8 @@ var Firebase = function(p){
             return self.getall()
 
         }).then(users => {
+
+            console.log('fb users loaded')
 
             _.each(users, adduser)
 
@@ -542,6 +549,8 @@ var Firebase = function(p){
 
             return loaddb().then(() => {
 
+                self.dbloaded = true
+
                 self.processInterval = setInterval(() => {
                     process()
                 }, 2000)
@@ -587,6 +596,7 @@ var Firebase = function(p){
             inited : self.inited,
             users : self.users.length,
             useNotifications: self.useNotifications,
+            dbloaded : self.dbloaded
         }
     }
 
