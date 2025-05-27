@@ -425,21 +425,21 @@ class TorControl {
     start = async ()=>{
         console.log("Tor start triggered");
 
-        if(this.instance) return true
+        if (this.needinstall()) return false
+
+        if (this.state.status !== "stopped") return true
+
+        this.state.status = "running"
 
         if (this.settings.enabled2 === 'auto') {
             this.startTimer()
         }
-
-        if(this.needinstall()) return false
 
         var configCreated = await this.makeConfig();
 
         if(!configCreated){
             console.log("Tor config creation failed")
         }
-
-        this.state.status = "running"
 
         await this.getpidandkill()
 
@@ -456,7 +456,12 @@ class TorControl {
 
         console.log('this.getpath()', this.getpath(), this.getsettingspath())
 
-        this.instance.on("error", (error) => this.log({ error }));
+        this.instance.on("error", (error) => {
+
+            this.stop()
+
+            this.log({ error })
+        });
 
         this.instance.on("exit", async (code) => {
 
