@@ -456,9 +456,13 @@ class Transports {
             port = (protocol === 'https:') ? 443 : 80;
         }
 
-        const isLocalhost = await checkIfLocalhost(hostname);
+        const isIPAddress = (address) => {
+            const ipv4Like = /^(\d{1,3}\.){3}\d{1,3}$/;
+            const ipv6Like = /^([0-9a-fA-F]{0,4}:){2,7}[0-9a-fA-F]{0,4}$/;
+            return ipv4Like.test(address) || ipv6Like.test(address);
+        };
 
-        if (isLocalhost) {
+        if (isIPAddress(hostname) && await checkIfLocalhost(hostname)) {
             return true;
         }
 
@@ -554,6 +558,10 @@ class Transports {
 
     async pingHost(host, port) {
         function synackPing() {
+
+            //127.x.x.x or 0.0.0.0 or ::1 or ::
+            const isLocalhost = (address) => /^(127(?:\.\d{1,3}){0,3}|0\.0\.0\.0|::1|::)$/.test(address);
+
             return new Promise((resolve, reject) => {
                 let socket;
 
@@ -568,6 +576,14 @@ class Transports {
                 }
 
                 socket.setTimeout(100);
+
+                socket.on('lookup', (err, address) => {
+                    if (isLocalhost(address)) {
+                        socket.end();
+                        socket.destroy();
+                        reject('SYNACK_PING_FAILED');
+                    }
+                });
 
                 socket.on('error', (err) => {
                     socket.end();
