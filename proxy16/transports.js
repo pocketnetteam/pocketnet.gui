@@ -629,7 +629,9 @@ class Transports {
 
     getTorAgent() {
         if (!this.torAgent) {
-            this.torAgent = new SocksProxyAgent('socks5h://127.0.0.1:9151', {
+            const url = new URL('socks5h://127.0.0.1:9151');
+            url.tls = { rejectUnauthorized: false };
+            this.torAgent = new SocksProxyAgent(url, {
                 keepAlive: true,
                 timeout: 60000,
             });
