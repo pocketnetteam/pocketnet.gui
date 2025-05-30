@@ -1041,7 +1041,32 @@ var BastyonApps = function (app) {
                 }) {
                     return app.platform.sdk.videos.info(data.urls)
                 }
-            }
+            },
+            videosWithShares: {
+                permissions: [],
+                parameters: ['links', 'update', 'proxyupdate', 'count', 'depth'],
+                action: function ({
+                    data
+                }) {
+                    return app.platform.sdk.videos.infoWithShares(
+                        data.links, {
+                            update: data.update,
+                            proxyupdate: data.proxyupdate,
+                            count: data.count,
+                            depth: data.depth
+                        }
+                    )
+                }
+            },
+            feed: {
+                permissions: [],
+                parameters: ['author', 'count', 'depth'],
+                action: function ({
+                    data
+                }) {
+                    return app.platform.sdk.feed.get(data || {})
+                }
+            },
         }
 
     }

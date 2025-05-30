@@ -327,6 +327,12 @@ var BastyonSdk = function(settings = {}){
         videos : function(urls){
             return action('get.videos', {urls})
         },
+        videosWithShares : function(options = {}){
+            return action('get.videosWithShares', options)
+        },
+        feed : function(options = {}){
+            return action('get.feed', options)
+        },
         account : function(){
             return action('account', {})
         },

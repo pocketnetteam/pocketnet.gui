@@ -5837,7 +5837,7 @@ Platform = function (app, listofnodes) {
             },
 
         },
-
+        
         metmenu: function (_el, id, actions) {
             var share = self.psdk.share.get(id)
 
@@ -18954,7 +18954,42 @@ Platform = function (app, listofnodes) {
                     return Promise.resolve()
                 })
             },
+            infoWithShares: function (links, {
+                update = false,
+                proxyupdate,
+                count,
+                depth
+            } = {}) {
 
+                var norm = l => {
+                    var m = self.app.platform.parseUrl(l);
+                    return m.url || l;
+                };
+
+                var uniq = _.uniq(links.map(norm));
+
+                return self.sdk.videos.info(uniq, update, proxyupdate)
+                    .then(() => new Promise((resolve, reject) => {
+
+                        var p = {
+                            type: 'video',
+                            video: true,
+                            count: count || Math.max(uniq.length, 200),
+                            depth: depth || 1e4
+                        };
+
+                        self.sdk.node.shares.hierarchical(p, (shares, err) => {
+                            if (err) return reject(err);
+
+                            var result = _.filter(shares, s => s.url && uniq.includes(norm(s.url)));
+
+                            resolve({
+                                shares: result,
+                                videocache: _.pick(self.sdk.videos.storage, uniq)
+                            });
+                        }, 'clear');
+                    }));
+            },
             paddingplaceholder: function (url, middle, clbk, elf) {
 
                 if (!url) {
@@ -19198,6 +19233,37 @@ Platform = function (app, listofnodes) {
                 self.sdk.videos.load()
 
                 if (clbk) clbk()
+            }
+        },
+
+        feed: {
+            get({
+                author,
+                count = 30,
+                depth = 1e4,
+            } = {}) {
+                const sdk = self.app.platform.sdk
+                const p = {
+                    count,
+                    depth,
+                    lang: self.app.localization.key
+                }
+                if (author) p.author = author
+
+                const call = author ?
+                    sdk.node.shares.getprofilefeed :
+                    sdk.node.shares.hierarchical
+
+                return new Promise((resolve, reject) => {
+                    call(p, shares => {
+                        sdk.node.shares.loadvideoinfoifneed(shares, true, () => {
+                            resolve({
+                                shares,
+                                videocache: sdk.videos.storage
+                            })
+                        })
+                    }, 'clear')
+                })
             }
         },
 
