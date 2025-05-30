@@ -857,10 +857,9 @@ var Action = function(account, object, priority, settings){
                     }, 10000)
                 })
                 
-                return Promise.resolve(ttxid)
             }
 
-            return Promise.reject(code)
+            return Promise.reject(e)
 
         }).then(transaction => {
 
@@ -899,16 +898,20 @@ var Action = function(account, object, priority, settings){
             delete self.sending
             delete self.ttxid
 
+            console.log("code", code, retry)
+
             if((code == -26 || code == -25 || code == 16 || code == 261)){
 
                 if(!retry){
                     save()
+
+
                     return makeTransaction(true, calculatedFee, send)
                 }
 
                 else{
                     self.logerror({
-                        method, parameters, error : e
+                        method, parameters, error : e.toString ? e.toString() : e
                     })
                 }
                 
@@ -916,7 +919,7 @@ var Action = function(account, object, priority, settings){
 
             if (code == 26){
                 self.logerror({
-                    method, parameters, error : e
+                    method, parameters, error : e.toString ? e.toString() : e
                 })
             }
 
