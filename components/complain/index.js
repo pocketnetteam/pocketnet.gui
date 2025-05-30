@@ -10,6 +10,15 @@ var complain = (function () {
 
 		var el, ess, sobj, selected, ed, textreason;
 
+		var reasonIds = {
+			1: 'Erotic/Porn',
+			2: 'Child exploitation',
+			3: 'Direct threat of violence',
+			4: 'Illegal narcotics',
+			5: 'Copyrighted content',
+			6: 'Spam',
+		}
+
 		var reasons = {
 
 			post: [
@@ -65,8 +74,33 @@ var complain = (function () {
 					gid: 6
 				}
 
-			]
-
+			],
+			miniapp_entity: [
+				{
+					name: self.app.localization.e('lowstar_reason_1'),
+					gid: 1
+				},
+				{
+					name: self.app.localization.e('lowstar_reason_2'),
+					gid: 2
+				},
+				{
+					name: self.app.localization.e('lowstar_reason_3'),
+					gid: 3
+				},
+				{
+					name: self.app.localization.e('lowstar_reason_4'),
+					gid: 4
+				},
+				{
+					name: self.app.localization.e('lowstar_reason_5'),
+					gid: 5
+				},
+				{
+					name: self.app.localization.e('lowstar_reason_6'),
+					gid: 6
+				}
+			],
 		}
 
 
@@ -75,6 +109,11 @@ var complain = (function () {
 				return _.find(reasons[ess], function (r) {
 					return (r.gid || r.id) == id
 				})
+			},
+
+			actionValue: function (id) {
+				var target = actions.find(id);
+				return reasonIds[target.gid] || id;
 			},
 
 			complain: function (clbk) {
@@ -108,11 +147,9 @@ var complain = (function () {
 
 						else {
 							try {
-								var i1 = ((actions.find(selected) || {}).name) || selected;
-
 								self.app.Logger.info({
 									actionId: 'POST_COMPLAIN',
-									actionValue: i1,
+									actionValue: actions.actionValue(selected),
 									actionSubType: sobj.txid,
 
 									active : true
@@ -171,10 +208,9 @@ var complain = (function () {
 						else {
 
 							try {
-								var i1 = ((actions.find(selected) || {}).name) || selected;
 								self.app.Logger.info({
 									actionId: 'USER_COMPLAIN',
-									actionValue: i1,
+									actionValue: actions.actionValue(selected),
 									actionSubType: sobj.data.address,
 
 									active : true
@@ -188,6 +224,34 @@ var complain = (function () {
 							}
 
 						}
+					}
+
+					if (ess == 'miniapp_entity') {
+
+						try {
+							var actionSubType = JSON.stringify(
+								{
+									link: sobj.entityLink, 
+									txid: sobj.entityTxid,
+									type: sobj.entityType,
+								}
+							);
+
+							self.app.Logger.info({
+								actionId: 'MINIAPP_COMPLAIN',
+								actionValue: actions.actionValue(selected),
+								actionSubType,
+
+								active : true
+							});
+							clbk(true)
+							sitemessage(self.app.localization.e('complain_success'))
+						} catch (error) {
+							self.app.platform.errorHandler(error, true)
+
+							clbk(false)
+						}
+
 					}
 
 				})
