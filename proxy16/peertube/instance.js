@@ -148,7 +148,8 @@ var instance = function (host, ip, Roy) {
 		}
 
 		try {
-			return Roy.parent.transports.fetch(`http://${host}${url}`, {
+
+			return Roy.parent.transports.fetch(`http://${self.ip || host}${url}`, {
 				method: p.type || 'get',
 				timeout,
 			}).then(async (result) => {
@@ -176,7 +177,10 @@ var instance = function (host, ip, Roy) {
 					meta,
 					host,
 				});
-			});
+			}).catch(e => {
+
+				return Promise.reject(e)
+			})
 		} catch(error) {
 
 

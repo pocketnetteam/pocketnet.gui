@@ -29,7 +29,14 @@ const FetchHandler = require('./js/transports2/fetch/handler.js');
 const Badge = require('./js/vendor/electron-windows-badge.js');
 
 // AutoUpdate --------------------------------------
+
+
+<% if(win7) {%>
+const { autoUpdater } = require("electron-updater-patch-win7");
+<% } else {%> 
 const { autoUpdater } = require("electron-updater");
+<%}%>
+
 const log = require('electron-log');
 const is = require('electron-is');
 const fs = require('fs');
@@ -398,7 +405,7 @@ function createWindow() {
             nodeIntegration: true,
             enableRemoteModule: true,
             allowRendererProcessReuse: false,
-            spellcheck: true
+            spellcheck: true,
         }
     });
 
@@ -408,22 +415,16 @@ function createWindow() {
 
     win.webContents.session.setSpellCheckerLanguages(['en-US', 'ru'])
 
-    electronLocalshortcut.register(win, 'f5', function() {
+    electronLocalshortcut.register(win, 'F5', function() {
 		refresh()
 	})
-
 
 	electronLocalshortcut.register(win, 'CommandOrControl+R', function() {
 		refresh()
 	})
 
-  electronLocalshortcut.register(win, 'f5', function() {
-		refresh()
-	})
-
-
-	electronLocalshortcut.register(win, 'CommandOrControl+R', function() {
-		refresh()
+	electronLocalshortcut.register(win, 'F12', function() {
+		win.webContents.toggleDevTools()
 	})
 
     var refresh = function(){
@@ -618,6 +619,9 @@ function createWindow() {
             destroyBadge()
             
         } else {
+            // Close all system notifications
+            notificationsClose()
+
             destroyBadge()
             destroyTray()
             win = null
@@ -641,17 +645,37 @@ function createWindow() {
         if(p.image){
             pathImage= await saveBlobToFile(p.image)
         }
+
+        let notificationId = p.id || require('crypto').createHash('md5').update(p.title + p.body + Date.now().toString()).digest('hex');
+
         if (!is.windows()) {
             const n = new Notification({ title : p.title, body: p.body, silent :true, icon: pathImage})
-            n.onclick = function(){
 
-                if (win) {
-                    win.show();
-                    win.webContents.send('nav-message', { msg: 'userpage?id=notifications&report=notifications', type: 'action'})
-                }
+            // Save chat info
+            if (p.roomid) {
+                n.roomid = p.roomid
             }
 
+            n.on('click', () => {
+
+                if (!win)
+                    return
+
+                win.show()
+                win.focus()
+
+                if (!n.roomid) {
+                    win.webContents.send('nav-message', { msg: 'userpage?id=notifications&report=notifications', type: 'action' })
+                } else {
+                    win.webContents.send('open-chat', { roomid: n.roomid })
+                }
+            })
+
             n.show()
+            
+            // Save notification reference with its ID for later closing
+            if (!global.activeNotifications) global.activeNotifications = {};
+            global.activeNotifications[notificationId] = n;
         }
         else {
 
@@ -661,21 +685,55 @@ function createWindow() {
                     title: p.title,
                     message: p.body,
                     icon: pathImage, // Absolute path (doesn't work on balloons)
-                    wait: true // Wait with callback, until user action is taken against notification, does not apply to Windows Toasters as they always wait or notify-send as it does not support the wait option
+                    wait: true, // Wait with callback, until user action is taken against notification, does not apply to Windows Toasters as they always wait or notify-send as it does not support the wait option
+                    roomid: p.roomid
                 },
                 function (err, response, metadata) {
 
                     if (response != 'timeout' && !_.isEmpty(metadata))
 
                         if (win) {
-                            win.show();
-                            win.webContents.send('nav-message', { msg: 'userpage?id=notifications&report=notifications', type: 'action'})
+                            if (win.isMinimized())
+                                win.restore()
+
+                            win.focus()
+                            win.show()
+
+                            if (!n.roomid) {
+                                win.webContents.send('nav-message', { msg: 'userpage?id=notifications&report=notifications', type: 'action'})
+                            } else {
+                                win.webContents.send('open-chat', { roomid: n.roomid })
+                            }
                         }
                 }
             );
 
         }
 
+    })
+
+    const notificationClose = (id, n) => {
+        if (n.close) {
+            n.close();
+        }
+
+        delete global.activeNotifications[id];
+    }
+
+    const notificationsClose = (id = 'all') => {
+        if (global.activeNotifications) {
+            if (id === 'all') {
+                _.each(global.activeNotifications, (n, id) => {
+                    notificationClose(id, n);
+                });
+            } else if (global.activeNotifications[id]) {
+                notificationClose(id, global.activeNotifications[id]);
+            }
+        }
+    }
+
+    ipcMain.on('electron-notification-close', (e, notificationId) => {
+        notificationsClose(notificationId)
     })
 
     ipcMain.on('quitAndInstall', function(e) {

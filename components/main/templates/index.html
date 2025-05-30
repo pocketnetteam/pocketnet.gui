@@ -6,6 +6,28 @@
 	<div class="vdivcontainer">
 		<div class="maincntwrapperOvf">
 			<div class="maincntwrapper" id="maincntwrapper">
+
+				<% 
+
+				var dapp = _.find(app.developapps, (da) => {
+					return da.id == 'barteron.pocketnet.app'
+				})
+				
+				
+				if (isMobile() && dapp) {%>
+
+						<div class="barteronbanner">
+							<div class="rightchatspacer">
+								<div class="work adj">
+									<span><%= e('BarteronOffer') %></span>
+								</div>
+							</div>
+						</div>
+
+			
+				<% } %>
+
+				
 				<div class="rightchatspacer">
 					<div class="work adj">
 

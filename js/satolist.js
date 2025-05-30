@@ -256,7 +256,6 @@ Platform = function (app, listofnodes) {
         'PDSkBPfxgX25RTde3VzoZ1Wz8yTeUaYAvM': true,
         'PFkCWH4zuAYtVJSQn6rvgEiSsMjHvN8dwE': true,
         'PLYPuTA1HUD8iXBsqTmLUwNhySbJgYja55': true,
-        'PXZGt2EaVyRDrXCWMTiH2Tvh5eP7RZhhxF': true,
         'PCtDTH7XznLBCTHhKFeeg8ezSa7WJtYiMJ': true,
         'PUK1GND45D8yVx5WoJKvCMHLfNLNih5MYH': true,
         'PAGt5jHaFFdhNtgUN9zHygCcmpmooWiLPK': true,
@@ -471,7 +470,33 @@ Platform = function (app, listofnodes) {
         'P8tNMA6QtBooqxw8EieKcL5uP1cTpt9vi9': true,
         'PFCSYXEc5fmVKNoPEtEg1NFezh4bym6e12': true,
         'PUH33LTfznPMgAWuyT1KqinYE8f9B4sRk9': true,
-        'PGrXFgpLYXVBgBPrhAeGRLnSpYE6Jwpt5Z': true
+        'PLwWXrGBvVxWfujrDxgGHa7oCVtyw9F3Du': true,
+        'PBsnRLRRafnjDEHVaTyreFS1SRKavVFXHZ': true,
+        'PWMSN4XByB3sKXrsBnmP9LPYFFBo2PUQ1R': true,
+        'PDdwKn4ZNSMyeSyQ6F9zf4ttVd6jC1arvn': true,
+        "PCZtNtn7b4m2BYYLNKiJGsquqQ4k5qSa45" : true,
+        "PU2BEjFmbEjAc9PnAcLZtJLQC3uqqAy3io" : true,
+        "PBvEaZDUYmHzT6pZ3ByaUTyPajx2tgzp1k" : true,
+        "PW1gF9Jm5TjqEdDT8mBNDBq2H7zh7CQDUp" : true,
+        "PPhcg2DRQ9DQtEQHZ2KgNq7L75BK8hiueU" : true,
+        "PBCzbfUhpVCx4rUoKQg4YKdM3AaPc8vfRK" : true,
+        "PQb6pDXHTt3xsUsgPVy3mb7xqt9Q9Kzt8F" : true,
+        "PUBxem8UZ17SJWjJ2rP6TDAshGr5hNZ4Kj" : true,
+        "PUFyVgmpsjTcMuoDAw5H9ktzdqUSa9qFb3" : true,
+        "PXniv1ebpG1kjLDnhc2M26dyEsg9CXjvpd" : true,
+        "PHN3UprgHjMPQsiXkqEju9bAqCmD73H6B9" : true,
+        "PXirXfZmypofgk4qXgHsxu3wA4cyecqJFn" : true,
+        "PFYMkD2kF8xcoFRQKNYht1Hb4mhekYLnQq" : true,
+        "PKxmKHnngyXsrvsLMYVwb3Hxq6Jnzbse8c" : true,
+        "PEL45oK7ppFhB69G6GSsMLxHatNu5FJc5P" : true,
+        "PSF42Hi3xTjLTcpBNhpC1GRxoHPynoeUxP" : true,
+        "PUKcVWfMB4nkHHxtveVLKWTYSSvm1jQXda" : true,
+        "PMBw57GmUzZqWJ5nSjoE3QXqjYJ6tsD87M" : true,
+        "PU1L46uyV2bNXcU9q8U3sV7MvMCUySZEFH" : true,
+        "PSFC4gwWJ9rTnedFgSWdUVfdZhA9xda11c" : true,
+        'PGrXFgpLYXVBgBPrhAeGRLnSpYE6Jwpt5Z': true,
+        'PA2mkqDV1CU7ZHtneYVPMkB3u4WdzKz4t7': true,
+        'PNXh7Qnc1HpYjypyG2UjyHd3xZVbWPcszQ': true
     }
 
     self.bch = {
@@ -4259,6 +4284,44 @@ Platform = function (app, listofnodes) {
 
         },
 
+        getSocialsharePostParams: function(ed) {
+
+            var p = {dontsave : true}
+
+            p.description = '' 
+            
+
+            if (ed.sharing){
+
+                if (ed.sharing.title){
+                    p.description = p.description + superXSS(ed.sharing.title) + '\n'
+                }
+
+                if (ed.sharing.text && ed.sharing.text.body){
+                    p.description = p.description + superXSS(ed.sharing.text.body) + '\n'
+                }
+
+                p.images = ed.sharing.image ? [ed.sharing.image] : ed.sharing.images || []
+
+                p.images = _.map(p.images, (im) => {
+                    return superXSS(im)
+                })
+
+                p.tags = ed.sharing.tags || []
+            }
+            
+            if (ed.url){
+                p.url = self.app.nav.api.history.removeParametersFromHref(superXSS(ed.url), ['ref'])
+
+                if(p.description != '') p.description = p.description + '\n'
+
+                p.description = p.description + p.url
+            }
+
+            return p
+
+        },
+
         socialshare: function (url, p) {
             if (!p) p = {}
 
@@ -4291,6 +4354,7 @@ Platform = function (app, listofnodes) {
 
             const {
                 name,
+                images,
                 description,
                 tags,
                 url
@@ -4318,6 +4382,7 @@ Platform = function (app, listofnodes) {
                         repost: p.repost,
                         videoLink: p.videoLink,
                         name,
+                        images,
                         description,
                         tags,
                         url,
@@ -5593,6 +5658,7 @@ Platform = function (app, listofnodes) {
                 miniapp.address = data.address
                 miniapp.name = data.name
                 miniapp.description = data.description
+                miniapp.tscope = data.tscope
                 miniapp.tags = data.tags
                 miniapp.scope = data.scope
 
@@ -5771,7 +5837,7 @@ Platform = function (app, listofnodes) {
             },
 
         },
-
+        
         metmenu: function (_el, id, actions) {
             var share = self.psdk.share.get(id)
 
@@ -10744,6 +10810,10 @@ Platform = function (app, listofnodes) {
                     if (!notification.seen)
                         notification.seen = self.app.platform.currentTime()
                 })
+
+                // Close all system OS notifications
+                if (electron)
+                    electron.ipcRenderer.send('electron-notification-close', 'all');
 
                 n.save()
 
@@ -16091,7 +16161,7 @@ Platform = function (app, listofnodes) {
                     }
 
                     self.app.platform.actions.addActionAndSendIfCan(comment, 2, null, {
-                        rejectIfError: true
+                        rejectIfError: ['actions_noinputs_wait']
                     }).then(action => {
 
                         var alias = action.get()
@@ -18884,7 +18954,42 @@ Platform = function (app, listofnodes) {
                     return Promise.resolve()
                 })
             },
+            infoWithShares: function (links, {
+                update = false,
+                proxyupdate,
+                count,
+                depth
+            } = {}) {
 
+                var norm = l => {
+                    var m = self.app.platform.parseUrl(l);
+                    return m.url || l;
+                };
+
+                var uniq = _.uniq(links.map(norm));
+
+                return self.sdk.videos.info(uniq, update, proxyupdate)
+                    .then(() => new Promise((resolve, reject) => {
+
+                        var p = {
+                            type: 'video',
+                            video: true,
+                            count: count || Math.max(uniq.length, 200),
+                            depth: depth || 1e4
+                        };
+
+                        self.sdk.node.shares.hierarchical(p, (shares, err) => {
+                            if (err) return reject(err);
+
+                            var result = _.filter(shares, s => s.url && uniq.includes(norm(s.url)));
+
+                            resolve({
+                                shares: result,
+                                videocache: _.pick(self.sdk.videos.storage, uniq)
+                            });
+                        }, 'clear');
+                    }));
+            },
             paddingplaceholder: function (url, middle, clbk, elf) {
 
                 if (!url) {
@@ -19131,6 +19236,37 @@ Platform = function (app, listofnodes) {
             }
         },
 
+        feed: {
+            get({
+                author,
+                count = 30,
+                depth = 1e4,
+            } = {}) {
+                const sdk = self.app.platform.sdk
+                const p = {
+                    count,
+                    depth,
+                    lang: self.app.localization.key
+                }
+                if (author) p.author = author
+
+                const call = author ?
+                    sdk.node.shares.getprofilefeed :
+                    sdk.node.shares.hierarchical
+
+                return new Promise((resolve, reject) => {
+                    call(p, shares => {
+                        sdk.node.shares.loadvideoinfoifneed(shares, true, () => {
+                            resolve({
+                                shares,
+                                videocache: sdk.videos.storage
+                            })
+                        })
+                    }, 'clear')
+                })
+            }
+        },
+
         syncStorage: {
             eventListeners: {},
             on(eventType, lStorageProp, callback) {
@@ -19254,6 +19390,30 @@ Platform = function (app, listofnodes) {
         }
 
         self.api = {
+            addMiniappToken: function (appId, address, proxy) {
+                if (!self.isFirebaseConfigured) return Promise.reject('firebase:not_configured')
+                return self.request.addMiniappToken(appId, address, proxy)
+                    .then(r => {
+                        const port = proxy.port ? `:${proxy.port}` : ''
+                        return Promise.resolve({
+                            token: r.token,
+                            address: r.address,
+                            proxy: `https://${proxy.host}${port}`
+                        });
+                    })
+                    .catch(e => {
+                        return Promise.reject(e);
+                    });
+            },
+            checkMiniappToken: function (appId, address, proxy) {
+                return self.request.checkMiniappToken(appId, address, proxy)
+                    .then(r => {
+                        return Promise.resolve(r);
+                    })
+                    .catch(e => {
+                        return Promise.reject(e);
+                    });
+            },
             revoke: function (token, proxy) {
 
                 var address = getaddress()
@@ -19361,7 +19521,10 @@ Platform = function (app, listofnodes) {
 
             return self.request.revokeall()
         }
-
+        self.isFirebaseConfigured = async function () {
+            const tokensData = self.storage.data[appid] || {};
+            return Object.keys(tokensData).length > 0;
+        }
         self.set = function (proxy) {
             if (!currenttoken) return Promise.reject('emptytoken')
 
@@ -19385,6 +19548,26 @@ Platform = function (app, listofnodes) {
                 return Promise.resolve()
             })
 
+        }
+
+        self.getNotificationsProxy = async function () {
+            let current = null;
+            for (const proxy of platform.app.api.get.proxies()) {
+                const {
+                    info
+                } = await proxy.get.info();
+                
+                if (info.firebase.useNotifications && info.firebase.inited) {   
+                    current = proxy;
+                }
+            }
+            if (current) {
+                return self.api.checkProxy(current).then(r => {
+                    return Promise.resolve(current)
+                })
+            } else {
+                return Promise.reject('none')
+            }
         }
 
         self.settings = async function (current) {
@@ -19413,7 +19596,22 @@ Platform = function (app, listofnodes) {
         }
 
         self.request = {
-
+            addMiniappToken: function (appId, address, proxy) {
+                return platform.app.api.fetchauth('miniapp/addToken', {
+                    appId: appId,
+                    address: address
+                }, {
+                    proxy: proxy
+                });
+            },
+            checkMiniappToken: function (appId, address, proxy) {
+                return platform.app.api.fetchauth('miniapp/checkToken', {
+                    appId: appId,
+                    address: address
+                }, {
+                    proxy: proxy
+                });
+            },
             revokeall: function () {
 
                 return platform.app.api.fetchauthall('firebase/revokedevice', {
@@ -19546,21 +19744,26 @@ Platform = function (app, listofnodes) {
 
                 try {
                     if (!firebase.apps.length) {
-                        firebase.initializeApp({
-                            messagingSenderId: "1020521924918",
-                            projectId: 'pocketnet',
-                            apiKey: 'AIzaSyC_Jeet2gpKRZp44iATwlFFA7iGNYsabkk',
-                            appId: '1:1020521924918:ios:ab35cc84f0d10d86aacb97',
-                        });
+
+                        if(!window.project_config.firebaseweb){
+                            throw 'window.project_config.firebaseweb'
+                        }
+
+                        firebase.initializeApp(JSON.parse(hexDecode(window.project_config.firebaseweb)));
                     }
+
                     const messaging = firebase.messaging();
+
+
                     messaging.getToken().then(token => {
                         currenttoken = token
                         platform.fcmtoken = token
                         platform.matrixchat.changeFcm()
                         self.events()
+
                         if (clbk)
                             clbk(token)
+
                     }).catch(e => {
                         console.log("E", e)
                     })
@@ -22637,9 +22840,6 @@ Platform = function (app, listofnodes) {
                                             });
 
                                         })
-
-
-
                                     }
 
                                 } else {
@@ -24341,6 +24541,9 @@ Platform = function (app, listofnodes) {
                 self.app.peertubeHandler.api.proxy.roys({
                     type: 'upload'
                 }).then((ptServers) => {
+
+                    console.log('ptServers', ptServers)
+
                     try {
                         if (ptServers)
                             self.app.options.peertubeServer = ptServers[_.sample(Object.keys(ptServers))];
@@ -24977,7 +25180,7 @@ Platform = function (app, listofnodes) {
                     var _el = $(self.matrixchat.notify.tpl(matrixevent))
 
                     var title = _el.find('.caption').text()
-                    var body = _el.find('.tips').text()
+                    var body = _el.find('.tips').text().trim()
                     var image = _el.find('[image]').attr('image')
                     _el = null
 
@@ -24986,14 +25189,11 @@ Platform = function (app, listofnodes) {
                         electron.ipcRenderer.send('electron-notification-small', {
                             title,
                             body,
-                            image
+                            image,
+                            roomid: matrixevent.roomId
                         });
 
                     })
-
-
-
-
                 }
             }
         },
@@ -25451,6 +25651,10 @@ Platform = function (app, listofnodes) {
                 }
 
             }
+
+            // When focused clear all system notifications
+            if (electron)
+                electron.ipcRenderer.send('electron-notification-close', 'all');
 
             if (time > 120 && window.cordova) {
 
@@ -25972,10 +26176,23 @@ Platform = function (app, listofnodes) {
         }
 
         if (electron && _Electron) {
-
+            
             electron.ipcRenderer.on('nav-message', function (event, data) {
                 if (data.type == 'action') {
                     routing(data.msg)
+                }
+            })
+
+            electron.ipcRenderer.on('open-chat', function (event, data) {
+                if (data.roomid) {
+    
+                    var chatLink = '/chat?id=' + data.roomid;
+    
+                    return self.app.platform.matrixchat.wait().then((core) => {
+                        core.gopage(chatLink)    
+                        return Promise.resolve()
+    
+                    })
                 }
             })
 

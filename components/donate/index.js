@@ -40,7 +40,7 @@ var donate = (function(){
 			},
 			send : function(amount, receiver, clbk, onerror){
 
-				globalpreloader(true)
+				globalpreloader(true, null, true)
 
 				var transaction = actions.getTransaction(amount, receiver)
 
@@ -61,7 +61,8 @@ var donate = (function(){
 
 				}).catch(e => {
 
-					sitemessage(e)
+					self.app.platform.errorHandler(e, true)
+					//sitemessage(e)
 
 					if(onerror) onerror(e)
 

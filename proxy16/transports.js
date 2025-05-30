@@ -70,17 +70,19 @@ class WrappedAxios {
 
         const preparedArgs = WrappedAxios.prepareArguments(...args);
 
-        const hasDirectAccess = await this.transports.hasDirectAccess(preparedArgs.url);
+        const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
         const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
-        const useDirectAccess = (hasDirectAccess && !isDirectAccessRestricted);
-
+        let useDirectAccess = false;
+        if (!isTorEnabledInSettings) {
+            useDirectAccess = true;
+        } else if (!isDirectAccessRestricted) {
+            useDirectAccess = await this.transports.hasDirectAccess(preparedArgs.url);
+        }
         let isTorReady = this.transports.isTorReady();
 
         if (isDirectAccessRestricted) {
             isTorReady = await this.transports.waitTorReady();
         }
-
-        const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
         const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
 
         if (useTor) {
@@ -112,20 +114,21 @@ class WrappedAxios {
                     return Promise.reject(error)
                 }
 
-            
-                var hasDirectAccess = await this.transports.hasDirectAccess(preparedArgs.url);
-                var isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
-                var useDirectAccess = (hasDirectAccess && !isDirectAccessRestricted);
+                const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
+                const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
+                let useDirectAccess = false;
+                if (!isTorEnabledInSettings) {
+                    useDirectAccess = true;
+                } else if (!isDirectAccessRestricted) {
+                    useDirectAccess = await this.transports.hasDirectAccess(preparedArgs.url);
+                }
                 let isTorReady = this.transports.isTorReady();
 
                 if (isDirectAccessRestricted) {
                     isTorReady = await this.transports.waitTorReady();
                 }
 
-                var isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
                 var useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
-
-
                 if (useTor) {
                     const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
 
@@ -191,19 +194,21 @@ class WrappedFetch {
 
         const preparedArgs = {...options};
 
-        const hasDirectAccess = await this.transports.hasDirectAccess(url);
+        const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
         const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
-        const useDirectAccess = (hasDirectAccess && !isDirectAccessRestricted);
-
+        let useDirectAccess = false;
+        if (!isTorEnabledInSettings) {
+            useDirectAccess = true;
+        } else if (!isDirectAccessRestricted) {
+            useDirectAccess = await this.transports.hasDirectAccess(url);
+        }
         let isTorReady = this.transports.isTorReady();
 
         if (isDirectAccessRestricted) {
             isTorReady = await this.transports.waitTorReady();
         }
 
-        const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
         const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
-
         if (useTor) {
             const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
 
@@ -236,19 +241,21 @@ class WrappedFetch {
                     return Promise.reject(error)
                 }
 
-                const hasDirectAccess = await this.transports.hasDirectAccess(url);
+                const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
                 const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
-                const useDirectAccess = (hasDirectAccess && !isDirectAccessRestricted);
-
+                let useDirectAccess = false;
+                if (!isTorEnabledInSettings) {
+                    useDirectAccess = true;
+                } else if (!isDirectAccessRestricted) {
+                    useDirectAccess = await this.transports.hasDirectAccess(url);
+                }
                 let isTorReady = this.transports.isTorReady();
 
                 if (isDirectAccessRestricted) {
                     isTorReady = await this.transports.waitTorReady();
                 }
 
-                const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
                 const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
-
                 if (useTor) {
                     const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
 
@@ -317,19 +324,21 @@ class WrappedRequest {
 
         const preparedArgs = {...options};
 
-        const hasDirectAccess = await this.transports.hasDirectAccess(preparedArgs.url);
+        const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
         const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
-        const useDirectAccess = (hasDirectAccess && !isDirectAccessRestricted);
-
+        let useDirectAccess = false;
+        if (!isTorEnabledInSettings) {
+            useDirectAccess = true;
+        } else if (!isDirectAccessRestricted) {
+            useDirectAccess = await this.transports.hasDirectAccess(preparedArgs.url);
+        }
         let isTorReady = this.transports.isTorReady();
 
         if (isDirectAccessRestricted) {
             isTorReady = await this.transports.waitTorReady();
         }
 
-        const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
         const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
-
         if (useTor) {
             const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
 
@@ -355,19 +364,21 @@ class WrappedRequest {
                     callback?.(preparedResult.error, response, body);
                 }
 
-                const hasDirectAccess = await this.transports.hasDirectAccess(url);
+                const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
                 const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
-                const useDirectAccess = (hasDirectAccess && !isDirectAccessRestricted);
-
+                let useDirectAccess = false;
+                if (!isTorEnabledInSettings) {
+                    useDirectAccess = true;
+                } else if (!isDirectAccessRestricted) {
+                    useDirectAccess = await this.transports.hasDirectAccess(preparedArgs.url);
+                }
                 let isTorReady = this.transports.isTorReady();
 
                 if (isDirectAccessRestricted) {
                     isTorReady = await this.transports.waitTorReady();
                 }
-                
-                const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
-                const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
 
+                const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
                 if (useTor) {
                     const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
 
@@ -445,9 +456,13 @@ class Transports {
             port = (protocol === 'https:') ? 443 : 80;
         }
 
-        const isLocalhost = await checkIfLocalhost(hostname);
+        const isIPAddress = (address) => {
+            const ipv4Like = /^(\d{1,3}\.){3}\d{1,3}$/;
+            const ipv6Like = /^([0-9a-fA-F]{0,4}:){2,7}[0-9a-fA-F]{0,4}$/;
+            return ipv4Like.test(address) || ipv6Like.test(address);
+        };
 
-        if (isLocalhost) {
+        if (isIPAddress(hostname) && await checkIfLocalhost(hostname)) {
             return true;
         }
 
@@ -543,6 +558,10 @@ class Transports {
 
     async pingHost(host, port) {
         function synackPing() {
+
+            //127.x.x.x or 0.0.0.0 or ::1 or ::
+            const isLocalhost = (address) => /^(127(?:\.\d{1,3}){0,3}|0\.0\.0\.0|::1|::)$/.test(address);
+
             return new Promise((resolve, reject) => {
                 let socket;
 
@@ -557,6 +576,14 @@ class Transports {
                 }
 
                 socket.setTimeout(100);
+
+                socket.on('lookup', (err, address) => {
+                    if (isLocalhost(address)) {
+                        socket.end();
+                        socket.destroy();
+                        reject('SYNACK_PING_FAILED');
+                    }
+                });
 
                 socket.on('error', (err) => {
                     socket.end();
@@ -602,7 +629,9 @@ class Transports {
 
     getTorAgent() {
         if (!this.torAgent) {
-            this.torAgent = new SocksProxyAgent('socks5h://127.0.0.1:9151', {
+            const url = new URL('socks5h://127.0.0.1:9151');
+            url.tls = { rejectUnauthorized: false };
+            this.torAgent = new SocksProxyAgent(url, {
                 keepAlive: true,
                 timeout: 60000,
             });
@@ -614,19 +643,22 @@ class Transports {
     async isTorNeeded(url) {
         const torCtrl = this.torapplications;
 
-        const hasDirectAccess = await this.hasDirectAccess(url);
-        const isDirectRestricted = (torCtrl.settings.enabled2 === 'always');
-        const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
-        const useDirectAccess = (hasDirectAccess && !isDirectRestricted);
+        const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
+        const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
+        let useDirectAccess = false;
+        if (!isTorEnabledInSettings) {
+            useDirectAccess = true;
+        } else if (!isDirectAccessRestricted) {
+            useDirectAccess = await this.hasDirectAccess(url);
+        }
 
         let isTorReady = this.isTorReady();
 
-        if (isDirectRestricted || (isTorAutoEnabled && !hasDirectAccess && !isTorReady)) {
+        if (!useDirectAccess && !isTorReady) {
             torCtrl.start();
             isTorReady = await this.waitTorReady();
         }
 
-        const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
         const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
 
         return !!useTor;

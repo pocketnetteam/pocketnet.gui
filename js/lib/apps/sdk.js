@@ -327,6 +327,12 @@ var BastyonSdk = function(settings = {}){
         videos : function(urls){
             return action('get.videos', {urls})
         },
+        videosWithShares : function(options = {}){
+            return action('get.videosWithShares', options)
+        },
+        feed : function(options = {}){
+            return action('get.feed', options)
+        },
         account : function(){
             return action('account', {})
         },
@@ -411,6 +417,10 @@ var BastyonSdk = function(settings = {}){
     self.openExternalLink = function(url){
         return action('openExternalLink', {url})
     }
+ 
+    self.registerForNotifications = function(){
+        return action('registerForNotifications')
+    }
 
     self.barteron = {
         account : function(data){
@@ -490,27 +500,36 @@ var BastyonSdk = function(settings = {}){
         registration: function(){
             return action('registration', {})
         },
+      
+        channel: function(address){
+            return action('channel', {address})
+        },
 
         userstate : function(){
             return action('userstate', {})
         },
 
-        share: function(data){
+        share: function(data, options = { shareOnBastyon: false }){
 
             /*
             
             data.path
             data.sharing
-            
+            options.shareOnBastyon
+
             */
 
             if (data.path){
                 data.url = self.get.applink(data.path)
             }
 
-            
+            const actionName = options?.shareOnBastyon ? 'shareOnBastyon' : 'share';
 
-            return action('share', data)
+            return action(actionName, data)
+        },
+
+        shareOnBastyon: function(data){
+            self.helpers.share(data, { shareOnBastyon: true })
         },
     }
 

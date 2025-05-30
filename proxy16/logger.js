@@ -53,6 +53,7 @@ var Logger = function(_loggers){
         })
     }
 
+    
     self.getlevel = function(){
         return level
     }

@@ -369,7 +369,6 @@ var author = (function(){
 						history : true,
 						if : function(){
 							return false
-							if(isTablet()) return true
 						}
 					},
 					

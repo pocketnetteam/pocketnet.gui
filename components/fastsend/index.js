@@ -26,7 +26,7 @@ var fastsend = (function(){
 
 					if(message) transaction.message.set(message)
 					
-					globalpreloader(true)
+					globalpreloader(true, null, true)
 
 					self.app.platform.actions.addActionAndSendIfCan(transaction, 1, null, {
 						calculatedFee : 0,

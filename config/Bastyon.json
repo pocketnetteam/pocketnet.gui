@@ -10,7 +10,7 @@
             "version": "0.0.1",
             "scope" : "pkoin.net/wpkoinui",
             "cantdelete" : true,
-            "name" : "WPkoin",
+            "name" : "WPKOIN",
             "install" : true,
             "develop": true,
             "store" : {"g" : true},
@@ -94,11 +94,6 @@
     "servers" : {
         "production" : {
             "proxy" : [
-                {
-                    "host" : "1.pocketnet.app",
-                    "port" : 8899,
-                    "wss" : 8099
-                },
                 
                 {
                     "host" : "2.pocketnet.app",
@@ -181,6 +176,11 @@
                 "github" : {
                     "name": "BastyonSetup.exe",
                     "url": "https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest"
+                },
+                "githubalt" : {
+                    "label" : "windows7",
+                    "name": "BastyonSetup-win7.exe",
+                    "url": "https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest"
                 }
             },
             "macos" : {
@@ -214,6 +214,8 @@
             }
         }
     },
+
+    "firebaseweb" : "7b226d6573736167696e6753656e6465724964223a2231303230353231393234393138222c2270726f6a6563744964223a22706f636b65746e6574222c226170694b6579223a2241497a615379435f4a6565743267704b525a703434694154776c4646413769474e597361626b6b222c226170704964223a22313a313032303532313932343931383a696f733a61623335636338346630643130643836616163623937227d",
 
     "cordova" : {
         "name" : "pocketnet.app",

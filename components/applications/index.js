@@ -12,19 +12,21 @@ var applications = (function(){
 
 		var actions = {
 
-			download : function(os, clbk){
+			download : function(os, clbk, githubalt){
 				if (os){
 
-					if(os.github){
+					var ooobj = githubalt ? os.githubalt : os.github
+
+					if (ooobj){
 
 						globalpreloader(true)
 
-						$.get(os.github.url, {}, function(d){
+						$.get(ooobj.url, {}, function(d){
 
 							var assets = deep(d, 'assets') || [];
 
 							var l = _.find(assets, function(a){
-								return a.name == os.github.name
+								return a.name == ooobj.name
 							})
 
 							if (l){
@@ -87,9 +89,11 @@ var applications = (function(){
 						var osid = $(this).closest('.os').attr('osid')
 
 						var os = _.find(_oss, (os) => {return osid == os.id})
-				
+
 						if (os){
-							actions.download(os, function(link){})
+							actions.download(os, function(link){
+
+							}, $(this).hasClass('githubalt'))
 						}
 						else{
 							sitemessage('error')

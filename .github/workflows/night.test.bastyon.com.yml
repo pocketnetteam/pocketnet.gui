@@ -68,10 +68,12 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: macos
-          path: ./dist/BastyonSetup.dmg
+          path: |
+            ./dist/BastyonSetup.dmg
+            ./dist/latest-macos.yml
 
   build-unix:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
@@ -101,6 +103,7 @@ jobs:
             ./dist/BastyonSetup.deb
             ./dist/BastyonSetup.rpm
             ./dist/Bastyon.AppImage
+            ./dist/latest-linux.yml
             ./head.txt
 
   build-windows:
@@ -127,10 +130,41 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: windows
-          path: ./dist/BastyonSetup.exe
+          path: |
+            ./dist/BastyonSetup.exe
+            ./dist/latest.yml
+
+  build-windows-win7:
+    runs-on: windows-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Prepare building
+        run: |
+          npm i
+          npm run build:proxy16
+          npm run dev:bastyon:test:win7 -- -sha=${{ github.sha }}
+      - name: Building
+        run: |
+          npm run dist
+          move .\dist\latest.yml .\dist\latest-win7.yml
+          move .\dist\BastyonSetup.exe .\dist\BastyonSetup-win7.exe
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-win7
+          path: |
+            ./dist/BastyonSetup-win7.exe
+            ./dist/latest-win7.yml
 
   build-android:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/setup-java@v3
         with:
@@ -195,7 +229,9 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
       - name: Copy artifacts
-        run: cp ./**/Bastyon* /data/dev/binaries/night.test/
+        run: |
+          cp ./**/Bastyon* /data/dev/binaries/night.test/
+          cp ./**/latest* /data/dev/binaries/night.test/
       - name: Copy HEAD information
         run: cp ./unix/head.txt /data/dev/binaries/night.test/head.txt
       - name: Clean work dir

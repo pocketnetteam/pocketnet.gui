@@ -31,13 +31,6 @@ var about = (function(){
 				report : 'aboutHome',
 				mobile : true
 			})
-
-			reports.push({
-				name : self.app.localization.e('contentCreators'),
-				id : 'about-content-creators',
-				report : 'aboutContentCreators',
-				mobile : true
-			})
 			
 			reports.push({
 				name : self.app.localization.e('howItWorks'),
@@ -254,7 +247,7 @@ var about = (function(){
 				var group = helpers.findReport(id);
 
 				if (group){
-					group.active = !!!group.active;
+					group.active = group.active ? false : true;
 
 					var _el = el.c.find('[levelid="'+id+'"]');
 

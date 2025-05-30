@@ -9,7 +9,7 @@ on:
 jobs:
 
   prepare:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout git repository
         uses: actions/checkout@v3
@@ -100,11 +100,13 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: macos
-          path: ./dist/BastyonSetup.dmg
+          path: |
+            ./dist/latest-macos.yml
+            ./dist/BastyonSetup.dmg
 
   build-unix:
     needs: prepare
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
@@ -131,6 +133,7 @@ jobs:
         with:
           name: unix
           path: |
+            ./dist/latest-linux.yml
             ./dist/BastyonSetup.deb
             ./dist/BastyonSetup.rpm
             ./dist/Bastyon.AppImage
@@ -162,11 +165,45 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: windows
-          path: ./dist/BastyonSetup.exe
+          path: |
+            ./dist/latest.yml
+            ./dist/BastyonSetup.exe
+
+  build-windows-win7:
+    needs: prepare
+    runs-on: windows-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: repo.tgz
+      - name: Unpack artifact
+        run: tar xzf repo.tgz
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Prepare building
+        run: |
+          npm i
+          npm run build:proxy16
+          npm run dev:bastyon:win7 -- -sha=${{ github.sha }}
+      - name: Building
+        run: |
+          npm run dist
+          move .\dist\latest.yml .\dist\latest-win7.yml
+          move .\dist\BastyonSetup.exe .\dist\BastyonSetup-win7.exe
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-win7
+          path: |
+            ./dist/latest-win7.yml
+            ./dist/BastyonSetup-win7.exe
 
   build-android:
     needs: prepare
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
@@ -228,7 +265,7 @@ jobs:
 
   build-android-gf:
     needs: prepare
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
@@ -287,13 +324,15 @@ jobs:
           path: ./cordova/platforms/android/app/build/outputs/apk/release/BastyonGF.apk
 
   deploy-app-binaries:
-    needs: [ build-macos, build-unix, build-windows, build-android, build-android-gf ]
+    needs: [ build-macos, build-unix, build-windows, build-windows-win7, build-android, build-android-gf ]
     runs-on: dev.pocketnet.app
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
       - name: Copy artifacts
-        run: cp ./**/Bastyon* /data/dev/binaries/night/
+        run: |
+          cp ./**/Bastyon* /data/dev/binaries/night/
+          cp ./**/latest* /data/dev/binaries/night/
       - name: Copy HEAD information
         run: cp ./head/head.txt /data/dev/binaries/night/head.txt
       - name: Clean work dir

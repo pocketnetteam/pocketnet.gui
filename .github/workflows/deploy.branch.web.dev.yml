@@ -1,0 +1,104 @@
+name: Deploy Branch Web+Proxy to dev.pocketnet.app
+
+on:
+  workflow_dispatch:
+
+jobs:
+
+  # Deploy test & pre sites
+  deploy-pre:
+    runs-on: gui
+    steps:
+      - name: Checkout git repository
+        uses: actions/checkout@v3
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Prepare
+        run: |
+          npm i
+          npm run build:proxy16
+          npm run minimize:bastyon -- -sha=${{ github.sha }} -run=${{ github.run_number }}${{ github.run_attempt }}
+      - name: Copy to dest dir
+        run: rsync -ah --exclude={'.git','.gitignore','.github','package.json','package-lock.json','minimize.json','node_modules','.well-known','assets','proxy16','cordova','res','build'} ./ /docker/pre/
+
+  deploy-test:
+    runs-on: gui
+    steps:
+      - name: Checkout git repository
+        uses: actions/checkout@v3
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Prepare
+        run: |
+          npm i
+          npm run build:proxy16
+          npm run minimize:bastyon:test -- -sha=${{ github.sha }} -run=${{ github.run_number }}${{ github.run_attempt }}
+      - name: Copy to dest dir
+        run: rsync -ah --exclude={'.git','.gitignore','.github','package.json','package-lock.json','minimize.json','node_modules','.well-known','assets','proxy16','cordova','res','build'} ./ /docker/gui/
+
+  # Build & Deploy proxy services
+  build-proxy:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout git repository
+        uses: actions/checkout@v3
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ secrets.DOCKER_HUB_USERNAME }}/proxy
+          tags: type=raw,value=night
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Cache Docker layers
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v4
+        with:
+          context: ./proxy16
+          file: ./proxy16/dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
+
+  deploy-proxy:
+    needs: build-proxy
+    runs-on: proxy.test
+    steps:
+      - name: Pull && Up proxy container
+        run: /data/proxy_pre_pull_up.sh
+        shell: bash
+      - name: Reset nginx cache
+        run: /data/reset_cache.sh
+        shell: bash
+
+  deploy-proxy-test:
+    needs: build-proxy
+    runs-on: proxy.test
+    steps:
+      - name: Pull && Up proxy container
+        run: /data/proxy_test_pull_up.sh
+        shell: bash
+      - name: Reset nginx cache
+        run: /data/reset_cache.sh
+        shell: bash

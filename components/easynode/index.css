@@ -271,6 +271,10 @@
 #easynode .faqWrapper .faq .group .groupCnt .question .icon:hover {
   background: rgb(var(--color-txt-ac));
 }
+#easynode .aboutPkoin a {
+  text-decoration: underline;
+  color: rgb(var(--color-txt-ac));
+}
 @media (max-width: 400px) {
   #easynode h2,
   #easynode h3 {

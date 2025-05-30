@@ -169,7 +169,10 @@ const publics = {
 
 }
 
-const keepAliveAgent = new http.Agent({ keepAlive: true });
+const keepAliveAgent = new https.Agent({ 
+    keepAlive: true,
+    rejectUnauthorized: false
+});
 
 function rpca(request, obj){
     return new Promise(function(resolve, reject){
@@ -193,6 +196,10 @@ function rpca(request, obj){
 
     })
 }
+
+var agent = new https.Agent({  
+    rejectUnauthorized: false
+})
 
 function rpc(request, callback, obj) {
 
@@ -280,6 +287,8 @@ function rpc(request, callback, obj) {
     var reqf = self.transports?.axios || axios
 
     config.method = 'post'
+    config.httpsAgent = options.agent
+   
     //config.signal = signal
     
 
@@ -370,6 +379,7 @@ function rpc(request, callback, obj) {
     .catch(err => {
 
 
+
         called = true;
 
         var error = err.response?.data?.error;
@@ -384,7 +394,7 @@ function rpc(request, callback, obj) {
                 }
             }
         }
-        
+
         callback(error || {
             code : 408,
             error : bytimeout ? 'timeout' : 'requesterror'

@@ -87,7 +87,6 @@ var share = (function(){
 			},
 
 			resizeImage : function(base64, settings){
-
 				if(!settings) settings = {}
 
 				var images = [{
@@ -114,7 +113,6 @@ var share = (function(){
 							},
 					
 							success : function(i, editclbk){
-
 								resize(images[0].original, 1920, 1080, function(resized){
 									var r = resized.split(',');
 					
@@ -129,7 +127,7 @@ var share = (function(){
 										reject("error")
 									}
 								
-								})
+								}, null, settings.qualityForThumbnail || null)
 
 				
 						  	},
@@ -148,7 +146,9 @@ var share = (function(){
 					thumbnailfile: image,
 				};
 
-				var settingsObject = {}
+				var settingsObject = {
+					qualityForThumbnail: 0.95,
+				}
 
 				var urlMeta = self.app.peertubeHandler.parselink(shareUrl);
 
@@ -954,6 +954,34 @@ var share = (function(){
 								}
 
 								var alias = action.object
+
+								try{
+								
+									if (action.transaction){
+										if(action.object.delayed()){
+
+											var __parameters = {
+												actionId: 'POST_CREATED_SUCCESS',
+												actionValue: action.transaction,
+												payload : {
+													post : action.object.export(),
+													inputs : action.inputs,
+													outputs : action.outputs
+												}
+
+											}
+
+											self.app.Logger.info(__parameters);
+										}
+										
+									}
+
+								}catch(e){
+									console.log('log error delayed')
+									console.error(e)
+								}
+
+								/**/
 
 
 								if (alias.itisvideo() || alias.itisaudio() || alias.itisstream()) {
