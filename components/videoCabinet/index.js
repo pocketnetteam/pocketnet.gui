@@ -201,7 +201,7 @@ var videoCabinet = (function () {
 
 			getBlockchainPostByVideos: (videoArray = []) =>
 				self.app.api
-					.rpc('searchlinks', [videoArray, 'video', 0, videoArray.length])
+					.rpc('searchlinks', [videoArray, ['video', 'brtoffer'], 0, videoArray.length])
 
 					.then((res = []) => {
 						res.forEach((post) => {
