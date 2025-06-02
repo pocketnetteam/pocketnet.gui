@@ -559,6 +559,7 @@ class TorControl {
             enabled : this.settings.enabled2,
             useSnowFlake : this.settings.useSnowFlake,
             customObfs4 : this.settings.customObfs4,
+            installed : this.isInstalled
         }
 
         info.state = {
@@ -566,11 +567,9 @@ class TorControl {
         }
 
         if(!compact){
-
             info.instance = this.instance ? this.instance.pid : null
             info.binPath = path.join(this.getpath())
             info.dataPath = this.getsettingspath()
-            info.installed = this.isInstalled
         }
 
         return info
