@@ -3426,6 +3426,10 @@ var system16 = (function(){
 
 						p.el.find('.reinstalltor').on('click', function(){
 
+							info.tor.state.status = "install"
+
+							renders.webserveradmin(elc)
+
 							topPreloader(20);
 
 							proxy.fetchauth('manage', {
@@ -3441,6 +3445,10 @@ var system16 = (function(){
 								topPreloader(100);
 	
 							}).catch(e => {
+
+								info.tor.state.status = "stopped"
+
+								renders.webserveradmin(elc)
 	
 								sitemessage(self.app.localization.e('e13293'))
 	
@@ -3450,6 +3458,11 @@ var system16 = (function(){
 						})
 
 						p.el.find('.installtor').on('click', function(){
+
+							info.tor.state.status = "install"
+
+							renders.webserveradmin(elc)
+
 							proxy.fetchauth('manage', {
 								action : 'tor.install',
 								data : {
@@ -3463,6 +3476,10 @@ var system16 = (function(){
 								topPreloader(100);
 	
 							}).catch(e => {
+
+								info.tor.state.status = "stopped"
+
+								renders.webserveradmin(elc)
 	
 								sitemessage(self.app.localization.e('e13293'))
 	
