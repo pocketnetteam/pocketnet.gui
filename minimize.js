@@ -163,7 +163,7 @@ var vars = {
 		protocol : config.protocol
 	},
 	prod : {
-		proxypath : '"http://pocketnet.app:8898/"',
+		proxypath : '"http://5.pocketnet.app:8898/"',
 		domain : config.url,
 		packageVersion: package.version,
 		test : '',

@@ -106,11 +106,11 @@ var devapplication = (function () {
         loadMiniApp();
       },
       publish: function () {
-        if (!self.app.test) {
+        /*if (!self.app.test) {
           return sitemessage(
             self.app.localization.e("miniApp_publishOnlyTestNetworkMessage")
           );
-        }
+        }*/
 
         if (!application.scope || application.scope.includes("localhost")) {
           return sitemessage(
