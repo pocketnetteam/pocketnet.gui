@@ -78,6 +78,7 @@ class TorControl {
     onStopped = (listener) => this.listeners.push({ type: 'stopped', listener });
     onInstalling = (listener) => this.listeners.push({ type: 'install', listener });
     onRunning = (listener) => this.listeners.push({ type: 'running', listener });
+    onAny = (listener) => this.listeners.push({ type: 'any', listener });
 
     init = async() => {
         try {
