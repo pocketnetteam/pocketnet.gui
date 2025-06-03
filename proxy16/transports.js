@@ -613,7 +613,13 @@ class Transports {
             torStart = this.torStartPromise;
         } else {
             torStart = new Promise((resolve) => {
-                this.torapplications.onStarted(() => resolve(true));
+                this.torapplications.onAny((status) => {
+                    if (status === 'started') {
+                        resolve(true)
+                    } else if (status === 'failed') {
+                        resolve(false)
+                    }
+                });
             });
 
             this.torStartPromise = torStart;
