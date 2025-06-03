@@ -87,12 +87,13 @@ class TorControl {
 
             await this.folders();
 
-            this.autorun()
+            this.autorun().catch(e => {
+                this.startFailed(e);
+            });
 
 
         } catch (e) {
-            console.log("Tor control failed to start:", e.message);
-            this.state.status = "stopped";
+            this.startFailed(e);
         }
     }
 
@@ -116,29 +117,35 @@ class TorControl {
         this.settings = {...settings};
 
         if (needRestart){
-            await this.autorun()
+            try {
+                await this.autorun()
+            } catch (e) {
+                this.startFailed(e);
+            }
         }
+    }
+
+    startFailed = (err) => {
+        console.log("Tor control failed to start:", err);
+        this.state.status = "failed";
     }
 
     autorun = async () =>{
 
-        if (this.instance){
-            if (this.settings.enabled2 == 'neveruse'){
-                this.stop()
-            }
-            else{
+        if (this.instance || this.state.status !== 'stopped'){
+            if (this.settings.enabled2 === 'neveruse'){
+                await this.stop()
+            } else {
                 await this.restart()
             }
         } else {
-
-            if (this.settings.enabled2 != 'neveruse'){
+            if (this.settings.enabled2 !== 'neveruse'){
                 if (this.needinstall()){
-
-                    await this.install()
+                    await this.install();
                 }
             }
 
-            if (this.settings.enabled2 == 'always'){
+            if (this.settings.enabled2 === 'always'){
                 await this.restart()
             }
         }
@@ -312,7 +319,7 @@ class TorControl {
             throw this.installfailed
         }
 
-        try{
+        try {
 
             this.state.status = "install";
 
@@ -328,16 +335,16 @@ class TorControl {
 
             return true;
 
-        }catch (e) {
+        } catch (e) {
 
             this.installfailed = {
                 code : 500,
                 error : 'cantcopy'
-            }
+            };
 
-            this.state.status = "stopped";
+            this.state.status = "failed";
 
-            throw this.installfailed
+            throw this.installfailed;
         }
     }
 
@@ -382,9 +389,8 @@ class TorControl {
 
             if (isBrokerFailure(data) || isConnectionFailure(data)) {
                 console.warn("Tor connection lost")
-                this.state.status = "failure"
                 return
-            } else if (isBootstrapped100(data) || isConnected(data)) {
+            } else if (isBootstrapped100(data)) {
                 console.log("Tor instance started again")
                 this.state.status = "started"
                 return
@@ -426,9 +432,25 @@ class TorControl {
     start = async ()=>{
         console.log("Tor start triggered");
 
-        if (this.needinstall()) return false
+        if (this.needinstall()) {
+            if (this.state.status === 'install') {
+                return false;
+            } if (this.settings.enabled2 === 'neveruse') {
+                this.state.status = "stopped";
+                return false;
+            } else {
+                try {
+                    await this.install();
+                } catch (e) {
+                    console.log("Tor failed to install:", e);
+                    this.state.status = "failed";
+                }
+            }
+        }
 
-        if (this.state.status !== "stopped") return true
+        if (this.settings.enabled2 === 'neveruse') return false;
+
+        if (this.state.status !== "stopped") return true;
 
         this.state.status = "running"
 
@@ -535,6 +557,7 @@ class TorControl {
         this.state.status = "stopped"
 
         this.instance = null
+        this.installfailed = null
 
         clearInterval(this.timeoutIntervalId);
         this.timeoutIntervalId = null;
