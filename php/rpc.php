@@ -2,7 +2,7 @@
 
 class RPC {
 
-    protected $node = 'https://pocketnet.app:8899/rpc/';
+    protected $node = 'https://5.pocketnet.app:8899/rpc/';
 
 	public function __construct ($proxypath)
 	{
