@@ -493,17 +493,23 @@ var menu = (function(){
 
 						proxyData = await currentProxy.get.info();
 
-						if (proxyData?.info.tor.state.status === 'started') {
-							controlTorElem.removeClass(['off', 'loading']);
+						if (proxyData?.info.tor.state.status === 'stopped'
+							|| proxyData?.info.tor.enabled === 'neveruse') {
+							controlTorElem.removeClass(['on', 'loading', 'failed']);
+							controlTorElem.addClass('off');
+							controlTorElem.attr('title', app.localization.e('torHintStateDisabled'));
+						} else if (proxyData?.info.tor.state.status === 'started') {
+							controlTorElem.removeClass(['off', 'loading', 'failed']);
 							controlTorElem.addClass('on');
 							controlTorElem.attr('title', app.localization.e('torHintStateEnabled'));
-						} else if (proxyData?.info.tor.state.status === 'running') {
-							controlTorElem.removeClass(['on', 'off']);
+						} else if (proxyData?.info.tor.state.status === 'install'
+							|| proxyData?.info.tor.state.status === 'running') {
+							controlTorElem.removeClass(['on', 'off', 'failed']);
 							controlTorElem.addClass('loading');
 							controlTorElem.attr('title', app.localization.e('torHintStateLoading'));
-						} else if (proxyData?.info.tor.state.status === 'stopped') {
-							controlTorElem.removeClass(['on', 'loading']);
-							controlTorElem.addClass('off');
+						} else if (proxyData?.info.tor.state.status === 'failed') {
+							controlTorElem.removeClass(['on', 'loading', 'off']);
+							controlTorElem.addClass('failed');
 							controlTorElem.attr('title', app.localization.e('torHintStateDisabled'));
 						}
 					}, 2000);
