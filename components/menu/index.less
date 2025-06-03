@@ -369,6 +369,15 @@
 							50% { color: rgb(var(--color-txt-ac)) }
 						}
 					}
+
+					&.failed {
+						color: rgb(var(--neutral-grad-1));
+						animation: torFailedPulse 2s linear infinite;
+
+						@keyframes torFailedPulse {
+							30% { color: rgb(var(--color-bad)) }
+						}
+					}
 				}
 			}
 
