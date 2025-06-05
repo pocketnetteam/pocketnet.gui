@@ -27,7 +27,7 @@
         "cordova-plugin-camera": "6.0.0",
         "cordova-plugin-fullscreen": "^1.3.0",
         "cordova-plugin-gallery-refresh": "1.0.61",
-        "cordova-plugin-inappbrowser": "4.0.0",
+        "cordova-plugin-inappbrowser": "6.0.0",
         "cordova-plugin-network-information": "3.0.0",
         "cordova-plugin-screen-orientation": "^3.0.1",
         "cordova-plugin-vibration": "3.1.1",
@@ -36,7 +36,9 @@
         "html-minifier": "^4.0.0",
         "mkpath": "^1.0.0",
         "node-version-compare": "^1.0.3",
-        "xml2js": "^0.4.23"
+        "xml2js": "^0.4.23",
+        "plist": "^1.2.0",
+        "rimraf" : "^2.4.0"
     },
     "devDependencies": {
         "@ahovakimyan/cordova-plugin-wkwebviewxhrfix": "^1.0.1",
