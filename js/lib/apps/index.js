@@ -683,6 +683,39 @@ var BastyonApps = function (app) {
             }
         },
 
+        complain: {
+            permissions: [],
+            parameters: [],
+            authorization: true,
+            action: function ({
+                data,
+                application
+            }) {
+
+				app.nav.api.load({
+					open : true,
+					id : 'complain',
+					inWnd : true,
+					essenseData : {
+						item : 'miniapp_entity',
+						obj : {
+                            entityLink: data.entityLink,
+                            entityTxid: data.entityTxid,
+                            entityType: data.entityType,
+                        },
+
+						success : function(){
+						}
+					},
+
+					clbk : function(){
+					}
+				})
+
+                return Promise.resolve();
+            }
+        },
+
         chat: {
 
             openRoom: {

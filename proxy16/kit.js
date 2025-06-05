@@ -224,8 +224,8 @@ var defaultSettings = {
 	tor : {
 		dbpath2 : 'data/tordb',
 		path : 'data/tor',
-		enabled2: 'neveruse',
-		useSnowFlake : false,
+		enabled2: 'auto',
+		useSnowFlake : true,
 		customObfs4 : false,
 	},
 
@@ -1332,9 +1332,9 @@ const kit = {
 			},
 
 			install : function(){
-				return kit.proxy().then(proxy => {
-					proxy.torapplications.install().catch(e => {
-						console.log(e)
+				return kit.proxy().then(async proxy => {
+					await proxy.torapplications.install().catch(e => {
+						return Promise.reject(e)
 					})
 
 					return Promise.resolve(proxy.torapplications.info())
@@ -1342,9 +1342,9 @@ const kit = {
 			},
 
 			reinstall : function(){
-				return kit.proxy().then(proxy => {
-					proxy.torapplications.reinstall().catch(e => {
-						console.log(e)
+				return kit.proxy().then(async proxy => {
+					await proxy.torapplications.reinstall().catch(e => {
+						return Promise.reject(e)
 					})
 
 					return new Promise(resolve => {
