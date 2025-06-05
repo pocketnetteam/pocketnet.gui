@@ -390,7 +390,7 @@ class TorControl {
             const isBrokerFailure = ({ data }) => (/Managed proxy .*: broker failure/g).test(data);
             const isConnectionFailure = ({ data }) => (/Managed proxy .*: connection failed/g).test(data);
             const isRetryingConnection = ({ data }) => (/Retrying on a new circuit/g).test(data)
-            const extractBootstrapMessage = ({ data }) => (data.match(/Bootstrapped \d+%.*/) || [null])[0];
+            const extractBootstrapMessage = ({ data }) => (data?.match(/Bootstrapped \d+%.*/) || [null])[0];
 
             //console.log("Tor:", data)
 
