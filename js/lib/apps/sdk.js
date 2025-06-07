@@ -324,8 +324,12 @@ var BastyonSdk = function(settings = {}){
     }
 
     self.get = {
-        videos : function(urls){
-            return action('get.videos', {urls})
+        videos : function(urls, update = false){
+            const data = {
+                urls, 
+                update
+            };
+            return action('get.videos', data)
         },
         videosWithShares : function(options = {}){
             return action('get.videosWithShares', options)
@@ -448,6 +452,16 @@ var BastyonSdk = function(settings = {}){
         upload : function(data){
             return action('images.upload', data)
         }
+    }
+
+    self.videos = {
+        opendialog : function(data){
+            return action('videos.opendialog', data)
+        },
+
+        remove : function(data){
+            return action('videos.remove', data)
+        },
     }
 
     self.chat = {
