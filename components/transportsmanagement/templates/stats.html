@@ -12,7 +12,7 @@
 
     <div class="stat current tor <% if(!initial && stats.torUsed && stats.status == 'failed') {%>failed<% } %>">
         <div class="statcaption"><span><%- e('torusing_stat_torbytesLength')%></span></div>
-        <div class="value"><span><%- formatBytes(!initial || (stats.torUsed && stats.status == 'success') ? (deep(stats, 'bytesLength') || 0) : 0) %></span></div>
+        <div class="value"><span><%- formatBytes(!initial && (stats.torUsed && stats.status == 'success') ? (deep(stats, 'bytesLength') || 0) : 0) %></span></div>
     </div>
 
     <div class="stat">
@@ -21,7 +21,7 @@
     </div>
 
     <div class="stat">
-        <div class="statcaption"><span><%- e('torusing_stat_totalTorBytes')%></div>
+        <div class="statcaption"><span><%- e('torusing_stat_totalTorBytes')%></span></div>
         <div class="value"><span><%- formatBytes(deep(stats, 'totalStats.totalTorBytes') || 0) %></span></div>
     </div>
 </div>
