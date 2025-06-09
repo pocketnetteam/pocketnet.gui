@@ -493,10 +493,10 @@ class Transports {
 
                     if (result === true) {
                         // Retry in 30 minutes
-                        this.accessRecords[hostname].nextTry = Date.now() + 30 * 60 * 60 * 1000;
+                        this.accessRecords[hostname].nextTry = Date.now() + 30 * 60 * 1000;
                     } else {
                         // Retry in 10 minutes
-                        this.accessRecords[hostname].nextTry = Date.now() + 10 * 60 * 60 * 1000;
+                        this.accessRecords[hostname].nextTry = Date.now() + 10 * 60 * 1000;
                     }
 
                     return result;
@@ -538,12 +538,12 @@ class Transports {
             if (pingResult) {
                 this.accessRecords[hostname] = {
                     accessOk: true,
-                    nextTry: Date.now() + 30 * 60 * 60 * 1000, // Retry in 30 minutes
+                    nextTry: Date.now() + 30 * 60 * 1000, // Retry in 30 minutes
                 };
             } else {
                 this.accessRecords[hostname] = {
                     accessOk: false,
-                    nextTry: Date.now() + 10 * 60 * 60 * 1000, // Retry in 10 minutes
+                    nextTry: Date.now() + 10 * 60 * 1000, // Retry in 10 minutes
                 };
             }
         }
