@@ -574,7 +574,7 @@ class Transports {
     saveHostsDeb = _.debounce(this.saveHosts, 60000)
 
     async pingHost(host, port) {
-        function synackPing() {
+        function synackPing(timeout) {
 
             //127.x.x.x or 0.0.0.0 or ::1 or ::
             const isLocalhost = (address) => /^(127(?:\.\d{1,3}){0,3}|0\.0\.0\.0|::1|::)$/.test(address);
@@ -592,20 +592,29 @@ class Transports {
                     reject('SYNACK_PING_FAILED');
                 }
 
-                socket.setTimeout(100);
+                socket.setTimeout(timeout);
 
                 socket.on('lookup', (err, address) => {
                     if (isLocalhost(address)) {
                         socket.end();
                         socket.destroy();
-                        reject('SYNACK_PING_FAILED');
+                        reject('SYNACK_PING_LOCALHOST');
                     }
                 });
 
                 socket.on('error', (err) => {
                     socket.end();
                     socket.destroy();
-                    reject('SYNACK_PING_FAILED');
+
+                    const messages = [
+                        ...(Array.isArray(err.errors) ? err.errors.map(e => e.message || e.toString() || '') : []),
+                        err.message || err.toString()
+                    ];
+                    if (messages.some(m => m.includes('ETIMEDOUT'))) {
+                        reject('SYNACK_PING_TIMEOUT');
+                    } else {
+                        reject('SYNACK_PING_FAILED');
+                    }
                 });
 
                 socket.on('timeout', (err) => {
@@ -616,9 +625,20 @@ class Transports {
             });
         }
 
-        return synackPing().catch(() => {
-            return false;
-        });
+        const timeouts = [200, 300, 500];
+        for (const timeout of timeouts) {
+            try {
+                return await synackPing(timeout);
+            } catch (e) {
+                if (e === 'SYNACK_PING_FAILED') {
+                    await Transports.waitTimeout(timeout/1000, false);
+                } else if (e === 'SYNACK_PING_LOCALHOST') {
+                    return false;
+                }
+            }
+        }
+
+        return false;
     }
 
     async waitTorReady() {
