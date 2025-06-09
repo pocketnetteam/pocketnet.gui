@@ -571,7 +571,7 @@ class Transports {
         
     }
 
-    saveHostsDeb = _.debounce(this.saveHosts, 60000)
+    saveHostsDeb = _.debounce(this.saveHosts, 10 * 60 * 1000);
 
     async pingHost(host, port) {
         function synackPing(timeout) {
