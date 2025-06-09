@@ -110,12 +110,18 @@ class WrappedAxios {
                     return WrappedAxios.handleError(error);
                 }
                 
-                if (error.code != 'ECONNREFUSED' && error.code != "ETIMEDOUT" && error.code != "ENOTFOUND"){
+                if (error.code !== 'ECONNREFUSED' &&
+                    error.code !== 'ETIMEDOUT' &&
+                    error.code !== 'ENOTFOUND' &&
+                    error.code !== 'ECONNRESET'
+                ){
                     return Promise.reject(error)
                 }
 
                 const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
                 const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
+                const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
+
                 let useDirectAccess = false;
                 if (!isTorEnabledInSettings) {
                     useDirectAccess = true;
@@ -128,9 +134,10 @@ class WrappedAxios {
                     isTorReady = await this.transports.waitTorReady();
                 }
 
-                var useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
+                const torRefuseConnections = this.transports.isTorRefuseConnections(error);
+                const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings &&
+                    !(torRefuseConnections && isTorAutoEnabled));
                 if (useTor) {
-                    const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
 
                     if (isTorAutoEnabled) {
                         torCtrl.resetTimer();
@@ -237,12 +244,18 @@ class WrappedFetch {
                     return WrappedFetch.handleError(error);
                 }
 
-                if (error.code != 'ECONNREFUSED' && error.code != "ETIMEDOUT" && error.code != "ENOTFOUND"){
+                if (error.code !== 'ECONNREFUSED' &&
+                    error.code !== 'ETIMEDOUT' &&
+                    error.code !== 'ENOTFOUND' &&
+                    error.code !== 'ECONNRESET'
+                ){
                     return Promise.reject(error)
                 }
 
                 const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
                 const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
+                const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
+
                 let useDirectAccess = false;
                 if (!isTorEnabledInSettings) {
                     useDirectAccess = true;
@@ -255,9 +268,10 @@ class WrappedFetch {
                     isTorReady = await this.transports.waitTorReady();
                 }
 
-                const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
+                const torRefuseConnections = this.transports.isTorRefuseConnections(error);
+                const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings &&
+                    !(torRefuseConnections && isTorAutoEnabled));
                 if (useTor) {
-                    const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
 
                     if (isTorAutoEnabled) {
                         torCtrl.resetTimer();
@@ -366,6 +380,8 @@ class WrappedRequest {
 
                 const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
                 const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
+                const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
+
                 let useDirectAccess = false;
                 if (!isTorEnabledInSettings) {
                     useDirectAccess = true;
@@ -378,9 +394,10 @@ class WrappedRequest {
                     isTorReady = await this.transports.waitTorReady();
                 }
 
-                const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
+                const torRefuseConnections = this.transports.isTorRefuseConnections(error);
+                const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings &&
+                    !(torRefuseConnections && isTorAutoEnabled));
                 if (useTor) {
-                    const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
 
                     if (isTorAutoEnabled) {
                         torCtrl.resetTimer();
@@ -671,13 +688,17 @@ class Transports {
     }
 
     checkForAgentError(error) {
-        const isSocksRejected = /Socks5 proxy rejected connection - Failed/;
+        const isSocksRejected = /Socks5 proxy rejected connection/;
         const isSocketNotCreated = /A "socket" was not created/;
 
         return (
             isSocksRejected.test(error.message) ||
             isSocketNotCreated.test(error.message)
         );
+    }
+
+    isTorRefuseConnections(error) {
+        return error.message.includes('ECONNREFUSED 127.0.0.1:9151');
     }
 }
 
