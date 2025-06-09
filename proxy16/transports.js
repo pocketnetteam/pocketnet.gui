@@ -653,7 +653,7 @@ class Transports {
                 this.torapplications.onAny((status) => {
                     if (status === 'started') {
                         resolve(true)
-                    } else if (status === 'failed') {
+                    } else if (status === 'stopped' || status === 'failed') {
                         resolve(false)
                     }
                 });
