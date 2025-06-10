@@ -504,7 +504,7 @@ RpcClient.callspec = {
     getmostcommentedfeed: 'int str int str obj obj obj obj obj str int',
     getuseraddress: 'str int',
     search: 'str str str',
-    searchlinks: 'obj str int int',
+    searchlinks: 'obj obj int int',
     searchusers: 'str',
     getcomments: 'str',
     sendcomment: 'str str str str str',

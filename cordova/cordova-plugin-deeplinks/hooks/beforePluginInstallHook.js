@@ -48,7 +48,7 @@ module.exports = function(ctx) {
   var npm = (process.platform === "win32" ? "npm.cmd" : "npm");
   var result = spawnSync(npm, ['install', '--production'], { cwd: './plugins/' + ctx.opts.plugin.id });
   if (result.error) {
-    throw result.error;
+    //throw result.error;
   }
 
   createPluginInstalledFlag(ctx);
