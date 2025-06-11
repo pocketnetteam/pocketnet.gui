@@ -163,7 +163,7 @@
   line-height: 45px;
   opacity: 1;
   border-radius: 12px;
-  background: rgba(var(--background-hidden-layer), 0.35);
+  background: rgba(var(--background-hidden-layer), 0.5);
   color: rgb(var(--neutral-grad-3));
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
