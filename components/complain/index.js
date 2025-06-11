@@ -48,6 +48,33 @@ var complain = (function () {
 				}
 
 			],
+			miniapp: [
+				{
+					name: self.app.localization.e('lowstar_reason_1'),
+					gid: 1
+				},
+				{
+					name: self.app.localization.e('lowstar_reason_2'),
+					gid: 2
+				},
+				{
+					name: self.app.localization.e('lowstar_reason_3'),
+					gid: 3
+				},
+				{
+					name: self.app.localization.e('lowstar_reason_4'),
+					gid: 4
+				},
+				/*{
+					name: self.app.localization.e('lowstar_reason_5'),
+					gid: 5
+				},*/
+				{
+					name: self.app.localization.e('lowstar_reason_6'),
+					gid: 6
+				}
+
+			],
 			user: [
 				{
 					name: self.app.localization.e('lowstar_reason_1'),
@@ -213,6 +240,52 @@ var complain = (function () {
 									actionValue: actions.actionValue(selected),
 									actionSubType: sobj.data.address,
 
+									active : true
+								});
+								clbk(true)
+								sitemessage(self.app.localization.e('complain_success'))
+							} catch (error) {
+								self.app.platform.errorHandler(error, true)
+
+								clbk(false)
+							}
+
+						}
+					}
+					if (ess == 'miniapp') {
+						if ((typeof mestate != 'undefined' && mestate.badges && Object.values(mestate.badges).includes('shark'))) {
+
+							var modFlag = sobj.data.modFlag(selected);
+
+							//topPreloader(30);
+
+							self.app.platform.actions.addActionAndSendIfCan(modFlag).then(action => {
+
+
+								var alias = action.get()
+								
+
+								successCheck()
+								sitemessage(self.app.localization.e('complain_success'))
+
+								if (clbk) clbk(true)
+
+							}).catch(e => {
+								self.app.platform.errorHandler(e, true)
+
+								if(clbk) clbk(true)
+							})
+
+						}
+
+						else {
+
+							try {
+								var i1 = ((actions.find(selected) || {}).name) || selected;
+								self.app.Logger.info({
+									actionId: 'MINIAPP_COMPLAIN',
+									actionValue: i1,
+									actionSubType: sobj.hash,
 									active : true
 								});
 								clbk(true)

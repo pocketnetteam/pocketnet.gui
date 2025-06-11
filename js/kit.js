@@ -2606,6 +2606,18 @@ pMiniapp = function(){
 
 		self._import(v)
 	}
+	
+	
+	self.modFlag = function(reason){
+		var modFlag = new ModFlag();
+
+		modFlag.s2.set(self.hash);
+		modFlag.s3.set(self.address);
+		modFlag.i1.set(reason);
+
+		return modFlag;
+	}
+
 
 
 	self.type = 'miniapp';
