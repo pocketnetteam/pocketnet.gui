@@ -68,7 +68,28 @@ var applicationmeta = (function(){
 				pr.then(() => {
 					renders.permissions()
 				})
-			}
+			},
+			complain : function(id){
+			
+				self.nav.api.load({
+					open : true,
+					id : 'complain',
+					inWnd : true,
+
+					essenseData : {
+						item : 'miniapp',
+						obj : application,
+
+						success : function(){
+							
+						}
+					},
+
+					clbk : function(){
+						
+					}
+				})
+			},
 		}
 
 		var events = {
@@ -206,6 +227,10 @@ var applicationmeta = (function(){
 
 			})
 			
+			el.c.find('.report').on('click', () => {
+	        actions.complain()
+			})
+			
 			el.c.find('.remove').on('click', () => {
 
 				new dialog({
@@ -267,11 +292,12 @@ var applicationmeta = (function(){
 	
 					application = f.application
 					appdata = f.appdata
-
+					userAddress = self.app.user.address.value;
 	
 					var data = {
 						application,
-						appdata
+						appdata,
+						canReport: userAddress && userAddress !== appdata.address && Boolean(application.hash)
 					};
 	
 					clbk(data);

@@ -22,28 +22,32 @@
 
 		</div>
 
-		
+	<div class="panel">
 		<% if(!application.cantdelete) {%>
 
 			<% if(!application.installed) {%>
 
-				<div class="panel">
 					<button class="button install">
 						<%- e('installpplication')%>
 					</button>
-				</div>
+
 
 			<% } else { %> 
 
-				<div class="panel">
+
 					<button class="button remove">
 						<%- e('deleteapplication')%>
 					</button>
-				</div>
 				
 			<% } %>
 
 		<% } %>
+		<% if(canReport) {%>
+		    <button class="button report">
+				<%- e('reportminiapp')%>
+			</button>
+		<% } %>
+	</div>
 
 		
 		
