@@ -181,7 +181,7 @@
 }
 #menu .sections .section.centerpart {
   padding-right: 0;
-  padding-left: 0;
+  padding-left: 3em;
 }
 #menu .sections .section.leftpart {
   padding-left: 0;
@@ -233,6 +233,28 @@
 }
 #menu .sections .items.control-app .control-tor-state {
   position: relative;
+  min-height: 33px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  background: rgb(var(--background-main));
+  border: 0;
+  border-radius: 30px;
+  overflow: hidden;
+  margin-left: 1.25em;
+  padding: 0 1em;
+}
+#menu .sections .items.control-app .control-tor-state .tor-progress-text {
+  display: none;
+  text-align: center;
+  white-space: nowrap;
+  font-size: 0.9em;
+  padding-left: 0.5em;
+  color: rgb(var(--color-txt-gray-dark));
+}
+#menu .sections .items.control-app .control-tor-state .tor-progress-text.visible {
+  display: flex;
 }
 #menu .sections .items.control-app .control-tor-state i::after {
   position: absolute;
@@ -243,8 +265,8 @@
 #menu .sections .items.control-app .control-tor-state.on::before {
   content: '';
   position: absolute;
-  left: 15px;
-  top: 15px;
+  left: 27px;
+  top: 20px;
   display: block;
   width: 3px;
   height: 3px;
@@ -258,10 +280,10 @@
   background: rgb(var(--color-good));
 }
 #menu .sections .items.control-app .control-tor-state.off {
-  color: rgb(var(--neutral-grad-1));
+  color: rgb(var(--color-txt-gray-dark));
 }
 #menu .sections .items.control-app .control-tor-state.loading {
-  color: rgb(var(--neutral-grad-1));
+  color: rgb(var(--color-txt-gray-dark));
   animation: torPulse 2s linear infinite;
 }
 @keyframes torPulse {
@@ -270,7 +292,7 @@
   }
 }
 #menu .sections .items.control-app .control-tor-state.failed {
-  color: rgb(var(--neutral-grad-1));
+  color: rgb(var(--color-txt-gray-dark));
   animation: torFailedPulse 2s linear infinite;
 }
 @keyframes torFailedPulse {
@@ -786,6 +808,9 @@ html.allcontent #menu .usericon {
 }
 html.allcontent #menu .far.fa-comment {
   font-weight: 700;
+}
+html.allcontent #menu .sections .items.control-app .control-tor-state {
+  background: transparent;
 }
 html.television #menu,
 html.mobileview #menu {
