@@ -223,7 +223,7 @@ class TorControl {
             "# The user is free to edit this config if he know\n" +
             "# how to do that. Read TOR documentation before...\n",
 
-            "SocksPort 0.0.0.0:9151",
+            "SocksPort 0.0.0.0:9051",
             "CookieAuthentication 1",
             "DormantCanceledByStartup 1",
             `DataDirectory ${getSettingsPath("data")}`,
