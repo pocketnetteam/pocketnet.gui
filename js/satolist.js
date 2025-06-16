@@ -504,11 +504,9 @@ Platform = function (app, listofnodes) {
     }
 
     self.bch = {
-        'PK4qABXW7cGS4YTwHbKX99MsgMznYgGxBL': true
     }
 
     self.bchl = {
-        'PJTPfBQ6Q174s7WWcW41DwTdGrkGYQx5sJ': true
     }
 
     self.nvadr = {
