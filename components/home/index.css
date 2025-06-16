@@ -54,7 +54,7 @@
 }
 #home .applicationsList .list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(14%, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
   margin-top: 1em;
   gap: 1em;
 }
@@ -93,13 +93,7 @@
   line-height: 1.4em;
   max-height: 4.2em;
 }
-#home .applicationsList .application.dev-mode .name {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3em;
-}
-#home .applicationsList .application.dev-mode .dev-label {
+#home .applicationsList .application .dev-label {
   background: rgb(var(--color-bg-ac));
   color: rgb(var(--text-on-bg-ac-color));
   font-size: 0.7em;
