@@ -1737,7 +1737,7 @@ Application = function (p) {
 			if (self.playingvideo && self.playingvideo.playing) {
 
 				try {
-					self.playingvideo.pause()
+					if(!isMobile() || os() !== 'android') self.playingvideo.pause()
 
 					if (self.playingvideo.player_id){
 						var i = self.playingvideo.player_id
