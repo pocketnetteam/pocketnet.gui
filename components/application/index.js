@@ -24,7 +24,7 @@ var application = (function(){
 					successCheck()
 				}).catch(e => {
 					console.error(e)
-					sitemessage(JSON.stringify(e), null, 5000)
+					sitemessage(self.app.localization.e('miniApp_installErrorMessage'), null, 5000)
 				}).finally(() => {
 					globalpreloader(false)
 				})

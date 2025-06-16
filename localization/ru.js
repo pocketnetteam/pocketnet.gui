@@ -2801,6 +2801,7 @@ _l.miniApp_noButton = "Отмена";
 _l.miniApp_deleteSuccessMessage = "Приложение было успешно удалено.";
 _l.miniApp_deleteErrorMessage = "Не удалось удалить приложение. Попробуйте ещё раз позже.";
 _l.miniApp_loadErrorMessage = "Не удалось загрузить данные приложения.";
+_l.miniApp_installErrorMessage = "Не удалось установить приложение. Пожалуйста, попробуйте ещё раз позже.";
 _l.miniApp_editErrorMessage = "Не удалось отредактировать приложение. Попробуйте ещё раз позже.";
 
 _l.miniApp_guideLink = "Руководство по мини-приложениям Bastyon";

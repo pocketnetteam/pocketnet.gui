@@ -2441,7 +2441,7 @@ var BastyonApps = function (app) {
             var ins = this.installedAndInstalling()
 
             str = str.toLowerCase()
-
+            
             /// added only scope
 
             
@@ -2517,11 +2517,9 @@ var BastyonApps = function (app) {
             const filteredInstalledApps = filterApplications(transformedSearch, Object.values(installedApps), searchBy || 'name');
 
             let additionalApps = [];
-            if (transformedSearch) {
-                additionalApps = await app.platform.sdk.miniapps.getall({
-                    [searchBy || 'search']: transformedSearch
-                });
-            }
+            additionalApps = await app.platform.sdk.miniapps.getall({
+                [searchBy || 'search']: transformedSearch
+            });
 
             const allApps = [...filteredInstalledApps, ...additionalApps]
 
