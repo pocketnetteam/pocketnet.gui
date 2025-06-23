@@ -1427,10 +1427,10 @@ _l.attachVideoLentaShort = "Attach";
 _l.linkToPostLenta = "Already posted"
 
 _l.ReferralUsers = "Referral Users. Total/From&nbsp;01.11.2021"
-_l.lockedaccount = "Your account has been blocked due to a decrease in reputation or due to user complaints"
-_l.lockedaccounta = "Author account has been blocked due to a decrease in reputation or due to user complaints"
+_l.lockedaccount = "Your account has been blocked due to user complaints or a jury decision"
+_l.lockedaccounta = "Author account has been blocked due to user complaints or a jury decision"
 
-_l.lockedaccountacomment = "Comment author account has been blocked due to a decrease in reputation or due to user complaints"
+_l.lockedaccountacomment = "Comment author account has been blocked due to user complaints or a jury decision"
 _l.hiddenCommentLabel = "The comment is hidden due to a low rating or because the author has blocked the user"
 
 _l.blockedbymeHiddenCommentLabel = "Comment hidden because you have blocked a user"
@@ -3247,3 +3247,4 @@ _l.appsdisclaimer='Every app is already a wallet for pcoin. Except for the IOS';
 
 _l.BarteronOffer = "Barteron - 0% commission"
 _l.windows7 = "Download for Windows 7"
+_l.miniapps = "Mini Applications"

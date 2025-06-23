@@ -87,6 +87,12 @@ var main = (function(){
 			},
 
 			{
+				link : "home",
+				label : () => self.app.localization.e('miniapps'),
+				value : 'miniapps'
+			},
+
+			{
 				link : "index?r=jury",
 				label : () => self.app.localization.e('jury'),
 				value : 'jury',
