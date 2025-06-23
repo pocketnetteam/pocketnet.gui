@@ -211,6 +211,8 @@ var nodes = activenodes
 
 if (test) nodes = testnodes
 
+
+
 var defaultSettings = {
 
 	admins : [],
@@ -224,8 +226,8 @@ var defaultSettings = {
 	tor : {
 		dbpath2 : 'data/tordb',
 		path : 'data/tor',
-		enabled2: 'neveruse',
-		useSnowFlake : false,
+		enabled3: 'neweruse',
+		useSnowFlake2 : false,
 		customObfs4 : false,
 	},
 
@@ -367,8 +369,8 @@ var state = {
 			},
 			tor : {
 				dbpath : settings.tor.dbpath,
-				enabled2: settings.tor.enabled2,
-				useSnowFlake : settings.tor.useSnowFlake,
+				enabled3: settings.tor.enabled3,
+				useSnowFlake2 : settings.tor.useSnowFlake2,
 				customObfs4 : settings.tor.customObfs4,
 			},
 			testkeys : state.exportkeys(),
@@ -500,15 +502,15 @@ const kit = {
 					return kit.proxy().then((proxy) => {
 
 
-						if (typeof data.useSnowFlake != 'undefined')
-							settings.tor.useSnowFlake = data.useSnowFlake
+						if (typeof data.useSnowFlake2 != 'undefined')
+							settings.tor.useSnowFlake2 = data.useSnowFlake2
 
 						if (typeof data.customObfs4 != 'undefined') {
 							settings.tor.customObfs4 = data.customObfs4
 						}
 
-						if (typeof data.enabled2 != 'undefined')
-							settings.tor.enabled2 = data.enabled2
+						if (typeof data.enabled3 != 'undefined')
+							settings.tor.enabled3 = data.enabled3
 
 						return proxy.torapplications.settingChanged(settings.tor)
 
@@ -517,11 +519,11 @@ const kit = {
 					})
 				},
 
-				useSnowFlake: function (data) {
+				useSnowFlake2: function (data) {
 
 					return kit.proxy().then((proxy) => {
 
-						settings.tor.useSnowFlake = data.useSnowFlake || false
+						settings.tor.useSnowFlake2 = data.useSnowFlake2 || false
 
 						return proxy.torapplications.settingChanged(settings.tor)
 
@@ -543,11 +545,11 @@ const kit = {
 					})
 				},
 
-				enabled2: function (data) {
+				enabled3: function (data) {
 
 					return kit.proxy().then((proxy) => {
 
-						settings.tor.enabled2 = data.enabled2 || false
+						settings.tor.enabled3 = data.enabled3 || false
 
 						return proxy.torapplications.settingChanged(settings.tor)
 
@@ -572,8 +574,8 @@ const kit = {
 					if (typeof settings.enabled) notification.enabled = settings.enabled
 					if (deep(settings, 'firebase.id')) notification.firebase = deep(settings, 'firebase.id')
 					if (settings.ssl) notification.ssl = true
-					if (settings.torenabled2) notification.torenabled2 = settings.torenabled2
-					if (typeof settings.useSnowFlake != 'undefined') notification.useSnowFlake = settings.useSnowFlake
+					if (settings.torenabled3) notification.torenabled3 = settings.torenabled3
+					if (typeof settings.useSnowFlake2 != 'undefined') notification.useSnowFlake2 = settings.useSnowFlake2
 					if (settings.customObfs4) notification.customObfs4 = settings.customObfs4
 
 					return kit.proxy().then(proxy => {
@@ -588,19 +590,19 @@ const kit = {
 					}).then(() => {
 						var promises = []
 
-						const hasPropTorEnabled2 = ('torenabled2' in settings);
-						const hasPropUseSnowFlake = ('useSnowFlake' in settings);
+						const hasPropTorEnabled3 = ('torenabled3' in settings);
+						const hasPropUseSnowFlake2 = ('useSnowFlake2' in settings);
 						const hasPropCustomObfs4 = ('customObfs4' in settings);
 
-						if(hasPropTorEnabled2 || hasPropUseSnowFlake || hasPropCustomObfs4){
+						if(hasPropTorEnabled3 || hasPropUseSnowFlake2 || hasPropCustomObfs4){
 							const newSettings = {};
 
-							if ('torenabled2' in settings) {
-								newSettings.enabled2 = settings.torenabled2;
+							if ('torenabled3' in settings) {
+								newSettings.enabled3 = settings.torenabled3;
 							}
 
-							if ('useSnowFlake' in settings) {
-								newSettings.useSnowFlake = settings.useSnowFlake;
+							if ('useSnowFlake2' in settings) {
+								newSettings.useSnowFlake2 = settings.useSnowFlake2;
 							}
 
 							if ('customObfs4' in settings) {
@@ -785,9 +787,6 @@ const kit = {
 					
 				},
 	
-				enabled : function(v){
-
-				},
 
 				enabled: function (v) {
 

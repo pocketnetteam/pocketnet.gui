@@ -179,13 +179,13 @@
                         <span>Use Tor</span>
                     </div>
 
-                    <div elementsid="torenabled2" class="value" sys="torenabled2" value="<%-(typeof changes.torenabled2 != 'undefined' ? changes.torenabled2 : system.tor.enabled2)%>">
-                        <span><%- e('torusing_' + (typeof changes.torenabled2!= 'undefined' ? changes.torenabled2 : system.tor.enabled2)) %></span>
+                    <div elementsid="torenabled3" class="value" sys="torenabled3" value="<%-(typeof changes.torenabled3 != 'undefined' ? changes.torenabled3 : system.tor.enabled3)%>">
+                        <span><%- e('torusing_' + (typeof changes.torenabled3!= 'undefined' ? changes.torenabled3 : system.tor.enabled3)) %></span>
                     </div>
 
-                    <% if(typeof changes.torenabled2 != 'undefined') {%>
+                    <% if(typeof changes.torenabled3 != 'undefined') {%>
                         <div class="icon">
-                            <i elementsid="fa-times-circle" class="far fa-times-circle" remove="torenabled2"></i>
+                            <i elementsid="fa-times-circle" class="far fa-times-circle" remove="torenabled3"></i>
                         </div>
                     <% } %>
                 </div>
@@ -197,13 +197,13 @@
                         <span>Use SnowFlake</span>
                     </div>
 
-                    <div elementsid="snowflakeenabled" class="value" sys="useSnowFlake" value="<%-(typeof changes.useSnowFlake != 'undefined' ? changes.useSnowFlake : system.tor.useSnowFlake)%>">
-                        <span><%- (typeof changes.useSnowFlake!= 'undefined' ? changes.useSnowFlake : system.tor.useSnowFlake) ? "Yes" : "No" %></span>
+                    <div elementsid="snowflakeenabled" class="value" sys="useSnowFlake2" value="<%-(typeof changes.useSnowFlake2 != 'undefined' ? changes.useSnowFlake2 : system.tor.useSnowFlake2)%>">
+                        <span><%- (typeof changes.useSnowFlake2!= 'undefined' ? changes.useSnowFlake2 : system.tor.useSnowFlake2) ? "Yes" : "No" %></span>
                     </div>
 
-                    <% if(typeof changes.useSnowFlake != 'undefined') {%>
+                    <% if(typeof changes.useSnowFlake2 != 'undefined') {%>
                         <div class="icon">
-                            <i elementsid="fa-times-circle" class="far fa-times-circle" remove="useSnowFlake"></i>
+                            <i elementsid="fa-times-circle" class="far fa-times-circle" remove="useSnowFlake2"></i>
                         </div>
                     <% } %>
                 </div>

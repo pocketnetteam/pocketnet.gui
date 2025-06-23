@@ -4388,7 +4388,7 @@ Platform = function (app, listofnodes) {
                         description,
                         tags,
                         url,
-                        dontsave: (p.repost || p.videoLink || p.dontsave) ? true : false
+                        dontsave: (/*p.repost || */p.videoLink || p.dontsave) ? true : false
                     }
                 })
             }, 50)
