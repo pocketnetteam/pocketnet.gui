@@ -295,7 +295,28 @@ var IPC = function(ipc, wc, ComLayer){
         return kit.manage.node.stop()
     }
 
-    kit.init({}, { wssdummy, userDataPath : electron.app.getPath('userData')})
+	var useSnowFlake2 = false
+
+	try{
+
+		var locale = Intl.DateTimeFormat().resolvedOptions().locale
+
+		if(locale == 'ru-RU' || locale == 'fa-IR') {
+			useSnowFlake2 = true
+		}
+
+	}catch(e){
+
+	}
+
+	console.log('useSnowFlake2', useSnowFlake2)
+
+    kit.init({
+		tor : {
+			enabled3: 'auto',
+			useSnowFlake2 : useSnowFlake2
+		},
+	}, { wssdummy, userDataPath : electron.app.getPath('userData')})
 
 	return self
 }

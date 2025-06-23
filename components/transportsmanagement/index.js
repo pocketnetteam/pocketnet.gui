@@ -19,15 +19,15 @@ var transportsmanagement = (function(){
 		var changes = {}
 
 		var systemsettings = {
-			'torenabled2' : function(_el){
+			'torenabled3' : function(_el){
 				var values = ['neveruse', 'auto', 'always']
-				changes.torenabled2 = nextElCircle(values, _el.attr('value'))
+				changes.torenabled3 = nextElCircle(values, _el.attr('value'))
 
-				if(changes.torenabled2 == system.tor.enabled2) delete changes.torenabled2
+				if(changes.torenabled3 == system.tor.enabled3) delete changes.torenabled3
 			},
-			'useSnowFlake' : function(_el){
-				changes.useSnowFlake = !JSON.parse(_el.attr('value'))
-				if(changes.useSnowFlake == system.tor.useSnowFlake) delete changes.useSnowFlake
+			'useSnowFlake2' : function(_el){
+				changes.useSnowFlake2 = !JSON.parse(_el.attr('value'))
+				if(changes.useSnowFlake2 == system.tor.useSnowFlake2) delete changes.useSnowFlake2
 
 			},
 		}

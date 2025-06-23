@@ -70,8 +70,8 @@ class WrappedAxios {
 
         const preparedArgs = WrappedAxios.prepareArguments(...args);
 
-        const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
-        const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
+        const isTorEnabledInSettings = (torCtrl.settings.enabled3 !== 'neveruse');
+        const isDirectAccessRestricted = (torCtrl.settings.enabled3 === 'always');
         let useDirectAccess = false;
         if (!isTorEnabledInSettings) {
             useDirectAccess = true;
@@ -86,7 +86,7 @@ class WrappedAxios {
         const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
 
         if (useTor) {
-            const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
+            const isTorAutoEnabled = (torCtrl.settings.enabled3 === 'auto');
 
             if (isTorAutoEnabled) {
                 torCtrl.resetTimer();
@@ -118,9 +118,9 @@ class WrappedAxios {
                     return Promise.reject(error)
                 }
 
-                const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
-                const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
-                const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
+                const isTorEnabledInSettings = (torCtrl.settings.enabled3 !== 'neveruse');
+                const isDirectAccessRestricted = (torCtrl.settings.enabled3 === 'always');
+                const isTorAutoEnabled = (torCtrl.settings.enabled3 === 'auto');
 
                 let useDirectAccess = false;
                 if (!isTorEnabledInSettings) {
@@ -201,8 +201,8 @@ class WrappedFetch {
 
         const preparedArgs = {...options};
 
-        const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
-        const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
+        const isTorEnabledInSettings = (torCtrl.settings.enabled3 !== 'neveruse');
+        const isDirectAccessRestricted = (torCtrl.settings.enabled3 === 'always');
         let useDirectAccess = false;
         if (!isTorEnabledInSettings) {
             useDirectAccess = true;
@@ -217,7 +217,7 @@ class WrappedFetch {
 
         const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
         if (useTor) {
-            const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
+            const isTorAutoEnabled = (torCtrl.settings.enabled3 === 'auto');
 
             if (isTorAutoEnabled) {
                 torCtrl.resetTimer();
@@ -252,9 +252,9 @@ class WrappedFetch {
                     return Promise.reject(error)
                 }
 
-                const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
-                const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
-                const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
+                const isTorEnabledInSettings = (torCtrl.settings.enabled3 !== 'neveruse');
+                const isDirectAccessRestricted = (torCtrl.settings.enabled3 === 'always');
+                const isTorAutoEnabled = (torCtrl.settings.enabled3 === 'auto');
 
                 let useDirectAccess = false;
                 if (!isTorEnabledInSettings) {
@@ -338,8 +338,8 @@ class WrappedRequest {
 
         const preparedArgs = {...options};
 
-        const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
-        const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
+        const isTorEnabledInSettings = (torCtrl.settings.enabled3 !== 'neveruse');
+        const isDirectAccessRestricted = (torCtrl.settings.enabled3 === 'always');
         let useDirectAccess = false;
         if (!isTorEnabledInSettings) {
             useDirectAccess = true;
@@ -354,7 +354,7 @@ class WrappedRequest {
 
         const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
         if (useTor) {
-            const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
+            const isTorAutoEnabled = (torCtrl.settings.enabled3 === 'auto');
 
             if (isTorAutoEnabled) {
                 torCtrl.resetTimer();
@@ -378,9 +378,9 @@ class WrappedRequest {
                     callback?.(preparedResult.error, response, body);
                 }
 
-                const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
-                const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
-                const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
+                const isTorEnabledInSettings = (torCtrl.settings.enabled3 !== 'neveruse');
+                const isDirectAccessRestricted = (torCtrl.settings.enabled3 === 'always');
+                const isTorAutoEnabled = (torCtrl.settings.enabled3 === 'auto');
 
                 let useDirectAccess = false;
                 if (!isTorEnabledInSettings) {
@@ -686,8 +686,8 @@ class Transports {
     async isTorNeeded(url) {
         const torCtrl = this.torapplications;
 
-        const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
-        const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
+        const isTorEnabledInSettings = (torCtrl.settings.enabled3 !== 'neveruse');
+        const isDirectAccessRestricted = (torCtrl.settings.enabled3 === 'always');
         let useDirectAccess = false;
         if (!isTorEnabledInSettings) {
             useDirectAccess = true;

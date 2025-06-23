@@ -2692,7 +2692,7 @@ var share = (function(){
 				if(essenseData.dontsave) return
 
 				if(!currentShare){
-					self.app.settings.set(self.map.id, 'currentShare_v1', '');
+					self.app.settings.set(self.map.id, 'currentShare_v1' + (essenseData.repost || parameters().repost || ""), '');
 				}
 				else
 				{
@@ -2705,7 +2705,7 @@ var share = (function(){
 
 					if (exp.message == m) exp.message = ''
 
-					var scs = self.app.settings.set(self.map.id, 'currentShare_v1', exp);
+					var scs = self.app.settings.set(self.map.id, 'currentShare_v1' + (essenseData.repost || parameters().repost || ""), exp);
 
 				}
 				
@@ -2714,7 +2714,7 @@ var share = (function(){
 
 				if(essenseData.dontsave) return
 
-				var last = self.app.settings.get(self.map.id, 'currentShare_v1')
+				var last = self.app.settings.get(self.map.id, 'currentShare_v1' + (essenseData.repost || parameters().repost || ""))
 
 				if (last){
 
