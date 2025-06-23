@@ -494,7 +494,7 @@ var menu = (function(){
 						proxyData = await currentProxy.get.info();
 
 						if (proxyData?.info.tor.state.status === 'stopped'
-							|| proxyData?.info.tor.enabled === 'neveruse') {
+							|| proxyData?.info.tor.enabled3 === 'neveruse') {
 							controlTorElem.removeClass(['on', 'loading', 'failed']);
 							controlTorElem.addClass('off');
 							controlTorElem.attr('title', app.localization.e('torHintStateDisabled'));
