@@ -76,7 +76,7 @@ var help = (function () {
       },
       {
         d: 'March 2021',
-        n: 'PKOIN listed on Digifinex, Tapbit',
+        n: 'PKOIN listed on Tapbit',
         r: true,
       },
 

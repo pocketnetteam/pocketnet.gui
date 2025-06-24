@@ -178,7 +178,7 @@ FAQLANGS = function(app){
                     {
                         id : 'earnbastyon9en',
                         q : '',
-                        a : 'You will need to deposit PKOIN to earn stakes, click Deposit. After clicking Deposit you will see a PKOIN address. You can copy the address and send PKOIN to it. If you did not yet buy PKOIN, you can buy it in the following ways: <br />1.	Buy for cryptocurrency at pkoin.net (or on DigiFinex or Tapbit exchanges) <br />2.	Buy it by selecting PKOIN/Peer-to-Peer tag on the left side of the Bastyon application. Select a seller and write to them in chat (at your own risk)',
+                        a : 'You will need to deposit PKOIN to earn stakes, click Deposit. After clicking Deposit you will see a PKOIN address. You can copy the address and send PKOIN to it. If you did not yet buy PKOIN, you can buy it in the following ways: <br />1.	Buy for cryptocurrency at pkoin.net (or on Tapbit exchanges) <br />2.	Buy it by selecting PKOIN/Peer-to-Peer tag on the left side of the Bastyon application. Select a seller and write to them in chat (at your own risk)',
                         img: '<img src="img/per-to-per2.jpg" alt="" />'
                     },
                     {
@@ -789,7 +789,7 @@ FAQLANGS = function(app){
                         {
                             id : 'buy-pkoin21',
                             q : '',
-                            a : 'Покупку PKOIN также можно осуществить на следующих сайтах. 	<br> <a target="_blank" href="https://www.tapbit.com/spot/exchange/PKOIN_USDT">https://www.tapbit.com/spot/exchange/PKOIN_USDT</a> <br> <a target="_blank" href="https://www.digifinex.com/en-ww/trade/USDT/PKOIN">https://www.digifinex.com/en-ww/trade/USDT/PKOIN</a>  <br> <a target="_blank" href="https://pkoin.net/">https://pkoin.net/</a> - здесь приобрести  PKOIN можно за другие криптовалюты.',
+                            a : 'Покупку PKOIN также можно осуществить на следующих сайтах. 	<br> <a target="_blank" href="https://www.tapbit.com/spot/exchange/PKOIN_USDT">https://www.tapbit.com/spot/exchange/PKOIN_USDT</a> <br> <a target="_blank" href="https://pkoin.net/">https://pkoin.net/</a> - здесь приобрести  PKOIN можно за другие криптовалюты.',
                             img: ''
                         },
                         {
@@ -885,7 +885,7 @@ FAQLANGS = function(app){
                         {
                             id : 'earnbastyon9',
                             q : '',
-                            a : 'Вам нужно будет внести PKOIN, чтобы заработать ставки, нажмите "Внести". После нажатия кнопки Пополнить счет вы увидите адрес пункта. Вы можете скопировать адрес и отправить по нему PKOIN. Если вы еще не купили PKOIN, вы можете купить его следующими способами: <br />1. Покупайте за криптовалюту на pkoin.net (или на биржах DigiFinex Orbit forex)<br />2. Купите его, выбрав тег "PKOIN/Из рук в руки" в левой части приложения Bastyon. Выберите продавца и напишите ему в чат (на свой страх и риск)',
+                            a : 'Вам нужно будет внести PKOIN, чтобы заработать ставки, нажмите "Внести". После нажатия кнопки Пополнить счет вы увидите адрес пункта. Вы можете скопировать адрес и отправить по нему PKOIN. Если вы еще не купили PKOIN, вы можете купить его следующими способами: <br />1. Покупайте за криптовалюту на pkoin.net (или на биржах Tapbit)<br />2. Купите его, выбрав тег "PKOIN/Из рук в руки" в левой части приложения Bastyon. Выберите продавца и напишите ему в чат (на свой страх и риск)',
                             img: '<img src="img/earnbastyon9ru99.jpg" alt="" />'
                         },
                         {
