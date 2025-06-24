@@ -17348,13 +17348,21 @@ Platform = function (app, listofnodes) {
     
                         return app.psdk.getfromtotransactions.request(() => {
     
-                            var nodes = ['135.181.196.243:38081', '65.21.56.203:38081']
     
-                            return self.app.api.rpc('getfromtotransactions', [from, to, self.currentBlock - 43200 * 12], {
+                            return self.app.api.rpc('getfromtotransactions', [from, to, self.currentBlock - 43200 * 12])
+
+                            /*
+                            
+                            var nodes = ['94.156.128.149:38081']
+    
+                            return self.app.api.rpc('getfromtotransactions', [from, to, self.currentBlock - 43200 * 12, ['a:subscription', 'a:donate']], {
                                 rpc: {
                                     fnode: nodes[rand(0, nodes.length - 1)]
                                 }
                             })
+                            
+                            
+                            */
         
                         }, from + to, {
                             update : update
