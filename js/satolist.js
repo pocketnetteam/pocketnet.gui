@@ -475,7 +475,6 @@ Platform = function (app, listofnodes) {
         'PWMSN4XByB3sKXrsBnmP9LPYFFBo2PUQ1R': true,
         'PDdwKn4ZNSMyeSyQ6F9zf4ttVd6jC1arvn': true,
         "PCZtNtn7b4m2BYYLNKiJGsquqQ4k5qSa45" : true,
-        "PU2BEjFmbEjAc9PnAcLZtJLQC3uqqAy3io" : true,
         "PBvEaZDUYmHzT6pZ3ByaUTyPajx2tgzp1k" : true,
         "PW1gF9Jm5TjqEdDT8mBNDBq2H7zh7CQDUp" : true,
         "PPhcg2DRQ9DQtEQHZ2KgNq7L75BK8hiueU" : true,
@@ -496,15 +495,18 @@ Platform = function (app, listofnodes) {
         "PSFC4gwWJ9rTnedFgSWdUVfdZhA9xda11c" : true,
         'PGrXFgpLYXVBgBPrhAeGRLnSpYE6Jwpt5Z': true,
         'PA2mkqDV1CU7ZHtneYVPMkB3u4WdzKz4t7': true,
-        'PNXh7Qnc1HpYjypyG2UjyHd3xZVbWPcszQ': true
+        'PNXh7Qnc1HpYjypyG2UjyHd3xZVbWPcszQ': true,
+        "PBjda5RoRHQWXP8WCXJKGweApvE3FMdS19" : true,
+        "PTu7bTiqv4dHbrCAPrXsFAEQVTrEY1AuvY" : true,
+        "P9xkH7FYTiBmKthEFexXPsaKAzhbYhs1uW" : true,
+        "PGuK3hjdHkdN4GytBvmus79htEW266yLMe" : true,
+        "PJzcsfPbvtpb4QDHrWkzgeXJ1oGZEaxmVc" : true
     }
 
     self.bch = {
-        'PK4qABXW7cGS4YTwHbKX99MsgMznYgGxBL': true
     }
 
     self.bchl = {
-        'PJTPfBQ6Q174s7WWcW41DwTdGrkGYQx5sJ': true
     }
 
     self.nvadr = {
@@ -4386,7 +4388,7 @@ Platform = function (app, listofnodes) {
                         description,
                         tags,
                         url,
-                        dontsave: (p.repost || p.videoLink || p.dontsave) ? true : false
+                        dontsave: (/*p.repost || */p.videoLink || p.dontsave) ? true : false
                     }
                 })
             }, 50)
@@ -5837,7 +5839,7 @@ Platform = function (app, listofnodes) {
             },
 
         },
-
+        
         metmenu: function (_el, id, actions) {
             var share = self.psdk.share.get(id)
 
@@ -17346,13 +17348,21 @@ Platform = function (app, listofnodes) {
     
                         return app.psdk.getfromtotransactions.request(() => {
     
-                            var nodes = ['135.181.196.243:38081', '65.21.56.203:38081']
     
-                            return self.app.api.rpc('getfromtotransactions', [from, to, self.currentBlock - 43200 * 12], {
+                            return self.app.api.rpc('getfromtotransactions', [from, to, self.currentBlock - 43200 * 12])
+
+                            /*
+                            
+                            var nodes = ['94.156.128.149:38081']
+    
+                            return self.app.api.rpc('getfromtotransactions', [from, to, self.currentBlock - 43200 * 12, ['a:subscription', 'a:donate']], {
                                 rpc: {
                                     fnode: nodes[rand(0, nodes.length - 1)]
                                 }
                             })
+                            
+                            
+                            */
         
                         }, from + to, {
                             update : update
@@ -18954,7 +18964,42 @@ Platform = function (app, listofnodes) {
                     return Promise.resolve()
                 })
             },
+            infoWithShares: function (links, {
+                update = false,
+                proxyupdate,
+                count,
+                depth
+            } = {}) {
 
+                var norm = l => {
+                    var m = self.app.platform.parseUrl(l);
+                    return m.url || l;
+                };
+
+                var uniq = _.uniq(links.map(norm));
+
+                return self.sdk.videos.info(uniq, update, proxyupdate)
+                    .then(() => new Promise((resolve, reject) => {
+
+                        var p = {
+                            type: 'video',
+                            video: true,
+                            count: count || Math.max(uniq.length, 200),
+                            depth: depth || 1e4
+                        };
+
+                        self.sdk.node.shares.hierarchical(p, (shares, err) => {
+                            if (err) return reject(err);
+
+                            var result = _.filter(shares, s => s.url && uniq.includes(norm(s.url)));
+
+                            resolve({
+                                shares: result,
+                                videocache: _.pick(self.sdk.videos.storage, uniq)
+                            });
+                        }, 'clear');
+                    }));
+            },
             paddingplaceholder: function (url, middle, clbk, elf) {
 
                 if (!url) {
@@ -19198,6 +19243,37 @@ Platform = function (app, listofnodes) {
                 self.sdk.videos.load()
 
                 if (clbk) clbk()
+            }
+        },
+
+        feed: {
+            get({
+                author,
+                count = 30,
+                depth = 1e4,
+            } = {}) {
+                const sdk = self.app.platform.sdk
+                const p = {
+                    count,
+                    depth,
+                    lang: self.app.localization.key
+                }
+                if (author) p.author = author
+
+                const call = author ?
+                    sdk.node.shares.getprofilefeed :
+                    sdk.node.shares.hierarchical
+
+                return new Promise((resolve, reject) => {
+                    call(p, shares => {
+                        sdk.node.shares.loadvideoinfoifneed(shares, true, () => {
+                            resolve({
+                                shares,
+                                videocache: sdk.videos.storage
+                            })
+                        })
+                    }, 'clear')
+                })
             }
         },
 

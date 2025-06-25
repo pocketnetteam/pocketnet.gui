@@ -324,8 +324,18 @@ var BastyonSdk = function(settings = {}){
     }
 
     self.get = {
-        videos : function(urls){
-            return action('get.videos', {urls})
+        videos : function(urls, update = false){
+            const data = {
+                urls, 
+                update
+            };
+            return action('get.videos', data)
+        },
+        videosWithShares : function(options = {}){
+            return action('get.videosWithShares', options)
+        },
+        feed : function(options = {}){
+            return action('get.feed', options)
         },
         account : function(){
             return action('account', {})
@@ -444,6 +454,16 @@ var BastyonSdk = function(settings = {}){
         }
     }
 
+    self.videos = {
+        opendialog : function(data){
+            return action('videos.opendialog', data)
+        },
+
+        remove : function(data){
+            return action('videos.remove', data)
+        },
+    }
+
     self.chat = {
         getOrCreateRoom : function({users, parameters}){
             return action('chat.getOrCreateRoom', {users, parameters}).then(room => {
@@ -524,6 +544,10 @@ var BastyonSdk = function(settings = {}){
 
         shareOnBastyon: function(data){
             self.helpers.share(data, { shareOnBastyon: true })
+        },
+
+        complain: function(data){
+            return action("complain", data)
         },
     }
 

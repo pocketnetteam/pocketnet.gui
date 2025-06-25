@@ -1554,11 +1554,11 @@ Date.prototype.addDays = function( d ) {
    return this;
 };
 Date.prototype.format=function(e,t){return dateFormat(this,e,t)}
-Date.prototype.addMonths=function(b){a=new Date(this.valueOf());a.setMonth(a.getMonth()+b);return a};
-Date.prototype.addDays=function(b){a=new Date(this.valueOf());a.setDate(a.getDate()+b);return a};
-Date.prototype.addHours=function(b){a=new Date(this.valueOf());a.setHours(this.getHours()+b);return a};
-Date.prototype.addMinutes=function(b){a=new Date(this.valueOf());a.setMinutes(this.getMinutes()+b);return a};
-Date.prototype.addSeconds=function(b){a=new Date(this.valueOf());a.setSeconds(this.getSeconds()+b);return a};
+Date.prototype.addMonths=function(b){var a=new Date(this.valueOf());a.setMonth(a.getMonth()+b);return a};
+Date.prototype.addDays=function(b){var a=new Date(this.valueOf());a.setDate(a.getDate()+b);return a};
+Date.prototype.addHours=function(b){var a=new Date(this.valueOf());a.setHours(this.getHours()+b);return a};
+Date.prototype.addMinutes=function(b){var a=new Date(this.valueOf());a.setMinutes(this.getMinutes()+b);return a};
+Date.prototype.addSeconds=function(b){var a=new Date(this.valueOf());a.setSeconds(this.getSeconds()+b);return a};
 Date.prototype.lastDayOfMonth=function(){return new Date(this.getFullYear(),this.getMonth()+1,0).getDate()};
 
 Date.prototype.yyyymmdd = function(d) {

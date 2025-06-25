@@ -112,7 +112,10 @@ var Remote = function(app){
 			request({
 				uri : nremotelink + '?url=' + uri + '&validate=false' + (p.bitchute ? '&bitchute=true' : ''),
 				timeout : 30000,
-				type : "POST"
+				type : "POST",
+				headers: {
+					'User-Agent': 'proxybot'
+				}
 			}, function(error, response, body){
 
 				if (error){
@@ -143,10 +146,8 @@ var Remote = function(app){
 					//d = d.data || {}
 				}
 				catch(e){
+					console.log(e)
 				}
-
-
-
 
 				if (clbk){
 					clbk(dn || {})

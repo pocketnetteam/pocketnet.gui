@@ -1427,10 +1427,10 @@ _l.attachVideoLentaShort = "Attach";
 _l.linkToPostLenta = "Already posted"
 
 _l.ReferralUsers = "Referral Users. Total/From&nbsp;01.11.2021"
-_l.lockedaccount = "Your account has been blocked due to a decrease in reputation or due to user complaints"
-_l.lockedaccounta = "Author account has been blocked due to a decrease in reputation or due to user complaints"
+_l.lockedaccount = "Your account has been blocked due to user complaints or a jury decision"
+_l.lockedaccounta = "Author account has been blocked due to user complaints or a jury decision"
 
-_l.lockedaccountacomment = "Comment author account has been blocked due to a decrease in reputation or due to user complaints"
+_l.lockedaccountacomment = "Comment author account has been blocked due to user complaints or a jury decision"
 _l.hiddenCommentLabel = "The comment is hidden due to a low rating or because the author has blocked the user"
 
 _l.blockedbymeHiddenCommentLabel = "Comment hidden because you have blocked a user"
@@ -2995,6 +2995,7 @@ _l.miniApp_noButton = "Cancel";
 _l.miniApp_deleteSuccessMessage = "The mini-app has been successfully deleted.";
 _l.miniApp_deleteErrorMessage = "Failed to delete the app. Please try again later.";_l.miniApp_deleteErrorMessage = "Failed to delete the app. Please try again later.";
 _l.miniApp_loadErrorMessage = "Failed to edit the application. Please try again later.";
+_l.miniApp_installErrorMessage = "Failed to install the application. Please try again.";
 _l.miniApp_editErrorMessage = "Не удалось отредактировать приложение. Попробуйте ещё раз позже.";
 
 _l.miniApp_guideLink = "Guide to Bastyon Mini-Applications";
@@ -3247,3 +3248,4 @@ _l.appsdisclaimer='Every app is already a wallet for pcoin. Except for the IOS';
 
 _l.BarteronOffer = "Barteron - 0% commission"
 _l.windows7 = "Download for Windows 7"
+_l.miniapps = "Mini Applications"

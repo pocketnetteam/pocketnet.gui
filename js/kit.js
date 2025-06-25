@@ -2335,8 +2335,10 @@ brtOffer = function(){
 	self.condition = [];
 	self.images = [];
 	self.geohash = '';
+	self.video = '';
 	self.currencyPrice = {};
 	self.delivery = {};
+	self.videoSettings = {};
 	self.price = 0;
 	self.published = 'published';
 
@@ -2365,10 +2367,12 @@ brtOffer = function(){
 						c: self.condition,
 						p: self.published,
 						f: self.currencyPrice,
-						d: self.delivery
+						d: self.delivery,
+						v: self.videoSettings
 					 }) +
 					 JSON.stringify(self.images) +
 					 self.geohash +
+					 self.video +
 					 self.price;
 	}
 
@@ -2385,8 +2389,10 @@ brtOffer = function(){
 				condition: self.condition,
 				images: self.images,
 				geohash: self.geohash,
+				video: self.video,
 				currencyPrice: self.currencyPrice,
 				delivery: self.delivery,
+				videoSettings: self.videoSettings,
 				price: self.price,
 				published: self.published
 			};
@@ -2405,10 +2411,12 @@ brtOffer = function(){
 					c: self.condition,
 					p: self.published,
 					f: self.currencyPrice,
-					d: self.delivery
+					d: self.delivery,
+					v: self.videoSettings
 				}),
 				s5: JSON.stringify(self.images),
 				s6: self.geohash,
+				s7: self.video,
 				i1: self.price
 			}
 		};
@@ -2425,8 +2433,10 @@ brtOffer = function(){
 		self.condition = d.condition,
 		self.images = d.images;
 		self.geohash = d.geohash;
+		self.video = d.video;
 		self.currencyPrice = d.currencyPrice;
 		self.delivery = d.delivery;
+		self.videoSettings = d.videoSettings;
 		self.price = d.price;
 		self.published = d.published;
 	}

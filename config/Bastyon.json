@@ -86,7 +86,7 @@
 		    },
 		    "author": "TQsidN3F7qcctiJ1Y5FgZnTjzQqQCt6ydG"
 		}
-		],
+	],
     "protocol" : "bastyon",
     "support" : "support@bastyon.com",
     "lname" : "Dvm Analytics LLC",
@@ -94,7 +94,11 @@
     "servers" : {
         "production" : {
             "proxy" : [
-                
+                {
+                    "host" : "1.pocketnet.app",
+                    "port" : 8899,
+                    "wss" : 8099
+                },
                 {
                     "host" : "2.pocketnet.app",
                     "port" : 8899,

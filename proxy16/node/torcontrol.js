@@ -78,6 +78,7 @@ class TorControl {
     onStopped = (listener) => this.listeners.push({ type: 'stopped', listener });
     onInstalling = (listener) => this.listeners.push({ type: 'install', listener });
     onRunning = (listener) => this.listeners.push({ type: 'running', listener });
+    onAny = (listener) => this.listeners.push({ type: 'any', listener });
 
     init = async() => {
         try {
@@ -86,24 +87,25 @@ class TorControl {
 
             await this.folders();
 
-            this.autorun()
+            this.autorun().catch(e => {
+                this.startFailed(e);
+            });
 
 
         } catch (e) {
-            console.log("Tor control failed to start:", e.message);
-            this.state.status = "stopped";
+            this.startFailed(e);
         }
     }
 
     settingChanged = async(settings) => {
         var needRestart = false
 
-        const isSnowflakeChanged = (settings.useSnowFlake !== this.settings.useSnowFlake);
-        const isTorStateChanged = (settings.enabled2 !== this.settings.enabled2);
+        const isSnowflakeChanged = (settings.useSnowFlake2 !== this.settings.useSnowFlake2);
+        const isTorStateChanged = (settings.enabled3 !== this.settings.enabled3);
 
         const keepInstanceAlive = (
-            settings.enabled2 === 'auto' && this.settings.enabled2 === 'always' ||
-            settings.enabled2 === 'always' && this.settings.enabled2 === 'auto'
+            settings.enabled3 === 'auto' && this.settings.enabled3 === 'always' ||
+            settings.enabled3 === 'always' && this.settings.enabled3 === 'auto'
         );
 
         const isCustomObfs4Changed = (settings.customObfs4 !== this.settings.customObfs4);
@@ -115,29 +117,35 @@ class TorControl {
         this.settings = {...settings};
 
         if (needRestart){
-            await this.autorun()
+            try {
+                await this.autorun()
+            } catch (e) {
+                this.startFailed(e);
+            }
         }
+    }
+
+    startFailed = (err) => {
+        console.log("Tor control failed to start:", err);
+        this.state.status = "failed";
     }
 
     autorun = async () =>{
 
-        if (this.instance){
-            if (this.settings.enabled2 == 'neveruse'){
-                this.stop()
-            }
-            else{
+        if (this.instance || this.state.status !== 'stopped'){
+            if (this.settings.enabled3 === 'neveruse'){
+                await this.stop()
+            } else {
                 await this.restart()
             }
         } else {
-
-            if (this.settings.enabled2 != 'neveruse'){
+            if (this.settings.enabled3 !== 'neveruse'){
                 if (this.needinstall()){
-
-                    await this.install()
+                    await this.install();
                 }
             }
 
-            if (this.settings.enabled2 == 'always'){
+            if (this.settings.enabled3 === 'always'){
                 await this.restart()
             }
         }
@@ -179,7 +187,7 @@ class TorControl {
     }
 
     makeConfig = async() => {
-        const useSnowFlake = this.settings.useSnowFlake || false;
+        const useSnowFlake2 = this.settings.useSnowFlake2 || false;
         const customObfs4 = this.settings.customObfs4 || null;
         const isOverwrite = true; //config.overwrite || false;
 
@@ -215,7 +223,7 @@ class TorControl {
             "# The user is free to edit this config if he know\n" +
             "# how to do that. Read TOR documentation before...\n",
 
-            "SocksPort 0.0.0.0:9151",
+            "SocksPort 0.0.0.0:9051",
             "CookieAuthentication 1",
             "DormantCanceledByStartup 1",
             `DataDirectory ${getSettingsPath("data")}`,
@@ -226,15 +234,14 @@ class TorControl {
             "KeepalivePeriod 10",
         ];
 
-        if (useSnowFlake) {
+        if (useSnowFlake2) {
             torConfig.push(
                 "# Bridges configurations\n",
 
                 "UseBridges 1",
                 `ClientTransportPlugin snowflake exec ${getSettingsPath("pluggable_transports", this.helpers.bin_name("snowflake-client"))}`,
-                `Bridge snowflake 192.0.2.4:80 8838024498816A039FCBBAB14E6F40A0843051FA fingerprint=8838024498816A039FCBBAB14E6F40A0843051FA url=https://snowflake-broker.torproject.net/ ampcache=https://cdn.ampproject.org/ fronts=http://www.google.com,http://cdn.ampproject.org utls-imitate=hellorandomizedalpn ice=stun:http://stun.nextcloud.com:443,stun:http://stun.sipgate.net:10000,stun:http://stun.epygi.com:3478,stun:http://stun.uls.co.za:3478,stun:http://stun.voipgate.com:3478,stun:http://stun.bethesda.net:3478,stun:http://stun.mixvoip.com:3478,stun:http://stun.voipia.net:3478`,
-                `Bridge snowflake 192.0.2.3:80 2B280B23E1107BB62ABFC40DDCC8824814F80A72 fingerprint=2B280B23E1107BB62ABFC40DDCC8824814F80A72 url=https://snowflake-broker.torproject.net/ ampcache=https://cdn.ampproject.org/ fronts=http://www.google.com,http://cdn.ampproject.org utls-imitate=hellorandomizedalpn ice=stun:http://stun.nextcloud.com:443,stun:http://stun.sipgate.net:10000,stun:http://stun.epygi.com:3478,stun:http://stun.uls.co.za:3478,stun:http://stun.voipgate.com:3478,stun:http://stun.bethesda.net:3478,stun:http://stun.mixvoip.com:3478,stun:http://stun.voipia.net:3478
-`
+                `Bridge snowflake 192.0.2.4:80 8838024498816A039FCBBAB14E6F40A0843051FA fingerprint=8838024498816A039FCBBAB14E6F40A0843051FA url=https://snowflake-broker.torproject.net/ ampcache=https://cdn.ampproject.org/ fronts=www.google.com,cdn.ampproject.org utls-imitate=hellorandomizedalpn ice=stun:stun.nextcloud.com:443,stun:stun.sipgate.net:10000,stun:stun.epygi.com:3478,stun:stun.uls.co.za:3478,stun:stun.voipgate.com:3478,stun:stun.bethesda.net:3478,stun:stun.mixvoip.com:3478,stun:stun.voipia.net:3478`,
+                `Bridge snowflake 192.0.2.3:80 2B280B23E1107BB62ABFC40DDCC8824814F80A72 fingerprint=2B280B23E1107BB62ABFC40DDCC8824814F80A72 url=https://snowflake-broker.torproject.net/ ampcache=https://cdn.ampproject.org/ fronts=www.google.com,cdn.ampproject.org utls-imitate=hellorandomizedalpn ice=stun:stun.nextcloud.com:443,stun:stun.sipgate.net:10000,stun:stun.epygi.com:3478,stun:stun.uls.co.za:3478,stun:stun.voipgate.com:3478,stun:stun.bethesda.net:3478,stun:stun.mixvoip.com:3478,stun:stun.voipia.net:3478`
             )
 
 
@@ -312,7 +319,7 @@ class TorControl {
             throw this.installfailed
         }
 
-        try{
+        try {
 
             this.state.status = "install";
 
@@ -328,16 +335,16 @@ class TorControl {
 
             return true;
 
-        }catch (e) {
+        } catch (e) {
 
             this.installfailed = {
                 code : 500,
                 error : 'cantcopy'
-            }
+            };
 
-            this.state.status = "stopped";
+            this.state.status = "failed";
 
-            throw this.installfailed
+            throw this.installfailed;
         }
     }
 
@@ -382,9 +389,8 @@ class TorControl {
 
             if (isBrokerFailure(data) || isConnectionFailure(data)) {
                 console.warn("Tor connection lost")
-                this.state.status = "failure"
                 return
-            } else if (isBootstrapped100(data) || isConnected(data)) {
+            } else if (isBootstrapped100(data)) {
                 console.log("Tor instance started again")
                 this.state.status = "started"
                 return
@@ -426,21 +432,37 @@ class TorControl {
     start = async ()=>{
         console.log("Tor start triggered");
 
-        if(this.instance) return true
-
-        if (this.settings.enabled2 === 'auto') {
-            this.startTimer()
+        if (this.needinstall()) {
+            if (this.state.status === 'install') {
+                return false;
+            } if (this.settings.enabled3 === 'neveruse') {
+                this.state.status = "stopped";
+                return false;
+            } else {
+                try {
+                    await this.install();
+                } catch (e) {
+                    console.log("Tor failed to install:", e);
+                    this.state.status = "failed";
+                }
+            }
         }
 
-        if(this.needinstall()) return false
+        if (this.settings.enabled3 === 'neveruse') return false;
+
+        if (this.state.status !== "stopped") return true;
+
+        this.state.status = "running"
+
+        if (this.settings.enabled3 === 'auto') {
+            this.startTimer()
+        }
 
         var configCreated = await this.makeConfig();
 
         if(!configCreated){
             console.log("Tor config creation failed")
         }
-
-        this.state.status = "running"
 
         await this.getpidandkill()
 
@@ -457,7 +479,12 @@ class TorControl {
 
         console.log('this.getpath()', this.getpath(), this.getsettingspath())
 
-        this.instance.on("error", (error) => this.log({ error }));
+        this.instance.on("error", (error) => {
+
+            this.stop()
+
+            this.log({ error })
+        });
 
         this.instance.on("exit", async (code) => {
 
@@ -530,6 +557,7 @@ class TorControl {
         this.state.status = "stopped"
 
         this.instance = null
+        this.installfailed = null
 
         clearInterval(this.timeoutIntervalId);
         this.timeoutIntervalId = null;
@@ -552,9 +580,10 @@ class TorControl {
         delete stateNormalized.instance;
 
         var info = {
-            enabled : this.settings.enabled2,
-            useSnowFlake : this.settings.useSnowFlake,
+            enabled3 : this.settings.enabled3,
+            useSnowFlake2 : this.settings.useSnowFlake2,
             customObfs4 : this.settings.customObfs4,
+            installed : this.isInstalled
         }
 
         info.state = {
@@ -562,11 +591,9 @@ class TorControl {
         }
 
         if(!compact){
-
             info.instance = this.instance ? this.instance.pid : null
             info.binPath = path.join(this.getpath())
             info.dataPath = this.getsettingspath()
-            info.installed = this.isInstalled
         }
 
         return info
