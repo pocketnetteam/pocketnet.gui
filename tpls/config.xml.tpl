@@ -232,6 +232,7 @@
             <uses-feature android:name="android.hardware.location.gps" android:required="false"/>
             <uses-feature android:name="android.hardware.microphone" android:required="false"/>
             <uses-feature android:name="android.hardware.sensor" android:required="false"/>
+            <uses-feature android:name="android.hardware.wifi" android:required="false"/>
         </config-file>
 
         <preference name="AndroidPersistentFileLocation" value="Compatibility" />
