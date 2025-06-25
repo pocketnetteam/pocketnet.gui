@@ -30,6 +30,8 @@ class Helpers {
 class State {
     instance = null;
     _status = 'stopped';
+    info = '';
+
     constructor(control) {
         this.instance = control
     };
@@ -47,6 +49,10 @@ class State {
                 listener.listener(stateValue);
             }
         });
+
+        if (stateValue !== 'running' && stateValue !== 'started') {
+            this.info = '';
+        }
     };
 }
 
@@ -384,25 +390,24 @@ class TorControl {
             const isBrokerFailure = ({ data }) => (/Managed proxy .*: broker failure/g).test(data);
             const isConnectionFailure = ({ data }) => (/Managed proxy .*: connection failed/g).test(data);
             const isRetryingConnection = ({ data }) => (/Retrying on a new circuit/g).test(data)
+            const extractBootstrapMessage = ({ data }) => (data?.match(/Bootstrapped \d+%.*/) || [null])[0];
 
             //console.log("Tor:", data)
 
+
+            const message = extractBootstrapMessage(data);
+            if (message !== null) this.state.info = message;
+
             if (isBrokerFailure(data) || isConnectionFailure(data)) {
                 console.warn("Tor connection lost")
-                return
             } else if (isBootstrapped100(data)) {
                 console.log("Tor instance started again")
                 this.state.status = "started"
-                return
             } else if (isRetryingConnection(data)) {
                 console.warn("Tor retrying circuit")
-                return
-                //this.state.status = "running"
             }
-
             
-        }
-        catch(e){
+        } catch(e) {
             console.error(e)
         }
     }
@@ -587,7 +592,8 @@ class TorControl {
         }
 
         info.state = {
-            status : this.state.status
+            status : this.state.status,
+            info : this.state.info
         }
 
         if(!compact){
