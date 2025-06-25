@@ -23,6 +23,13 @@ var exec    = require('cordova/exec'),
     channel = require('cordova/channel');
 
 /**
+ * @private
+ *
+ * Flag indicates if the notification permission is requested.
+ */
+exports._notificationPermRequested = false;
+
+/**
  * Activates the background mode. When activated the application
  * will be prevented from going to sleep while in background
  * for the next time.
@@ -31,8 +38,35 @@ var exec    = require('cordova/exec'),
  */
 exports.enable = function()
 {
+
+    const checkAndroidNotificationPermission = () => {
+
+        const androidVersion = parseFloat(device && device.version) || 0;
+
+        return new Promise((resolve, reject) => {
+
+            if (this._notificationPermRequested || !this._isAndroid || androidVersion < 13) {
+                return resolve(true);
+            }
+
+            const perm = cordova.plugins.permissions.POST_NOTIFICATIONS;
+            const permissions = cordova.plugins.permissions;
+
+            permissions.checkPermission(perm, status => {
+                if (status.hasPermission) return resolve(true);
+                permissions.requestPermission(perm, result => {
+                    resolve(result.hasPermission);
+                }, err => reject(err));
+            }, err => reject(err));
+        });
+    };
+
     if (this.isEnabled())
         return;
+
+    checkAndroidNotificationPermission()
+        .then(() => this._notificationPermRequested = true)
+        .catch(() => this._notificationPermRequested = false);
 
     var fn = function() {
         exports._isEnabled = true;
