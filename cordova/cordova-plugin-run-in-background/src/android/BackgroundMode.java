@@ -26,6 +26,7 @@ import android.content.*;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Build;
+import androidx.annotation.Keep;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
@@ -38,6 +39,7 @@ import de.appplant.cordova.plugin.background.ForegroundService.ForegroundBinder;
 import static android.content.Context.BIND_AUTO_CREATE;
 import static de.appplant.cordova.plugin.background.BackgroundModeExt.clearKeyguardFlags;
 
+@Keep
 public class BackgroundMode extends CordovaPlugin {
 
     // Event types for callbacks

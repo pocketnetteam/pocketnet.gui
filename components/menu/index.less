@@ -267,7 +267,7 @@
 
 			&.centerpart{
 				padding-right: 0;
-				padding-left: 0;
+				padding-left: 6 * @rhythm;
 			}
 
 			&.leftpart{
@@ -329,6 +329,31 @@
 
 				.control-tor-state {
 					position: relative;
+					min-height: 33px;
+					display: flex;
+					flex-wrap: nowrap;
+					justify-content: space-between;
+					align-items: center;
+					background: rgb(var(--background-main));
+					border : 0;
+					border-radius: 30px;
+					overflow: hidden;
+					margin-left: 2.5 * @rhythm;;
+					padding : 0 2 * @rhythm;
+
+					.tor-progress-text {
+						display: none;
+						text-align: center;
+						white-space: nowrap;
+						font-size: 0.9em;
+						padding-left: @rhythm;
+						color : rgb(var(--color-txt-gray-dark));
+
+						&.visible {
+							display: flex;
+						}
+					}
+
 					i::after {
 						position: absolute;
 					}
@@ -339,8 +364,8 @@
 						&::before {
 							content: '';
 							position: absolute;
-							left: 15px;
-							top: 15px;
+							left: 27px;
+							top: 20px;
 							display: block;
 							width: 3px;
 							height: 3px;
@@ -358,11 +383,11 @@
 					}
 
 					&.off {
-						color: rgb(var(--neutral-grad-1));
+						color: rgb(var(--color-txt-gray-dark));
 					}
 
 					&.loading {
-						color: rgb(var(--neutral-grad-1));
+						color: rgb(var(--color-txt-gray-dark));
 						animation: torPulse 2s linear infinite;
 
 						@keyframes torPulse {
@@ -371,7 +396,7 @@
 					}
 
 					&.failed {
-						color: rgb(var(--neutral-grad-1));
+						color: rgb(var(--color-txt-gray-dark));
 						animation: torFailedPulse 2s linear infinite;
 
 						@keyframes torFailedPulse {
@@ -1071,6 +1096,10 @@ html.allcontent{
 		}
 
 		.sitenames{
+		}
+
+		.sections .items.control-app .control-tor-state {
+			background: transparent;
 		}
 
 		.sections .items .item.wallets{

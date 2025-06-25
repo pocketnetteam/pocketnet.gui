@@ -187,8 +187,12 @@
             <manifest xmlns:tools="http://schemas.android.com/tools" />
         </edit-config>-->
 
+        <resource-file src="resources/android/raw/isrg_root_x1.der" target="app/src/main/res/raw/isrg_root_x1.der" />
+        <resource-file src="resources/android/raw/isrg_root_x2.der" target="app/src/main/res/raw/isrg_root_x2.der" />
+        <resource-file src="resources/android/xml/network_security_config.xml" target="app/src/main/res/xml/network_security_config.xml" />
+
         <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application">
-            <application android:hardwareAccelerated="true" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" android:largeHeap="true" android:banner="@drawable/banner" android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
+            <application android:hardwareAccelerated="true" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" android:largeHeap="true" android:banner="@drawable/banner" android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true" android:networkSecurityConfig="@xml/network_security_config"/>
         </edit-config>
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
@@ -232,6 +236,7 @@
             <uses-feature android:name="android.hardware.location.gps" android:required="false"/>
             <uses-feature android:name="android.hardware.microphone" android:required="false"/>
             <uses-feature android:name="android.hardware.sensor" android:required="false"/>
+            <uses-feature android:name="android.hardware.wifi" android:required="false"/>
         </config-file>
 
         <preference name="AndroidPersistentFileLocation" value="Compatibility" />
