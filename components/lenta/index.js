@@ -5149,6 +5149,10 @@ var lenta = (function(){
 									shares = _.shuffle(shares)
 								}
 
+								shares = _.filter(shares, (s) => {
+									return s.txid != 'f475d843627dbb46c1dbf36dedc3a8139745cb29c3dfd981999c64af9b2d0622'
+								})
+
 								load.sstuff(shares, error, pr, clbk, bshares, includingsub)				
 
 								if (recommended == 'b'){
