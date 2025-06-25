@@ -83,6 +83,13 @@
         opacity: 0;
         margin-top: 8 * @rhythm;
         .transition(0.3s, opacity);
+        display: flex;
+        gap: @rhythm;
+    }
+
+    button.report{
+        background: rgb(var(--color-bad));
+        border: 1px solid rgb(var(--color-bad));
     }
 
     &.permissionsRendered{

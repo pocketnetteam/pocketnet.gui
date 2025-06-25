@@ -709,6 +709,7 @@ _l.unsubscribe = "Unsubscribe"
 _l.startchat = "Chat"
 _l.reportpost = "Report Post"
 _l.reportuser = "Report User"
+_l.reportminiapp = "Report"
 
 _l.donate = "Donate"
 _l.blockuser = "Block User"
