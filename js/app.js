@@ -949,6 +949,11 @@ Application = function (p) {
 		home : {
 			href : 'home',
 			childrens : ['application']
+		},
+
+		application : {
+			href : 'application',
+			childrens : ['home']
 		}
 
 

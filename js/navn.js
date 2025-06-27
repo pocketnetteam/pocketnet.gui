@@ -2,6 +2,8 @@ var electron = null
 
 if(typeof _Electron != 'undefined'){
 	electron = require('electron');
+
+	window.electron = electron
 }
 
 if(typeof _OpenApi == 'undefined'){
@@ -1140,6 +1142,7 @@ Nav = function(app)
 
 				link.off('click').on('click', function(event){
 					event.preventDefault();
+					
 					
 					electron.shell.openExternal(this.href);
 
