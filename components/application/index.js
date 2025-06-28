@@ -49,6 +49,9 @@ var application = (function(){
 				
 			},
 			openinfo : function(){
+
+				console.log('application', application)
+
 				app.nav.api.load({
                     open : true,
                     id : 'applicationmeta',
