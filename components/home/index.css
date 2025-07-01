@@ -104,34 +104,27 @@
 #home .applicationsList .application .tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 4px;
+    gap: 3px;
     justify-content: center;
 }
 
 #home .applicationsList .application .tag {
-    font-size: 0.65em;
+    font-size: 0.6em;
     color: rgb(var(--text-on-main-bg-color));
     cursor: pointer;
     transition: color 0.2s ease;
-    line-height: 1.2;
-    max-width: 60px;
+    line-height: 1.1;
+    max-width: 50px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    opacity: 0.8;
+    opacity: 0.7;
+    text-align: center;
 }
 
 #home .applicationsList .application .tag:hover {
     color: rgb(var(--color-txt-ac));
     opacity: 1;
-    text-decoration: underline;
-}
-
-#home .applicationsList .application .tag:not(:last-child)::after {
-    content: " •";
-    color: rgb(var(--text-on-main-bg-color));
-    opacity: 0.5;
-    margin-left: 2px;
 }
 
 #home .applicationsList .application .manage-button {
