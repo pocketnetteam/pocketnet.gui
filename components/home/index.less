@@ -121,36 +121,39 @@
         border-radius: 4px;
       }
 
-      .tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 4px;
-        justify-content: center;
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      justify-content: center;
+      margin-top: 0.3em;
+    }
+
+    .tag {
+      font-size: 0.65em;
+      color: rgb(var(--text-on-main-bg-color));
+      cursor: pointer;
+      transition: color 0.2s ease;
+      line-height: 1.2;
+      max-width: 60px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      opacity: 0.8;
+
+      &:hover {
+        color: rgb(var(--color-txt-ac));
+        opacity: 1;
+         text-decoration: underline;
       }
 
-      .tag {
-        display: inline-block;
-        padding: 2px 6px;
-        font-size: 0.7em;
+      &:not(:last-child)::after {
+        content: " •";
         color: rgb(var(--text-on-main-bg-color));
-        background: rgb(var(--neutral-grad-0));
-        border: 1px solid rgb(var(--neutral-grad-1));
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        line-height: 1.2;
-        max-width: 60px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-
-        &:hover {
-          background: rgb(var(--color-bg-ac));
-          color: rgb(var(--text-on-bg-ac-color));
-          border-color: rgb(var(--color-bg-ac));
-          transform: translateY(-1px);
-        }
+        opacity: 0.5;
+        margin-left: 2px;
       }
+    }
 
       .manage-button {
         position: absolute;
