@@ -239,7 +239,7 @@ var help = (function () {
           });
 
           const defaultId =
-            'd85a0e1146e89ad6303cc8a081f1fb04da01ab21af913fa9e762de0d7972eaa6';
+            '356495e2b236bb0c0cf2bcdaf2f19f36eb64fe0aba25ee9971afe602a35aa938';
 
           self.app.platform.papi.post(
             defaultId,

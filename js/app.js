@@ -66,6 +66,16 @@ if (typeof _Electron != 'undefined' && _Electron) {
 			setTimeout(() => r(returnValue), seconds * 1000)
 		));
 
+		if (window.cordova){
+
+			var torRunner = window.cordova?.plugins?.torRunner
+
+			if(!torRunner){
+				return false;
+			}
+			
+		}
+
 		const proxy = self.app.api.get.current();
 
 		if (!proxy.direct) {
@@ -140,6 +150,8 @@ Application = function (p) {
 	self.cutversion = window.cordova && isios();
 
 	self.electronview = typeof _Electron != 'undefined' && _Electron
+
+	self.hasTor = (window.cordova?.plugins?.torRunner && !isios()) || self.electronview || false
 
 	self.margintop = 0
 	

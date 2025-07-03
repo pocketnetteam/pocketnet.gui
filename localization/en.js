@@ -3251,3 +3251,5 @@ _l.appsdisclaimer='Every app is already a wallet for pcoin. Except for the IOS';
 _l.BarteronOffer = "Barteron - 0% commission"
 _l.windows7 = "Download for Windows 7"
 _l.miniapps = "Mini Applications"
+
+_l.sysmodbas="Content moderation system on Bastyon"
