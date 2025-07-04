@@ -126,6 +126,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  width: 160px;
 }
 #help .page .lentasection .postGuideButton {
   width: 100%;

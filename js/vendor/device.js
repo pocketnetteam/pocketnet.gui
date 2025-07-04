@@ -126,9 +126,13 @@
   device.television = function() {
     var i, television = [
       "googletv",
+      "google tv",
+      "bravia",
       "android tv",
+      "androidtv",
       "viera",
       "smarttv",
+      "smart tv",
       "internet.tv",
       "netcast",
       "nettv",

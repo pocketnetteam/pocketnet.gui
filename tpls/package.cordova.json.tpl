@@ -5,7 +5,7 @@
     "description": "A Revolutionary anti-censorship decentralized publishing and social platform. Based on the blockchain technology, it runs on a set of computers around the world, not controlled by any single entity. Self-policed by users with good reputation where nobody records your keystrokes, viewing habits or searches.",
     "main": "index.js",
     "scripts": {
-        "android-add": "cordova platform add android@13.0.0",
+        "android-add": "cordova platform add android@14.0.1",
         "ios-add": "cordova platform add ios@6.3.0",
         "ios-run": "cordova run ios --buildConfig build.json",
         "ios-build-debug": "cordova build ios --buildConfig build.json",
@@ -45,7 +45,7 @@
         "@cordova/eslint-config": "^4.0.0",
         "@globules-io/cordova-plugin-ios-xhr": "^1.2.1",
         "cc.fovea.cordova.openwith": "file:cc.fovea.cordova.openwith",
-        "cordova-android": "^11.0.0",
+        "cordova-android": "^14.0.0",
         "cordova-androidx-build": "^1.0.4",
         "cordova-ios": "^6.3.0",
         "cordova-plugin-actionsheet": "^2.3.3",
@@ -80,7 +80,7 @@
             "cordova-plugin-apkupdater": "~4.0.0",
         <% } %>
         
-        "cordova-plugin-firebasex": "file:cordova-plugin-firebasex",
+        "cordova-plugin-firebasex": "^18.0.0",
         "np": "^5.0.3",
         "sync-cordova-xml": "^0.4.0"
     },
