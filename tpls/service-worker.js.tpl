@@ -57,7 +57,12 @@ function onFetch(event) {
 
   async function torAnswerCordova() {
 
+		console.log('AltTransportActive1')
+
     const isTorRequest = await swBroadcaster.invoke('AltTransportActive', request.url);
+
+		console.log('AltTransportActive2')
+
 
     if (isTorRequest) {
       
@@ -152,7 +157,7 @@ function onFetch(event) {
       }
     }
 
-    if(isCordova){
+    if(isCordova && request.url.indexOf("https://localhost")  == -1){
       try {
         const torResponseCordova = await torAnswerCordova();
 
@@ -206,6 +211,10 @@ function onFetch(event) {
       reject(err);
     }
   });
+
+  
+
+  console.log('request', request)
 
   switch (request.destination) {
     case 'image':

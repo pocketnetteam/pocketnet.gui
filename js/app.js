@@ -34,10 +34,15 @@ if (typeof _Electron != 'undefined' && _Electron) {
 	filterXss = require('./js/vendor/xss.min.js')
 
 	Broadcaster = require('./js/broadcaster.js');
+}
 
+if(typeof Broadcaster != 'undefined' && ((typeof _Electron != 'undefined' && _Electron) || window.cordova)){
 	swBroadcaster = new Broadcaster('ServiceWorker');
 
 	swBroadcaster.handle('AltTransportActive', async (url) => {
+
+		console.log('AltTransportActive2')
+
 		function isWhitelisted(url) {
 			const { hostname } = new URL(url);
 
@@ -92,7 +97,6 @@ if (typeof _Electron != 'undefined' && _Electron) {
 
 		return await Promise.race([transportCheck, wait(1, false)]);
 	});
-
 }
 
 if (typeof _Node == 'undefined') _Node = false;
