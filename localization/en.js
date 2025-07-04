@@ -2994,7 +2994,8 @@ _l.miniApp_publishConfirmation = "Are you sure you want to publish the applicati
 _l.miniApp_yesButton = "Yes";
 _l.miniApp_noButton = "Cancel";
 _l.miniApp_deleteSuccessMessage = "The mini-app has been successfully deleted.";
-_l.miniApp_deleteErrorMessage = "Failed to delete the app. Please try again later.";_l.miniApp_deleteErrorMessage = "Failed to delete the app. Please try again later.";
+_l.miniApp_deleteErrorMessage = "Failed to delete the app. Please try again later.";
+_l.miniApp_deleteErrorMessage = "Failed to delete the app. Please try again later.";
 _l.miniApp_loadErrorMessage = "Failed to edit the application. Please try again later.";
 _l.miniApp_installErrorMessage = "Failed to install the application. Please try again.";
 _l.miniApp_editErrorMessage = "Не удалось отредактировать приложение. Попробуйте ещё раз позже.";
@@ -3250,3 +3251,5 @@ _l.appsdisclaimer='Every app is already a wallet for pcoin. Except for the IOS';
 _l.BarteronOffer = "Barteron - 0% commission"
 _l.windows7 = "Download for Windows 7"
 _l.miniapps = "Mini Applications"
+
+_l.sysmodbas="Content moderation system on Bastyon"

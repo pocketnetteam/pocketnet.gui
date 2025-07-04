@@ -67,12 +67,13 @@ var read = parameters(app.nav.current.completeHref, true).read;
                     <a href="index?r=recommended"  handler="true"><i class="far fa-comment"></i><span class="text"><%=e('discussed')%></span></a>
                 </span>
             </div>
-
+            <% if(!app.television) {%>
             <div class="tab">
                 <span class="pcenterLabel">
                     <a href="home"><i class="fas fa-mobile"></i><span class="text"><%=e('miniapps')%></span></a>
                 </span>
             </div>
+            <% } %>
 
 
             <% if (app.platform.sdk.user.isjury()) { %>

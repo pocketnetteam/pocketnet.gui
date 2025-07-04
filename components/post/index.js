@@ -2416,7 +2416,7 @@ var post = (function () {
 
 				make()
 
-				if(share && !p.inWnd && share.itisarticle() && !ed.repost){
+				if(share && !p.inWnd && share.itisarticle() && !ed.repost && !ed.removemargin){
 
 					allcontentenabled = true
 

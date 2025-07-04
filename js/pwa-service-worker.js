@@ -5,6 +5,10 @@ if(typeof _Electron != 'undefined'){
     platform = 'electron';
 }
 
+if (window.cordova){
+    platform = 'cordova';
+}
+
 if ('serviceWorker' in navigator) {
     const swArgs = new URLSearchParams({
         appVersion: `${packageversion}-${versionsuffix}`,
@@ -37,7 +41,7 @@ if ('serviceWorker' in navigator) {
 
         const channel = new BroadcastChannel(event.data);
 
-        if (typeof _Electron != 'undefined') {
+        if (typeof _Electron != 'undefined' || (window.cordova && window.cordova?.plugins?.torRunner)) {
 
             fetch(event.data, { mode: 'no-cors'}).then(function(res){
                 return res.blob()
@@ -47,11 +51,6 @@ if ('serviceWorker' in navigator) {
             }).catch(function(e){
                 throw e;
             })
-            
-            /*const res = await pwaFetch(event.data, { mode: 'no-cors'});
-            const blob = await res.blob();*/
-            
-
 
         } else {
             channel.postMessage(event.data)
