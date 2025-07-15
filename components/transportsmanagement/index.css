@@ -102,6 +102,7 @@
   width: 160px;
 }
 #transportsmanagement .settingTable .icon {
+  cursor: pointer;
   padding-left: 0.5em;
   color: rgb(var(--neutral-grad-1));
 }

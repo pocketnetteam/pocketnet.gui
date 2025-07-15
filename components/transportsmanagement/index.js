@@ -10,24 +10,20 @@ var transportsmanagement = (function(){
 
 		var el, ed, releaseTimeout = null, proxy, info = null, system = null;
 
-		/*
-		
-		
-		
-		*/
+		var cordovaProxy = window.cordova && app.hasTor
 
 		var changes = {}
 
 		var systemsettings = {
-			'torenabled2' : function(_el){
+			'torenabled3' : function(_el){
 				var values = ['neveruse', 'auto', 'always']
-				changes.torenabled2 = nextElCircle(values, _el.attr('value'))
+				changes.torenabled3 = nextElCircle(values, _el.attr('value'))
 
-				if(changes.torenabled2 == system.tor.enabled2) delete changes.torenabled2
+				if(changes.torenabled3 == system.tor.enabled3) delete changes.torenabled3
 			},
-			'useSnowFlake' : function(_el){
-				changes.useSnowFlake = !JSON.parse(_el.attr('value'))
-				if(changes.useSnowFlake == system.tor.useSnowFlake) delete changes.useSnowFlake
+			'useSnowFlake2' : function(_el){
+				changes.useSnowFlake2 = !JSON.parse(_el.attr('value'))
+				if(changes.useSnowFlake2 == system.tor.useSnowFlake2) delete changes.useSnowFlake2
 
 			},
 		}
@@ -74,6 +70,22 @@ var transportsmanagement = (function(){
 				return _.last(actions.history()) || {}
 			},
 
+			loadNData : function(){
+				if(cordovaProxy){
+					system = {
+						tor : {
+							enabled3 : false,
+							useSnowFlake2 : false
+						}
+					}
+
+					return Promise.resolve()
+				}
+				else{
+					return actions.loadProxyData()
+				}
+			},
+
 			loadProxyData : function(){
 
 				info = null
@@ -106,7 +118,7 @@ var transportsmanagement = (function(){
 		var renders = {
 			settings : function(initial){
 
-				if(system && info && actions.directProxy()){
+				if(system && (actions.directProxy() || cordovaProxy)){
 					self.shell({
 						name : 'settings',
 						data : {
@@ -139,15 +151,38 @@ var transportsmanagement = (function(){
 						p.el.find('.save').on('click', function(){
 							
 							var _make = function(){
-								globalpreloader(true)
+
+								var promise = null
 								
-								proxy.fetchauth('manage', {
-									action: 'set.server.settings',
-									data: {
-										settings: changes
+								globalpreloader(true)
+
+								if(window.cordovaProxy){
+									var st = {
+										enabled : changes.torenabled3,
+										useSnowFlake : changes.useSnowFlake2
 									}
-								}).then(r => {
-	
+
+									/// GOTO PLUGIN
+
+									promise = function(){
+										return Promise.resolve()
+									}
+								}
+								else{
+
+
+									promise = proxy.fetchauth('manage', {
+										action: 'set.server.settings',
+										data: {
+											settings: changes
+										}
+									})
+									
+									
+								}
+
+								promise.then(r => {
+		
 									changes = {}
 		
 									remake();
@@ -163,6 +198,8 @@ var transportsmanagement = (function(){
 									}, 500)
 									
 								})
+								
+								
 							}
 							
 							_make()
@@ -211,6 +248,9 @@ var transportsmanagement = (function(){
 				var directProxy = actions.directProxy()
 				var candirect = actions.candirect()
 
+				
+				 
+
 				self.shell({
 					name : 'state',
 					data : {
@@ -220,7 +260,8 @@ var transportsmanagement = (function(){
 						lastHistoryEvent : directProxy ? actions.lastHistoryEvent() : {},
 						proxy : app.api.get.current(),
 						system,
-						info
+						info,
+						cordovaProxy
 					},
 
 					el : el.c.find('.stateWrapper')
@@ -299,7 +340,7 @@ var transportsmanagement = (function(){
 		var remake = function(){
 			proxy = app.api.get.current()
 
-			actions.loadProxyData().then(() => {
+			actions.loadNData().then(() => {
 				make()
 			})
 		}
@@ -323,7 +364,7 @@ var transportsmanagement = (function(){
 					ed
 				};
 
-				actions.loadProxyData().then(() => {
+				actions.loadNData().then(() => {
 					clbk(data);
 				})
 

@@ -798,7 +798,8 @@ var BastyonApps = function (app) {
                     margintop: document.documentElement.style.getPropertyValue('--app-margin-top') || document.documentElement.style.getPropertyValue('--app-margin-top-default') || '0px',
                     application: application.manifest,
                     project: project_config,
-                    transactionsApiVersion: 4
+                    transactionsApiVersion: 4,
+                    alttransport : app.hasTor || false
                 })
             }
         },
@@ -2441,7 +2442,7 @@ var BastyonApps = function (app) {
             var ins = this.installedAndInstalling()
 
             str = str.toLowerCase()
-
+            
             /// added only scope
 
             
@@ -2517,11 +2518,9 @@ var BastyonApps = function (app) {
             const filteredInstalledApps = filterApplications(transformedSearch, Object.values(installedApps), searchBy || 'name');
 
             let additionalApps = [];
-            if (transformedSearch) {
-                additionalApps = await app.platform.sdk.miniapps.getall({
-                    [searchBy || 'search']: transformedSearch
-                });
-            }
+            additionalApps = await app.platform.sdk.miniapps.getall({
+                [searchBy || 'search']: transformedSearch
+            });
 
             const allApps = [...filteredInstalledApps, ...additionalApps]
 

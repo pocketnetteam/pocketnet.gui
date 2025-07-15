@@ -30,6 +30,8 @@ class Helpers {
 class State {
     instance = null;
     _status = 'stopped';
+    info = '';
+
     constructor(control) {
         this.instance = control
     };
@@ -47,6 +49,10 @@ class State {
                 listener.listener(stateValue);
             }
         });
+
+        if (stateValue !== 'running' && stateValue !== 'started') {
+            this.info = '';
+        }
     };
 }
 
@@ -100,12 +106,12 @@ class TorControl {
     settingChanged = async(settings) => {
         var needRestart = false
 
-        const isSnowflakeChanged = (settings.useSnowFlake !== this.settings.useSnowFlake);
-        const isTorStateChanged = (settings.enabled2 !== this.settings.enabled2);
+        const isSnowflakeChanged = (settings.useSnowFlake2 !== this.settings.useSnowFlake2);
+        const isTorStateChanged = (settings.enabled3 !== this.settings.enabled3);
 
         const keepInstanceAlive = (
-            settings.enabled2 === 'auto' && this.settings.enabled2 === 'always' ||
-            settings.enabled2 === 'always' && this.settings.enabled2 === 'auto'
+            settings.enabled3 === 'auto' && this.settings.enabled3 === 'always' ||
+            settings.enabled3 === 'always' && this.settings.enabled3 === 'auto'
         );
 
         const isCustomObfs4Changed = (settings.customObfs4 !== this.settings.customObfs4);
@@ -133,19 +139,19 @@ class TorControl {
     autorun = async () =>{
 
         if (this.instance || this.state.status !== 'stopped'){
-            if (this.settings.enabled2 === 'neveruse'){
+            if (this.settings.enabled3 === 'neveruse'){
                 await this.stop()
             } else {
                 await this.restart()
             }
         } else {
-            if (this.settings.enabled2 !== 'neveruse'){
+            if (this.settings.enabled3 !== 'neveruse'){
                 if (this.needinstall()){
                     await this.install();
                 }
             }
 
-            if (this.settings.enabled2 === 'always'){
+            if (this.settings.enabled3 === 'always'){
                 await this.restart()
             }
         }
@@ -187,7 +193,7 @@ class TorControl {
     }
 
     makeConfig = async() => {
-        const useSnowFlake = this.settings.useSnowFlake || false;
+        const useSnowFlake2 = this.settings.useSnowFlake2 || false;
         const customObfs4 = this.settings.customObfs4 || null;
         const isOverwrite = true; //config.overwrite || false;
 
@@ -223,7 +229,7 @@ class TorControl {
             "# The user is free to edit this config if he know\n" +
             "# how to do that. Read TOR documentation before...\n",
 
-            "SocksPort 0.0.0.0:9151",
+            "SocksPort 0.0.0.0:9051",
             "CookieAuthentication 1",
             "DormantCanceledByStartup 1",
             `DataDirectory ${getSettingsPath("data")}`,
@@ -234,7 +240,7 @@ class TorControl {
             "KeepalivePeriod 10",
         ];
 
-        if (useSnowFlake) {
+        if (useSnowFlake2) {
             torConfig.push(
                 "# Bridges configurations\n",
 
@@ -384,25 +390,24 @@ class TorControl {
             const isBrokerFailure = ({ data }) => (/Managed proxy .*: broker failure/g).test(data);
             const isConnectionFailure = ({ data }) => (/Managed proxy .*: connection failed/g).test(data);
             const isRetryingConnection = ({ data }) => (/Retrying on a new circuit/g).test(data)
+            const extractBootstrapMessage = ({ data }) => (data?.match(/Bootstrapped \d+%.*/) || [null])[0];
 
             //console.log("Tor:", data)
 
+
+            const message = extractBootstrapMessage(data);
+            if (message !== null) this.state.info = message;
+
             if (isBrokerFailure(data) || isConnectionFailure(data)) {
                 console.warn("Tor connection lost")
-                return
             } else if (isBootstrapped100(data)) {
                 console.log("Tor instance started again")
                 this.state.status = "started"
-                return
             } else if (isRetryingConnection(data)) {
                 console.warn("Tor retrying circuit")
-                return
-                //this.state.status = "running"
             }
-
             
-        }
-        catch(e){
+        } catch(e) {
             console.error(e)
         }
     }
@@ -435,7 +440,7 @@ class TorControl {
         if (this.needinstall()) {
             if (this.state.status === 'install') {
                 return false;
-            } if (this.settings.enabled2 === 'neveruse') {
+            } if (this.settings.enabled3 === 'neveruse') {
                 this.state.status = "stopped";
                 return false;
             } else {
@@ -448,13 +453,13 @@ class TorControl {
             }
         }
 
-        if (this.settings.enabled2 === 'neveruse') return false;
+        if (this.settings.enabled3 === 'neveruse') return false;
 
         if (this.state.status !== "stopped") return true;
 
         this.state.status = "running"
 
-        if (this.settings.enabled2 === 'auto') {
+        if (this.settings.enabled3 === 'auto') {
             this.startTimer()
         }
 
@@ -580,14 +585,15 @@ class TorControl {
         delete stateNormalized.instance;
 
         var info = {
-            enabled : this.settings.enabled2,
-            useSnowFlake : this.settings.useSnowFlake,
+            enabled3 : this.settings.enabled3,
+            useSnowFlake2 : this.settings.useSnowFlake2,
             customObfs4 : this.settings.customObfs4,
             installed : this.isInstalled
         }
 
         info.state = {
-            status : this.state.status
+            status : this.state.status,
+            info : this.state.info
         }
 
         if(!compact){

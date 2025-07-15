@@ -70,8 +70,8 @@ class WrappedAxios {
 
         const preparedArgs = WrappedAxios.prepareArguments(...args);
 
-        const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
-        const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
+        const isTorEnabledInSettings = (torCtrl.settings.enabled3 !== 'neveruse');
+        const isDirectAccessRestricted = (torCtrl.settings.enabled3 === 'always');
         let useDirectAccess = false;
         if (!isTorEnabledInSettings) {
             useDirectAccess = true;
@@ -86,7 +86,7 @@ class WrappedAxios {
         const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
 
         if (useTor) {
-            const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
+            const isTorAutoEnabled = (torCtrl.settings.enabled3 === 'auto');
 
             if (isTorAutoEnabled) {
                 torCtrl.resetTimer();
@@ -110,12 +110,18 @@ class WrappedAxios {
                     return WrappedAxios.handleError(error);
                 }
                 
-                if (error.code != 'ECONNREFUSED' && error.code != "ETIMEDOUT" && error.code != "ENOTFOUND"){
+                if (error.code !== 'ECONNREFUSED' &&
+                    error.code !== 'ETIMEDOUT' &&
+                    error.code !== 'ENOTFOUND' &&
+                    error.code !== 'ECONNRESET'
+                ){
                     return Promise.reject(error)
                 }
 
-                const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
-                const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
+                const isTorEnabledInSettings = (torCtrl.settings.enabled3 !== 'neveruse');
+                const isDirectAccessRestricted = (torCtrl.settings.enabled3 === 'always');
+                const isTorAutoEnabled = (torCtrl.settings.enabled3 === 'auto');
+
                 let useDirectAccess = false;
                 if (!isTorEnabledInSettings) {
                     useDirectAccess = true;
@@ -128,9 +134,10 @@ class WrappedAxios {
                     isTorReady = await this.transports.waitTorReady();
                 }
 
-                var useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
+                const torRefuseConnections = this.transports.isTorRefuseConnections(error);
+                const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings &&
+                    !(torRefuseConnections && isTorAutoEnabled));
                 if (useTor) {
-                    const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
 
                     if (isTorAutoEnabled) {
                         torCtrl.resetTimer();
@@ -166,7 +173,7 @@ class WrappedAxios {
     }
 
     static handleError(error) {
-        const isConnRefused = error.message.includes('ECONNREFUSED 127.0.0.1:9151');
+        const isConnRefused = error.message.includes('ECONNREFUSED 127.0.0.1:9051');
         const isSocksRejection = error.message.includes('Socks5 proxy rejected connection');
 
         if (isConnRefused || isSocksRejection) {
@@ -194,8 +201,8 @@ class WrappedFetch {
 
         const preparedArgs = {...options};
 
-        const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
-        const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
+        const isTorEnabledInSettings = (torCtrl.settings.enabled3 !== 'neveruse');
+        const isDirectAccessRestricted = (torCtrl.settings.enabled3 === 'always');
         let useDirectAccess = false;
         if (!isTorEnabledInSettings) {
             useDirectAccess = true;
@@ -210,7 +217,7 @@ class WrappedFetch {
 
         const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
         if (useTor) {
-            const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
+            const isTorAutoEnabled = (torCtrl.settings.enabled3 === 'auto');
 
             if (isTorAutoEnabled) {
                 torCtrl.resetTimer();
@@ -237,12 +244,18 @@ class WrappedFetch {
                     return WrappedFetch.handleError(error);
                 }
 
-                if (error.code != 'ECONNREFUSED' && error.code != "ETIMEDOUT" && error.code != "ENOTFOUND"){
+                if (error.code !== 'ECONNREFUSED' &&
+                    error.code !== 'ETIMEDOUT' &&
+                    error.code !== 'ENOTFOUND' &&
+                    error.code !== 'ECONNRESET'
+                ){
                     return Promise.reject(error)
                 }
 
-                const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
-                const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
+                const isTorEnabledInSettings = (torCtrl.settings.enabled3 !== 'neveruse');
+                const isDirectAccessRestricted = (torCtrl.settings.enabled3 === 'always');
+                const isTorAutoEnabled = (torCtrl.settings.enabled3 === 'auto');
+
                 let useDirectAccess = false;
                 if (!isTorEnabledInSettings) {
                     useDirectAccess = true;
@@ -255,9 +268,10 @@ class WrappedFetch {
                     isTorReady = await this.transports.waitTorReady();
                 }
 
-                const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
+                const torRefuseConnections = this.transports.isTorRefuseConnections(error);
+                const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings &&
+                    !(torRefuseConnections && isTorAutoEnabled));
                 if (useTor) {
-                    const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
 
                     if (isTorAutoEnabled) {
                         torCtrl.resetTimer();
@@ -296,7 +310,7 @@ class WrappedFetch {
     }
 
     static handleError(error) {
-        const isConnRefused = error.message.includes('ECONNREFUSED 127.0.0.1:9151');
+        const isConnRefused = error.message.includes('ECONNREFUSED 127.0.0.1:9051');
         const isSocksRejection = error.message.includes('Socks5 proxy rejected connection');
 
         if (isConnRefused || isSocksRejection) {
@@ -324,8 +338,8 @@ class WrappedRequest {
 
         const preparedArgs = {...options};
 
-        const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
-        const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
+        const isTorEnabledInSettings = (torCtrl.settings.enabled3 !== 'neveruse');
+        const isDirectAccessRestricted = (torCtrl.settings.enabled3 === 'always');
         let useDirectAccess = false;
         if (!isTorEnabledInSettings) {
             useDirectAccess = true;
@@ -340,7 +354,7 @@ class WrappedRequest {
 
         const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
         if (useTor) {
-            const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
+            const isTorAutoEnabled = (torCtrl.settings.enabled3 === 'auto');
 
             if (isTorAutoEnabled) {
                 torCtrl.resetTimer();
@@ -364,8 +378,10 @@ class WrappedRequest {
                     callback?.(preparedResult.error, response, body);
                 }
 
-                const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
-                const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
+                const isTorEnabledInSettings = (torCtrl.settings.enabled3 !== 'neveruse');
+                const isDirectAccessRestricted = (torCtrl.settings.enabled3 === 'always');
+                const isTorAutoEnabled = (torCtrl.settings.enabled3 === 'auto');
+
                 let useDirectAccess = false;
                 if (!isTorEnabledInSettings) {
                     useDirectAccess = true;
@@ -378,9 +394,10 @@ class WrappedRequest {
                     isTorReady = await this.transports.waitTorReady();
                 }
 
-                const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
+                const torRefuseConnections = this.transports.isTorRefuseConnections(error);
+                const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings &&
+                    !(torRefuseConnections && isTorAutoEnabled));
                 if (useTor) {
-                    const isTorAutoEnabled = (torCtrl.settings.enabled2 === 'auto');
 
                     if (isTorAutoEnabled) {
                         torCtrl.resetTimer();
@@ -424,7 +441,7 @@ class WrappedRequest {
     }
 
     static handleError(error) {
-        const isConnRefused = error.message.includes('ECONNREFUSED 127.0.0.1:9151');
+        const isConnRefused = error.message.includes('ECONNREFUSED 127.0.0.1:9051');
         const isSocksRejection = error.message.includes('Socks5 proxy rejected connection');
 
         if (isConnRefused || isSocksRejection) {
@@ -476,10 +493,10 @@ class Transports {
 
                     if (result === true) {
                         // Retry in 30 minutes
-                        this.accessRecords[hostname].nextTry = Date.now() + 30 * 60 * 60 * 1000;
+                        this.accessRecords[hostname].nextTry = Date.now() + 30 * 60 * 1000;
                     } else {
                         // Retry in 10 minutes
-                        this.accessRecords[hostname].nextTry = Date.now() + 10 * 60 * 60 * 1000;
+                        this.accessRecords[hostname].nextTry = Date.now() + 10 * 60 * 1000;
                     }
 
                     return result;
@@ -521,12 +538,12 @@ class Transports {
             if (pingResult) {
                 this.accessRecords[hostname] = {
                     accessOk: true,
-                    nextTry: Date.now() + 30 * 60 * 60 * 1000, // Retry in 30 minutes
+                    nextTry: Date.now() + 30 * 60 * 1000, // Retry in 30 minutes
                 };
             } else {
                 this.accessRecords[hostname] = {
                     accessOk: false,
-                    nextTry: Date.now() + 10 * 60 * 60 * 1000, // Retry in 10 minutes
+                    nextTry: Date.now() + 10 * 60 * 1000, // Retry in 10 minutes
                 };
             }
         }
@@ -554,10 +571,10 @@ class Transports {
         
     }
 
-    saveHostsDeb = _.debounce(this.saveHosts, 60000)
+    saveHostsDeb = _.debounce(this.saveHosts, 10 * 60 * 1000);
 
     async pingHost(host, port) {
-        function synackPing() {
+        function synackPing(timeout) {
 
             //127.x.x.x or 0.0.0.0 or ::1 or ::
             const isLocalhost = (address) => /^(127(?:\.\d{1,3}){0,3}|0\.0\.0\.0|::1|::)$/.test(address);
@@ -575,20 +592,29 @@ class Transports {
                     reject('SYNACK_PING_FAILED');
                 }
 
-                socket.setTimeout(100);
+                socket.setTimeout(timeout);
 
                 socket.on('lookup', (err, address) => {
                     if (isLocalhost(address)) {
                         socket.end();
                         socket.destroy();
-                        reject('SYNACK_PING_FAILED');
+                        reject('SYNACK_PING_LOCALHOST');
                     }
                 });
 
                 socket.on('error', (err) => {
                     socket.end();
                     socket.destroy();
-                    reject('SYNACK_PING_FAILED');
+
+                    const messages = [
+                        ...(Array.isArray(err.errors) ? err.errors.map(e => e.message || e.toString() || '') : []),
+                        err.message || err.toString()
+                    ];
+                    if (messages.some(m => m.includes('ETIMEDOUT'))) {
+                        reject('SYNACK_PING_TIMEOUT');
+                    } else {
+                        reject('SYNACK_PING_FAILED');
+                    }
                 });
 
                 socket.on('timeout', (err) => {
@@ -599,9 +625,20 @@ class Transports {
             });
         }
 
-        return synackPing().catch(() => {
-            return false;
-        });
+        const timeouts = [200, 300, 500];
+        for (const timeout of timeouts) {
+            try {
+                return await synackPing(timeout);
+            } catch (e) {
+                if (e === 'SYNACK_PING_FAILED') {
+                    await Transports.waitTimeout(timeout/1000, false);
+                } else if (e === 'SYNACK_PING_LOCALHOST') {
+                    return false;
+                }
+            }
+        }
+
+        return false;
     }
 
     async waitTorReady() {
@@ -616,7 +653,7 @@ class Transports {
                 this.torapplications.onAny((status) => {
                     if (status === 'started') {
                         resolve(true)
-                    } else if (status === 'failed') {
+                    } else if (status === 'stopped' || status === 'failed') {
                         resolve(false)
                     }
                 });
@@ -635,7 +672,7 @@ class Transports {
 
     getTorAgent() {
         if (!this.torAgent) {
-            const url = new URL('socks5h://127.0.0.1:9151');
+            const url = new URL('socks5h://127.0.0.1:9051');
             url.tls = { rejectUnauthorized: false };
             this.torAgent = new SocksProxyAgent(url, {
                 keepAlive: true,
@@ -649,8 +686,8 @@ class Transports {
     async isTorNeeded(url) {
         const torCtrl = this.torapplications;
 
-        const isTorEnabledInSettings = (torCtrl.settings.enabled2 !== 'neveruse');
-        const isDirectAccessRestricted = (torCtrl.settings.enabled2 === 'always');
+        const isTorEnabledInSettings = (torCtrl.settings.enabled3 !== 'neveruse');
+        const isDirectAccessRestricted = (torCtrl.settings.enabled3 === 'always');
         let useDirectAccess = false;
         if (!isTorEnabledInSettings) {
             useDirectAccess = true;
@@ -671,13 +708,17 @@ class Transports {
     }
 
     checkForAgentError(error) {
-        const isSocksRejected = /Socks5 proxy rejected connection - Failed/;
+        const isSocksRejected = /Socks5 proxy rejected connection/;
         const isSocketNotCreated = /A "socket" was not created/;
 
         return (
             isSocksRejected.test(error.message) ||
             isSocketNotCreated.test(error.message)
         );
+    }
+
+    isTorRefuseConnections(error) {
+        return error.message.includes('ECONNREFUSED 127.0.0.1:9051');
     }
 }
 

@@ -172,18 +172,18 @@ var system16 = (function(){
 				renders.webserveradmin(el.c)
 			},
 			
-			'torenabled2' : function(_el){
+			'torenabled3' : function(_el){
 
 				var values = ['neveruse', 'auto', 'always']
 				
-				changes.server.torenabled2 = nextElCircle(values, _el.attr('value'))
+				changes.server.torenabled3 = nextElCircle(values, _el.attr('value'))
 				 
-				if(changes.server.torenabled2 == system.tor.enabled2) delete changes.server.torenabled2
+				if(changes.server.torenabled3 == system.tor.enabled3) delete changes.server.torenabled3
 				renders.webserveradmin(el.c)
 			},
-			'useSnowFlake' : function(_el){
-				changes.server.useSnowFlake = !JSON.parse(_el.attr('value'))
-				if(changes.server.useSnowFlake == system.tor.useSnowFlake) delete changes.server.useSnowFlake
+			'useSnowFlake2' : function(_el){
+				changes.server.useSnowFlake2 = !JSON.parse(_el.attr('value'))
+				if(changes.server.useSnowFlake2 == system.tor.useSnowFlake2) delete changes.server.useSnowFlake2
 
 				renders.webserveradmin(el.c)
 			},
@@ -769,7 +769,7 @@ var system16 = (function(){
 
 					windows.proxieslist(use, "Select Proxy that using Interface", function(selected){
 						function onSettingsReceived(settings) {
-							if (settings.tor.enabled) {
+							if (settings.tor.enabled3) {
 								selected.fetchauth('manage', {
 									action: 'tor.start',
 									data: { persistence: false },
@@ -3310,7 +3310,7 @@ var system16 = (function(){
 								})
 							}
 							
-							if(typeof changes.server.torenabled2 != 'undefined' || typeof changes.server.enabled != 'undefined' || changes.server.https || changes.server.wss || changes.server.ssl){
+							if(typeof changes.server.torenabled3 != 'undefined' || typeof changes.server.enabled != 'undefined' || changes.server.https || changes.server.wss || changes.server.ssl){
 								new dialog({
 									class : 'zindex',
 									html : "Do you really want to change this settings?",

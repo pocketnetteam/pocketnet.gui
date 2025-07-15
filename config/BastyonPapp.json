@@ -1,0 +1,239 @@
+{
+    "url" : "pocketnet.app",
+    "turl" : "test.pocketnet.app",
+    "name" : "Bastyon",
+    "fullname" : "Bastyon",
+
+    "developapps" : [
+        {
+            "id" : "wpkoin.app",
+            "version": "0.0.1",
+            "scope" : "pkoin.net/wpkoinui",
+            "cantdelete" : true,
+            "name" : "WPKOIN",
+            "install" : true,
+            "develop": true,
+            "store" : {"g" : true},
+            "author" : "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82"
+        },
+        {
+            "id" : "swipelux.app",
+            "version": "0.0.1",
+            "scope": "app.swipelux.pocketnet.app",
+            "cantdelete": true,
+            "name": "Swipelux",
+            "develop": true,
+            "install": true,
+            "store": {
+                "g": true
+            },
+		    "author": "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82"
+		}, 
+        {
+		    "id": "barteron.pocketnet.app",
+		    "version": "1.0.0",
+		    "scope": "barteron.club",
+		    "cantdelete": true,
+		    "develop": true,
+		    "install": true,
+		    "name": "Barteron",
+		    "grantedPermissions": ["account", "chat"],
+		    "includeinsearch": true,
+		    "includeminiapps": true,
+		    "store": {
+		        "g": true
+		    }
+		}, 
+        {
+		    "id": "app.pocketnet.docs",
+		    "version": "1.0.0",
+		    "scope": "docs.pocketnet.app",
+		    "cantdelete": true,
+		    "develop": true,
+		    "install": true,
+		    "name": "Bastyon documentation",
+		    "grantedPermissions": [],
+		    "store": {
+		        "g": true,
+		        "i": true
+		    }
+		}, 
+        {
+		    "id": "app.pocketnet.blockexplorer",
+		    "version": "0.0.1",
+		    "scope": "bastyon.com/blockexplorer",
+		    "cantdelete": true,
+		    "name": "Block Explorer",
+		    "develop": true,
+		    "install": true,
+		    "store": {
+		        "g": true,
+		        "i": true
+		    },
+		    "author": "PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5"
+		}, 
+        {
+		    "id": "p2p.pkoin.app"   ,
+		    "version": "0.0.1",
+		    "scope": "p2p.pocketnet.app",
+		    "cantdelete": true,
+		    "name": "PKOIN Exchange",
+		    "grantedPermissions": ["account", "sign", "chat"],
+		    "develop": true,
+		    "install": true,
+		    "store": {
+		        "g": true
+		    },
+		    "author": "TQsidN3F7qcctiJ1Y5FgZnTjzQqQCt6ydG"
+		}
+	],
+    "protocol" : "bastyon",
+    "support" : "support@bastyon.com",
+    "lname" : "Dvm Analytics LLC",
+	"blockexplorer" : "https://bastyon.com/blockexplorer/",
+    "servers" : {
+        "production" : {
+            "proxy" : [
+                {
+                    "host" : "1.pocketnet.app",
+                    "port" : 8899,
+                    "wss" : 8099
+                },
+                {
+                    "host" : "2.pocketnet.app",
+                    "port" : 8899,
+                    "wss" : 8099
+                },
+                
+                {
+                    "host" : "3.pocketnet.app",
+                    "port" : 8899,
+                    "wss" : 8099
+                },
+                {
+                    "host" : "4.pocketnet.app",
+                    "port" : 8899,
+                    "wss" : 8099
+                },
+                {
+                    "host" : "5.pocketnet.app",
+                    "port" : 8899,
+                    "wss" : 8099
+                },
+                {
+                    "host" : "6.pocketnet.app",
+                    "port" : 8899,
+                    "wss" : 8099
+                }
+            ],
+        
+            "translateProxy" : {
+                "host" : "2.pocketnet.app",
+                "port" : 8899,
+                "wss" : 8099
+            },
+            
+            "matrix" : "matrix.pocketnet.app",
+            "matrixMirrors" : ["matrix.2.pocketnet.app"],
+
+            "monetization" : {
+                "url" : "pnettool.pocketnet.app",
+                "auth" : "dXNlcjE6R2ZoamttIDQuLg=="
+            }
+        },
+
+        "test" : {
+            "proxy" : [
+                {
+                    "host" : "test.pocketnet.app",
+                    "port" : 8899,
+                    "wss" : 8099
+                }
+            ],
+        
+            "translateProxy" : {
+                "host" : "2.pocketnet.app",
+                "port" : 8899,
+                "wss" : 8099
+            },
+        
+            "matrix" : "test.matrix.pocketnet.app"
+        }
+    },
+    "forbiddenNames" : [
+        "bastyon", "pocketnet", "lotos", "brighteon"
+    ],
+    "applications" : {
+        "ui" : {
+            "android" : {
+                "github" : {
+                    "name": "Bastyon.apk",
+                    "gfname": "BastyonGF.apk",
+                    "url": "https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest"
+                },
+                "href" : "https://play.google.com/store/apps/details?id=pocketnet.app"
+            },
+            "ios" : {
+                "href" : "https://apps.apple.com/app/id1537944200"
+            },
+            "windows" : {
+                "github" : {
+                    "name": "BastyonSetup.exe",
+                    "url": "https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest"
+                },
+                "githubalt" : {
+                    "label" : "windows7",
+                    "name": "BastyonSetup-win7.exe",
+                    "url": "https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest"
+                }
+            },
+            "macos" : {
+                "github" : {
+                    "name": "BastyonSetup.dmg",
+                    "url": "https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest",
+                    "page": "https://github.com/pocketnetteam/pocketnet.gui/blob/master/README.md#download-bastyon-on-your-devices"
+                }
+            },
+            "linux" : {
+                "github" : {
+                    "name": "BastyonSetup.deb",
+                    "url": "https://api.github.com/repos/pocketnetapp/pocketnet.gui/releases/latest",
+                    "page": "https://github.com/pocketnetteam/pocketnet.gui/blob/master/README.md#download-bastyon-on-your-devices"
+                }
+            }
+        },
+        "node": {
+            "windows": {
+                "github": {
+                    "name": "pocketnetcore_0.22.0_win_x64_setup.exe",
+                    "url": "https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest"
+                }
+            },
+
+            "linux": {
+                "github": {
+                    "name": "Pocketnet_linux_x64.AppImage",
+                    "url": "https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest"
+                }
+            }
+        }
+    },
+
+    "firebaseweb" : "7b226d6573736167696e6753656e6465724964223a2231303230353231393234393138222c2270726f6a6563744964223a22706f636b65746e6574222c226170694b6579223a2241497a615379435f4a6565743267704b525a703434694154776c4646413769474e597361626b6b222c226170704964223a22313a313032303532313932343931383a696f733a61623335636338346630643130643836616163623937227d",
+
+    "cordova" : {
+        "name" : "pocketnet.app",
+        "displayName" : "Pocketnet",
+        "iosTeamId" : "Y5JW9JU787",
+        "reversedClientId" : "com.googleusercontent.apps.1020521924918-0he8n2cuadpvdm9mi2dv9vj8llr8pgr1",
+        "iosUrlScheme" : "pocketnet",
+        "groupIdentifier" : "group.app.pocketnet"
+    },
+
+    "electron" : {
+        "protocol" : "bastyon"
+    },
+
+    "regAccounts" : ["PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd"],
+    "adminTools" : false
+}

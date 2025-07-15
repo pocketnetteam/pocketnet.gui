@@ -24,7 +24,7 @@ var application = (function(){
 					successCheck()
 				}).catch(e => {
 					console.error(e)
-					sitemessage(JSON.stringify(e), null, 5000)
+					sitemessage(self.app.localization.e('miniApp_installErrorMessage'), null, 5000)
 				}).finally(() => {
 					globalpreloader(false)
 				})
@@ -49,6 +49,9 @@ var application = (function(){
 				
 			},
 			openinfo : function(){
+
+				console.log('application', application)
+
 				app.nav.api.load({
                     open : true,
                     id : 'applicationmeta',

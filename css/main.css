@@ -6537,7 +6537,7 @@ html.mobileview #bnavigation .fakem {
     margin-left: 0;
   }
   #miniappscnt {
-    display: none;
+    display: none!important;
   }
 }
 @media only screen and (max-width: 1366px) {

@@ -699,10 +699,10 @@ function createWindow() {
                             win.focus()
                             win.show()
 
-                            if (!n.roomid) {
+                            if (!p.roomid) {
                                 win.webContents.send('nav-message', { msg: 'userpage?id=notifications&report=notifications', type: 'action'})
                             } else {
-                                win.webContents.send('open-chat', { roomid: n.roomid })
+                                win.webContents.send('open-chat', { roomid: p.roomid })
                             }
                         }
                 }

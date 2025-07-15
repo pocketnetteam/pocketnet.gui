@@ -163,7 +163,7 @@ var vars = {
 		protocol : config.protocol
 	},
 	prod : {
-		proxypath : '"http://5.pocketnet.app:8898/"',
+		proxypath : '"https://5.pocketnet.app:8899/"',
 		domain : config.url,
 		packageVersion: package.version,
 		test : '',
@@ -271,7 +271,7 @@ fs.exists(mapJsPath, function (exists) {
 
 				return true
 			},
-			copy : ['chat', 'components', 'css', 'images', 'img', 'js', 'localization', 'peertube', 'sounds', 'browserconfig.xml', 'crossdomain.xml', 'favicon.svg', 'favicon.ico', 'indexcordova.html']
+			copy : ['chat', 'components', 'css', 'images', 'img', 'js', 'localization', 'peertube', 'sounds', 'browserconfig.xml', 'crossdomain.xml', 'favicon.svg', 'favicon.ico', 'indexcordova.html', 'service-worker.js']
 		}
 
 		var cordovaconfig = {

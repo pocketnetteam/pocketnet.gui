@@ -85,7 +85,9 @@ __map =  {
 		{path : "js/functionsfirst.js", babelify : true},
 
 		"js/localization.js",
-	
+
+		
+		{path : "js/broadcaster.js", babelify : true},
 		{path : "js/lib/client/system16.js", babelify : true},
 		{path : "js/lib/client/monetization.js", babelify : true},
 		{path : "js/lib/client/api.js", babelify : true},

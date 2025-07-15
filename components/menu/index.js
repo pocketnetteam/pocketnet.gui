@@ -469,6 +469,7 @@ var menu = (function(){
 					})
 
 					controlTorElem = _el.find('.control-tor-state');
+					const controlTorStatusText = _el.find('.tor-progress-text');
 
 					self.sdk.broadcaster.clbks['menu'] = function(data){
 						actions.receiveNetworkStats(data)
@@ -486,6 +487,7 @@ var menu = (function(){
 						if (!currentProxy.direct) {
 							controlTorElem.removeClass(['on', 'loading']);
 							controlTorElem.addClass('off');
+							controlTorStatusText.removeClass('visible');
 							controlTorElem.attr('title', app.localization.e('torHintStateDisabled'));
 
 							return;
@@ -494,23 +496,30 @@ var menu = (function(){
 						proxyData = await currentProxy.get.info();
 
 						if (proxyData?.info.tor.state.status === 'stopped'
-							|| proxyData?.info.tor.enabled === 'neveruse') {
+							|| proxyData?.info.tor.enabled3 === 'neveruse') {
 							controlTorElem.removeClass(['on', 'loading', 'failed']);
 							controlTorElem.addClass('off');
 							controlTorElem.attr('title', app.localization.e('torHintStateDisabled'));
+							controlTorStatusText.removeClass('visible');
 						} else if (proxyData?.info.tor.state.status === 'started') {
 							controlTorElem.removeClass(['off', 'loading', 'failed']);
 							controlTorElem.addClass('on');
-							controlTorElem.attr('title', app.localization.e('torHintStateEnabled'));
+							controlTorElem.attr('title', proxyData?.info.tor.state.info);
+							controlTorStatusText.addClass('visible');
+							controlTorStatusText.text(app.localization.e('torHintStateEnabled'));
 						} else if (proxyData?.info.tor.state.status === 'install'
 							|| proxyData?.info.tor.state.status === 'running') {
 							controlTorElem.removeClass(['on', 'off', 'failed']);
 							controlTorElem.addClass('loading');
-							controlTorElem.attr('title', app.localization.e('torHintStateLoading'));
+							controlTorElem.attr('title', proxyData?.info.tor.state.info);
+							controlTorStatusText.addClass('visible');
+							controlTorStatusText.text(app.localization.e('torHintStateLoading'));
 						} else if (proxyData?.info.tor.state.status === 'failed') {
 							controlTorElem.removeClass(['on', 'loading', 'off']);
 							controlTorElem.addClass('failed');
-							controlTorElem.attr('title', app.localization.e('torHintStateDisabled'));
+							controlTorElem.attr('title', '');
+							controlTorStatusText.addClass('visible');
+							controlTorStatusText.text(app.localization.e('torHintStateDisabled'));
 						}
 					}, 2000);
 

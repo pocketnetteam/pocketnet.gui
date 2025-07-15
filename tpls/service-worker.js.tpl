@@ -6,6 +6,8 @@ const swBroadcaster = new Broadcaster('ServiceWorker');
 const swArgs = new URL(location).searchParams;
 
 const isElectron = (swArgs.get('platform') === 'electron');
+const isCordova = (swArgs.get('platform') === 'cordova');
+
 
 let nodeFetch = (...args) => fetch(...args);
 
@@ -51,6 +53,24 @@ function onFetch(event) {
     }
 
     cache.put(request, response);
+  }
+
+  async function torAnswerCordova() {
+
+		console.log('AltTransportActive1')
+
+    const isTorRequest = await swBroadcaster.invoke('AltTransportActive', request.url);
+
+		console.log('AltTransportActive2')
+
+
+    if (isTorRequest) {
+      
+    }
+    else{
+
+    }
+    
   }
 
   async function torAnswer() {
@@ -137,6 +157,24 @@ function onFetch(event) {
       }
     }
 
+    if(isCordova && request.url.indexOf("https://localhost")  == -1){
+      try {
+        const torResponseCordova = await torAnswerCordova();
+
+        if (torResponseCordova) {
+          resolve(torResponseCordova.clone());
+
+          if (cacheName) {
+            putCache(cache, torResponseCordova);
+          }
+
+          return;
+        }
+      } catch(err) {
+        reject(err);
+      }
+    }
+
     try {
       const fetchResponse = await fetch(request);
 
@@ -173,6 +211,10 @@ function onFetch(event) {
       reject(err);
     }
   });
+
+  
+
+  console.log('request', request)
 
   switch (request.destination) {
     case 'image':

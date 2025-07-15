@@ -34,10 +34,15 @@ if (typeof _Electron != 'undefined' && _Electron) {
 	filterXss = require('./js/vendor/xss.min.js')
 
 	Broadcaster = require('./js/broadcaster.js');
+}
 
+if(typeof Broadcaster != 'undefined' && ((typeof _Electron != 'undefined' && _Electron) || window.cordova)){
 	swBroadcaster = new Broadcaster('ServiceWorker');
 
 	swBroadcaster.handle('AltTransportActive', async (url) => {
+
+		console.log('AltTransportActive2')
+
 		function isWhitelisted(url) {
 			const { hostname } = new URL(url);
 
@@ -66,6 +71,16 @@ if (typeof _Electron != 'undefined' && _Electron) {
 			setTimeout(() => r(returnValue), seconds * 1000)
 		));
 
+		if (window.cordova){
+
+			var torRunner = window.cordova?.plugins?.torRunner
+
+			if(!torRunner){
+				return false;
+			}
+			
+		}
+
 		const proxy = self.app.api.get.current();
 
 		if (!proxy.direct) {
@@ -82,7 +97,6 @@ if (typeof _Electron != 'undefined' && _Electron) {
 
 		return await Promise.race([transportCheck, wait(1, false)]);
 	});
-
 }
 
 if (typeof _Node == 'undefined') _Node = false;
@@ -140,6 +154,8 @@ Application = function (p) {
 	self.cutversion = window.cordova && isios();
 
 	self.electronview = typeof _Electron != 'undefined' && _Electron
+
+	self.hasTor = (window.cordova?.plugins?.torRunner && !isios()) || self.electronview || false
 
 	self.margintop = 0
 	
@@ -949,6 +965,11 @@ Application = function (p) {
 		home : {
 			href : 'home',
 			childrens : ['application']
+		},
+
+		application : {
+			href : 'application',
+			childrens : ['home']
 		}
 
 
@@ -1737,7 +1758,7 @@ Application = function (p) {
 			if (self.playingvideo && self.playingvideo.playing) {
 
 				try {
-					self.playingvideo.pause()
+					if(!isMobile() || os() !== 'android') self.playingvideo.pause()
 
 					if (self.playingvideo.player_id){
 						var i = self.playingvideo.player_id

@@ -44,6 +44,11 @@ Localization = function(app){
 			name : "Español",
 			key : 'es'
 		},
+		sr : {
+			name : "Српски",
+			key : 'sr'
+		},
+
 		it : {
 			name : "Italiano",
 			key : 'it'
