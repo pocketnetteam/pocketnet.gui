@@ -57,15 +57,31 @@ function onFetch(event) {
 
   async function torAnswerCordova() {
 
-		console.log('AltTransportActive1')
-
     const isTorRequest = await swBroadcaster.invoke('AltTransportActive', request.url);
 
-		console.log('AltTransportActive2')
-
-
     if (isTorRequest) {
-      
+
+      request.url = 'http://127.0.0.1:' + port + '/?url=' + request.url
+
+      const fetchResponse = await fetch(request);
+
+      const responseClone = response.fetchResponse();
+
+      const responseBuffer = await responseClone.arrayBuffer();
+
+      networkTotalStats.torSuccessCount++;
+      networkTotalStats.totalTorBytes += responseBuffer.byteLength;
+
+      swBroadcaster.send('network-stats', {
+        status: 'success',
+        url: request.url,
+        torUsed: true,
+        bytesLength: responseBuffer.byteLength,
+        totalStats: networkTotalStats,
+      });
+
+      return fetchResponse;
+
     }
     else{
 

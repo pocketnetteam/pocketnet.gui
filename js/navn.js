@@ -144,7 +144,12 @@ Nav = function(app)
 			this.save()
 		},
 		load : function(){
-			this.chain = JSON.parse(localStorage['backchain'] || "[]");
+			try{
+				this.chain = JSON.parse(localStorage['backchain'] || "[]");
+			}
+			catch(e){
+				this.chain = []
+			}
 
 
 			if(!this.chain.length){
@@ -153,7 +158,13 @@ Nav = function(app)
 
 		},
 		save : function(){
-			localStorage['backchain'] = JSON.stringify(this.chain || [])
+			try{
+				localStorage['backchain'] = JSON.stringify(this.chain || [])
+			}
+			catch(e){
+
+			}
+			
 		},	
 
 		add : function(href, scroll, back){

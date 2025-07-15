@@ -78,6 +78,31 @@ if(typeof Broadcaster != 'undefined' && ((typeof _Electron != 'undefined' && _El
 			if(!torRunner){
 				return false;
 			}
+
+			return new Promise((resolve, reject) => {
+
+				window.cordova?.plugins?.torRunner.isUseWithTor(url, ({redirect, port}) => {
+
+					if(!redirect){
+						resolve(false)
+					}
+
+					else{
+						resolve({port})
+					}
+
+				}, (error) => {
+
+					console.log(error)
+
+					resolve(false)
+
+				})
+
+			})
+
+			
+			
 			
 		}
 
