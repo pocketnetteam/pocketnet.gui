@@ -34,7 +34,6 @@ var Roy = function (parent) {
 
 		_.each(instances, function (instance) {
 
-
 			if (!instance.info().canuploading || instance.cantuploading) can = false;
 		});
 
@@ -55,14 +54,15 @@ var Roy = function (parent) {
 	self.addInstance = function (url, options) {
 		if (!url) return;
 		if (!options) options = {};
-
+		
 		if (parent.instanses[url]){
+			if (!parent.instanses[url].instance.archiveDouble) {
+				parent.instanses[url].counter++ 
 
-			parent.instanses[url].counter++ 
+				instances.push(parent.instanses[url].instance);
 
-			instances.push(parent.instanses[url].instance);
-
-			return parent.instanses[url].instance
+				return parent.instanses[url].instance
+			}
 		}
 
 		var instance = new Instance(url, options.ip, self);
@@ -122,8 +122,7 @@ var Roy = function (parent) {
 
 	self.init = function (urls) {
 		inited = true;
-
-
+		
 		_.each(urls, function (ins) {
 			var host = ins;
 			var s = {};
