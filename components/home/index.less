@@ -121,6 +121,40 @@
         border-radius: 4px;
       }
 
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      justify-content: center;
+      margin-top: 0.3em;
+    }
+
+    .tag {
+      font-size: 0.65em;
+      color: rgb(var(--text-on-main-bg-color));
+      cursor: pointer;
+      transition: color 0.2s ease;
+      line-height: 1.2;
+      max-width: 60px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      opacity: 0.8;
+
+      &:hover {
+        color: rgb(var(--color-txt-ac));
+        opacity: 1;
+         text-decoration: underline;
+      }
+
+      &:not(:last-child)::after {
+        content: " •";
+        color: rgb(var(--text-on-main-bg-color));
+        opacity: 0.5;
+        margin-left: 2px;
+      }
+    }
+
       .manage-button {
         position: absolute;
         top: 0.5em;
@@ -204,12 +238,6 @@
           overflow: hidden;
           text-overflow: ellipsis;
           color: rgb(var(--text-color));
-
-          &:hover {
-            text-decoration-thickness: 2px;
-            text-underline-offset: 3px;
-            color: rgb(var(--color-txt-ac));
-          }
         }
 
         .app-tags {
@@ -248,6 +276,12 @@
           max-height: 2.4em;
         }
       }
+
+      &:hover .app-info .app-name {
+        text-decoration-thickness: 2px;
+        text-underline-offset: 3px;
+        color: rgb(var(--color-txt-ac));
+      }
     }
   }
 
@@ -268,6 +302,156 @@
       &:hover {
         background-color: rgb(var(--neutral-grad-2));
         color: rgb(var(--text-color));
+      }
+    }
+  }
+
+  .filterChipsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 0 4px;
+  }
+
+  .filter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border: 1px solid rgb(var(--neutral-grad-1));
+    border-radius: 20px;
+    background: rgb(var(--background-main));
+    color: rgb(var(--text-on-main-bg-color));
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+    white-space: nowrap;
+
+    &:hover {
+      border-color: rgb(var(--neutral-grad-2));
+      background: rgb(var(--neutral-grad-0));
+      transform: translateY(-1px);
+    }
+
+    &.active {
+      background: rgb(var(--color-bg-ac));
+      color: rgb(var(--text-on-bg-ac-color));
+      border-color: rgb(var(--color-bg-ac));
+    }
+
+    &.hidden {
+      display: none;
+    }
+
+    i {
+      font-size: 12px;
+      opacity: 0.7;
+
+      .active & {
+        opacity: 1;
+      }
+    }
+  }
+
+  .more-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 32px;
+    padding: 6px 8px;
+    border: 1px solid rgb(var(--neutral-grad-1));
+    border-radius: 20px;
+    background: rgb(var(--background-main));
+    color: rgb(var(--text-on-main-bg-color));
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+
+    &:hover {
+      border-color: rgb(var(--neutral-grad-2));
+      background: rgb(var(--neutral-grad-0));
+      transform: translateY(-1px);
+    }
+
+    &.expanded {
+      background: rgb(var(--color-bg-ac));
+      color: rgb(var(--text-on-bg-ac-color));
+      border-color: rgb(var(--color-bg-ac));
+    }
+  }
+
+  .controls-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+    padding: 0 4px;
+  }
+
+  .clear-filters {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 16px;
+    background: rgb(var(--neutral-grad-1));
+    color: rgb(var(--text-on-main-bg-color));
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    opacity: 0;
+    visibility: hidden;
+
+    &.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    &:hover {
+      background: rgb(var(--neutral-grad-2));
+      color: rgb(var(--text-color));
+    }
+  }
+
+  .active-filters-count {
+    background: rgb(var(--color-bg-ac));
+    color: rgb(var(--text-on-bg-ac-color));
+    border-radius: 10px;
+    padding: 2px 6px;
+    font-size: 11px;
+    font-weight: bold;
+    min-width: 16px;
+    text-align: center;
+  }
+
+  @media (max-width: 600px) {
+    .filter-chip,
+    .more-toggle {
+      font-size: 13px;
+      padding: 5px 10px;
+    }
+
+    .filterChipsContainer,
+    .controls-row {
+      gap: 6px;
+    }
+
+    .applicationsList .application {
+      .tags {
+        gap: 3px;
+      }
+
+      .tag {
+        font-size: 0.65em;
+        padding: 1px 4px;
+        max-width: 50px;
       }
     }
   }

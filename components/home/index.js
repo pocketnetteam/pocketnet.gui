@@ -1,296 +1,434 @@
 var home = (function () {
-	var self = new nModule();
+  var self = new nModule();
 
-	var essenses = {};
+  var essenses = {};
 
-	var Essense = function (p) {
-		var primary = deep(p, "history");
+  var Essense = function (p) {
+    var primary = deep(p, "history");
 
-		var el,
-			ed,
-			applicationSearch,
-			acsearch,
-			userAddress = null;
+    var el,
+      ed,
+      applicationSearch,
+      acsearch,
+      userAddress = null;
 
-		var actions = {
-			applicationSearchClear: function () {
-				renders.applications();
-			},
-			applySearchFilter: function (search) {
-				if (!search) {
-					console.warn("Invalid search configuration provided:", search);
-					return;
-				}
+    var actions = {
+      filterChipToggle: function (filter) {
+        if (!self.activeFilters) self.activeFilters = new Set();
 
-				if (!search) {
-					console.warn("Search value is empty:", searchValue);
-					return;
-				}
+        const chip = el.c.find(`[data-filter="${filter}"]`);
+        const isAll = filter === "all";
+        const hasFilter = self.activeFilters.has(filter);
 
-				if (acsearch && typeof acsearch.setvalue === "function") {
-					acsearch.setvalue(search);
-				} else {
-					console.error(
-						"acsearch.setvalue is not a valid function or acsearch is undefined."
-					);
-				}
+        if (isAll && !hasFilter) {
+          self.activeFilters.clear();
+          el.c.find(".filter-toggle").removeClass("active");
+        } else if (!isAll && self.activeFilters.has("all")) {
+          self.activeFilters.delete("all");
+          el.c.find(`[data-filter="all"]`).removeClass("active");
+        }
 
-				try {
-					renders.applications({
-						search,
-					});
-				} catch (error) {
-					console.error("Error rendering applications:", error);
-				}
-			},
-			removeValidSearchClass: function () {
-				el.c.find(".search").removeClass("validSearch");
-			},
-			applicationSearch: function (searchValue) {
-				if (acsearch) {
-					acsearch.destroy();
-					acsearch = null;
-				}
-				acsearch = new search(el.c.find(".applicationSearch"), {
-					placeholder: self.app.localization.e("searchbyapplications"),
+        self.activeFilters.has(filter)
+          ? self.activeFilters.delete(filter) && chip.removeClass("active")
+          : self.activeFilters.add(filter) && chip.addClass("active");
 
-					clbk: function (_el) { },
+        actions.updateFilterUI();
+        renders.applications({
+          search: acsearch?.getvalue() || "",
+          tags: actions.getActiveTagsAsWords(),
+          showAll: self.activeFilters.has("all"),
+        });
+      },
 
-					last: {
-						get: function (d) {
+      toggleChipsExpansion: function (hiddenCount) {
+        const moreButton = el.c.find("#moreButton");
+        const moreText = moreButton.find(".more-text");
+        const moreIcon = moreButton.find("i");
+        const hiddenChips = el.c.find(".filter-toggle.hidden");
 
-							return [];
-						},
+        self.chipsExpanded = !self.chipsExpanded;
 
-						tpl: function (result, clbk) { },
-					},
+        if (self.chipsExpanded) {
+          hiddenChips.removeClass("hidden");
+          moreText.text(self.app.localization.e("hide") || "Скрыть");
+          moreIcon.removeClass("fa-plus").addClass("fa-minus");
+        } else {
+          el.c.find(".filter-toggle").each(function (index) {
+            if (index > 5) {
+              $(this).addClass("hidden");
+            }
+          });
+          moreText.text("+" + hiddenCount);
+          moreIcon.removeClass("fa-minus").addClass("fa-plus");
+        }
+      },
 
-					events: {
-						fastsearch: async function (value, clbk) {
-							if (value.length < 2) {
-								actions.removeValidSearchClass();
-								return clbk();
-							}
-							const applications = await self.app.apps.get.applicationsSearch(
-								value
-							);
-							renders.searchResults(applications, value);
-							clbk();
-						},
-						search: async function (value, clbk, e, helpers) {
-							await renders.applications({
-								search: value,
-							});
-							actions.hideSearchResultsMenu();
-							clbk();
-						},
-						active: function (isActive) {
-							if (isActive) {
-								el.c.addClass("search-active");
-							} else {
-								el.c.removeClass("search-active");
-							}
-						},
-						clear: function (fs) {
-							actions.applicationSearchClear();
-							actions.removeValidSearchClass();
-							el.c.find(".searchFastResultWrapper").empty();
-						},
-					},
-				});
+      getActiveTagsAsWords: function () {
+        if (!self.activeFilters || self.activeFilters.size === 0) {
+          return [];
+        }
 
-				if (searchValue) {
-					acsearch.setvalue(searchValue);
-				}
-			},
-			hideSearchResultsMenu: function () {
-				const searchResultsWrapper = el.c.find(".searchFastResultWrapper");
-				searchResultsWrapper.addClass("hidden");
-			},
-		};
+        if (self.activeFilters.has("all")) {
+          return [];
+        }
 
-		var events = {};
+        return [...self.activeFilters]
+          .flatMap((item) => item.split(" "))
+          .filter(Boolean);
+      },
+      updateFilterUI: function () {
+        const activeCount = self.activeFilters ? self.activeFilters.size : 0;
+        const clearButton = el.c.find(".clear-filters");
+        const countBadge = el.c.find(".active-filters-count");
 
-		const applicationActions = {
-			navigateToApplication: (applicationId) => {
-				self.nav.api.go({
-					href: `application?id=${applicationId}`,
-					history: true,
-					open: true,
-				});
-			},
-			navigateToDevApplication: (applicationId) => {
-				self.nav.api.go({
-					href: `devapplication${applicationId ? "?id=" + applicationId : ""}`,
-					history: true,
-					open: true,
-				});
-			},
-		};
+        countBadge.text(activeCount);
 
-		var renders = {
-			searchResults: function (results, value) {
-				el.c.find(".search").addClass("validSearch");
-				self.shell({
-					name: "searchResults",
-					el: el.c.find(".searchFastResultWrapper"),
-					data: {
-						applications: results,
-						value,
-						hasSearchOptions: value.split(":").length <= 1,
-					},
-				},
-					function (p) {
-						p.el.find(".application").on("click", function (event) {
-							const applicationId = $(this).data("id");
-							applicationActions.navigateToApplication(applicationId);
-						});
-						p.el.find(".search-option").on("click", function (event) {
-							const searchBy = $(this).data("searchby");
+        if (activeCount > 0) {
+          clearButton.addClass("visible");
+        } else {
+          clearButton.removeClass("visible");
+        }
+      },
 
-							actions.applySearchFilter(`${searchBy}:${value}`);
-							actions.hideSearchResultsMenu();
-						});
-						p.el.find(".app-tag").on("click", function (event) {
-							event.stopPropagation();
-							actions.applySearchFilter(`tags:${$(this).text().trim()}`);
-						});
-					}
-				);
-			},
-			applications: async function (searchConfig, clbk) {
-				if (!searchConfig?.applications) {
-					applications = await self.app.apps.get.applicationsSearch(
-						searchConfig?.search,
-						searchConfig?.searchBy
-					);
-				}
+      clearAllFilters: function () {
+        if (self.activeFilters) {
+          self.activeFilters.clear();
+        }
+        el.c.find(".filter-toggle").removeClass("active");
+        actions.updateFilterUI();
+        renders.applications({
+          search: acsearch ? acsearch.getvalue() : "",
+        });
+      },
+      applicationSearchClear: function () {
+        renders.applications();
+      },
+      applySearchFilter: function (search) {
+        if (!search) {
+          console.warn("Invalid search configuration provided:", search);
+          return;
+        }
 
-				console.log('applications', applications)
+        if (!search) {
+          console.warn("Search value is empty:", searchValue);
+          return;
+        }
 
-				self.shell({
-					name: "applications",
-					el: el.c.find(".applicationsList"),
-					data: {
-						applications,
-						userAddress,
-					},
-				},
-					function (p) {
-						p.el.find(".application").on("click", function (event) {
-							const actionType = $(event.target)
-								.closest("[data-action]")
-								.data("action");
-							const applicationId = event.currentTarget.dataset?.id;
+        if (acsearch && typeof acsearch.setvalue === "function") {
+          acsearch.setvalue(search);
+        } else {
+          console.error(
+            "acsearch.setvalue is not a valid function or acsearch is undefined.",
+          );
+        }
 
-							if (actionType && applicationActions[actionType]) {
-								applicationActions[actionType](applicationId);
-							} else {
-								console.warn("Unknown action:", actionType);
-							}
-						});
+        try {
+          renders.applications({
+            search,
+          });
+        } catch (error) {
+          console.error("Error rendering applications:", error);
+        }
+      },
+      removeValidSearchClass: function () {
+        el.c.find(".search").removeClass("validSearch");
+      },
+      applicationSearch: function (searchValue) {
+        if (acsearch) {
+          acsearch.destroy();
+          acsearch = null;
+        }
+        acsearch = new search(el.c.find(".applicationSearch"), {
+          placeholder: self.app.localization.e("searchbyapplications"),
 
-						el.c.on("click", "#createAppButton", function () {
-							applicationActions.navigateToDevApplication();
-						});
+          clbk: function (_el) {},
 
-						el.c.on("click", "#myAppsButton", function () {
-							actions.applySearchFilter(`address:${userAddress}`);
-						});
+          last: {
+            get: function (d) {
+              return [];
+            },
 
-						if (clbk) clbk();
-					}
-				);
-			},
-		};
+            tpl: function (result, clbk) {},
+          },
 
-		var state = {
-			save: function () { },
-			load: function () { },
-		};
+          events: {
+            fastsearch: async function (value, clbk) {
+              if (value.length < 2) {
+                actions.removeValidSearchClass();
+                return clbk();
+              }
+              const applications =
+                await self.app.apps.get.applicationsSearch(value);
+              renders.searchResults(applications, value);
+              clbk();
+            },
+            search: async function (value, clbk, e, helpers) {
+              await renders.applications({
+                search: value,
+              });
+              actions.hideSearchResultsMenu();
+              clbk();
+            },
+            active: function (isActive) {
+              if (isActive) {
+                el.c.addClass("search-active");
+              } else {
+                el.c.removeClass("search-active");
+              }
+            },
+            clear: function (fs) {
+              actions.applicationSearchClear();
+              actions.removeValidSearchClass();
+              el.c.find(".searchFastResultWrapper").empty();
+            },
+          },
+        });
 
-		var initEvents = function () {
-			const searchInput = el.c.find(".applicationSearch input");
-			const searchResultsWrapper = el.c.find(".searchFastResultWrapper");
+        if (searchValue) {
+          acsearch.setvalue(searchValue);
+        }
+      },
+      hideSearchResultsMenu: function () {
+        const searchResultsWrapper = el.c.find(".searchFastResultWrapper");
+        searchResultsWrapper.addClass("hidden");
+      },
+    };
 
-			searchInput.on("focus", function () {
-				searchResultsWrapper.removeClass("hidden");
-			});
+    var events = {};
 
-			searchInput.on("blur", function () {
-				setTimeout(actions.hideSearchResultsMenu, 200);
-			});
-		};
+    const applicationActions = {
+      navigateToApplication: (applicationId) => {
+        self.nav.api.go({
+          href: `application?id=${applicationId}`,
+          history: true,
+          open: true,
+        });
+      },
+      navigateToDevApplication: (applicationId) => {
+        self.nav.api.go({
+          href: `devapplication${applicationId ? "?id=" + applicationId : ""}`,
+          history: true,
+          open: true,
+        });
+      },
+    };
 
-		var make = function () {
-			const searchValue = parameters().search;
-			applicationSearch = actions.applicationSearch(searchValue);
+    var renders = {
+      searchResults: function (results, value) {
+        el.c.find(".search").addClass("validSearch");
+        self.shell(
+          {
+            name: "searchResults",
+            el: el.c.find(".searchFastResultWrapper"),
+            data: {
+              applications: results,
+              value,
+              hasSearchOptions: value.split(":").length <= 1,
+            },
+          },
+          function (p) {
+            p.el.find(".application").on("click", function (event) {
+              const applicationId = $(this).data("id");
+              applicationActions.navigateToApplication(applicationId);
+            });
+            p.el.find(".search-option").on("click", function (event) {
+              const searchBy = $(this).data("searchby");
 
-			renders.applications({
-				search: searchValue,
-			});
-		};
+              actions.applySearchFilter(`${searchBy}:${value}`);
+              actions.hideSearchResultsMenu();
+            });
+            p.el.find(".app-tag").on("click", function (event) {
+              event.stopPropagation();
+              actions.applySearchFilter(`tags:${$(this).text().trim()}`);
+            });
+          },
+        );
+      },
+      filterChips: function () {
+        const { all, categoryIcons } = self.app.platform.sdk.categories.data;
+        const language = app.localization.key;
 
-		return {
-			primary: primary,
+        const chips = all[language].map((category) => ({
+          ...category,
+          tags: category.tags.join(" "),
+          icon:
+            categoryIcons.find((icon) => icon.id === category.id)?.icon ||
+            "fas fa-cube",
+        }));
 
-			getdata: function (clbk, p) {
-				ed = p.settings.essenseData;
+        const allChips = [
+          {
+            name: self.app.localization.e("all"),
+            icon: "fas fa-th",
+            tags: ["all"],
+          },
+          ...chips,
+        ];
 
-				userAddress = self.app?.user?.address?.value || null;
-				var data = {
-					ed,
-					userAddress,
-				};
+        const visibleCount = 6;
+        const totalCount = allChips.length;
+        const hiddenCount = Math.max(0, totalCount - visibleCount);
+        const hasHiddenChips = hiddenCount > 0;
+        self.shell(
+          {
+            name: "filterChips",
+            el: el.c.find(".filterChipsContainer"),
+            data: {
+              chips: allChips,
+              visibleCount,
+              hiddenCount,
+              hasHiddenChips,
+            },
+          },
+          function () {
+            el.c.find(".filter-toggle").on("click", function () {
+              actions.filterChipToggle($(this).data("filter"));
+            });
 
-				pretry(() => {
-					return self.app.apps.inited
-				}, 100, 3000).then(() => {
-	
-					clbk(data);
-				})
+            el.c.find(".clear-filters").on("click", () => {
+              actions.clearAllFilters();
+            });
 
-			},
+            el.c.find("#moreButton").on("click", () => {
+              actions.toggleChipsExpansion(hiddenCount);
+            });
+          },
+        );
+      },
+      applications: async function (searchConfig, clbk) {
+        if (!searchConfig?.applications) {
+          applications =
+            await self.app.apps.get.applicationsSearch(searchConfig);
+        }
 
-			destroy: function () {
-				ed = {};
-				el = {};
-			},
+        self.shell(
+          {
+            name: "applications",
+            el: el.c.find(".applicationsList"),
+            data: {
+              applications,
+              userAddress,
+            },
+          },
+          function (p) {
+            p.el.find(".application").on("click", function (event) {
+              const actionType = $(event.target)
+                .closest("[data-action]")
+                .data("action");
+              const applicationId = event.currentTarget.dataset?.id;
 
-			init: function (p) {
-				state.load();
+              if (actionType && applicationActions[actionType]) {
+                applicationActions[actionType](applicationId);
+              } else {
+                console.warn("Unknown action:", actionType);
+              }
+            });
 
-				el = {};
-				el.c = p.el.find("#" + self.map.id);
+            el.c.on("click", "#createAppButton", function () {
+              applicationActions.navigateToDevApplication();
+            });
 
-				make();
-				initEvents();
-				p.clbk(null, p);
-			},
-		};
-	};
+            p.el.find(".tag").on("click", function (event) {
+              event.stopPropagation();
+              actions.applySearchFilter(`tags:${$(this).text().trim()}`);
+            });
 
-	self.run = function (p) {
-		var essense = self.addEssense(essenses, Essense, p);
+            el.c.on("click", "#myAppsButton", function () {
+              actions.applySearchFilter(`address:${userAddress}`);
+            });
 
-		self.init(essense, p);
-	};
+            if (clbk) clbk();
+          },
+        );
+      },
+    };
 
-	self.stop = function () {
-		_.each(essenses, function (essense) {
-			window.rifticker.add(() => {
-				essense.destroy();
-			});
-		});
-	};
+    var state = {
+      save: function () {},
+      load: function () {},
+    };
 
-	return self;
+    var initEvents = function () {
+      const searchInput = el.c.find(".applicationSearch input");
+      const searchResultsWrapper = el.c.find(".searchFastResultWrapper");
+
+      searchInput.on("focus", function () {
+        searchResultsWrapper.removeClass("hidden");
+      });
+
+      searchInput.on("blur", function () {
+        setTimeout(actions.hideSearchResultsMenu, 200);
+      });
+    };
+
+    var make = function () {
+      const searchValue = parameters().search;
+      applicationSearch = actions.applicationSearch(searchValue);
+      renders.filterChips();
+      renders.applications(searchValue);
+    };
+
+    return {
+      primary: primary,
+
+      getdata: function (clbk, p) {
+        ed = p.settings.essenseData;
+
+        userAddress = self.app?.user?.address?.value || null;
+        var data = {
+          ed,
+          userAddress,
+        };
+
+        pretry(
+          () => {
+            return self.app.apps.inited;
+          },
+          100,
+          3000,
+        ).then(() => {
+          clbk(data);
+        });
+      },
+
+      destroy: function () {
+        ed = {};
+        el = {};
+      },
+
+      init: function (p) {
+        state.load();
+
+        el = {};
+        el.c = p.el.find("#" + self.map.id);
+
+        make();
+        initEvents();
+        p.clbk(null, p);
+      },
+    };
+  };
+
+  self.run = function (p) {
+    var essense = self.addEssense(essenses, Essense, p);
+
+    self.init(essense, p);
+  };
+
+  self.stop = function () {
+    _.each(essenses, function (essense) {
+      window.rifticker.add(() => {
+        essense.destroy();
+      });
+    });
+  };
+
+  return self;
 })();
 
 if (typeof module != "undefined") {
-	module.exports = home;
+  module.exports = home;
 } else {
-	app.modules.home = {};
-	app.modules.home.module = home;
-
+  app.modules.home = {};
+  app.modules.home.module = home;
 }

@@ -1,22 +1,32 @@
 <div class="list">
-    <% if (applications && applications.length) { %>
-    <% applications.forEach(function(ins) { %>
+    <% if (applications && applications.length) { %> <%
+    applications.forEach(function(ins) { %>
     <div class="application" data-id="<%- ins.id %>">
         <% if (ins.address === userAddress) { %>
         <button class="manage-button" data-action="navigateToDevApplication">
             <i title="Manage" class="fas fa-cog"></i>
         </button>
         <% } %>
-        <div class="icon" data-action="navigateToApplication" style="background-image: url('<%- ins.icon %>')"></div>
+        <div
+            class="icon"
+            data-action="navigateToApplication"
+            style="background-image: url(&quot;<%- ins.icon %>&quot;)"
+        ></div>
         <div class="name">
             <span data-action="navigateToApplication"><%- ins.name %></span>
             <% if (ins.status === 'development') { %>
             <span class="dev-label">Dev</span>
             <% } %>
         </div>
+        <% if (ins.tags && ins.tags.length > 0) { %>
+        <div class="tags">
+            <% ins.tags.forEach(function(tag) { %>
+            <span class="tag" data-tag="<%- tag %>">#<%- tag %></span>
+            <% }); %>
+        </div>
+        <% } %>
     </div>
-    <% }); %>
-    <% } else { %>
+    <% }); %> <% } else { %>
     <p>No applications available.</p>
     <% } %>
 </div>

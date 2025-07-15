@@ -1,32 +1,35 @@
 <% if (hasSearchOptions) { %>
 <div class="search-options">
-  <div class="search-option" data-searchBy="tags">
-    <div class="result-icon">
-      <i class="fas fa-hashtag"></i>
+    <div class="search-option" data-searchBy="tags">
+        <div class="result-icon">
+            <i class="fas fa-hashtag"></i>
+        </div>
+        <div class="result-label">
+            <%= e('searchbytags') %>
+            <b><%- value %></b>
+        </div>
     </div>
-    <div class="result-label">
-      <%= e('searchbytags') %>
-      <b><%- value %></b>
-    </div>
-  </div>
 </div>
 <% }%> <% if (applications && applications.length) { %>
 <div class="application-results">
-  <% applications.forEach(function(app) { %>
-  <div class="application" data-id="<%- app.id %>">
-    <div class="app-icon" style="background-image: url('<%- app.icon %>')"></div>
-    <div class="app-info">
-      <div class="app-name"><%- app.name %></div>
-      <div class="app-description"><%- app.description || '' %></div>
-      <div class="app-tags">
-        <% if (app && app.tags && app.tags.length) { %> <%
-        app.tags.forEach(function(tag) { %>
-        <span class="app-tag"><%- tag %></span>
-        <% }); %> <% } %>
-      </div>
+    <% applications.forEach(function(app) { %>
+    <div class="application" data-id="<%- app.id %>">
+        <div
+            class="app-icon"
+            style="background-image: url(&quot;<%- app.icon %>&quot;)"
+        ></div>
+        <div class="app-info">
+            <div class="app-name"><%- app.name %></div>
+            <div class="app-description"><%- app.description || '' %></div>
+            <div class="app-tags">
+                <% if (app && app.tags && app.tags.length) { %> <%
+                app.tags.forEach(function(tag) { %>
+                <span class="app-tag" title="<%- tag %>"><%- tag %></span>
+                <% }); %> <% } %>
+            </div>
+        </div>
     </div>
-  </div>
-  <% }); %>
+    <% }); %>
 </div>
 <% } else { %>
 <div class="no-results">...</div>
