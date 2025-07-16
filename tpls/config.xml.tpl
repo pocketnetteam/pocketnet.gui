@@ -192,7 +192,7 @@
         <resource-file src="resources/android/xml/network_security_config.xml" target="app/src/main/res/xml/network_security_config.xml" />
 
         <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application">
-            <application android:hardwareAccelerated="true" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" android:largeHeap="true" android:banner="@drawable/banner" android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true" android:networkSecurityConfig="@xml/network_security_config"/>
+            <application android:hardwareAccelerated="true" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" android:largeHeap="true" android:banner="@drawable/banner" android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true" android:networkSecurityConfig="@xml/network_security_config" android:name="pan.alexander.cordova.torrunner.App"/>
         </edit-config>
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
