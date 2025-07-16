@@ -75,27 +75,32 @@ if(typeof Broadcaster != 'undefined' && ((typeof _Electron != 'undefined' && _El
 
 			var torRunner = window.cordova?.plugins?.torRunner
 
+			console.log('isUseWithTor torRunner', torRunner)
+
+
 			if(!torRunner){
 				return false;
 			}
 
 			return new Promise((resolve, reject) => {
 
-				window.cordova?.plugins?.torRunner.isUseWithTor(url, ({redirect, port}) => {
+				window.cordova?.plugins?.torRunner.isUseWithTor(url, (data = {}) => {
 
-					if(!redirect){
-						resolve(false)
+					console.log('isUseWithTor data', data)
+
+					if(!data.redirect){
+						resolve(null)
 					}
 
 					else{
-						resolve({port})
+						resolve(data)
 					}
 
 				}, (error) => {
 
 					console.log(error)
 
-					resolve(false)
+					resolve(null)
 
 				})
 

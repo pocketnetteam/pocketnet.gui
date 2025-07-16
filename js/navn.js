@@ -74,7 +74,7 @@ Nav = function(app)
 	self.wnds = {};
 	self.prepared = false
 
-	var externalexclusions = ['blockexplorer', 'embedVideo.php', 'docs/', 'pocketnet-crypto-challenge']
+	var externalexclusions = ['blockexplorer', 'barteron', 'embedVideo.php', 'docs/', 'pocketnet-crypto-challenge']
 
 	var module = {
 		find : function(href){

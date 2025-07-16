@@ -61,11 +61,26 @@ function onFetch(event) {
 
     if (isTorRequest) {
 
-      request.url = 'http://127.0.0.1:' + port + '/?url=' + request.url
+      const proxyURL = `http://localhost:8181/${encodeURIComponent(request.url)}`;
 
-      const fetchResponse = await fetch(request);
+      const init = {
+            method: request.method,
+            headers: request.headers,
+            redirect: request.redirect,
+            credentials: "omit",
+            mode: "cors",
+      };
 
-      const responseClone = response.fetchResponse();
+      if (request.method !== "GET" && request.method !== "HEAD") {
+        try {
+            init.body = await request.clone().arrayBuffer();
+        } catch (err) {
+        }
+      }
+
+      const fetchResponse = await fetch(proxyURL, init);
+
+      const responseClone = fetchResponse.clone();
 
       const responseBuffer = await responseClone.arrayBuffer();
 
