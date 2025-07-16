@@ -111,13 +111,10 @@
 #userslist.preview .users {
   display: flex;
   flex-wrap: wrap;
-  justify-content: stretch;
-  margin-right: -5px;
+  justify-content: space-between;
 }
 #userslist.preview .users .wrk {
   display: flex;
-  flex: 1;
-  max-width: calc(100%/5);
 }
 #userslist.preview .users .user {
   margin-top: 0;

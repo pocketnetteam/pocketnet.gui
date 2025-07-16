@@ -3253,3 +3253,7 @@ _l.windows7 = "Download for Windows 7"
 _l.miniapps = "Mini Applications"
 
 _l.sysmodbas="Content moderation system on Bastyon"
+
+_l.collections = "Collections"
+_l.emptycollections = "No collections"
+_l.newcollection = "Create"
