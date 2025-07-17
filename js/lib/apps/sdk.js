@@ -623,6 +623,66 @@ var BastyonSdk = function(settings = {}){
         return options
     }
 
+    let swRegistration = null
+    
+    navigator.serviceWorker?.addEventListener('message', (event) => {
+      if (event.data.type === 'FETCH_REQUEST')
+        window.parent.postMessage(event.data, '*')
+    })
+    
+    window.addEventListener('message', (event) => {
+      if (event.data.type === 'FETCH_RESPONSE')
+        navigator.serviceWorker.controller?.postMessage(event.data)
+    })
+    
+    self.serviceWorker = {
+        register: async function() {
+          if (swRegistration) return swRegistration
+            
+            try {
+                const appinfo = await self.get.appinfo()
+                if (!appinfo.alttransport) {
+                    return null
+                }
+                
+                swRegistration = await navigator.serviceWorker.register('/miniapp-service-worker.js')
+                
+                return swRegistration
+                
+            } catch (error) {
+                console.error('Service Worker registration failed:', error)
+                return null
+            }
+        },
+        
+        isActive: function() {
+            return !!swRegistration?.active
+        },
+        
+        getStatus: function() {
+            return {
+                supported: 'serviceWorker' in navigator,
+                registered: !!swRegistration,
+                active: this.isActive(),
+                scope: swRegistration?.scope,
+                scriptURL: swRegistration?.active?.scriptURL
+            }
+        },
+        
+        unregister: async function() {
+            if (swRegistration) {
+                try {
+                    await swRegistration.unregister()
+                    swRegistration = null
+                    return true
+                } catch (error) {
+                    return false
+                }
+            }
+            return true
+        }
+    }
+    
 
     listen()
 
