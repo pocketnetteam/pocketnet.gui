@@ -187,6 +187,9 @@
             <manifest xmlns:tools="http://schemas.android.com/tools" />
         </edit-config>-->
 
+        <preference name="GradlePluginKotlinEnabled" value="true" />
+        <preference name="GradlePluginKotlinVersion" value="2.1.0" />
+
 
         <resource-file src="resources/android/raw/isrg_root_x1.der" target="app/src/main/res/raw/isrg_root_x1.der" />
         <resource-file src="resources/android/raw/isrg_root_x2.der" target="app/src/main/res/raw/isrg_root_x2.der" />

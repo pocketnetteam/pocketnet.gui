@@ -245,8 +245,6 @@ function onFetch(event) {
 
   
 
-  console.log('request', request)
-
   switch (request.destination) {
     case 'image':
       event.respondWith(handle('image-cache'));
@@ -255,7 +253,14 @@ function onFetch(event) {
     case 'style':
     case 'script':
     case 'worker':
-      event.respondWith(handle('cache[__VAR__.domain-__VAR__.packageVersion]'));
+
+      if(isCordova && request.url.indexOf("https://localhost")  > -1){
+        event.respondWith(handle());
+      }
+      else{
+        event.respondWith(handle('cache[__VAR__.domain-__VAR__.packageVersion]'));
+      }
+
       break;
 
     default: event.respondWith(handle()); break;
