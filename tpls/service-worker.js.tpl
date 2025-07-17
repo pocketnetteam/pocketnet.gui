@@ -57,15 +57,46 @@ function onFetch(event) {
 
   async function torAnswerCordova() {
 
-		console.log('AltTransportActive1')
-
     const isTorRequest = await swBroadcaster.invoke('AltTransportActive', request.url);
 
-		console.log('AltTransportActive2')
-
-
     if (isTorRequest) {
-      
+
+      const proxyURL = `http://localhost:8181/${encodeURIComponent(request.url)}`;
+
+      const init = {
+            method: request.method,
+            headers: request.headers,
+            redirect: request.redirect,
+            credentials: "omit",
+            mode: "cors",
+      };
+
+      if (request.method !== "GET" && request.method !== "HEAD") {
+        try {
+            init.body = await request.clone().arrayBuffer();
+        } catch (err) {
+        }
+      }
+
+      const fetchResponse = await fetch(proxyURL, init);
+
+      const responseClone = fetchResponse.clone();
+
+      const responseBuffer = await responseClone.arrayBuffer();
+
+      networkTotalStats.torSuccessCount++;
+      networkTotalStats.totalTorBytes += responseBuffer.byteLength;
+
+      swBroadcaster.send('network-stats', {
+        status: 'success',
+        url: request.url,
+        torUsed: true,
+        bytesLength: responseBuffer.byteLength,
+        totalStats: networkTotalStats,
+      });
+
+      return fetchResponse;
+
     }
     else{
 
@@ -214,8 +245,6 @@ function onFetch(event) {
 
   
 
-  console.log('request', request)
-
   switch (request.destination) {
     case 'image':
       event.respondWith(handle('image-cache'));
@@ -224,7 +253,14 @@ function onFetch(event) {
     case 'style':
     case 'script':
     case 'worker':
-      event.respondWith(handle('cache[__VAR__.domain-__VAR__.packageVersion]'));
+
+      if(isCordova && request.url.indexOf("https://localhost")  > -1){
+        event.respondWith(handle());
+      }
+      else{
+        event.respondWith(handle('cache[__VAR__.domain-__VAR__.packageVersion]'));
+      }
+
       break;
 
     default: event.respondWith(handle()); break;

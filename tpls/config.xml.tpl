@@ -187,12 +187,16 @@
             <manifest xmlns:tools="http://schemas.android.com/tools" />
         </edit-config>-->
 
+        <preference name="GradlePluginKotlinEnabled" value="true" />
+        <preference name="GradlePluginKotlinVersion" value="2.1.0" />
+
+
         <resource-file src="resources/android/raw/isrg_root_x1.der" target="app/src/main/res/raw/isrg_root_x1.der" />
         <resource-file src="resources/android/raw/isrg_root_x2.der" target="app/src/main/res/raw/isrg_root_x2.der" />
         <resource-file src="resources/android/xml/network_security_config.xml" target="app/src/main/res/xml/network_security_config.xml" />
 
         <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application">
-            <application android:hardwareAccelerated="true" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" android:largeHeap="true" android:banner="@drawable/banner" android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true" android:networkSecurityConfig="@xml/network_security_config"/>
+            <application android:hardwareAccelerated="true" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" android:largeHeap="true" android:banner="@drawable/banner" android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true" android:networkSecurityConfig="@xml/network_security_config" android:name="pan.alexander.cordova.torrunner.App"/>
         </edit-config>
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">

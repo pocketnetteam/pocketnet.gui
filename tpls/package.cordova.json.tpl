@@ -71,6 +71,7 @@
         "cordova-plugin-pip": "file:cordova-plugin-pip",
         "cordova-plugin-statusbar": "file:cordova-plugin-statusbar",
         "cordova-plugin-taptic-engine": "^2.2.0",
+        "cordova-plugin-tor-runner": "github:Gedsh/cordova-plugin-tor-runner",
         "cordova-plugin-webview-checker": "^1.0.1",
         "cordova-plugin-x-socialsharing": "^6.0.4",
         "cordova-plugin-file-opener2":"^4.0.0",
@@ -80,7 +81,7 @@
             "cordova-plugin-apkupdater": "~4.0.0",
         <% } %>
         
-        "cordova-plugin-firebasex": "^18.0.0",
+        "cordova-plugin-firebasex": "18.0.7",
         "np": "^5.0.3",
         "sync-cordova-xml": "^0.4.0"
     },
@@ -177,7 +178,15 @@
         <% } %>
 
             "cordova-plugin-audiotoggle": {},
-            "@ahovakimyan/cordova-plugin-wkwebviewxhrfix": {}
+            "@ahovakimyan/cordova-plugin-wkwebviewxhrfix": {},
+            "cordova-plugin-tor-runner": {
+                "ANDROID_DAGGER_VERSION": "2.55",
+                "KOTLINX_COROUTINES_VERSION": "1.9.0",
+                "LIFECYCLE_PROCESS_VERSION": "2.9.1",
+                "ANDROID_SHELL_VERSION": "1.0.1",
+                "OK_HTTP_VERSION": "4.12.0",
+                "ANDROID_PREFERENCES_VERSION": "1.2.1"
+            }
 
             
         },

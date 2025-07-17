@@ -41,13 +41,14 @@ if(typeof Broadcaster != 'undefined' && ((typeof _Electron != 'undefined' && _El
 
 	swBroadcaster.handle('AltTransportActive', async (url) => {
 
-		console.log('AltTransportActive2')
-
 		function isWhitelisted(url) {
 			const { hostname } = new URL(url);
 
 			const whitelistHosts = [
 				/.*\.?youtube\.com/,
+				/.*\.?imgur\.com/,
+				/.*\.?cdn\.jsdelivr\.net/,
+				
 				/.*\.?vimeocdn\.com/,
 				/.*\.?vimeo\.com/,
 				/.*\.?bitchute\.com/,
@@ -75,9 +76,35 @@ if(typeof Broadcaster != 'undefined' && ((typeof _Electron != 'undefined' && _El
 
 			var torRunner = window.cordova?.plugins?.torRunner
 
+
 			if(!torRunner){
 				return false;
 			}
+
+			return new Promise((resolve, reject) => {
+
+				window.cordova?.plugins?.torRunner.isUseWithTor(url, (data = {}) => {
+
+					if(!data.redirect){
+						resolve(null)
+					}
+
+					else{
+						resolve(data)
+					}
+
+				}, (error) => {
+
+					console.log(error)
+
+					resolve(null)
+
+				})
+
+			})
+
+			
+			
 			
 		}
 
@@ -155,7 +182,7 @@ Application = function (p) {
 
 	self.electronview = typeof _Electron != 'undefined' && _Electron
 
-	self.hasTor = (window.cordova?.plugins?.torRunner && !isios()) || self.electronview || false
+	self.hasTor = (window.cordova && !isios()) || self.electronview || false
 
 	self.margintop = 0
 	
@@ -1461,6 +1488,10 @@ Application = function (p) {
 	}
 
 	self.deviceReadyInit = function (p) {
+
+		//self.hasTor = (window.cordova?.plugins?.torRunner && !isios()) || self.electronview || false
+		self.hasTor = (window.cordova && !isios()) || self.electronview || false
+
 
 		self.el = {
 			camera: $('#camera'),
