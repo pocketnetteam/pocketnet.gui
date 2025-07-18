@@ -2945,7 +2945,6 @@ var share = (function(){
 				}
 
 				
-				
 
 				$('html').off('click', events.unfocus);
 
