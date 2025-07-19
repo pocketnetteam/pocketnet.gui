@@ -1251,7 +1251,7 @@ var BastyonApps = function (app) {
             id: "icon",
             type: 'image/png',
             importer: importIcon,
-            cache: true
+            cache: false
         },
 
     ]
