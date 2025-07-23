@@ -77,9 +77,9 @@ var transportsmanagement = (function(){
 					var tm = d.torMode.toLowerCase()
 					var us = false
 
-					if (tm == 'never') tm = 'neveruse'
+					if (tm === 'never' || tm === 'undefined') tm = 'neveruse'
 
-					if (d.bridgeType == "SNOWFLAKE") us = true
+					if (d.bridgeType === "SNOWFLAKE") us = true
 
 					system = {
 						tor : {
@@ -181,7 +181,7 @@ var transportsmanagement = (function(){
 									if(typeof changes.torenabled3 != 'undefined'){
 										var tm = changes.torenabled3.toUpperCase()
 
-										if (tm == 'NEVERUSE') tm = 'NEVER'
+										if (tm === 'NEVERUSE' ) tm = 'NEVER'
 
 										st.torMode = tm
 									}
@@ -191,17 +191,10 @@ var transportsmanagement = (function(){
 										else st.bridgeType = 'SNOWFLAKE'
 									}
 
-									console.log('changes', changes, st)
-
 									promise = new Promise((resolve, reject) => {
 										window.cordova?.plugins?.torRunner.configure(st)
 
-										console.log('1')
-
 										setTimeout(() => {
-
-											console.log('2')
-
 											resolve()
 										}, 500)
 									})
@@ -219,8 +212,6 @@ var transportsmanagement = (function(){
 								promise.then(r => {
 		
 									changes = {}
-
-									console.log("REMAKE")
 		
 									remake();
 		

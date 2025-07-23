@@ -483,15 +483,29 @@ var menu = (function(){
 
 					torIntervalId = setInterval(async () => {
 
-						console.log("torIntervalId", window.cordova, app.hasTor)
-
 						if(app.hasTor){
 
 							if(window.cordova){
 
 								var d = window.cordova?.plugins?.torRunner.getSettings()
 
-								if (d.torMode === 'NEVER') {
+                                if (d.torMode == 'UNDEFINED') {
+                                    try{
+                                        const locale = Intl.DateTimeFormat().resolvedOptions().locale
+                                        const st = {
+                                            torMode: 'AUTO'
+                                        }
+                                        if (locale == 'ru-RU' || locale == 'fa-IR') {
+                                            st.bridgeType = 'SNOWFLAKE'
+                                        } else {
+                                            st.bridgeType = 'NONE'
+                                        }
+                                        window.cordova?.plugins?.torRunner.configure(st)
+                                        d = window.cordova?.plugins?.torRunner.getSettings()
+                                    } catch(e) {}
+                                }
+
+								if (d.torMode === 'NEVER' || d.torState === 'STOPPED') {
 									controlTorElem.removeClass(['on', 'loading', 'failed']);
 									controlTorElem.addClass('off');
 									controlTorElem.attr('title', app.localization.e('torHintStateDisabled'));
@@ -511,7 +525,7 @@ var menu = (function(){
 									controlTorElem.attr('title', app.localization.e('torHintStateStarting')); ///
 									controlTorStatusText.addClass('visible');
 									controlTorStatusText.text(app.localization.e('torHintStateLoading'));
-								} else if (d.torState === 'STOPPED') {
+								} else if (d.torState === 'FAILED') {
 									controlTorElem.removeClass(['on', 'loading', 'off']);
 									controlTorElem.addClass('failed');
 									controlTorElem.attr('title', '');
@@ -519,7 +533,7 @@ var menu = (function(){
 									controlTorStatusText.text(app.localization.e('torHintStateDisabled'));
 								}
 
-								
+
 
 							}
 							else{
