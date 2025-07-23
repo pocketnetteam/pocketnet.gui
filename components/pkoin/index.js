@@ -7,7 +7,7 @@ var pkoin = (function(){
 	var Essense = function(p){
 
 		var primary = deep(p, 'history');
-		var el, optionsValue = 'pkoinComment', shareId, receiver, valSum, valComment, disabled, userinfo, boost = [], share = null, hiddenBlocks = false;
+		var el, optionsValue = 'pkoinComment', shareId, receiver, valSum, valComment, disabled, userinfo, boost = [], share = null, hiddenBlocks = false, balance = 0;
 
 		var renders = {
 
@@ -18,7 +18,7 @@ var pkoin = (function(){
 				if (account){
 					var b = account.actualBalance()
 					var total = b.actual
-					var balance = b.actual - b.tempbalance
+					balance = b.actual - b.tempbalance
 
 					var my = (share.address == self.app.user.address.value)
 	
@@ -87,27 +87,27 @@ var pkoin = (function(){
 
 						el.inputSum = _p.el.find('#inputSum');
 	
-						var errorWrapper = _p.el.find('#errorWrapper');
+						el.errorWrapper = _p.el.find('#errorWrapper');
 						
 						el.inputSum.on('keyup', function(e){
 							valSum = Number(e.target.value);
 							
 							if (valSum > Number(balance)){
 
-								errorWrapper.text(self.app.localization.e('incoins'));
+								el.errorWrapper.text(self.app.localization.e('incoins'));
 								disabled = true;
 								el.send.addClass('disabled');
 
 							} else if (valSum < 2.5){
 
-								errorWrapper.text(self.app.localization.e('minPkoin', 2.5));
+								el.errorWrapper.text(self.app.localization.e('minPkoin', 2.5));
 								disabled = true;
 								el.send.addClass('disabled');
 
 
 							} else {
 
-								errorWrapper.text('');
+								el.errorWrapper.text('');
 								disabled = false;
 								el.send.removeClass('disabled');
 
@@ -175,6 +175,34 @@ var pkoin = (function(){
 
 				var probability = Math.min(!total ? 1 : 3 * (vs / total), 1)
 
+				const getAudience = function(probability){
+					return (probability * (share.language === 'en' ? 7000 : share.language === 'ru' ? 78750 : 0)).toFixed(0);
+				}
+
+				const getSum = (probability) => {
+
+					// Convert percentage to a ratio in the range 0-1
+					const probabilityRatio = probability / 100;
+
+					// If there are no boosts yet, any amount will give 100% probability.
+					// Return 0 in this edge-case to avoid division by zero.
+					if (!total) return 0;
+
+					const prevboost = _.find(boost, r => r.txid == shareId);
+					const currentBoost = prevboost ? Number(prevboost.boost || 0) : 0;
+
+					// Required satoshi (1 PKOIN = 1e8 satoshi) to reach the target probability
+					const vsRequired = Math.min(probabilityRatio, 1) * total / 3;
+
+					// Additional satoshi still needed after accounting for an existing boost
+					const vsToAdd = Math.max(vsRequired - currentBoost, 0);
+
+					// Convert satoshi back to PKOIN amount
+					return Number((vsToAdd / 100000000).toFixed(2));
+				}
+
+				var audience = getAudience(probability);
+
 				//el.tutorial.removeClass('show');
 
 				self.shell({
@@ -185,7 +213,8 @@ var pkoin = (function(){
 						probability,
 						share,
 						language : share.language,
-						hiddenBlocks: hiddenBlocks
+						hiddenBlocks: hiddenBlocks,
+						audience: audience
 					},
 
 				}, function(_p){
@@ -204,56 +233,50 @@ var pkoin = (function(){
 					})
 
 					el.inputProbability = _p.el.find('#inputProbability');
+
+					el.valAudience = _p.el.find('#valAudience');
 						
 					el.inputProbability.on('keyup', function(e){
-						var valProbability = Number(e.target.value);
 
-						console.log('valProbability', valProbability);
+						var probabilityPercent = Number(e.target.value);
 
-						el.inputSum.val(valProbability * 100000000);
+						if (probabilityPercent > 100){
+							probabilityPercent = 100;
+							el.inputProbability.val(probabilityPercent);
+						}
 
-						const getProbability = (valSum) => {
-						
-							var vs = 100000000 * valSum
+						valSum = getSum(probabilityPercent);
+						el.inputSum.val(valSum);
 
-							var prevboost = _.find(boost, function(r){
-								if(r.txid == shareId){
-									return true
-								}
-							})
+						probability = probabilityPercent / 100;
 
-							if (prevboost){
-								vs += prevboost.boost
-							}
+						audience = getAudience(probability);
+						el.valAudience.text(audience);
 
 
-							var probability = Math.min(!total ? 1 : 3 * (vs / total), 1)
+						if (valSum > Number(balance)){
+
+							el.errorWrapper.text(self.app.localization.e('incoins'));
+							disabled = true;
+							el.send.addClass('disabled');
+
+						} else if (valSum < 2.5){
+
+							el.errorWrapper.text(self.app.localization.e('minPkoin', 2.5));
+							disabled = true;
+							el.send.addClass('disabled');
+
+
+						} else {
+
+							el.errorWrapper.text('');
+							disabled = false;
+							el.send.removeClass('disabled');
 
 						}
 
 						
 
-
-						// if (valProbability > 100){
-
-						// 	errorWrapper.text(self.app.localization.e('incoins'));
-						// 	disabled = true;
-						// 	el.send.addClass('disabled');
-
-						// } else if (valSum < 2.5){
-
-						// 	errorWrapper.text(self.app.localization.e('minPkoin', 2.5));
-						// 	disabled = true;
-						// 	el.send.addClass('disabled');
-
-
-						// } else {
-
-						// 	errorWrapper.text('');
-						// 	disabled = false;
-						// 	el.send.removeClass('disabled');
-
-						// }
 
 						// if(optionsValue === 'liftUpThePost') {
 						// 	renders.boostinfo(boost)

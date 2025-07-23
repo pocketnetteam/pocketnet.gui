@@ -30,7 +30,7 @@
     
     <% if(language === 'en' || language === 'ru') {%>
     
-    <div class="boostinfodata">
+    <div class="boostinfodata boostinfoaudience">
     
         <% if(app.localization.available[language]) {%>
             <div class="label">
@@ -38,7 +38,7 @@
             </div>
             
             <div class="probability">
-                <span><%- (probability * (language === 'en' ? 7000 : language === 'ru' ? 78750 : 0)).toFixed(0) %> </span>
+                <span id="valAudience"><%- audience %> </span>
             </div>
             
             <div class="text">
