@@ -149,68 +149,63 @@ var pkoin = (function(){
 			},
 
 			boostinfo : function(boost){
-				
-				if(!valSum){
 
-					el.c.find('.boostinfo').html('')
+				if (!valSum) valSum = 0;
+							
+				var vs = 100000000 * valSum
 
+				var prevboost = _.find(boost, function(r){
+					if(r.txid == shareId){
+						return true
+					}
+				})
+
+				if (prevboost){
+					vs += prevboost.boost
 				}
-				else{
-						
-					var vs = 100000000 * valSum
 
-					var prevboost = _.find(boost, function(r){
-						if(r.txid == shareId){
-							return true
-						}
-					})
+				var total = _.reduce(boost, function(sum, r){ 
 
-					if (prevboost){
-						vs += prevboost.boost
+					if(r.txid == shareId){
+						return sum
 					}
 
-					var total = _.reduce(boost, function(sum, r){ 
+					return sum + Number(r.boost || 0) 
+				}, 0)
 
-						if(r.txid == shareId){
-							return sum
+				var probability = Math.min(!total ? 1 : 3 * (vs / total), 1)
+
+				//el.tutorial.removeClass('show');
+
+				self.shell({
+
+					name :  'boostinfo',
+					el :   el.c.find('.boostinfo'),
+					data : {
+						probability,
+						share,
+						language : share.language,
+						hiddenBlocks: hiddenBlocks
+					},
+
+				}, function(_p){
+
+					_p.el.find('.showMore').on('click', function(){
+
+						var boostinfoblocks = _p.el.find('.boostinfoblocks');
+
+						if (boostinfoblocks.hasClass('hiddenBlocks')){
+							hiddenBlocks = false;
+						} else {
+							hiddenBlocks = true;
 						}
 
-						return sum + Number(r.boost || 0) 
-					}, 0)
-
-					var probability = Math.min(!total ? 1 : 3 * (vs / total), 1)
-
-					//el.tutorial.removeClass('show');
-
-					self.shell({
-
-						name :  'boostinfo',
-						el :   el.c.find('.boostinfo'),
-						data : {
-							probability,
-							share,
-							language : share.language,
-							hiddenBlocks: hiddenBlocks
-						},
-
-					}, function(_p){
-
-						_p.el.find('.showMore').on('click', function(){
-
-							var boostinfoblocks = _p.el.find('.boostinfoblocks');
-
-							if (boostinfoblocks.hasClass('hiddenBlocks')){
-								hiddenBlocks = false;
-							} else {
-								hiddenBlocks = true;
-							}
-
-							boostinfoblocks.toggleClass('hiddenBlocks')
-						})
-						
+						boostinfoblocks.toggleClass('hiddenBlocks')
 					})
 					
-				}
+				})
+					
+				
 
 			}
 		}

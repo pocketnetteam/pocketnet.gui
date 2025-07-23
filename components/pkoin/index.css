@@ -411,7 +411,6 @@
   display: none;
 }
 #pkoin .boostinfodata {
-  text-align: center;
   border-radius: 12px;
   background: rgb(var(--background-secondary-theme));
   border: 1px solid rgb(var(--neutral-grad-0));

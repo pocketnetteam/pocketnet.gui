@@ -10,6 +10,8 @@
             <div class="probability">
                 <span><%- (probability * 100).toFixed(1) %> %</span>
             </div>
+
+            <input type="number" id="inputSum" class="inputSum" placeholder="<%= e('wsamount') %>" value="<%= valSum %>">
             
             <div class="text">
                 <span><%= e('probabilitytext', app.localization.available[language].name) %></span>
