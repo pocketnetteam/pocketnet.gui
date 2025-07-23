@@ -2123,6 +2123,7 @@ var BastyonApps = function (app) {
 
     self.destroy = function () {
         window.removeEventListener("message", listener)
+        window.removeEventListener("message", swListener)
 
         installed = {}
         installing = {}
@@ -2136,9 +2137,44 @@ var BastyonApps = function (app) {
         app.platform.sdk.syncStorage.off('change', 'apps');
     }
 
+    var swListener = function (event) {
+        if (event.data && event.data.type === 'FETCH_REQUEST') {
+            const { requestId, request } = event.data;
+            
+            fetch(request.url, {
+                method: request.method,
+                headers: request.headers,
+                body: request.body ? new Uint8Array(request.body) : undefined
+            })
+            .then(async response => {
+                const body = await response.arrayBuffer();
+                
+                event.source.postMessage({
+                    type: 'FETCH_RESPONSE',
+                    requestId: requestId,
+                    success: true,
+                    data: {
+                        status: response.status,
+                        statusText: response.statusText,
+                        headers: Object.fromEntries(response.headers.entries()),
+                        body: Array.from(new Uint8Array(body))
+                    }
+                }, '*');
+            })
+            .catch(error => {
+                event.source.postMessage({
+                    type: 'FETCH_RESPONSE',
+                    requestId: requestId,
+                    success: false,
+                    error: error.message
+                }, '*');
+            });
+        }
+    };
+    
     self.init = function () {
         window.addEventListener("message", listener)
-
+        window.addEventListener("message", swListener);
         var promises = []
         const developApps = app.developapps || [];
         const localApps = [];
