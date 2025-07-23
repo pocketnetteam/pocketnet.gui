@@ -272,11 +272,8 @@
   border-width: 12px;
 }
 #pkoin .content .fieldsWrapper .fields .inputWrapper {
-  margin-bottom: 2em;
-  /* Firefox */
-}
-#pkoin .content .fieldsWrapper .fields .inputWrapper.inputSumWrapper {
   margin-bottom: 0.5em;
+  /* Firefox */
 }
 #pkoin .content .fieldsWrapper .fields .inputWrapper input::-webkit-outer-spin-button,
 #pkoin .content .fieldsWrapper .fields .inputWrapper input::-webkit-inner-spin-button {
