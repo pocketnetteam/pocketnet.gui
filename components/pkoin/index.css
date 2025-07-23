@@ -286,7 +286,7 @@
 #pkoin .content .fieldsWrapper .fields .inputWrapper input[type=number] {
   -moz-appearance: textfield;
 }
-#pkoin .content .fieldsWrapper .fields .inputWrapper .inputSum,
+#pkoin .content .fieldsWrapper .fields .inputWrapper .inputVal,
 #pkoin .content .fieldsWrapper .fields .inputWrapper .textareaComment {
   padding: 12px 16px;
   border-radius: 12px;

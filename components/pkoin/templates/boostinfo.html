@@ -6,13 +6,15 @@
             <div class="label">
                 <span><%- e('probability') %></span>
             </div>
-            
-            <div class="probability">
-                <span><%- (probability * 100).toFixed(1) %> %</span>
-            </div>
 
-            <input type="number" id="inputSum" class="inputSum" placeholder="<%= e('wsamount') %>" value="<%= valSum %>">
+            <div class="inputWrapper inputSumWrapper">
+                <input type="number" id="inputProbability" class="inputVal" placeholder="<%= e('wsamount') %>" value="<%= (probability * 100).toFixed(1) %>">
+                <div class="pkoinLabel">
+                    %
+                </div>
+            </div>
             
+
             <div class="text">
                 <span><%= e('probabilitytext', app.localization.available[language].name) %></span>
             </div>

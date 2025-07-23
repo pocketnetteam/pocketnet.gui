@@ -151,7 +151,7 @@ var pkoin = (function(){
 			boostinfo : function(boost){
 
 				if (!valSum) valSum = 0;
-							
+
 				var vs = 100000000 * valSum
 
 				var prevboost = _.find(boost, function(r){
@@ -201,6 +201,64 @@ var pkoin = (function(){
 						}
 
 						boostinfoblocks.toggleClass('hiddenBlocks')
+					})
+
+					el.inputProbability = _p.el.find('#inputProbability');
+						
+					el.inputProbability.on('keyup', function(e){
+						var valProbability = Number(e.target.value);
+
+						console.log('valProbability', valProbability);
+
+						el.inputSum.val(valProbability * 100000000);
+
+						const getProbability = (valSum) => {
+						
+							var vs = 100000000 * valSum
+
+							var prevboost = _.find(boost, function(r){
+								if(r.txid == shareId){
+									return true
+								}
+							})
+
+							if (prevboost){
+								vs += prevboost.boost
+							}
+
+
+							var probability = Math.min(!total ? 1 : 3 * (vs / total), 1)
+
+						}
+
+						
+
+
+						// if (valProbability > 100){
+
+						// 	errorWrapper.text(self.app.localization.e('incoins'));
+						// 	disabled = true;
+						// 	el.send.addClass('disabled');
+
+						// } else if (valSum < 2.5){
+
+						// 	errorWrapper.text(self.app.localization.e('minPkoin', 2.5));
+						// 	disabled = true;
+						// 	el.send.addClass('disabled');
+
+
+						// } else {
+
+						// 	errorWrapper.text('');
+						// 	disabled = false;
+						// 	el.send.removeClass('disabled');
+
+						// }
+
+						// if(optionsValue === 'liftUpThePost') {
+						// 	renders.boostinfo(boost)
+						// }
+
 					})
 					
 				})
