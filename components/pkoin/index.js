@@ -90,30 +90,10 @@ var pkoin = (function(){
 						el.errorWrapper = _p.el.find('#errorWrapper');
 						
 						el.inputSum.on('keyup', function(e){
+
 							valSum = Number(e.target.value);
-							
-							if (valSum > Number(balance)){
 
-								el.errorWrapper.text(self.app.localization.e('incoins'));
-								disabled = true;
-								el.send.addClass('disabled');
-
-							} else if (valSum < 2.5){
-
-								el.errorWrapper.text(self.app.localization.e('minPkoin', 2.5));
-								disabled = true;
-								el.send.addClass('disabled');
-
-
-							} else {
-
-								el.errorWrapper.text('');
-								disabled = false;
-								el.send.removeClass('disabled');
-
-							}
-		
-							
+							actions.checkSum();
 
 							if(optionsValue === 'liftUpThePost') {
 								renders.boostinfo(boost)
@@ -253,34 +233,7 @@ var pkoin = (function(){
 						audience = getAudience(probability);
 						el.valAudience.text(audience);
 
-
-						if (valSum > Number(balance)){
-
-							el.errorWrapper.text(self.app.localization.e('incoins'));
-							disabled = true;
-							el.send.addClass('disabled');
-
-						} else if (valSum < 2.5){
-
-							el.errorWrapper.text(self.app.localization.e('minPkoin', 2.5));
-							disabled = true;
-							el.send.addClass('disabled');
-
-
-						} else {
-
-							el.errorWrapper.text('');
-							disabled = false;
-							el.send.removeClass('disabled');
-
-						}
-
-						
-
-
-						// if(optionsValue === 'liftUpThePost') {
-						// 	renders.boostinfo(boost)
-						// }
+						actions.checkSum();
 
 					})
 					
@@ -292,6 +245,30 @@ var pkoin = (function(){
 		}
 
 		var actions = {
+
+			checkSum : function(){
+				
+				if (valSum > Number(balance)){
+
+					el.errorWrapper.text(self.app.localization.e('incoins'));
+					disabled = true;
+					el.send.addClass('disabled');
+
+				} else if (valSum < 2.5){
+
+					el.errorWrapper.text(self.app.localization.e('minPkoin', 2.5));
+					disabled = true;
+					el.send.addClass('disabled');
+
+
+				} else {
+
+					el.errorWrapper.text('');
+					disabled = false;
+					el.send.removeClass('disabled');
+
+				}
+			},
 
 			links : function(current, text){
 				
