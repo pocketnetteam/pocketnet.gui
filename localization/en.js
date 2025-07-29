@@ -3253,3 +3253,6 @@ _l.windows7 = "Download for Windows 7"
 _l.miniapps = "Mini Applications"
 
 _l.sysmodbas="Content moderation system on Bastyon"
+
+_l.torHintStateRunning = "The TOR module is working"
+_l.torHintStateStarting = "TOR module is starting"
