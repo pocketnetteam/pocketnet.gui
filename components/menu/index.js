@@ -482,44 +482,104 @@ var menu = (function(){
 					}
 
 					torIntervalId = setInterval(async () => {
-						const currentProxy = app.api.get.current();
 
-						if (!currentProxy.direct) {
-							controlTorElem.removeClass(['on', 'loading']);
-							controlTorElem.addClass('off');
-							controlTorStatusText.removeClass('visible');
-							controlTorElem.attr('title', app.localization.e('torHintStateDisabled'));
+						if(app.hasTor){
 
-							return;
-						}
+							if(window.cordova){
 
-						proxyData = await currentProxy.get.info();
+								var d = window.cordova?.plugins?.torRunner.getSettings()
 
-						if (proxyData?.info.tor.state.status === 'stopped'
-							|| proxyData?.info.tor.enabled3 === 'neveruse') {
-							controlTorElem.removeClass(['on', 'loading', 'failed']);
-							controlTorElem.addClass('off');
-							controlTorElem.attr('title', app.localization.e('torHintStateDisabled'));
-							controlTorStatusText.removeClass('visible');
-						} else if (proxyData?.info.tor.state.status === 'started') {
-							controlTorElem.removeClass(['off', 'loading', 'failed']);
-							controlTorElem.addClass('on');
-							controlTorElem.attr('title', proxyData?.info.tor.state.info);
-							controlTorStatusText.addClass('visible');
-							controlTorStatusText.text(app.localization.e('torHintStateEnabled'));
-						} else if (proxyData?.info.tor.state.status === 'install'
-							|| proxyData?.info.tor.state.status === 'running') {
-							controlTorElem.removeClass(['on', 'off', 'failed']);
-							controlTorElem.addClass('loading');
-							controlTorElem.attr('title', proxyData?.info.tor.state.info);
-							controlTorStatusText.addClass('visible');
-							controlTorStatusText.text(app.localization.e('torHintStateLoading'));
-						} else if (proxyData?.info.tor.state.status === 'failed') {
-							controlTorElem.removeClass(['on', 'loading', 'off']);
-							controlTorElem.addClass('failed');
-							controlTorElem.attr('title', '');
-							controlTorStatusText.addClass('visible');
-							controlTorStatusText.text(app.localization.e('torHintStateDisabled'));
+                                if (d.torMode == 'UNDEFINED') {
+                                    try{
+                                        const locale = Intl.DateTimeFormat().resolvedOptions().locale
+                                        const st = {
+                                            torMode: 'AUTO'
+                                        }
+                                        if (locale == 'ru-RU' || locale == 'fa-IR') {
+                                            st.bridgeType = 'SNOWFLAKE'
+                                        } else {
+                                            st.bridgeType = 'NONE'
+                                        }
+                                        window.cordova?.plugins?.torRunner.configure(st)
+                                        d = window.cordova?.plugins?.torRunner.getSettings()
+                                    } catch(e) {}
+                                }
+
+								if (d.torMode === 'NEVER' || d.torState === 'STOPPED') {
+									controlTorElem.removeClass(['on', 'loading', 'failed']);
+									controlTorElem.addClass('off');
+									controlTorElem.attr('title', app.localization.e('torHintStateDisabled'));
+									controlTorStatusText.removeClass('visible');
+
+								} else if (d.torState === 'RUNNING') {
+									controlTorElem.removeClass(['off', 'loading', 'failed']);
+									controlTorElem.addClass('on');
+									controlTorElem.attr('title', app.localization.e('torHintStateRunning')); ///
+
+									controlTorStatusText.addClass('visible');
+									controlTorStatusText.text(app.localization.e('torHintStateEnabled'));
+
+								} else if (d.torState === 'STARTING') {
+									controlTorElem.removeClass(['on', 'off', 'failed']);
+									controlTorElem.addClass('loading');
+									controlTorElem.attr('title', app.localization.e('torHintStateStarting')); ///
+									controlTorStatusText.addClass('visible');
+									controlTorStatusText.text(app.localization.e('torHintStateLoading'));
+								} else if (d.torState === 'FAILED') {
+									controlTorElem.removeClass(['on', 'loading', 'off']);
+									controlTorElem.addClass('failed');
+									controlTorElem.attr('title', '');
+									controlTorStatusText.addClass('visible');
+									controlTorStatusText.text(app.localization.e('torHintStateDisabled'));
+								}
+
+
+
+							}
+							else{
+								const currentProxy = app.api.get.current();
+
+								if (!currentProxy.direct) {
+									controlTorElem.removeClass(['on', 'loading']);
+									controlTorElem.addClass('off');
+									controlTorStatusText.removeClass('visible');
+									controlTorElem.attr('title', app.localization.e('torHintStateDisabled'));
+
+									return;
+								}
+
+								proxyData = await currentProxy.get.info();
+
+								if (proxyData?.info.tor.state.status === 'stopped'
+									|| proxyData?.info.tor.enabled3 === 'neveruse') {
+									controlTorElem.removeClass(['on', 'loading', 'failed']);
+									controlTorElem.addClass('off');
+									controlTorElem.attr('title', app.localization.e('torHintStateDisabled'));
+									controlTorStatusText.removeClass('visible');
+								} else if (proxyData?.info.tor.state.status === 'started') {
+									controlTorElem.removeClass(['off', 'loading', 'failed']);
+									controlTorElem.addClass('on');
+									controlTorElem.attr('title', proxyData?.info.tor.state.info);
+									controlTorStatusText.addClass('visible');
+									controlTorStatusText.text(app.localization.e('torHintStateEnabled'));
+								} else if (proxyData?.info.tor.state.status === 'install'
+									|| proxyData?.info.tor.state.status === 'running') {
+									controlTorElem.removeClass(['on', 'off', 'failed']);
+									controlTorElem.addClass('loading');
+									controlTorElem.attr('title', proxyData?.info.tor.state.info);
+									controlTorStatusText.addClass('visible');
+									controlTorStatusText.text(app.localization.e('torHintStateLoading'));
+								} else if (proxyData?.info.tor.state.status === 'failed') {
+									controlTorElem.removeClass(['on', 'loading', 'off']);
+									controlTorElem.addClass('failed');
+									controlTorElem.attr('title', '');
+									controlTorStatusText.addClass('visible');
+									controlTorStatusText.text(app.localization.e('torHintStateDisabled'));
+								}
+							}
+
+							
+
 						}
 					}, 2000);
 
@@ -530,18 +590,6 @@ var menu = (function(){
 							href : 'transportsmanagement',
 							inWnd : true,
 						})
-							
-						/*const isTorEnabled = (
-							proxyData?.info.tor.state.status === 'started' ||
-							proxyData?.info.tor.state.status === 'loading'
-						);
-
-						const currentProxy = app.api.get.current();
-
-						currentProxy.fetchauth('manage', {
-							action: isTorEnabled ? 'tor.stop' : 'tor.start',
-							data: {}
-						});*/
 					});
 				},
 				fast : true,

@@ -3064,3 +3064,7 @@ _l.BarteronOffer = "Бартерон - 0% комиссий"
 _l.windows7 = "Загрузить для Windows 7"
 _l.miniapps = "Мини-приложения"
 _l.sysmodbas="Система модерации контента на Bastyon"
+
+
+_l.torHintStateRunning = "Модуль ТОР работает"
+_l.torHintStateStarting = "Модуль ТОР запускается"
