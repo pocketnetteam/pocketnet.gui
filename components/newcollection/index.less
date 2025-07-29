@@ -2,6 +2,125 @@
 
 #newcollection{
 
+	.editform{
+		display: flex;
+		flex-wrap: wrap;
+
+		.collectionImageWrapper{
+			width: 100%;
+			height: 44px;
+			margin-bottom: @rhythm;
+			position: relative;	
+			.textIcon{
+				color : rgb(var(--neutral-grad-4));
+				position: absolute;
+				left: 0;
+				top: 0;
+				bottom: 0;
+				right: 0;
+				display: flex;
+				align-items: center;
+				background: rgb(var(--background-main));
+				border-radius: 6px;
+				overflow: hidden;
+
+				.icon{
+					margin-left: auto;
+					width: 44px;
+					height: 100%;
+					border-radius: 6px;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					.shadowSmaller()
+				}
+
+				.text{
+					margin-left: @rhythm;
+				}
+
+				.elContent{
+					display: flex;
+					align-items: center;
+				}
+
+			}
+		}
+
+		.collectionCaptionWrapper{
+			width: 100%;
+		}
+
+		.collectionDescriptionWrapper{
+			width: 100%;
+		}
+
+		.collectionItemsWrapper{
+			width: 100%;
+		}
+	}
+
+	.caption{
+		display: block;
+		padding : 2 * @rhythm 0;
+
+		span{
+			font-size: 1.5em;
+		}
+	}
+
+	.cpt{
+		margin-bottom: @rhythm;
+
+		input{
+			width: 100%;
+			border-radius: 6px;
+			border : 0;
+			background: rgb(var(--background-main));
+			outline: none;
+			padding : 2 * @rhythm 0;
+			padding-left : @rhythm;
+			padding-right : @rhythm;
+		}
+	}
+
+
+	.txt{
+		margin-bottom : @rhythm;
+		textarea{
+			width: 100%;
+			min-height: 78px;
+			border-radius: 6px;
+			border : 0;
+			background: rgb(var(--background-main));
+			outline: none;
+			padding : 2 * @rhythm 0;
+			padding-left : @rhythm;
+			padding-right : @rhythm;
+			overflow: auto;
+		}
+		.emojionearea,
+		.emojionearea.form-control{
+			border : 0;
+			border-radius: 6px;
+
+			.emojionearea-editor{
+				margin-right: 0;
+			}
+		}
+		
+		.emojionearea-editor{
+			padding : 2 * @rhythm 0;
+			padding-left : @rhythm;
+			padding-right : @rhythm;
+			background: rgb(var(--background-main));
+			outline: none;
+			border : 0;
+			min-height: 78px;
+			border-radius: 6px;
+		}
+	}
+
 }
 
 .wndnewcollection.wnd{

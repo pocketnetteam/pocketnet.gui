@@ -3257,3 +3257,6 @@ _l.sysmodbas="Content moderation system on Bastyon"
 _l.collections = "Collections"
 _l.emptycollections = "No collections"
 _l.newcollection = "Create"
+
+_l.newcollectionex = "Creating a new collection"
+_l.edcollectionex = "Editing a collection"

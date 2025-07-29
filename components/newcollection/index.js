@@ -28,7 +28,7 @@ var newcollection = (function(){
 
 				state.save()
 
-				renders.image() //
+				renders.body() //
 				
 			},
 
@@ -78,7 +78,7 @@ var newcollection = (function(){
 							currentCollection.image.v = f[0].original
 							state.save()
 
-							renders.image(clbk);
+							renders.body(clbk);
 						}
 					}
 				})
@@ -234,8 +234,8 @@ var newcollection = (function(){
 										}
 										else
 										{
-											if (renders.image)
-												renders.image();
+											if (renders.body)
+												renders.body();
 										}
 					
 									}
@@ -264,7 +264,7 @@ var newcollection = (function(){
 					}
 				});
 
-				_el.emojioneArea.setText(currentCollection.message.v);
+				_el[0].emojioneArea.setText(currentCollection.message.v);
 			}
 		}
 
@@ -347,15 +347,32 @@ var newcollection = (function(){
 		}
 
 		var renders = {
-			image : function(){
+			body : function(clbk){
+				self.shell({
+					name :  'body',
+					el : el.body,
+					data : {
+						collection : currentCollection,
+						ed : ed
+					},
 
-			}
+					insertimmediately : true
+
+				}, function(p){
+
+					helpers.emojioneArea(p.el.find('.message'))
+					imagesHelper.imageUploader(p.el.find('.textIcon'))
+
+				})
+			},
+
+			
 		}
 
 		var state = {
 			save : function(){
 
-				if(!essenseData.collection){
+				if(!ed.collection){
 					if(!currentCollection){
 						self.app.settings.set(self.map.id, 'currentCollection');
 					}
@@ -378,7 +395,7 @@ var newcollection = (function(){
 			},
 			load : function(){
 
-				if(essenseData.dontsave) return
+				if(ed.dontsave) return
 
 				var last = self.app.settings.get(self.map.id, 'currentCollection')
 
@@ -394,6 +411,10 @@ var newcollection = (function(){
 		var initEvents = function(){
 			
 			currentCollection.on.change.edit = events.change;
+		}
+
+		var init = function(){
+			renders.body()
 		}
 
 		return {
@@ -451,6 +472,8 @@ var newcollection = (function(){
 
 				ed = {}
 				el = {};
+
+
 				
 			},
 			
@@ -461,7 +484,11 @@ var newcollection = (function(){
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
 
+				el.body = el.c.find('.editform')
+
 				initEvents();
+
+				init()
 
 				p.clbk(null, p);
 			},

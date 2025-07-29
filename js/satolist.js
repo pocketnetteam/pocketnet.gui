@@ -506,7 +506,8 @@ Platform = function (app, listofnodes) {
         "PC7VEMD1YyNr5uewxffVNV2KWLKvaLmnNE" : true,
         "PV1ycXmbwbVwCvHqXQJC1wwbycvBa5YdTP" : true,
         "PWk8tjyzyfGCPWb8VNUu9JQDHsnZ7EhkPK" : true,
-        "PNrKCz99vnaCoaGbvwEVwgmhsdKQfhUFEH" : true
+        "PNrKCz99vnaCoaGbvwEVwgmhsdKQfhUFEH" : true,
+        'PNveZ2XJRXmtdmWaejQpRrUza3CrfRvXVg' : true
     }
 
     self.bch = {
@@ -11295,6 +11296,7 @@ Platform = function (app, listofnodes) {
 
 
                             var resultStatus = 'paid'
+
 
                             if(_.find(paidC, (v) => {
                                 return v.balance >= 0
