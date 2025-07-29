@@ -109,7 +109,7 @@ jobs:
           node-version: 20
       - name: Install Cordova
         run: |
-          npm i -g cordova@10
+          npm i -g cordova@12
           cordova --version
       - name: Prepare building
         run: |
@@ -167,7 +167,7 @@ jobs:
           node-version: 20
       - name: Install Cordova
         run: |
-          npm i -g cordova@10
+          npm i -g cordova@12
           cordova --version
       - name: Prepare building
         run: |
