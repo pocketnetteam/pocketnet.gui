@@ -6,11 +6,15 @@
             <div class="label">
                 <span><%- e('probability') %></span>
             </div>
-            
-            <div class="probability">
-                <span><%- (probability * 100).toFixed(1) %> %</span>
+
+            <div class="inputWrapper">
+                <input type="number" id="inputProbability" class="inputVal" placeholder="<%= e('probability') %>" value="<%= (probability * 100).toFixed(1) %>">
+                <div class="pkoinLabel">
+                    %
+                </div>
             </div>
             
+
             <div class="text">
                 <span><%= e('probabilitytext', app.localization.available[language].name) %></span>
             </div>
@@ -26,7 +30,7 @@
     
     <% if(language === 'en' || language === 'ru') {%>
     
-    <div class="boostinfodata">
+    <div class="boostinfodata boostinfoaudience">
     
         <% if(app.localization.available[language]) {%>
             <div class="label">
@@ -34,7 +38,7 @@
             </div>
             
             <div class="probability">
-                <span><%- (probability * (language === 'en' ? 7000 : language === 'ru' ? 78750 : 0)).toFixed(0) %> </span>
+                <span id="valAudience"><%- audience %> </span>
             </div>
             
             <div class="text">
