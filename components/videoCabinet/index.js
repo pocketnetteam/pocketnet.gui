@@ -1376,7 +1376,7 @@ var videoCabinet = (function () {
 								initUpload({
 									el: element.find('.editPreview .inputMenuWrapper'),
 
-									ext: ['png', 'jpeg', 'jpg', 'webp', 'jfif'],
+									ext: ['png', 'jpeg', 'jpg', 'jfif'],
 
 									dropZone: element.find('.editPreview'),
 									app: self.app,
