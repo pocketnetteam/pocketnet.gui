@@ -251,7 +251,6 @@ jobs:
       - name: Building
         run: |
           cd ./cordova
-          cat platforms/android/app/build.gradle
           npm run android-build
       - name: Rename apk binary
         run: |
