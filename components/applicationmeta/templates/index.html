@@ -8,9 +8,11 @@
 			</div>
 		</div>
 
-		<div class="version">
-			<span>Version: <%- application.manifest.versiontxt %></span>
-		</div>
+		<% if(application.manifest.versiontxt) {%>
+		    <div class="version">
+			    <span>Version: <%- application.manifest.versiontxt %></span>
+		    </div>
+		<% } %>
 
 		<div class="desctiption">
 			<%- application.manifest.descriptions[app.localization.current().key] || application.manifest.descriptions['en'] || "" %>
