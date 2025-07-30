@@ -2300,11 +2300,9 @@ resize = function (srcData, width, height, clbk, format, quality) {
 		canvas.width = newWidth;
 		canvas.height = newHeight;
 
-
 		ctx.drawImage(imageObj, 0, 0, newWidth, newHeight);
 		
 		console.log("QU image f", width, height, imageObj.width, imageObj.height, newWidth, newHeight)
-
 
 		var url = canvas.toDataURL("image/" + format, quality || 0.85);
 

@@ -2975,7 +2975,7 @@ _l.monet_participation_text_1 = "At the initial stage, monetization only works o
 _l.monet_participation_text_2 = `If you have a channel outside of Bastyon with more than 1,000 subscribers, you can email <a href="mailto:support@bastyon.com">support@bastyon.com</a> to request verification.` 
 _l.monet_participation_text_3 = "IMPORTANT: Authors earn proportionally to the activity and number of people on their channel. The more comments and ratings, the higher the payouts from the advertising pool. Authors have a Monetization dashboard in their settings where they can view their payout history. Payouts are made at the end of each week for activity on posts made in the past two weeks."; 
 _l.monet_monet_withdrawal_title = "How authors can withdraw earnings (very simple):"; 
-_l.monet_monet_withdrawal_text_1 = `Authors can withdraw PKOIN through exchanges like Tapbit, Digifineх, or through peer-to-peer exchanges in rubles, dollars, or any other currency. For author convenience, some older exchanges are directly available in the monetization dashboard. Other exchanges with a year or more of active history will be added to the dashboard. For withdrawal inquiries, contact support at <a href="mailto:support@bastyon.com">support@bastyon.com</a>` 
+_l.monet_monet_withdrawal_text_1 = `Authors can withdraw PKOIN through exchanges like Tapbit, ХТ, or through peer-to-peer exchanges in rubles, dollars, or any other currency. For author convenience, some older exchanges are directly available in the monetization dashboard. Other exchanges with a year or more of active history will be added to the dashboard. For withdrawal inquiries, contact support at <a href="mailto:support@bastyon.com">support@bastyon.com</a>` 
 _l.monet_calculation_title = "How payouts are calculated?"; 
 _l.monet_calculation_text1 = "Earnings vary depending on the amount of advertising in a week and how much advertisers have paid. The money from advertisers is divided among authors, but the amount depends on the total advertising revenue and the activity on the channel (ratings and comments). Audience growth attracts new advertisers, leading to increased earnings. Active channels can earn the equivalent of $50-75 per week or more.";  
 _l.monet_increaseearnings_title = "How to increase earnings:"; 
@@ -3253,3 +3253,6 @@ _l.windows7 = "Download for Windows 7"
 _l.miniapps = "Mini Applications"
 
 _l.sysmodbas="Content moderation system on Bastyon"
+
+_l.torHintStateRunning = "The TOR module is working"
+_l.torHintStateStarting = "TOR module is starting"

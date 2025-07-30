@@ -218,10 +218,10 @@ jobs:
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 22
       - name: Install Cordova
         run: |
-          npm i -g cordova@10
+          npm i -g cordova@12
           cordova --version
       - name: Prepare building
         run: |
@@ -280,10 +280,10 @@ jobs:
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 22
       - name: Install Cordova
         run: |
-          npm i -g cordova@10
+          npm i -g cordova@12
           cordova --version
       - name: Prepare building
         run: |

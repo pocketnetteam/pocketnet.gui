@@ -576,7 +576,7 @@ var authorn = (function(){
 						maxh : 1920,
 						maxw : 1920,
 						quality : 1,
-						ext : ['png', 'jpeg', 'jpg', 'webp', 'avif'],
+						ext : ['png', 'jpeg', 'jpg', 'avif'],
 						on : {
 						
 							added,
