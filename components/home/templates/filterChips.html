@@ -1,0 +1,17 @@
+<% chips.forEach(function(chip, index) { %>
+<div
+    class="filter-chip filter-toggle<%= index > visibleCount ? ' hidden' : '' %>"
+    data-filter="<%= chip.tags %>"
+>
+    <i class="<%- chip.icon %>"></i>
+    <%= chip.name %>
+</div>
+<% }); %>
+<div class="filter-chip" id="moreButton">
+    <span class="more-text">+<%= hiddenCount %></span>
+</div>
+<button class="clear-filters">
+    <i class="fas fa-times"></i>
+    <%= e('clearfilters') %>
+    <span class="active-filters-count">0</span>
+</button>

@@ -1251,7 +1251,7 @@ var BastyonApps = function (app) {
             id: "icon",
             type: 'image/png',
             importer: importIcon,
-            cache: true
+            cache: false
         },
 
     ]
@@ -2505,71 +2505,134 @@ var BastyonApps = function (app) {
             return Promise.resolve(filtered)
         },
 
-        applicationsSearch: async function (search = '', searchBy) {
-            if (search.includes(':')) {
-                const [detectedSearchBy, ...searchParts] = search.split(':');
-                searchBy = detectedSearchBy.trim();
-                search = searchParts.join(':').trim();
+        applicationsSearch: async function (searchConfig = {}) {
+            if (typeof searchConfig === 'string') {
+                searchConfig = { search: searchConfig };
             }
-
-            const searchTransformers = {
-                tags: (value) => value.split(' ').filter(Boolean),
-                default: (value) => value
+        
+            const {
+                search = '',
+                tags = [],
+                searchBy,
+                address,
+                scope,
+                name,
+                description,
+                showAll = false
+            } = searchConfig;
+        
+            let actualSearch = search;
+            let actualSearchBy = searchBy;
+        
+            if (actualSearch && actualSearch.includes(':')) {
+                const [detectedSearchBy, ...searchParts] = actualSearch.split(':');
+                actualSearchBy = detectedSearchBy.trim();
+                actualSearch = searchParts.join(':').trim();
+            }
+        
+            const getFieldValue = (app, field) => {
+                const fieldMap = {
+                    name: app.name || app.manifest?.name || '',
+                    description: app.description || app.manifest?.description?.eng || '',
+                    address: app.author || app.address || '',
+                    scope: (app.manifest?.scope || app.scope || '').replace('https://', '')
+                };
+                return fieldMap[field] || '';
             };
-
-            const transformedSearch = (searchTransformers[searchBy] || searchTransformers.default)(search);
-
+        
             const adaptApplicationData = (app) => ({
-                name: app.name || app.manifest?.name || '',
+                name: getFieldValue(app, 'name'),
                 icon: app.icon || getAppIconFromScope(app.scope),
-
-                description: app.description || app.manifest?.description?.eng || '',
+                description: getFieldValue(app, 'description'),
                 tags: app.tags || [],
                 id: app.id || '',
                 status: this.appStatusById(app.id),
-                address: app.author || app.address || '',
+                address: getFieldValue(app, 'address'),
             });
-
-            const filterApplications = (_search, apps, searchBy) => {
-                return apps?.filter(app => {
-                    switch (searchBy) {
-                        case 'name':
-                            return (app.name?.toLowerCase() || app.manifest?.name?.toLowerCase() || '').includes(_search);
-                        case 'scope':
-                            const scope = app.manifest?.scope?.replace('https://', '').toLowerCase() || app.scope?.toLowerCase() || '';
-                            return scope.includes(_search);
-                        case 'tags':
-                            return _search.some(tag => app.tags?.includes(tag));
-                        case 'address':
-                            const author = app.author?.toLowerCase() || app.address?.toLowerCase() || '';
-                            return author.includes(_search);
-                        default:
-                            return false;
+        
+            const matchesTags = (app, filterTags) => {
+                return !filterTags.length || filterTags.some(tag => app.tags?.includes(tag));
+            };
+        
+            const matchesField = (app, field, value) => {
+                if (!value) return true;
+                const fieldValue = getFieldValue(app, field).toLowerCase();
+                return fieldValue.includes(value.toLowerCase());
+            };
+        
+            const matchesSearch = (app, searchValue, searchBy) => {
+                if (!searchValue) return true;
+                const searchLower = searchValue.toLowerCase();
+        
+                if (searchBy) {
+                    if (searchBy === 'tags') {
+                        return Array.isArray(searchValue) 
+                            ? searchValue.some(tag => app.tags?.includes(tag))
+                            : app.tags?.some(tag => tag.toLowerCase().includes(searchLower));
                     }
+                    return matchesField(app, searchBy, searchValue);
+                }
+        
+                // General search across all fields
+                const nameMatch = getFieldValue(app, 'name').toLowerCase().includes(searchLower);
+                const descMatch = getFieldValue(app, 'description').toLowerCase().includes(searchLower);
+                const addressMatch = getFieldValue(app, 'address').toLowerCase().includes(searchLower);
+                const tagsMatch = app.tags?.some(tag => tag.toLowerCase().includes(searchLower));
+        
+                return nameMatch || descMatch || addressMatch || tagsMatch;
+            };
+        
+            const filterApplications = (apps, criteria) => {
+                if (!apps) return [];
+        
+                return apps.filter(app => {
+                    return matchesTags(app, criteria.tags) &&
+                           matchesField(app, 'address', criteria.address) &&
+                           matchesField(app, 'scope', criteria.scope) &&
+                           matchesField(app, 'name', criteria.name) &&
+                           matchesField(app, 'description', criteria.description) &&
+                           matchesSearch(app, criteria.search, criteria.searchBy);
                 });
             };
+        
+            const searchCriteria = {
+                search: actualSearch,
+                searchBy: actualSearchBy,
+                tags,
+                address,
+                scope,
+                name,
+                description
+            };
+        
             const installedApps = this.installedAndInstalling();
-
-
-            const filteredInstalledApps = filterApplications(transformedSearch, Object.values(installedApps), searchBy || 'name');
-
+            const filteredInstalledApps = filterApplications(Object.values(installedApps), searchCriteria);
+        
             let additionalApps = [];
-            additionalApps = await app.platform.sdk.miniapps.getall({
-                [searchBy || 'search']: transformedSearch
-            });
-
-            const allApps = [...filteredInstalledApps, ...additionalApps]
-
-
-            const appsMap = new Map(allApps.map((app) => [app.id, app]));
-            const uniqueAppsRaw = Array.from(appsMap.values());
-
-
-            const adaptedApps = uniqueAppsRaw.map(adaptApplicationData);
-
-            const filteredApps = adaptedApps.filter((app) => app.name);
-
-            return filteredApps;
+            
+            if (showAll || actualSearch || tags.length > 0) {
+                try {
+                    const apiParams = {};
+                    if (actualSearch) {
+                        const transformedSearch = actualSearchBy === 'tags' 
+                            ? actualSearch.split(' ').filter(Boolean) 
+                            : actualSearch;
+                        apiParams[actualSearchBy || 'search'] = transformedSearch;
+                    }
+        
+                    additionalApps = await app.platform.sdk.miniapps.getall(apiParams);
+                } catch (error) {
+                    console.warn('Error fetching additional apps:', error);
+                }
+            }
+        
+            const allApps = [...filteredInstalledApps, ...additionalApps];
+            const appsMap = new Map(allApps.map(app => [app.id, app]));
+            const uniqueApps = Array.from(appsMap.values());
+            const adaptedApps = uniqueApps.map(adaptApplicationData);
+            const finalApps = filterApplications(adaptedApps, searchCriteria);
+            
+            return finalApps.filter(app => app.name);
         },
         applicationall: function (id, cached) {
             return self.get.application(id).catch(e => {
