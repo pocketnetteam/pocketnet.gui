@@ -393,6 +393,23 @@ var Action = function(account, object, priority, settings){
         updatehash = getinternalhash()
     }
 
+    self.packError = function(e){
+        var etext = ''
+
+        if(e.toString) etext = e.toString()
+
+        if(!etext){
+            try{
+                etext = JSON.stringify(e)
+            }catch{
+                etext = e
+            }
+        }
+
+        return etext
+
+    }
+
     self.logerror = function(data){
 
         try{
@@ -911,7 +928,7 @@ var Action = function(account, object, priority, settings){
 
                 else{
                     self.logerror({
-                        method, parameters, error : e.toString ? e.toString() : e
+                        method, parameters, error : self.packError(e)
                     })
                 }
                 
@@ -919,7 +936,7 @@ var Action = function(account, object, priority, settings){
 
             if (code == 26){
                 self.logerror({
-                    method, parameters, error : e.toString ? e.toString() : e
+                    method, parameters, error : self.packError(e)
                 })
             }
 
