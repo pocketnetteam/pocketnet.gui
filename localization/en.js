@@ -2607,7 +2607,7 @@ _l.captchanotequal_angles = "Captcha segments must be rotated to the correct ang
 
 
 _l.permissions_name_account = "Access to account information"
-_l.permissions_descriptions_account = "This permission gives the application information: your account address; publicly available data associated with your account; wallet balance"
+_l.permissions_descriptions_account = "This permission allows the application to access your account address and other public information associated with this address"
 _l.permissions_name_sign = "Digital Signature of Data"
 _l.permissions_descriptions_sign = "You authorize the data to be signed with your unique signature"
 _l.permissions_name_payment = "Make a payment"
@@ -2632,7 +2632,7 @@ _l.permissions_forbid = "Forbid"
 _l.permissions = "Permissions"
 
 _l.deleteapplication = "Delete application"
-_l.installpplication = "Install application"
+_l.installpplication = "Open App"
 
 _l.complainapplication = "Complain application"
 
