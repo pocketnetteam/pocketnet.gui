@@ -103,7 +103,7 @@ var testnodes = [
 
 var activenodes = [
 	
-	{
+	/*{
 		host : '135.181.196.243',
 		port : WebPort,
 		ws : WsPort,
@@ -111,7 +111,7 @@ var activenodes = [
 		sws : SecureWsPort,
 		name : '135.181.196.243',
 		stable : true
-	},
+	},*/
 
 	{
 		host : '202.61.253.55', //
@@ -177,7 +177,7 @@ var activenodes = [
 		name : '109.197.196.106',
 		stable : true
 	},
-	{
+	/*{
 		host : '65.21.252.135',
 		port : WebPort,
 		ws : WsPort,
@@ -186,7 +186,7 @@ var activenodes = [
 		name : '65.21.252.135',
 		stable : true,
 		alwaysrun : true
-	},
+	},*/
 	{
 		host : '178.217.159.221',
 		port : WebPort,
@@ -195,7 +195,7 @@ var activenodes = [
 		sws : SecureWsPort,
 		name : '178.217.159.221',
 		stable : true
-	},
+	}/*,
 	{
 		host : '65.21.56.203',
 		port : WebPort,
@@ -204,7 +204,7 @@ var activenodes = [
 		sws : SecureWsPort,
 		name : '65.21.56.203',
 		stable : true
-	},
+	},*/
 ]
 
 var nodes = activenodes

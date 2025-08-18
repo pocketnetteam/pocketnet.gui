@@ -15965,17 +15965,13 @@ Platform = function (app, listofnodes) {
 
                         var options = {}
 
-                        var nodes = ['135.181.196.243:38081', '65.21.56.203:38081']
-
-                        console.log('type', type)
+                        //var nodes = ['135.181.196.243:38081', '65.21.56.203:38081']
 
                         if (type == 'videos'){
-                            options.rpc = {
+                            /*options.rpc = {
                                 fnode: nodes[rand(0, nodes.length - 1)]
-                            }
+                            }*/
                         }
-
-                        console.log('type options', options)
 
                         return self.app.api.rpc('search', np, options)
                     }, np).then(d => {
@@ -17101,10 +17097,7 @@ Platform = function (app, listofnodes) {
                 getboost: function (p, clbk, cache) {
 
                     self.app.platform.sdk.node.shares.lightsid(p, clbk, cache, {
-                        method: 'getboostfeed',
-                        /*rpc: {
-                            fnode: '65.21.252.135:38081'
-                        }*/
+                        method: 'getboostfeed'
                     })
                 },
 
