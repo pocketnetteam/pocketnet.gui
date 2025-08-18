@@ -496,7 +496,6 @@ Platform = function (app, listofnodes) {
         "P9xkH7FYTiBmKthEFexXPsaKAzhbYhs1uW" : true,
         "PGuK3hjdHkdN4GytBvmus79htEW266yLMe" : true,
         "PJzcsfPbvtpb4QDHrWkzgeXJ1oGZEaxmVc" : true,
-        "PU2BEjFmbEjAc9PnAcLZtJLQC3uqqAy3io" : true,
         "PGf7dNWLaKUfWCQm3fyyaY6zxPexKYALhF" : true,
         "PC7VEMD1YyNr5uewxffVNV2KWLKvaLmnNE" : true,
         "PV1ycXmbwbVwCvHqXQJC1wwbycvBa5YdTP" : true,
@@ -505,6 +504,7 @@ Platform = function (app, listofnodes) {
         'PLgFETDFmjeGtnbxu8n29tQrUJoE9ZVnTY' : true,
         'PKXyQLMzyV1U1wFNNe27RwQ81cbF26tcr1' : true,
         'PG8hRi7SetxR5bpPyHXykp2fooDpnia7ws' : true,
+
         'PCVScz56iKZPA7svmyvdzfNhsVPKAJ4gtx' : true,
         'PBoKaag8byXc1RQPfQ9ZKUUM5AEuASQtAP' : true,
         'PJbmA4Gxm86rTjNRcg8zit5geCCY54d19B' : true,
@@ -514,7 +514,9 @@ Platform = function (app, listofnodes) {
         'PCmLFV4Ra8hAdqaqTFRdgJ2d6tLtXMt2Fu' : true,
         'PNiQ31ZnbS2ZksFNyW2Nd34D5fKLa5TURD' : true,
         'PNveZ2XJRXmtdmWaejQpRrUza3CrfRvXVg' : true
-     }
+
+        'PNveZ2XJRXmtdmWaejQpRrUza3CrfRvXVg' : true,
+        'PC4jJAG5qrWNddQ7CPCoRurRYnW3qEBLQA' : true
 
     self.bch = {
     }
@@ -15968,17 +15970,13 @@ Platform = function (app, listofnodes) {
 
                         var options = {}
 
-                        var nodes = ['135.181.196.243:38081', '65.21.56.203:38081']
-
-                        console.log('type', type)
+                        //var nodes = ['135.181.196.243:38081', '65.21.56.203:38081']
 
                         if (type == 'videos'){
-                            options.rpc = {
+                            /*options.rpc = {
                                 fnode: nodes[rand(0, nodes.length - 1)]
-                            }
+                            }*/
                         }
-
-                        console.log('type options', options)
 
                         return self.app.api.rpc('search', np, options)
                     }, np).then(d => {
@@ -17104,10 +17102,7 @@ Platform = function (app, listofnodes) {
                 getboost: function (p, clbk, cache) {
 
                     self.app.platform.sdk.node.shares.lightsid(p, clbk, cache, {
-                        method: 'getboostfeed',
-                        /*rpc: {
-                            fnode: '65.21.252.135:38081'
-                        }*/
+                        method: 'getboostfeed'
                     })
                 },
 
