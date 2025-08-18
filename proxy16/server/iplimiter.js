@@ -49,7 +49,13 @@ var Iplimiter = function(p){
             '::ffff:64.235.40.47' : true,
             '::ffff:64.235.42.75' : true,
             '::ffff:64.235.50.17' : true,
-
+            '::ffff:185.141.60.22' : true,
+            '::ffff:91.92.144.143' : true,
+            '::ffff:185.148.146.43' : true,
+            '::ffff:185.148.147.143' : true,
+            '::ffff:5.78.101.131' : true,
+            '::ffff:185.148.146.11' : true,
+            '::ffff:178.217.159.221' : true,
         }
 
     }
