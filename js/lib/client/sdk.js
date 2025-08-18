@@ -2875,9 +2875,7 @@ var pSDK = function ({ app, api, actions }) {
             return loadone('blocking', address, (ids) => {
 
                 return api.rpc('getuserblockings', [ids[0], '1', '', '', 0, 5000], {
-                    /*rpc : {
-                        fnode : '65.21.56.203:38081'
-                    }*/
+           
                 }).then(r => {
 
                     /*r = _.map(r, (v) => {
