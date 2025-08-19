@@ -69,6 +69,10 @@
   gap: 0.5em;
 }
 #applicationmeta button.report {
+   background: rgb(var(--color-bg-orange));
+   border: 1px solid rgb(var(--color-bg-orange));
+}
+#applicationmeta button.remove {
    background: rgb(var(--color-bad));
    border: 1px solid rgb(var(--color-bad));
 }
