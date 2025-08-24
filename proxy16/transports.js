@@ -173,7 +173,7 @@ class WrappedAxios {
     }
 
     static handleError(error) {
-        const isConnRefused = error.message.includes('ECONNREFUSED 127.0.0.1:9051');
+        const isConnRefused = error.message.includes('ECONNREFUSED 127.0.0.1:9250');
         const isSocksRejection = error.message.includes('Socks5 proxy rejected connection');
 
         if (isConnRefused || isSocksRejection) {
@@ -310,7 +310,7 @@ class WrappedFetch {
     }
 
     static handleError(error) {
-        const isConnRefused = error.message.includes('ECONNREFUSED 127.0.0.1:9051');
+        const isConnRefused = error.message.includes('ECONNREFUSED 127.0.0.1:9250');
         const isSocksRejection = error.message.includes('Socks5 proxy rejected connection');
 
         if (isConnRefused || isSocksRejection) {
@@ -441,7 +441,7 @@ class WrappedRequest {
     }
 
     static handleError(error) {
-        const isConnRefused = error.message.includes('ECONNREFUSED 127.0.0.1:9051');
+        const isConnRefused = error.message.includes('ECONNREFUSED 127.0.0.1:9250');
         const isSocksRejection = error.message.includes('Socks5 proxy rejected connection');
 
         if (isConnRefused || isSocksRejection) {
@@ -672,7 +672,7 @@ class Transports {
 
     getTorAgent() {
         if (!this.torAgent) {
-            const url = new URL('socks5h://127.0.0.1:9051');
+            const url = new URL('socks5h://127.0.0.1:9250');
             url.tls = { rejectUnauthorized: false };
             this.torAgent = new SocksProxyAgent(url, {
                 keepAlive: true,
@@ -718,7 +718,7 @@ class Transports {
     }
 
     isTorRefuseConnections(error) {
-        return error.message.includes('ECONNREFUSED 127.0.0.1:9051');
+        return error.message.includes('ECONNREFUSED 127.0.0.1:9250');
     }
 }
 
