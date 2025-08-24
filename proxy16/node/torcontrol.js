@@ -229,7 +229,8 @@ class TorControl {
             "# The user is free to edit this config if he know\n" +
             "# how to do that. Read TOR documentation before...\n",
 
-            "SocksPort 0.0.0.0:9051",
+            "SocksPort 9050    # Default: Bind to localhost:9050 for local connections.",
+            "ControlPort 9051",
             "CookieAuthentication 1",
             "DormantCanceledByStartup 1",
             `DataDirectory ${getSettingsPath("data")}`,
