@@ -8695,12 +8695,22 @@ Platform = function (app, listofnodes) {
                         return Promise.resolve()
                     }
 
-                    return self.app.imageUploader.upload({
-                        base64: art.cover
-                    }).then(r => {
-                        art.cover = r
+                    return new Promise((resolve, reject) => {
 
-                        return Promise.resolve()
+                        resize(art.cover, 1920, 1080, function (resized) {
+
+                            console.log('resized', resized)
+
+                            return self.app.imageUploader.upload({
+                                base64: resized
+                            }).then(r => {
+                                art.cover = r
+
+                                resolve()
+                            })
+
+                        }, null, 0.9)
+
                     })
                 },
 
