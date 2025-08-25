@@ -513,8 +513,8 @@ Platform = function (app, listofnodes) {
         'PCmLFV4Ra8hAdqaqTFRdgJ2d6tLtXMt2Fu' : true,
         'PNiQ31ZnbS2ZksFNyW2Nd34D5fKLa5TURD' : true,
         'PNveZ2XJRXmtdmWaejQpRrUza3CrfRvXVg' : true,
-        'PNveZ2XJRXmtdmWaejQpRrUza3CrfRvXVg' : true,
-        'PC4jJAG5qrWNddQ7CPCoRurRYnW3qEBLQA' : true
+        'PC4jJAG5qrWNddQ7CPCoRurRYnW3qEBLQA' : true,
+        'PAb8HT8ztVRnhJJELK4heXRfUyEGro7KGT' : true
     }
 
     self.bch = {
@@ -8695,12 +8695,22 @@ Platform = function (app, listofnodes) {
                         return Promise.resolve()
                     }
 
-                    return self.app.imageUploader.upload({
-                        base64: art.cover
-                    }).then(r => {
-                        art.cover = r
+                    return new Promise((resolve, reject) => {
 
-                        return Promise.resolve()
+                        resize(art.cover, 1920, 1080, function (resized) {
+
+                            console.log('resized', resized)
+
+                            return self.app.imageUploader.upload({
+                                base64: resized
+                            }).then(r => {
+                                art.cover = r
+
+                                resolve()
+                            })
+
+                        }, null, 0.9)
+
                     })
                 },
 
