@@ -191,7 +191,12 @@ var Control = function(settings, proxy) {
                     'rpcuser=' + f.randomString(10) + EOL +
                     'rpcpassword=' + f.randomString(256) + EOL +
                     'api=1' + EOL +
-                    'rest=0' + EOL
+                    'rest=0' + EOL +
+                    'logips=1' + EOL +
+                    'disconnectold=1' + EOL +
+                    '# tor' + EOL +
+                    'listenonion=1' + EOL +
+                    'torcontrol=127.0.0.1:9251' + EOL
     
                 fs.writeFileSync(node.confPath, data)
             }
