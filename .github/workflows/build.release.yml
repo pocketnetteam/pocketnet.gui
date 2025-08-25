@@ -8,44 +8,365 @@ on:
       - 'v[0-9]+.[0-9]+.[0-9]+-beta*'
 
 jobs:
-  release:
-    # if: github.event.base_ref == 'refs/heads/master'
-    
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [macos-latest, ubuntu-22.04, windows-latest]
-
+  prepare:
+    runs-on: ubuntu-22.04
     steps:
-      - name: Check out Git repository
+      - name: Checkout git repository
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+      - name: Save HEAD information
+        run: git --no-pager log --decorate=short --pretty=oneline -n1 > head.txt
+      - name: Archive repo
+        run: |
+          mkdir -p /tmp/repo
+          rsync -ah --exclude={'.git','.gitignore','.github','node_modules','.well-known'} ./ /tmp/repo/
+          cd /tmp/repo
+          tar czf /tmp/repo.tgz ./
+      - name: Upload artifact repo.tgz
+        uses: actions/upload-artifact@v4
+        with:
+          name: repo.tgz
+          path: /tmp/repo.tgz
+      - name: Save artifact head.txt
+        uses: actions/upload-artifact@v4
+        with:
+          name: head
+          path: ./head.txt
 
+  build-macos:
+    needs: prepare
+    runs-on: macos-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: repo.tgz
+      - name: Unpack artifact
+        run: tar xzf repo.tgz
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
           node-version: 16
-
-      - name: Install Linux dependencies
-        if: startsWith(matrix.os, 'ubuntu')
-        run: sudo apt update && sudo apt install -y binutils rpm
-
+      - name: Prepare building
+        run: |
+          npm i
+          npm run build:proxy16
+          npm run dev:bastyon -- -sha=${{ github.sha }}
       - name: Prepare for app notarization
-        if: startsWith(matrix.os, 'macos')
         run: |
           mkdir -p ~/private_keys/
           echo '${{ secrets.APPLE_API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.APPLE_API_KEY_ID }}.p8
-
-      - name: Build/release Electron app
-        uses: samuelmeuli/action-electron-builder@v1
-        with:
-          github_token: ${{ secrets.release_token }}
-          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
-          mac_certs: ${{ secrets.mac_certs }}
-          mac_certs_password: ${{ secrets.mac_certs_password }}
+          echo '${{ secrets.APPLECERT }}' | base64 -d > applecert.p12
+      - name: Building
         env:
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASS }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
           APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          CSC_LINK: 'file://applecert.p12'
+          CSC_KEY_PASSWORD: ${{ secrets.APPLECERTPWD }}
+        run: |
+          npm run distm
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos
+          path: |
+            ./dist/latest-macos.yml
+            ./dist/BastyonSetup.dmg
+
+  build-unix:
+    needs: prepare
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: repo.tgz
+      - name: Unpack artifact
+        run: tar xzf repo.tgz
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Prepare building
+        run: |
+          apt update && apt install -y binutils rpm
+          npm i
+          npm run build:proxy16
+          npm run dev:bastyon -- -sha=${{ github.sha }}
+      - name: Building
+        run: |
+          npm run distl
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: unix
+          path: |
+            ./dist/latest-linux.yml
+            ./dist/BastyonSetup.deb
+            ./dist/BastyonSetup.rpm
+            ./dist/Bastyon.AppImage
+
+  build-windows:
+    needs: prepare
+    runs-on: windows-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: repo.tgz
+      - name: Unpack artifact
+        run: tar xzf repo.tgz
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Prepare building
+        run: |
+          npm i
+          npm run build:proxy16
+          npm run dev:bastyon -- -sha=${{ github.sha }}
+      - name: Building
+        run: |
+          npm run dist
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows
+          path: |
+            ./dist/latest.yml
+            ./dist/BastyonSetup.exe
+
+  build-windows-win7:
+    needs: prepare
+    runs-on: windows-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: repo.tgz
+      - name: Unpack artifact
+        run: tar xzf repo.tgz
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Prepare building
+        run: |
+          npm i
+          npm run build:proxy16
+          npm run dev:bastyon:win7 -- -sha=${{ github.sha }}
+      - name: Building
+        run: |
+          npm run dist
+          move .\dist\latest.yml .\dist\latest-win7.yml
+          move .\dist\BastyonSetup.exe .\dist\BastyonSetup-win7.exe
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-win7
+          path: |
+            ./dist/latest-win7.yml
+            ./dist/BastyonSetup-win7.exe
+
+  build-android:
+    needs: prepare
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: repo.tgz
+      - name: Unpack artifact
+        run: tar xzf repo.tgz
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+      - name: Install Cordova
+        run: |
+          npm i -g cordova@12
+          cordova --version
+      - name: Prepare building
+        run: |
+          npm i
+          npm run build:proxy16
+          npm run minimize:cordova -- -sha=${{ github.sha }}
+          cd ./cordova
+          npm i
+      - name: Prepare configuration
+        run: |
+          cd ./cordova
+          echo "${{ secrets.ANDROID_SECRET_KEY }}" | base64 -d > cert.keystore
+          echo "${{ secrets.ANDROID_BUILD_CONF }}" | base64 -d > build.json
+          echo "${{ secrets.ANDROID_FIREBASE_CONF }}" | base64 -d > google-services.json
+          ls -l cert.keystore
+          ls -l build.json
+      - name: Fixing Android Build Tool Issue
+        run: |
+            cd $ANDROID_HOME/build-tools/35.0.0
+            mv d8 dx
+            cd lib
+            mv d8.jar dx.jar
+      - name: Configure Cordova Plugins
+        run: |
+          cd ./cordova
+          npm run android-add
+      - name: Building
+        run: |
+          cd ./cordova
+          npm run android-build
+      - name: Rename apk binary
+        run: |
+          cd ./cordova/platforms/android/app/build/outputs/apk/release
+          mv app-release.apk Bastyon.apk
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: android
+          path: ./cordova/platforms/android/app/build/outputs/apk/release/Bastyon.apk
+
+  build-android-gf:
+    needs: prepare
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: repo.tgz
+      - name: Unpack artifact
+        run: tar xzf repo.tgz
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+      - name: Install Cordova
+        run: |
+          npm i -g cordova@12
+          cordova --version
+      - name: Prepare building
+        run: |
+          npm i
+          npm run build:proxy16
+          npm run minimize:cordova:gfree -- -sha=${{ github.sha }} -run=${{ github.run_number }}${{ github.run_attempt }}
+          cd ./cordova
+          npm i
+      - name: Prepare configuration
+        run: |
+          cd ./cordova
+          echo "${{ secrets.ANDROID_SECRET_KEY }}" | base64 -d > cert.keystore
+          echo "${{ secrets.ANDROID_BUILD_GFREE_CONF }}" | base64 -d > buildgfree.json
+          echo "${{ secrets.ANDROID_FIREBASE_CONF }}" | base64 -d > google-services.json
+      - name: Fixing Android Build Tool Issue
+        run: |
+            cd $ANDROID_HOME/build-tools/35.0.0
+            mv d8 dx
+            cd lib
+            mv d8.jar dx.jar
+      - name: Configure Cordova Plugins
+        run: |
+          cd ./cordova
+          npm run android-add
+      - name: Building
+        run: |
+          cd ./cordova
+          npm run android-build-gfree
+      - name: Rename apk binary
+        run: |
+          cd ./cordova/platforms/android/app/build/outputs/apk/release
+          ls -lh
+          mv app-release.apk BastyonGF.apk
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-gfree
+          path: ./cordova/platforms/android/app/build/outputs/apk/release/BastyonGF.apk
+
+  create-release:
+    needs: [build-macos, build-unix, build-windows, build-windows-win7, build-android, build-android-gf]
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - name: Download HEAD info
+        uses: actions/download-artifact@v4
+        with:
+          name: head
+          path: ./
+      
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ./artifacts
+      
+      - name: Generate changelog
+        id: changelog
+        run: |
+          # Get previous tag
+          PREVIOUS_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+          CURRENT_TAG=${{ github.ref_name }}
+          
+          echo "Current tag: $CURRENT_TAG"
+          echo "Previous tag: $PREVIOUS_TAG"
+          
+          # Generate changelog
+          if [ -n "$PREVIOUS_TAG" ]; then
+            echo "## Changes since $PREVIOUS_TAG" > changelog.md
+            echo "" >> changelog.md
+            git log --pretty=format:"- %s (%h)" $PREVIOUS_TAG..$CURRENT_TAG >> changelog.md
+          else
+            echo "## Initial Release" > changelog.md
+            echo "" >> changelog.md
+            echo "First release of Bastyon $CURRENT_TAG" >> changelog.md
+          fi
+          
+          # Add build information
+          echo "" >> changelog.md
+          echo "## Build Information" >> changelog.md
+          echo "- Build commit: ${{ github.sha }}" >> changelog.md
+          echo "- Build date: $(date)" >> changelog.md
+          echo "- Build number: ${{ github.run_number }}" >> changelog.md
+          
+          cat changelog.md
+          
+          # Set outputs for release notes
+          {
+            echo 'CHANGELOG<<EOF'
+            cat changelog.md
+            echo EOF
+          } >> $GITHUB_OUTPUT
+      
+      - name: Determine if pre-release
+        id: prerelease
+        run: |
+          if [[ "${{ github.ref_name }}" == *"beta"* ]]; then
+            echo "is_prerelease=true" >> $GITHUB_OUTPUT
+          else
+            echo "is_prerelease=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: Bastyon ${{ github.ref_name }}
+          body: ${{ steps.changelog.outputs.CHANGELOG }}
+          draft: true
+          prerelease: ${{ steps.prerelease.outputs.is_prerelease }}
+      
