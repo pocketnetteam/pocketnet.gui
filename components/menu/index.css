@@ -225,11 +225,18 @@
 #menu .sections .items.control-app > div:hover {
   color: rgb(var(--color-txt-gray));
 }
+#menu .sections .items.control-app.platform-android {
+  color: inherit;
+  padding: 0;
+}
 #menu .sections .items.control-app.control-left {
   padding-right: 1.5em;
 }
 #menu .sections .items.control-app.control-right {
   padding-left: 1.5em;
+}
+#menu .sections .items.control-app.control-right.platform-android {
+  padding-left: 0;
 }
 #menu .sections .items.control-app .control-tor-state {
   position: relative;
@@ -244,6 +251,10 @@
   overflow: hidden;
   margin-left: 1.25em;
   padding: 0 1em;
+}
+#menu .sections .items.control-app .control-tor-state.platform-android {
+  margin-left: 0;
+  background: transparent !important;
 }
 #menu .sections .items.control-app .control-tor-state .tor-progress-text {
   display: none;
@@ -282,9 +293,15 @@
 #menu .sections .items.control-app .control-tor-state.off {
   color: rgb(var(--color-txt-gray-dark));
 }
+#menu .sections .items.control-app .control-tor-state.off.platform-android {
+  color: inherit;
+}
 #menu .sections .items.control-app .control-tor-state.loading {
   color: rgb(var(--color-txt-gray-dark));
   animation: torPulse 2s linear infinite;
+}
+#menu .sections .items.control-app .control-tor-state.loading.platform-android {
+  color: inherit;
 }
 @keyframes torPulse {
   50% {
@@ -294,6 +311,9 @@
 #menu .sections .items.control-app .control-tor-state.failed {
   color: rgb(var(--color-txt-gray-dark));
   animation: torFailedPulse 2s linear infinite;
+}
+#menu .sections .items.control-app .control-tor-state.failed.platform-android {
+  color: inherit;
 }
 @keyframes torFailedPulse {
   30% {
@@ -322,6 +342,9 @@
 #menu .sections .items.searchWrapper .postssearchwrapper {
   padding: 15px 0;
   width: 100%;
+}
+#menu .sections .items.searchWrapper .postssearchwrapper.platform-android {
+  margin-top: 0.2em;
 }
 #menu .sections .items.searchIcons {
   margin-right: 1em;

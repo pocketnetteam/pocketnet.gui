@@ -319,12 +319,21 @@
 					}
 				}
 
+				&.platform-android {
+				  color : inherit;
+				  padding: 0;
+				}
+
 				&.control-left{
 					padding-right: @rhythm * 3;
 				}
 
 				&.control-right{
 					padding-left: @rhythm * 3;
+
+				  &.platform-android {
+					padding-left: 0;
+				  }
 				}
 
 				.control-tor-state {
@@ -338,8 +347,13 @@
 					border : 0;
 					border-radius: 30px;
 					overflow: hidden;
-					margin-left: 2.5 * @rhythm;;
+					margin-left: 2.5 * @rhythm;
 					padding : 0 2 * @rhythm;
+
+					&.platform-android {
+					  margin-left: 0;
+					  background: transparent !important;
+					}
 
 					.tor-progress-text {
 						display: none;
@@ -384,11 +398,19 @@
 
 					&.off {
 						color: rgb(var(--color-txt-gray-dark));
+
+						&.platform-android {
+						  color: inherit;
+						}
 					}
 
 					&.loading {
 						color: rgb(var(--color-txt-gray-dark));
 						animation: torPulse 2s linear infinite;
+
+						&.platform-android {
+						  color: inherit;
+						}
 
 						@keyframes torPulse {
 							50% { color: rgb(var(--color-txt-ac)) }
@@ -398,6 +420,10 @@
 					&.failed {
 						color: rgb(var(--color-txt-gray-dark));
 						animation: torFailedPulse 2s linear infinite;
+
+						&.platform-android {
+						  color: inherit;
+						}
 
 						@keyframes torFailedPulse {
 							30% { color: rgb(var(--color-bad)) }
@@ -432,6 +458,10 @@
 				.postssearchwrapper{
 					padding : 15px 0;
 					width: 100%;
+
+				  &.platform-android {
+					margin-top: 0.2em;
+				  }
 				}
 			}
 

@@ -301,7 +301,7 @@ var embeding = (function(){
 				initUpload({
 					el : el.upload,
 		
-					ext : ed.ext || ['png', 'jpeg', 'jpg', 'gif', 'webp', 'avif'],
+					ext : ed.ext || ['png', 'jpeg', 'jpg', 'gif', 'avif'],
 					app : self.app,
 					dropZone : el.c.closest('.wnd'),
 

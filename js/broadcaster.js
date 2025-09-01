@@ -1,9 +1,29 @@
+class StubBroadcastChannel {
+    constructor(name) {
+        console.warn(`BroadcastChannel is not supported on this platform. Channel: "${name}"`);
+        this.name = name;
+        this.onmessage = null;
+    }
+
+    postMessage(_data) {
+        console.warn(`BroadcastChannel.postMessage() called on unsupported platform. Channel: "${this.name}"`);
+    }
+
+    close() {
+        // No-op
+    }
+}
+
 class Broadcaster {
     listeners = {};
     handlers = {};
 
     constructor(name) {
-        this.channel = new BroadcastChannel(name);
+
+        const Channel = typeof BroadcastChannel !== 'undefined'
+            ? BroadcastChannel
+            : StubBroadcastChannel;
+        this.channel = new Channel(name);
 
         this.channel.onmessage = ({ data: message }) => {
             if (!this.listeners[message.name]) {
