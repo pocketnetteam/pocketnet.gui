@@ -12,7 +12,8 @@ var collections = (function(){
 
 		var actions = {
 			newcollection : function(){
-				self.nav.api.load({
+				self.app.platform.sdk.collections.opennewcollectionwindow()
+				/*self.nav.api.load({
 					open : true,
 					id : 'newcollection',
 					inWnd : true,
@@ -20,7 +21,7 @@ var collections = (function(){
 					essenseData : {
 						
 					}
-				})
+				})*/
 			}
 		}
 

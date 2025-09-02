@@ -11,16 +11,44 @@
     </div>
 </div>
 
+
+
 <div class="collectionImageWrapper">
     <div class="textIcon">
         
         <div class="text">
-            <span><%=e('collectionInputImage')%></span>
+            <span><%=e(collection.image.v ? 'collectionInputImageChange' : 'collectionInputImage')%></span>
         </div>
-        <div class="icon" image="<%-collection.image.value || '*'%>">
+        <div class="icon">
             <i class="fas fa-camera"></i>
         </div>
     </div>
 </div>
 
+<% if(collection.image.v) {%>
+
+    <div class="imagecover" image="<%-collection.image.v || '*'%>"></div>
+
+<% } %>
+
 <div class="collectionItemsWrapper"></div>
+
+
+<div class="panelErrorWrapper">
+    <div class="panelform">
+        <div class="panel">
+
+            <div class="error"><span></span></div>
+
+            <button class="button ghost cancel"><%=e('cancelcollection')%></button>
+
+            <% if(collection.aliasid) {%>
+                <button class="button bad remove"><%=e('deletecollection')%></button>
+            <% } %>
+
+            <button class="button save"><%=e(collection.aliasid ? 'savecollection' : 'savecollection')%></button>
+            
+        </div>
+    </div>
+</div>
+

@@ -1842,6 +1842,8 @@ Collection = function(lang){
 
 	var self = this;
 
+	self.internalid = makeid()
+
 	self.clear = function(){
 		
 		self.message.set()
@@ -1947,7 +1949,7 @@ Collection = function(lang){
 
 				else{
 
-					if(!images) return
+					if(!contentIds) return
 
 					this.v.push(contentIds)
 				}
@@ -2061,6 +2063,10 @@ Collection = function(lang){
 
 		if(!self.image.v){
 			return 'image'
+		}
+
+		if(!self.contentIds.v.length){
+			return 'contentIds'
 		}
 
 		if(!self.caption.v) return 'caption'
@@ -3769,6 +3775,8 @@ pCollection = function(){
 	self.txid = '';
 	self.language = '';
 	self.contentIds = [];
+
+	
 
 	self.time = new Date()
 	self.___temp = false

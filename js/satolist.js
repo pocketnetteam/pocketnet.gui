@@ -6516,6 +6516,122 @@ Platform = function (app, listofnodes) {
 
     self.sdk = {
 
+        collections : {
+            current : null,
+            clbks : {},
+            wnd : null,
+
+            unregisternewcollectionwindow : function(){
+                self.sdk.collections.wnd = null
+            },
+
+            opennewcollectionwindow : function(editing){
+
+                var type = editing ? 'edit' : 'new'
+
+                if (editing){
+                    self.sdk.collections.unregisternewcollectionwindow()
+                }
+
+                else{
+                    if (self.sdk.collections.wnd){
+                        if (self.sdk.collections.wnd.type != type){
+                            self.sdk.collections.unregisternewcollectionwindow()
+                        }
+
+                        else{
+                            var external = self.sdk.collections.wnd.element
+
+						    external.show()
+
+                            return
+                        }
+                    }
+                }   
+
+                
+
+                app.nav.api.load({
+					open : true,
+					id : 'newcollection',
+					inWnd : true,
+
+					essenseData : {
+                        collection : editing
+					},
+
+                    clbk : function( element){
+
+						self.sdk.collections.wnd = {
+                            element, 
+                            type
+                        };
+
+					}
+				})
+            },
+
+            addItem : function(id){
+                if(!self.sdk.collections.current) return
+
+                self.sdk.collections.current.contentIds.set(id)
+
+                if(self.sdk.collections.clbks.change) self.sdk.collections.clbks.change(self.sdk.collections.current)
+
+                app.el.html.find('.share_common#' + id).addClass('incollection')
+            },
+
+            removeItem : function(id){
+                self.sdk.collections.current.contentIds.remove(id)
+
+                if(self.sdk.collections.clbks.change) self.sdk.collections.clbks.change(self.sdk.collections.current)
+
+                app.el.html.find('.share_common#' + id).removeClass('incollection')
+                
+            },
+
+            enableEditMode : function(collection, clbks = {}){
+
+                var ws = self.sdk.collections.current
+
+                self.sdk.collections.current = collection || null
+
+                self.sdk.collections.clbks = clbks
+
+                if (self.sdk.collections.current){
+                    app.el.html.addClass('editcollection')
+                }
+                else{
+                    
+                    app.el.html.removeClass('editcollection')
+                }
+
+                if(collection?.internalid != ws?.internalid){
+
+                    app.el.html.find('.share_common').each((i, el) => {
+                        var t = $(el)
+
+                        if(self.sdk.collections.checkItemId(t.attr('id'))){
+                            t.addClass('incollection')
+                        }
+                        else{
+                            t.removeClass('incollection')
+                        }
+                    })
+
+                    return true
+                }
+            },
+
+            checkItemId : function(txid){
+                if(!self.sdk.collections.current) return false
+
+                return _.find(self.sdk.collections.current.contentIds.v, (i) => {
+                    return i == txid
+                })
+            }
+        },
+
         miniapps: {
             getbyid: async function (appId) {
                 const apps = await this.getall({id: appId})

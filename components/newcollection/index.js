@@ -12,6 +12,8 @@ var newcollection = (function(){
 		var currentCollection = null
 		var sortable = null
 
+		var wndObj = null, wnd = null;
+
 
 		var errors = {
 			message : self.app.localization.e('collectionemptymessage'),
@@ -21,6 +23,71 @@ var newcollection = (function(){
 		}
 
 		var actions = {
+
+			cancel : function(){
+				self.closeContainer();
+			},
+			
+			remove : function(){
+
+			},
+
+			fail : function(){
+				var message = e.text || findResponseError(e) || 'Updating error';
+
+					sitemessage(message);
+
+				el.c.removeClass('loading')
+			},
+
+			save : function(){
+				var error = actions.error();
+
+				if (error) return
+
+				if (ed.hash == currentCollection.shash()){
+					actions.errortext(self.app.localization.e('e13163'))
+					return
+				}
+
+				self.app.Logger.info({
+					actionId: 'COLLECTION_CREATED',
+				});
+				
+
+				el.c.addClass('loading')
+
+				currentCollection.language.set(self.app.localization.key)
+
+				currentCollection.uploadImages(self.app, function(){
+					if (currentCollection.checkloaded()){
+
+						actions.fail({ text : self.app.platform.errorHandler('imageerror', true)})
+			
+						return
+					}
+
+					self.app.platform.actions.addActionAndSendIfCan(currentCollection).then(action => {
+
+						var alias = action.object
+
+						if(!ed.notClear){
+							currentCollection = new Collection(self.app.localization.key, self.app);
+							
+							setTimeout(() => {
+								self.closeContainer()
+							}, 100)
+
+							state.save()
+
+							init();	
+						}
+
+						successCheck()
+					})
+				})
+
+			},
 
 			addimage : function(file){
 
@@ -95,12 +162,10 @@ var newcollection = (function(){
 
 					if(!text){
 						el.error.html('')
-						el.c.removeClass('showError')
 					}
 	
 					else{
-						el.error.html('<div>'+text+'</div>')
-						el.c.addClass('showError')
+						el.error.html(text)
 					}
 				}
 
@@ -134,13 +199,21 @@ var newcollection = (function(){
 
 			applyText : function(text){
 				currentCollection.message.set(findAndReplaceLinkClearReverse(text));
+
+				console.log('applyText ca')
+
 			},
 
 			caption : function(caption){
 				currentCollection.caption.set(findAndReplaceLinkClearReverse(caption));
+
+				console.log('applyText ca22', caption)
+
+				state.save()
 			},
 
 			eTextChange : function(c){
+				console.log('eTextChange')
 				var text = c.getText();
 
 				actions.applyText(text);
@@ -151,6 +224,45 @@ var newcollection = (function(){
 		}
 
 		var helpers = {
+			sortable : function(){
+
+				if(sortable) sortable.destroy()
+
+					sortable = null
+
+				var ps = {
+					animation: 150,
+					swapThreshold : 0.5,
+					draggable : '.draggablepart',
+					onUpdate: function (evt){
+	
+						var na = [];
+					   
+						var ps = el.c.find('.draggablepart');
+	
+						$.each(ps, function(){
+							na.push($(this).attr('share'))
+						})
+
+						currentCollection.contentIds.set(na)
+	
+						if (ed.changeArrange){
+							ed.changeArrange()
+						}
+
+						state.save()
+					},
+
+					forceFallback : true,
+					handle : '.draggablepart'
+				}
+				
+				if(el.c.find('.allshares').length){	
+					sortable = Sortable.create(el.c.find('.allshares')[0], ps); 
+				}
+
+				
+			},
 			emojioneArea : function(_el){
 				_el.emojioneArea({
 					pickerPosition : 'bottom',
@@ -342,8 +454,22 @@ var newcollection = (function(){
 
 		var events = {
 			change : function(){
+				actions.error(true);
+			},
 
-			}
+			eTextChange : function(editor, event){
+
+				var c = this;
+
+				actions.eTextChange(c)
+				
+			}, 
+
+			caption : function(){
+				var caption = $(this).val()
+
+				actions.caption(caption)
+			},
 		}
 
 		var renders = {
@@ -363,8 +489,74 @@ var newcollection = (function(){
 					helpers.emojioneArea(p.el.find('.message'))
 					imagesHelper.imageUploader(p.el.find('.textIcon'))
 
+					renders.shares()
+
+					var elcaption = p.el.find('.collectionCaptionWrapper input')
+
+
+					elcaption.on('keyup', events.caption)
+
+					elcaption.val(currentCollection.caption.v || "")
+
+
+					el.error = p.el.find('.error span')
+
+
+					p.el.find('.cancel').on('click', actions.cancel)
+					p.el.find('.remove').on('click', actions.remove)
+					p.el.find('.save').on('click', actions.save)
+
+
 				})
 			},
+
+			shares : function(){
+
+				self.app.platform.sdk.node.shares.getbyid(currentCollection.contentIds.v, function(shares){
+
+
+					self.shell({
+						name :  'shares',
+						el : el.body.find('.collectionItemsWrapper'),
+						data : {
+							collection : currentCollection,
+							shares,
+							ed : ed,
+							tpl : self.app.platform.ws.tempates.share
+						},
+
+						insertimmediately : true
+
+					}, function(p){
+
+						helpers.sortable()
+						
+						p.el.find('.additems').on('click', function(){
+							self.app.platform.sdk.collections.enableEditMode(currentCollection, {
+								change : function(){
+									state.save()
+									renders.shares()
+								}
+							})
+							sitemessage(self.app.localization.e('enabledEditModeCollections'), null, 5000, {
+								class : 'lightcenter'
+							})
+							wndObj.hide()
+						})
+
+						p.el.find('.remove').on('click', function(){
+							var txid = $(this).closest('.shareWrapper').attr('share')
+
+							currentCollection.contentIds.remove(txid)
+
+							state.save()
+							renders.shares()
+						})
+					})
+				})
+
+				
+			}
 
 			
 		}
@@ -431,6 +623,7 @@ var newcollection = (function(){
 				currentCollection = ed.collection || new Collection(self.app.localization.key, self.app);
 				currentCollection.app = self.app
 
+				
 				if(!ed.collection){
 
 					if(!state.load()){
@@ -439,6 +632,9 @@ var newcollection = (function(){
 					
 					currentCollection.language.set(self.app.localization.key)
 				}
+
+
+				///currentCollection.shash()
 
 				clbk(data);
 
@@ -469,9 +665,14 @@ var newcollection = (function(){
 					sortable = null
 				}
 
+				self.app.platform.sdk.collections.unregisternewcollectionwindow()
+				self.app.platform.sdk.collections.enableEditMode(null)
 
 				ed = {}
 				el = {};
+
+				wndObj = null
+				wnd = null;
 
 
 				
@@ -494,7 +695,19 @@ var newcollection = (function(){
 			},
 
 			wnd: {
+				allowHide: true,
+				minimizeOnBgClick : true,
 				class: 'wndnewcollection normalizedmobile maxheight withoutButtons',
+
+				postRender: function (_wnd, _wndObj, clbk) {
+					wndObj = _wndObj;
+					wnd = _wnd;
+
+					console.log(wndObj, wnd)
+					if (clbk) {
+						clbk();
+					}
+				},
 			}
 		}
 	};
