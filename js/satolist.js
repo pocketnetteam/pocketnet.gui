@@ -6629,6 +6629,125 @@ Platform = function (app, listofnodes) {
                 return _.find(self.sdk.collections.current.contentIds.v, (i) => {
                     return i == txid
                 })
+            },
+
+            load : {
+                byid : function(txid, clbk, refresh){
+                    self.sdk.collections.load([txid], function(collections, error, p){
+
+                        if(!collections.length && !error){
+                            error = 'collectionNotFound'
+                        }
+
+                        if (error){
+
+                            if (clbk) {
+                                clbk(null, error)
+                            }
+                            
+                            return
+                        }
+
+                        if (clbk){
+                            clbk(collections[0], null)
+                        }
+                        
+
+                    }, refresh)
+                },
+                byids : function(txids, clbk, refresh){
+
+                    self.psdk.collection.load(txids, refresh).then(() => {
+
+                        var collections = self.psdk.share.gets(txids)
+
+                        if (clbk){
+                            clbk(collections, null, {
+                                count: txids.length
+                            })
+                        }
+                        
+
+                    }).catch(e => {
+
+                        if (clbk) {
+                            clbk(null, e, {})
+                        }
+
+                    })
+
+                },
+                profile : function(address, clbk, count = 100){
+                    ///getprofilecollections
+
+                    var method = 'getprofilecollections'
+                    var parameters = [0, '', count, '', [], [], [], [], [], '', address]
+
+
+
+                    /*
+
+                     var parameters = [Number(p.height), p.txid, p.count, p.lang == 'all' ? '' : p.lang, p.tagsfilter, p.type ? [p.type] : [],
+                                [],
+                                [], p.tagsexcluded
+                            ];
+                    
+                    topHeight : N1
+                    topContentHash : "hash1"
+                    countOut : 10
+                    lang : "ru"
+                    
+                    tags : ["tag1", "tag2"]
+                    contentTypes : [200,201]
+                    txIdsExcluded : ["txhash1", "txhash2"]
+                    adrsExcluded : ["addr1", "addr2"]
+                    tagsExcluded : ["tag1", "tag2"]
+
+                    address : "addr1"
+                    address_feed : "addr2"
+                    keyword : "keyword1"
+                    orderby : "id" | "comment" | "score"
+                    ascdesc : "asc" | "desc"
+                    
+                    */
+
+                    self.psdk.collection.request(() => {
+
+                        return self.app.api.rpc(method, parameters, {
+                            rpc: rpc
+                        }).then(data => {
+
+                            if (_.isArray(data)) {
+                                return Promise.resolve({
+                                    contents: data
+                                })
+
+                            }
+
+                            return Promise.resolve(data)
+
+                        })
+                    }, {
+                        method,
+                        parameters
+                    }).then(d => {
+
+                        var collections = self.psdk.collection.gets(_.map(d.contents, (s) => {
+                            return s.txid
+                        }))
+
+                        d.contents = collections
+
+                        if (clbk) clbk(d)
+
+                    }).catch(e => {
+
+                        if (clbk) {
+                            clbk([], e)
+                        }
+
+                    })
+                }
             }
         },
 

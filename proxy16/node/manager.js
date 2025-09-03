@@ -26,6 +26,7 @@ const queuemethods = {
     getpostscores: true,
     getpagescores: true,
     gethierarchicalstrip : true,
+    //getprofilecollections : true,
     getusercontents : true,
     getcontentsstatistic : true,
     getboostfeed : true,

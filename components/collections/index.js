@@ -6,6 +6,8 @@ var collections = (function(){
 
 	var Essense = function(p){
 
+		var mid = p.mid
+
 		var primary = deep(p, 'history');
 
 		var el, ed, author = {};
@@ -13,15 +15,12 @@ var collections = (function(){
 		var actions = {
 			newcollection : function(){
 				self.app.platform.sdk.collections.opennewcollectionwindow()
-				/*self.nav.api.load({
-					open : true,
-					id : 'newcollection',
-					inWnd : true,
+			},
 
-					essenseData : {
-						
-					}
-				})*/
+			loadcollections : function(clbk){
+				self.app.platform.sdk.collections.load.profile(author.address, (collections) => {
+					if(clbk) clbk(collections)
+				}, ed.count)
 			}
 		}
 
@@ -30,7 +29,7 @@ var collections = (function(){
 		}
 
 		var renders = {
-			collectionsdata : function(items = []){
+			collectionsdata : function(items = [], clbk){
 				self.shell({
 					name :  'collectionsdata',
 					el :   el.c.find('.collectionsdata'),
@@ -39,10 +38,11 @@ var collections = (function(){
 					},
 					insertimmediately : true,
 				}, function(p){
-
 					if(items.length){
 						el.c.addClass('.hasitems')
 					}
+
+					if(clbk) clbk()
 				})
 			}
 		}
@@ -61,14 +61,39 @@ var collections = (function(){
 			el.c.find('.newcollection').on('click', function(){
 				actions.newcollection()
 			})
+
+			self.app.psdk.updatelisteners[mid] = self.app.platform.actionListeners[mid] = function({type, alias, status}){
+
+				if(type == 'collection'){
+					if (author.address == alias.actor){
+						make()
+					}
+					
+				}
+				
+			}
+		}
+
+		var make = function(clbk){
+
+			actions.loadcollections(collections => {
+				renders.collectionsdata(collections, clbk)
+			})
+			
 		}
 
 		return {
 			primary : primary,
 
+			id : mid,
+
 			getdata : function(clbk, p){
 
 				ed = p.settings.essenseData
+
+				if(!ed.count) ed.count = 6
+
+				if(ed.count > 100) ed.count = 100
 
 				var data = {
 					ed
@@ -95,6 +120,9 @@ var collections = (function(){
 			destroy : function(){
 				ed = {}
 				el = {};
+
+				delete self.app.platform.actionListeners[mid]
+				delete self.app.psdk.updatelisteners[mid]
 			},
 			
 			init : function(p){
@@ -106,7 +134,7 @@ var collections = (function(){
 
 				initEvents();
 
-				renders.collectionsdata()
+				make()
 
 				p.clbk(null, p);
 			}
