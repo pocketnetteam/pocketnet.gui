@@ -194,6 +194,10 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		}
 	}
 
+	self.clearCachedInfo = function(){
+		cachedInfo = null
+	}
+
 	self.authorization = {
 
 		dummy: function () {
@@ -875,6 +879,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			if(cachedInfo && !wcached){
 				if(cachedInfo.time + 120000 > Date.now()){
 					cachedInfo.data.tor = self.torapplications.info(compact);
+					cachedInfo.data.nodeControl = self.nodeControl.info(compact);
 					return cachedInfo.data
 				}
 			}
