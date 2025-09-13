@@ -48,9 +48,8 @@ var transportsmanagement = (function(){
 
 				var address = self.app.platform.sdk.address.pnet()
 
-				if(!address) return false
 				if (proxy && info){
-					return proxy.direct || _.indexOf(info.admins, address.address) > -1
+					return proxy.direct || (address && _.indexOf(info.admins, address.address) > -1)
 				}
 			},
 			directProxy : function(){
