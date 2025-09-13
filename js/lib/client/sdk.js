@@ -57,7 +57,7 @@ var pSDK = function ({ app, api, actions }) {
             time: 60 // temp
         },
 
-        collectionsRequest: {
+        collectionRequest: {
             time: 60 // temp
         },
 
@@ -251,6 +251,10 @@ var pSDK = function ({ app, api, actions }) {
         if (!_.isArray(ids)) ids = [ids]
 
         if (!dbname) return Promise.resolve([])
+        if (!dbmeta[dbname]) {
+            console.log('dbname', dbname)
+            return Promise.resolve([])
+        }
 
         if (dbmeta[dbname].authorized) ids = _.map(ids, id => {
             return id + '_' + app.user.address.value
@@ -2223,6 +2227,8 @@ var pSDK = function ({ app, api, actions }) {
 
             _.each(actions.getAccounts(), (account) => {
                 var actions = _.filter(account.getTempActions('collection'), filter)
+
+                console.log('actions', actions)
 
                 _.each(actions, (a) => {
                     objects.unshift(a)

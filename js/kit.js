@@ -1854,10 +1854,7 @@ Collection = function(lang){
 		self.repost.set()
 		self.language.set(lang)
 		self.aliasid = ""
-
-		_.each(self.settings, function(s, k){
-			self.settings[k] = null;
-		})
+		
 	}
 
 	self.caption = {
@@ -2032,7 +2029,7 @@ Collection = function(lang){
 				base64: image
 			}).then( url => {
 
-				self.images.v[index] = url;
+				self.image.v = url;
 				clbk();
 
 			}).catch(err => {
@@ -2053,9 +2050,9 @@ Collection = function(lang){
 			return false;
 		}
 
-		if(!self.message.v && !self.caption.v){
+		/*if(!self.message.v && !self.caption.v){
 			return 'message'
-		}
+		}*/
 
 		if(!self.language.v){
 			return 'language'
@@ -2076,11 +2073,11 @@ Collection = function(lang){
 
 	self.serialize = function(){
 		
-		return (self.caption.v) + (self.message.v) + (self.image.v)
+		return _.map(self.contentIds.v, function(t){ return (t) }).join(',') + 
+		
+		(self.language.v) + (self.caption.v) /*+ (self.message.v)*/ + (self.image.v)
 
-		+ _.map(self.contentIds.v, function(t){ return (t) }).join(',')
-
-		+ (self.aliasid || "")
+		//+ (self.aliasid || "")
 	}
 
 	self.shash = function(){
@@ -2091,22 +2088,23 @@ Collection = function(lang){
 
 		return {
 			type : self.type,
-			caption : self.caption.v,
-			message : self.message.v,
-			image : self.image.v,
-			language : self.language.v,
+			c : self.caption.v,
+			//message : self.message.v,
+			i : self.image.v,
+			l : self.language.v,
 			txidEdit : self.aliasid || "",
-			contentIds : self.contentIds.v
+			contentIds : self.contentIds.v,
+			s : ""
 		}
 
 	}
 
 	self.import = function(v){
 
-		self.caption.set(v.caption)
-		self.message.set(v.message)
-		self.image.set(v.image)
-		self.language.set(v.language || 'en')
+		self.caption.set(v.c || v.caption)
+		//self.message.set(v.message)
+		self.image.set(v.i || v.image)
+		self.language.set(v.l || v.language || 'en')
 		self.contentIds.set(v.contentIds || [])
 
 		if (v.txidEdit) self.aliasid = v.txidEdit
@@ -3793,11 +3791,11 @@ pCollection = function(){
 	self._import = function(v){
 
 		self.message = v.message || ""
-		self.caption = v.caption || ""
+		self.caption = v.c || v.caption || ""
 		self.contentIds = v.contentIds || []
 
-		self.language = v.language || 'en'
-		self.image =  v.images || ''
+		self.language =  v.l || v.language || 'en'
+		self.image = v.i || v.image || ''
 
 		if(self.image){
 			if(!checkIfAllowedImage(self.image)) self.image = ''

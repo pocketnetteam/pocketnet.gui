@@ -18,7 +18,10 @@ var collections = (function(){
 			},
 
 			loadcollections : function(clbk){
-				self.app.platform.sdk.collections.load.profile(author.address, (collections) => {
+				self.app.platform.sdk.collections.load.profile(author.address, (r) => {
+
+					var collections = r.contents
+
 					if(clbk) clbk(collections)
 				}, ed.count)
 			}

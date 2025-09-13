@@ -32,7 +32,10 @@ var newcollection = (function(){
 
 			},
 
-			fail : function(){
+			fail : function(e){
+
+				console.error(e)
+
 				var message = e.text || findResponseError(e) || 'Updating error';
 
 					sitemessage(message);
@@ -54,6 +57,9 @@ var newcollection = (function(){
 					actionId: 'COLLECTION_CREATED',
 				});
 				
+				if(!window.testpocketnet){
+					return
+				}
 
 				el.c.addClass('loading')
 
@@ -62,7 +68,9 @@ var newcollection = (function(){
 				currentCollection.uploadImages(self.app, function(){
 					if (currentCollection.checkloaded()){
 
-						actions.fail({ text : self.app.platform.errorHandler('imageerror', true)})
+						console.log('currentCollection', currentCollection)
+
+						actions.fail({ text : self.app.localization.e('imageerror')})
 			
 						return
 					}
@@ -84,6 +92,12 @@ var newcollection = (function(){
 						}
 
 						successCheck()
+					}).catch(e => {
+						var t = self.app.platform.errorHandlerSimple(e);
+
+						console.log("TTT", t)
+
+						actions.fail({text : t})
 					})
 				})
 
@@ -486,7 +500,7 @@ var newcollection = (function(){
 
 				}, function(p){
 
-					helpers.emojioneArea(p.el.find('.message'))
+					//helpers.emojioneArea(p.el.find('.message'))
 					imagesHelper.imageUploader(p.el.find('.textIcon'))
 
 					renders.shares()

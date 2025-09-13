@@ -3276,3 +3276,5 @@ _l.collectionMode = "Collection edit mode"
 _l.removeFromCollection = "Remove from collection"
 _l.addToCollection = "Add to collection"
 _l.e13163 = "There are no changes in the collection"
+
+_l.imageerror = "An error occurred while loading images. Please try again"

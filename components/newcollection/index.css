@@ -1,3 +1,6 @@
+#newcollection {
+  position: relative;
+}
 #newcollection .panelErrorWrapper {
   position: sticky;
   bottom: 0;

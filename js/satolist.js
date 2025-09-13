@@ -1244,6 +1244,41 @@ Platform = function (app, listofnodes) {
                     a(key, action, akey)
                 }
 
+                console.log('eobj', eobj)
+
+                return (eobj.text || function () {
+                    return ''
+                })()
+            }
+
+
+
+        }
+
+        self.errorHandlerSimple = function (key, akey) {
+
+            var er = null
+
+            if (_.isObject(key)) {
+                er = key
+                key = er.code
+            }
+
+            var eobj = self.errors[key] || self.errors['network'];
+
+            if (!eobj) {
+                return false;
+            } else {
+                var m = eobj.message;
+
+                if (m) {
+                    if (typeof m == 'function') m = m(akey, er);
+
+                    if (!m) return
+
+                    return m
+                }
+
                 return (eobj.text || function () {
                     return ''
                 })()
@@ -1916,6 +1951,8 @@ Platform = function (app, listofnodes) {
         "imageerror": {
 
             message: function () {
+
+                return self.app.localization.e('imageerror')
 
                 return 'An error occurred while loading images. Please try again'
 
@@ -6661,6 +6698,8 @@ Platform = function (app, listofnodes) {
 
                         var collections = self.psdk.share.gets(txids)
 
+                       
+
                         if (clbk){
                             clbk(collections, null, {
                                 count: txids.length
@@ -6677,13 +6716,13 @@ Platform = function (app, listofnodes) {
                     })
 
                 },
-                profile : function(address, clbk, count = 100){
+                profile : function(address, clbk, count = 100, rpc){
                     ///getprofilecollections
 
                     var method = 'getprofilecollections'
-                    var parameters = [0, '', count, '', [], [], [], [], [], '', address]
+                    var parameters = [self.currentBlock, '', count, '', [], [], [], [], [], '', address]
 
-
+                    console.log('load profile collections')
 
                     /*
 
@@ -6736,11 +6775,17 @@ Platform = function (app, listofnodes) {
                             return s.txid
                         }))
 
+                        collections = self.psdk.collection.tempAdd(collections, (alias) => {
+                            return alias.actor == address
+                        })
+
                         d.contents = collections
 
                         if (clbk) clbk(d)
 
                     }).catch(e => {
+
+                        console.error(e)
 
                         if (clbk) {
                             clbk([], e)
