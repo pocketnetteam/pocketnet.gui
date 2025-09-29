@@ -9,6 +9,9 @@
 
 	var deleted = typeof app.platform.sdk.user.myaccauntdeleted != 'undefined' && app.platform.sdk.user.myaccauntdeleted()
 
+	// Mock key for groups - always true for now
+	var isGroup = true
+
 	if (deleted) {letter = ''; src = ''}
 %>
 
@@ -86,7 +89,13 @@
 
 										<div class="tips">
 											<a elementsid='authorlink' href="<%-app.platform.api.authorlink(user.address.value)%>">
-												<button class="profile"><%=e('profile')%></button>
+												<button class="profile">
+													<% if(isGroup) { %>
+														<%=e('group_profile')%>
+													<% } else { %>
+														<%=e('profile')%>
+													<% } %>
+												</button>
 											</a>
 											
 										</div>

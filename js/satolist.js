@@ -9826,7 +9826,6 @@ Platform = function (app, listofnodes) {
             },
 
             accSetMy: function (settingsObj, clbk) {
-
                 if (!settingsObj) settingsObj = {}
 
                 self.psdk.accSet.load(self.app.user.address.value).then(() => {
@@ -9838,6 +9837,9 @@ Platform = function (app, listofnodes) {
                     ct.paidsubscription.set(typeof settingsObj.paidsubscription == 'undefined' ? (settings.paidsubscription || 0) : settingsObj.paidsubscription);
 
                     ct.pin.set(typeof settingsObj.pin == 'undefined' ? (settings.pin || '') : settingsObj.pin);
+        
+                    ct.community.set(typeof settingsObj.community == 'undefined' ? (settings.community || 0) : settingsObj.community);
+        
                     ct.monetization.set(typeof settingsObj.monetization == 'undefined' ?
                         ((settings.monetization === "" || settings.monetization === true || settings.monetization === false) ? settings.monetization : "") : settingsObj.monetization);
 
@@ -11467,7 +11469,35 @@ Platform = function (app, listofnodes) {
 
                 })
             },
+            getCommunity : function (address) {
+                return self.psdk.accSet.load(address).then(s => {
 
+                    var settings = self.psdk.accSet.get(address) || {}
+
+                    return Promise.resolve(settings.community || '')
+                })
+            },
+            setCommunity : function (community, clbk) {
+
+                self.app.platform.sdk.user.accSetMy({
+                    community: community || ''
+                }, function (err, alias) {
+
+                    if (!err) {
+
+                        if (clbk) {
+                            clbk(null, alias)
+                        }
+
+                    } else {
+                        self.app.platform.errorHandler(err, true)
+
+                        if (clbk)
+                            clbk(err, null)
+                    }
+
+                })
+            },
             setMonetization: function (monetization, clbk) {
                 self.app.platform.sdk.user.accSetMy({
                     monetization: monetization || false

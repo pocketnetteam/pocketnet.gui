@@ -2185,6 +2185,11 @@ _l.desktopPopupDisagree = "Не сейчас"
 _l.recommended = 'Рекомендовано'
 
 _l.removeaccount = 'Удалить аккаунт'
+_l.removegroup = 'Удалить группу'
+_l.group_name = 'Название группы'
+_l.account_type = 'Тип аккаунта'
+_l.user = 'Пользователь'
+_l.uchangegroupicon = 'Изменить иконку группы'
 _l.removeAccountQuestion = 'Вы действительно хотите удалить аккаунт навсегда? Это действие невозможно будет отменить.'
 _l.removeAccountYes = 'Да, удалить аккаунт навсегда'
 
@@ -3068,3 +3073,63 @@ _l.sysmodbas="Система модерации контента на Bastyon"
 
 _l.torHintStateRunning = "Модуль ТОР работает"
 _l.torHintStateStarting = "Модуль ТОР запускается"
+
+
+_l.group = "Группа";
+_l.group_members = "Участники";
+_l.group_posts = "Публикации";
+_l.group_information = "Информация о группе";
+_l.group_created = "Создана";
+
+_l.join_group = "Присоединиться";
+_l.leave_group = "Покинуть группу";
+_l.group_joined = "Вы участник";
+_l.group_blocked = "Группа заблокирована";
+_l.write_to_group = "Написать в группу";
+_l.share_group = "Поделиться группой";
+
+_l.group_settings = "Настройки группы";
+_l.edit_group = "Редактировать группу";
+_l.group_about = "О группе";
+_l.group_info = "Информация о группе";
+_l.group_profile = "Профиль группы";
+_l.group_locked = "Группа заблокирована";
+_l.group_deleted = "Группа удалена";
+_l.group = "Группа";
+_l.group_about_placeholder = "Пожалуйста, напишите кратко о группе для того, чтобы дать понять, почему пользователям следует присоединиться к группе";
+
+_l.block_group = "Заблокировать группу";
+_l.unblock_group = "Разблокировать группу";
+_l.report_group = "Пожаловаться на группу";
+
+// Group-specific texts for blocking, following, members
+_l.aynoblockedgroups = "Вы еще не заблокировали ни одной группы";
+_l.anoblockedgroups = "Эта группа еще никого не заблокировала";
+_l.blockedgroups = "Заблокированные группы";
+_l.aynojoined = "Вы еще не присоединились ни к одной группе";
+_l.anojoined = "Эта группа еще ни к чему не присоединилась";
+_l.joined_groups = "Присоединенные группы";
+_l.aynomembers = "В вашей группе еще нет участников";
+_l.anomembers = "В этой группе еще нет участников";
+_l.leave_group_confirm = "Вы уверены, что хотите покинуть эту группу?";
+_l.notificationsTurnOffGroupQ = "Вы уверены, что хотите отключить уведомления от этой группы?";
+
+_l.lockedgroupa = "Группа заблокирована по причине решения жюри или в связи с жалобами пользователей";
+_l.deletedGroup_temp = "Группа находится в процессе удаления";
+_l.deletedGroup_deleted = "Группа удалена";
+_l.deletedGroup_true = "Группа удалена";
+
+_l.posts = "Публикации";
+
+_l.group_join_success = "Вы успешно присоединились к группе";
+_l.group_leave_success = "Вы покинули группу";
+_l.group_block_question = "Вы действительно хотите заблокировать эту группу?";
+_l.group_unblock_question = "Вы действительно хотите разблокировать эту группу?";
+_l.group_leave_question = "Вы действительно хотите покинуть группу?";
+_l.group_report_question = "Вы действительно хотите пожаловаться на эту группу?";
+
+_l.group_no_posts = "В группе пока нет публикаций";
+_l.group_no_members = "В группе пока нет участников";
+_l.group_admin = "Администратор группы";
+_l.group_moderator = "Модератор группы";
+_l.group_member = "Участник группы";

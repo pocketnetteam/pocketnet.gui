@@ -676,3 +676,51 @@
     margin-bottom: 1em;
   }
 }
+
+#authorn .aucaption.group-profile .group-badge {
+  margin-top: 0.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(var(--color-txt-ac));
+  font-size: 0.8em;
+  font-weight: 500;
+}
+
+#authorn .aucaption.group-profile .group-badge i {
+  margin-right: 0.3em;
+  font-size: 0.9em;
+}
+
+#authorn .aucaption .usericon.group-icon {
+  border: 2px solid rgb(var(--color-txt-ac));
+}
+
+#authorn .aucaption .usericon.group-icon i.fa-users {
+  color: rgb(var(--background-main));
+  font-size: 1.2em;
+}
+
+#authorn .bgwallpaperWrapper .bgwallpaper.group-bg .grad {
+  background: linear-gradient(180deg, rgba(30, 141, 236, 0.4), rgba(1, 1, 1, 0.1), rgba(1, 1, 1, 0.3));
+}
+
+#authorn .group-profile-page .whatsnew.hidden,
+#authorn .group-profile-page .blocking.hidden {
+  display: none !important;
+}
+
+@media only screen and (max-width: 768px) {
+  #authorn .aucaption.group-profile .group-badge {
+    font-size: 0.75em;
+  }
+  
+  #authorn .aucaption .usericon.group-icon {
+    font-size: 1.8em;
+  }
+  
+  #authorn.group-profile-page .acontent .lcolumn .subscribers,
+  #authorn.group-profile-page .acontent .lcolumn .subscribes {
+    display: block !important;
+  }
+}

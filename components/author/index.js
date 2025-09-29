@@ -1488,6 +1488,9 @@ var author = (function(){
 
 					author.data = self.psdk.userInfo.get(author.address)
 
+					// Mock key for groups - always true for now
+					author.isGroup = true
+
 
 					
 					if(author.data && (!deleted || self.app.user.isItMe(author.address))){

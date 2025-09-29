@@ -12,7 +12,7 @@ var test = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el = {}, ed, ref, plissing; 
+		var el = {}, ed, ref, plissing, accountType; 
 
 		var firstTime = false;
 		var loading = false
@@ -130,7 +130,7 @@ var test = (function(){
 			equal : function(v1, v2){
 
 				var a = function(o){
-					return 'name:' + (trim(o.name) || "") + 'image:' + (o.image || "") + 'about:' + (trim(o.about) || "") + 'site:' + (trim(o.site) || "")  + 'language:' + (o.language || "") + "addresses:" + JSON.stringify(o.addresses || [])
+					return 'name:' + (trim(o.name) || "") + 'image:' + (o.image || "") + 'about:' + (trim(o.about) || "") + 'site:' + (trim(o.site) || "")  + 'language:' + (o.language || "") + "addresses:" + JSON.stringify(o.addresses || []) + 'accountType:' + (o.accountType || 'group') // TODO: [group] change real data
 				}
 
 				return a(v1) == a(v2)
@@ -205,7 +205,7 @@ var test = (function(){
 					return
 				}
 
-				if (actions.equal(tempInfo, self.psdk.userInfo.getmy() || {})){
+				if (actions.equal(tempInfo, {...self.psdk.userInfo.getmy(), community} || {})){
 					sitemessage(self.app.localization.e('uchanges'))
 					saving = false
 					return
@@ -242,8 +242,8 @@ var test = (function(){
 					userInfo.image.set(superXSS(tempInfo.image));
 					userInfo.addresses.set(tempInfo.addresses);
 					userInfo.ref.set(deep(ref, 'address') || '');
-
-				var err  = userInfo.validation()
+				
+				var err  = userInfo.validation()	
 
 				if (err){
 
@@ -324,8 +324,12 @@ var test = (function(){
 										actions.saveemail(email);
 									}
 
-									self.app.platform.actions.addActionAndSendIfCan(userInfo).then(action => {
-
+									self.app.platform.actions.addActionAndSendIfCan(userInfo).then(async (action) => {
+									
+									 if(!accountType === tempInfo.accountType){
+					            await self.app.platform.sdk.users.setCommunity(tempInfo.accountType === 'group' ? 1 : 0)
+										}
+										
 										successCheck()
 
 										//self.psdk.userInfo.clearAll(self.user.address.value)
@@ -522,9 +526,13 @@ var test = (function(){
 				actions.userOptions();
 			},
 
-			userOptions : function(){
-
-				tempInfo = _.clone(self.psdk.userInfo.getmy() || {})
+			userOptions : async function(){
+			
+				const community = await self.app.platform.sdk.users.getCommunity(self.app.user.address.value)
+				
+				accountType = community ? 'group' : 'user'
+				
+				tempInfo = _.clone({...self.psdk.userInfo.getmy(), accountType} || {})
 
 				_.each(userOptions, function(parameter, id){
 					var value = tempInfo[parameter.id];
@@ -532,7 +540,12 @@ var test = (function(){
 					if(id == 'addresses'){
 						value = _.clone(tempInfo[parameter.id]);
 					}
-					
+
+
+					if(id == 'accountType'){
+						value = value || 'user'; 
+					}
+
 					parameter.value = value || parameter.defaultValue || ''
 					tempInfo[parameter.id] = parameter.value
 
@@ -540,6 +553,9 @@ var test = (function(){
 
 						if(id == 'addresses'){
 							tempInfo[parameter.id] = _.clone(value);
+						}
+						else if(id == 'accountType'){
+							tempInfo[parameter.id] = value;
 						}
 						else
 						{
@@ -623,6 +639,22 @@ var test = (function(){
 			},
 		}
 
+		var updateLabelsBasedOnAccountType = function() {
+		 // TODO: [group] change real data
+			var accountType = (tempInfo && tempInfo.accountType) || 'group';
+			var isGroup = (accountType === 'group');
+
+			if (userOptions.name) {
+				userOptions.name.name = isGroup ? self.app.localization.e('group_name') : self.app.localization.e('unickname');
+				userOptions.name.placeholder = isGroup ? self.app.localization.e('group_name') : self.app.localization.e('unickname');
+			}
+
+			if (userOptions.about) {
+				userOptions.about.name = isGroup ? self.app.localization.e('group_about') : self.app.localization.e('uabout');
+				userOptions.about.placeholder = isGroup ? self.app.localization.e('group_about_placeholder') : self.app.localization.e('e133512');
+			}
+		}
+
 		var initUserOptions = function(){
 			userOptions = {
 				name : new Parameter({
@@ -665,7 +697,6 @@ var test = (function(){
 					id : 'about',
 					type : "TEXT",
 					onType : true,
-					
 					placeholder : self.app.localization.e('e133512')
 				}),
 
@@ -676,6 +707,16 @@ var test = (function(){
 					onType : true,
 					value : '',
 					name : self.app.localization.e('uwebsite')
+				}),
+
+				accountType : new Parameter({
+					name : self.app.localization.e('account_type'),
+					id : 'accountType',
+					type : "VALUES",
+					defaultValue : 'group',
+					possibleValues : ['group', 'user'],
+					possibleValuesLabels : [self.app.localization.e('group'), self.app.localization.e('user')],
+					onType : true
 				}),
 
 				addresses : new function(){
@@ -889,6 +930,10 @@ var test = (function(){
 					return _self
 				}
 			}
+
+			setTimeout(function() {
+				updateLabelsBasedOnAccountType();
+			}, 0);
 		}
 
 		var events = {
@@ -1099,6 +1144,9 @@ var test = (function(){
 
 		var prepare = function(){
 			actions.userOptions()
+			setTimeout(function() {
+				updateLabelsBasedOnAccountType();
+			}, 0);
 		}
 
 		
@@ -1156,7 +1204,7 @@ var test = (function(){
 							ref = self.psdk.userInfo.get(address) 
 
 							data.ref = ref;
-
+							data.tempInfo = tempInfo;
 
 							clbk(data);
 
@@ -1164,6 +1212,7 @@ var test = (function(){
 					}
 					else
 					{
+						data.tempInfo = tempInfo;
 						clbk(data);
 					}
 

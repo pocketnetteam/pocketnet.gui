@@ -1,94 +1,95 @@
 <%
-
 var me = psdk.userInfo.getmy()
-
 var sUserInfo = psdk.userInfo.getShortForm(author.address)
-
 %>
-
-<div class="buttonsrow">
+<div class="buttonsrow <% if(author.isGroup) { %>group-buttons<% } %>">
     <% if(author.me) {%>
-
         <% if(!sUserInfo.deleted) {%>
-
             <% if(!app.mobileview) {%>
-                <button class="button settings"><%= e('settings') %> <i class="fas fa-cog"></i></button>
+                <button class="button settings">
+                    <% if(author.isGroup) { %>
+                        <%= e('group_settings') %>
+                    <% } else { %>
+                        <%= e('settings') %>
+                    <% } %>
+                    <i class="fas fa-cog"></i>
+                </button>
             <% } %>
-
-            <% if(sUserInfo.reputation > 100 && !app.pkoindisable && !app.paidsubscriptiondisable) {%>
-            
+            <% if(!author.isGroup && sUserInfo.reputation > 100 && !app.pkoindisable && !app.paidsubscriptiondisable) {%>
                 <button class="button managePaidSubscription"><%= e('managePaidSubscription') %> <i class="fas fa-fire"></i></button>
-
             <% } %>
-
         <% } else {%> 
-            <button class="button openwallet"><%= e('rwallet') %></button>
+            <% if(!author.isGroup) { %>
+                <button class="button openwallet"><%= e('rwallet') %></button>
+            <% } %>
         <% } %>
-        
     <% } %>
-
     <% if(!author.me) {
-        
         var r = me ? me.relation(author.address, 'subscribes') : null
         var blocking = me ? me.relation(author.address, 'blocking') : null
-        
         %>
-
         <% if(!sUserInfo.deleted && !author.reputationBlocked && !app.television) {%>
-
-            <button class="button startchat"><%= e('startchat') %> <i class="fas fa-comment"></i></button>
-
+            <button class="button startchat">
+                <% if(author.isGroup) { %>
+                    <%= e('write_to_group') %>
+                <% } else { %>
+                    <%= e('startchat') %>
+                <% } %>
+                <i class="fas fa-comment"></i>
+            </button>
         <% } %>
-
-        <% if(!app.pkoindisable) {%>
-        <button class="button donate"><%= e('sendcoinssm') %> <img class="logo logo20 desaturate" src="img/logo20.svg"></button>
+        <% if(!author.isGroup && !app.pkoindisable) {%>
+            <button class="button donate"><%= e('sendcoinssm') %> <img class="logo logo20 desaturate" src="img/logo20.svg"></button>
         <% } %>
-
         <% if(!sUserInfo.deleted) {%>
             <% if(!blocking) {%>
-
                 <% if(!author.reputationBlocked) {%>
-
                     <% if(r) { %>
-
-                        <button class="button unsubscribe"><%= e('youarefollowing') %> <i class="fas fa-user-check"></i></button>
+                        <button class="button unsubscribe">
+                            <% if(author.isGroup) { %>
+                                <%= e('group_joined') %>
+                            <% } else { %>
+                                <%= e('youarefollowing') %>
+                            <% } %>
+                            <i class="fas fa-user-check"></i>
+                        </button>
                     
                         <% if(r.private == 'true' || r.private == '1' || r.private === true) {%>
-
                             <button class="button notifications icon bright"><i class="fas fa-bell"></i></button>
-
                         <% } else { %> 
                             <button class="button notifications icon"><i class="far fa-bell-slash"></i></button>
                         <% } %>
-
                     <% } else { %> 
-
-                        <button class="button follow"><%= e('follow') %> <i class="fas fa-user-plus"></i></button>
-
+                        <button class="button follow">
+                            <% if(author.isGroup) { %>
+                                <%= e('join_group') %>
+                            <% } else { %>
+                                <%= e('follow') %>
+                            <% } %>
+                            <i class="fas fa-user-plus"></i>
+                        </button>
                     <% } %>
-
-                    
-
                 <% } %>
-
             <% } else { %> 
-                <button class="button unblocking"><%= e('blocked') %> <i class="fas fa-user-alt-slash"></i></button>
-                
+                <button class="button unblocking">
+                    <% if(author.isGroup) { %>
+                        <%= e('group_blocked') %>
+                    <% } else { %>
+                        <%= e('blocked') %>
+                    <% } %>
+                    <i class="fas fa-user-alt-slash"></i>
+                </button>
             <% } %>
-
             <% if(state) {%>
                 <button class="button metmenu icon"><i class="fas fa-ellipsis-h"></i></button>
             <% } %>
-
-            <% if(!sUserInfo.deleted) {%>
+            <% if(!sUserInfo.deleted && !author.isGroup) {%>
                 <% if(!blocking) {%>
-    
                     <% if(!author.reputationBlocked && !app.paidsubscriptiondisable && !app.pkoindisable) {%>
                         <button class="button getPaidSubscription hidden"><%= e('getPaidSubscription') %> <i class="fas fa-fire"></i></button>
                     <% } %>
                 <% } %>
             <% } %>
-
         <% } %>
     <% } %>
 </div>

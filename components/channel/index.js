@@ -232,6 +232,10 @@ var channel = (function(){
 						author.state = self.psdk.userState.get(ed.id)
 						author.address = ed.id;
 
+					  // TODO: [group] change real data
+						// Mock key for groups - always true for now
+						author.isGroup = true
+
 						var me = self.psdk.userInfo.getmy()
 							
 						author.following = me && me.relation(author.address, 'subscribes');
