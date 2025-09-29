@@ -1848,6 +1848,7 @@ UserInfo = function(){
 		self.language.set()
 		self.about.set()
 		self.site.set()
+		self.community.set()
 		self.addresses.set()
 	}
 
@@ -2087,6 +2088,7 @@ UserInfo = function(){
 		 + (self.about.v)
 		 + self.image.v + JSON.stringify(self.addresses.v) 
 		 + self.ref.v
+		 + self.community.v,
 		 + self.keys.v.join(',')
 	}
 
@@ -2116,6 +2118,7 @@ UserInfo = function(){
 				image : self.image.v,
 				addresses : JSON.stringify(self.addresses.v || []),
 				ref : self.ref.v,
+				community : self.community.v,
 				keys : self.keys.v.join(',')
 			}
 		}
@@ -2128,7 +2131,8 @@ UserInfo = function(){
 			i : self.image.v,
 			b : JSON.stringify(self.addresses.v || []),
 			r : self.ref.v,
-			k : self.keys.v.join(',')
+			k : self.keys.v.join(','),
+			community : self.community
 		}
 	}
 
@@ -3942,6 +3946,28 @@ Settings = function(){
 		},
 		v : ''
 	};
+	
+	self.community = {
+		set : function(_v){
+
+			if(!_v){
+				this.v = ''
+			}
+			else
+			{
+				this.v = _v
+			}
+
+			_.each(self.on.change || {}, function(f){
+				f('community', this.v)
+			})
+
+		},
+		get : function(){
+			return this.v
+		},
+		v : ''
+	};
 
 	self.monetization = {
 		set : function(_v){
@@ -4015,6 +4041,7 @@ Settings = function(){
 		self.monetization.set()
 		self.paidsubscription.set()
 		self.cover.set()
+		self.community.set()
 
 	}
 
@@ -4084,7 +4111,8 @@ Settings = function(){
 			pin: self.pin.v,
 			monetization : self.monetization.v,
 			paidsubscription : self.paidsubscription.v,
-			cover : self.cover.v
+			cover : self.cover.v,
+			community : self.community.v
 		})
 
 	}
@@ -4102,7 +4130,8 @@ Settings = function(){
 					pin: self.pin.v || "",
 					monetization : (self.monetization.v === "" || self.monetization.v === true || self.monetization.v === false) ? self.monetization.v : "",
 					paidsubscription : self.paidsubscription.v,
-					cover : self.cover.v
+					cover : self.cover.v,
+					community : self.community.v
 				})
 			} 
 		}
@@ -4112,7 +4141,8 @@ Settings = function(){
 				pin: self.pin.v || "",
 				monetization : (self.monetization.v === "" || self.monetization.v === true || self.monetization.v === false) ? self.monetization.v : "",
 				paidsubscription : self.paidsubscription.v,
-				cover : self.cover.v
+				cover : self.cover.v,
+				community : self.community.v
 			})
 		}
 
@@ -4139,6 +4169,7 @@ Settings = function(){
 		self.monetization.set(parsed.monetization); 
 		self.paidsubscription.set(parsed.paidsubscription || 0)
 		self.cover.set(parsed.cover || '')
+		self.community.set(parsed.community || 0)
 
 	}
 

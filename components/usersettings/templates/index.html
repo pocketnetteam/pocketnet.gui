@@ -1,3 +1,8 @@
+<%
+// TODO: [group] change real data
+// Mock key for groups - always true for now
+var isGroup = true
+%>
 <div id="<%-module.map.id%>" class="<% if(!state) {%> unathorized <% } %>">
 	<div class="mwork">
 		<div class="caption">
@@ -23,7 +28,13 @@
 			<div class="removeAccauntWrapper">
 				<div class="mwork">
 					<div class="removeAccount">
-						<span><%- e('removeaccount') %></span>
+						<span>
+							<% if(isGroup) { %>
+								<%- e('removegroup') %>
+							<% } else { %>
+								<%- e('removeaccount') %>
+							<% } %>
+						</span>
 					</div>
 				</div>
 			</div>
