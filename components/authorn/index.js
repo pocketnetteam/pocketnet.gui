@@ -1551,8 +1551,6 @@ var authorn = (function(){
 					modules['collections'] = null
 				}
 
-				console.log('el.collections', el.collections)
-
 				self.nav.api.load({
 
 					open : true,
@@ -1788,7 +1786,7 @@ var authorn = (function(){
 				renders.subscribes()
 				renders.subscribers()
 				renders.blocking()
-				renders.collections()
+				//renders.collections()
 			}
 
 			renders.upbutton()
