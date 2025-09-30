@@ -1,0 +1,121 @@
+@import "../../css/__cssvar";
+
+#collections{
+	padding : 5 * @rhythm;
+	background: rgb(var(--background-total-theme));
+
+	&.preview{
+		padding : 0;
+	}
+
+	.caption{
+		font-weight: 100;
+		font-size: 2em;
+	}
+
+    .panel{
+        text-align: center;
+    }
+	
+    .captionWrapper{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+	.loaderWrapper{
+		display : none;
+		padding : 2 * @rhythm;
+		text-align: center;
+	}
+
+	&.loading{
+		.loaderWrapper{
+			display: block;
+		}
+	}
+
+	.collectionslist{
+		.collection{
+			padding : @rhythm 0;
+			margin-top: @rhythm;
+			margin-bottom: @rhythm;
+		}
+
+        .empty{
+            padding : @rhythm 0;
+			margin-top: @rhythm;
+			margin-bottom: @rhythm;
+
+        }
+	}
+
+    .iconbutton{
+        cursor: pointer;
+        color : rgb(var(--color-txt-ac));
+        padding : @rhythm;
+        padding-right: 0;
+    }
+
+	&.preview{
+		padding : 0;
+
+		.caption{
+			font-weight: 700;
+			font-size: 1em;
+		}
+
+		.showmoreWrapper{
+			button{
+				width: 100%;
+			}
+		}
+	}
+
+    .showmoreWrapper{
+        display: none;
+    }
+
+    &.hasitems{
+        display: block;
+    }
+}
+
+.wnd.userlistwindow{
+	.wndinner {
+		max-width: 440px;
+		max-height: 650px;
+	}
+
+	#collections{
+		padding : 0;
+	}
+}
+
+.wnd.userlistwindow{
+	
+	#collections{
+		padding : 2 * @rhythm;
+
+		.caption{
+		}
+
+		.users{
+			.addressTable{
+				>div{
+				}
+
+			}
+		}
+	}
+
+}
+
+
+html.mobileview{
+	.wnd{
+		#collections{
+			padding : 2 * @rhythm;
+		}
+	}
+}

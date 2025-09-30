@@ -128,6 +128,7 @@ const publics = {
     estimatesmartfee: true,
     gettransaction : true,
     gethierarchicalstrip : true,
+    getprofilecollections : true,
     gethistoricalstrip : true,
     getusercontents : true,
     getcontentstatistic : true,
@@ -521,6 +522,9 @@ RpcClient.callspec = {
     getboostfeed : 'int str int str obj obj obj obj obj str str',
     getprofilefeed : 'int str int str obj str str str obj str str',
     getsubscribesfeed : 'int str int str obj obj obj obj obj str str',
+
+    
+    getprofilecollections: 'int str int str obj obj obj obj obj str str str str str',
     gethierarchicalstrip : 'int str int str obj obj obj obj obj str str',
     gethistoricalstrip : 'int str int str obj obj obj obj obj str str',
     getusercontents : 'str int str int obj str',

@@ -164,6 +164,8 @@ var Cache = function(p){
                 stats : true
             },
 
+            
+
             // node +
             getusercontents: {
                 time : 760,
@@ -171,6 +173,11 @@ var Cache = function(p){
 
             // node +
             gethierarchicalstrip: {
+                time : 460,
+                block : 0,
+            },  
+
+            getprofilecollections: {
                 time : 460,
                 block : 0,
             },  

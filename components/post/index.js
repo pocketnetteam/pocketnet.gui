@@ -95,6 +95,15 @@ var post = (function () {
 				
 				})
 			},
+
+			removeFromCollection: function(){
+				self.app.platform.sdk.collections.removeItem(share.txid)
+			},
+
+			addToCollection : function(){
+				self.app.platform.sdk.collections.addItem(share.txid)
+			},
+
 			unblock : function(){
 					
 				self.app.platform.api.actions.unblocking(share.address, function (tx, error) {
@@ -1485,8 +1494,16 @@ var post = (function () {
 							actions.unblock()
 						})
 
-						_p.el.find('.translateto').on('click', events.translateto)
+						_p.el.find('.removeFromCollection').on('click', function(){
+							actions.removeFromCollection()
+						})
 
+						_p.el.find('.addToCollection').on('click', function(){
+							actions.addToCollection()
+						})
+
+
+						_p.el.find('.translateto').on('click', events.translateto)
 
 						if (ed.repost){
 							_p.el.find('.showMore').on('click', function(e){
