@@ -194,6 +194,10 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		}
 	}
 
+	self.clearCachedInfo = function(){
+		cachedInfo = null
+	}
+
 	self.authorization = {
 
 		dummy: function () {
