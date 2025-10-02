@@ -1,0 +1,56 @@
+
+<div class="collectionCaptionWrapper">
+    <div class="cpt">
+        <input type='text' value="" class="captionshare" placeholder="<%=e('collectionInputCaption')%>">
+    </div>
+</div>
+
+<!--
+<div class="collectionDescriptionWrapper">
+    <div class="txt">
+        <div elementsid='emjcontainer' class="message" placeholder="<%=e('collectionInputDescription')%>" id='emjcontainer' spellcheck="true"></div>
+    </div>
+</div>
+-->
+
+
+
+<div class="collectionImageWrapper">
+    <div class="textIcon">
+        
+        <div class="text">
+            <span><%=e(collection.image.v ? 'collectionInputImageChange' : 'collectionInputImage')%></span>
+        </div>
+        <div class="icon">
+            <i class="fas fa-camera"></i>
+        </div>
+    </div>
+</div>
+
+<% if(collection.image.v) {%>
+
+    <div class="imagecover" image="<%-collection.image.v || '*'%>"></div>
+
+<% } %>
+
+<div class="collectionItemsWrapper"></div>
+
+
+<div class="panelErrorWrapper">
+    <div class="panelform">
+        <div class="panel">
+
+            <div class="error"><span></span></div>
+
+            <button class="button ghost cancel"><%=e('cancelcollection')%></button>
+
+            <% if(collection.aliasid) {%>
+                <button class="button bad remove"><%=e('deletecollection')%></button>
+            <% } %>
+
+            <button class="button save"><%=e(collection.aliasid ? 'savecollection' : 'savecollection')%></button>
+            
+        </div>
+    </div>
+</div>
+

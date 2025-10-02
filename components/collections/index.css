@@ -1,0 +1,72 @@
+#collections {
+  padding: 2.5em;
+  background: rgb(var(--background-total-theme));
+}
+#collections.preview {
+  padding: 0;
+}
+#collections .caption {
+  font-weight: 100;
+  font-size: 2em;
+}
+#collections .panel {
+  text-align: center;
+}
+#collections .captionWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#collections .loaderWrapper {
+  display: none;
+  padding: 1em;
+  text-align: center;
+}
+#collections.loading .loaderWrapper {
+  display: block;
+}
+#collections .collectionslist .collection {
+  padding: 0.5em 0;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+#collections .collectionslist .empty {
+  padding: 0.5em 0;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+#collections .iconbutton {
+  cursor: pointer;
+  color: rgb(var(--color-txt-ac));
+  padding: 0.5em;
+  padding-right: 0;
+}
+#collections.preview {
+  padding: 0;
+}
+#collections.preview .caption {
+  font-weight: 700;
+  font-size: 1em;
+}
+#collections.preview .showmoreWrapper button {
+  width: 100%;
+}
+#collections .showmoreWrapper {
+  display: none;
+}
+#collections.hasitems {
+  display: block;
+}
+.wnd.userlistwindow .wndinner {
+  max-width: 440px;
+  max-height: 650px;
+}
+.wnd.userlistwindow #collections {
+  padding: 0;
+}
+.wnd.userlistwindow #collections {
+  padding: 1em;
+}
+html.mobileview .wnd #collections {
+  padding: 1em;
+}

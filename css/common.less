@@ -1395,6 +1395,64 @@
 
     }
 
+    .collectionMode{
+        display: none;
+        position: absolute;
+        left : 0;
+        right : 0;
+        top : 0;
+        bottom : 0; 
+        background: rgba(var(--background-total-theme), 0.28);
+        z-index : 10;
+        align-items: center;
+
+        .removeFromCollection{
+            display: none;
+        }
+
+        .collectionModeCell{
+            text-align: center;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            .label{
+                font-size: 0.8em;
+                margin-bottom : 2 * @rhythm;
+                border-radius: 16px;
+                padding : @rhythm 2 * @rhythm;
+                background: rgba(var(--background-total-theme), 0.88);
+            }
+
+            button{
+                width : 180px;
+                border-radius: 30px;
+                font-size: 0.8em;
+            }
+
+            .removeFromCollection,
+            .addToCollection{
+                margin-top: 2 * @rhythm;
+            }
+            
+        }
+
+    }
+
+    &.incollection{
+        .collectionMode{
+            .addToCollection{
+                display: none;
+            }
+            .removeFromCollection{
+                display: block;
+            }
+        }
+    }
+
     .blockAuthor{
         display: none;
         position: absolute;
@@ -1725,6 +1783,18 @@ html.television{
             cursor: default;
         }
     }
+}
+html.editcollection{
+    .share_common{
+        .collectionMode{
+            display: block;
+        }
+
+        .commentsWrapperHb{
+            display: none;
+        }
+    }
+    
 }
 html.mobileview{
     .share_common{

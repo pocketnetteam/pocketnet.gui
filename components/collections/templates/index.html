@@ -1,0 +1,37 @@
+<div id="<%-module.map.id%>" class="<%- ed.preview ? 'preview' : ''%>">
+
+	<div class="captionWrapper">
+		<div class="caption">
+			<span><%- e('collections') %></span> <span class="count"></span>
+		</div>
+		<% if(author.me) {%>
+
+			<div class="panel">
+				<div class="iconbutton newcollection">
+					<i class="fas fa-plus-circle"></i>
+				</div>
+			</div>
+
+		<% } %>
+	</div>
+
+	
+
+	<div class="collectionsdata">
+		<div class="loaderWrapper">
+			<div class="loader">
+				<div class="preloader5"><img src="./img/three-dots.svg"/></div>
+			</div>
+		</div>
+	</div>
+
+	
+
+	<% if(ed.preview) {%>
+		<div class="showmoreWrapper">
+			<button class="button ghost showmore"><%-e('e13021')%></button>
+		</div>
+	<% } %>
+
+
+</div>

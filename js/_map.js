@@ -1112,6 +1112,33 @@ __map =  {
 		]
 	},
 
+	collections : {
+		uri : "collections",
+		href : "collections",
+		add : insertingfunc
+	},
+
+	newcollection : {
+		uri : "newcollection",
+		href : "newcollection",
+		add : insertingfunc,
+		relations : [
+
+			{src : 'js/vendor/Sortable.min.js', f : 'js', 
+
+				require : function(){
+
+					Sortable = require('sortablejs')
+
+			}},
+		
+			{src : 'js/vendor/emojionearea.min.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},	
+			{src : 'js/vendor/emojionearea.min.css',			   f : 'css'},	
+
+	
+		],
+	},
+
 	complain : {
 		uri : "complain",
 		href : "complain",

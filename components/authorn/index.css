@@ -135,6 +135,7 @@
 #authorn .subscribes,
 #authorn .subscribers,
 #authorn .uinfoWr,
+#authorn .collections,
 #authorn .fbuttonsrow {
   margin-top: 0.5em;
 }
@@ -169,6 +170,7 @@
   flex-grow: 2;
 }
 #authorn .lcolumn .subscribes,
+#authorn .lcolumn .collections,
 #authorn .lcolumn .subscribers {
   border-radius: 12px;
   background: rgba(var(--background-total-theme), 1);
@@ -176,12 +178,14 @@
   display: none;
 }
 #authorn .lcolumn .subscribes .empty,
+#authorn .lcolumn .collections .empty,
 #authorn .lcolumn .subscribers .empty {
   text-align: center;
   color: rgb(var(--neutral-grad-3));
   font-size: 0.9em;
 }
 #authorn .lcolumn .subscribes.active,
+#authorn .lcolumn .collections.active,
 #authorn .lcolumn .subscribers.active {
   display: block;
 }
@@ -623,6 +627,7 @@
   }
   #authorn .acontent .lcolumn .blocking,
   #authorn .acontent .lcolumn .subscribers,
+  #authorn .acontent .lcolumn .collections,
   #authorn .acontent .lcolumn .subscribes {
     display: none;
   }

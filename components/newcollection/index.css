@@ -1,0 +1,263 @@
+#newcollection {
+  position: relative;
+}
+#newcollection .panelErrorWrapper {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgb(var(--background-hidden-layer));
+  z-index: 20;
+  width: 100%;
+  padding: 0.5em;
+  padding-bottom: 1em;
+}
+#newcollection .panelErrorWrapper .panel {
+  display: flex;
+  justify-content: flex-end;
+}
+#newcollection .panelErrorWrapper .panel .error {
+  color: rgb(var(--color-bad));
+  font-weight: 400;
+  font-size: 0.8em;
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+}
+#newcollection .panelErrorWrapper .panel button {
+  margin-left: 1em;
+}
+#newcollection .caption {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgb(var(--background-hidden-layer));
+  z-index: 20;
+}
+#newcollection .shares {
+  padding-bottom: 3em;
+  margin-top: 1em;
+}
+#newcollection .shares .panel {
+  text-align: center;
+}
+#newcollection .shares .sharesCaption {
+  font-weight: 700;
+}
+#newcollection .shares .captionWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#newcollection .shares .sharesContent {
+  margin-top: 1.5em;
+}
+#newcollection .shares .sharesContent .shareWrapper {
+  margin-top: 0.5em;
+  padding: 0.5em;
+  border-radius: 6px;
+  cursor: pointer;
+  background: rgb(var(--background-main));
+  display: flex;
+  justify-content: center;
+}
+#newcollection .shares .sharesContent .shareWrapper .remove {
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  text-align: center;
+  color: rgb(var(--neutral-grad-4));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+#newcollection .shares .sharesContent .shareWrapper .remove i {
+  font-size: 0.8em;
+}
+#newcollection .shares .sharesContent .shareWrapper .remove:hover {
+  color: rgb(var(--color-bad));
+}
+#newcollection .shares .sharesContent .shareWrapper .notification {
+  flex-grow: 2;
+}
+#newcollection .shares .sharesContent .shareWrapper .sharepreview {
+  padding: 0;
+}
+#newcollection .editform {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+#newcollection .editform .imagecover {
+  height: 250px;
+  border-radius: 6px;
+  overflow: hidden;
+  aspect-ratio: 1;
+  margin-bottom: 0.5em;
+}
+#newcollection .editform .collectionImageWrapper {
+  width: 100%;
+  height: 44px;
+  margin-bottom: 0.5em;
+  position: relative;
+}
+#newcollection .editform .collectionImageWrapper .textIcon {
+  color: rgb(var(--neutral-grad-4));
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  background: rgb(var(--background-main));
+  border-radius: 6px;
+  overflow: hidden;
+}
+#newcollection .editform .collectionImageWrapper .textIcon .icon {
+  margin-left: auto;
+  width: 44px;
+  height: 100%;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
+}
+#newcollection .editform .collectionImageWrapper .textIcon .text {
+  margin-left: 0.5em;
+}
+#newcollection .editform .collectionImageWrapper .textIcon .elContent {
+  display: flex;
+  align-items: center;
+}
+#newcollection .editform .collectionCaptionWrapper {
+  width: 100%;
+}
+#newcollection .editform .collectionDescriptionWrapper {
+  width: 100%;
+}
+#newcollection .editform .collectionItemsWrapper {
+  width: 100%;
+}
+#newcollection .emptywrapper {
+  display: flex;
+  padding: 2em;
+  align-items: center;
+  justify-content: center;
+}
+#newcollection .emptywrapper .buttonsWrapper {
+  text-align: center;
+}
+#newcollection .caption {
+  display: block;
+  padding: 1em 0;
+}
+#newcollection .caption span {
+  font-size: 1.5em;
+}
+#newcollection .cpt {
+  margin-bottom: 0.5em;
+}
+#newcollection .cpt input {
+  width: 100%;
+  border-radius: 6px;
+  border: 0;
+  background: rgb(var(--background-main));
+  outline: none;
+  padding: 1em 0;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+#newcollection .txt {
+  margin-bottom: 0.5em;
+}
+#newcollection .txt textarea {
+  width: 100%;
+  min-height: 78px;
+  border-radius: 6px;
+  border: 0;
+  background: rgb(var(--background-main));
+  outline: none;
+  padding: 1em 0;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  overflow: auto;
+}
+#newcollection .txt .emojionearea,
+#newcollection .txt .emojionearea.form-control {
+  border: 0;
+  border-radius: 6px;
+}
+#newcollection .txt .emojionearea .emojionearea-editor,
+#newcollection .txt .emojionearea.form-control .emojionearea-editor {
+  margin-right: 0;
+}
+#newcollection .txt .emojionearea-editor {
+  padding: 1em 0;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  background: rgb(var(--background-main));
+  outline: none;
+  border: 0;
+  min-height: 78px;
+  border-radius: 6px;
+}
+#newcollection .sLoader {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  padding: 1.5em 1em;
+  background: rgba(var(--background-secondary-theme), 0.9);
+  z-index: 22;
+}
+#newcollection.loading .sLoader {
+  display: block;
+}
+.wndnewcollection.wnd .wndcontent {
+  padding-top: 0;
+}
+.wndnewcollection.wnd .hideButton {
+  display: none;
+}
+.wndnewcollection.wnd .wndinner {
+  max-width: 540px;
+  max-height: 90vh;
+}
+.wndnewcollection.wnd #newcollection .container {
+  border-radius: 12px;
+  background: initial;
+  padding: 0.5em;
+  margin-bottom: 1em;
+}
+.wndnewcollection.wnd #newcollection .content {
+  margin-top: 1em;
+}
+.wnd.wndnewcollection.hiddenState .wndinner {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+}
+.wnd.wndnewcollection.hiddenState .wndinner .wndcontent {
+  padding: 0 20px;
+}
+.wnd.wndnewcollection.hiddenState .wndcontent {
+  overflow: hidden;
+}
+.wnd.wndnewcollection.hiddenState #newcollection .caption {
+  position: static;
+}
+.wnd.wndnewcollection.hiddenState #newcollection .caption span {
+  font-size: 1em;
+}
+.wnd.wndnewcollection.hiddenState #newcollection .editform {
+  display: none;
+}
