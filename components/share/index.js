@@ -905,8 +905,6 @@ var share = (function(){
 				}
 
 				if(essenseData.hash == currentShare.shash()){
-
-
 					actions.errortext(self.app.localization.e('e13163'))
 					return
 				}
@@ -2945,7 +2943,6 @@ var share = (function(){
 				}
 
 				
-				
 
 				$('html').off('click', events.unfocus);
 
@@ -3018,6 +3015,7 @@ var share = (function(){
 					external.addclbk('share' + key, actions.videoadded)
 					external.addclbk('share' + key, actions.closeexternal, 'closed')
 				}
+				
 
 				if (essenseData.images){
 					currentShare.images.set(essenseData.images);

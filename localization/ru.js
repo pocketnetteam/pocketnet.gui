@@ -3068,3 +3068,27 @@ _l.sysmodbas="Система модерации контента на Bastyon"
 
 _l.torHintStateRunning = "Модуль ТОР работает"
 _l.torHintStateStarting = "Модуль ТОР запускается"
+
+_l.collections = "Коллекции"
+_l.emptycollections = "Нет коллекций"
+_l.newcollection = "Создать"
+_l.newcollectionex = "Создание новой коллекции"
+_l.edcollectionex = "Редактирование коллекции"
+_l.savecollection = "Сохранить"
+_l.deletecollection = "Удалить"
+_l.cancelcollection = "Отмена"
+_l.collectionInputCaption = "Название коллекции"
+_l.collectionInputDescription = "Описание коллекции"
+_l.collectionInputImage = "Обложка коллекции"
+_l.collectionInputImageChange = "Изменить обложку коллекции"
+_l.collectionMaterialsAdd = "Добавить публикации"
+_l.collectionMaterials = "Публикации"
+_l.enabledEditModeCollections = "Выберите в интерфейсе публикации, которые хотите включить в эту коллекцию"
+_l.collectionMode = "Режим редактирования коллекции"
+_l.removeFromCollection = "Убрать из коллекции"
+_l.addToCollection = "Добавить в коллекцию"
+_l.e131632 = "В коллекцию не внесено изменений"
+
+
+_l.imageerror = "Произошла ошибка при загрузке изображений. Попробуйте ещё раз."
+

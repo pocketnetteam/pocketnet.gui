@@ -9379,7 +9379,7 @@ findAndReplaceLink = function (inputText = '', nottrust) {
 
 			var l = linkifyHtml(inputText, {
 				attributes: s,
-				truncate: 50,
+				truncate: 150,
 
 				format : (value, type) => {
 
