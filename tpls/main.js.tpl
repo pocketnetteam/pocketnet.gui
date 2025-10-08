@@ -19,7 +19,7 @@ const electronLocalshortcut = require('electron-localshortcut');
 var win, nwin, badge, tray, proxyInterface, ipcbridge;
 var willquit = false;
 
-const { app, BrowserWindow, Menu, MenuItem, Tray, ipcMain, Notification, nativeImage, dialog, globalShortcut, OSBrowser } = require('electron')
+const { app, BrowserWindow, Menu, MenuItem, Tray, ipcMain, Notification, nativeImage, dialog, globalShortcut, OSBrowser, desktopCapturer } = require('electron')
 app.allowRendererProcessReuse = false
 
 const FetchHandler = require('./js/transports2/fetch/handler.js');
@@ -758,8 +758,22 @@ function createWindow() {
 
         console.log('autoLaunchManage', p)
 
+        
         autoLaunchManage(p.enable)
     })
+    
+    ipcMain.handle('get-desktop-sources', async () => {
+        const sources = await desktopCapturer.getSources({
+            types: ['window', 'screen'],
+            thumbnailSize: { width: 150, height: 150 }
+        });
+
+        return sources.map(source => ({
+            id: source.id,
+            name: source.name,
+            thumbnail: source.thumbnail.toDataURL()
+        }));
+    });
 
     const Storage = app.getPath('userData');
 
