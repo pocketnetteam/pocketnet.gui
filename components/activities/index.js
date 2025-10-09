@@ -10,6 +10,8 @@ var activities = (function () {
 
 		var el, loading, scnt, currentFilter = 'all', end = false, block;
 
+		var ed = {}
+
 		var filtersList = ['all', 'interactions', 'comment', 'subscriber', 'blocking', 'video']
 
 			filtersList.push('pending')
@@ -576,7 +578,9 @@ var activities = (function () {
 		return {
 			primary: primary,
 
-			getdata: function (clbk) {
+			getdata: function (clbk, p){
+
+				ed = p.settings.essenseData || {}
 
 				var data = {
 					filters: filtersList
@@ -585,7 +589,7 @@ var activities = (function () {
 				currentFilter = 'all'
 
 				try{
-					currentFilter = localStorage['activityFilter'] || 'all'
+					currentFilter = ed.activityFilter || localStorage['activityFilter'] || 'all'
 				}
 				catch (e){
 				}
