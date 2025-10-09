@@ -924,12 +924,19 @@ var component = Object(componentNormalizer["a" /* default */])(
       if (this.streamMode && !((_this$videoMeta = this.videoMeta) !== null && _this$videoMeta !== void 0 && _this$videoMeta.isLive)) return;
       var self = this;
       this.$store.commit("SET_CHAT_TO_FORCE", this.m_chat.roomId);
+      this.$store.state.globalpreloader = true;
       this.core.mtrx.client.joinRoom(this.m_chat.roomId).then(() => {
         //this.$store.commit('SET_CHAT_TO_STORE', this.m_chat.summary)
         this.$emit("joined");
       }).catch(function (error) {
+        this.$store.commit("icon", {
+          icon: "error",
+          message: error
+        });
         self.brokenRoom(true);
         return self.creatorLeft = true;
+      }).finally(() => {
+        this.$store.state.globalpreloader = false;
       });
     },
     back() {
@@ -940,19 +947,25 @@ var component = Object(componentNormalizer["a" /* default */])(
       if (users.length > 1) {
         return;
       }
+      this.$store.state.globalpreloader = true;
       this.core.mtrx.blockUser(users[0].userId).then(r => {
         this.$router.go(-1);
-      }).catch(e => {});
+      }).catch(e => {}).finally(() => {
+        this.$store.state.globalpreloader = false;
+      });
     },
     decline: function () {
       this.$store.commit("SET_CHAT_TO_FORCE", this.m_chat.roomId);
+      this.$store.state.globalpreloader = true;
       this.core.mtrx.client.leave(this.chat.roomId).then(r => {
-        this.core.mtrx.client.forget(this.chat.roomId, true).then(r => {
+        return this.core.mtrx.client.forget(this.chat.roomId, true).then(r => {
           return r;
         }).then(r => {
           this.$store.commit("DELETE_ROOM", this.chat.roomId);
           this.$router.go(-1);
         });
+      }).finally(() => {
+        this.$store.state.globalpreloader = false;
       });
     },
     brokenRoom() {
