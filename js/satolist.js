@@ -17739,7 +17739,7 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                getfromtotransactions : function(from, to, update){
+                getfromtotransactions : function(from, to, update, depth, opreturn){
 
                     return pretry(function () {
                         return self.currentBlock
@@ -17750,8 +17750,11 @@ Platform = function (app, listofnodes) {
     
                         return app.psdk.getfromtotransactions.request(() => {
     
-    
-                            return self.app.api.rpc('getfromtotransactions', [from, to, self.currentBlock - 43200 * 12])
+                            depth = depth || (self.currentBlock - 43200 * 12);
+
+                            const params = opreturn ? [from, to, depth, opreturn] : [from, to, depth];
+
+                            return self.app.api.rpc('getfromtotransactions', params);
 
                             /*
                             

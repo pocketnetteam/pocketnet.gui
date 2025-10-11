@@ -376,6 +376,31 @@ var BastyonApps = function (app) {
             }
         },
 
+        fromToTransactions: {
+            parameters: ['addressFrom', 'addressTo'],
+            permissions: [],
+            authorization: true,
+            action: function ({
+                data,
+                application
+            }) {
+                return app.platform.sdk.node.transactions.getfromtotransactions(
+                    data.addressFrom, data.addressTo, data.update, data.depth, data.opreturn
+                ).then(result => {
+                    if (data.confirmations) {
+                        return app.platform.sdk.node.get.timepr().then(() => {
+                            if (!(app.platform.currentBlock)) {
+                                throw new Error('actions_currentBlock_not_defined');
+                            }
+                            return (result || []).filter(f => (app.platform.currentBlock - f.height >= data.confirmations))
+                        })
+                    } else {
+                        return result;
+                    }
+                })
+            }
+        },
+
         sign: {
             permissions: ['sign'],
             authorization: true,
@@ -798,7 +823,7 @@ var BastyonApps = function (app) {
                     margintop: document.documentElement.style.getPropertyValue('--app-margin-top') || document.documentElement.style.getPropertyValue('--app-margin-top-default') || '0px',
                     application: application.manifest,
                     project: project_config,
-                    transactionsApiVersion: 4,
+                    transactionsApiVersion: 5,
                     alttransport : app.hasTor || false
                 })
             }

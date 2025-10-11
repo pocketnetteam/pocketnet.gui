@@ -351,6 +351,18 @@ var BastyonSdk = function(settings = {}){
             })
         },
 
+        fromToTransactions : function (addressFrom, addressTo, options = {}) {
+            const data = {
+                addressFrom, 
+                addressTo,
+                update: options?.update,
+                depth: options?.depth, 
+                opreturn: options?.opreturn,
+                confirmations: options?.confirmations,
+            };
+            return action('fromToTransactions', data)
+        },
+
         geolocation : function(){
             return action('geolocation', {})
         },

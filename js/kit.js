@@ -2570,6 +2570,7 @@ brtAccount = function(){
 	self.geohash = '';
 	self.static = false;
 	self.radius = 0;
+	self.safeDeal = {};
 
 	self.validation = function(){
 
@@ -2581,7 +2582,8 @@ brtAccount = function(){
 						a: self.tags,
 						g: self.geohash,
 						s: self.static,
-						r: self.radius
+						r: self.radius,
+						d: self.safeDeal,
 					 });
 	}
 
@@ -2592,7 +2594,8 @@ brtAccount = function(){
 				tags: self.tags,
 				geohash: self.geohash,
 				static: self.static,
-				radius: self.radius
+				radius: self.radius,
+				safeDeal: self.safeDeal,
 			};
 		}
 
@@ -2603,7 +2606,8 @@ brtAccount = function(){
 					a: self.tags,
 					g: self.geohash,
 					s: self.static,
-					r: self.radius
+					r: self.radius,
+					d: self.safeDeal,
 				})
 			}
 		};
@@ -2615,6 +2619,7 @@ brtAccount = function(){
 		self.geohash = d.geohash;
 		self.static = d.static;
 		self.radius = d.radius;
+		self.safeDeal = d.safeDeal;
 	}
 
 	self.type = 'brtaccount';
@@ -2639,6 +2644,7 @@ brtOffer = function(){
 	self.currencyPrice = {};
 	self.delivery = {};
 	self.videoSettings = {};
+	self.safeDeal = {};
 	self.price = 0;
 	self.published = 'published';
 
@@ -2668,7 +2674,8 @@ brtOffer = function(){
 						p: self.published,
 						f: self.currencyPrice,
 						d: self.delivery,
-						v: self.videoSettings
+						v: self.videoSettings,
+						s: self.safeDeal,
 					 }) +
 					 JSON.stringify(self.images) +
 					 self.geohash +
@@ -2693,6 +2700,7 @@ brtOffer = function(){
 				currencyPrice: self.currencyPrice,
 				delivery: self.delivery,
 				videoSettings: self.videoSettings,
+				safeDeal: self.safeDeal,
 				price: self.price,
 				published: self.published
 			};
@@ -2712,7 +2720,8 @@ brtOffer = function(){
 					p: self.published,
 					f: self.currencyPrice,
 					d: self.delivery,
-					v: self.videoSettings
+					v: self.videoSettings,
+					s: self.safeDeal,
 				}),
 				s5: JSON.stringify(self.images),
 				s6: self.geohash,
@@ -2737,6 +2746,7 @@ brtOffer = function(){
 		self.currencyPrice = d.currencyPrice;
 		self.delivery = d.delivery;
 		self.videoSettings = d.videoSettings;
+		self.safeDeal = d.safeDeal;
 		self.price = d.price;
 		self.published = d.published;
 	}
