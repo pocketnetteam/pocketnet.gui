@@ -145,7 +145,7 @@ var fastsend = (function(){
 
 				var value = _.reduce(list, function(m,v){return m + v.value}, 0).toFixed(8)
 
-				var count = 100
+				var count = 50
 
 				if (count < 2) count = 2
 

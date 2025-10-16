@@ -619,9 +619,11 @@ var TranslateApi = function(p = {}){
                     return Promise.resolve(result)
                 }).catch(response => {
 
+                    console.log('response', response)
+
                     return Promise.reject({
                         code : response.status || 500,
-                        text : 'translate:libre:' + (response.data || response.statusText || 'error')
+                        text : 'translate:libre:' + (response.data ? response.data.error : (response.statusText || 'error'))
                     })
                 })
             }
@@ -670,9 +672,12 @@ var TranslateApi = function(p = {}){
 
                     return Promise.resolve(response.data.translations)
                 }).catch(response => {
+
+                     console.log('response', response)
+
                     return Promise.reject({
                         code : response.status || 500,
-                        text : 'translate:yandex:' + ((response.data ? (response.data.error || response.data) : '') || response.statusText ||  'error')
+                        text : 'translate:yandex:' + ((response.data ? (response.data.error || response.data.code || response.data) : '') || response.statusText ||  'error')
                     })
                 })
             }
