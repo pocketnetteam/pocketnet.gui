@@ -181,7 +181,7 @@ var fastsend = (function(){
 
 									actions.makeTransaction(list, message.value, function(){
 
-									})
+									}, true)
 
 								})
 

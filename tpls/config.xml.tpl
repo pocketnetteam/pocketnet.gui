@@ -223,7 +223,7 @@
         </config-file>
 
         <edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:name='MainActivity']" mode="merge">
-            <activity android:windowSoftInputMode="adjustPan" android:supportsPictureInPicture="true" />
+            <activity android:windowSoftInputMode="adjustNothing" android:supportsPictureInPicture="true" />
         </edit-config>
 
         <config-file parent="/manifest/application/activity[@android:name='MainActivity']/intent-filter" target="AndroidManifest.xml">
