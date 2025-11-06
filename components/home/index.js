@@ -281,6 +281,7 @@ var home = (function () {
             },
           },
           function () {
+            actions.filterChipToggle("all");
             el.c.find(".filter-toggle").on("click", function () {
               actions.filterChipToggle($(this).data("filter"));
             });

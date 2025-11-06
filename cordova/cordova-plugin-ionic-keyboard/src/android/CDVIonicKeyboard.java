@@ -33,8 +33,6 @@ import android.view.WindowInsets;
 import android.view.DisplayCutout;
 
 import androidx.core.view.WindowInsetsCompat;
-import androidx.core.view.OnApplyWindowInsetsListener;
-import androidx.core.view.ViewCompat;
 
 
 
@@ -134,9 +132,8 @@ public class CDVIonicKeyboard extends CordovaPlugin {
 
                                 if (isKeyboardVisible){
                                     float keyboardHeight = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom / density;
-                                    float systemBarsHeight = insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom / density;
 
-                                    pixelHeightDiff = (int) Math.max(0, keyboardHeight - systemBarsHeight);
+                                    pixelHeightDiff = (int) keyboardHeight;
                                 }
 
                                 
@@ -178,12 +175,6 @@ public class CDVIonicKeyboard extends CordovaPlugin {
                             return (r.bottom - r.top);
                         }
                     };
-
-                    if (Build.VERSION.SDK_INT >= 30) {
-                        ViewCompat.setOnApplyWindowInsetsListener((View) webView.getView(), (v, insets) -> {
-                            return insets;
-                        });
-                    }
 
                     mChildOfContent = content.getChildAt(0);
                     rootView.getViewTreeObserver().addOnGlobalLayoutListener(list);
