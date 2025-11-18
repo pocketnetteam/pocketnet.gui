@@ -380,4 +380,186 @@
             -webkit-backdrop-filter: none !important;
         }
     }
+
+    // Reviews Page Styles
+    .reviewsWrapper {
+        padding: calc(55px + var(--app-margin-top)) 0 20px 0;
+        max-width: 900px;
+        margin: 0 auto;
+        overflow-y: auto;
+        height: 100vh;
+    }
+
+    .reviewsAppHeader {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 20px;
+        border-bottom: 1px solid rgb(var(--neutral-grad-0));
+    }
+
+    .reviewItem {
+        padding: 20px;
+        margin-bottom: 16px;
+        background: rgb(var(--neutral-grad-1));
+        border: 1px solid rgb(var(--neutral-grad-0));
+        border-radius: 12px;
+
+        &:hover {
+            .reviewActions {
+                opacity: 1;
+            }
+        }
+    }
+
+    .reviewHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 12px;
+    }
+
+    .reviewUserInfo {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+    }
+
+    .reviewUserAvatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgb(var(--neutral-grad-0));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgb(var(--text-on-main-bg-color));
+    }
+
+    .reviewUserName {
+        font-weight: 600;
+        color: rgb(var(--text-color));
+        font-size: 0.95em;
+    }
+
+    .reviewDate {
+        font-size: 0.85em;
+        color: rgb(var(--text-on-main-bg-color));
+        opacity: 0.6;
+    }
+
+    .reviewText {
+        color: rgb(var(--text-on-main-bg-color));
+        line-height: 1.6;
+        font-size: 0.95em;
+        margin-bottom: 12px;
+    }
+
+    .reviewActions {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+
+        .deleteReviewButton {
+            background: none;
+            border: none;
+            color: rgb(var(--text-on-main-bg-color));
+            opacity: 0.5;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            transition: all 0.2s ease;
+
+            &:hover {
+                opacity: 1;
+                background: rgba(var(--color-bg-ac-error), 0.1);
+                color: rgb(var(--color-bg-ac-error));
+            }
+        }
+    }
+
+    .writeReviewSection {
+        padding: 20px;
+        border-bottom: 1px solid rgb(var(--neutral-grad-0));
+        display: flex;
+        gap: 12px;
+    }
+
+    .rateAppButton,
+    .writeReviewButton {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .userRatingDisplay {
+        flex: 1;
+        background: rgba(var(--color-bg-ac), 0.1);
+        border: 1px solid rgba(var(--color-bg-ac), 0.3);
+        border-radius: 12px;
+        padding: 12px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .overallRating {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        padding: 30px 20px;
+        border-bottom: 1px solid rgb(var(--neutral-grad-0));
+    }
+
+    .ratingScore {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 100px;
+    }
+
+    .scoreNumber {
+        font-size: 3.5em;
+        font-weight: 700;
+        color: rgb(var(--text-color));
+        line-height: 1;
+    }
+
+    .starsDisplay {
+        display: flex;
+        gap: 4px;
+        color: #FFB800;
+        font-size: 1.5em;
+    }
+
+    .ratingDistribution {
+        padding: 20px;
+        border-bottom: 1px solid rgb(var(--neutral-grad-0));
+    }
+
+    .distributionRow {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 8px;
+    }
+
+    .distributionBar {
+        flex: 1;
+        height: 8px;
+        background: rgb(var(--neutral-grad-0));
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .distributionBarFill {
+        height: 100%;
+        background: #FFB800;
+        transition: width 0.3s ease;
+    }
 }
