@@ -189,13 +189,22 @@
 #applicationfx .installwrapper {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   text-align: center;
   max-width: 600px;
-  height: 80vh;
+  min-height: 100vh;
   margin: auto;
-  padding: 0;
+  padding: calc(55px + var(--app-margin-top)) 0 40px 0;
+  overflow-y: auto;
+}
+
+#applicationfx .installContentWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-top: 40px;
 }
 #applicationfx .installwrapper .appicon {
   width: 96px;
@@ -368,4 +377,826 @@
 .wnd.appwindow .wndback {
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
+}
+
+/* Ratings Preview in Install Page */
+#applicationfx .ratingsPreviewSection {
+  margin-top: 40px;
+  padding: 0 20px;
+  max-width: 600px;
+  width: 100%;
+}
+
+#applicationfx .ratingsPreviewHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#applicationfx .ratingsPreviewHeader h3 {
+  font-size: 1.5em;
+  font-weight: 700;
+  color: rgb(var(--text-color));
+  margin: 0;
+}
+
+#applicationfx .viewAllReviews {
+  background: none;
+  border: none;
+  color: rgb(var(--color-bg-ac));
+  font-size: 1em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+#applicationfx .viewAllReviews:hover {
+  background: rgba(var(--color-bg-ac), 0.1);
+}
+
+#applicationfx .ratingsPreview {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#applicationfx .ratingPreviewCard {
+  background: rgb(var(--neutral-grad-1));
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid rgb(var(--neutral-grad-0));
+}
+
+#applicationfx .overallRatingPreview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+}
+
+#applicationfx .ratingScorePreview {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+#applicationfx .scoreNumberLarge {
+  font-size: 3em;
+  font-weight: 700;
+  color: rgb(var(--text-color));
+}
+
+#applicationfx .scoreOutOfSmall {
+  font-size: 1.2em;
+  color: rgb(var(--text-on-main-bg-color));
+  opacity: 0.7;
+}
+
+#applicationfx .starsPreview {
+  display: flex;
+  gap: 4px;
+  color: #FFB800;
+  font-size: 1.2em;
+}
+
+#applicationfx .ratingsCountPreview {
+  font-size: 0.9em;
+  color: rgb(var(--text-on-main-bg-color));
+  opacity: 0.7;
+}
+
+#applicationfx .recentReviewsPreview {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+#applicationfx .reviewPreviewItem {
+  background: rgb(var(--neutral-grad-1));
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid rgb(var(--neutral-grad-0));
+}
+
+#applicationfx .reviewPreviewHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+#applicationfx .reviewPreviewStars {
+  display: flex;
+  gap: 2px;
+  color: #FFB800;
+  font-size: 0.9em;
+}
+
+#applicationfx .reviewPreviewDate {
+  font-size: 0.85em;
+  color: rgb(var(--text-on-main-bg-color));
+  opacity: 0.6;
+}
+
+#applicationfx .reviewPreviewUser {
+  font-weight: 600;
+  color: rgb(var(--text-color));
+  margin-bottom: 4px;
+}
+
+#applicationfx .reviewPreviewTitle {
+  font-weight: 600;
+  color: rgb(var(--text-color));
+  margin-bottom: 4px;
+  font-size: 0.95em;
+}
+
+#applicationfx .reviewPreviewText {
+  font-size: 0.9em;
+  color: rgb(var(--text-on-main-bg-color));
+  line-height: 1.4;
+}
+
+#applicationfx .ratingsPreviewEmpty {
+  padding: 40px 20px;
+}
+
+#applicationfx .emptyRatingCard {
+  background: rgb(var(--neutral-grad-1));
+  border-radius: 16px;
+  padding: 40px 20px;
+  text-align: center;
+  border: 1px solid rgb(var(--neutral-grad-0));
+}
+
+#applicationfx .emptyStars {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  color: rgb(var(--neutral-grad-0));
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+#applicationfx .emptyRatingCard p {
+  margin: 8px 0;
+  color: rgb(var(--text-color));
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+#applicationfx .emptySubtext {
+  color: rgb(var(--text-on-main-bg-color));
+  opacity: 0.7;
+  font-size: 0.9em !important;
+  font-weight: 400 !important;
+}
+
+/* Reviews Page Styles */
+#applicationfx .reviewsWrapper {
+  padding: calc(55px + var(--app-margin-top)) 0 20px 0;
+  max-width: 900px;
+  margin: 0 auto;
+  overflow-y: auto;
+  height: 100vh;
+}
+
+#applicationfx .reviewsAppHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px;
+  border-bottom: 1px solid rgb(var(--neutral-grad-0));
+}
+
+#applicationfx .appIconSmall {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  background: rgba(var(--neutral-grad-1), 0.3);
+}
+
+#applicationfx .appInfo {
+  flex: 1;
+}
+
+#applicationfx .appInfo .appName {
+  font-size: 1.3em;
+  font-weight: 700;
+  color: rgb(var(--text-color));
+}
+
+#applicationfx .appInfo .appDeveloper {
+  font-size: 0.9em;
+  color: rgb(var(--text-on-main-bg-color));
+  opacity: 0.7;
+}
+
+#applicationfx .overallRating {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 30px 20px;
+  border-bottom: 1px solid rgb(var(--neutral-grad-0));
+}
+
+#applicationfx .ratingScore {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 100px;
+}
+
+#applicationfx .scoreNumber {
+  font-size: 3.5em;
+  font-weight: 700;
+  color: rgb(var(--text-color));
+  line-height: 1;
+}
+
+#applicationfx .scoreOutOf {
+  font-size: 1em;
+  color: rgb(var(--text-on-main-bg-color));
+  opacity: 0.7;
+}
+
+#applicationfx .ratingDetails {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#applicationfx .starsDisplay {
+  display: flex;
+  gap: 4px;
+  color: #FFB800;
+  font-size: 1.5em;
+}
+
+#applicationfx .ratingCount {
+  font-size: 0.95em;
+  color: rgb(var(--text-on-main-bg-color));
+  opacity: 0.7;
+}
+
+#applicationfx .ratingDistribution {
+  padding: 20px;
+  border-bottom: 1px solid rgb(var(--neutral-grad-0));
+}
+
+#applicationfx .distributionRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+#applicationfx .distributionStars {
+  display: flex;
+  gap: 2px;
+  color: #FFB800;
+  font-size: 0.8em;
+  min-width: 60px;
+}
+
+#applicationfx .distributionBar {
+  flex: 1;
+  height: 8px;
+  background: rgb(var(--neutral-grad-0));
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+#applicationfx .distributionBarFill {
+  height: 100%;
+  background: #FFB800;
+  transition: width 0.3s ease;
+}
+
+#applicationfx .distributionPercent {
+  min-width: 40px;
+  text-align: right;
+  font-size: 0.9em;
+  color: rgb(var(--text-on-main-bg-color));
+  opacity: 0.7;
+}
+
+#applicationfx .writeReviewSection {
+  padding: 20px;
+  border-bottom: 1px solid rgb(var(--neutral-grad-0));
+  display: flex;
+  gap: 12px;
+}
+
+#applicationfx .rateAppButton,
+#applicationfx .writeReviewButton {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+#applicationfx .userRatingDisplay {
+  flex: 1;
+  background: rgba(var(--color-bg-ac), 0.1);
+  border: 1px solid rgba(var(--color-bg-ac), 0.3);
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#applicationfx .userRatingInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+#applicationfx .userRatingLabel {
+  font-weight: 600;
+  color: rgb(var(--text-color));
+  font-size: 0.95em;
+}
+
+#applicationfx .userRatingStars {
+  display: flex;
+  gap: 2px;
+  color: #FFB800;
+  font-size: 1em;
+}
+
+#applicationfx .userRatingValue {
+  font-weight: 600;
+  color: rgb(var(--color-bg-ac));
+  font-size: 0.95em;
+}
+
+#applicationfx .userRatingNote {
+  font-size: 0.85em;
+  color: rgb(var(--text-on-main-bg-color));
+  opacity: 0.7;
+}
+
+#applicationfx .reviewsList {
+  padding: 20px;
+}
+
+#applicationfx .noReviews {
+  text-align: center;
+  padding: 40px 20px;
+  color: rgb(var(--text-on-main-bg-color));
+  opacity: 0.7;
+}
+
+#applicationfx .noReviews p {
+  font-size: 1em;
+  margin: 0;
+}
+
+#applicationfx .reviewsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#applicationfx .reviewsHeader h3 {
+  font-size: 1.3em;
+  font-weight: 700;
+  color: rgb(var(--text-color));
+  margin: 0;
+}
+
+#applicationfx .sortSelect {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid rgb(var(--neutral-grad-0));
+  background: rgb(var(--neutral-grad-1));
+  color: rgb(var(--text-color));
+  font-size: 0.9em;
+  cursor: pointer;
+}
+
+#applicationfx .reviewItem {
+  padding: 20px;
+  margin-bottom: 16px;
+  background: rgb(var(--neutral-grad-1));
+  border: 1px solid rgb(var(--neutral-grad-0));
+  border-radius: 12px;
+}
+
+#applicationfx .reviewHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+#applicationfx .reviewUserInfo {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+#applicationfx .reviewUserAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgb(var(--neutral-grad-0));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(var(--text-on-main-bg-color));
+}
+
+#applicationfx .reviewUserName {
+  font-weight: 600;
+  color: rgb(var(--text-color));
+  font-size: 0.95em;
+}
+
+#applicationfx .reviewDate {
+  font-size: 0.85em;
+  color: rgb(var(--text-on-main-bg-color));
+  opacity: 0.6;
+}
+
+#applicationfx .reviewRating {
+  display: flex;
+  gap: 2px;
+  color: #FFB800;
+  font-size: 0.9em;
+}
+
+#applicationfx .reviewTitle {
+  font-weight: 600;
+  color: rgb(var(--text-color));
+  margin-bottom: 8px;
+  font-size: 1em;
+}
+
+#applicationfx .reviewText {
+  color: rgb(var(--text-on-main-bg-color));
+  line-height: 1.6;
+  font-size: 0.95em;
+  margin-bottom: 12px;
+}
+
+#applicationfx .developerResponse {
+  background: rgba(var(--color-bg-ac), 0.05);
+  border-left: 3px solid rgb(var(--color-bg-ac));
+  padding: 12px;
+  margin-top: 12px;
+  border-radius: 8px;
+}
+
+#applicationfx .developerResponseHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  color: rgb(var(--color-bg-ac));
+  margin-bottom: 8px;
+  font-size: 0.9em;
+}
+
+#applicationfx .developerResponseText {
+  color: rgb(var(--text-on-main-bg-color));
+  font-size: 0.9em;
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+
+#applicationfx .developerResponseDate {
+  font-size: 0.8em;
+  color: rgb(var(--text-on-main-bg-color));
+  opacity: 0.6;
+}
+
+#applicationfx .reviewActions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+#applicationfx .reviewItem:hover .reviewActions {
+  opacity: 1;
+}
+
+#applicationfx .reviewActions .deleteReviewButton {
+  background: none;
+  border: none;
+  color: rgb(var(--text-on-main-bg-color));
+  opacity: 0.5;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.9em;
+  transition: all 0.2s ease;
+}
+
+#applicationfx .reviewActions .deleteReviewButton:hover {
+  opacity: 1;
+  background: rgba(var(--color-bg-ac-error), 0.1);
+  color: rgb(var(--color-bg-ac-error));
+}
+
+#applicationfx .reviewActionButton {
+  background: none;
+  border: none;
+  color: rgb(var(--text-on-main-bg-color));
+  font-size: 0.85em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+#applicationfx .reviewActionButton:hover {
+  background: rgb(var(--neutral-grad-0));
+}
+
+#applicationfx .loadMoreSection {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+#applicationfx .loadMoreButton {
+  min-width: 200px;
+}
+
+/* Review Form Styles */
+#applicationfx .reviewFormWrapper {
+  padding: calc(55px + var(--app-margin-top)) 20px 40px 20px;
+  max-width: 700px;
+  margin: 0 auto;
+  overflow-y: auto;
+  height: 100vh;
+}
+
+#applicationfx .reviewFormAppHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 20px;
+  border-bottom: 1px solid rgb(var(--neutral-grad-0));
+  margin-bottom: 30px;
+}
+
+#applicationfx .reviewFormAppHeader .appIconSmall {
+  width: 80px;
+  height: 80px;
+}
+
+#applicationfx .reviewFormAppHeader .appName {
+  font-size: 1.4em;
+  font-weight: 700;
+  color: rgb(var(--text-color));
+  text-align: center;
+}
+
+#applicationfx .reviewFormRating {
+  text-align: center;
+  padding: 30px 20px;
+  border-bottom: 1px solid rgb(var(--neutral-grad-0));
+}
+
+#applicationfx .reviewFormRating h3 {
+  font-size: 1.3em;
+  font-weight: 700;
+  color: rgb(var(--text-color));
+  margin: 0 0 20px 0;
+}
+
+#applicationfx .starRatingInput {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+#applicationfx .starRatingInput i {
+  font-size: 2.5em;
+  color: #FFB800;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+#applicationfx .starRatingInput i:hover {
+  transform: scale(1.2);
+}
+
+#applicationfx .ratingLabel {
+  font-size: 0.95em;
+  color: rgb(var(--text-on-main-bg-color));
+  opacity: 0.7;
+}
+
+#applicationfx .reviewFormFields {
+  padding: 30px 20px;
+}
+
+#applicationfx .formGroup {
+  margin-bottom: 24px;
+}
+
+#applicationfx .formGroup label {
+  display: block;
+  font-weight: 600;
+  color: rgb(var(--text-color));
+  margin-bottom: 8px;
+  font-size: 0.95em;
+}
+
+#applicationfx .formInput,
+#applicationfx .formTextarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgb(var(--neutral-grad-0));
+  border-radius: 8px;
+  background: rgb(var(--neutral-grad-1));
+  color: rgb(var(--text-color));
+  font-size: 0.95em;
+  font-family: inherit;
+  resize: vertical;
+}
+
+#applicationfx .formInput:focus,
+#applicationfx .formTextarea:focus {
+  outline: none;
+  border-color: rgb(var(--color-bg-ac));
+}
+
+#applicationfx .characterCount {
+  text-align: right;
+  font-size: 0.85em;
+  color: rgb(var(--text-on-main-bg-color));
+  opacity: 0.6;
+  margin-top: 4px;
+}
+
+#applicationfx .reviewGuidelines {
+  background: rgba(var(--color-bg-ac), 0.05);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+#applicationfx .guidelinesTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: rgb(var(--text-color));
+  margin-bottom: 12px;
+}
+
+#applicationfx .reviewGuidelines ul {
+  margin: 0;
+  padding-left: 20px;
+  list-style: disc;
+}
+
+#applicationfx .reviewGuidelines li {
+  color: rgb(var(--text-on-main-bg-color));
+  font-size: 0.9em;
+  line-height: 1.6;
+  margin-bottom: 6px;
+}
+
+#applicationfx .reviewFormActions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+#applicationfx .reviewFormActions .button {
+  min-width: 140px;
+}
+
+#applicationfx .cancelButton {
+  background: rgb(var(--neutral-grad-1));
+  color: rgb(var(--text-color));
+  border: 1px solid rgb(var(--neutral-grad-0));
+}
+
+#applicationfx .cancelButton:hover {
+  background: rgb(var(--neutral-grad-0));
+}
+
+#applicationfx .submitReviewButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Rating Form Styles */
+#applicationfx .ratingFormWrapper {
+  padding: calc(55px + var(--app-margin-top)) 20px 40px 20px;
+  max-width: 500px;
+  margin: 0 auto;
+  overflow-y: auto;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#applicationfx .ratingFormAppHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+#applicationfx .ratingFormAppHeader .appIconLarge {
+  width: 100px;
+  height: 100px;
+  border-radius: 20px;
+  background: rgba(var(--neutral-grad-1), 0.3);
+}
+
+#applicationfx .ratingFormAppHeader .appName {
+  font-size: 1.6em;
+  font-weight: 700;
+  color: rgb(var(--text-color));
+}
+
+#applicationfx .ratingFormAppHeader .ratingPrompt {
+  font-size: 1.1em;
+  color: rgb(var(--text-on-main-bg-color));
+  opacity: 0.8;
+}
+
+#applicationfx .ratingFormStars {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+#applicationfx .ratingFormStars .starRatingInput {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+#applicationfx .ratingFormStars .starRatingInput i {
+  font-size: 3em;
+  color: #FFB800;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+#applicationfx .ratingFormStars .starRatingInput i:hover {
+  transform: scale(1.15);
+}
+
+#applicationfx .ratingFormStars .ratingLabel {
+  font-size: 1em;
+  color: rgb(var(--text-on-main-bg-color));
+  opacity: 0.7;
+}
+
+#applicationfx .ratingFormActions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  padding: 20px;
+}
+
+#applicationfx .ratingFormActions .button {
+  min-width: 140px;
+}
+
+#applicationfx .cancelRatingButton {
+  background: rgb(var(--neutral-grad-1));
+  color: rgb(var(--text-color));
+  border: 1px solid rgb(var(--neutral-grad-0));
+}
+
+#applicationfx .cancelRatingButton:hover {
+  background: rgb(var(--neutral-grad-0));
+}
+
+#applicationfx .submitRatingButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

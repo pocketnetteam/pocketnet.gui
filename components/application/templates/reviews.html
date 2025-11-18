@@ -1,0 +1,134 @@
+<div class="captionRow">
+    <div class="back iconwrapper">
+        <div class="icon">
+            <i class="fas fa-chevron-left"></i>
+        </div>
+    </div>
+    <div class="caption">
+        <span><%-application && application.name ? application.name : ""%></span>
+    </div>
+    <% if(application) {%>
+    <div class="settings iconwrapper">
+        <div class="icon">
+            <i class="fas fa-ellipsis-v"></i>
+        </div>
+    </div>
+    <% } %>
+</div>
+
+<div class="reviewsWrapper">
+    <div class="reviewsAppHeader">
+        <img class="appIconSmall" src="<%-application.icon%>" alt="<%-application.name%>">
+        <div class="appInfo">
+            <div class="appName"><%-application.name || "Unknown App"%></div>
+        </div>
+    </div>
+
+    <div class="overallRating">
+        <div class="ratingScore">
+            <div class="scoreNumber"><%- ratingsData && ratingsData.averageRating ? ratingsData.averageRating : 0 %></div>
+            <div class="scoreOutOf"><%- e('outOf5') %></div>
+        </div>
+        <div class="ratingDetails">
+            <div class="starsDisplay">
+                <% var avgRating = ratingsData && ratingsData.averageRating ? ratingsData.averageRating : 0; %>
+                <% for(var i = 1; i <= 5; i++) { %>
+                    <i class="<%= i <= Math.round(avgRating) ? 'fas' : 'far' %> fa-star"></i>
+                <% } %>
+            </div>
+            <div class="ratingCount"><%- ratingsData && ratingsData.totalRatings ? ratingsData.totalRatings : 0 %> <%- e('ratings') %></div>
+        </div>
+    </div>
+
+    <% if(ratingsData && ratingsData.distribution && ratingsData.distribution.length > 0) { %>
+    <div class="ratingDistribution">
+        <% ratingsData.distribution.forEach(function(item) { %>
+        <div class="distributionRow">
+            <div class="distributionStars">
+                <% for(var i = 0; i < item.stars; i++) { %>
+                    <i class="fas fa-star"></i>
+                <% } %>
+            </div>
+            <div class="distributionBar">
+                <div class="distributionBarFill" style="width: <%- item.percentage %>%"></div>
+            </div>
+            <div class="distributionPercent"><%- item.percentage %>%</div>
+        </div>
+        <% }) %>
+    </div>
+    <% } %>
+
+    <% if(canWriteReview) { %>
+    <div class="writeReviewSection">
+        <% if(hasUserRated) { %>
+            <div class="userRatingDisplay">
+                <div class="userRatingInfo">
+                    <span class="userRatingLabel"><%- e('yourRating') %>:</span>
+                    <div class="userRatingStars">
+                        <% for(var i = 1; i <= 5; i++) { %>
+                            <i class="<%= i <= userRating ? 'fas' : 'far' %> fa-star"></i>
+                        <% } %>
+                    </div>
+                    <span class="userRatingValue"><%- userRating %> <%- e('outOf5') %></span>
+                </div>
+                <div class="userRatingNote"><%- e('youAlreadyRated') %></div>
+            </div>
+        <% } else { %>
+            <button class="rateAppButton button">
+                <i class="fas fa-star"></i>
+                <%- e('rateApp') %>
+            </button>
+        <% } %>
+        <button class="writeReviewButton button secondary">
+            <i class="fas fa-comment"></i>
+            <%- e('writeComment') %>
+        </button>
+    </div>
+    <% } %>
+
+    <div class="reviewsList">
+        <div class="reviewsHeader">
+            <h3><%- e('ratingsAndReviews') %></h3>
+        </div>
+
+        <% if(ratingsData && ratingsData.reviews && ratingsData.reviews.length > 0) { %>
+        <% ratingsData.reviews.forEach(function(review) { %>
+        <div class="reviewItem">
+            <div class="reviewHeader">
+                <div class="reviewUserInfo">
+                    <div class="reviewUserAvatar">
+                        <% if(!review.userAvatar) { %>
+                            <i class="fas fa-user"></i>
+                        <% } else { %>
+                            <img src="<%= review.userAvatar %>"></img>
+                        <% } %>
+                    </div>
+                    <div class="reviewUserDetails">
+                        <div class="reviewUserName"><%- review.userName %></div>
+                        <div class="reviewDate"><%- review.date %></div>
+                    </div>
+                </div>
+                <% if(userAddress && review.address === userAddress) { %>
+                <div class="reviewActions">
+                    <button class="deleteReviewButton" data-comment-id="<%- review.id %>" title="<%- e('deleteComment') %>">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+                <% } %>
+            </div>
+
+            <div class="reviewText">
+                <% if(review.title) { %>
+                    <strong><%- review.title %></strong><br>
+                <% } %>
+                <%- review.text %>
+            </div>
+        </div>
+        <% }) %>
+        <% } else { %>
+        <div class="noReviews">
+            <p><%- e('noReviewsYet') %></p>
+        </div>
+        <% } %>
+    </div>
+</div>

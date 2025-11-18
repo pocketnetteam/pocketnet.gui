@@ -76,12 +76,26 @@
     <% } %>
     </div>
     <% if(app.mobileview || app.electronview) {%>
+    <% if(hasReviewsSupport) { %>
+    <div class="reviewsBtn iconwrapper filterIcon">
+      <div class="icon">
+        <i class="fas fa-star"></i>
+      </div>
+    </div>
+    <% } %>
     <div class="settings iconwrapper filterIcon">
       <div class="icon">
         <i class="fas fa-ellipsis-v"></i>
       </div>
     </div>
     <% } else { %>
+    <% if(hasReviewsSupport) { %>
+      <div class="reviewsBtn iconwrapper filterIcon">
+        <div class="icon">
+          <i class="fas fa-star"></i>
+        </div>
+      </div>
+    <% } %>
     <div class="info iconwrapper filterIcon">
       <div class="icon">
         <i class="fas fa-cog"></i>
