@@ -2929,6 +2929,21 @@ pMiniapp = function(){
 	}
 
 
+	self.upvote = function(value, address){
+
+		if(self.myVal && self.myVal != '0') return null;
+
+		var upvoteShare = new UpvoteShare();
+
+		upvoteShare.share.set(self.hash);
+		upvoteShare.value.set(value);
+		upvoteShare.address.set(self.address || '')
+
+
+		return upvoteShare;
+	}
+
+
 
 	self.type = 'miniapp';
 	return self;

@@ -10,16 +10,23 @@ var all = {
 		class : 'settings'
 	},
 
+	reviews : {
+		icon : '<i class="fas fa-star"></i>',
+		text : e('reviewsAndRatingsMenu'),
+		class : 'reviews'
+	},
+
 	close : {
 		icon : '<i class="fas fa-times"></i>',
 		text : e('application_close'),
 		class : 'close'
 	}
-	
+
 }
 
 if(application && application.manifest){
 	m.push('settings')
+	m.push('reviews')
 }
 
 m.push('close')
