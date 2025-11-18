@@ -1,0 +1,38 @@
+<div class="captionRow">
+    <div class="back iconwrapper">
+        <div class="icon">
+            <i class="fas fa-chevron-left"></i>
+        </div>
+    </div>
+    <div class="caption">
+        <span><%- e('rateApp') %></span>
+    </div>
+</div>
+
+<div class="ratingFormWrapper">
+    <div class="ratingFormAppHeader">
+        <img class="appIconLarge" src="<%-application.icon%>" alt="<%-application.name%>">
+        <div class="appName"><%-application.name || "Unknown App"%></div>
+        <div class="ratingPrompt"><%- e('howDoYouRate') %></div>
+    </div>
+
+    <div class="ratingFormStars">
+        <div class="starRatingInput">
+            <i class="far fa-star" data-rating="1"></i>
+            <i class="far fa-star" data-rating="2"></i>
+            <i class="far fa-star" data-rating="3"></i>
+            <i class="far fa-star" data-rating="4"></i>
+            <i class="far fa-star" data-rating="5"></i>
+        </div>
+        <div class="ratingLabel"><%- e('clickStarToRate') %></div>
+    </div>
+
+    <div class="ratingFormActions">
+        <button class="cancelRatingButton button secondary">
+            <%- e('cancel') %>
+        </button>
+        <button class="submitRatingButton button" disabled>
+            <%- e('submitRating') %>
+        </button>
+    </div>
+</div>

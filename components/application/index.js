@@ -8,9 +8,189 @@ var application = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, ed, application, appdata, curpath, userAddress, isUserAuthor, grantedPermissions;
+		var el, ed, application, appdata, curpath, userAddress, isUserAuthor, grantedPermissions, scores, userRating, comments, hasReviewsSupport;
+
+		var calculateRatingStats = function(scores) {
+			if (!scores || !scores.length) {
+				return {
+					averageRating: 0,
+					totalRatings: 0,
+					distribution: [
+						{ stars: 5, count: 0, percentage: 0 },
+						{ stars: 4, count: 0, percentage: 0 },
+						{ stars: 3, count: 0, percentage: 0 },
+						{ stars: 2, count: 0, percentage: 0 },
+						{ stars: 1, count: 0, percentage: 0 }
+					]
+				}
+			}
+
+			var total = scores.length
+			var sum = 0
+			var distribution = [0, 0, 0, 0, 0]
+
+			scores.forEach(function(score) {
+				var value = parseInt(score.value) || 0
+				sum += value
+				if (value >= 1 && value <= 5) {
+					distribution[value - 1]++
+				}
+			})
+
+			var average = total > 0 ? (sum / total).toFixed(1) : 0
+
+			var createDistributionItem = function(stars, index) {
+				return {
+					stars: stars,
+					count: distribution[index],
+					percentage: total > 0 ? Math.round((distribution[index] / total) * 100) : 0
+				}
+			}
+
+			return {
+				averageRating: parseFloat(average),
+				totalRatings: total,
+				distribution: [
+					createDistributionItem(5, 4),
+					createDistributionItem(4, 3),
+					createDistributionItem(3, 2),
+					createDistributionItem(2, 1),
+					createDistributionItem(1, 0)
+				]
+			}
+		}
+
+		var findUserRating = function(scores, userAddress) {
+			if (!scores || !userAddress) return null
+			var userScore = scores.find(function(score) {
+				return score.address === userAddress
+			})
+			return userScore ? parseInt(userScore.value) : null
+		}
+
+		var mapCommentsToReviews = function(comments) {
+			if (!comments || !comments.length) return []
+
+			return comments.filter(comment => !comment.deleted).map(function(comment) {
+				console.log(comment, 'comment')
+				var userInfo = self.psdk.userInfo.get(comment.address) || {}
+				console.log(userInfo, 'userInfo')
+				return {
+					userName: userInfo.name || 'Anonymous',
+					text: comment.message || '',
+					userAvatar: userInfo.image,
+					date: comment.time ? new Date(comment.time).toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' }) : '',
+					id: comment.id,
+					address: comment.address
+				}
+			})
+		}
+
+		var loadUserInfoForComments = function(comments, callback) {
+			if (!comments || comments.length === 0) {
+				if (callback) callback()
+				return
+			}
+
+			var addresses = comments.map(function(c) { return c.address }).filter(Boolean)
+			if (addresses.length === 0) {
+				if (callback) callback()
+				return
+			}
+
+			self.psdk.userInfo.load(addresses).then(callback).catch(function(err){
+				console.error('Error loading user info:', err)
+				if (callback) callback()
+			})
+		}
 
 		var actions = {
+			deleteComment : function(comment, clbk){
+				var ct = comment.delete()
+
+				self.app.platform.sdk.comments.delete(ct, function(err, alias){
+
+					if(!err){
+						if (clbk)
+							clbk(null, alias)
+					}
+
+					else
+					{
+						self.app.platform.errorHandler(err, true)
+
+						if (clbk)
+							clbk(err, null)
+					}
+
+				})
+			},
+
+			loadscores : function(callback){
+				if (!application || !application.hash) {
+					if (callback) callback()
+					return
+				}
+
+				self.app.platform.sdk.postscores.get(application.hash, function(){
+					scores = self.psdk.postScores.get(application.hash) || []
+					userRating = findUserRating(scores, userAddress)
+					if (callback) callback()
+				})
+			},
+
+			loadcomments : function(callback){
+				if (!application || !application.hash) {
+					if (callback) callback([])
+					return
+				}
+				var nodes = ['94.156.128.149:38081']
+				self.app.platform.sdk.comments.getclear(application.hash, "", function (loadedComments, error) {
+					if (error) {
+						console.error('Error loading comments:', error)
+						comments = []
+						if (callback) callback(comments)
+					} else {
+						comments = loadedComments || []
+						loadUserInfoForComments(comments, function () {
+							if (callback) callback(comments)
+						})
+					}
+				}, {
+					rpc: {
+						fnode: nodes[rand(0, nodes.length - 1)]
+					}
+				})
+			},
+
+			openreviews : function(){
+				globalpreloader(true, true)
+				if (!hasReviewsSupport) return
+
+				actions.loadscores(function(){
+					actions.loadcomments(function(){
+						globalpreloader(false)
+						renders.reviews()
+					})
+				})
+			},
+
+			openreviewform : function(){
+				if (!application.installed) {
+					sitemessage(self.app.localization.e('mustInstallToComment'))
+					return
+				}
+				renders.reviewform()
+			},
+
+			openratingform : function(){
+				if (!application.installed) {
+					sitemessage(self.app.localization.e('mustInstallToRate'))
+					return
+				}
+				renders.ratingform()
+			},
+
 			install : function(){
 				
 
@@ -241,6 +421,12 @@ var application = (function(){
 							close()
 						})
 
+						el.find('.reviews').on('click', function(){
+							actions.openreviews()
+
+							close()
+						})
+
 						el.find('.close').on('click', function(){
 							actions.gotohome()
 
@@ -250,15 +436,129 @@ var application = (function(){
 					})
 
 				}, d)
-		  
-				
+
+
 			},
 
 			install : function(clbk){
+				actions.loadscores(function(){
+					actions.loadcomments(function(){
+						var ratingStats = calculateRatingStats(scores)
+						var reviewsList = mapCommentsToReviews(comments)
+
+						var reviewsData = Object.assign({}, ratingStats)
+						if (reviewsList.length > 0) {
+							reviewsData.reviews = reviewsList
+						}
+
+						self.shell({
+							name :  'install',
+							el :   el.c,
+							data : {
+								application,
+								ratingsData: reviewsData,
+								hasReviewsSupport: hasReviewsSupport
+							},
+						}, function(p){
+							p.el.find('.installButton button').on('click', function(){
+								actions.install()
+							})
+
+							p.el.find('.back').on('click', function(){
+								actions.gotohome()
+							})
+
+							p.el.find('.viewAllReviews').on('click', function(){
+								actions.openreviews()
+							})
+
+							events.pageevents(p, true)
+
+							if (clbk)
+								clbk();
+						})
+					})
+				})
+			},
+
+			reviews : function(clbk){
+				var ratingStats = calculateRatingStats(scores)
+				var reviewsList = mapCommentsToReviews(comments)
+
+				var reviewsData = Object.assign({}, ratingStats)
+				if (reviewsList.length > 0) {
+					reviewsData.reviews = reviewsList
+				}
+				const canWriteReview = application.installed && !!userAddress && appdata.address !== userAddress
+				self.shell({
+					name :  'reviews',
+					el :   el.c,
+					data : {
+						application,
+						ratingsData: reviewsData,
+						canWriteReview,
+						userRating: userRating,
+						hasUserRated: userRating !== null,
+						userAddress: userAddress
+					},
+				}, function(p){
+					p.el.find('.back').on('click', function(){
+						if(application.installed){
+							renders.frameremote()
+						} else {
+							renders.install()
+						}
+					})
+
+					p.el.find('.rateAppButton').on('click', function(){
+						actions.openratingform()
+					})
+
+					p.el.find('.writeReviewButton').on('click', function(){
+						actions.openreviewform()
+					})
+
+					p.el.find('.deleteReviewButton').on('click', function(){
+						var commentId = $(this).data('comment-id')
+						var comment = comments.find(function(c){ return c.id === commentId })
+
+						if (!comment) return
+
+						new dialog({
+							html : self.app.localization.e('e13032'),
+							success : function(){
+
+								actions.deleteComment(comment, function(err){
+
+									if(!err)
+									{
+										sitemessage('Comment deleted')
+										actions.loadcomments(function(){
+											renders.reviews()
+										})
+									}
+
+								})
+
+							},
+							btn1text : self.app.localization.e('e13034'),
+							btn2text : self.app.localization.e('e13035'),
+							class : 'zindex',
+						})
+					})
+
+					events.pageevents(p, true)
+
+					if (clbk)
+						clbk();
+				})
+			},
+
+			reviewform : function(clbk){
 
 				self.shell({
 
-					name :  'install',
+					name :  'reviewform',
 					el :   el.c,
 					data : {
 						application
@@ -266,17 +566,137 @@ var application = (function(){
 
 				}, function(p){
 
-
-					p.el.find('.installButton button').on('click', function(){
-						actions.install()
+					p.el.find('.back').on('click', function(){
+						renders.reviews()
 					})
 
-					p.el.find('.back').on('click', function(){
-						actions.gotohome()
+					p.el.find('#reviewText').on('input', function(){
+						var length = $(this).val().length
+						p.el.find('#reviewText').closest('.formGroup').find('.currentCount').text(length)
+						validateForm()
+					})
+
+					var validateForm = function(){
+						var reviewText = p.el.find('#reviewText').val().trim()
+						var isValid = reviewText.length >= 10
+
+						p.el.find('.submitReviewButton').prop('disabled', !isValid)
+					}
+
+					p.el.find('.cancelButton').on('click', function(){
+						renders.reviews()
+					})
+
+					p.el.find('.submitReviewButton').on('click', function(){
+						var btn = $(this)
+						var reviewText = p.el.find('#reviewText').val().trim()
+
+						if (!reviewText || reviewText.length < 10) {
+							sitemessage(self.app.localization.e('commentMinLength'))
+							return
+						}
+
+						btn.prop('disabled', true)
+						btn.html('<i class="fas fa-spinner fa-spin"></i>')
+
+						var comment = new Comment(application.hash)
+						comment.message.set(reviewText)
+
+						self.app.platform.sdk.comments.send(comment, function(error, alias){
+							if (error) {
+								console.error('Error sending comment:', error)
+								sitemessage(self.app.localization.e('commentSendError'))
+								btn.prop('disabled', false)
+								btn.html(self.app.localization.e('submitReview'))
+							} else {
+								sitemessage(self.app.localization.e('commentSent'))
+								renders.reviews()
+							}
+						})
 					})
 
 					events.pageevents(p, true)
-					
+
+					if (clbk)
+						clbk();
+				})
+			},
+
+			ratingform : function(clbk){
+
+				var selectedRating = 0
+
+				self.shell({
+
+					name :  'ratingform',
+					el :   el.c,
+					data : {
+						application
+					},
+
+				}, function(p){
+
+					p.el.find('.back').on('click', function(){
+						renders.reviews()
+					})
+
+					p.el.find('.starRatingInput i').on('click', function(){
+						selectedRating = $(this).data('rating')
+
+						p.el.find('.starRatingInput i').each(function(){
+							var starRating = $(this).data('rating')
+							$(this).removeClass('fas far').addClass(starRating <= selectedRating ? 'fas' : 'far')
+						})
+
+						p.el.find('.ratingLabel').text(self.app.localization.e('yourRating') + ': ' + selectedRating + ' ' + self.app.localization.e('outOf5'))
+
+						p.el.find('.submitRatingButton').prop('disabled', false)
+					})
+
+					p.el.find('.cancelRatingButton').on('click', function(){
+						renders.reviews()
+					})
+
+					p.el.find('.submitRatingButton').on('click', function(){
+						var btn = $(this)
+
+						btn.prop('disabled', true)
+						btn.html('<i class="fas fa-spinner fa-spin"></i>')
+
+						self.app.platform.sdk.upvote.checkvalue(
+							selectedRating,
+							function () {
+								const obj = self.psdk.miniapp.get(application.id)
+								var upvoteShare = obj.upvote(selectedRating, userAddress);
+
+								if (!upvoteShare) {
+									self.app.platform.errorHandler("4", true);
+									btn.prop('disabled', false)
+									btn.html(self.app.localization.e('submitRating'))
+									return;
+								}
+
+								self.app.platform.actions
+									.addActionAndSendIfCan(upvoteShare)
+									.then(() => {
+										sitemessage(self.app.localization.e('ratingSent'))
+										renders.reviews()
+									})
+									.catch((e) => {
+										self.app.platform.errorHandler(e, true);
+										btn.prop('disabled', false)
+										btn.html(self.app.localization.e('submitRating'))
+									});
+							},
+							function () {
+								btn.prop('disabled', false)
+								btn.html(self.app.localization.e('submitRating'))
+							}
+						);
+					})
+
+					events.pageevents(p, true)
+
 					if (clbk)
 						clbk();
 				})
@@ -372,14 +792,15 @@ var application = (function(){
 
 					name :  'frameremote',
 					el :   el.c,
-					
+
 					data : {
 						application,
 						iframeAllowAttr,
 						isInDevMode: _scope === tscope,
 						tscope: isUserAuthor && tscope,
 						scope: appdata.scope,
-						src
+						src,
+						hasReviewsSupport: hasReviewsSupport
 					},
 
 				}, function(p){
@@ -395,12 +816,16 @@ var application = (function(){
 						}
 					})
 
+					p.el.find('.reviewsBtn').on('click', function(){
+						actions.openreviews()
+					})
+
 					p.el.find('.forward').on('click', function(){
 						if (history.length) {
-							history.forward() 
+							history.forward()
 						}
 					})
-					
+
 					p.el.find('#domain-switch')?.on('change', function () {
 						const isDevMode = this.checked;
 						renders.frameremote(isDevMode ? tscope : appdata.scope);
@@ -536,11 +961,16 @@ var application = (function(){
 				application = null
 				appdata = null
 
-      			userAddress = self.app.user.address.value;
-				self.app.apps.get.application(id).then((f) => {
-
+      	userAddress = self.app.user.address.value;
+				self.app.apps.get.application(id).then(async (f) => {
+					globalpreloader(true, true)
 					if (f){
-						
+						hasReviewsSupport = !!(self.psdk.miniapp.get(f.application.id))
+						if(!hasReviewsSupport) {
+						 	const app = await self.sdk.miniapps.getbyid(id)
+							hasReviewsSupport = !!app
+						}
+
 						application = f.application
 						
 						appdata = f.appdata?.data
@@ -568,7 +998,8 @@ var application = (function(){
 					var data = {
 						ed
 					};
-	
+
+					globalpreloader(false)
 					clbk(data);
 
 				}).catch(e => {
@@ -585,10 +1016,9 @@ var application = (function(){
 						ed
 					};
 	
+					globalpreloader(false)
 					clbk(data);
-					
 				})
-
 			},
 
 			destroy : function(){

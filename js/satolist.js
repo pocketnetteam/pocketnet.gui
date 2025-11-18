@@ -16457,12 +16457,12 @@ Platform = function (app, listofnodes) {
 
 
 
-            getclear: function (txid, pid, clbk, ccha) {
+            getclear: function (txid, pid, clbk, options) {
 
                 var parameters = [txid, pid || '', self.app.user.address.value || '']
 
                 self.psdk.comment.request(() => {
-                    return self.app.api.rpc('getcomments', parameters)
+                    return self.app.api.rpc('getcomments', parameters, options)
                 }, {
                     parameters
                 }).then(d => {
