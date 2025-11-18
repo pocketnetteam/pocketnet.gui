@@ -1265,6 +1265,8 @@ var Action = function(account, object, priority, settings){
 
     self.processingWithIteractions = async function(rejectIfError){
 
+        console.log('rejectIfError', rejectIfError)
+
         var error = null
         var tryresolve = false
 
@@ -2861,7 +2863,9 @@ var Actions = function(app, api, storage = localStorage){
 
             ////processing
 
-            return action.processingWithIteractions(true).then(() => {
+            console.log("P", p)
+
+            return action.processingWithIteractions(p.rejectIfErrorEn ? false : true).then(() => {
                 return Promise.resolve(action)
             }).catch(e => {
 

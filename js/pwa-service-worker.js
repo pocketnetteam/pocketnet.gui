@@ -34,9 +34,6 @@ if ('serviceWorker' in navigator) {
         console.log('Service worker registration succeeded:', registration);
     });
 
-
-
-
     navigator.serviceWorker.addEventListener('message', function(event) {
 
         const channel = new BroadcastChannel(event.data);

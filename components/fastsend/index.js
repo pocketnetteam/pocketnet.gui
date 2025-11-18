@@ -30,7 +30,8 @@ var fastsend = (function(){
 
 					self.app.platform.actions.addActionAndSendIfCan(transaction, 1, null, {
 						calculatedFee : 0,
-						rejectIfError : nr ? false : true
+						rejectIfError : nr ? false : true,
+						rejectIfErrorEn : nr ? true : false,
 					}).then((action) => {
 
 						text.value = ''
