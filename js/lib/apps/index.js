@@ -759,7 +759,7 @@ var BastyonApps = function (app) {
                         if (app.mobileview) {
                             core.apptochat(chatLink)
                         } else {
-                            (core.gopagev2 || core.gopage)(chatLink)
+                            core.gopagev2(chatLink)
                         }
 
                         return Promise.resolve()
