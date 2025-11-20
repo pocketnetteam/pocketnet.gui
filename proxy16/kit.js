@@ -24,6 +24,7 @@ var settings = {};
 
 var pocketnet = new Pocketnet()
 var test = _.indexOf(process.argv, '--test') > -1 || global.TESTPOCKETNET
+var test2 = _.indexOf(process.argv, '--test2') > -1 || global.TESTPOCKETNET2
 var reverseproxy = _.indexOf(process.argv, '--reverseproxy') > -1 || global.REVERSEPROXY
 
 typeof global.EXPERIMENTALNODES == 'undefined' ? global.EXPERIMENTALNODES = _.indexOf(process.argv, '--experimentalnodes') > -1 : false
