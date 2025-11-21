@@ -176,6 +176,13 @@ var Roy = function (parent) {
 			return instance.canuse() || self.useall;
 		});
 
+		
+
+		if(type == 'upload'){
+			_instances = _.filter(_instances, (i) => {
+				return !i.offline
+			})
+		}
 
 		return _.sortBy(_instances, (instance) => {
 			return getBestByType[type]
@@ -186,7 +193,6 @@ var Roy = function (parent) {
 
 	self.best = function (type = 'view') {
 		var bestlist = self.bestlist(type);
-
 
 		if (bestlist.length) return [...bestlist].pop();
 
