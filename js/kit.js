@@ -2645,6 +2645,7 @@ brtOffer = function(){
 	self.delivery = {};
 	self.videoSettings = {};
 	self.safeDeal = {};
+	self.metaData = {};
 	self.price = 0;
 	self.published = 'published';
 
@@ -2676,6 +2677,7 @@ brtOffer = function(){
 						d: self.delivery,
 						v: self.videoSettings,
 						s: self.safeDeal,
+						m: self.metaData,
 					 }) +
 					 JSON.stringify(self.images) +
 					 self.geohash +
@@ -2701,6 +2703,7 @@ brtOffer = function(){
 				delivery: self.delivery,
 				videoSettings: self.videoSettings,
 				safeDeal: self.safeDeal,
+				metaData: self.metaData,
 				price: self.price,
 				published: self.published
 			};
@@ -2722,6 +2725,7 @@ brtOffer = function(){
 					d: self.delivery,
 					v: self.videoSettings,
 					s: self.safeDeal,
+					m: self.metaData,
 				}),
 				s5: JSON.stringify(self.images),
 				s6: self.geohash,
@@ -2747,6 +2751,7 @@ brtOffer = function(){
 		self.delivery = d.delivery;
 		self.videoSettings = d.videoSettings;
 		self.safeDeal = d.safeDeal;
+		self.metaData = d.metaData;
 		self.price = d.price;
 		self.published = d.published;
 	}
