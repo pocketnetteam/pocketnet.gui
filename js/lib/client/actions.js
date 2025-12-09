@@ -1530,9 +1530,9 @@ var Account = function(address, parent){
 
         
 
-        if (u.confirmations <= 11 && u.pockettx) {
+        if (u.confirmations <= 15 && u.pockettx) {
 
-            wait = 11 - u.confirmations
+            wait = 15 - u.confirmations
 
         }
 
@@ -1542,9 +1542,9 @@ var Account = function(address, parent){
 
         }
 
-        if (u.confirmations < 100 && (u.coinbase || u.coinstake)) {
+        if (u.confirmations < 115 && (u.coinbase || u.coinstake)) {
 
-            wait = 100 - u.confirmations
+            wait = 115 - u.confirmations
 
         }
 
