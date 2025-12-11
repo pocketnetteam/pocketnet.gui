@@ -1226,6 +1226,7 @@ var BastyonApps = function (app) {
         locale: {},
         theme: {},
         changestate: {},
+        keyboard: {},
         permissionchange: {}
     }
 
