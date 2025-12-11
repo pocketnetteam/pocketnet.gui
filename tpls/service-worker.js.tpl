@@ -243,9 +243,12 @@ function onFetch(event) {
     }
   });
 
-  
+  if(isCordova && request.destination == 'document'){
+    return
+  }
 
   switch (request.destination) {
+
     case 'image':
       event.respondWith(handle('image-cache'));
       break;
