@@ -110,7 +110,7 @@ var Remote = function(app){
 			}
 
 			request({
-				uri : nremotelink + '?url=' + uri + '&validate=false' + (p.bitchute ? '&bitchute=true' : ''),
+				uri : nremotelink + '?url=' + encodeURIComponent(uri) + '&validate=false' + (p.bitchute ? '&bitchute=true' : ''),
 				timeout : 30000,
 				type : "POST",
 				headers: {

@@ -1133,7 +1133,33 @@ var functions = __webpack_require__("3139");
       } else {
         if (this.share) {
           var _share = this.share;
-          this.$router.push(_share.route || "chat?id=" + chat.roomId);
+          if (!_share.route) {
+            return this.$router.push("chat?id=" + chat.roomId);
+          }
+          this.$store.commit("SHARE", null);
+          this.$store.commit("icon", {
+            icon: "loading",
+            message: "",
+            manual: true
+          });
+          this.core.mtrx.shareInChat(chat.roomId, _share).then(r => {
+            this.$store.commit("icon", {
+              icon: "success",
+              message: ""
+            });
+            setTimeout(() => {
+              this.$router.push(_share.route).catch(e => {});
+            }, 2000);
+          }).catch(e => {
+            console.error(e);
+            this.$store.commit("icon", {
+              icon: "error",
+              message: ""
+            });
+            if (_share.route) {
+              this.$router.push(_share.route).catch(e => {});
+            }
+          });
         } else {
           this.$router.push("chat?id=" + chat.roomId).catch(e => {});
         }
