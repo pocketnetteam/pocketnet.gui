@@ -13041,8 +13041,13 @@ Platform = function (app, listofnodes) {
 
             getnew: function (url, action) {
 
-                var tempURL = new URL(url);
-                if (!tempURL.searchParams.has('lang')) {
+                try {
+                    var tempURL = new URL(url);
+                } catch (e) {
+                    console.error(e);
+                }
+
+                if (tempURL && !(tempURL.searchParams.has('lang'))) {
                     tempURL.searchParams.set('lang', self.app.localization.key || '');
                     url = tempURL.toString();
                 }
