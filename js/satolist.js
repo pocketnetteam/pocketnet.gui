@@ -13041,6 +13041,12 @@ Platform = function (app, listofnodes) {
 
             getnew: function (url, action) {
 
+                var tempURL = new URL(url);
+                if (!tempURL.searchParams.has('lang')) {
+                    tempURL.searchParams.set('lang', self.app.localization.key || '');
+                    url = tempURL.toString();
+                }
+
                 var s = self.sdk.remote.storage;
                 var f = self.sdk.remote.failed;
                 var l = self.sdk.remote.loading;
