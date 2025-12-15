@@ -2220,9 +2220,9 @@ var BastyonApps = function (app) {
                                 return Promise.resolve()
                             }
                         } else {
-                            if (!application.store['g']) {
+                            /*if (!application.store['g']) {
                                 return Promise.resolve()
-                            }
+                            }*/
                         }
                     }
 
@@ -2676,9 +2676,9 @@ var BastyonApps = function (app) {
                                     return false
                                 }
                             } else {
-                                if (!dapp.store['g']) {
+                                /*if (!dapp.store['g']) {
                                     return false
-                                }
+                                }*/
                             }
                         }
 
