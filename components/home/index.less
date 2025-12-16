@@ -89,6 +89,7 @@
         background-size: cover;
         border-radius: 12px;
         margin-bottom: 0.5em;
+        position: relative;
       }
 
       .name {
@@ -119,6 +120,27 @@
         font-weight: bold;
         padding: 0.2em 0.5em;
         border-radius: 4px;
+      }
+
+      .installed-badge {
+        position: absolute;
+        top: -0.2em;
+        left: -0.2em;
+        background: rgb(var(--color-good));
+        color: white;
+        width: 1.2em;
+        height: 1.2em;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7em;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        z-index: 1;
+
+        i {
+          font-size: 0.8em;
+        }
       }
 
     .tags {

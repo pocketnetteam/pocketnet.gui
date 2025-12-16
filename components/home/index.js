@@ -17,26 +17,27 @@ var home = (function () {
         if (!self.activeFilters) self.activeFilters = new Set();
 
         const chip = el.c.find(`[data-filter="${filter}"]`);
-        const isAll = filter === "all";
+        const isInstalled = filter === "installed";
         const hasFilter = self.activeFilters.has(filter);
 
-        if (isAll && !hasFilter) {
-          self.activeFilters.clear();
-          el.c.find(".filter-toggle").removeClass("active");
-        } else if (!isAll && self.activeFilters.has("all")) {
-          self.activeFilters.delete("all");
-          el.c.find(`[data-filter="all"]`).removeClass("active");
+        if (hasFilter) {
+          self.activeFilters.delete(filter);
+          chip.removeClass("active");
+        } else {
+          if (isInstalled) {
+            self.activeFilters.clear();
+            el.c.find(".filter-toggle").removeClass("active");
+          }
+          self.activeFilters.add(filter);
+          chip.addClass("active");
         }
-
-        self.activeFilters.has(filter)
-          ? self.activeFilters.delete(filter) && chip.removeClass("active")
-          : self.activeFilters.add(filter) && chip.addClass("active");
 
         actions.updateFilterUI();
         renders.applications({
           search: acsearch?.getvalue() || "",
           tags: actions.getActiveTagsAsWords(),
-          showAll: self.activeFilters.has("all"),
+          showAll: self.activeFilters.size === 0,
+          showInstalled: self.activeFilters.has("installed"),
         });
       },
 
@@ -68,7 +69,7 @@ var home = (function () {
           return [];
         }
 
-        if (self.activeFilters.has("all")) {
+        if (self.activeFilters.has("installed")) {
           return [];
         }
 
@@ -98,10 +99,15 @@ var home = (function () {
         actions.updateFilterUI();
         renders.applications({
           search: acsearch ? acsearch.getvalue() : "",
+          showAll: true,
+          showInstalled: false,
         });
       },
       applicationSearchClear: function () {
-        renders.applications();
+        renders.applications({
+          showAll: true,
+          showInstalled: false,
+        });
       },
       applySearchFilter: function (search) {
         if (!search) {
@@ -125,6 +131,8 @@ var home = (function () {
         try {
           renders.applications({
             search,
+            showAll: true,
+            showInstalled: false,
           });
         } catch (error) {
           console.error("Error rendering applications:", error);
@@ -165,6 +173,8 @@ var home = (function () {
             search: async function (value, clbk, e, helpers) {
               await renders.applications({
                 search: value,
+                showAll: true,
+                showInstalled: false,
               });
               actions.hideSearchResultsMenu();
               clbk();
@@ -258,9 +268,9 @@ var home = (function () {
 
         const allChips = [
           {
-            name: self.app.localization.e("all"),
-            icon: "fas fa-th",
-            tags: ["all"],
+            name: self.app.localization.e("installedApps"),
+            icon: "fas fa-check-circle",
+            tags: "installed",
           },
           ...chips,
         ];
@@ -281,7 +291,6 @@ var home = (function () {
             },
           },
           function () {
-            actions.filterChipToggle("all");
             el.c.find(".filter-toggle").on("click", function () {
               actions.filterChipToggle($(this).data("filter"));
             });
@@ -366,7 +375,11 @@ var home = (function () {
       const searchValue = parameters().search;
       applicationSearch = actions.applicationSearch(searchValue);
       renders.filterChips();
-      renders.applications(searchValue);
+      renders.applications({
+        search: searchValue,
+        showAll: true,
+        showInstalled: false,
+      });
     };
 
     return {

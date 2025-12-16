@@ -255,13 +255,70 @@ var application = (function(){
 						decoded = hexDecode(p)
 					}
 					catch(e){
-	
+
 					}
 				}
 
 				return decoded
 
 
+			},
+
+			showRatingPrompt: function() {
+				if (!application || !application.installed || !hasReviewsSupport) {
+					return;
+				}
+
+				if (userRating !== null && userRating !== undefined) {
+					return;
+				}
+
+				var appId = application.manifest.id;
+
+
+				if (localStorage['app_rated_modal_' + appId] === 'true') {
+					return;
+				}
+
+
+				var openCount = parseInt(localStorage['app_open_count_' + appId] || '0');
+				openCount++;
+				localStorage['app_open_count_' + appId] = openCount.toString();
+
+
+				var cancelCount = parseInt(localStorage['app_rating_cancel_count_' + appId] || '0');
+
+				var shouldShow = false;
+
+				if (cancelCount === 0 && openCount === 2) {
+					shouldShow = true;
+				}
+
+				else if (cancelCount > 0 && (openCount - 2) % 4 === 0) {
+					shouldShow = true;
+				}
+
+				if (!shouldShow) {
+					return;
+				}
+
+
+				new dialog({
+					html: self.app.localization.e('rateAppPromptMessage'),
+					btn1text: self.app.localization.e('rateAppButton'),
+					btn2text: self.app.localization.e('dcancel'),
+					class: 'ratingPromptDialog',
+
+					success: function() {
+						localStorage['app_rated_modal_' + appId] = 'true';
+						actions.openratingform();
+					},
+
+					fail: function() {
+						var currentCancelCount = parseInt(localStorage['app_rating_cancel_count_' + appId] || '0');
+						localStorage['app_rating_cancel_count_' + appId] = (currentCancelCount + 1).toString();
+					}
+				});
 			}
 		}
 
@@ -804,6 +861,10 @@ var application = (function(){
 				}, function(p){
 
 					events.pageevents(p)
+
+					setTimeout(function() {
+						actions.showRatingPrompt();
+					}, 2000);
 
 					p.el.find('.back').on('click', function(){
 
