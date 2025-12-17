@@ -3250,7 +3250,7 @@ _l.buypkoinexchnagep2p='Buy via PKOIN Exchange';
 
 _l.appsdisclaimer='Every app is already a wallet for pcoin. Except for the IOS';
 
-_l.BarteronOffer = "Barteron - 0% commission"
+_l.gotobarteron = "Go to Barteron"
 _l.windows7 = "Download for Windows 7"
 _l.miniapps = "Mini Applications"
 
