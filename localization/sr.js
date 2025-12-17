@@ -3281,6 +3281,6 @@ _l.buypkoinexchnagep2p='Купи преко PKOIN берзе';
 
 _l.appsdisclaimer='Свака апликација је већ новчаник за pcoin. Осим за iOS';
 
-_l.BarteronOffer = "Barteron - 0% провизије"
+_l.gotobarteron = "Прећи у Barteron"
 _l.windows7 = "Преузми за Windows 7"
 _l.miniapps = "Мини апликације"
