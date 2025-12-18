@@ -913,6 +913,24 @@
   color: rgb(var(--color-bg-ac-error));
 }
 
+#applicationfx .reviewActions .translateButton {
+  background: none;
+  border: none;
+  color: rgb(var(--text-on-main-bg-color));
+  opacity: 0.5;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.9em;
+  transition: all 0.2s ease;
+}
+
+#applicationfx .reviewActions .translateButton:hover {
+  opacity: 1;
+  background: rgba(var(--color-bg-ac), 0.1);
+  color: rgb(var(--color-bg-ac));
+}
+
 #applicationfx .reviewActionButton {
   background: none;
   border: none;
@@ -1199,4 +1217,77 @@
 #applicationfx .submitRatingButton:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* Mobile responsive styles */
+@media screen and (max-width: 768px) {
+  #applicationfx .writeReviewSection {
+    flex-direction: column;
+  }
+  #applicationfx .reviewActions {
+    opacity: 1 !important;
+    gap: 12px;
+  }
+  #applicationfx .reviewActions .deleteReviewButton,
+  #applicationfx .reviewActions .translateButton {
+    opacity: 0.8;
+    background: rgba(var(--color-bg-ac), 0.05);
+    padding: 12px;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+  }
+  #applicationfx .reviewActions .deleteReviewButton i,
+  #applicationfx .reviewActions .translateButton i {
+    font-size: 1.1em;
+  }
+  #applicationfx .reviewActions .deleteReviewButton:active,
+  #applicationfx .reviewActions .translateButton:active {
+    transform: scale(0.95);
+    opacity: 1;
+  }
+  #applicationfx .reviewActions .deleteReviewButton:active {
+    background: rgba(var(--color-bg-ac-error), 0.15);
+  }
+  #applicationfx .reviewActions .translateButton:active {
+    background: rgba(var(--color-bg-ac), 0.15);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  #applicationfx .reviewItem {
+    padding: 16px;
+  }
+  #applicationfx .reviewActions {
+    gap: 10px;
+  }
+  #applicationfx .reviewActions .deleteReviewButton,
+  #applicationfx .reviewActions .translateButton {
+    padding: 10px;
+    min-width: 44px;
+    min-height: 44px;
+  }
+  #applicationfx .reviewActions .deleteReviewButton i,
+  #applicationfx .reviewActions .translateButton i {
+    font-size: 1em;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  #applicationfx .reviewActions {
+    gap: 8px;
+  }
+  #applicationfx .reviewActions .deleteReviewButton,
+  #applicationfx .reviewActions .translateButton {
+    padding: 8px;
+    min-width: 40px;
+    min-height: 40px;
+  }
+  #applicationfx .reviewActions .deleteReviewButton i,
+  #applicationfx .reviewActions .translateButton i {
+    font-size: 0.95em;
+  }
 }
