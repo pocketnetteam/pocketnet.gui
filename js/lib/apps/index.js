@@ -2574,6 +2574,7 @@ var BastyonApps = function (app) {
                 id: app.id || '',
                 status: this.appStatusById(app.id),
                 address: getFieldValue(app, 'address'),
+                installed: !!installed[app.id] || app.installed || false,
             });
         
             const matchesTags = (app, filterTags) => {

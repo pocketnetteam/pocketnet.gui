@@ -2213,6 +2213,8 @@ _l.ratings123 = "Only users with high reputation at least 10 publications in the
 _l.ratingss3 = "Only users with high reputation can give 1, 2, 3 star ratings. This is done to protect authors, because "+appname+" does NOT require any personal information for registration."
 
 _l.clearfilters = "Clear filters"
+_l.installedApps = "Installed"
+_l.installedBadge = "Installed"
 _l.clearcategories = "Do you really want to clear category filters?"
 _l.cleartags = "Do you really want to clear tags filters?"
 _l.fromsh = "From"
@@ -3248,7 +3250,7 @@ _l.buypkoinexchnagep2p='Buy via PKOIN Exchange';
 
 _l.appsdisclaimer='Every app is already a wallet for pcoin. Except for the IOS';
 
-_l.BarteronOffer = "Barteron - 0% commission"
+_l.gotobarteron = "Go to Barteron"
 _l.windows7 = "Download for Windows 7"
 _l.miniapps = "Mini Applications"
 
@@ -3305,3 +3307,5 @@ _l.submitRating = "Rate"
 _l.mustInstallToComment = "You must install the app before writing a review"
 _l.mustInstallToRate = "You must install the app before rating"
 _l.reviewsAndRatingsMenu = "Reviews and Ratings"
+_l.rateAppPromptMessage = "Are you enjoying this app? Please take a moment to rate it!"
+_l.rateAppButton = "Rate App"

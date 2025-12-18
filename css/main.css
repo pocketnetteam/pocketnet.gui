@@ -3434,6 +3434,23 @@ html.mobileview.android .wnd .wndback {
   border-right: 0;
   border-top: 0;
 }
+.dialog.ratingPromptDialog .buttons > div.btn1wr button {
+  background: rgb(var(--color-bg-ac-bright));
+  color: rgb(var(--text-on-bg-ac-color));
+  border: 1px solid rgb(var(--color-bg-ac-bright));
+  font-weight: 600;
+}
+.dialog.ratingPromptDialog .buttons > div.btn1wr button:hover {
+  opacity: 0.9;
+}
+.dialog.ratingPromptDialog .buttons > div.btn2wr button {
+  background: transparent;
+  color: rgb(var(--color-txt-ac));
+  border: 1px solid rgb(var(--neutral-grad-2));
+}
+.dialog.ratingPromptDialog .buttons > div.btn2wr button:hover {
+  background: rgba(var(--neutral-grad-1), 0.1);
+}
 .dialog .values {
   padding: 0.5em 0;
 }
