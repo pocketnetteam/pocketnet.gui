@@ -1200,8 +1200,10 @@ PeerTubePocketnet = function (app) {
 						channelId: deep(r, 'videoChannels.0.id'),
 						videoQuotaDaily: deep(r, 'videoQuotaDaily'),
 						videoQuota: deep(r, 'videoQuota'),
-						username: deep(r, 'username'),
+						username: deep(r, 'username')
 					};
+
+					
 
 
 					if (!data.channelId || !data.videoQuotaDaily)

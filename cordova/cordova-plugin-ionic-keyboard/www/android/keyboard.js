@@ -46,11 +46,11 @@ Keyboard.hide = function () {
 };
 
 Keyboard.adjustpan = function () {
-    exec(null, null, "adjustpan", "hide", []);
+    exec(null, null, "CDVIonicKeyboard", "adjustpan", []);
 };
 
 Keyboard.adjustresize = function () {
-    exec(null, null, "adjustresize", "hide", []);
+    exec(null, null, "CDVIonicKeyboard", "adjustresize", []);
 };
 
 Keyboard.show = function () {
