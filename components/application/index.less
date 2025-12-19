@@ -453,6 +453,11 @@
         line-height: 1.6;
         font-size: 0.95em;
         margin-bottom: 12px;
+        transition: opacity 0.3s;
+
+        &.translating {
+            opacity: 0.5;
+        }
     }
 
     .reviewActions {
@@ -462,7 +467,8 @@
         opacity: 0;
         transition: opacity 0.2s ease;
 
-        .deleteReviewButton {
+        .deleteReviewButton,
+        .translateButton {
             background: none;
             border: none;
             color: rgb(var(--text-on-main-bg-color));
@@ -475,9 +481,17 @@
 
             &:hover {
                 opacity: 1;
-                background: rgba(var(--color-bg-ac-error), 0.1);
-                color: rgb(var(--color-bg-ac-error));
             }
+        }
+
+        .deleteReviewButton:hover {
+            background: rgba(var(--color-bg-ac-error), 0.1);
+            color: rgb(var(--color-bg-ac-error));
+        }
+
+        .translateButton:hover {
+            background: rgba(var(--color-bg-ac), 0.1);
+            color: rgb(var(--color-bg-ac));
         }
     }
 
@@ -486,6 +500,15 @@
         border-bottom: 1px solid rgb(var(--neutral-grad-0));
         display: flex;
         gap: 12px;
+
+        @media screen and (max-width: 600px) {
+            flex-direction: column;
+            
+            .rateAppButton,
+            .writeReviewButton {
+                width: 100%;
+            }
+        }
     }
 
     .rateAppButton,
@@ -561,5 +584,163 @@
         height: 100%;
         background: #FFB800;
         transition: width 0.3s ease;
+    }
+
+    .ratingFormWrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        height: 100vh;
+        padding: calc(55px + var(--app-margin-top)) 20px 20px 20px;
+        overflow-y: auto;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        
+        &::-webkit-scrollbar {
+            display: none;
+            width: 0 !important;
+            height: 0 !important;
+            background: transparent;
+        }
+
+        .ratingFormAppHeader {
+            flex-shrink: 0;
+            margin-bottom: 24px;
+        }
+    }
+
+    .ratingFormComment {
+        margin-top: 10px;
+        padding: 0 20px;
+        flex-shrink: 0;
+
+        .formGroup {
+            position: relative;
+        }
+
+        .formTextarea {
+            width: 100%;
+            background: rgba(var(--background-total-theme), 0.3);
+            border: 1px solid rgb(var(--neutral-grad-0));
+            border-radius: 12px;
+            color: rgb(var(--text-color));
+            padding: 12px;
+            resize: none;
+            transition: all 0.3s;
+            font-size: 0.95em;
+            line-height: 1.5;
+
+            &:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+                background: rgba(var(--neutral-grad-0), 0.2);
+                border-color: transparent;
+            }
+
+            &:focus {
+                border-color: rgb(var(--color-bg-ac));
+                outline: none;
+                background: rgba(var(--background-total-theme), 0.8);
+                box-shadow: 0 0 0 2px rgba(var(--color-bg-ac), 0.2);
+            }
+
+            &::placeholder {
+                color: rgb(var(--neutral-grad-2));
+            }
+        }
+
+        .characterCount {
+            text-align: right;
+            font-size: 0.8em;
+            color: rgb(var(--neutral-grad-2));
+            margin-top: 4px;
+        }
+    }
+}
+
+// Mobile responsive styles
+@media screen and (max-width: 768px) {
+    #applicationfx .writeReviewSection {
+        flex-direction: column;
+    }
+
+    #applicationfx .reviewActions {
+        opacity: 1 !important;
+        gap: 12px;
+    }
+
+    #applicationfx .reviewActions .deleteReviewButton,
+    #applicationfx .reviewActions .translateButton {
+        opacity: 0.8;
+        background: rgba(var(--color-bg-ac), 0.05);
+        padding: 12px;
+        min-width: 44px;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+    }
+
+    #applicationfx .reviewActions .deleteReviewButton i,
+    #applicationfx .reviewActions .translateButton i {
+        font-size: 1.1em;
+    }
+
+    #applicationfx .reviewActions .deleteReviewButton:active,
+    #applicationfx .reviewActions .translateButton:active {
+        transform: scale(0.95);
+        opacity: 1;
+    }
+
+    #applicationfx .reviewActions .deleteReviewButton:active {
+        background: rgba(var(--color-bg-ac-error), 0.15);
+    }
+
+    #applicationfx .reviewActions .translateButton:active {
+        background: rgba(var(--color-bg-ac), 0.15);
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #applicationfx .reviewItem {
+        padding: 16px;
+    }
+
+    #applicationfx .reviewActions {
+        gap: 10px;
+    }
+
+    #applicationfx .reviewActions .deleteReviewButton,
+    #applicationfx .reviewActions .translateButton {
+        padding: 10px;
+        min-width: 44px;
+        min-height: 44px;
+    }
+
+    #applicationfx .reviewActions .deleteReviewButton i,
+    #applicationfx .reviewActions .translateButton i {
+        font-size: 1em;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    #applicationfx .reviewActions {
+        gap: 8px;
+    }
+
+    #applicationfx .reviewActions .deleteReviewButton,
+    #applicationfx .reviewActions .translateButton {
+        padding: 8px;
+        min-width: 40px;
+        min-height: 40px;
+    }
+
+    #applicationfx .reviewActions .deleteReviewButton i,
+    #applicationfx .reviewActions .translateButton i {
+        font-size: 0.95em;
     }
 }

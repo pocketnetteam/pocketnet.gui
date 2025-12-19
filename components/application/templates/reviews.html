@@ -83,6 +83,7 @@
             <i class="fas fa-comment"></i>
             <%- e('writeComment') %>
         </button>
+
     </div>
     <% } %>
 
@@ -108,13 +109,16 @@
                         <div class="reviewDate"><%- review.date %></div>
                     </div>
                 </div>
-                <% if(userAddress && review.address === userAddress) { %>
                 <div class="reviewActions">
+                    <button class="translateButton" data-comment-id="<%- review.id %>" title="<%- e('translate') %>">
+                        <i class="fas fa-language"></i>
+                    </button>
+                    <% if(userAddress && review.address === userAddress) { %>
                     <button class="deleteReviewButton" data-comment-id="<%- review.id %>" title="<%- e('deleteComment') %>">
                         <i class="fas fa-trash-alt"></i>
                     </button>
+                    <% } %>
                 </div>
-                <% } %>
             </div>
 
             <div class="reviewText">
