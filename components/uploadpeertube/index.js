@@ -746,9 +746,9 @@ var uploadpeertube = (function () {
 					.then((res) => {
 						
 
-						if(res.isNewUser && (!window.cordova && typeof _Electron == 'undefined')){
+						/*if(res.isNewUser && (!window.cordova && typeof _Electron == 'undefined')){
 							return Promise.reject('onlyapplication')
-						}
+						}*/
 
 						data.hasAccess = true;
 						hasAccess = true
