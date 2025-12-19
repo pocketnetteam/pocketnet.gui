@@ -528,7 +528,10 @@ Platform = function (app, listofnodes) {
         'PNPjWdkZcxqzubHkBoKxxKaGQrNNfxa8tJ' : true,
         'PFH2MCd8wwhKShnuxELr3GmYj9pwL2AGBy' : true,
         'PF64CgBa32LUYSAkwFbW1cozChV7SCNyhM' : true,
-        'PRw4Y3gPxVVEzmLhiG2eWTKx18gBdrZ5TD' : true
+        'PRw4Y3gPxVVEzmLhiG2eWTKx18gBdrZ5TD' : true,
+        'PBjV827sqgz7dJybRb9MKbQKgzFGFzXWZc' : true,
+        'PPbNqCweFnTePQyXWR21B9jXWCiDJa2yYu' : true,
+        'PXJpTaoAKL2XpkrQ3xpYR5Y2cqnDXzn74T' : true
     }
 
     self.bch = {
