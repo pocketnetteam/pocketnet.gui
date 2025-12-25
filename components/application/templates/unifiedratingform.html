@@ -1,0 +1,47 @@
+<div class="captionRow">
+  <div class="back iconwrapper">
+    <div class="icon">
+      <i class="fas fa-chevron-left"></i>
+    </div>
+  </div>
+  <div class="caption">
+    <span><%- e('rateApp') %></span>
+  </div>
+</div>
+
+<div class="unifiedRatingFormWrapper">
+  <div class="ratingFormContent">
+    <div class="ratingSection">
+      <div class="ratingPrompt"><%- e('yourRating') || 'Ваша оценка' %></div>
+      <div class="starRatingInput">
+        <i class="far fa-star" data-rating="1"></i>
+        <i class="far fa-star" data-rating="2"></i>
+        <i class="far fa-star" data-rating="3"></i>
+        <i class="far fa-star" data-rating="4"></i>
+        <i class="far fa-star" data-rating="5"></i>
+      </div>
+      <div class="ratingLabel"><%- e('clickStarToRate') || 'Нажмите на звезду' %></div>
+    </div>
+
+    <div class="commentSection">
+      <label for="unifiedCommentText">
+        <%- e('writeComment') %> <span class="optionalLabel">(<%- e('optional') || 'опционально' %>)</span>
+      </label>
+      <textarea
+        id="unifiedCommentText"
+        class="formTextarea"
+        placeholder="<%- e('tellAboutExperience') || 'Расскажите о вашем опыте...' %>"
+        rows="4"
+        maxlength="500"
+      ></textarea>
+      <div class="characterCount">
+        <span class="currentCount">0</span>/<span class="maxCount">500</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="ratingFormActions">
+    <button class="cancelRatingButton button secondary"><%- e('cancel') %></button>
+    <button class="submitUnifiedButton button" disabled><%- e('submitRating') %></button>
+  </div>
+</div>

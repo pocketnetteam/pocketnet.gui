@@ -695,13 +695,28 @@
   gap: 12px;
 }
 
-#applicationfx .rateAppButton,
-#applicationfx .writeReviewButton {
+#applicationfx .rateAppButton {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
+}
+
+#applicationfx .rateAppButton.accent {
+  background: rgb(var(--color-bg-ac));
+  color: white;
+  font-size: 1.05em;
+  padding: 14px 28px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(var(--color-bg-ac), 0.3);
+  transition: all 0.2s ease;
+}
+
+#applicationfx .rateAppButton.accent:hover {
+  background: rgb(var(--color-bg-ac-hover));
+  box-shadow: 0 4px 12px rgba(var(--color-bg-ac), 0.4);
+  transform: translateY(-1px);
 }
 
 #applicationfx .userRatingDisplay {
@@ -777,22 +792,75 @@
   margin: 0;
 }
 
-#applicationfx .sortSelect {
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid rgb(var(--neutral-grad-0));
-  background: rgb(var(--neutral-grad-1));
-  color: rgb(var(--text-color));
-  font-size: 0.9em;
-  cursor: pointer;
-}
-
 #applicationfx .reviewItem {
   padding: 20px;
   margin-bottom: 16px;
   background: rgb(var(--neutral-grad-1));
   border: 1px solid rgb(var(--neutral-grad-0));
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+#applicationfx .reviewItem:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+#applicationfx .reviewItem.pending {
+  border: 2px solid rgb(var(--color-bg-ac));
+  background: rgba(var(--color-bg-ac), 0.03);
+  position: relative;
+  overflow: hidden;
+}
+
+#applicationfx .reviewItem.pending::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 16px;
+  background: linear-gradient(90deg, transparent, rgba(var(--color-bg-ac), 0.2), transparent);
+  animation: shimmer 2s infinite;
+  pointer-events: none;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+#applicationfx .pendingBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: rgba(var(--color-bg-ac), 0.1);
+  border: 1px solid rgba(var(--color-bg-ac), 0.3);
   border-radius: 12px;
+  font-size: 0.8em;
+  color: rgb(var(--color-bg-ac));
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+#applicationfx .pendingBadge i {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 #applicationfx .reviewHeader {
@@ -817,18 +885,28 @@
   align-items: center;
   justify-content: center;
   color: rgb(var(--text-on-main-bg-color));
+  overflow: hidden;
+}
+
+#applicationfx .reviewUserAvatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 #applicationfx .reviewUserName {
   font-weight: 600;
   color: rgb(var(--text-color));
-  font-size: 0.95em;
+  font-size: 1em;
+  letter-spacing: 0.02em;
 }
 
 #applicationfx .reviewDate {
   font-size: 0.85em;
   color: rgb(var(--text-on-main-bg-color));
   opacity: 0.6;
+  font-variant-numeric: tabular-nums;
 }
 
 #applicationfx .reviewRating {
@@ -847,9 +925,10 @@
 
 #applicationfx .reviewText {
   color: rgb(var(--text-on-main-bg-color));
-  line-height: 1.6;
+  line-height: 1.7;
   font-size: 0.95em;
   margin-bottom: 12px;
+  letter-spacing: 0.01em;
 }
 
 #applicationfx .developerResponse {
@@ -929,6 +1008,24 @@
   opacity: 1;
   background: rgba(var(--color-bg-ac), 0.1);
   color: rgb(var(--color-bg-ac));
+}
+
+#applicationfx .reviewActions .cancelPendingReviewButton {
+  background: none;
+  border: none;
+  color: rgb(var(--text-on-main-bg-color));
+  opacity: 0.7;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.9em;
+  transition: all 0.2s ease;
+}
+
+#applicationfx .reviewActions .cancelPendingReviewButton:hover {
+  opacity: 1;
+  background: rgba(var(--color-bg-ac-error), 0.1);
+  color: rgb(var(--color-bg-ac-error));
 }
 
 #applicationfx .reviewActionButton {
@@ -1219,6 +1316,95 @@
   cursor: not-allowed;
 }
 
+/* Unified Rating Form Styles */
+#applicationfx .unifiedRatingFormWrapper {
+  padding: calc(55px + var(--app-margin-top)) 20px 20px 20px;
+  max-width: 700px;
+  margin: 0 auto;
+  overflow-y: auto;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#applicationfx .ratingFormContent {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 30px;
+  padding: 30px;
+  background: rgb(var(--neutral-grad-1));
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+#applicationfx .ratingSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-right: 20px;
+  border-right: 1px solid rgb(var(--neutral-grad-0));
+}
+
+#applicationfx .ratingPrompt {
+  font-size: 1em;
+  font-weight: 600;
+  color: rgb(var(--text-color));
+}
+
+#applicationfx .ratingSection .starRatingInput {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: center;
+}
+
+#applicationfx .ratingSection .starRatingInput i {
+  font-size: 2em;
+  color: #FFB800;
+  cursor: pointer;
+  transition: transform 0.2s, color 0.2s;
+}
+
+#applicationfx .ratingSection .starRatingInput i:hover {
+  transform: scale(1.1);
+}
+
+#applicationfx .ratingSection .ratingLabel {
+  font-size: 0.9em;
+  color: rgb(var(--text-on-main-bg-color));
+  opacity: 0.7;
+}
+
+#applicationfx .commentSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#applicationfx .commentSection label {
+  font-weight: 600;
+  color: rgb(var(--text-color));
+  font-size: 0.95em;
+}
+
+#applicationfx .commentSection .optionalLabel {
+  font-weight: 400;
+  opacity: 0.6;
+  font-size: 0.9em;
+}
+
+#applicationfx .commentSection textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+#applicationfx .submitUnifiedButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 /* Mobile responsive styles */
 @media screen and (max-width: 768px) {
   #applicationfx .writeReviewSection {
@@ -1229,7 +1415,8 @@
     gap: 12px;
   }
   #applicationfx .reviewActions .deleteReviewButton,
-  #applicationfx .reviewActions .translateButton {
+  #applicationfx .reviewActions .translateButton,
+  #applicationfx .reviewActions .cancelPendingReviewButton {
     opacity: 0.8;
     background: rgba(var(--color-bg-ac), 0.05);
     padding: 12px;
@@ -1241,11 +1428,13 @@
     border-radius: 8px;
   }
   #applicationfx .reviewActions .deleteReviewButton i,
-  #applicationfx .reviewActions .translateButton i {
+  #applicationfx .reviewActions .translateButton i,
+  #applicationfx .reviewActions .cancelPendingReviewButton i {
     font-size: 1.1em;
   }
   #applicationfx .reviewActions .deleteReviewButton:active,
-  #applicationfx .reviewActions .translateButton:active {
+  #applicationfx .reviewActions .translateButton:active,
+  #applicationfx .reviewActions .cancelPendingReviewButton:active {
     transform: scale(0.95);
     opacity: 1;
   }
@@ -1254,6 +1443,23 @@
   }
   #applicationfx .reviewActions .translateButton:active {
     background: rgba(var(--color-bg-ac), 0.15);
+  }
+  #applicationfx .reviewActions .cancelPendingReviewButton:active {
+    background: rgba(var(--color-bg-ac-error), 0.15);
+  }
+  #applicationfx .ratingFormContent {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  #applicationfx .ratingSection {
+    border-right: none;
+    border-bottom: 1px solid rgb(var(--neutral-grad-0));
+    padding-right: 0;
+    padding-bottom: 20px;
+  }
+  #applicationfx .ratingSection .starRatingInput {
+    flex-direction: row;
+    justify-content: space-between;
   }
 }
 
@@ -1265,13 +1471,15 @@
     gap: 10px;
   }
   #applicationfx .reviewActions .deleteReviewButton,
-  #applicationfx .reviewActions .translateButton {
+  #applicationfx .reviewActions .translateButton,
+  #applicationfx .reviewActions .cancelPendingReviewButton {
     padding: 10px;
     min-width: 44px;
     min-height: 44px;
   }
   #applicationfx .reviewActions .deleteReviewButton i,
-  #applicationfx .reviewActions .translateButton i {
+  #applicationfx .reviewActions .translateButton i,
+  #applicationfx .reviewActions .cancelPendingReviewButton i {
     font-size: 1em;
   }
 }
@@ -1281,13 +1489,15 @@
     gap: 8px;
   }
   #applicationfx .reviewActions .deleteReviewButton,
-  #applicationfx .reviewActions .translateButton {
+  #applicationfx .reviewActions .translateButton,
+  #applicationfx .reviewActions .cancelPendingReviewButton {
     padding: 8px;
     min-width: 40px;
     min-height: 40px;
   }
   #applicationfx .reviewActions .deleteReviewButton i,
-  #applicationfx .reviewActions .translateButton i {
+  #applicationfx .reviewActions .translateButton i,
+  #applicationfx .reviewActions .cancelPendingReviewButton i {
     font-size: 0.95em;
   }
 }

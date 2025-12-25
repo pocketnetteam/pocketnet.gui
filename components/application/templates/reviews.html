@@ -74,15 +74,11 @@
                 <div class="userRatingNote"><%- e('youAlreadyRated') %></div>
             </div>
         <% } else { %>
-            <button class="rateAppButton button">
+            <button class="rateAppButton button accent">
                 <i class="fas fa-star"></i>
                 <%- e('rateApp') %>
             </button>
         <% } %>
-        <button class="writeReviewButton button secondary">
-            <i class="fas fa-comment"></i>
-            <%- e('writeComment') %>
-        </button>
 
     </div>
     <% } %>
@@ -94,7 +90,14 @@
 
         <% if(ratingsData && ratingsData.reviews && ratingsData.reviews.length > 0) { %>
         <% ratingsData.reviews.forEach(function(review) { %>
-        <div class="reviewItem">
+        <div class="reviewItem <%= review.isPending ? 'pending' : '' %>">
+            <% if(review.isPending) { %>
+            <div class="pendingBadge">
+                <i class="fas fa-spinner"></i>
+                <%- e('sending') || 'Отправка...' %>
+            </div>
+            <% } %>
+
             <div class="reviewHeader">
                 <div class="reviewUserInfo">
                     <div class="reviewUserAvatar">
@@ -110,13 +113,19 @@
                     </div>
                 </div>
                 <div class="reviewActions">
-                    <button class="translateButton" data-comment-id="<%- review.id %>" title="<%- e('translate') %>">
-                        <i class="fas fa-language"></i>
-                    </button>
-                    <% if(userAddress && review.address === userAddress) { %>
-                    <button class="deleteReviewButton" data-comment-id="<%- review.id %>" title="<%- e('deleteComment') %>">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
+                    <% if(review.isPending) { %>
+                        <button class="cancelPendingReviewButton" data-pending-id="<%- review.id %>" title="<%- e('cancel') || 'Отменить' %>">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    <% } else { %>
+                        <button class="translateButton" data-comment-id="<%- review.id %>" title="<%- e('translate') %>">
+                            <i class="fas fa-language"></i>
+                        </button>
+                        <% if(userAddress && review.address === userAddress) { %>
+                        <button class="deleteReviewButton" data-comment-id="<%- review.id %>" title="<%- e('deleteComment') %>">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                        <% } %>
                     <% } %>
                 </div>
             </div>
