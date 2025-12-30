@@ -922,19 +922,18 @@ var component = Object(componentNormalizer["a" /* default */])(
     join: function () {
       var _this$videoMeta;
       if (this.streamMode && !((_this$videoMeta = this.videoMeta) !== null && _this$videoMeta !== void 0 && _this$videoMeta.isLive)) return;
-      var self = this;
       this.$store.commit("SET_CHAT_TO_FORCE", this.m_chat.roomId);
       this.$store.state.globalpreloader = true;
       this.core.mtrx.client.joinRoom(this.m_chat.roomId).then(() => {
         //this.$store.commit('SET_CHAT_TO_STORE', this.m_chat.summary)
         this.$emit("joined");
-      }).catch(function (error) {
+      }).catch(e => {
         this.$store.commit("icon", {
           icon: "error",
-          message: error
+          message: e
         });
-        self.brokenRoom(true);
-        return self.creatorLeft = true;
+        this.brokenRoom(true);
+        return this.creatorLeft = true;
       }).finally(() => {
         this.$store.state.globalpreloader = false;
       });
