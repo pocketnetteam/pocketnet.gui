@@ -396,6 +396,49 @@
         gap: 12px;
         padding: 20px;
         border-bottom: 1px solid rgb(var(--neutral-grad-0));
+
+        .appIconSmall {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+        }
+
+        .appInfo {
+            flex: 1;
+
+            .appName {
+                font-weight: 600;
+                color: rgb(var(--text-color));
+                font-size: 1.1em;
+            }
+        }
+    }
+
+    .reviewsList {
+        padding: 20px;
+    }
+
+    .reviewsHeader {
+        margin-bottom: 20px;
+
+        h3 {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: rgb(var(--text-color));
+            margin: 0;
+        }
+    }
+
+    .noReviews {
+        text-align: center;
+        padding: 40px 20px;
+        color: rgb(var(--text-on-main-bg-color));
+        opacity: 0.6;
+
+        p {
+            margin: 0;
+            font-size: 1.1em;
+        }
     }
 
     .reviewItem {
@@ -404,10 +447,43 @@
         background: rgb(var(--neutral-grad-1));
         border: 1px solid rgb(var(--neutral-grad-0));
         border-radius: 12px;
+        position: relative;
+
+        &.pending {
+            opacity: 0.8;
+        }
 
         &:hover {
             .reviewActions {
                 opacity: 1;
+            }
+        }
+    }
+
+    .pendingBadge {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: rgba(var(--color-bg-ac), 0.1);
+        border: 1px solid rgba(var(--color-bg-ac), 0.3);
+        color: rgb(var(--color-bg-ac));
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 0.8em;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+
+        i {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
             }
         }
     }
@@ -434,6 +510,20 @@
         align-items: center;
         justify-content: center;
         color: rgb(var(--text-on-main-bg-color));
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    }
+
+    .reviewUserDetails {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
     }
 
     .reviewUserName {
@@ -468,7 +558,8 @@
         transition: opacity 0.2s ease;
 
         .deleteReviewButton,
-        .translateButton {
+        .translateButton,
+        .cancelPendingReviewButton {
             background: none;
             border: none;
             color: rgb(var(--text-on-main-bg-color));
@@ -484,7 +575,8 @@
             }
         }
 
-        .deleteReviewButton:hover {
+        .deleteReviewButton:hover,
+        .cancelPendingReviewButton:hover {
             background: rgba(var(--color-bg-ac-error), 0.1);
             color: rgb(var(--color-bg-ac-error));
         }
@@ -492,6 +584,10 @@
         .translateButton:hover {
             background: rgba(var(--color-bg-ac), 0.1);
             color: rgb(var(--color-bg-ac));
+        }
+
+        .cancelPendingReviewButton {
+            opacity: 0.7;
         }
     }
 
@@ -511,13 +607,28 @@
         }
     }
 
-    .rateAppButton,
-    .writeReviewButton {
+    .rateAppButton {
         flex: 1;
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 8px;
+
+        &.accent {
+            background: rgb(var(--color-bg-ac));
+            color: white;
+            font-size: 1.05em;
+            padding: 14px 28px;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(var(--color-bg-ac), 0.3);
+            transition: all 0.2s ease;
+
+            &:hover {
+                background: rgb(var(--color-bg-ac-hover));
+                box-shadow: 0 4px 12px rgba(var(--color-bg-ac), 0.4);
+                transform: translateY(-1px);
+            }
+        }
     }
 
     .userRatingDisplay {
@@ -529,6 +640,38 @@
         display: flex;
         flex-direction: column;
         gap: 8px;
+    }
+
+    .userRatingInfo {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .userRatingLabel {
+        font-weight: 600;
+        color: rgb(var(--text-color));
+        font-size: 0.95em;
+    }
+
+    .userRatingStars {
+        display: flex;
+        gap: 2px;
+        color: #FFB800;
+        font-size: 1em;
+    }
+
+    .userRatingValue {
+        font-weight: 600;
+        color: rgb(var(--text-color));
+        font-size: 0.95em;
+    }
+
+    .userRatingNote {
+        font-size: 0.85em;
+        color: rgb(var(--text-on-main-bg-color));
+        opacity: 0.7;
     }
 
     .overallRating {
@@ -553,11 +696,31 @@
         line-height: 1;
     }
 
+    .scoreOutOf {
+        font-size: 0.9em;
+        color: rgb(var(--text-on-main-bg-color));
+        opacity: 0.6;
+        margin-top: 4px;
+    }
+
+    .ratingDetails {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
     .starsDisplay {
         display: flex;
         gap: 4px;
         color: #FFB800;
         font-size: 1.5em;
+    }
+
+    .ratingCount {
+        font-size: 0.9em;
+        color: rgb(var(--text-on-main-bg-color));
+        opacity: 0.7;
     }
 
     .ratingDistribution {
@@ -572,12 +735,28 @@
         margin-bottom: 8px;
     }
 
+    .distributionStars {
+        display: flex;
+        gap: 2px;
+        color: #FFB800;
+        font-size: 0.9em;
+        min-width: 80px;
+    }
+
     .distributionBar {
         flex: 1;
         height: 8px;
         background: rgb(var(--neutral-grad-0));
         border-radius: 4px;
         overflow: hidden;
+    }
+
+    .distributionPercent {
+        min-width: 40px;
+        text-align: right;
+        font-size: 0.85em;
+        color: rgb(var(--text-on-main-bg-color));
+        opacity: 0.7;
     }
 
     .distributionBarFill {
@@ -609,6 +788,78 @@
         .ratingFormAppHeader {
             flex-shrink: 0;
             margin-bottom: 24px;
+            text-align: center;
+
+            .appIconLarge {
+                width: 96px;
+                height: 96px;
+                border-radius: 20px;
+                margin: 0 auto 16px;
+                display: block;
+            }
+
+            .appName {
+                font-size: 1.5em;
+                font-weight: 700;
+                color: rgb(var(--text-color));
+                margin-bottom: 8px;
+            }
+
+            .ratingPrompt {
+                font-size: 1.1em;
+                color: rgb(var(--text-on-main-bg-color));
+                opacity: 0.8;
+            }
+        }
+    }
+
+    .ratingFormStars {
+        padding: 0 20px;
+        margin-bottom: 10px;
+        flex-shrink: 0;
+    }
+
+    .starRatingInput {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        margin-bottom: 12px;
+
+        i {
+            font-size: 3em;
+            color: #FFB800;
+            cursor: pointer;
+            transition: transform 0.2s, color 0.2s;
+
+            &:hover {
+                transform: scale(1.1);
+            }
+
+            &.far {
+                opacity: 0.3;
+            }
+
+            &.fas {
+                opacity: 1;
+            }
+        }
+    }
+
+    .ratingLabel {
+        text-align: center;
+        font-size: 0.9em;
+        color: rgb(var(--text-on-main-bg-color));
+        opacity: 0.6;
+    }
+
+    .ratingFormActions {
+        display: flex;
+        gap: 12px;
+        padding: 0 20px;
+        flex-shrink: 0;
+
+        button {
+            flex: 1;
         }
     }
 
@@ -659,6 +910,121 @@
             margin-top: 4px;
         }
     }
+
+    // Unified Rating Form Styles
+    .unifiedRatingFormWrapper {
+        padding: calc(55px + var(--app-margin-top)) 20px 20px 20px;
+        max-width: 700px;
+        margin: 0 auto;
+        overflow-y: auto;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .ratingFormContent {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        gap: 30px;
+        padding: 30px;
+        background: rgb(var(--neutral-grad-1));
+        border-radius: 12px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .ratingSection {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding-right: 20px;
+        border-right: 1px solid rgb(var(--neutral-grad-0));
+
+        .ratingPrompt {
+            font-size: 1em;
+            font-weight: 600;
+            color: rgb(var(--text-color));
+        }
+
+        .starRatingInput {
+            display: flex;
+            flex-direction: row;
+            gap: 12px;
+            align-items: center;
+
+            i {
+                font-size: 2em;
+                color: #FFB800;
+                cursor: pointer;
+                transition: transform 0.2s, color 0.2s;
+
+                &:hover {
+                    transform: scale(1.1);
+                }
+
+                &.fas {
+                    color: #FFB800;
+                }
+            }
+        }
+
+        .ratingLabel {
+            font-size: 0.9em;
+            color: rgb(var(--text-on-main-bg-color));
+            opacity: 0.7;
+        }
+    }
+
+    .commentSection {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        label {
+            font-weight: 600;
+            color: rgb(var(--text-color));
+            font-size: 0.95em;
+        }
+
+        .optionalLabel {
+            font-weight: 400;
+            opacity: 0.6;
+            font-size: 0.9em;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+    }
+
+    .ratingFormActions {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        padding: 20px;
+
+        .button {
+            min-width: 140px;
+        }
+    }
+
+    .cancelRatingButton {
+        background: rgb(var(--neutral-grad-1));
+        color: rgb(var(--text-color));
+        border: 1px solid rgb(var(--neutral-grad-0));
+
+        &:hover {
+            background: rgb(var(--neutral-grad-0));
+        }
+    }
+
+    .submitUnifiedButton:disabled,
+    .submitRatingButton:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
 }
 
 // Mobile responsive styles
@@ -673,7 +1039,8 @@
     }
 
     #applicationfx .reviewActions .deleteReviewButton,
-    #applicationfx .reviewActions .translateButton {
+    #applicationfx .reviewActions .translateButton,
+    #applicationfx .reviewActions .cancelPendingReviewButton {
         opacity: 0.8;
         background: rgba(var(--color-bg-ac), 0.05);
         padding: 12px;
@@ -686,12 +1053,14 @@
     }
 
     #applicationfx .reviewActions .deleteReviewButton i,
-    #applicationfx .reviewActions .translateButton i {
+    #applicationfx .reviewActions .translateButton i,
+    #applicationfx .reviewActions .cancelPendingReviewButton i {
         font-size: 1.1em;
     }
 
     #applicationfx .reviewActions .deleteReviewButton:active,
-    #applicationfx .reviewActions .translateButton:active {
+    #applicationfx .reviewActions .translateButton:active,
+    #applicationfx .reviewActions .cancelPendingReviewButton:active {
         transform: scale(0.95);
         opacity: 1;
     }
@@ -702,6 +1071,27 @@
 
     #applicationfx .reviewActions .translateButton:active {
         background: rgba(var(--color-bg-ac), 0.15);
+    }
+
+    #applicationfx .reviewActions .cancelPendingReviewButton:active {
+        background: rgba(var(--color-bg-ac-error), 0.15);
+    }
+
+    #applicationfx .ratingFormContent {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    #applicationfx .ratingSection {
+        border-right: none;
+        border-bottom: 1px solid rgb(var(--neutral-grad-0));
+        padding-right: 0;
+        padding-bottom: 20px;
+
+        .starRatingInput {
+            flex-direction: row;
+            justify-content: space-between;
+        }
     }
 }
 
@@ -715,14 +1105,16 @@
     }
 
     #applicationfx .reviewActions .deleteReviewButton,
-    #applicationfx .reviewActions .translateButton {
+    #applicationfx .reviewActions .translateButton,
+    #applicationfx .reviewActions .cancelPendingReviewButton {
         padding: 10px;
         min-width: 44px;
         min-height: 44px;
     }
 
     #applicationfx .reviewActions .deleteReviewButton i,
-    #applicationfx .reviewActions .translateButton i {
+    #applicationfx .reviewActions .translateButton i,
+    #applicationfx .reviewActions .cancelPendingReviewButton i {
         font-size: 1em;
     }
 }
@@ -733,14 +1125,16 @@
     }
 
     #applicationfx .reviewActions .deleteReviewButton,
-    #applicationfx .reviewActions .translateButton {
+    #applicationfx .reviewActions .translateButton,
+    #applicationfx .reviewActions .cancelPendingReviewButton {
         padding: 8px;
         min-width: 40px;
         min-height: 40px;
     }
 
     #applicationfx .reviewActions .deleteReviewButton i,
-    #applicationfx .reviewActions .translateButton i {
+    #applicationfx .reviewActions .translateButton i,
+    #applicationfx .reviewActions .cancelPendingReviewButton i {
         font-size: 0.95em;
     }
 }

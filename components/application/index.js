@@ -19,10 +19,65 @@ var application = (function () {
       scores,
       userRating,
       comments,
-      hasReviewsSupport;
+      hasReviewsSupport,
+      pendingReviews = [],
+      pendingRating = null;
+
+    var getPendingRatingFromStorage = function () {
+      if (!application || !application.id || !userAddress) return null;
+      var storageKey = "pendingRating_" + application.id + "_" + userAddress;
+      var stored = localStorage.getItem(storageKey);
+      if (!stored) return null;
+
+      try {
+        var data = JSON.parse(stored);
+        if (Date.now() - data.timestamp > 24 * 60 * 60 * 1000) {
+          localStorage.removeItem(storageKey);
+          return null;
+        }
+        return data.rating;
+      } catch (e) {
+        return null;
+      }
+    };
+
+    var savePendingRatingToStorage = function (rating) {
+      if (!application || !application.id || !userAddress) return;
+      var storageKey = "pendingRating_" + application.id + "_" + userAddress;
+      localStorage.setItem(storageKey, JSON.stringify({
+        rating: rating,
+        timestamp: Date.now()
+      }));
+    };
+
+    var removePendingRatingFromStorage = function () {
+      if (!application || !application.id || !userAddress) return;
+      var storageKey = "pendingRating_" + application.id + "_" + userAddress;
+      localStorage.removeItem(storageKey);
+    };
 
     var calculateRatingStats = function (scores) {
-      if (!scores || !scores.length) {
+      var scoresArray = scores || [];
+      var pendingRatingValue = getPendingRatingFromStorage();
+      var hasUserRating = userAddress && scoresArray.find(function (score) {
+        return score.address === userAddress;
+      });
+
+      if (hasUserRating && pendingRatingValue) {
+        removePendingRatingFromStorage();
+        pendingRatingValue = null;
+      }
+
+      var effectiveScores = scoresArray.slice();
+      if (pendingRatingValue && !hasUserRating) {
+        effectiveScores.push({
+          address: userAddress,
+          value: pendingRatingValue,
+          isPending: true
+        });
+      }
+
+      if (!effectiveScores || !effectiveScores.length) {
         return {
           averageRating: 0,
           totalRatings: 0,
@@ -36,11 +91,11 @@ var application = (function () {
         };
       }
 
-      var total = scores.length;
+      var total = effectiveScores.length;
       var sum = 0;
       var distribution = [0, 0, 0, 0, 0];
 
-      scores.forEach(function (score) {
+      effectiveScores.forEach(function (score) {
         var value = parseInt(score.value) || 0;
         sum += value;
         if (value >= 1 && value <= 5) {
@@ -73,11 +128,20 @@ var application = (function () {
     };
 
     var findUserRating = function (scores, userAddress) {
-      if (!scores || !userAddress) return null;
-      var userScore = scores.find(function (score) {
-        return score.address === userAddress;
-      });
-      return userScore ? parseInt(userScore.value) : null;
+      if (!userAddress) return null;
+
+      var userScore = null;
+      if (scores) {
+        userScore = scores.find(function (score) {
+          return score.address === userAddress;
+        });
+      }
+
+      if (userScore) {
+        return parseInt(userScore.value);
+      }
+
+      return getPendingRatingFromStorage();
     };
 
     var mapCommentsToReviews = function (comments) {
@@ -87,6 +151,10 @@ var application = (function () {
         .filter((comment) => !comment.deleted)
         .map(function (comment) {
           var userInfo = self.psdk.userInfo.get(comment.address) || {};
+          var userScore = scores.find(function (score) {
+            return score.address === comment.address;
+          });
+
           return {
             userName: userInfo.name || "Anonymous",
             text: comment.message || "",
@@ -100,8 +168,40 @@ var application = (function () {
               : "",
             id: comment.id,
             address: comment.address,
+            rating: userScore ? parseInt(userScore.value) : null,
+            timestamp: comment.time || 0,
           };
         });
+    };
+
+    var createPendingReview = function (reviewText, rating) {
+      var tempId =
+        "pending_" +
+        Date.now() +
+        "_" +
+        Math.random().toString(36).substr(2, 9);
+      var userInfo = self.psdk.userInfo.get(userAddress) || {};
+
+      return {
+        id: tempId,
+        userName: userInfo.name || "Anonymous",
+        text: reviewText || "",
+        userAvatar: userInfo.image,
+        date: new Date().toLocaleDateString("ru-RU", {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+        }),
+        address: userAddress,
+        isPending: true,
+        rating: rating,
+        timestamp: Date.now(),
+      };
+    };
+
+    var getAllReviews = function () {
+      var confirmedReviews = mapCommentsToReviews(comments);
+      return pendingReviews.concat(confirmedReviews);
     };
 
     var loadUserInfoForComments = function (comments, callback) {
@@ -587,16 +687,18 @@ var application = (function () {
 
       reviews: function (clbk) {
         var ratingStats = calculateRatingStats(scores);
-        var reviewsList = mapCommentsToReviews(comments);
+        var reviewsList = getAllReviews();
 
         var reviewsData = Object.assign({}, ratingStats);
         if (reviewsList.length > 0) {
           reviewsData.reviews = reviewsList;
         }
+
         const canWriteReview =
           application.installed &&
           !!userAddress &&
           appdata.address !== userAddress;
+
         self.shell(
           {
             name: "reviews",
@@ -653,6 +755,16 @@ var application = (function () {
               });
             });
 
+            p.el.find(".cancelPendingReviewButton").on("click", function () {
+              var pendingId = $(this).data("pending-id");
+
+              pendingReviews = pendingReviews.filter(function (r) {
+                return r.id !== pendingId;
+              });
+
+              renders.reviews();
+            });
+
             p.el.find(".translateButton").on("click", function () {
               var commentId = $(this).data("comment-id");
               var reviewEl = $(this).closest(".reviewItem");
@@ -668,84 +780,19 @@ var application = (function () {
       },
 
       reviewform: function (clbk) {
-        self.shell(
-          {
-            name: "reviewform",
-            el: el.c,
-            data: {
-              application,
-            },
-          },
-          function (p) {
-            p.el.find(".back").on("click", function () {
-              renders.reviews();
-            });
-
-            p.el.find("#reviewText").on("input", function () {
-              var length = $(this).val().length;
-              p.el
-                .find("#reviewText")
-                .closest(".formGroup")
-                .find(".currentCount")
-                .text(length);
-              validateForm();
-            });
-
-            var validateForm = function () {
-              var reviewText = p.el.find("#reviewText").val().trim();
-              var isValid = reviewText.length >= 10;
-
-              p.el.find(".submitReviewButton").prop("disabled", !isValid);
-            };
-
-            p.el.find(".cancelButton").on("click", function () {
-              renders.reviews();
-            });
-
-            p.el.find(".submitReviewButton").on("click", function () {
-              var btn = $(this);
-              var reviewText = p.el.find("#reviewText").val().trim();
-
-              if (!reviewText || reviewText.length < 10) {
-                sitemessage(self.app.localization.e("commentMinLength"));
-                return;
-              }
-
-              btn.prop("disabled", true);
-              btn.html('<i class="fas fa-spinner fa-spin"></i>');
-
-              var comment = new Comment(application.hash);
-              comment.message.set(reviewText);
-
-              self.app.platform.sdk.comments.send(
-                comment,
-                function (error, alias) {
-                  if (error) {
-                    console.error("Error sending comment:", error);
-                    sitemessage(self.app.localization.e("commentSendError"));
-                    btn.prop("disabled", false);
-                    btn.html(self.app.localization.e("submitReview"));
-                  } else {
-                    sitemessage(self.app.localization.e("commentSent"));
-                    renders.reviews();
-                  }
-                }
-              );
-            });
-
-            events.pageevents(p, true);
-
-            if (clbk) clbk();
-          }
-        );
+        renders.unifiedratingform(clbk);
       },
 
       ratingform: function (clbk) {
+        renders.unifiedratingform(clbk);
+      },
+
+      unifiedratingform: function (clbk) {
         var selectedRating = 0;
 
         self.shell(
           {
-            name: "ratingform",
+            name: "unifiedratingform",
             el: el.c,
             data: {
               application,
@@ -756,7 +803,7 @@ var application = (function () {
               renders.reviews();
             });
 
-            p.el.find("#ratingCommentText").on("input", function () {
+            p.el.find("#unifiedCommentText").on("input", function () {
               var length = $(this).val().length;
               p.el.find(".currentCount").text(length);
             });
@@ -781,20 +828,31 @@ var application = (function () {
                     self.app.localization.e("outOf5")
                 );
 
-              p.el.find(".submitRatingButton").prop("disabled", false);
-              p.el.find("#ratingCommentText").prop("disabled", false).focus();
+              p.el.find(".submitUnifiedButton").prop("disabled", false);
             });
 
             p.el.find(".cancelRatingButton").on("click", function () {
               renders.reviews();
             });
 
-            p.el.find(".submitRatingButton").on("click", function () {
+            p.el.find(".submitUnifiedButton").on("click", function () {
               var btn = $(this);
-              var reviewText = p.el.find("#ratingCommentText").val().trim();
+              var reviewText = p.el.find("#unifiedCommentText").val().trim();
+
+              if (!selectedRating) {
+                sitemessage(self.app.localization.e("pleaseSelectRating"));
+                return;
+              }
 
               btn.prop("disabled", true);
               btn.html('<i class="fas fa-spinner fa-spin"></i>');
+
+              var pendingReview = createPendingReview(reviewText, selectedRating);
+              pendingReviews.push(pendingReview);
+
+              savePendingRatingToStorage(selectedRating);
+
+              renders.reviews();
 
               self.app.platform.sdk.upvote.checkvalue(
                 selectedRating,
@@ -803,9 +861,11 @@ var application = (function () {
                   var upvoteShare = obj.upvote(selectedRating, userAddress);
 
                   if (!upvoteShare) {
+                    pendingReviews = pendingReviews.filter(
+                      (r) => r.id !== pendingReview.id
+                    );
                     self.app.platform.errorHandler("4", true);
-                    btn.prop("disabled", false);
-                    btn.html(self.app.localization.e("submitRating"));
+                    renders.reviews();
                     return;
                   }
 
@@ -833,19 +893,31 @@ var application = (function () {
                     .addActionAndSendIfCan(upvoteShare)
                     .then(() => {
                       sendComment(function () {
-                        sitemessage(self.app.localization.e("ratingSent"));
-                        renders.reviews();
+                        pendingReviews = pendingReviews.filter(
+                          (r) => r.id !== pendingReview.id
+                        );
+
+                        actions.loadscores(function () {
+                          actions.loadcomments(function () {
+                            sitemessage(self.app.localization.e("ratingSent"));
+                            renders.reviews();
+                          });
+                        });
                       });
                     })
                     .catch((e) => {
+                      pendingReviews = pendingReviews.filter(
+                        (r) => r.id !== pendingReview.id
+                      );
                       self.app.platform.errorHandler(e, true);
-                      btn.prop("disabled", false);
-                      btn.html(self.app.localization.e("submitRating"));
+                      renders.reviews();
                     });
                 },
                 function () {
-                  btn.prop("disabled", false);
-                  btn.html(self.app.localization.e("submitRating"));
+                  pendingReviews = pendingReviews.filter(
+                    (r) => r.id !== pendingReview.id
+                  );
+                  renders.reviews();
                 }
               );
             });
