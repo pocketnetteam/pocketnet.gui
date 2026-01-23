@@ -4,6 +4,7 @@ const Applications = require("./applications");
 const f = require('../functions');
 const fs = require("fs/promises");
 const fssync = require("fs");
+const { app } = require("electron");
 var kill = require('tree-kill');
 
 class Helpers {
@@ -63,7 +64,6 @@ class TorControl {
     listeners = [];
     settings = {};
     application = null;
-    installfailed = null;
     timeoutIntervalId = null;
     timeoutCounter = null;
 
@@ -71,18 +71,14 @@ class TorControl {
         this.settings = {...settings};
 
         this.application = new Applications(settings, applicationRepository, proxy, true)
-
-        this.needinstall();
     }
 
     isStarted = () => (this.state.status === 'started');
     isStopped = () => (this.state.status === 'stopped');
-    isInstalling = () => (this.state.status === 'install');
     isRunning = () => (this.state.status === 'running');
 
     onStarted = (listener) => this.listeners.push({ type: 'started', listener });
     onStopped = (listener) => this.listeners.push({ type: 'stopped', listener });
-    onInstalling = (listener) => this.listeners.push({ type: 'install', listener });
     onRunning = (listener) => this.listeners.push({ type: 'running', listener });
     onAny = (listener) => this.listeners.push({ type: 'any', listener });
 
@@ -145,33 +141,27 @@ class TorControl {
                 await this.restart()
             }
         } else {
-            if (this.settings.enabled3 !== 'neveruse'){
-                if (this.needinstall()){
-                    await this.install();
-                }
-            }
-
             if (this.settings.enabled3 === 'always'){
                 await this.restart()
             }
         }
     }
 
+    gettordirpath = () => {
+        if (process.platform == 'darwin') {
+            const arch = process.arch === "arm64" ? "aarch64" : "x86_64";
+            return path.join(process.resourcesPath, "tor", arch);
+        } else {
+            return path.join(process.resourcesPath, "tor")
+        }
+    }
+
     getpath = () => {
-        return path.join(this.getsettingspath(), this.helpers.bin_name("tor"))
+        return path.join(this.gettordirpath(), this.helpers.bin_name("tor"));
     }
 
     getsettingspath = () => {
-        return f.path(this.settings.path)
-    }
-
-    needinstall = () => {
-
-        var existsBin = this.helpers.checkPath(this.getpath());
-
-        this.isInstalled = existsBin.exists;
-
-        return !existsBin.exists;
+        return path.join(app.getPath("userData"), this.settings.path);
     }
 
     folders = async() => {
@@ -236,8 +226,8 @@ class TorControl {
             `DataDirectory ${getSettingsPath("data")}`,
             "Log notice stdout",
             "AvoidDiskWrites 1",
-            `GeoIPFile ${getSettingsPath("geoip")}`,
-            `GeoIPv6File ${getSettingsPath("geoip6")}`,
+            `GeoIPFile ${path.join(this.gettordirpath(), "geoip")}`,
+            `GeoIPv6File ${path.join(this.gettordirpath(), "geoip6")}`,
             "KeepalivePeriod 10",
         ];
 
@@ -246,7 +236,7 @@ class TorControl {
                 "# Bridges configurations\n",
 
                 "UseBridges 1",
-                `ClientTransportPlugin snowflake exec ${getSettingsPath("pluggable_transports", this.helpers.bin_name("snowflake-client"))}`,
+                `ClientTransportPlugin snowflake exec ${path.join(this.gettordirpath(), "pluggable_transports", this.helpers.bin_name("snowflake-client"))}`,
                 `Bridge snowflake 192.0.2.4:80 8838024498816A039FCBBAB14E6F40A0843051FA fingerprint=8838024498816A039FCBBAB14E6F40A0843051FA url=https://snowflake-broker.torproject.net/ ampcache=https://cdn.ampproject.org/ fronts=www.google.com,cdn.ampproject.org utls-imitate=hellorandomizedalpn ice=stun:stun.nextcloud.com:443,stun:stun.sipgate.net:10000,stun:stun.epygi.com:3478,stun:stun.uls.co.za:3478,stun:stun.voipgate.com:3478,stun:stun.bethesda.net:3478,stun:stun.mixvoip.com:3478,stun:stun.voipia.net:3478`,
                 `Bridge snowflake 192.0.2.3:80 2B280B23E1107BB62ABFC40DDCC8824814F80A72 fingerprint=2B280B23E1107BB62ABFC40DDCC8824814F80A72 url=https://snowflake-broker.torproject.net/ ampcache=https://cdn.ampproject.org/ fronts=www.google.com,cdn.ampproject.org utls-imitate=hellorandomizedalpn ice=stun:stun.nextcloud.com:443,stun:stun.sipgate.net:10000,stun:stun.epygi.com:3478,stun:stun.uls.co.za:3478,stun:stun.voipgate.com:3478,stun:stun.bethesda.net:3478,stun:stun.mixvoip.com:3478,stun:stun.voipia.net:3478`
             )
@@ -313,76 +303,6 @@ class TorControl {
 
     }
 
-    installManual = async() => {
-
-        this.installfailed = null
-
-        return await this.install()
-    }
-
-    install = async() => {
-
-        if (this.installfailed){
-            throw this.installfailed
-        }
-
-        try {
-
-            this.state.status = "install";
-
-            const download = await this.application.download('bin', {user: "shpingalet007", name: "tor-builds"});
-            await this.application.decompress(download.path, this.getsettingspath())
-            await fs.unlink(download.path)
-            await fs.chmod(this.getsettingspath(), 0o755)
-            await fs.chmod(this.getpath(), 0o755)
-
-            this.state.status = "stopped";
-
-            this.needinstall();
-
-            return true;
-
-        } catch (e) {
-
-            this.installfailed = {
-                code : 500,
-                error : 'cantcopy'
-            };
-
-            this.state.status = "failed";
-
-            throw this.installfailed;
-        }
-    }
-
-    remove = () => {
-        this.stop()
-
-        if(!this.needinstall()){
-
-            try{
-                fssync.rmdirSync(this.getsettingspath(), { recursive: true });
-            }catch(e){
-                console.log("Failed to delete Tor folder:", e.message)
-
-                return Promise.reject('path')
-            }
-
-        }
-
-        return this.application.removeAll()
-    }
-
-    reinstall = () => {
-        return this.remove().then(() => {
-            return this.installManual()
-        }).catch(e => {
-            console.log(e)
-
-            return Promise.reject(e)
-        })
-    }
-
     log = (data) => {
 
         try{
@@ -438,22 +358,6 @@ class TorControl {
     start = async ()=>{
         console.log("Tor start triggered");
 
-        if (this.needinstall()) {
-            if (this.state.status === 'install') {
-                return false;
-            } if (this.settings.enabled3 === 'neveruse') {
-                this.state.status = "stopped";
-                return false;
-            } else {
-                try {
-                    await this.install();
-                } catch (e) {
-                    console.log("Tor failed to install:", e);
-                    this.state.status = "failed";
-                }
-            }
-        }
-
         if (this.settings.enabled3 === 'neveruse') return false;
 
         if (this.state.status !== "stopped") return true;
@@ -479,7 +383,7 @@ class TorControl {
             detached : false,
             shell : false,
             env: {
-                'LD_LIBRARY_PATH': this.getsettingspath()
+                'LD_LIBRARY_PATH': this.gettordirpath()
             }
         })
 
@@ -563,7 +467,6 @@ class TorControl {
         this.state.status = "stopped"
 
         this.instance = null
-        this.installfailed = null
 
         clearInterval(this.timeoutIntervalId);
         this.timeoutIntervalId = null;
@@ -588,8 +491,7 @@ class TorControl {
         var info = {
             enabled3 : this.settings.enabled3,
             useSnowFlake2 : this.settings.useSnowFlake2,
-            customObfs4 : this.settings.customObfs4,
-            installed : this.isInstalled
+            customObfs4 : this.settings.customObfs4
         }
 
         info.state = {

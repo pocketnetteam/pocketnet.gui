@@ -162,6 +162,12 @@
                     ]
                 }
             ],
+            "extraResources": [
+                {
+                    "from": "tor/macos/",
+                    "to": "tor"
+                }
+            ],
             "artifactName": "${productName}Setup.${ext}",
             "icon": "res/electron/icons/mac/icon.icns",
             "extendInfo": "bastyon",
@@ -183,6 +189,12 @@
                     "target": "rpm"
                 }
             ],
+            "extraResources": [
+                {
+                    "from": "tor/linux/",
+                    "to": "tor"
+                }
+            ],
             "artifactName": "${productName}Setup.${ext}",
             "category": "Network",
             "executableName": "bastyon",
@@ -198,6 +210,12 @@
             "target": [
                 {
                     "target": "nsis"
+                }
+            ],
+            "extraResources": [
+                {
+                    "from": "tor/windows/",
+                    "to": "tor"
                 }
             ],
             "icon": "res/electron/icons/win/icon.ico"
