@@ -55,13 +55,18 @@ var Roy = function (parent) {
 		if (!url) return;
 		if (!options) options = {};
 		
-		if (parent.instanses[url]){
-			if (!parent.instanses[url].instance.archiveDouble) {
-				parent.instanses[url].counter++ 
-
-				instances.push(parent.instanses[url].instance);
-
-				return parent.instanses[url].instance
+		// Get reference to existing instance record to reduce race window
+		var existingRecord = parent.instanses[url];
+		
+		if (existingRecord && existingRecord.instance){
+			// Defensive check: verify instance wasn't destroyed between check and use
+			if (!existingRecord.instance.archiveDouble && existingRecord.counter !== undefined) {
+				// Increment counter only if record still exists
+				if (parent.instanses[url] === existingRecord) {
+					existingRecord.counter++;
+					instances.push(existingRecord.instance);
+					return existingRecord.instance;
+				}
 			}
 		}
 
@@ -78,11 +83,12 @@ var Roy = function (parent) {
 
 		instances.push(instance);
 
-
-
-		parent.instanses[url] = {
-			instance,
-			counter : 1
+		// Final check before storing: ensure no race created duplicate
+		if (!parent.instanses[url]) {
+			parent.instanses[url] = {
+				instance: instance,
+				counter: 1
+			};
 		}
 
 		return instance;
@@ -93,29 +99,29 @@ var Roy = function (parent) {
 	self.removeInstance = function (host) {
 		var instance = self.find(host);
 
-
 		if (instance) {
+			// Get reference to existing record to reduce race window
+			var existingRecord = parent.instanses[host];
 
-			if (parent.instanses[host]){
-				parent.instanses[host].counter--
+			if (existingRecord && existingRecord.counter !== undefined){
+				existingRecord.counter--;
 
-				if (parent.instanses[host].counter <= 0){
-
+				// Defensive check: verify record still exists and counter is valid
+				if (existingRecord.counter <= 0 && parent.instanses[host] === existingRecord){
 					instance.destroy();
-					delete parent.instanses[host]
+					delete parent.instanses[host];
 				}
 			}
 			else{
+				// No shared record, destroy directly
 				instance.destroy();
 			}
-			
-
-			
 		}
 
-	instances = _.filter(instances, function (instance) {
-		return instance.host != host;
-	});
+		// Remove from local instances array
+		instances = _.filter(instances, function (instance) {
+			return instance.host != host;
+		});
 	};
 
 	///
@@ -144,20 +150,22 @@ var Roy = function (parent) {
 
 	self.destroy = function () {
 		_.each(instances, function (instance) {
-			//instance.destroy();
+			var host = instance.host;
+			
+			// Get reference to existing record to reduce race window
+			var existingRecord = parent.instanses[host];
 
-			var host = instance.host
+			if (existingRecord && existingRecord.counter !== undefined){
+				existingRecord.counter--;
 
-			if (parent.instanses[host]){
-				parent.instanses[host].counter--
-
-				if (parent.instanses[host].counter <= 0){
-
+				// Defensive check: verify record still exists and counter is valid
+				if (existingRecord.counter <= 0 && parent.instanses[host] === existingRecord){
 					instance.destroy();
-					delete parent.instanses[host]
+					delete parent.instanses[host];
 				}
 			}
 			else{
+				// No shared record, destroy directly
 				instance.destroy();
 			}
 		});
