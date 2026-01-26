@@ -211,7 +211,7 @@ var Roy = function (parent) {
 		var i = []
 
 		_.each(instances, (ins) => {
-			if(!ins.old){
+			if(!ins.old && !ins.offline){
 				i.push(ins.host)
 			}
 		})
