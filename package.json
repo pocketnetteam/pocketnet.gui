@@ -2,10 +2,10 @@
     "name": "pocketnet",
     "project": "Bastyon",
 
-    "version": "0.9.136",
-    "versionsuffix": "3",
-    "cordovaversion": "1.8.136",
-    "cordovaversioncode": "1801363",
+    "version": "0.9.137",
+    "versionsuffix": "0",
+    "cordovaversion": "1.8.137",
+    "cordovaversioncode": "1801370",
 
     "description": "Bastyon desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
@@ -162,6 +162,12 @@
                     ]
                 }
             ],
+            "extraResources": [
+                {
+                    "from": "tor/macos/",
+                    "to": "tor"
+                }
+            ],
             "artifactName": "${productName}Setup.${ext}",
             "icon": "res/electron/icons/mac/icon.icns",
             "extendInfo": "bastyon",
@@ -183,6 +189,12 @@
                     "target": "rpm"
                 }
             ],
+            "extraResources": [
+                {
+                    "from": "tor/linux/",
+                    "to": "tor"
+                }
+            ],
             "artifactName": "${productName}Setup.${ext}",
             "category": "Network",
             "executableName": "bastyon",
@@ -198,6 +210,12 @@
             "target": [
                 {
                     "target": "nsis"
+                }
+            ],
+            "extraResources": [
+                {
+                    "from": "tor/windows/",
+                    "to": "tor"
                 }
             ],
             "icon": "res/electron/icons/win/icon.ico"

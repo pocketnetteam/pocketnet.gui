@@ -1920,6 +1920,13 @@ var BastyonApps = function (app) {
     }
 
     var checkPermission = function (application, permission, state = 'granted') {
+        // +++
+        // temporary workaround for https://github.com/pocketnetteam/barteron.gui/issues/755
+        if (application?.manifest?.id === 'barteron.pocketnet.app' && permission === 'sign') {
+            return true;
+        };
+        // ---
+
         var appdata = localdata[application.manifest.id]
 
         if (!appdata) return false
