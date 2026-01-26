@@ -2,10 +2,10 @@
     "name": "pocketnet",
     "project": "Bastyon",
 
-    "version": "0.9.130",
+    "version": "0.9.137",
     "versionsuffix": "1",
-    "cordovaversion": "1.8.130",
-    "cordovaversioncode": "1801301",
+    "cordovaversion": "1.8.137",
+    "cordovaversioncode": "1801371",
 
     "description": "Bastyon desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
@@ -51,7 +51,7 @@
         "@babel/preset-env": "^7.23.8",
         "@types/grunt": "^0.4.31",
         "babel-plugin-remove-use-strict": "^1.0.1",
-        "electron": "^34.3.0",
+        "electron": "^39.2.6",
         "electron-builder": "^25.1.8",
         "electron-builder-notarize": "^1.5.1",
         "electron-notarize": "",
@@ -118,6 +118,7 @@
     },
     "build": {
         "productName": "Bastyon",
+        "afterPack": "scripts/afterPack.js",
         "afterSign": "electron-builder-notarize",
         "appId": "app.pocketnet.gui",
         "files": [
@@ -162,6 +163,12 @@
                     ]
                 }
             ],
+            "extraResources": [
+                {
+                    "from": "tor/macos/",
+                    "to": "tor"
+                }
+            ],
             "artifactName": "${productName}Setup.${ext}",
             "icon": "res/electron/icons/mac/icon.icns",
             "extendInfo": "bastyon",
@@ -183,6 +190,12 @@
                     "target": "rpm"
                 }
             ],
+            "extraResources": [
+                {
+                    "from": "tor/linux/",
+                    "to": "tor"
+                }
+            ],
             "artifactName": "${productName}Setup.${ext}",
             "category": "Network",
             "executableName": "bastyon",
@@ -198,6 +211,12 @@
             "target": [
                 {
                     "target": "nsis"
+                }
+            ],
+            "extraResources": [
+                {
+                    "from": "tor/windows/",
+                    "to": "tor"
                 }
             ],
             "icon": "res/electron/icons/win/icon.ico"

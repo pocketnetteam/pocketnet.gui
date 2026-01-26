@@ -1,0 +1,40 @@
+<div class="shares">
+    <div class="captionWrapper">
+		<div class="sharesCaption">
+			<span><%- e('collectionMaterials') %></span> <% if(shares.length) {%><span class="count">(<%-shares.length%>)</span><% } %>
+		</div>
+
+        <% if(shares.length) {%>
+            <div class="panel">
+                <button class="button small additems"><%- e('collectionMaterialsAdd') %> <i class="fas fa-plus-circle"></i></button>
+            </div>
+        <% } %>
+
+	</div>
+
+    <div class="sharesContent">
+        <% if(shares.length) {%>
+
+            <div class="allshares">
+
+            <% _.each(shares, function(share){ %> 
+                <div class="shareWrapper draggablepart" share="<%-share.txid%>">
+                    <div class="notification">
+                        <%= tpl(share, null, true) %>
+                    </div>
+                    <div class="remove">
+                        <i class="fas fa-trash"></i>
+                    </div>
+                </div>
+                
+            <% }) %>
+
+            </div>
+
+        <% } else { %> 
+            <div class="emptywrapper">
+                <div class="buttonsWrapper"><button class="button ghost additems"><%- e('collectionMaterialsAdd') %> <i class="fas fa-plus-circle"></i></button></div>
+            </div>
+        <% } %>
+    </div>
+</div>

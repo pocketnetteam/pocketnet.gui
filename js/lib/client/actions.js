@@ -638,24 +638,30 @@ var Action = function(account, object, priority, settings){
 
         var totalInputAmount = toFixed(totalInputAmountWithFee - fee, 8)
 
+        var amountError = null
+
 
         if (amount && totalInputAmountWithFee < amount) {
 
 
             if(!feeIncludedinAmount){
                 if (account.actualBalance(changeAddresses).total < amount){
-                    return Promise.reject('actions_totalAmountSmaller_amount')
+                    if(!amountError) amountError = 'actions_totalAmountSmaller_amount'
+                    //return Promise.reject('actions_totalAmountSmaller_amount')
                 }
-    
-                return Promise.reject('actions_totalAmountSmaller_amount_wait')
+                
+                if(!amountError) amountError = 'actions_totalAmountSmaller_amount_wait'
+                //return Promise.reject('actions_totalAmountSmaller_amount_wait')
             }
 
             else{
                 if (account.actualBalance(changeAddresses).total < amount){
-                    return Promise.reject('actions_totalAmountSmaller_amount_fee')
+                    if(!amountError) amountError = 'actions_totalAmountSmaller_amount_fee'
+                    //return Promise.reject('actions_totalAmountSmaller_amount_fee')
                 }
     
-                return Promise.reject('actions_totalAmountSmaller_amount_fee_wait')
+                if(!amountError) amountError = 'actions_totalAmountSmaller_amount_fee_wait'
+                //return Promise.reject('actions_totalAmountSmaller_amount_fee_wait')
             }
 
             
@@ -663,7 +669,18 @@ var Action = function(account, object, priority, settings){
 
         if (totalInputAmount <= 0) {
 
-            return Promise.reject('actions_totalAmountZero')
+            if(!amountError) amountError = 'actions_totalAmountZero'
+
+            //return Promise.reject('actions_totalAmountZero')
+        }
+
+        if(amountError){
+            if(!retry){
+                return makeTransaction(true, calculatedFee, send)
+            }
+
+            return Promise.reject(amountError)
+            
         }
 
         var outputs = []
@@ -1248,6 +1265,8 @@ var Action = function(account, object, priority, settings){
 
     self.processingWithIteractions = async function(rejectIfError){
 
+        console.log('rejectIfError', rejectIfError)
+
         var error = null
         var tryresolve = false
 
@@ -1511,9 +1530,9 @@ var Account = function(address, parent){
 
         
 
-        if (u.confirmations <= 11 && u.pockettx) {
+        if (u.confirmations <= 15 && u.pockettx) {
 
-            wait = 11 - u.confirmations
+            wait = 15 - u.confirmations
 
         }
 
@@ -1523,9 +1542,9 @@ var Account = function(address, parent){
 
         }
 
-        if (u.confirmations < 100 && (u.coinbase || u.coinstake)) {
+        if (u.confirmations < 115 && (u.coinbase || u.coinstake)) {
 
-            wait = 100 - u.confirmations
+            wait = 115 - u.confirmations
 
         }
 
@@ -1963,6 +1982,7 @@ var Account = function(address, parent){
 
     self.addUnspentFromTransaction = function(transaction){
 
+        var coinbase = deep(transaction, 'vin.0.coinbase') || (deep(transaction, 'vout.0.scriptPubKey.type') == 'nonstandard') || false
        
         var outs = _.map(transaction.vout, (out) => {
             return {
@@ -1973,7 +1993,7 @@ var Account = function(address, parent){
                 scriptPubKey : deep(out, 'scriptPubKey.hex'),
                 confirmations : Math.max(transaction.confirmations || (transaction.height && parent.app.platform.currentBlock ? parent.app.platform.currentBlock - transaction.height : 0), 0),
                 pockettx : deep(transaction, 'vout.0.scriptPubKey.addresses.0') == "",
-                coinbase : false,
+                coinbase : coinbase, ////// 
                 txid : transaction.txid
             }
         })
@@ -2843,7 +2863,9 @@ var Actions = function(app, api, storage = localStorage){
 
             ////processing
 
-            return action.processingWithIteractions(true).then(() => {
+            console.log("P", p)
+
+            return action.processingWithIteractions(p.rejectIfErrorEn ? false : true).then(() => {
                 return Promise.resolve(action)
             }).catch(e => {
 

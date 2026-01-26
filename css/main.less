@@ -196,7 +196,6 @@
 }
 
 
-
 /* iOS 11.0: supports constant() css function. (Assume all other inset vars are supported.) */
 @supports (padding-top: constant(safe-area-inset-top))  {
 	:root {
@@ -1381,10 +1380,6 @@ html.mobileview{
 
     .upbutton{
         display: none;
-    }
-
-    body{
-        overflow-x: hidden;
     }
 }
 
@@ -3748,6 +3743,30 @@ html.mobileview.android{
     right: 0;
     background: rgba(var(--color-shadow-var), 0.9);
     z-index: 1010;
+    &.ratingPromptDialog {
+        .buttons > div {
+          &.btn1wr button {
+            background: rgb(var(--color-bg-ac-bright));
+            color: rgb(var(--text-on-bg-ac-color));
+            border: 1px solid rgb(var(--color-bg-ac-bright));
+            font-weight: 600;
+      
+            &:hover {
+              opacity: 0.9;
+            }
+          }
+      
+          &.btn2wr button {
+            background: transparent;
+            color: rgb(var(--color-txt-ac));
+            border: 1px solid rgb(var(--neutral-grad-2));
+      
+            &:hover {
+              background: rgba(var(--neutral-grad-1), 0.1);
+            }
+          }
+        }
+    }
 
     &.zindex{
         z-index: 5000;
@@ -7984,7 +8003,7 @@ html{
     position: fixed;
     left: 0;
     width: 44px;
-    bottom: 52px;
+    bottom: 152px;
     border-top-right-radius: @rhythm;
     border-bottom-right-radius: @rhythm;
     overflow: hidden;

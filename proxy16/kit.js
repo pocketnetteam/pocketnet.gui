@@ -24,6 +24,7 @@ var settings = {};
 
 var pocketnet = new Pocketnet()
 var test = _.indexOf(process.argv, '--test') > -1 || global.TESTPOCKETNET
+var test2 = _.indexOf(process.argv, '--test2') > -1 || global.TESTPOCKETNET2
 var reverseproxy = _.indexOf(process.argv, '--reverseproxy') > -1 || global.REVERSEPROXY
 
 typeof global.EXPERIMENTALNODES == 'undefined' ? global.EXPERIMENTALNODES = _.indexOf(process.argv, '--experimentalnodes') > -1 : false
@@ -1327,33 +1328,6 @@ const kit = {
 			info: function () {
 				return kit.proxy().then(proxy => {
 					return proxy.torapplications.info();
-				})
-			},
-
-			install : function(){
-				return kit.proxy().then(async proxy => {
-					await proxy.torapplications.install().catch(e => {
-						return Promise.reject(e)
-					})
-
-					return Promise.resolve(proxy.torapplications.info())
-				})
-			},
-
-			reinstall : function(){
-				return kit.proxy().then(async proxy => {
-					await proxy.torapplications.reinstall().catch(e => {
-						return Promise.reject(e)
-					})
-
-					return new Promise(resolve => {
-						setTimeout(() => {
-							return resolve(proxy.torapplications.info())
-						}, 1000)
-					})
-
-
-
 				})
 			}
 

@@ -1465,6 +1465,22 @@ var lenta = (function(){
 				}
 			},
 
+			removeFromCollection: function(id, clbk){
+				var share = self.psdk.share.get(id)
+
+				if (share){
+					self.app.platform.sdk.collections.removeItem(id)
+				}
+			},
+
+			addToCollection : function(id, clbk){
+				var share = self.psdk.share.get(id)
+
+				if (share){
+					self.app.platform.sdk.collections.addItem(id)
+				}
+			},
+
 			unblock : function(id, clbk){
 				var share = self.psdk.share.get(id)
 
@@ -3138,6 +3154,22 @@ var lenta = (function(){
 				var shareId = $(this).closest('.share').attr('id');
 
 					actions.unblock(shareId)
+
+			},
+
+			removeFromCollection: function(){
+
+				var shareId = $(this).closest('.share').attr('id');
+
+					actions.removeFromCollection(shareId)
+
+			},
+
+			addToCollection: function(){
+
+				var shareId = $(this).closest('.share').attr('id');
+
+					actions.addToCollection(shareId)
 
 			},
 
@@ -5250,6 +5282,8 @@ var lenta = (function(){
 			el.c.on('click', '.panel .pkoin', events.pkoin)
 			el.c.on('click', '.panel .boost', events.boost)
 			el.c.on('click', '.unblockbutton', events.unblock)
+			el.c.on('click', '.addToCollection', events.addToCollection)
+			el.c.on('click', '.removeFromCollection', events.removeFromCollection)
 			el.c.on('click', '.showblockedpost', events.showblockedpost)
 			el.c.on('click', '.videoTips', events.fullScreenVideo)
 			el.c.on('click', '.videoOpen', events.fullScreenVideo)

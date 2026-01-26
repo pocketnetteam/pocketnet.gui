@@ -42,17 +42,14 @@ function onFetch(event) {
   }
 
   async function putCache(cache, response) {
-    const responseClone = await response.clone();
-    const responseBuffer = await responseClone.arrayBuffer();
 
     const isOpaque = (response.type === 'opaque');
-    const isBodyEmpty = (responseBuffer.length === 0);
 
-    if (isOpaque || isBodyEmpty) {
+    if (isOpaque) {
       return;
     }
 
-    cache.put(request, response);
+    cache.put(request, response.clone());
   }
 
   async function torAnswerCordova() {
@@ -175,11 +172,12 @@ function onFetch(event) {
         const torResponse = await torAnswer();
 
         if (torResponse) {
-          resolve(torResponse.clone());
 
           if (cacheName) {
             putCache(cache, torResponse);
           }
+
+          resolve(torResponse);
 
           return;
         }
@@ -193,11 +191,12 @@ function onFetch(event) {
         const torResponseCordova = await torAnswerCordova();
 
         if (torResponseCordova) {
-          resolve(torResponseCordova.clone());
 
           if (cacheName) {
             putCache(cache, torResponseCordova);
           }
+
+          resolve(torResponseCordova);
 
           return;
         }
@@ -223,11 +222,12 @@ function onFetch(event) {
           totalStats: networkTotalStats,
         });
 
-        resolve(fetchResponse.clone());
-
         if (cacheName) {
           putCache(cache, fetchResponse);
         }
+
+        resolve(fetchResponse);
+
       }
     } catch (err) {
       networkTotalStats.directFailCount++;
@@ -243,9 +243,12 @@ function onFetch(event) {
     }
   });
 
-  
+  if(isCordova && request.destination == 'document'){
+    return
+  }
 
   switch (request.destination) {
+
     case 'image':
       event.respondWith(handle('image-cache'));
       break;

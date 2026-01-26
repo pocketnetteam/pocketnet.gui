@@ -1838,6 +1838,306 @@ Share = function(lang){
 	return self;
 }
 
+Collection = function(lang){
+
+	var self = this;
+
+	self.internalid = makeid()
+
+	self.clear = function(){
+		
+		self.message.set()
+		self.images.set()
+		self.tags.set()
+		self.url.set()
+		self.caption.set()
+		self.repost.set()
+		self.language.set(lang)
+		self.aliasid = ""
+		
+	}
+
+	self.caption = {
+		set : function(_v){
+
+			if(!_v){
+				this.v = ''
+			}
+			else
+			{
+				this.v = _v
+			}
+
+			_.each(self.on.change || {}, function(f){
+				f('caption', this.v)
+			})
+			
+
+		},
+		v : '',
+
+		drag : false
+	};
+	
+	self.message = {
+		set : function(_v){
+
+			if(!_v){
+				this.v = ''
+			}
+			else
+			{
+				this.v = _v
+			}
+			
+			_.each(self.on.change || {}, function(f){
+				f('message', this.v)
+			})
+
+		},
+		v : '',
+
+		drag : true
+	};
+
+	self.language = {
+		set : function(_v){
+
+			if(!_v){
+				this.v = ''
+			}
+			else
+			{
+				this.v = _v
+			}
+			
+			_.each(self.on.change || {}, function(f){
+				f('language', this.v)
+			})
+
+		},
+		get : function(){
+			return this.v
+		},
+		v : ''
+	};
+
+	self.ustate = function(){
+		if(self.aliasid){
+			return ''
+		}
+
+		return 'collection'
+	}
+
+	self.contentIds = {
+		
+		set : function(contentIds){
+
+			if(!contentIds){
+				this.v = []
+			}
+
+			else
+			{
+				if(_.isArray(contentIds)){
+					this.v = contentIds;
+				}
+
+				else{
+
+					if(!contentIds) return
+
+					this.v.push(contentIds)
+				}
+			}
+
+			_.each(self.on.change || {}, function(f){
+				f('contentIds', this.v)
+			})
+
+
+			return true;
+		},
+		remove : function(contentId){
+			if(!contentId){
+				this.v = []
+			}
+			else
+			{
+				removeEqual(this.v, contentId)
+			}
+
+			_.each(self.on.change || {}, function(f){
+				f('contentIds', this.v)
+			})
+		},
+		get : function(){
+			return _.map(this.v, function(contentId){
+				return contentId
+			})
+		},
+		v : []
+	}
+	
+
+	self.image = {
+		set : function(_v){
+
+			if(!_v){
+				this.v = ''
+			}
+			else
+			{
+				this.v = _v
+			}
+			
+			_.each(self.on.change || {}, function(f){
+				f('image', this.v)
+			})
+
+		},
+		get : function(){
+			return this.v
+		},
+		v : ''
+	};
+
+
+	self.on = {
+		change : {}
+	}
+
+	self.off = function(e){
+		delete self.on[e]
+	}
+
+
+	self.checkloaded = function(){
+		var notloaded = self.image.v.indexOf('data:image') > -1
+
+		return notloaded
+	}
+
+	self.uploadImages = function(app, clbk){
+
+		var image = self.image.v
+
+		if (image.indexOf('data:image') > -1){
+
+			app.imageUploader.upload({
+				base64: image
+			}).then( url => {
+
+				self.image.v = url;
+				clbk();
+
+			}).catch(err => {
+				clbk();
+			})
+			
+		}
+		else
+		{
+			clbk();
+		}
+
+	}
+
+	self.validation = function(){
+
+		if (self.delete){
+			return false;
+		}
+
+		/*if(!self.message.v && !self.caption.v){
+			return 'message'
+		}*/
+
+		if(!self.language.v){
+			return 'language'
+		}
+
+		if(!self.image.v){
+			return 'image'
+		}
+
+		if(!self.contentIds.v.length){
+			return 'contentIds'
+		}
+
+		if(!self.caption.v) return 'caption'
+
+		return false
+	}
+
+	self.serialize = function(){
+		
+		return _.map(self.contentIds.v, function(t){ return (t) }).join(',') + 
+		
+		(self.language.v) + (self.caption.v) /*+ (self.message.v)*/ + (self.image.v)
+
+		//+ (self.aliasid || "")
+	}
+
+	self.shash = function(){
+		return bitcoin.crypto.sha256(self.serialize()).toString('hex')
+	}
+
+	self.export = function(){
+
+		return {
+			type : self.type,
+			c : self.caption.v,
+			//message : self.message.v,
+			i : self.image.v,
+			l : self.language.v,
+			txidEdit : self.aliasid || "",
+			contentIds : self.contentIds.v,
+			s : ""
+		}
+
+	}
+
+	self.import = function(v){
+
+		self.caption.set(v.c || v.caption)
+		//self.message.set(v.message)
+		self.image.set(v.i || v.image)
+		self.language.set(v.l || v.language || 'en')
+		self.contentIds.set(v.contentIds || [])
+
+		if (v.txidEdit) self.aliasid = v.txidEdit
+		
+	}
+
+	self.alias = function(txid){
+		var collection = new pCollection();
+
+			collection.time = new Date();
+
+			collection._import(self.export(true))
+
+			collection.txid = txid || self.aliasid
+
+		return collection;
+	}
+
+	self.optstype = function(){
+		return self.type
+	}
+
+	self.typeop = function(){
+		return self.type
+	}
+
+	if(lang) self.language.set(lang)
+
+	self.type = 'collection'
+
+	return self;
+}
+
 UserInfo = function(){
 
 	var self = this;
@@ -2274,6 +2574,7 @@ brtAccount = function(){
 	self.geohash = '';
 	self.static = false;
 	self.radius = 0;
+	self.safeDeal = {};
 
 	self.validation = function(){
 
@@ -2285,7 +2586,8 @@ brtAccount = function(){
 						a: self.tags,
 						g: self.geohash,
 						s: self.static,
-						r: self.radius
+						r: self.radius,
+						d: self.safeDeal,
 					 });
 	}
 
@@ -2296,7 +2598,8 @@ brtAccount = function(){
 				tags: self.tags,
 				geohash: self.geohash,
 				static: self.static,
-				radius: self.radius
+				radius: self.radius,
+				safeDeal: self.safeDeal,
 			};
 		}
 
@@ -2307,7 +2610,8 @@ brtAccount = function(){
 					a: self.tags,
 					g: self.geohash,
 					s: self.static,
-					r: self.radius
+					r: self.radius,
+					d: self.safeDeal,
 				})
 			}
 		};
@@ -2319,6 +2623,7 @@ brtAccount = function(){
 		self.geohash = d.geohash;
 		self.static = d.static;
 		self.radius = d.radius;
+		self.safeDeal = d.safeDeal;
 	}
 
 	self.type = 'brtaccount';
@@ -2343,6 +2648,8 @@ brtOffer = function(){
 	self.currencyPrice = {};
 	self.delivery = {};
 	self.videoSettings = {};
+	self.safeDeal = {};
+	self.metaData = {};
 	self.price = 0;
 	self.published = 'published';
 
@@ -2372,7 +2679,9 @@ brtOffer = function(){
 						p: self.published,
 						f: self.currencyPrice,
 						d: self.delivery,
-						v: self.videoSettings
+						v: self.videoSettings,
+						s: self.safeDeal,
+						m: self.metaData,
 					 }) +
 					 JSON.stringify(self.images) +
 					 self.geohash +
@@ -2397,6 +2706,8 @@ brtOffer = function(){
 				currencyPrice: self.currencyPrice,
 				delivery: self.delivery,
 				videoSettings: self.videoSettings,
+				safeDeal: self.safeDeal,
+				metaData: self.metaData,
 				price: self.price,
 				published: self.published
 			};
@@ -2416,7 +2727,9 @@ brtOffer = function(){
 					p: self.published,
 					f: self.currencyPrice,
 					d: self.delivery,
-					v: self.videoSettings
+					v: self.videoSettings,
+					s: self.safeDeal,
+					m: self.metaData,
 				}),
 				s5: JSON.stringify(self.images),
 				s6: self.geohash,
@@ -2441,6 +2754,8 @@ brtOffer = function(){
 		self.currencyPrice = d.currencyPrice;
 		self.delivery = d.delivery;
 		self.videoSettings = d.videoSettings;
+		self.safeDeal = d.safeDeal;
+		self.metaData = d.metaData;
 		self.price = d.price;
 		self.published = d.published;
 	}
@@ -2620,6 +2935,21 @@ pMiniapp = function(){
 		modFlag.i1.set(reason);
 
 		return modFlag;
+	}
+
+
+	self.upvote = function(value, address){
+
+		if(self.myVal && self.myVal != '0') return null;
+
+		var upvoteShare = new UpvoteShare();
+
+		upvoteShare.share.set(self.hash);
+		upvoteShare.value.set(value);
+		upvoteShare.address.set(self.address || '')
+
+
+		return upvoteShare;
 	}
 
 
@@ -3301,10 +3631,11 @@ pShare = function(){
 	self.social = function(app){
 
 		var text = self.message.v;
+		var name = app.platform.api.name(self.address)
 
 		if (window.cordova && deep(window, 'plugins.socialsharing') && self.message.blocks){
 
-			var name = app.platform.api.name(self.address)
+			
 			var edjs = new edjsHTML(null, app)
 			var message = edjs.apply(self.message, articleDecode)
 			text = edjs.text(message);
@@ -3462,6 +3793,177 @@ pShare = function(){
 	}
 
 	self.type = 'share'
+
+	return self;
+}
+
+pCollection = function(){
+
+	var self = this;
+
+	self.message = ''
+	self.caption = ''
+	self.image = '';
+	self.txid = '';
+	self.language = '';
+	self.contentIds = [];
+
+	
+
+	self.time = new Date()
+	self.___temp = false
+
+	self.address = ''
+
+	self.deleted = false;
+
+	self.on = {}
+	self.off = function(e){
+		delete self.on[e]
+	}
+
+	self._import = function(v){
+
+		self.message = v.message || ""
+		self.caption = v.c || v.caption || ""
+		self.contentIds = v.contentIds || []
+
+		self.language =  v.l || v.language || 'en'
+		self.image = v.i || v.image || ''
+
+		if(self.image){
+			if(!checkIfAllowedImage(self.image)) self.image = ''
+		}
+
+		if (v.deleted) self.deleted = true
+
+		if (v.txid)
+			self.txid = v.txid;
+
+		if (v.id)
+			self.id = v.id;
+
+		if(v.___temp) self.___temp = v.___temp
+
+		if (v.txidEdit){
+			self.txidEdit = v.txidEdit;	
+			self.edit = true
+		}
+
+		if (v.edit){
+			self.edit = true
+		}
+
+		self.temp = v.temp || null;
+
+		if (v._time)
+			self._time = v._time
+
+		if (v.time)
+			self.time.setTime(v.time * 1000);
+	}
+
+	self.clone = function(){
+		var ui = new pCollection()
+
+			ui._import(self.export())
+
+		return ui
+	}
+
+	self.export = function(){
+
+		var v = {}
+		
+		v.message = (self.message)
+		v.caption = (self.caption)
+		v.contentIds = _.map(self.contentIds || [], function(t){ return (t) })
+		v.image = _.clone(self.image)
+		v._time = self._time || self.time;
+		v.time = self.time.getTime() / 1000;
+		v.language = self.language
+		v.deleted = self.deleted
+
+		v.address = self.address
+		v.txid = self.txid
+		v.txidEdit = self.txidEdit
+		v.edit = self.edit
+		v.___temp = self.___temp
+
+		return v
+	}
+
+	self.import = function(v){
+
+		v = JSON.parse(v)
+
+		self._import(v)
+	}
+
+	self.social = function(app){
+
+		var text = self.renders.text(self.message);
+		var name = app.platform.api.name(self.address)
+
+
+		var s = {
+			image : self.image ? self.image : '',
+			files : self.image ? [self.image] : [],
+			title : app.localization.e('collectionby') + " " + name,
+			html : {
+				body : text,
+				preview : self.renders.caption(self.caption)
+			},
+
+			text : {
+				body : text,
+				preview : self.renders.caption(self.caption),
+				title: self.caption
+			}
+		
+		}
+
+		return s
+	}
+
+	self.renders = {
+		
+		caption : function(c){
+
+			var m = trimrn(filterXSS(c || self.caption, {
+				whiteList: [],
+				stripIgnoreTag: true,
+			}))
+
+			return trimrn(c || self.caption);
+		},
+
+		message : function(m){
+
+			var m = trimrn(filterXSS(m || self.message, {
+				whiteList: [],
+				stripIgnoreTag: true,
+			}))
+
+			return m
+		},
+		
+	}
+
+	self.alias = function(){
+		var collection = new Collection();
+
+		collection.import(self)
+
+		collection.aliasid = self.txid
+
+		collection.time = self.time
+
+		return collection;
+	}
+
+	
+	self.type = 'collection'
 
 	return self;
 }

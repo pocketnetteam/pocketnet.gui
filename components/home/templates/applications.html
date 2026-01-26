@@ -11,7 +11,13 @@
             class="icon"
             data-action="navigateToApplication"
             style="background-image: url(&quot;<%- ins.icon %>&quot;)"
-        ></div>
+        >
+            <% if (ins.installed) { %>
+            <span class="installed-badge" title="<%- e('installedBadge') %>">
+                <i class="fas fa-check-circle"></i>
+            </span>
+            <% } %>
+        </div>
         <div class="name">
             <span data-action="navigateToApplication"><%- ins.name %></span>
             <% if (ins.status === 'development') { %>

@@ -186,7 +186,6 @@
         <!--<edit-config file="AndroidManifest.xml" target="/manifest" mode="merge">
             <manifest xmlns:tools="http://schemas.android.com/tools" />
         </edit-config>-->
-
         <preference name="GradlePluginKotlinEnabled" value="true" />
         <preference name="GradlePluginKotlinVersion" value="2.1.0" />
 
@@ -223,7 +222,7 @@
         </config-file>
 
         <edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:name='MainActivity']" mode="merge">
-            <activity android:windowSoftInputMode="adjustPan" android:supportsPictureInPicture="true" />
+            <activity android:windowSoftInputMode="adjustNothing" android:supportsPictureInPicture="true" />
         </edit-config>
 
         <config-file parent="/manifest/application/activity[@android:name='MainActivity']/intent-filter" target="AndroidManifest.xml">

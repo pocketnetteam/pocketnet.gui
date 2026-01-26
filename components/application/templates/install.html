@@ -16,24 +16,87 @@
     <% } %>
 </div>
 <div class="installwrapper">
-    <img class="appicon" src="<%-application.icon%>"></>
-    <div class="appdetails">
-        <div class="appname"><%-application.name || "Unknown App"%></div>
-        <div class="appdescription"><%-application.description || "No description available."%></div>
-        <div class="apptags">
-            <% if (application.tags && application.tags.length) { %>
-                <% application.tags.forEach(function(tag) { %>
-                    <span class="tag"><%- tag %></span>
-                <% }) %>
+    <div class="installContentWrapper">
+        <img class="appicon" src="<%-application.icon%>">
+        <div class="appdetails">
+            <div class="appname"><%-application.name || "Unknown App"%></div>
+            <div class="appdescription"><%-application.description || "No description available."%></div>
+            <div class="apptags">
+                <% if (application.tags && application.tags.length) { %>
+                    <% application.tags.forEach(function(tag) { %>
+                        <span class="tag"><%- tag %></span>
+                    <% }) %>
+                <% } else { %>
+                    <span class="tag">No tags available</span>
+                <% } %>
+            </div>
+        </div>
+
+        <div class="installButton">
+            <button class="button">
+                <%- e('installpplication')%>
+            </button>
+        </div>
+
+        <% if(hasReviewsSupport) { %>
+        <div class="ratingsPreviewSection">
+            <div class="ratingsPreviewHeader">
+                <h3><%- e('ratingsAndReviews') %></h3>
+                <button class="viewAllReviews">
+                    <span><%- e('allReviews') %></span>
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <% if(ratingsData && ratingsData.totalRatings && ratingsData.totalRatings > 0) { %>
+            <div class="ratingsPreview">
+                <div class="ratingPreviewCard">
+                    <div class="overallRatingPreview">
+                        <div class="ratingScorePreview">
+                            <div class="scoreNumberLarge"><%- ratingsData.averageRating || 0 %></div>
+                            <div class="scoreOutOfSmall"><%- e('outOf5') %></div>
+                        </div>
+                        <div class="starsPreview">
+                            <% var avgRating = ratingsData.averageRating || 0; %>
+                            <% for(var i = 1; i <= 5; i++) { %>
+                                <i class="<%= i <= Math.round(avgRating) ? 'fas' : 'far' %> fa-star"></i>
+                            <% } %>
+                        </div>
+                        <div class="ratingsCountPreview"><%- ratingsData.totalRatings || 0 %> <%- e('ratings') %></div>
+                    </div>
+                </div>
+
+                <% if(ratingsData.reviews && ratingsData.reviews.length > 0) { %>
+                <div class="recentReviewsPreview">
+                    <% ratingsData.reviews.slice(0, 2).forEach(function(review) { %>
+                    <div class="reviewPreviewItem">
+                        <div class="reviewPreviewHeader">
+                            <div class="reviewPreviewDate"><%- review.date || '' %></div>
+                        </div>
+                        <div class="reviewPreviewUser"><%- review.userName || 'Аноним' %></div>
+                        <% if(review.title) { %>
+                        <div class="reviewPreviewTitle"><%- review.title %></div>
+                        <% } %>
+                        <div class="reviewPreviewText"><%- review.text ? review.text.substring(0, 100) : '' %>...</div>
+                    </div>
+                    <% }) %>
+                </div>
+                <% } %>
+            </div>
             <% } else { %>
-                <span class="tag">No tags available</span>
+            <div class="ratingsPreviewEmpty">
+                <div class="emptyRatingCard">
+                    <div class="emptyStars">
+                        <% for(var i = 1; i <= 5; i++) { %>
+                            <i class="far fa-star"></i>
+                        <% } %>
+                    </div>
+                    <p><%- e('noRatingsYet') %></p>
+                    <p class="emptySubtext"><%- e('beFirstToRate') %></p>
+                </div>
+            </div>
             <% } %>
         </div>
-    </div>
-
-    <div class="installButton">
-        <button class="button">
-            <%- e('installpplication')%>
-        </button>
+        <% } %>
     </div>
 </div>

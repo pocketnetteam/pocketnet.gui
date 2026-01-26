@@ -1,0 +1,45 @@
+<div class="captionRow">
+    <div class="back iconwrapper">
+        <div class="icon">
+            <i class="fas fa-chevron-left"></i>
+        </div>
+    </div>
+    <div class="caption">
+        <span><%- e('writeComment') %></span>
+    </div>
+</div>
+
+<div class="reviewFormWrapper">
+    <div class="reviewFormAppHeader">
+        <img class="appIconSmall" src="<%-application.icon%>" alt="<%-application.name%>">
+        <div class="appName"><%-application.name || "Unknown App"%></div>
+    </div>
+
+    <div class="reviewFormFields">
+        <h3><%- e('writeComment') %></h3>
+
+        <div class="formGroup">
+            <label for="reviewText"><%- e('yourComment') %> *</label>
+            <textarea
+                id="reviewText"
+                class="formTextarea"
+                placeholder="<%- e('tellAboutExperience') %>"
+                rows="8"
+                maxlength="500"
+                required
+            ></textarea>
+            <div class="characterCount">
+                <span class="currentCount">0</span>/<span class="maxCount">500</span>
+            </div>
+        </div>
+
+        <div class="reviewFormActions">
+            <button class="cancelButton button secondary">
+                <%- e('cancel') %>
+            </button>
+            <button class="submitReviewButton button" disabled>
+                <%- e('submitReview') %>
+            </button>
+        </div>
+    </div>
+</div>

@@ -12,6 +12,9 @@ class wsstransport extends Transport {
       
       this.logger = opts.logger
 
+
+      
+
     }
    
     log(info, callback) {

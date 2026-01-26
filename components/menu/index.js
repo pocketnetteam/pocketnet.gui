@@ -562,8 +562,7 @@ var menu = (function(){
 									controlTorElem.attr('title', proxyData?.info.tor.state.info);
 									controlTorStatusText.addClass('visible');
 									controlTorStatusText.text(app.localization.e('torHintStateEnabled'));
-								} else if (proxyData?.info.tor.state.status === 'install'
-									|| proxyData?.info.tor.state.status === 'running') {
+								} else if (proxyData?.info.tor.state.status === 'running') {
 									controlTorElem.removeClass(['on', 'off', 'failed']);
 									controlTorElem.addClass('loading');
 									controlTorElem.attr('title', proxyData?.info.tor.state.info);

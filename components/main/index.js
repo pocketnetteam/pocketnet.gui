@@ -1072,7 +1072,7 @@ var main = (function(){
 
 			el.addbutton.on('click', actions.addbutton)
 
-			el.c.find('.barteronbanner').on('click', function(){
+			el.c.find('.barteronbutton button').on('click', function(){
 
 				console.log('asd')
 

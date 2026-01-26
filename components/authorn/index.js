@@ -1528,6 +1528,38 @@ var authorn = (function(){
 				})
 			},
 
+			collections : function( clbk){
+
+				if (modules['collections']){
+					modules['collections'].destroy()
+					modules['collections'] = null
+				}
+
+				self.nav.api.load({
+
+					open : true,
+					id : 'collections',
+					el : el.collections,
+					animation : false,
+					
+					essenseData : {
+						address : author.address,
+						preview : true,
+					},
+					
+					clbk : function(e, p){
+
+						modules['collections'] = p
+
+						el.collections.addClass('active')
+
+						if (clbk)
+							clbk(e, p)
+					}
+
+				})
+			},
+
 			userslist : function(_el, addresses, empty, caption, clbk, mid, count){
 
 				if (modules['userlist' + mid]){
@@ -1736,6 +1768,7 @@ var authorn = (function(){
 				renders.subscribes()
 				renders.subscribers()
 				renders.blocking()
+				//renders.collections()
 			}
 
 			renders.upbutton()
@@ -1860,6 +1893,7 @@ var authorn = (function(){
 				el.subscribers = el.c.find('.subscribers')
 				el.blocking = el.c.find('.blocking')
 				el.upbackbutton = el.c.find('.upbackbuttonwrapper')
+				el.collections = el.c.find('.collections')
 
 				if(!self.app.user.isItMe(author.address))
 					self.sdk.activity.adduser('visited', author.address)

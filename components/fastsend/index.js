@@ -12,7 +12,7 @@ var fastsend = (function(){
 
 		var actions = {
 
-			makeTransaction : function(list, message, clbk){
+			makeTransaction : function(list, message, clbk, nr){
 
 				var transaction = new Transaction()
 				
@@ -30,7 +30,8 @@ var fastsend = (function(){
 
 					self.app.platform.actions.addActionAndSendIfCan(transaction, 1, null, {
 						calculatedFee : 0,
-						rejectIfError : true
+						rejectIfError : nr ? false : true,
+						rejectIfErrorEn : nr ? true : false,
 					}).then((action) => {
 
 						text.value = ''
@@ -145,15 +146,65 @@ var fastsend = (function(){
 
 				var value = _.reduce(list, function(m,v){return m + v.value}, 0).toFixed(8)
 
-				if (list.length && value){
-					new dialog({
-						html : 'Do you really want to send ' + self.app.platform.mp.coin(value) + ' to ' + list.length + ' addresses',
-						class : 'one',
+				var count = 50
 
-						success : function(){
-							actions.makeTransaction(list, message.value)
-						}
-					})
+				if (count < 2) count = 2
+
+				if (list.length && value){
+
+					if(list.length < count){
+						new dialog({
+							html : 'Do you really want to send ' + self.app.platform.mp.coin(value) + ' to ' + list.length + ' addresses',
+							class : 'one',
+
+							success : function(){
+								actions.makeTransaction(list, message.value, function(){
+
+								})
+							}
+						})
+					}
+
+					else{
+
+						var llist = _.toArray(_.groupBy(list, (l, index) => {
+							return Math.floor(index / count)
+						}))
+
+						console.log('llist', llist)
+
+						new dialog({
+							html : '!IMORTANT! There will be <b>'+llist.length+'</b> transactions. Do you really want to send ' + self.app.platform.mp.coin(value) + ' to ' + list.length + ' addresses',
+							class : 'one',
+
+							success : function(){
+								_.each(llist, (list) => {
+
+									actions.makeTransaction(list, message.value, function(){
+
+									}, true)
+
+								})
+
+								setTimeout(() => {
+									self.nav.api.go({
+										open : true,
+										href : 'activities',
+										inWnd : true,
+										history : true,
+										essenseData : {
+											activityFilter : "pending"
+										}
+									})
+								}, 300)
+
+								
+								
+							}
+						})
+					}
+
+					
 				}
 				else{
 					sitemessage('Empty list')

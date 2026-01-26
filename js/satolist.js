@@ -468,7 +468,6 @@ Platform = function (app, listofnodes) {
         'PFCSYXEc5fmVKNoPEtEg1NFezh4bym6e12': true,
         'PUH33LTfznPMgAWuyT1KqinYE8f9B4sRk9': true,
         'PLwWXrGBvVxWfujrDxgGHa7oCVtyw9F3Du': true,
-        'PBsnRLRRafnjDEHVaTyreFS1SRKavVFXHZ': true,
         'PDdwKn4ZNSMyeSyQ6F9zf4ttVd6jC1arvn': true,
         "PCZtNtn7b4m2BYYLNKiJGsquqQ4k5qSa45" : true,
         "PBvEaZDUYmHzT6pZ3ByaUTyPajx2tgzp1k" : true,
@@ -514,7 +513,28 @@ Platform = function (app, listofnodes) {
         'PNiQ31ZnbS2ZksFNyW2Nd34D5fKLa5TURD' : true,
         'PNveZ2XJRXmtdmWaejQpRrUza3CrfRvXVg' : true,
         'PC4jJAG5qrWNddQ7CPCoRurRYnW3qEBLQA' : true,
-        'PAb8HT8ztVRnhJJELK4heXRfUyEGro7KGT' : true
+        'PAb8HT8ztVRnhJJELK4heXRfUyEGro7KGT' : true,
+        'PMWWFd2vWukA8x8y3ApPRSWcMi9w2CqhLp' : true,
+        'PJ559LyiZUVXAnFnyXxX8RHvs5CCU7D4dn' : true,
+        'PDgMM7rnExAB1nxXhPS42saTqBnNtvNyga' : true,
+        'PDSTrWEM3pYDgvmUKMRxNCwmCrUPrK6fWg' : true,
+        'PNoyq94ugcQBDpCvuM3HDqWf7c19Q6tG64' : true,
+        'PK3cvGC1MeinhNrQmQPXH8Qaw4m1SySrkV' : true,
+        'PSPMwr8im5UnHxXikFF36uT7ZnBgxUAcP9' : true,
+        'PT9BaHuotbTrXzyHkf7L8mLcqzhfBfYdnn' : true,
+        'P8nmYypqL7Dt6Ys6ucVfx1D1gxKX38Wy1C' : true,
+        'PXpffcJzoxfkzCbH1vKQaLTSmSTYtumpkv' : true,
+        'PNPjWdkZcxqzubHkBoKxxKaGQrNNfxa8tJ' : true,
+        'PFH2MCd8wwhKShnuxELr3GmYj9pwL2AGBy' : true,
+        'PF64CgBa32LUYSAkwFbW1cozChV7SCNyhM' : true,
+        'PRw4Y3gPxVVEzmLhiG2eWTKx18gBdrZ5TD' : true,
+        'PBjV827sqgz7dJybRb9MKbQKgzFGFzXWZc' : true,
+        'PPbNqCweFnTePQyXWR21B9jXWCiDJa2yYu' : true,
+        'PXJpTaoAKL2XpkrQ3xpYR5Y2cqnDXzn74T' : true,
+        'PJagHqZFaeS1mMYkCG6G4BbVwxy5S1a8E4' : true,
+        'PVxA9jPbHMpz6q69LJgLBCPvKdam35KAEG' : true,
+        'PV5E3oDm9YNnHMndHKd7r6eYyGaAW3TXpn' : true
+
     }
 
     self.bch = {
@@ -1244,6 +1264,41 @@ Platform = function (app, listofnodes) {
                     a(key, action, akey)
                 }
 
+                console.log('eobj', eobj)
+
+                return (eobj.text || function () {
+                    return ''
+                })()
+            }
+
+
+
+        }
+
+        self.errorHandlerSimple = function (key, akey) {
+
+            var er = null
+
+            if (_.isObject(key)) {
+                er = key
+                key = er.code
+            }
+
+            var eobj = self.errors[key] || self.errors['network'];
+
+            if (!eobj) {
+                return false;
+            } else {
+                var m = eobj.message;
+
+                if (m) {
+                    if (typeof m == 'function') m = m(akey, er);
+
+                    if (!m) return
+
+                    return m
+                }
+
                 return (eobj.text || function () {
                     return ''
                 })()
@@ -1916,6 +1971,8 @@ Platform = function (app, listofnodes) {
         "imageerror": {
 
             message: function () {
+
+                return self.app.localization.e('imageerror')
 
                 return 'An error occurred while loading images. Please try again'
 
@@ -6515,6 +6572,249 @@ Platform = function (app, listofnodes) {
     }
 
     self.sdk = {
+
+        collections : {
+            current : null,
+            clbks : {},
+            wnd : null,
+
+            unregisternewcollectionwindow : function(){
+                self.sdk.collections.wnd = null
+            },
+
+            opennewcollectionwindow : function(editing){
+
+                var type = editing ? 'edit' : 'new'
+
+                if (editing){
+                    self.sdk.collections.unregisternewcollectionwindow()
+                }
+
+                else{
+                    if (self.sdk.collections.wnd){
+                        if (self.sdk.collections.wnd.type != type){
+                            self.sdk.collections.unregisternewcollectionwindow()
+                        }
+
+                        else{
+                            var external = self.sdk.collections.wnd.element
+
+						    external.show()
+
+                            return
+                        }
+                    }
+                }   
+
+                
+
+                app.nav.api.load({
+					open : true,
+					id : 'newcollection',
+					inWnd : true,
+
+					essenseData : {
+                        collection : editing
+					},
+
+                    clbk : function( element){
+
+						self.sdk.collections.wnd = {
+                            element, 
+                            type
+                        };
+
+					}
+				})
+            },
+
+            addItem : function(id){
+                if(!self.sdk.collections.current) return
+
+                self.sdk.collections.current.contentIds.set(id)
+
+                if(self.sdk.collections.clbks.change) self.sdk.collections.clbks.change(self.sdk.collections.current)
+
+                app.el.html.find('.share_common#' + id).addClass('incollection')
+            },
+
+            removeItem : function(id){
+                self.sdk.collections.current.contentIds.remove(id)
+
+                if(self.sdk.collections.clbks.change) self.sdk.collections.clbks.change(self.sdk.collections.current)
+
+                app.el.html.find('.share_common#' + id).removeClass('incollection')
+                
+            },
+
+            enableEditMode : function(collection, clbks = {}){
+
+                var ws = self.sdk.collections.current
+
+                self.sdk.collections.current = collection || null
+
+                self.sdk.collections.clbks = clbks
+
+                if (self.sdk.collections.current){
+                    app.el.html.addClass('editcollection')
+                }
+                else{
+                    
+                    app.el.html.removeClass('editcollection')
+                }
+
+                if(collection?.internalid != ws?.internalid){
+
+                    app.el.html.find('.share_common').each((i, el) => {
+                        var t = $(el)
+
+                        if(self.sdk.collections.checkItemId(t.attr('id'))){
+                            t.addClass('incollection')
+                        }
+                        else{
+                            t.removeClass('incollection')
+                        }
+                    })
+
+                    return true
+                }
+            },
+
+            checkItemId : function(txid){
+                if(!self.sdk.collections.current) return false
+
+                return _.find(self.sdk.collections.current.contentIds.v, (i) => {
+                    return i == txid
+                })
+            },
+
+            load : {
+                byid : function(txid, clbk, refresh){
+                    self.sdk.collections.load([txid], function(collections, error, p){
+
+                        if(!collections.length && !error){
+                            error = 'collectionNotFound'
+                        }
+
+                        if (error){
+
+                            if (clbk) {
+                                clbk(null, error)
+                            }
+                            
+                            return
+                        }
+
+                        if (clbk){
+                            clbk(collections[0], null)
+                        }
+                        
+
+                    }, refresh)
+                },
+                byids : function(txids, clbk, refresh){
+
+                    self.psdk.collection.load(txids, refresh).then(() => {
+
+                        var collections = self.psdk.share.gets(txids)
+
+                       
+
+                        if (clbk){
+                            clbk(collections, null, {
+                                count: txids.length
+                            })
+                        }
+                        
+
+                    }).catch(e => {
+
+                        if (clbk) {
+                            clbk(null, e, {})
+                        }
+
+                    })
+
+                },
+                profile : function(address, clbk, count = 100, rpc){
+                    ///getprofilecollections
+
+                    var method = 'getprofilecollections'
+                    var parameters = [self.currentBlock, '', count, '', [], [], [], [], [], '', address]
+
+                    console.log('load profile collections')
+
+                    /*
+
+                     var parameters = [Number(p.height), p.txid, p.count, p.lang == 'all' ? '' : p.lang, p.tagsfilter, p.type ? [p.type] : [],
+                                [],
+                                [], p.tagsexcluded
+                            ];
+                    
+                    topHeight : N1
+                    topContentHash : "hash1"
+                    countOut : 10
+                    lang : "ru"
+                    
+                    tags : ["tag1", "tag2"]
+                    contentTypes : [200,201]
+                    txIdsExcluded : ["txhash1", "txhash2"]
+                    adrsExcluded : ["addr1", "addr2"]
+                    tagsExcluded : ["tag1", "tag2"]
+
+                    address : "addr1"
+                    address_feed : "addr2"
+                    keyword : "keyword1"
+                    orderby : "id" | "comment" | "score"
+                    ascdesc : "asc" | "desc"
+                    
+                    */
+
+                    self.psdk.collection.request(() => {
+
+                        return self.app.api.rpc(method, parameters, {
+                            rpc: rpc
+                        }).then(data => {
+
+                            if (_.isArray(data)) {
+                                return Promise.resolve({
+                                    contents: data
+                                })
+
+                            }
+
+                            return Promise.resolve(data)
+
+                        })
+                    }, {
+                        method,
+                        parameters
+                    }).then(d => {
+
+                        var collections = self.psdk.collection.gets(_.map(d.contents, (s) => {
+                            return s.txid
+                        }))
+
+                        collections = self.psdk.collection.tempAdd(collections, (alias) => {
+                            return alias.actor == address
+                        })
+
+                        d.contents = collections
+
+                        if (clbk) clbk(d)
+
+                    }).catch(e => {
+
+                        console.error(e)
+
+                        if (clbk) {
+                            clbk([], e)
+                        }
+
+                    })
+                }
+            }
+        },
 
         miniapps: {
             getbyid: async function (appId) {
@@ -11316,6 +11616,7 @@ Platform = function (app, listofnodes) {
 
                             var resultStatus = 'paid'
 
+
                             if(_.find(paidC, (v) => {
                                 return v.balance >= 0
                             })) {
@@ -12775,6 +13076,17 @@ Platform = function (app, listofnodes) {
 
 
             getnew: function (url, action) {
+
+                try {
+                    var tempURL = new URL(url);
+                } catch (e) {
+                    console.error(e);
+                }
+
+                if (tempURL && !(tempURL.searchParams.has('lang'))) {
+                    tempURL.searchParams.set('lang', self.app.localization.key || '');
+                    url = tempURL.toString();
+                }
 
                 var s = self.sdk.remote.storage;
                 var f = self.sdk.remote.failed;
@@ -16206,12 +16518,12 @@ Platform = function (app, listofnodes) {
 
 
 
-            getclear: function (txid, pid, clbk, ccha) {
+            getclear: function (txid, pid, clbk, options) {
 
                 var parameters = [txid, pid || '', self.app.user.address.value || '']
 
                 self.psdk.comment.request(() => {
-                    return self.app.api.rpc('getcomments', parameters)
+                    return self.app.api.rpc('getcomments', parameters, options)
                 }, {
                     parameters
                 }).then(d => {
@@ -17488,7 +17800,7 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                getfromtotransactions : function(from, to, update){
+                getfromtotransactions : function(from, to, update, depth, opreturn){
 
                     return pretry(function () {
                         return self.currentBlock
@@ -17499,8 +17811,11 @@ Platform = function (app, listofnodes) {
     
                         return app.psdk.getfromtotransactions.request(() => {
     
-    
-                            return self.app.api.rpc('getfromtotransactions', [from, to, self.currentBlock - 43200 * 12])
+                            depth = depth || (self.currentBlock - 43200 * 12);
+
+                            const params = opreturn ? [from, to, depth, opreturn] : [from, to, depth];
+
+                            return self.app.api.rpc('getfromtotransactions', params);
 
                             /*
                             

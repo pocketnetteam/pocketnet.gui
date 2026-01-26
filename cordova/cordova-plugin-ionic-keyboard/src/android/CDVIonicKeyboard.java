@@ -8,7 +8,7 @@ import org.apache.cordova.PluginResult;
 import org.apache.cordova.PluginResult.Status;
 import org.json.JSONArray;
 import org.json.JSONException;
-
+import android.util.Log;
 import android.content.Context;
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
@@ -48,6 +48,8 @@ public class CDVIonicKeyboard extends CordovaPlugin {
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
     }
+
+    
 
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
         if ("hide".equals(action)) {
@@ -92,6 +94,9 @@ public class CDVIonicKeyboard extends CordovaPlugin {
                         int previousHeightDiff = 0;
                         @Override
                         public void onGlobalLayout() {
+
+                            Log.d("Keyboard layout", "onGlobalLayout");
+
                             boolean resize = preferences.getBoolean("resizeOnFullScreen", false);
                             if (resize) {
                                 possiblyResizeChildOfContent();
@@ -108,7 +113,8 @@ public class CDVIonicKeyboard extends CordovaPlugin {
 
 
                             
-                            
+                            Log.d("Keyboard", "rootViewHeight = " + rootViewHeight);
+                            Log.d("Keyboard", "resultBottom = " + resultBottom);
 
                             // calculate screen height differently for android versions >= 21: Lollipop 5.x, Marshmallow 6.x
                             //http://stackoverflow.com/a/29257533/3642890 beware of nexus 5
@@ -179,14 +185,27 @@ public class CDVIonicKeyboard extends CordovaPlugin {
                         }
                     };
 
-                    if (Build.VERSION.SDK_INT >= 30) {
+                    
+
+                    mChildOfContent = content.getChildAt(0);
+                    
+                    if (Build.VERSION.SDK_INT < 30) {
                         ViewCompat.setOnApplyWindowInsetsListener((View) webView.getView(), (v, insets) -> {
+
+                            list.onGlobalLayout();
+
                             return insets;
                         });
                     }
+                    else{
 
-                    mChildOfContent = content.getChildAt(0);
-                    rootView.getViewTreeObserver().addOnGlobalLayoutListener(list);
+                        ViewCompat.setOnApplyWindowInsetsListener((View) webView.getView(), (v, insets) -> {
+                            return insets;
+                        });
+
+                        rootView.getViewTreeObserver().addOnGlobalLayoutListener(list);
+                    }
+
                     frameLayoutParams = (FrameLayout.LayoutParams) mChildOfContent.getLayoutParams();
                     PluginResult dataResult = new PluginResult(PluginResult.Status.OK);
                     dataResult.setKeepCallback(true);
@@ -197,15 +216,26 @@ public class CDVIonicKeyboard extends CordovaPlugin {
         }
 
         if ("adjustpan".equals(action)) {
-            cordova.getThreadPool().execute(new Runnable() {
-                public void run() {
+            cordova.getThreadPool().execute(() -> {
 
+                if (Build.VERSION.SDK_INT < 30) {
 
-                    cordova.getActivity().getWindow().setSoftInputMode(32);
+                    cordova.getActivity().runOnUiThread(() -> {
 
+                        Log.d("Keyboard layout", "adjustpan");
+
+                        cordova.getActivity().getWindow().setSoftInputMode(
+                            16
+                        );
+
+                        PluginResult r = new PluginResult(PluginResult.Status.OK);
+                        callbackContext.sendPluginResult(r); // thread-safe
+                    });
+                }
+                else {
+                    // На 30+ просто отвечаем OK, ничего не делая
                     PluginResult r = new PluginResult(PluginResult.Status.OK);
-
-                    callbackContext.sendPluginResult(r); // Thread-safe.
+                    callbackContext.sendPluginResult(r);
                 }
             });
             return true;

@@ -1018,6 +1018,51 @@
 .share_common .sharecnt.deleted .removeDescription {
   display: block;
 }
+.share_common .collectionMode {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(var(--background-total-theme), 0.28);
+  z-index: 10;
+  align-items: center;
+}
+.share_common .collectionMode .removeFromCollection {
+  display: none;
+}
+.share_common .collectionMode .collectionModeCell {
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.share_common .collectionMode .collectionModeCell .label {
+  font-size: 0.8em;
+  margin-bottom: 1em;
+  border-radius: 16px;
+  padding: 0.5em 1em;
+  background: rgba(var(--background-total-theme), 0.88);
+}
+.share_common .collectionMode .collectionModeCell button {
+  width: 180px;
+  border-radius: 30px;
+  font-size: 0.8em;
+}
+.share_common .collectionMode .collectionModeCell .removeFromCollection,
+.share_common .collectionMode .collectionModeCell .addToCollection {
+  margin-top: 1em;
+}
+.share_common.incollection .collectionMode .addToCollection {
+  display: none;
+}
+.share_common.incollection .collectionMode .removeFromCollection {
+  display: block;
+}
 .share_common .blockAuthor {
   display: none;
   position: absolute;
@@ -1267,6 +1312,12 @@
 }
 html.television .share_common .sharecaption {
   cursor: default;
+}
+html.editcollection .share_common .collectionMode {
+  display: block;
+}
+html.editcollection .share_common .commentsWrapperHb {
+  display: none;
 }
 html.mobileview .share_common .images .imagesContainer.owlcar {
   max-width: none;

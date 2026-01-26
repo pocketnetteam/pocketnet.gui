@@ -57,11 +57,19 @@ var pSDK = function ({ app, api, actions }) {
             time: 60 // temp
         },
 
+        collectionRequest: {
+            time: 60 // temp
+        },
+
         getboostfeed : {
             time : 60 * 15
         },
 
         share: {
+            time: 240
+        },
+
+        collection: {
             time: 240
         },
 
@@ -243,6 +251,10 @@ var pSDK = function ({ app, api, actions }) {
         if (!_.isArray(ids)) ids = [ids]
 
         if (!dbname) return Promise.resolve([])
+        if (!dbmeta[dbname]) {
+            console.log('dbname', dbname)
+            return Promise.resolve([])
+        }
 
         if (dbmeta[dbname].authorized) ids = _.map(ids, id => {
             return id + '_' + app.user.address.value
@@ -1930,6 +1942,302 @@ var pSDK = function ({ app, api, actions }) {
         get: function (id) {
             return objects.miniapp[id] || null
         },
+    }
+
+    self.collection = {
+        keys: ['collection'],
+
+        objkey : 'txid',
+
+        searchIndex : function(obj){
+            var sobj = {
+                caption : {v : (obj.c || obj.caption), c : 2},
+                message : {v : (obj.b || obj.message), c : 1}
+            }
+
+            return sobj
+        },
+
+        request: function (executor, hash, cacheIndex) {
+
+            return request('collection', hash, (data) => {
+                
+                return executor(data).then(r => {
+
+                    if (r.boosts){
+                        return r
+                    }
+
+                    if(_.isArray(r)){
+                        r = {
+                            contents : r
+                        }
+                    }
+
+
+                    if(r.contents) r.contents = this.cleanData(r.contents)
+                    else r = this.cleanData(r)
+
+
+                    return r
+                })
+
+            }, {
+                requestIndexedDb: cacheIndex || 'collectionRequest',
+
+                insertFromResponse: (r) => this.insertFromResponseEx(r)
+            })
+        },
+
+        insertFromResponseEx: function (response) {
+
+            self.userInfo.insertFromResponse(self.userInfo.cleanData(response.users), true)
+
+            return this.insertFromResponse(response.contents)
+        },
+
+        insertFromResponse: function (data) {
+
+            var result = _.map(data, (r) => {
+
+                if (!r) return null
+
+                return {
+                    key: r.txid,
+                    data: r
+                }
+            })
+
+            var indexedDb = 'collection'
+            var key = 'collection'
+
+            return settodb(indexedDb, result).then(() => {
+
+                var filtered = []
+
+                _.each(result, (r) => {
+
+                    if (r && r.key && r.data) {
+                        storage[key][r.key] = r.data // ADD STORAGE
+                        filtered.push(r)
+                    }
+
+                    var object = this.transform(r)  // ADD STORAGE (TR)
+
+                    if (object) {
+                        objects[key][r.key] = object
+
+                        checkObjectInActions([object])
+                    }
+
+                })
+
+                return filtered
+
+            })
+
+        },
+
+        insertFromResponseSmall: function (data, ncn) {
+
+            if(!ncn)
+                data = this.cleanData(data)
+
+            var result = _.map(data, (r) => {
+
+                if (!r) return null
+
+                return {
+                    key: r.txid,
+                    data: r
+                }
+            })
+
+            var key = 'collection'
+
+
+            _.each(result, (r) => {
+
+                if (!storage[key][r.key] || (storage[key][r.key] && storage[key][r.key].___temp))
+                    storage[key][r.key] = r.data // ADD STORAGE
+
+                var object = this.transform(r, true)
+
+                if (object && !(objects[key][r.key] && objects[key][r.key].___temp)) {
+                    objects[key][r.key] = object
+                }
+
+            })
+
+            return data
+
+        },
+
+        transform: function ({ key, data: collection }, small) {
+
+
+            if (collection.userprofile || collection.user) {
+                self.userInfo[!small ? 'insertFromResponse' : 'insertFromResponseSmall'](self.userInfo.cleanData([collection.userprofile || collection.user]), true)
+            }
+
+            var s = new pCollection();
+
+            s._import(collection);
+
+            return s
+        },
+
+        gets: function (ids) {
+
+            if (!_.isArray(ids)) ids = [ids]
+
+            return _.filter(_.map(ids, s => this.get(s)), s => s)
+        },
+
+        get: function (id) {
+            return this.tempExtend(id ? (objects.collection[id] || null) : null, id)
+        },
+
+        cleanData: function (rawcollections) {
+
+            return _.filter(_.map(rawcollections, (c) => {
+
+                if(!c) return false
+
+                try {
+                    c.caption = clearStringXss(trydecode(c.c || '')).replace(/&nbsp;/g, ' ');
+                    c.image = clearStringXss(trydecode(c.i || ''));
+
+                    
+                    c.message = trimrn((superXSS(trydecode(c.message || ''), {
+                        whiteList: [],
+                        stripIgnoreTag: true,
+                    }))).replace(/\n{2,}/g, '\n\n')
+
+                    c.contentIds = _.filter(_.map(c.contentIds || [], function(i){return (clearStringXss(i))}), function(i){return i});
+
+                }
+                catch (e) {
+                    console.error(e)
+
+                    return null
+                }
+
+
+                return c
+
+            }), c => c)
+        },
+
+        //? TODO COLL
+        load: function (txids, update) {
+            
+
+            return loadList('collection', txids, (txids) => {
+
+                return api.rpc('getrawtransactionwithmessagebyid', [txids]).then(d => {
+
+                    if (d && !_.isArray(d)) d = [d];
+
+                    d = this.cleanData(d)
+
+                    d = _.sortBy(d, (collection) => _.indexOf(txids, collection.txid))
+
+                    d = _.filter(d || [], (s) => s.address)
+
+                    checkObjectInActions(d)
+
+                    return _.map(d || [], (info) => {
+                        return {
+                            key: info.txid,
+                            data: info
+                        }
+                    })
+
+                })
+            }, {
+                transform: (r) => this.transform(r),
+                update,
+                indexedDb: 'collection',
+            })
+        },
+
+        listener: function (exp, address, status) {
+
+
+            if (status == 'completed') {
+                clearallfromdb('collectionRequest')
+                clearfromdb('collection', _.filter([exp.txid], r => r))
+
+                var modified = this.applyAction(objects['collection'][exp.txid], exp) //// check txidEdit
+
+                if (modified) {
+                    objects['collection'][modified.txid] = modified
+                }
+                else {
+
+                    objects['collection'][exp.txid] = exp
+                }
+            }
+        },
+
+
+        applyAction: function (object, exp) {
+
+            if (exp.editing) {
+
+                if (!object) return
+
+                if (exp.txid == object.txid) {
+
+                    object.message = exp.message
+                    object.image = exp.image
+                    object.contentIds = exp.contentIds
+                    object.caption = exp.caption
+                    object.language = exp.language
+                    object.edit = true
+                    object.temp = exp.temp
+                    object.relay = exp.relay
+                    object.rejected = exp.rejected
+
+                }
+
+
+
+            }
+
+            else {
+
+            }
+
+            return object
+        },
+
+        tempExtend: function (object, txid) {
+
+            return extendFromActions('collection', 
+                ['collection'],
+                object,
+                txid
+            )
+
+        },
+
+        tempAdd: function (objects = [], filter) {
+
+            _.each(actions.getAccounts(), (account) => {
+                var actions = _.filter(account.getTempActions('collection'), filter)
+
+                console.log('actions', actions)
+
+                _.each(actions, (a) => {
+                    objects.unshift(a)
+                })
+            })
+
+            return objects
+
+        }
     }
 
     self.share = {
