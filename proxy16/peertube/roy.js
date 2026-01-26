@@ -113,9 +113,9 @@ var Roy = function (parent) {
 			
 		}
 
-		instances = _.filter(instances, function (instance) {
-			return instance.host == host;
-		});
+	instances = _.filter(instances, function (instance) {
+		return instance.host != host;
+	});
 	};
 
 	///
