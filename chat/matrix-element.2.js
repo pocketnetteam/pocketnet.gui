@@ -1008,7 +1008,6 @@ var component = Object(componentNormalizer["a" /* default */])(
       var _ref2 = Object(asyncToGenerator["a" /* default */])(function* () {
         this.loading = true;
         this.firstPaginate = true;
-        console.log("DEBUG 1501: init");
         var inittime = performance.now();
 
         //this.chat.getTimelineForEvent('$FXUvcjIqcvDu0meLTnz-8plloZoNHLIYEb6WGQMWO3s')
@@ -1073,13 +1072,10 @@ var component = Object(componentNormalizer["a" /* default */])(
               ts = timeline.getTimelineSet();
             }
         }
-        console.log("DEBUG 1501: init before timeline", performance.now() - inittime);
         this.timeline = {
           inited: true
         };
         this.timeline.tl = new this.core.mtrx.sdk.TimelineWindow(this.core.mtrx.client, ts);
-        console.log("DEBUG 1501: init after timeline", performance.now() - inittime);
-        console.log("DEBUG 1501: timeline", this.timeline);
         var inittime = performance.now();
         setTimeout(() => {
           this.timeline.tl.load(
