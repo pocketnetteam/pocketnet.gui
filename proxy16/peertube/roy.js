@@ -278,6 +278,11 @@ var Roy = function (parent) {
 	
 
 		var request = function (instance) {
+			// Verify instance is still usable before making request
+			if (!instance.canuse()) {
+				return Promise.reject('INSTANCE_NOT_USABLE');
+			}
+
 			return instance
 				.request(method, data, p)
 				.then((r) => {
@@ -291,7 +296,10 @@ var Roy = function (parent) {
 					return Promise.resolve(r);
 				})
 				.catch((e) => {
-
+					// Handle destroyed instance errors
+					if (e === 'INSTANCE_DESTROYED' || e === 'INSTANCE_NOT_USABLE') {
+						error = e;
+					}
 
 					if (e && e.status) {
 						if (e.status != 500) {
