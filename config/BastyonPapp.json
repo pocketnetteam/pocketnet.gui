@@ -37,7 +37,7 @@
 		    "develop": true,
 		    "install": true,
 		    "name": "Barteron",
-		    "grantedPermissions": ["account", "chat"],
+		    "grantedPermissions": ["account", "sign", "chat"],
 		    "includeinsearch": true,
 		    "includeminiapps": true,
 		    "store": {
