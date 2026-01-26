@@ -79,14 +79,7 @@ var Roy = function (parent) {
 		if (options.archiveDouble) instance.archiveDouble = true;
 		if (options.archived) instance.archived = true;
 
-		// Initialize instance (async, but don't block - instance will be unusable until init succeeds)
-		instance.init().catch(function(e) {
-			// Log init failure but don't block instance creation
-			// Instance will have inited=false and won't be used until successful init
-			// if (self.parent && self.parent.logger) {
-			// 	self.parent.logger.w('system', 'error', 'Instance init failed for ' + url + ': ' + JSON.stringify(e));
-			// }
-		});
+		instance.init();
 
 		instances.push(instance);
 

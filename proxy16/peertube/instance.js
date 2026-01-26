@@ -254,33 +254,15 @@ var instance = function (host, ip, Roy) {
 	};
 
 	self.init = function () {
-		// Initialize statistic tracking first (safe to init multiple times)
-		statistic.init();
 
-		// Attempt initial info fetch before marking as initialized
-		return getinfo()
-			.then(function() {
-				// Only mark as initialized if getinfo succeeds
-				inited = true;
+		inited = true;
 
-				// Start polling interval only after successful init
-				setinfointerval();
+		getinfo()
 
-				return Promise.resolve();
-			})
-			.catch(function(e) {
-				// Cleanup on initialization failure
-				inited = false;
-				clearinfointerval();
-				statistic.destroy();
+		setinfointerval()
 
-				// Return rejection with context
-				return Promise.reject({
-					error: 'INSTANCE_INIT_FAILED',
-					host: host,
-					details: e
-				});
-			});
+		statistic.init()
+
 	};
 
 	self.export = function () {
