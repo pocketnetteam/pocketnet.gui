@@ -118,6 +118,7 @@
     },
     "build": {
         "productName": "Bastyon",
+        "afterPack": "scripts/afterPack.js",
         "afterSign": "electron-builder-notarize",
         "appId": "app.pocketnet.gui",
         "files": [
