@@ -8,10 +8,11 @@
 				<div class="iconWrapper">
 					<div class="icon">
 
-						<% 
-							var src = tempInfo.image 
+						<%
+							var src = tempInfo.image
 							var name = tempInfo.name;
 							var letter = name ? name[0] : ''
+							var isGroup = (tempInfo.accountType === 'group')
 						%>
 
 						<div elementsid="open_<%-src || 'usericon'%>" class="usericon" image="<%-src || '*'%>">
@@ -23,9 +24,11 @@
 								</span>
 		
 							<% } else if (!src) { %>
-		
-								<i class="far fa-user"></i>
-		
+								<% if(isGroup) { %>
+									<i class="fas fa-users"></i>
+								<% } else { %>
+									<i class="far fa-user"></i>
+								<% } %>
 							<% } %>
 
 						</div>
@@ -33,9 +36,11 @@
 				</div>
 
 				<div class="label">
-
-					<%=e('uchangeicon')%>
-
+					<% if(isGroup) { %>
+						<%=e('uchangegroupicon')%>
+					<% } else { %>
+						<%=e('uchangeicon')%>
+					<% } %>
 				</div>
 			</div>
 		</div>
