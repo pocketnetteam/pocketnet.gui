@@ -83,9 +83,9 @@ var Roy = function (parent) {
 		instance.init().catch(function(e) {
 			// Log init failure but don't block instance creation
 			// Instance will have inited=false and won't be used until successful init
-			if (self.parent && self.parent.logger) {
-				self.parent.logger.w('peertube', 'error', 'Instance init failed for ' + url + ': ' + JSON.stringify(e));
-			}
+			// if (self.parent && self.parent.logger) {
+			// 	self.parent.logger.w('system', 'error', 'Instance init failed for ' + url + ': ' + JSON.stringify(e));
+			// }
 		});
 
 		instances.push(instance);
