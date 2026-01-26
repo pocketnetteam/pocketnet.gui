@@ -1909,7 +1909,12 @@ Application = function (p) {
 
 			window.requestAnimationFrame(() => {
 				if (self.scrollRemoved) {
+					console.log("OFFSCROLL")
 					self.el.html.css('overflow', 'hidden')
+
+					if (window.Keyboard && window.Keyboard.disableScroll && !isios()) {
+						window.Keyboard.disableScroll(true)
+					}
 				}
 			})
 
@@ -1922,9 +1927,7 @@ Application = function (p) {
 
 			//self.el.html.addClass('nooverflow')
 
-			if (window.Keyboard && window.Keyboard.disableScroll && !isios()) {
-				window.Keyboard.disableScroll(true)
-			}
+			
 
 			setTimeout(function () {
 				scrollmodechanging = false
@@ -1950,7 +1953,12 @@ Application = function (p) {
 
 				window.requestAnimationFrame(() => {
 					if (!self.scrollRemoved) {
+						console.log("ONSCROLL")
 						self.el.html.css('overflow', '')
+
+						if (window.Keyboard && window.Keyboard.disableScroll && !isios()) {
+							window.Keyboard.disableScroll(false)
+						}
 					}
 				})
 
@@ -1964,9 +1972,7 @@ Application = function (p) {
 				//self.el.html.removeClass('nooverflow')
 				///
 
-				if (window.Keyboard && window.Keyboard.disableScroll && !isios()) {
-					window.Keyboard.disableScroll(false)
-				}
+				
 
 				setTimeout(function () {
 					scrollmodechanging = false

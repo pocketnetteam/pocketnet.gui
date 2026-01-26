@@ -835,7 +835,8 @@ var component = Object(componentNormalizer["a" /* default */])(
   beforeDestroy() {
     this.activated = false;
     if (this.timeline) {
-      this.timeline.unpaginate(this.timeline._eventCount, true);
+      this.timeline.tl.unpaginate(this.timeline.tl._eventCount, true);
+      this.timeline = null;
     }
   },
   activated() {
@@ -868,7 +869,7 @@ var component = Object(componentNormalizer["a" /* default */])(
       if (this.esize.clientHeight) return this.esize.clientHeight;
     },
     getEvents: function () {
-      var events = this.timeline.getEvents();
+      var events = this.timeline.tl.getEvents();
       var lastCallAccess = events.filter(e => {
         return e.event.type === "m.room.request_calls_access";
       }).pop();
@@ -962,7 +963,7 @@ var component = Object(componentNormalizer["a" /* default */])(
       });
     },
     relations: function (events) {
-      var ts = this.timeline.timelineSet;
+      var ts = this.timeline.tl.timelineSet;
       _.each(events, e => {
         try {
           //if(!e.event.content.edited){
@@ -1007,6 +1008,8 @@ var component = Object(componentNormalizer["a" /* default */])(
       var _ref2 = Object(asyncToGenerator["a" /* default */])(function* () {
         this.loading = true;
         this.firstPaginate = true;
+        console.log("DEBUG 1501: init");
+        var inittime = performance.now();
 
         //this.chat.getTimelineForEvent('$FXUvcjIqcvDu0meLTnz-8plloZoNHLIYEb6WGQMWO3s')
 
@@ -1070,9 +1073,16 @@ var component = Object(componentNormalizer["a" /* default */])(
               ts = timeline.getTimelineSet();
             }
         }
-        this.timeline = new this.core.mtrx.sdk.TimelineWindow(this.core.mtrx.client, ts);
+        console.log("DEBUG 1501: init before timeline", performance.now() - inittime);
+        this.timeline = {
+          inited: true
+        };
+        this.timeline.tl = new this.core.mtrx.sdk.TimelineWindow(this.core.mtrx.client, ts);
+        console.log("DEBUG 1501: init after timeline", performance.now() - inittime);
+        console.log("DEBUG 1501: timeline", this.timeline);
+        var inittime = performance.now();
         setTimeout(() => {
-          this.timeline.load(
+          this.timeline.tl.load(
             /*null, (this.wh() || 600)*/).then(r => {
             return this.getEventsAndEncrypt();
           }).then(events => {
@@ -1126,11 +1136,11 @@ var component = Object(componentNormalizer["a" /* default */])(
       //$(this.$el).find('.eventsflex')[0]
 
       if (!this.loading && this.timeline && !this["p_" + direction]) {
-        if (this.timeline.canPaginate(direction) || rnd) {
+        if (this.timeline.tl.canPaginate(direction) || rnd) {
           this["p_" + direction] = true;
           let count = /*this.firstPaginate ? 24 : */20;
           var error = null;
-          return this.timeline.paginate(direction, count).then(e => {
+          return this.timeline.tl.paginate(direction, count).then(e => {
             return Promise.resolve();
           }).catch(e => {
             error = e;
@@ -1180,12 +1190,14 @@ var component = Object(componentNormalizer["a" /* default */])(
     },
     readFirst: function () {
       if (this.streamMode) return;
-      var events = this.timeline.getEvents();
+      if (!this.timeline) return;
+      var events = this.timeline.tl.getEvents();
       this.readEvent(events[0]);
     },
     readLast: function () {
       if (this.streamMode) return;
-      var events = this.timeline.getEvents();
+      if (!this.timeline) return;
+      var events = this.timeline.tl.getEvents();
       this.readEvent(events[events.length - 1]);
     },
     readEvents: function (events) {
