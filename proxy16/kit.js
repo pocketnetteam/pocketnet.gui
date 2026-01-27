@@ -1329,6 +1329,33 @@ const kit = {
 				return kit.proxy().then(proxy => {
 					return proxy.torapplications.info();
 				})
+			},
+
+			install : function(){
+				return kit.proxy().then(async proxy => {
+					await proxy.torapplications.install().catch(e => {
+						return Promise.reject(e)
+					})
+
+					return Promise.resolve(proxy.torapplications.info())
+				})
+			},
+
+			reinstall : function(){
+				return kit.proxy().then(async proxy => {
+					await proxy.torapplications.reinstall().catch(e => {
+						return Promise.reject(e)
+					})
+
+					return new Promise(resolve => {
+						setTimeout(() => {
+							return resolve(proxy.torapplications.info())
+						}, 1000)
+					})
+
+
+
+				})
 			}
 
 		},
