@@ -1,20 +1,23 @@
-const { execSync } = require("child_process");
-const path = require("path");
+const fs = require("fs-extra")
+const path = require("path")
 
 exports.default = async function (context) {
+  if (context.electronPlatformName !== "darwin") return
 
-  if (process.platform !== "darwin") return;
+  const appOutDir = context.appOutDir
+  const projectDir = context.projectDir || path.resolve(__dirname, "..")
 
-  const appPath = path.join(
-    context.appOutDir,
-    `${context.packager.appInfo.productFilename}.app`
-  );
+  const resourcesPath = path.join(appOutDir, "Bastyon.app", "Contents", "Resources")
 
-  console.log("Signing Tor and pluggable transports in:", appPath);
+  const torSrc = path.join(projectDir, "tor", "macos", "universal")
+  const torDest = path.join(resourcesPath, "tor")
 
-  execSync(`bash scripts/sign-tor-macos.sh "${appPath}"`, {
-    stdio: "inherit",
-    env: process.env
-  });
-};
+  console.log("Removing old Tor folder:", torDest)
+  await fs.remove(torDest)
+
+  console.log("Copying universal Tor ->", torDest)
+  await fs.copy(torSrc, torDest)
+
+  console.log("Tor copied successfully")
+}
 
