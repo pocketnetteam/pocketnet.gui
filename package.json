@@ -24,8 +24,8 @@
         "build:proxy16": "cd proxy16 && npm run build",
         "dist": "electron-builder -w --x64 --ia32 -p never",
         "distl": "electron-builder -l --x64 -p never",
-        "distm": "bash scripts/macos-tor-universal.sh && electron-builder -m --x64 -p never",
-        "dist:arm64": "bash scripts/macos-tor-universal.sh && electron-builder -m --arm64",
+        "distm": "electron-builder -m --x64 -p never",
+        "dist:arm64": "electron-builder -m --arm64",
         "publish": "build --win --x64 --ia32 -p always",
         "minimize": "node minimize.js -prodaction=true -vendor=30069 -path=/",
         "minimize:test": "node minimize.js -prodaction=true -vendor=30069 -test=true -path=/",
@@ -162,6 +162,10 @@
                         "universal"
                     ]
                 }
+            ],
+            "extraResources": [
+                { "from": "tor/macos/x86_64", "to": "tor/x86_64" },
+                { "from": "tor/macos/aarch64", "to": "tor/aarch64" }
             ],
             "artifactName": "${productName}Setup.${ext}",
             "icon": "res/electron/icons/mac/icon.icns",
