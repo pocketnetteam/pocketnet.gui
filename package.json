@@ -148,7 +148,6 @@
                 ]
             }
         ],
-        "x64ArchFiles": "Contents/Resources/tor/**/*",
         "protocols": {
             "name": "bastyon",
             "schemes": [
