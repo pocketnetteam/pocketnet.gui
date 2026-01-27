@@ -148,6 +148,7 @@
                 ]
             }
         ],
+        "x64ArchFiles": "Contents/Resources/tor/**/*",
         "protocols": {
             "name": "bastyon",
             "schemes": [
@@ -164,10 +165,8 @@
                 }
             ],
             "extraResources": [
-                {
-                    "from": "tor/macos/",
-                    "to": "tor"
-                }
+                { "from": "tor/macos/x86_64", "to": "tor/x86_64" },
+                { "from": "tor/macos/aarch64", "to": "tor/aarch64" }
             ],
             "artifactName": "${productName}Setup.${ext}",
             "icon": "res/electron/icons/mac/icon.icns",
