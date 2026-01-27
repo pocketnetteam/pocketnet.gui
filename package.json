@@ -118,7 +118,7 @@
     },
     "build": {
         "productName": "Bastyon",
-        
+        "afterPack": "scripts/afterPack.js",
         "afterSign": "electron-builder-notarize",
         "appId": "app.pocketnet.gui",
         "files": [
@@ -161,12 +161,6 @@
                     "arch": [
                         "universal"
                     ]
-                }
-            ],
-            "extraResources": [
-                {
-                    "from": "tor/macos/universal",
-                    "to": "tor"
                 }
             ],
             "artifactName": "${productName}Setup.${ext}",
