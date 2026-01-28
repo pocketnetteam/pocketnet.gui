@@ -1148,7 +1148,24 @@ var BastyonApps = function (app) {
                     //// TODO CHECK ELECTRON NODE SAFE
                     return Promise.resolve({})
                 }
-            }
+            },
+
+            profile: {
+                parameters: ['username'],
+                action: function ({
+                    data,
+                    application
+                }) {
+
+                    app.nav.api.load({
+                        open: true,
+                        href: data.username,
+                        history: true,
+                    })
+
+                    return Promise.resolve({})
+                }
+            },
         },
 
         get : {
