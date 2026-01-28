@@ -148,7 +148,12 @@ class TorControl {
     }
 
     gettordirpath = () => {
-        return path.join(process.resourcesPath, "tor")
+        if (process.platform == 'darwin') {
+            const arch = process.arch === "arm64" ? "aarch64" : "x86_64";
+            return path.join(process.resourcesPath, "tor", arch);
+        } else {
+            return path.join(process.resourcesPath, "tor")
+        }
     }
 
     getpath = () => {
