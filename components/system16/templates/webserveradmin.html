@@ -220,6 +220,49 @@
                     </div>
                 </div>
             </div>
+
+            <div class="setting togglebutton torinstallsetting">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span>Tor installed</span>
+                    </div>
+
+                    <div class="value values">
+
+                        <% if(deep(info, 'tor.state.status') == 'install') { %>
+                            
+                            <div class="chunk status">
+                                <span>Installing</span>
+                            </div>
+
+                        <% } else { %> 
+
+                            <% if(info.tor.installed) { %>
+                                <div class="chunk status">
+                                    <span>Installed</span>
+                                </div>
+    
+                                <div class="chunk">
+                                    <button class="button ghost reinstalltor">Reinstall</button>
+                                </div>
+    
+                            <% } else { %> 
+                                <div class="chunk status">
+                                    <span>Not installed</span>
+                                </div>
+    
+                                <div class="chunk">
+                                    <button class="button ghost installtor">Install</button>
+                                </div>
+                            <% } %>
+                            
+                        <% } %>
+
+                        
+                        
+                    </div>
+                </div>
+            </div>
             
             <% if(proxy.direct) {%>
 

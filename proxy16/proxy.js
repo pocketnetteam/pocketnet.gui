@@ -629,6 +629,18 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		destroy: () => {
 			return torapplications.destroy();
 		},
+
+		remove: () => {
+			return torapplications.remove();
+		},
+
+		install: () => {
+			return torapplications.installManual();
+		},
+
+		reinstall: () => {
+			return torapplications.reinstall();
+		}
 	}
 
 	const axiosTransport = (...args) => transports.axios(...args);
