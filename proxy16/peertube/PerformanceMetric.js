@@ -4,6 +4,11 @@ class PerformanceMetric {
 	calculate(instance) {
 		const { _ratings } = this;
 
+		// Return low score for destroyed or unusable instances
+		if (!instance.canuse()) {
+			return -100;
+		}
+
 		const stats = ((instance.stats()).info || {}).last || {};
 
 		const calculatedRatings = _ratings.map((rating) => rating(stats, instance));
