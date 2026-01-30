@@ -1151,15 +1151,22 @@ var BastyonApps = function (app) {
             },
 
             profile: {
-                parameters: ['username'],
+                parameters: ['type', 'data'],
                 action: function ({
                     data,
                     application
                 }) {
 
+                    const isValid = ["username", "address"].includes(data.type)
+                    if (!(isValid)) {
+                        return Promise.reject(appsError('discrepancy:type'))
+                    } else if (typeof data.data !== 'string') {
+                        return Promise.reject(appsError('discrepancy:data'))
+                    }
+
                     app.nav.api.load({
                         open: true,
-                        href: data.username,
+                        href: data.data,
                         history: true,
                     })
 
