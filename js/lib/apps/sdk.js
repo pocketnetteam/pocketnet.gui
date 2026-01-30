@@ -402,6 +402,9 @@ var BastyonSdk = function(settings = {}){
         donation : function(receiver){
             return action('open.donation', {receiver})
         },
+        profile : function(type, data){
+            return action('open.profile', {type, data})
+        },
     }
 
     self.permissions = {
