@@ -1727,30 +1727,47 @@ var authorn = (function(){
     
             self.sdk.users.get(author.address, function(){
                 author.deleted = typeof self.app.platform.sdk.user.deletedaccount != 'undefined' ? self.app.platform.sdk.user.deletedaccount(author.address) : false
-    
+
                 author.data = self.psdk.userInfo.get(author.address)
                 author.me = self.app.user.isItMe(author.address)
-    
-                // TODO: [group] change real data
-                // Mock key for groups - always true for now
-                author.isGroup = true
-    
+
                 author.reputationBlocked = self.app.platform.sdk.user.reputationBlocked(address)
-    
+
                 if(
                     !author.data
                 ){
                     return redir(author.me ? 'userpage?id=test' : 'page404')
                 }
-    
+
                 if(
                     author.reputationBlocked && author.me
                 ){
                     return redir('userpage?id=test')
                 }
-    
-                clbk()
-                
+
+                // Get community flag from accSet
+                self.app.platform.sdk.users.getCommunity(author.address).then(community => {
+                    author.isGroup = !!community
+
+                    // If it's a community and user is logged in, check membership status
+                    if (author.isGroup && self.app.user.address.value && !author.me) {
+                        return self.app.platform.sdk.users.isCommunityMember(
+                            self.app.user.address.value,
+                            author.address
+                        ).then(membership => {
+                            author.membershipStatus = membership
+                            clbk()
+                        })
+                    } else {
+                        author.membershipStatus = { isRequested: false, isMember: false }
+                        clbk()
+                    }
+                }).catch(() => {
+                    author.isGroup = false
+                    author.membershipStatus = { isRequested: false, isMember: false }
+                    clbk()
+                })
+
             }, true)
         })
     }

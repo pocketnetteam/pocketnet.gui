@@ -232,24 +232,37 @@ var channel = (function(){
 						author.state = self.psdk.userState.get(ed.id)
 						author.address = ed.id;
 
-					  // TODO: [group] change real data
-						// Mock key for groups - always true for now
-						author.isGroup = true
-
 						var me = self.psdk.userInfo.getmy()
-							
+
 						author.following = me && me.relation(author.address, 'subscribes');
 						author.me = self.app.user.isItMe(author.address)
 
-						var data = {
-							author : author,
-							reports : reports,
-							connect : ed.connect,
-							domain : window.location.hostname || window.pocketnetdomain,
-							ed : ed
-						};
+						// Check if this is a community/group
+						self.sdk.users.getCommunity(ed.id).then(function(isCommunity) {
+							author.isGroup = !!isCommunity
 
-						clbk(data);
+							var data = {
+								author : author,
+								reports : reports,
+								connect : ed.connect,
+								domain : window.location.hostname || window.pocketnetdomain,
+								ed : ed
+							};
+
+							clbk(data);
+						}).catch(function() {
+							author.isGroup = false
+
+							var data = {
+								author : author,
+								reports : reports,
+								connect : ed.connect,
+								domain : window.location.hostname || window.pocketnetdomain,
+								ed : ed
+							};
+
+							clbk(data);
+						});
 
 					})
 

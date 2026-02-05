@@ -47,19 +47,29 @@ var sUserInfo = psdk.userInfo.getShortForm(author.address)
                     <% if(r) { %>
                         <button class="button unsubscribe">
                             <% if(author.isGroup) { %>
-                                <%= e('group_joined') %>
+                                <% if(author.membershipStatus && author.membershipStatus.isMember) { %>
+                                    <%= e('group_joined') %>
+                                <% } else { %>
+                                    <%= e('group_requested') %>
+                                <% } %>
                             <% } else { %>
                                 <%= e('youarefollowing') %>
                             <% } %>
-                            <i class="fas fa-user-check"></i>
+                            <% if(author.isGroup && author.membershipStatus && !author.membershipStatus.isMember) { %>
+                                <i class="fas fa-clock"></i>
+                            <% } else { %>
+                                <i class="fas fa-user-check"></i>
+                            <% } %>
                         </button>
-                    
-                        <% if(r.private == 'true' || r.private == '1' || r.private === true) {%>
-                            <button class="button notifications icon bright"><i class="fas fa-bell"></i></button>
-                        <% } else { %> 
-                            <button class="button notifications icon"><i class="far fa-bell-slash"></i></button>
+
+                        <% if(!author.isGroup) { %>
+                            <% if(r.private == 'true' || r.private == '1' || r.private === true) {%>
+                                <button class="button notifications icon bright"><i class="fas fa-bell"></i></button>
+                            <% } else { %>
+                                <button class="button notifications icon"><i class="far fa-bell-slash"></i></button>
+                            <% } %>
                         <% } %>
-                    <% } else { %> 
+                    <% } else { %>
                         <button class="button follow">
                             <% if(author.isGroup) { %>
                                 <%= e('join_group') %>

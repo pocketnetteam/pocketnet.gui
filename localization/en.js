@@ -212,6 +212,7 @@ _l.wsaddressnotv = "Address is not valid";
 _l.uaddaddressdona = "Add address For Donations";
 _l.uaddaddressdonaplace = "Enter Address";
 _l.uchangeicon = "Upload Profile Image";
+_l.uchangegroupicon = "Upload Group Image";
 _l.utip1 = "You must create name on blockchain before using "+appname+"";
 _l.utip2 = "You have only one step left";
 _l.upicset = "Set Profile Icon";
@@ -2370,6 +2371,7 @@ _l.desktopPopupDisagree = "Not now"
 _l.recommended = 'Recommended'
 
 _l.removeaccount = 'Remove Account'
+_l.removegroup = 'Remove Group'
 _l.removeAccountQuestion = 'Are you sure you want to permanently delete your account? This action cannot be undone.'
 _l.removeAccountYes = 'Yes, remove account'
 
@@ -3309,3 +3311,49 @@ _l.mustInstallToRate = "You must install the app before rating"
 _l.reviewsAndRatingsMenu = "Reviews and Ratings"
 _l.rateAppPromptMessage = "Are you enjoying this app? Please take a moment to rate it!"
 _l.rateAppButton = "Rate App"
+
+// Groups
+_l.group = "Group";
+_l.group_members = "Members";
+_l.group_posts = "Posts";
+_l.group_information = "Group Information";
+_l.group_created = "Created";
+
+_l.join_group = "Join";
+_l.leave_group = "Leave Group";
+_l.group_joined = "Joined";
+_l.group_requested = "Request Sent";
+_l.group_blocked = "Group Blocked";
+_l.write_to_group = "Write to Group";
+_l.share_group = "Share Group";
+_l.post_to_community = "Post to Group";
+_l.post_to_my_profile = "My Profile";
+
+_l.group_settings = "Group Settings";
+_l.edit_group = "Edit Group";
+_l.group_about = "About Group";
+_l.group_info = "Group Info";
+_l.group_profile = "Group Profile";
+_l.group_locked = "Group Locked";
+_l.group_deleted = "Group Deleted";
+_l.group_about_placeholder = "Please write a brief description of the group to help users understand why they should join";
+
+_l.block_group = "Block Group";
+_l.unblock_group = "Unblock Group";
+_l.report_group = "Report Group";
+
+_l.aynoblockedgroups = "You haven't blocked any groups yet";
+_l.anoblockedgroups = "This group hasn't blocked anyone yet";
+_l.blockedgroups = "Blocked Groups";
+_l.aynojoined = "You haven't joined any groups yet";
+_l.anojoined = "This group hasn't joined anything yet";
+_l.joined_groups = "Joined Groups";
+_l.aynomembers = "Your group has no members yet";
+_l.anomembers = "This group has no members yet";
+_l.leave_group_confirm = "Are you sure you want to leave this group?";
+_l.notificationsTurnOffGroupQ = "Are you sure you want to turn off notifications from this group?";
+
+_l.lockedgroupa = "Group is blocked due to jury decision or user reports";
+_l.deletedGroup_temp = "Group is in the process of being deleted";
+_l.deletedGroup_deleted = "Group deleted";
+_l.deletedGroup_true = "Group deleted";

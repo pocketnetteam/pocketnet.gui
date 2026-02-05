@@ -1,5 +1,5 @@
-<% 
-	var info = psdk.userInfo.getShortForm() 
+<%
+	var info = psdk.userInfo.getShortForm()
 
 	var name = info.name
 
@@ -9,8 +9,8 @@
 
 	var deleted = typeof app.platform.sdk.user.myaccauntdeleted != 'undefined' && app.platform.sdk.user.myaccauntdeleted()
 
-	// Mock key for groups - always true for now
-	var isGroup = true
+	// Check if this is a group from user data
+	var isGroup = typeof user.isGroup != 'undefined' && user.isGroup
 
 	if (deleted) {letter = ''; src = ''}
 %>
@@ -29,7 +29,13 @@
 
 							<div class="deletedAccount">
 								<div class="deletedAccountText">
-									<span><%-e('deletedAccount_' + deleted)%></span>
+									<span>
+										<% if(isGroup) { %>
+											<%-e('deletedGroup_' + deleted)%>
+										<% } else { %>
+											<%-e('deletedAccount_' + deleted)%>
+										<% } %>
+									</span>
 								</div>
 							</div>
 
@@ -49,7 +55,11 @@
 
 											<% } else if (!src) { %>
 
-												<i class="far fa-user"></i>
+												<% if(isGroup) { %>
+													<i class="fas fa-users"></i>
+												<% } else { %>
+													<i class="far fa-user"></i>
+												<% } %>
 
 											<% } %>
 

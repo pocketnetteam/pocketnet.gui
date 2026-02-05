@@ -223,8 +223,8 @@ var userpage = (function(){
 
 				reports.push({
 					name : function() {
-						// Mock key for groups - always true for now
-						var isGroup = true;
+						// Check if user is a group - default to false for regular users
+						var isGroup = self.app.user.isGroup || false;
 						return isGroup ? self.app.localization.e('edit_group') : self.app.localization.e('e13186');
 					}(),
 					id : 'test',

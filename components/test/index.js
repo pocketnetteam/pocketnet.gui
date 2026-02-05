@@ -205,13 +205,13 @@ var test = (function(){
 					return
 				}
 
-				if (actions.equal(tempInfo, {...self.psdk.userInfo.getmy(), community} || {})){
+				if (actions.equal(tempInfo, {...self.psdk.userInfo.getmy(), accountType} || {})){
 					sitemessage(self.app.localization.e('uchanges'))
 					saving = false
 					return
 				}
 
-				if(!actions.valid(tempInfo, self.psdk.userInfo.getmy() || {})){
+				if(!actions.valid(tempInfo, {...self.psdk.userInfo.getmy(), accountType} || {})){
 					sitemessage(self.app.localization.e('uchangesvalid'))
 
 					if(!trim(tempInfo.name)){	
@@ -324,12 +324,12 @@ var test = (function(){
 										actions.saveemail(email);
 									}
 
+									// Send community to accSet if changed
+									if(accountType !== tempInfo.accountType){
+					          self.app.platform.sdk.users.setCommunity(tempInfo.accountType === 'group')
+									}
+
 									self.app.platform.actions.addActionAndSendIfCan(userInfo).then(async (action) => {
-									
-									 if(!accountType === tempInfo.accountType){
-					            await self.app.platform.sdk.users.setCommunity(tempInfo.accountType === 'group' ? 1 : 0)
-										}
-										
 										successCheck()
 
 										//self.psdk.userInfo.clearAll(self.user.address.value)
@@ -508,7 +508,7 @@ var test = (function(){
 				else{
 					el.upanel.removeClass('wait')
 
-					if(actions.equal(tempInfo, self.psdk.userInfo.getmy() || {}) || !actions.valid(tempInfo, self.psdk.userInfo.getmy() || {})){
+					if(actions.equal(tempInfo, {...self.psdk.userInfo.getmy(), accountType} || {}) || !actions.valid(tempInfo, {...self.psdk.userInfo.getmy(), accountType} || {})){
 						
 						el.upanel.removeClass('changes')
 					}
@@ -556,6 +556,8 @@ var test = (function(){
 						}
 						else if(id == 'accountType'){
 							tempInfo[parameter.id] = value;
+							// Update labels when account type changes
+							updateLabelsBasedOnAccountType();
 						}
 						else
 						{

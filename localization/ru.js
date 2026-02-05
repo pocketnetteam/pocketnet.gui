@@ -3138,7 +3138,10 @@ _l.group_created = "Создана";
 _l.join_group = "Присоединиться";
 _l.leave_group = "Покинуть группу";
 _l.group_joined = "Вы участник";
+_l.group_requested = "Заявка отправлена";
 _l.group_blocked = "Группа заблокирована";
+_l.post_to_community = "Опубликовать в группу";
+_l.post_to_my_profile = "В мой профиль";
 _l.write_to_group = "Написать в группу";
 _l.share_group = "Поделиться группой";
 

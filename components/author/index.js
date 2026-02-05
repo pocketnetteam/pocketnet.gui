@@ -1488,11 +1488,13 @@ var author = (function(){
 
 					author.data = self.psdk.userInfo.get(author.address)
 
-					// Mock key for groups - always true for now
-					author.isGroup = true
+					// Get community flag from accSet
+					self.app.platform.sdk.users.getCommunity(author.address).then(community => {
+						author.isGroup = !!community
+					}).catch(() => {
+						author.isGroup = false
+					}).finally(() => {
 
-
-					
 					if(author.data && (!deleted || self.app.user.isItMe(author.address))){
 
 						if(self.app.platform.sdk.user.reputationBlockedRedirect(address)){
@@ -1567,9 +1569,11 @@ var author = (function(){
 							redir404()
 						}
 
-						
+
 					}
-	
+
+					}) // end .finally()
+
 				}, true)
 	
 	

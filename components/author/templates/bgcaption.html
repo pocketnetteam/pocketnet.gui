@@ -13,7 +13,13 @@
 
                         <div class="deletedAccount">
                             <div class="deletedAccountText">
-                                <span><%-e('deletedAccount_' + sUserInfo.deleted)%></span>
+                                <span>
+                                    <% if(author.isGroup) { %>
+                                        <%-e('deletedGroup_' + sUserInfo.deleted)%>
+                                    <% } else { %>
+                                        <%-e('deletedAccount_' + sUserInfo.deleted)%>
+                                    <% } %>
+                                </span>
                             </div>
 
                             <% if(sUserInfo.itisme) { %>

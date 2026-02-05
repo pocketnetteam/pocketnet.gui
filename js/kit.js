@@ -1724,7 +1724,8 @@ Share = function(lang){
 				language : self.language.v,
 				txidEdit : self.aliasid || "",
 				txidRepost : self.repost.v || "",
-				poll : self.poll.v || {}
+				poll : self.poll.v || {},
+				communityId : self.community.v || ""
 			}
 		}
 
@@ -1738,7 +1739,8 @@ Share = function(lang){
 			s : _.clone(self.settings),
 			l : self.language.v,
 			txidEdit : self.aliasid || "",
-			txidRepost : self.repost.v || ""
+			txidRepost : self.repost.v || "",
+			communityId : self.community.v || ""
 		}
 	}
 
@@ -2148,7 +2150,6 @@ UserInfo = function(){
 		self.language.set()
 		self.about.set()
 		self.site.set()
-		self.community.set()
 		self.addresses.set()
 	}
 
@@ -2311,7 +2312,7 @@ UserInfo = function(){
 			{
 				this.v = _v
 			}
-			
+
 
 			if (self.on.change)
 				self.on.change('site', this.v)
@@ -2386,9 +2387,8 @@ UserInfo = function(){
 		 + (self.site.v)
 		 + self.language.v
 		 + (self.about.v)
-		 + self.image.v + JSON.stringify(self.addresses.v) 
+		 + self.image.v + JSON.stringify(self.addresses.v)
 		 + self.ref.v
-		 + self.community.v,
 		 + self.keys.v.join(',')
 	}
 
@@ -2418,7 +2418,6 @@ UserInfo = function(){
 				image : self.image.v,
 				addresses : JSON.stringify(self.addresses.v || []),
 				ref : self.ref.v,
-				community : self.community.v,
 				keys : self.keys.v.join(',')
 			}
 		}
@@ -2431,8 +2430,7 @@ UserInfo = function(){
 			i : self.image.v,
 			b : JSON.stringify(self.addresses.v || []),
 			r : self.ref.v,
-			k : self.keys.v.join(','),
-			community : self.community
+			k : self.keys.v.join(',')
 		}
 	}
 
