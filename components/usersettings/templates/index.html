@@ -1,3 +1,7 @@
+<%
+// Check if current user is a group from user data
+var isGroup = typeof user != 'undefined' && typeof user.isGroup != 'undefined' && user.isGroup
+%>
 <div id="<%-module.map.id%>" class="<% if(!state) {%> unathorized <% } %>">
 	<div class="mwork">
 		<div class="caption">
@@ -23,7 +27,13 @@
 			<div class="removeAccauntWrapper">
 				<div class="mwork">
 					<div class="removeAccount">
-						<span><%- e('removeaccount') %></span>
+						<span>
+							<% if(isGroup) { %>
+								<%- e('removegroup') %>
+							<% } else { %>
+								<%- e('removeaccount') %>
+							<% } %>
+						</span>
 					</div>
 				</div>
 			</div>

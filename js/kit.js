@@ -1724,7 +1724,8 @@ Share = function(lang){
 				language : self.language.v,
 				txidEdit : self.aliasid || "",
 				txidRepost : self.repost.v || "",
-				poll : self.poll.v || {}
+				poll : self.poll.v || {},
+				communityId : self.community.v || ""
 			}
 		}
 
@@ -1738,7 +1739,8 @@ Share = function(lang){
 			s : _.clone(self.settings),
 			l : self.language.v,
 			txidEdit : self.aliasid || "",
-			txidRepost : self.repost.v || ""
+			txidRepost : self.repost.v || "",
+			communityId : self.community.v || ""
 		}
 	}
 
@@ -2310,7 +2312,7 @@ UserInfo = function(){
 			{
 				this.v = _v
 			}
-			
+
 
 			if (self.on.change)
 				self.on.change('site', this.v)
@@ -2385,7 +2387,7 @@ UserInfo = function(){
 		 + (self.site.v)
 		 + self.language.v
 		 + (self.about.v)
-		 + self.image.v + JSON.stringify(self.addresses.v) 
+		 + self.image.v + JSON.stringify(self.addresses.v)
 		 + self.ref.v
 		 + self.keys.v.join(',')
 	}
@@ -4444,6 +4446,28 @@ Settings = function(){
 		},
 		v : ''
 	};
+	
+	self.community = {
+		set : function(_v){
+
+			if(!_v){
+				this.v = ''
+			}
+			else
+			{
+				this.v = _v
+			}
+
+			_.each(self.on.change || {}, function(f){
+				f('community', this.v)
+			})
+
+		},
+		get : function(){
+			return this.v
+		},
+		v : ''
+	};
 
 	self.monetization = {
 		set : function(_v){
@@ -4517,6 +4541,7 @@ Settings = function(){
 		self.monetization.set()
 		self.paidsubscription.set()
 		self.cover.set()
+		self.community.set()
 
 	}
 
@@ -4586,7 +4611,8 @@ Settings = function(){
 			pin: self.pin.v,
 			monetization : self.monetization.v,
 			paidsubscription : self.paidsubscription.v,
-			cover : self.cover.v
+			cover : self.cover.v,
+			community : self.community.v
 		})
 
 	}
@@ -4604,7 +4630,8 @@ Settings = function(){
 					pin: self.pin.v || "",
 					monetization : (self.monetization.v === "" || self.monetization.v === true || self.monetization.v === false) ? self.monetization.v : "",
 					paidsubscription : self.paidsubscription.v,
-					cover : self.cover.v
+					cover : self.cover.v,
+					community : self.community.v
 				})
 			} 
 		}
@@ -4614,7 +4641,8 @@ Settings = function(){
 				pin: self.pin.v || "",
 				monetization : (self.monetization.v === "" || self.monetization.v === true || self.monetization.v === false) ? self.monetization.v : "",
 				paidsubscription : self.paidsubscription.v,
-				cover : self.cover.v
+				cover : self.cover.v,
+				community : self.community.v
 			})
 		}
 
@@ -4641,6 +4669,7 @@ Settings = function(){
 		self.monetization.set(parsed.monetization); 
 		self.paidsubscription.set(parsed.paidsubscription || 0)
 		self.cover.set(parsed.cover || '')
+		self.community.set(parsed.community || 0)
 
 	}
 

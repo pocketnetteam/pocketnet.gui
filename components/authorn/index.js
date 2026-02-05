@@ -228,121 +228,99 @@ var authorn = (function(){
 		}
 
 		var lentameta = [{
-			id : 'common',
-			text : 'shares',
-			default : true,
-			extend : function(params){
-				params.getpin = true
-				//params.opensviStream = !isMobile() || self.app.television ? true : null
-				params.opensvi = !isMobile() || self.app.television ? actions.openvi : null
-				
-				return params
-			},
-
-
-			count : function(){
-				return 0
-				var c = author.data.content || {}
-
-				return ((c[200] || 0) + (c[201] || 0) + (c[202] || 0) + (c[209] || 0) + (c[210] || 0)) || author.data.postcnt || 0
-			}
-		},{
-			id : 'video',
-			text : 'e14105',
-			parameter : 'video',
-			extend : function(params){
-				params.video = !isMobile() || self.app.television
-				params.videomobile = isMobile() && !self.app.television
-
-				params.opensvi = !isMobile() || self.app.television ? actions.openvi : null
-
-				return params
-			},
-			count : function(){
-				return 0
-
-				var c = author.data.content || {}
-
-				return (c[201] || 0) + (c[209] || 0)
-			}
-		},{
-			id : 'articles',
-			text : 'longreads',
-			parameter : 'read',
-			extend : function(params){
-				params.read = true
-				return params
-			},
-			count : function(){
-				return 0
-
-				var c = author.data.content || {}
-
-				return (c[202] || 0)
-			}
-		},{
-			id : 'audio',
-			text : 'audio',
-			parameter : 'audio',
-			extend : function(params){
-				params.audio = true
-				return params
-			},
-			count : function(){
-				return 0
-				
-				var c = author.data.content || {}
-
-				return (c[210] || 0)
-			}
-		},{
-			id : 'search',
-			parameter : 'ssa',
-			extend : function(params){
-				params.search = true
-				params.searchValue = parameters().ssa
-				params.loader = function(clbk){
-
-					var _clbk = function(data){
-
-						self.app.psdk.share.insertFromResponseSmall(data)
-
-						var shares = self.app.psdk.share.gets(_.map(data, (s) => {
-							return s.txid
-						}))
-
-						if (clbk)
-							clbk(shares, null, {
-								count : 10
-							})
-					}
-
-					
-					actions.makenext('postssearch', deep(result, 'data.length') || 0, 10, function(data){
-						_clbk(data)
-					})
-					
-				}
-
-				return params
-			}
-		},{
-			id : 'searchTags',
-			parameter : 'ssat',
-
-			extend : function(params){
-
-				var tgsi = decodeURI(parameters().ssat || '')
-
-				var words = _.uniq(_.filter(tgsi.split(wordsRegExp), function(r){
-					return r
-				}));
-
-				params.searchTags = words.length ? words : null
-				
-				return params
-			}
-		}]
+        id : 'common',
+        text : function() {
+            return author.isGroup ? 'posts' : 'shares'
+        },
+        default : true,
+        extend : function(params){
+            params.getpin = true
+            params.opensvi = !isMobile() || self.app.television ? actions.openvi : null
+            
+            return params
+        },
+        count : function(){
+            return 0
+            var c = author.data.content || {}
+            return ((c[200] || 0) + (c[201] || 0) + (c[202] || 0) + (c[209] || 0) + (c[210] || 0)) || author.data.postcnt || 0
+        }
+    },{
+        id : 'video',
+        text : 'e14105',
+        parameter : 'video',
+        extend : function(params){
+            params.video = !isMobile() || self.app.television
+            params.videomobile = isMobile() && !self.app.television
+            params.opensvi = !isMobile() || self.app.television ? actions.openvi : null
+            return params
+        },
+        count : function(){
+            return 0
+            var c = author.data.content || {}
+            return (c[201] || 0) + (c[209] || 0)
+        }
+    },{
+        id : 'articles',
+        text : 'longreads',
+        parameter : 'read',
+        extend : function(params){
+            params.read = true
+            return params
+        },
+        count : function(){
+            return 0
+            var c = author.data.content || {}
+            return (c[202] || 0)
+        }
+    },{
+        id : 'audio',
+        text : 'audio',
+        parameter : 'audio',
+        extend : function(params){
+            params.audio = true
+            return params
+        },
+        count : function(){
+            return 0
+            var c = author.data.content || {}
+            return (c[210] || 0)
+        }
+    },{
+        id : 'search',
+        parameter : 'ssa',
+        extend : function(params){
+            params.search = true
+            params.searchValue = parameters().ssa
+            params.loader = function(clbk){
+                var _clbk = function(data){
+                    self.app.psdk.share.insertFromResponseSmall(data)
+                    var shares = self.app.psdk.share.gets(_.map(data, (s) => {
+                        return s.txid
+                    }))
+                    if (clbk)
+                        clbk(shares, null, {
+                            count : 10
+                        })
+                }
+                
+                actions.makenext('postssearch', deep(result, 'data.length') || 0, 10, function(data){
+                    _clbk(data)
+                })
+            }
+            return params
+        }
+    },{
+        id : 'searchTags',
+        parameter : 'ssat',
+        extend : function(params){
+            var tgsi = decodeURI(parameters().ssat || '')
+            var words = _.uniq(_.filter(tgsi.split(wordsRegExp), function(r){
+                return r
+            }));
+            params.searchTags = words.length ? words : null
+            return params
+        }
+    }]
 
 
 		var load = {
@@ -716,9 +694,11 @@ var authorn = (function(){
 			showblocking : function(){
 				load.blocking().then(addresses => {
 
-					var etext = self.user.isItMe(author.address) ? self.app.localization.e('aynoblocked') : self.app.localization.e('anoblocked')
+					var etext = self.user.isItMe(author.address) ?
+						(author.isGroup ? self.app.localization.e('aynoblockedgroups') : self.app.localization.e('aynoblocked')) :
+						(author.isGroup ? self.app.localization.e('anoblockedgroups') : self.app.localization.e('anoblocked'))
 
-					var ctext = self.app.localization.e('blockedusers')
+					var ctext = author.isGroup ? self.app.localization.e('blockedgroups') : self.app.localization.e('blockedusers')
 
 					events.showuserslist(el.subscribes, addresses, etext, ctext)
 				})
@@ -727,8 +707,10 @@ var authorn = (function(){
 			showsubscribes : function(){
 				load.subscribes().then(({addresses, count}) => {
 
-					var etext = self.user.isItMe(author.address) ? self.app.localization.e('aynofollowing') : self.app.localization.e('anofollowing')
-					var ctext = self.app.localization.e('following')
+					var etext = self.user.isItMe(author.address) ?
+						(author.isGroup ? self.app.localization.e('aynojoined') : self.app.localization.e('aynofollowing')) :
+						(author.isGroup ? self.app.localization.e('anojoined') : self.app.localization.e('anofollowing'))
+					var ctext = author.isGroup ? self.app.localization.e('joined_groups') : self.app.localization.e('following')
 
 					events.showuserslist(el.subscribes, addresses, etext, ctext, null, count)
 				})
@@ -737,8 +719,10 @@ var authorn = (function(){
 			showsubscribers : function(){
 				load.subscribers().then(({addresses, count}) => {
 
-					var etext = self.user.isItMe(author.address) ? self.app.localization.e('aynofollowers') : self.app.localization.e('anofollowers')
-					var ctext = self.app.localization.e('followers')
+					var etext = self.user.isItMe(author.address) ?
+						(author.isGroup ? self.app.localization.e('aynomembers') : self.app.localization.e('aynofollowers')) :
+						(author.isGroup ? self.app.localization.e('anomembers') : self.app.localization.e('anofollowers'))
+					var ctext = author.isGroup ? self.app.localization.e('group_members') : self.app.localization.e('followers')
 
 					events.showuserslist(el.subscribers, addresses, etext, ctext, null, count)
 				})
@@ -775,8 +759,8 @@ var authorn = (function(){
 				self.app.platform.sdk.user.stateAction(() => {
 
 					new dialog({
-						html : self.app.localization.e('e13022'),
-						btn1text :  self.app.localization.e('unfollow'),
+						html : author.isGroup ? self.app.localization.e('leave_group_confirm') : self.app.localization.e('e13022'),
+						btn1text : author.isGroup ? self.app.localization.e('leave_group') : self.app.localization.e('unfollow'),
 						btn2text : self.app.localization.e('ucancel') ,
 
 						class : 'zindex',
@@ -854,7 +838,7 @@ var authorn = (function(){
 					if (f == 'notificationsTurnOff'){
 
 						new dialog({
-							html : self.app.localization.e('notificationsTurnOffQ'),
+							html : author.isGroup ? self.app.localization.e('notificationsTurnOffGroupQ') : self.app.localization.e('notificationsTurnOffQ'),
 							btn1text : self.app.localization.e('dyes'),
 							btn2text : self.app.localization.e('dno'),
 	
@@ -1731,47 +1715,62 @@ var authorn = (function(){
 			
 		}
 
-		var get = function(address, clbk){
+    var get = function(address, clbk){
+        author = {}
+    
+        self.sdk.users.addressByName(address, function(address){
+            if(!address){
+                return redir('page404')
+            }
+    
+            author.address = address
+    
+            self.sdk.users.get(author.address, function(){
+                author.deleted = typeof self.app.platform.sdk.user.deletedaccount != 'undefined' ? self.app.platform.sdk.user.deletedaccount(author.address) : false
 
-			author = {}
+                author.data = self.psdk.userInfo.get(author.address)
+                author.me = self.app.user.isItMe(author.address)
 
-			self.sdk.users.addressByName(address, function(address){
-				if(!address){
-					return redir('page404')
-				}
-	
-				author.address = address
-	
-				self.sdk.users.get(author.address, function(){
-					author.deleted = typeof self.app.platform.sdk.user.deletedaccount != 'undefined' ? self.app.platform.sdk.user.deletedaccount(author.address) : false
-	
-					author.data = self.psdk.userInfo.get(author.address)
-					author.me = self.app.user.isItMe(author.address)
+                author.reputationBlocked = self.app.platform.sdk.user.reputationBlocked(address)
 
-					author.reputationBlocked = self.app.platform.sdk.user.reputationBlocked(address)
+                if(
+                    !author.data
+                ){
+                    return redir(author.me ? 'userpage?id=test' : 'page404')
+                }
 
-					//var me = self.app.platform.psdk.userInfo.getmy()
+                if(
+                    author.reputationBlocked && author.me
+                ){
+                    return redir('userpage?id=test')
+                }
 
-					if(
-						!author.data
-					){
-						return redir(author.me ? 'userpage?id=test' : 'page404')
-					}
+                // Get community flag from accSet
+                self.app.platform.sdk.users.getCommunity(author.address).then(community => {
+                    author.isGroup = !!community
 
-	
-					if(
-						author.reputationBlocked && author.me
-					){
-						return redir('userpage?id=test')
-					}
+                    // If it's a community and user is logged in, check membership status
+                    if (author.isGroup && self.app.user.address.value && !author.me) {
+                        return self.app.platform.sdk.users.isCommunityMember(
+                            self.app.user.address.value,
+                            author.address
+                        ).then(membership => {
+                            author.membershipStatus = membership
+                            clbk()
+                        })
+                    } else {
+                        author.membershipStatus = { isRequested: false, isMember: false }
+                        clbk()
+                    }
+                }).catch(() => {
+                    author.isGroup = false
+                    author.membershipStatus = { isRequested: false, isMember: false }
+                    clbk()
+                })
 
-					clbk()
-					
-				}, true)
-			})
-
-			
-		}
+            }, true)
+        })
+    }
 
 		var init = function(){
 			renders.aucaption()
