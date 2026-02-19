@@ -4,6 +4,7 @@ const Applications = require("./applications");
 const f = require('../functions');
 const fs = require("fs/promises");
 const fssync = require("fs");
+const { app } = require("electron");
 var kill = require('tree-kill');
 
 class Helpers {
@@ -157,12 +158,16 @@ class TorControl {
         }
     }
 
+    gettordirpath = () => {
+        return path.join(process.resourcesPath, "tor")
+    }
+
     getpath = () => {
-        return path.join(this.getsettingspath(), this.helpers.bin_name("tor"))
+        return path.join(this.gettordirpath(), this.helpers.bin_name("tor"));
     }
 
     getsettingspath = () => {
-        return f.path(this.settings.path)
+        return path.join(app.getPath("userData"), this.settings.path);
     }
 
     needinstall = () => {
@@ -236,8 +241,8 @@ class TorControl {
             `DataDirectory ${getSettingsPath("data")}`,
             "Log notice stdout",
             "AvoidDiskWrites 1",
-            `GeoIPFile ${getSettingsPath("geoip")}`,
-            `GeoIPv6File ${getSettingsPath("geoip6")}`,
+            `GeoIPFile ${path.join(this.gettordirpath(), "geoip")}`,
+            `GeoIPv6File ${path.join(this.gettordirpath(), "geoip6")}`,
             "KeepalivePeriod 10",
         ];
 
@@ -246,7 +251,7 @@ class TorControl {
                 "# Bridges configurations\n",
 
                 "UseBridges 1",
-                `ClientTransportPlugin snowflake exec ${getSettingsPath("pluggable_transports", this.helpers.bin_name("snowflake-client"))}`,
+                `ClientTransportPlugin snowflake exec ${path.join(this.gettordirpath(), "pluggable_transports", this.helpers.bin_name("snowflake-client"))}`,
                 `Bridge snowflake 192.0.2.4:80 8838024498816A039FCBBAB14E6F40A0843051FA fingerprint=8838024498816A039FCBBAB14E6F40A0843051FA url=https://snowflake-broker.torproject.net/ ampcache=https://cdn.ampproject.org/ fronts=www.google.com,cdn.ampproject.org utls-imitate=hellorandomizedalpn ice=stun:stun.nextcloud.com:443,stun:stun.sipgate.net:10000,stun:stun.epygi.com:3478,stun:stun.uls.co.za:3478,stun:stun.voipgate.com:3478,stun:stun.bethesda.net:3478,stun:stun.mixvoip.com:3478,stun:stun.voipia.net:3478`,
                 `Bridge snowflake 192.0.2.3:80 2B280B23E1107BB62ABFC40DDCC8824814F80A72 fingerprint=2B280B23E1107BB62ABFC40DDCC8824814F80A72 url=https://snowflake-broker.torproject.net/ ampcache=https://cdn.ampproject.org/ fronts=www.google.com,cdn.ampproject.org utls-imitate=hellorandomizedalpn ice=stun:stun.nextcloud.com:443,stun:stun.sipgate.net:10000,stun:stun.epygi.com:3478,stun:stun.uls.co.za:3478,stun:stun.voipgate.com:3478,stun:stun.bethesda.net:3478,stun:stun.mixvoip.com:3478,stun:stun.voipia.net:3478`
             )
@@ -290,7 +295,7 @@ class TorControl {
                 "# Custom OBFS4 bridges configurations\n",
 
                 "UseBridges 1",
-                `ClientTransportPlugin obfs4 exec ${getSettingsPath("pluggable_transports", this.helpers.bin_name("obfs4proxy"))} managed`,
+                `ClientTransportPlugin snowflake exec ${path.join(this.gettordirpath(), "pluggable_transports", this.helpers.bin_name("lyrebird"))}`,
 
                 customObfs4.map(b => `Bridge ${b}`).join('\n'),
             )
