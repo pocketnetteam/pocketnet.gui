@@ -128,7 +128,8 @@
             "!proxy16/pocketcoin${/*}",
             "!proxy16/pocketcoind${/*}",
             "!proxy16/downloads${/*}",
-            "!proxy16/node_modules${/*}"
+            "!proxy16/node_modules${/*}",
+            "!tor${/*}"
         ],
         "extraFiles": [
             {
