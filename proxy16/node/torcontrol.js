@@ -292,10 +292,12 @@ class TorControl {
             */
         } else if (customObfs4) {
             torConfig.push(
-                "# Custom OBFS4 bridges configurations\n",
+                "# Custom bridges configurations\n",
 
                 "UseBridges 1",
-                `ClientTransportPlugin snowflake exec ${path.join(this.gettordirpath(), "pluggable_transports", this.helpers.bin_name("lyrebird"))}`,
+                `ClientTransportPlugin meek_lite,obfs2,obfs3,obfs4,scramblesuit,webtunnel exec ${path.join(this.gettordirpath(), "pluggable_transports", this.helpers.bin_name("lyrebird"))}`,
+                `ClientTransportPlugin snowflake exec ${path.join(this.gettordirpath(), "pluggable_transports", this.helpers.bin_name("snowflake-client"))}`,
+                `ClientTransportPlugin conjure exec ${path.join(this.gettordirpath(), "pluggable_transports", this.helpers.bin_name("conjure-client"))}`,
 
                 customObfs4.map(b => `Bridge ${b}`).join('\n'),
             )

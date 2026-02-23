@@ -191,29 +191,52 @@ var system16 = (function(){
 				var v = system.tor.customObfs4 || changes.server?.customObfs4;
 
 				var d = inputDialogNew({
-					caption : "OBFS4 settings",
+					caption : "Bridge settings",
 					wrap : true,
 					values : [{
 						defValue : (Array.isArray(v)) ? v.join('\n') : undefined,
-						label : "OBFS4 bridges list",
+						label : "Bridges list",
 						placeholder : "Use TOR project syntax",
 						text : 'None',
 					}],
 
 					success : function(v){
 						if (v[0].length === 0) {
-							sitemessage('OBFS4 bridges are unloaded');
-							changes.server.customObfs4 = undefined;
+							sitemessage('Bridges are unloaded');
+							changes.server.customObfs4 = false;
 							renders.webserveradmin(el.c);
 							return true;
 						}
 
-						const bridgeParser = /obfs4\s((?:[0-9]{1,3}\.){3}[0-9]{1,3}:\d+)\s([A-Z0-9]{40})\scert=([A-z0-9+\/]{70})\siat-mode=\d$/gm;
+						const lines = v[0]
+						.split('\n')
+						.map(l => l.trim())
+						.filter(Boolean);
 
-						const bridgeList = v[0].match(bridgeParser);
+						const bridgeList = [];
+						for (const line of lines) {
+							const obfs3 = /^obfs3\s+((?:\d{1,3}\.){3}\d{1,3}:\d{1,5}|\[[0-9a-fA-F:]+\]:\d{1,5})\s+([A-Fa-f0-9]{40})$/;
+							const obfs4 = /^obfs4\s+((?:\d{1,3}\.){3}\d{1,3}:\d{1,5}|\[[0-9a-fA-F:]+\]:\d{1,5})\s+([A-Fa-f0-9]{40})\s+cert=([A-Za-z0-9+/=]+)\s+iat-mode=\d+$/;
+							const webtunnel = /^webtunnel\s+((?:\d{1,3}\.){3}\d{1,3}:\d{1,5}|\[[0-9a-fA-F:]+\]:\d{1,5})\s+([A-Fa-f0-9]{40})\s+url=(https?:\/\/[^\s]+)\s+ver=\d+\.\d+\.\d+$/;
+							const meekLite = /^meek_lite\s+(\d{1,3}(?:\.\d{1,3}){3}:\d{1,5})\s+url=(https?:\/\/[^\s]+)\s+front=([A-Za-z0-9.-]+)(\s+utls=([^\s]+))?$/;
+							const vanilla = /^((?:\d{1,3}\.){3}\d{1,3}:\d{1,5}|\[[0-9a-fA-F:]+\]:\d{1,5})\s+([A-Fa-f0-9]{40})$/;
+
+							if (
+								obfs3.test(line) ||
+								obfs4.test(line) ||
+								webtunnel.test(line) ||
+								meekLite.test(line) ||
+								vanilla.test(line)
+							) {
+								bridgeList.push(line);
+							} else {
+								sitemessage(`Invalid bridge format: ${line}`);
+								return false;
+							}
+						}
 
 						if (!bridgeList.length) {
-							sitemessage('Invalid OBFS4 bridges format');
+							sitemessage('No valid bridges found');
 							return false;
 						}
 
