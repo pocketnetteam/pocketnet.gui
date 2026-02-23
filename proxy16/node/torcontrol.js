@@ -64,7 +64,6 @@ class TorControl {
     listeners = [];
     settings = {};
     application = null;
-    installfailed = null;
     timeoutIntervalId = null;
     timeoutCounter = null;
 
@@ -72,18 +71,14 @@ class TorControl {
         this.settings = {...settings};
 
         this.application = new Applications(settings, applicationRepository, proxy, true)
-
-        this.needinstall();
     }
 
     isStarted = () => (this.state.status === 'started');
     isStopped = () => (this.state.status === 'stopped');
-    isInstalling = () => (this.state.status === 'install');
     isRunning = () => (this.state.status === 'running');
 
     onStarted = (listener) => this.listeners.push({ type: 'started', listener });
     onStopped = (listener) => this.listeners.push({ type: 'stopped', listener });
-    onInstalling = (listener) => this.listeners.push({ type: 'install', listener });
     onRunning = (listener) => this.listeners.push({ type: 'running', listener });
     onAny = (listener) => this.listeners.push({ type: 'any', listener });
 
@@ -146,12 +141,6 @@ class TorControl {
                 await this.restart()
             }
         } else {
-            if (this.settings.enabled3 !== 'neveruse'){
-                if (this.needinstall()){
-                    await this.install();
-                }
-            }
-
             if (this.settings.enabled3 === 'always'){
                 await this.restart()
             }
@@ -168,15 +157,6 @@ class TorControl {
 
     getsettingspath = () => {
         return path.join(app.getPath("userData"), this.settings.path);
-    }
-
-    needinstall = () => {
-
-        var existsBin = this.helpers.checkPath(this.getpath());
-
-        this.isInstalled = existsBin.exists;
-
-        return !existsBin.exists;
     }
 
     folders = async() => {
@@ -320,76 +300,6 @@ class TorControl {
 
     }
 
-    installManual = async() => {
-
-        this.installfailed = null
-
-        return await this.install()
-    }
-
-    install = async() => {
-
-        if (this.installfailed){
-            throw this.installfailed
-        }
-
-        try {
-
-            this.state.status = "install";
-
-            const download = await this.application.download('bin', {user: "shpingalet007", name: "tor-builds"});
-            await this.application.decompress(download.path, this.getsettingspath())
-            await fs.unlink(download.path)
-            await fs.chmod(this.getsettingspath(), 0o755)
-            await fs.chmod(this.getpath(), 0o755)
-
-            this.state.status = "stopped";
-
-            this.needinstall();
-
-            return true;
-
-        } catch (e) {
-
-            this.installfailed = {
-                code : 500,
-                error : 'cantcopy'
-            };
-
-            this.state.status = "failed";
-
-            throw this.installfailed;
-        }
-    }
-
-    remove = () => {
-        this.stop()
-
-        if(!this.needinstall()){
-
-            try{
-                fssync.rmdirSync(this.getsettingspath(), { recursive: true });
-            }catch(e){
-                console.log("Failed to delete Tor folder:", e.message)
-
-                return Promise.reject('path')
-            }
-
-        }
-
-        return this.application.removeAll()
-    }
-
-    reinstall = () => {
-        return this.remove().then(() => {
-            return this.installManual()
-        }).catch(e => {
-            console.log(e)
-
-            return Promise.reject(e)
-        })
-    }
-
     log = (data) => {
 
         try{
@@ -444,22 +354,6 @@ class TorControl {
 
     start = async ()=>{
         console.log("Tor start triggered");
-
-        if (this.needinstall()) {
-            if (this.state.status === 'install') {
-                return false;
-            } if (this.settings.enabled3 === 'neveruse') {
-                this.state.status = "stopped";
-                return false;
-            } else {
-                try {
-                    await this.install();
-                } catch (e) {
-                    console.log("Tor failed to install:", e);
-                    this.state.status = "failed";
-                }
-            }
-        }
 
         if (this.settings.enabled3 === 'neveruse') return false;
 
@@ -570,7 +464,6 @@ class TorControl {
         this.state.status = "stopped"
 
         this.instance = null
-        this.installfailed = null
 
         clearInterval(this.timeoutIntervalId);
         this.timeoutIntervalId = null;
@@ -595,8 +488,7 @@ class TorControl {
         var info = {
             enabled3 : this.settings.enabled3,
             useSnowFlake2 : this.settings.useSnowFlake2,
-            customObfs4 : this.settings.customObfs4,
-            installed : this.isInstalled
+            customObfs4 : this.settings.customObfs4
         }
 
         info.state = {
