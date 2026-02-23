@@ -595,8 +595,8 @@ class Transports {
         
         if(!areStatsEmpty){
             try {
-                if (!fs.existsSync(torcontrol.settings.path)) {
-                    fs.mkdirSync(torcontrol.settings.path, { recursive: true });
+                if (!fs.existsSync(torcontrol.getsettingspath())) {
+                    fs.mkdirSync(torcontrol.getsettingspath(), { recursive: true });
                 }
     
                 fs.writeFileSync(statsFilePath, JSON.stringify(this.accessRecords, null, 2), {encoding:'utf8',flag:'w'});
