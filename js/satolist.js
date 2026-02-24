@@ -10125,8 +10125,7 @@ Platform = function (app, listofnodes) {
 
             },
 
-            accSetMy: function (settingsObj, clbk) {
-
+            accSetMy: function (settingsObj, clbk, options = {}) {
                 if (!settingsObj) settingsObj = {}
 
                 self.psdk.accSet.load(self.app.user.address.value).then(() => {
@@ -10138,6 +10137,9 @@ Platform = function (app, listofnodes) {
                     ct.paidsubscription.set(typeof settingsObj.paidsubscription == 'undefined' ? (settings.paidsubscription || 0) : settingsObj.paidsubscription);
 
                     ct.pin.set(typeof settingsObj.pin == 'undefined' ? (settings.pin || '') : settingsObj.pin);
+        
+                    ct.community.set(typeof settingsObj.community == 'undefined' ? (settings.community || 0) : settingsObj.community);
+        
                     ct.monetization.set(typeof settingsObj.monetization == 'undefined' ?
                         ((settings.monetization === "" || settings.monetization === true || settings.monetization === false) ? settings.monetization : "") : settingsObj.monetization);
 
@@ -10157,7 +10159,7 @@ Platform = function (app, listofnodes) {
     
                         })
                     }).then(() => {
-                        return self.app.platform.actions.addActionAndSendIfCan(ct)
+                        return self.app.platform.actions.addActionAndSendIfCan(ct, undefined, undefined, options)
                     })
 
                 }).then(action => {
@@ -11766,6 +11768,132 @@ Platform = function (app, listofnodes) {
                             clbk(err, null)
                     }
 
+                })
+            },
+            getCommunity : function (address) {
+                // Load from special node 94.73.244.41
+                return self.app.api.rpc('getaccountsetting', [address], {
+                    rpc: {
+                        fnode: '94.73.244.41:38081'
+                    }
+                }).then(d => {
+                    var settings = {}
+                    try {
+                        settings = JSON.parse(d || "{}")
+                    } catch (e) {}
+                    return Promise.resolve(settings.community || false)
+                }).catch(() => {
+                    return Promise.resolve(false)
+                })
+            },
+            setCommunity : function (community, clbk) {
+
+                self.app.platform.sdk.user.accSetMy({
+                    community: community
+                }, function (err, alias) {
+
+                    if (!err) {
+
+                        if (clbk) {
+                            clbk(null, alias)
+                        }
+
+                    } else {
+                        self.app.platform.errorHandler(err, true)
+
+                        if (clbk)
+                            clbk(err, null)
+                    }
+
+                }, {
+                    rpc: {
+                        fnode: '94.73.244.41:38081'
+                    }
+                })
+            },
+
+            // Get list of all communities
+            getCommunities: function () {
+                return self.app.api.rpc('GetCommunities', [], {
+                    rpc: {
+                        fnode: '94.73.244.41:38081'
+                    }
+                }).then(data => {
+                    return Promise.resolve(data || [])
+                }).catch(() => {
+                    return Promise.resolve([])
+                })
+            },
+
+            // Get community feed by community address
+            getCommunityFeed: function (communityAddress, topHeight, count, lang) {
+                return self.app.api.rpc('getcommunityfeed', [communityAddress, topHeight || 0, count || 10, lang || ''], {
+                    rpc: {
+                        fnode: '94.73.244.41:38081'
+                    }
+                }).then(data => {
+                    return Promise.resolve(data || [])
+                }).catch(() => {
+                    return Promise.resolve([])
+                })
+            },
+
+            // Check if user is a member of community (mutual subscription)
+            isCommunityMember: function (userAddress, communityAddress) {
+                return Promise.all([
+                    self.psdk.subscribes.load(userAddress),
+                    self.psdk.subscribes.load(communityAddress)
+                ]).then(() => {
+                    var userSubscribes = self.psdk.subscribes.get(userAddress) || []
+                    var communitySubscribes = self.psdk.subscribes.get(communityAddress) || []
+
+                    // User subscribed to community (request sent)
+                    var userSubscribedToCommunity = _.find(userSubscribes, function(s) {
+                        return (s.adddress || s.address) === communityAddress
+                    })
+
+                    // Community subscribed to user (request accepted)
+                    var communitySubscribedToUser = _.find(communitySubscribes, function(s) {
+                        return (s.adddress || s.address) === userAddress
+                    })
+
+                    return Promise.resolve({
+                        isRequested: !!userSubscribedToCommunity,
+                        isMember: !!(userSubscribedToCommunity && communitySubscribedToUser)
+                    })
+                }).catch(() => {
+                    return Promise.resolve({ isRequested: false, isMember: false })
+                })
+            },
+
+            // Get communities user is member of
+            getUserCommunities: function (userAddress) {
+                return self.psdk.subscribes.load(userAddress).then(() => {
+                    var userSubscribes = self.psdk.subscribes.get(userAddress) || []
+                    var communityChecks = []
+
+                    _.each(userSubscribes, function(sub) {
+                        var addr = sub.adddress || sub.address
+                        communityChecks.push(
+                            self.sdk.users.getCommunity(addr).then(isCommunity => {
+                                if (isCommunity) {
+                                    return self.sdk.users.isCommunityMember(userAddress, addr).then(membership => {
+                                        if (membership.isMember) {
+                                            return addr
+                                        }
+                                        return null
+                                    })
+                                }
+                                return null
+                            }).catch(() => null)
+                        )
+                    })
+
+                    return Promise.all(communityChecks).then(results => {
+                        return Promise.resolve(_.filter(results, r => r !== null))
+                    })
+                }).catch(() => {
+                    return Promise.resolve([])
                 })
             },
 
@@ -25109,6 +25237,13 @@ Platform = function (app, listofnodes) {
             if (state) {
 
                 self.actions.prepare(() => {
+                    // Check if current user is a community/group
+                    self.sdk.users.getCommunity(app.user.address.value).then(function(isCommunity) {
+                        app.user.isGroup = !!isCommunity
+                    }).catch(function() {
+                        app.user.isGroup = false
+                    })
+
                     lazyActions([
 
                         //self.sdk.node.transactions.loadTemp,

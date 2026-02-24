@@ -13,7 +13,13 @@
 
                         <div class="deletedAccount">
                             <div class="deletedAccountText">
-                                <span><%-e('deletedAccount_' + sUserInfo.deleted)%></span>
+                                <span>
+                                    <% if(author.isGroup) { %>
+                                        <%-e('deletedGroup_' + sUserInfo.deleted)%>
+                                    <% } else { %>
+                                        <%-e('deletedAccount_' + sUserInfo.deleted)%>
+                                    <% } %>
+                                </span>
                             </div>
 
                             <% if(sUserInfo.itisme) { %>
@@ -43,9 +49,11 @@
                                             </span>
 
                                         <% } else if (!sUserInfo.image) { %>
-
-                                            <i class="far fa-user"></i>
-
+                                            <% if(author.isGroup) { %>
+                                                <i class="fas fa-users"></i>
+                                            <% } else { %>
+                                                <i class="far fa-user"></i>
+                                            <% } %>
                                         <% } %>
 
                                         <%= app.platform.ui.markUser(author.address)%>
@@ -59,6 +67,12 @@
 
                                     <div class="nameWrapper">
                                         <span><%-sUserInfo.name%></span>
+                                        <% if(author.isGroup) { %>
+                                            <span class="group-badge">
+                                                <i class="fas fa-users"></i>
+                                                <span><%=e('group')%></span>
+                                            </span>
+                                        <% } %>
                                     </div>
 
                                     <div class="mobileinfo">
