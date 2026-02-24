@@ -1,0 +1,496 @@
+---
+description: Blockchain integration patterns and cryptographic operations
+globs: "**/*.js"
+alwaysApply: false
+---
+
+# Blockchain Integration Guidelines
+
+## Overview
+
+Bastyon uses a **Bitcoin-based blockchain** (Pocketcoin/PKOIN) with custom consensus and social network features.
+
+## Key Concepts
+
+### 1. **Private Keys**
+- **WIF Format**: Private keys use Wallet Import Format
+- **Ed25519**: Cryptographic signature scheme
+- **ONE KEY = ONE ACCOUNT**: Lost keys cannot be recovered
+- **No Password**: Keys are the only authentication method
+
+### 2. **Addresses**
+- **P2PKH Format**: Standard Bitcoin-style addresses (starts with 'P')
+- **Derived from Public Key**: Address = Hash160(PublicKey)
+- **Unique Identity**: Each address is a user on the platform
+
+### 3. **Transactions**
+- **Immutable**: Cannot be deleted once on blockchain
+- **Gas Fees**: Small PKOIN fee for each transaction
+- **Confirmation Time**: ~60 seconds per block
+- **Types**: Posts, comments, votes, subscriptions, transfers, etc.
+
+## Private Key Operations
+
+### Importing Keys
+
+```javascript
+// In wallet (proxy16/wallet/wallet.js)
+var bitcoin = require('./lib/btc16.js');
+
+self.import = function(privateKeyWIF, clbk) {
+  try {
+    // Parse WIF format
+    var keyPair = bitcoin.ECPair.fromWIF(privateKeyWIF);
+    
+    // Derive address
+    var address = bitcoin.payments.p2pkh({
+      pubkey: keyPair.publicKey
+    }).address;
+    
+    // Store (encrypted in production)
+    self.keys[address] = {
+      privateKey: privateKeyWIF,
+      publicKey: keyPair.publicKey.toString('hex'),
+      address: address
+    };
+    
+    clbk(null, address);
+  } catch (error) {
+    clbk(new Error("Invalid private key"));
+  }
+};
+```
+
+### Generating Keys
+
+```javascript
+// Generate new key pair
+function generateKeyPair() {
+  var keyPair = bitcoin.ECPair.makeRandom();
+  var privateKey = keyPair.toWIF();
+  var publicKey = keyPair.publicKey.toString('hex');
+  var address = bitcoin.payments.p2pkh({
+    pubkey: keyPair.publicKey
+  }).address;
+  
+  return {
+    privateKey: privateKey,
+    publicKey: publicKey,
+    address: address
+  };
+}
+```
+
+## Signature Verification
+
+### Creating Signatures
+
+```javascript
+// In pocketnet.js
+function createSignature(privateKeyWIF, message) {
+  try {
+    var keyPair = bitcoin.ECPair.fromWIF(privateKeyWIF);
+    var messageHash = bitcoin.crypto.sha256(Buffer.from(message, 'utf8'));
+    var signature = keyPair.sign(messageHash);
+    
+    return {
+      signature: signature.toString('hex'),
+      pubkey: keyPair.publicKey.toString('hex'),
+      address: bitcoin.payments.p2pkh({
+        pubkey: keyPair.publicKey
+      }).address,
+      nonce: message,
+      v: true  // Hash version indicator
+    };
+  } catch (error) {
+    return null;
+  }
+}
+```
+
+### Verifying Signatures
+
+```javascript
+// In pocketnet.js
+self.kit.authorization.signature = function(signature, addresses) {
+  if (!signature.pubkey) return false;
+  if (!signature.nonce) return false;
+  if (!signature.address) return false;
+  if (!signature.signature) return false;
+  
+  try {
+    // Reconstruct public key
+    var pkbuffer = Buffer.from(signature.pubkey, 'hex');
+    var keyPair = bitcoin.ECPair.fromPublicKey(pkbuffer);
+    
+    // Hash message
+    var hash = signature.v
+      ? bitcoin.crypto.sha256(Buffer.from(signature.nonce, 'utf8'))
+      : Buffer.from(signature.nonce, 'utf8');
+    
+    // Verify signature
+    var sigBuffer = Buffer.from(signature.signature, 'hex');
+    var verify = keyPair.verify(hash, sigBuffer);
+    
+    // Verify address matches public key
+    var derivedAddress = bitcoin.payments.p2pkh({
+      pubkey: pkbuffer
+    }).address;
+    
+    if (signature.address !== derivedAddress) {
+      return false;
+    }
+    
+    // Check address whitelist (if provided)
+    if (addresses) {
+      if (!_.isArray(addresses)) addresses = [addresses];
+      if (_.indexOf(addresses, signature.address) === -1) {
+        return false;
+      }
+    }
+    
+    return verify;
+  } catch (error) {
+    return false;
+  }
+};
+```
+
+## Transaction Types
+
+### 1. **User Registration**
+```javascript
+// Register new user on blockchain
+{
+  type: "userRegistration",
+  address: "PxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxX",
+  name: "username",
+  avatar: "ipfs://...",
+  about: "User bio"
+}
+```
+
+### 2. **Post (Share)**
+```javascript
+{
+  type: "share",
+  address: "PxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxX",
+  caption: "Post content",
+  message: "Additional text",
+  tags: ["tag1", "tag2"],
+  images: ["url1", "url2"],
+  language: "en"
+}
+```
+
+### 3. **Comment**
+```javascript
+{
+  type: "comment",
+  postid: "transaction_hash_of_post",
+  parentid: "transaction_hash_of_parent_comment",
+  msg: "Comment text",
+  address: "PxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxX"
+}
+```
+
+### 4. **Score (Vote)**
+```javascript
+{
+  type: "score",
+  address: "PxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxX",
+  share: "transaction_hash_of_post",
+  value: 5  // 1-5 stars
+}
+```
+
+### 5. **Subscribe/Unsubscribe**
+```javascript
+{
+  type: "subscribe",  // or "unsubscribe"
+  address: "PxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxX",
+  address_to: "PxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxX"
+}
+```
+
+### 6. **Coin Transfer**
+```javascript
+{
+  type: "coinTransfer",
+  from: "PxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxX",
+  to: "PxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxX",
+  amount: 10.5  // PKOIN amount
+}
+```
+
+## Blockchain Queries
+
+### Via RPC (Backend)
+
+```javascript
+// Get user info
+self.rpc('getaddressregistration', [address])
+  .then(function(registration) {
+    // User profile data
+    var profile = {
+      address: registration.address,
+      name: registration.name,
+      avatar: registration.avatar,
+      reputation: registration.reputation
+    };
+  });
+
+// Get post
+self.rpc('gettransaction', [txid])
+  .then(function(tx) {
+    // Post data from transaction
+  });
+
+// Get post scores (votes)
+self.rpc('getpostscores', [postid])
+  .then(function(scores) {
+    // Array of votes with addresses and values
+  });
+
+// Get comments
+self.rpc('getcomments', [postid])
+  .then(function(comments) {
+    // Array of comments
+  });
+```
+
+### Via SDK (Frontend)
+
+```javascript
+// Get user
+self.sdk.users.getone(address, function(user) {
+  // User object with profile data
+}, refresh);
+
+// Get posts
+self.sdk.node.shares.get({
+  count: 20,
+  start: 0
+}, function(shares) {
+  // Array of posts
+});
+
+// Vote on post
+self.app.actions.upvote(postid, function(result) {
+  if (result.txid) {
+    // Vote transaction created
+  }
+});
+
+// Create post
+self.app.actions.share({
+  caption: "Post text",
+  tags: ["tag1"],
+  images: []
+}, function(result) {
+  if (result.txid) {
+    // Post created
+  }
+});
+```
+
+## Address Validation
+
+```javascript
+// Validate Pocketnet address
+function validateAddress(address) {
+  // Check format
+  if (!address || typeof address !== 'string') {
+    return false;
+  }
+  
+  // Check starts with 'P'
+  if (address[0] !== 'P') {
+    return false;
+  }
+  
+  // Check length (typically 34 characters)
+  if (address.length < 26 || address.length > 35) {
+    return false;
+  }
+  
+  // Use Bitcoin library
+  try {
+    bitcoin.address.toOutputScript(address);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+```
+
+## Transaction Creation
+
+### General Pattern
+
+```javascript
+// 1. Create transaction data
+var txData = {
+  type: "share",
+  caption: "My post",
+  // ... other fields
+};
+
+// 2. Serialize transaction
+var txHex = serializeTransaction(txData);
+
+// 3. Sign transaction
+var signature = signTransaction(txHex, privateKey);
+
+// 4. Broadcast transaction
+self.rpc('sendrawtransaction', [signature.hex])
+  .then(function(txid) {
+    // Transaction ID (hash)
+  })
+  .catch(function(error) {
+    // Handle error
+  });
+```
+
+## Blockchain Data Structure
+
+### Block Structure
+```javascript
+{
+  hash: "block_hash",
+  height: 123456,
+  time: 1234567890,
+  previousblockhash: "previous_block_hash",
+  tx: ["txid1", "txid2", ...],  // Transaction IDs
+  merkleroot: "merkle_root"
+}
+```
+
+### Transaction Structure
+```javascript
+{
+  txid: "transaction_hash",
+  type: "share",           // Transaction type
+  time: 1234567890,        // Timestamp
+  blockHeight: 123456,     // Block number
+  confirmations: 10,       // Number of confirmations
+  // Type-specific fields
+  address: "PxxxxxxxxxxxX",
+  caption: "Post content",
+  // ...
+}
+```
+
+## Security Best Practices
+
+### ✅ DO:
+- **Always verify signatures** before processing authenticated requests
+- **Validate addresses** using Bitcoin library
+- **Hash sensitive data** before storing
+- **Use HTTPS/WSS** for all communications
+- **Rate limit** blockchain operations
+- **Check confirmations** before trusting transactions
+- **Encrypt private keys** at rest
+
+### ❌ DON'T:
+- **Never expose private keys** to frontend
+- **Never store private keys** in plain text
+- **Never trust client data** without verification
+- **Don't reuse nonces** in signatures
+- **Don't skip address validation**
+- **Don't assume transactions are instant**
+- **Don't hard-code addresses** (use configuration)
+
+## Common Issues
+
+### 1. **Invalid Signature**
+```javascript
+// Debug signature verification
+function debugSignature(signature) {
+  console.log("Signature:", signature.signature);
+  console.log("Public Key:", signature.pubkey);
+  console.log("Address:", signature.address);
+  console.log("Nonce:", signature.nonce);
+  console.log("Version:", signature.v);
+  
+  // Verify address matches pubkey
+  var pkbuffer = Buffer.from(signature.pubkey, 'hex');
+  var keyPair = bitcoin.ECPair.fromPublicKey(pkbuffer);
+  var derivedAddress = bitcoin.payments.p2pkh({
+    pubkey: keyPair.publicKey
+  }).address;
+  
+  console.log("Derived Address:", derivedAddress);
+  console.log("Match:", derivedAddress === signature.address);
+}
+```
+
+### 2. **Transaction Not Confirming**
+```javascript
+// Check transaction status
+self.rpc('getrawtransaction', [txid, true])
+  .then(function(tx) {
+    if (!tx.blockhash) {
+      console.log("Transaction in mempool (not yet in block)");
+    } else {
+      console.log("Confirmations:", tx.confirmations);
+    }
+  });
+```
+
+### 3. **Address Format Issues**
+```javascript
+// Normalize address
+function normalizeAddress(address) {
+  // Trim whitespace
+  address = address.trim();
+  
+  // Ensure starts with 'P'
+  if (address[0] !== 'P') {
+    throw new Error("Invalid address prefix");
+  }
+  
+  // Validate with Bitcoin library
+  try {
+    bitcoin.address.toOutputScript(address);
+    return address;
+  } catch (e) {
+    throw new Error("Invalid address format");
+  }
+}
+```
+
+## Testing
+
+### Manual Testing
+```javascript
+// Generate test keys
+var testKey = generateKeyPair();
+console.log("Private Key:", testKey.privateKey);
+console.log("Address:", testKey.address);
+
+// Test signature
+var sig = createSignature(testKey.privateKey, "test message");
+var valid = self.kit.authorization.signature(sig);
+console.log("Signature valid:", valid);
+```
+
+### RPC Testing
+```bash
+# Test RPC connection (in proxy16/)
+curl -X POST http://localhost:38081 \
+  -H "Content-Type: application/json" \
+  -d '{
+    "method": "getblockcount",
+    "params": [],
+    "id": 1
+  }'
+```
+
+## References
+
+- `proxy16/pocketnet.js` - Blockchain utilities
+- `proxy16/lib/btc16.js` - Bitcoin library
+- `js/lib/pocketnet/btc17.js` - Frontend crypto
+- `ARCHITECTURE.md` - Overall architecture
+- Pocketnet Whitepaper - Consensus and protocol details
