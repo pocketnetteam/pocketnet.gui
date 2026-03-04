@@ -156,7 +156,14 @@ class TorControl {
     }
 
     getsettingspath = () => {
-        return path.join(app.getPath("userData"), this.settings.path);
+
+        if(app){
+            return path.join(app.getPath("userData"), this.settings.path);
+        }
+
+        return f.path(this.settings.path)
+
+        
     }
 
     folders = async() => {
