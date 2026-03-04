@@ -4,7 +4,7 @@ const Applications = require("./applications");
 const f = require('../functions');
 const fs = require("fs/promises");
 const fssync = require("fs");
-const { app } = require("electron");
+//const { app } = require("electron");
 var kill = require('tree-kill');
 
 class Helpers {
@@ -157,9 +157,9 @@ class TorControl {
 
     getsettingspath = () => {
 
-        if(app){
+        /*if(app){
             return path.join(app.getPath("userData"), this.settings.path);
-        }
+        }*/
 
         return f.path(this.settings.path)
 
