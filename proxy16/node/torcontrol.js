@@ -4,7 +4,6 @@ const Applications = require("./applications");
 const f = require('../functions');
 const fs = require("fs/promises");
 const fssync = require("fs");
-//const { app } = require("electron");
 var kill = require('tree-kill');
 
 class Helpers {
@@ -63,13 +62,14 @@ class TorControl {
     instance = null; /// tor instance
     listeners = [];
     settings = {};
+    proxy = null;
     application = null;
     timeoutIntervalId = null;
     timeoutCounter = null;
 
     constructor(settings, proxy) {
         this.settings = {...settings};
-
+        this.proxy = proxy;
         this.application = new Applications(settings, applicationRepository, proxy, true)
     }
 
@@ -157,9 +157,9 @@ class TorControl {
 
     getsettingspath = () => {
 
-        /*if(app){
-            return path.join(app.getPath("userData"), this.settings.path);
-        }*/
+        if (this.proxy && this.proxy.userDataPath) {
+            return path.join(this.proxy.userDataPath, this.settings.path);
+        }
 
         return f.path(this.settings.path)
 
