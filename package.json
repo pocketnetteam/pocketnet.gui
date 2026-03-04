@@ -128,7 +128,8 @@
             "!proxy16/pocketcoin${/*}",
             "!proxy16/pocketcoind${/*}",
             "!proxy16/downloads${/*}",
-            "!proxy16/node_modules${/*}"
+            "!proxy16/node_modules${/*}",
+            "!tor${/*}"
         ],
         "extraFiles": [
             {
@@ -162,6 +163,18 @@
                     ]
                 }
             ],
+            "extraResources": [
+                {
+                    "from": "tor/macos-${arch}/",
+                    "to": "tor"
+                }
+            ],
+            "binaries": [
+                "Contents/Resources/tor/tor",
+                "Contents/Resources/tor/pluggable_transports/conjure-client",
+                "Contents/Resources/tor/pluggable_transports/lyrebird",
+                "Contents/Resources/tor/pluggable_transports/snowflake-client"
+            ],
             "artifactName": "${productName}Setup.${ext}",
             "icon": "res/electron/icons/mac/icon.icns",
             "extendInfo": "bastyon",
@@ -183,6 +196,12 @@
                     "target": "rpm"
                 }
             ],
+            "extraResources": [
+                {
+                    "from": "tor/linux/",
+                    "to": "tor"
+                }
+            ],
             "artifactName": "${productName}Setup.${ext}",
             "category": "Network",
             "executableName": "bastyon",
@@ -198,6 +217,12 @@
             "target": [
                 {
                     "target": "nsis"
+                }
+            ],
+            "extraResources": [
+                {
+                    "from": "tor/windows/",
+                    "to": "tor"
                 }
             ],
             "icon": "res/electron/icons/win/icon.ico"

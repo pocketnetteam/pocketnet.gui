@@ -212,54 +212,11 @@
             <div class="setting togglebutton">
                 <div class="settingTable table">
                     <div class="label">
-                        <span>Custom OBFS4</span>
+                        <span>Custom bridges</span>
                     </div>
 
                     <div elementsid="customobfs4" class="value" sys="customObfs4">
                         <span><%- (!!system.tor.customObfs4 || !!changes.server?.customObfs4) ? 'Loaded' : 'None' %></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="setting togglebutton torinstallsetting">
-                <div class="settingTable table">
-                    <div class="label">
-                        <span>Tor installed</span>
-                    </div>
-
-                    <div class="value values">
-
-                        <% if(deep(info, 'tor.state.status') == 'install') { %>
-                            
-                            <div class="chunk status">
-                                <span>Installing</span>
-                            </div>
-
-                        <% } else { %> 
-
-                            <% if(info.tor.installed) { %>
-                                <div class="chunk status">
-                                    <span>Installed</span>
-                                </div>
-    
-                                <div class="chunk">
-                                    <button class="button ghost reinstalltor">Reinstall</button>
-                                </div>
-    
-                            <% } else { %> 
-                                <div class="chunk status">
-                                    <span>Not installed</span>
-                                </div>
-    
-                                <div class="chunk">
-                                    <button class="button ghost installtor">Install</button>
-                                </div>
-                            <% } %>
-                            
-                        <% } %>
-
-                        
-                        
                     </div>
                 </div>
             </div>
