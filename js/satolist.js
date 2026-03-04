@@ -406,7 +406,6 @@ Platform = function (app, listofnodes) {
         'P9K1uMNAkhHJGfbMFJXyxs4nBdmowL9rvp': true,
         'PU3PEYF6EJRjm6HC2cXJpC5R6vFCU3Vkao': true,
         'PAqtmQ4pExvpf3cctWDTYyRGmLCsZY24yy': true,
-        'PPCHQtVQ6hQna3V6E5Snaht9v9NCJJLYTM': true,
         'PN1iicsiSVHvo52LREkJvVtSxcq2153gnz': true,
         'PRH3aKqRb6UWcJE5EnwVvhmHAVGbT5D6nE': true,
         'PFRhNJJcAVTf8XkghJt3Gu8NJJhAA4BZ68': true,
@@ -533,7 +532,10 @@ Platform = function (app, listofnodes) {
         'PXJpTaoAKL2XpkrQ3xpYR5Y2cqnDXzn74T' : true,
         'PJagHqZFaeS1mMYkCG6G4BbVwxy5S1a8E4' : true,
         'PVxA9jPbHMpz6q69LJgLBCPvKdam35KAEG' : true,
-        'PV5E3oDm9YNnHMndHKd7r6eYyGaAW3TXpn' : true
+        'PJiCkAihRHTg6SEBFeVe8hcHQ12HfuYwbr' : true,
+        'PNG6ibmQMmCdCBKk51SqC7K7Q7UqiUwAnr' : true,
+        'PNfuYmcQattunXw94mgE8rtoJzskFmnNkm' : true,
+        'PJbVDxTVhAwgLhV2p7nS9NzCrFj1D2mqXJ' : true
 
     }
 
