@@ -108,7 +108,8 @@ User = function(app, p) {
 
 	self.data = {};
 	self.features = {};
-	
+	self.isGroup = false; // Default to false, will be updated on login if user is a community
+
 	self.tokenExpired = function(){}
 
 	self.prepare = function(clbk){
@@ -243,6 +244,7 @@ User = function(app, p) {
 
 		state = 0;
 		self.data = {};
+		self.isGroup = false;
 
 		try{
 			localStorage['mnemonic'] = ''

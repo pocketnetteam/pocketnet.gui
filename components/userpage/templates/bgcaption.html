@@ -1,5 +1,5 @@
-<% 
-	var info = psdk.userInfo.getShortForm() 
+<%
+	var info = psdk.userInfo.getShortForm()
 
 	var name = info.name
 
@@ -8,6 +8,9 @@
 	var letter = info.letter
 
 	var deleted = typeof app.platform.sdk.user.myaccauntdeleted != 'undefined' && app.platform.sdk.user.myaccauntdeleted()
+
+	// Check if this is a group from user data
+	var isGroup = typeof user.isGroup != 'undefined' && user.isGroup
 
 	if (deleted) {letter = ''; src = ''}
 %>
@@ -26,7 +29,13 @@
 
 							<div class="deletedAccount">
 								<div class="deletedAccountText">
-									<span><%-e('deletedAccount_' + deleted)%></span>
+									<span>
+										<% if(isGroup) { %>
+											<%-e('deletedGroup_' + deleted)%>
+										<% } else { %>
+											<%-e('deletedAccount_' + deleted)%>
+										<% } %>
+									</span>
 								</div>
 							</div>
 
@@ -46,7 +55,11 @@
 
 											<% } else if (!src) { %>
 
-												<i class="far fa-user"></i>
+												<% if(isGroup) { %>
+													<i class="fas fa-users"></i>
+												<% } else { %>
+													<i class="far fa-user"></i>
+												<% } %>
 
 											<% } %>
 
@@ -86,7 +99,13 @@
 
 										<div class="tips">
 											<a elementsid='authorlink' href="<%-app.platform.api.authorlink(user.address.value)%>">
-												<button class="profile"><%=e('profile')%></button>
+												<button class="profile">
+													<% if(isGroup) { %>
+														<%=e('group_profile')%>
+													<% } else { %>
+														<%=e('profile')%>
+													<% } %>
+												</button>
 											</a>
 											
 										</div>

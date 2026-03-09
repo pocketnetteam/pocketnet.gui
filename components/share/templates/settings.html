@@ -3,6 +3,12 @@
         <%= selector.input() %>
     </div>
 
+    <% if(typeof communitySelector != 'undefined' && communitySelector) { %>
+        <div class="visibilityWrapper communityWrapper">
+            <%= communitySelector.input() %>
+        </div>
+    <% } %>
+
     <% if(app.delaypost && typeof timeselector != 'undefined' && typeof share != 'undefined' && share.settings) {
         
         if(share.aliasid && !share.delayed()){}
