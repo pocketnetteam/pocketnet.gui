@@ -797,6 +797,7 @@ var system16 = (function(){
 									action: 'tor.start',
 									data: { persistence: false },
 								});
+								actions.toggleTorElectronProxy(settings.tor.enabled3);
 							}
 						}
 
@@ -805,6 +806,7 @@ var system16 = (function(){
 								action: 'tor.stop',
 								data: { persistence: false },
 							});
+							actions.toggleTorElectronProxy('neveruse');
 						}
 
 						api.set.currentwithnode(selected.id, true).then(r => {
@@ -824,6 +826,20 @@ var system16 = (function(){
 						if(clbk) clbk()
 					})
 				}
+			},
+
+			toggleTorElectronProxy: function (torMode) {
+				return new Promise((resolve, reject) => {
+					if (typeof _Electron != 'undefined' && _Electron) {
+						var electron = require('electron');
+						if (electron && proxy?.direct && torMode == 'always') {
+							electron.ipcRenderer.send('electron-toggle-proxy', true);
+						} else if (electron) {
+							electron.ipcRenderer.send('electron-toggle-proxy', false);
+						}
+					}
+					resolve();
+				})
 			}
 		}
 
@@ -3312,6 +3328,10 @@ var system16 = (function(){
 
 							var _make = function(){
 								globalpreloader(true)
+
+								if (changes.server.torenabled3) {
+									actions.toggleTorElectronProxy(changes.server.torenabled3);
+								}
 								
 								proxy.fetchauth('manage', {
 									action: 'set.server.settings',

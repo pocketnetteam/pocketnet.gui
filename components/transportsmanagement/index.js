@@ -123,6 +123,20 @@ var transportsmanagement = (function(){
 					system = s
 				})
 					
+			},
+
+            toggleTorElectronProxy: function (torMode) {
+				return new Promise((resolve, reject) => {
+					if (typeof _Electron != 'undefined' && _Electron) {
+						var electron = require('electron');
+						if (electron && proxy?.direct && torMode == 'always') {
+							electron.ipcRenderer.send('electron-toggle-proxy', true);
+						} else if (electron) {
+							electron.ipcRenderer.send('electron-toggle-proxy', false);
+						}
+					}
+					resolve();
+				})
 			}
 		}
 
@@ -199,6 +213,10 @@ var transportsmanagement = (function(){
 									})
 								}
 								else{
+
+									if (changes.torenabled3) {
+										actions.toggleTorElectronProxy(changes.torenabled3);
+									}
 
 									promise = proxy.fetchauth('manage', {
 										action: 'set.server.settings',
@@ -328,7 +346,9 @@ var transportsmanagement = (function(){
 									globalpreloader(true)
 
 									promise.then(() => {
-										remake()
+										return remake();
+									}).then(() => {
+										actions.toggleTorElectronProxy(info?.tor?.enabled3);
 									}).catch(e => {
 										sitemessage(self.app.localization.e('error'))
 									}).finally(() => {
@@ -366,7 +386,7 @@ var transportsmanagement = (function(){
 				proxy = app.api.get.current()
 			}
 
-			actions.loadNData().then(() => {
+			return actions.loadNData().then(() => {
 				make()
 			})
 		}

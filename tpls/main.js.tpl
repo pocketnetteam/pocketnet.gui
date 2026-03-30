@@ -19,7 +19,7 @@ const electronLocalshortcut = require('electron-localshortcut');
 var win, nwin, badge, tray, proxyInterface, ipcbridge;
 var willquit = false;
 
-const { app, BrowserWindow, Menu, MenuItem, Tray, ipcMain, Notification, nativeImage, dialog, globalShortcut, OSBrowser, desktopCapturer } = require('electron')
+const { app, session, BrowserWindow, Menu, MenuItem, Tray, ipcMain, Notification, nativeImage, dialog, globalShortcut, OSBrowser, desktopCapturer } = require('electron')
 app.allowRendererProcessReuse = false
 
 const FetchHandler = require('./js/transports2/fetch/handler.js');
@@ -761,7 +761,27 @@ function createWindow() {
         
         autoLaunchManage(p.enable)
     })
-    
+
+    ipcMain.on('electron-toggle-proxy', (e, isEnabled) => {
+        const ses = session.defaultSession;
+
+        if (isEnabled) {
+            ses.setProxy({
+                proxyRules: 'socks5://127.0.0.1:9250',
+                proxyBypassRules: 'localhost'
+            }).then(() => {
+                console.log('Tor session proxy ON');
+            }).catch(err => console.error('Tor toggle session proxy:', err));
+        } else {
+            ses.setProxy({
+                proxyRules: '',
+                proxyBypassRules: ''
+            }).then(() => {
+                console.log('Tor session proxy OFF');
+            }).catch(err => console.error('Tor toggle session proxy:', err));
+        }
+    });
+
     ipcMain.handle('get-desktop-sources', async () => {
         const sources = await desktopCapturer.getSources({
             types: ['window', 'screen'],

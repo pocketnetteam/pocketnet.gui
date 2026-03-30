@@ -1071,8 +1071,27 @@ Application = function (p) {
 
 				}
 
+				toggleTorElectronProxy()
+
 			}
 		})
+	}
+
+    var toggleTorElectronProxy = function () {
+		if (self.isElectron()) {
+			const proxy = self.api.get.current();
+			proxy.get.info().then(proxyInfo => {
+				if (electron && proxy.direct) {
+					if (proxyInfo.info?.tor?.enabled3 === 'always') {
+						electron.ipcRenderer.send('electron-toggle-proxy', true);
+					} else {
+						electron.ipcRenderer.send('electron-toggle-proxy', false);
+					}
+				} else if (electron) {
+					electron.ipcRenderer.send('electron-toggle-proxy', false);
+				}
+			}).catch(err => console.error('Electron init session proxy error:', err));
+		}
 	}
 
 
