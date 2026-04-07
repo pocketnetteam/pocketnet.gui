@@ -12,6 +12,23 @@
   width: 350px;
   max-width: 90%;
 }
+#main .fortachatbutton {
+  background: rgb(var(--background-total-theme));
+  padding: 0.5em 0;
+  text-align: center;
+}
+#main .fortachatbutton button {
+  border-radius: 30px;
+  width: 350px;
+  max-width: 90%;
+  background: rgb(var(--color-bg-orange));
+  color: rgb(var(--text-on-bg-ac-color));
+  border-color: rgb(var(--color-bg-orange));
+}
+#main .fortachatbutton button:hover {
+  background: rgb(var(--color-bg-orange));
+  border-color: rgb(var(--color-bg-orange));
+}
 #main.wshar .bgCaption {
   display: none;
 }

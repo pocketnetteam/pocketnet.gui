@@ -144,6 +144,7 @@ const publics = {
     gettopaccounts: true,
     getrecommendedaccountbyaddress: true,
     getcontentactions: true,    
+    getsubscribeschannels: true,    
 
     getaccountearning : true,
 
@@ -518,6 +519,7 @@ RpcClient.callspec = {
 
     gettopfeed : 'int str int str obj obj obj obj obj str int',
     gettopaccounts : 'int int str obj obj obj obj int',
+    getsubscribeschannels : 'str int int int obj',
 
     getboostfeed : 'int str int str obj obj obj obj obj str str',
     getprofilefeed : 'int str int str obj str str str obj str str',

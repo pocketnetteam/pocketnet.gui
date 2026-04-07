@@ -4,6 +4,77 @@
   background: rgba(var(--color-bg-ac-bright));
   color: rgb(var(--text-on-bg-shadow-color));
 }
+#applications .fortaBanner {
+  background: rgba(var(--background-secondary-theme));
+  margin-top: 2em;
+  margin-bottom: 2em;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  height: 300px;
+}
+#applications .fortaBanner .fortaBannerInner {
+  position: absolute;
+  left: 10%;
+  top: 10%;
+  right: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5em;
+}
+#applications .fortaBanner .fortaBannerImage {
+  flex-shrink: 0;
+  width: 120px;
+  height: 120px;
+}
+#applications .fortaBanner .fortaBannerImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+#applications .fortaBanner .fortaBannerContent {
+  flex: 1;
+}
+#applications .fortaBanner .fortaBannerTitle {
+  font-size: 2em;
+  font-weight: 700;
+  margin-bottom: 0.5em;
+}
+#applications .fortaBanner .fortaBannerText {
+  font-size: 1.3em;
+  margin-bottom: 2em;
+  max-width: 640px;
+}
+#applications .fortaBanner .fortaBannerButtons {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+#applications .fortaBanner .fortaBannerButtons .downloadOsStyleAlt,
+#applications .fortaBanner .fortaBannerButtons .downloadOsStyle {
+  border-radius: 30px;
+  padding-left: 2em;
+  padding-right: 2em;
+  font-size: 1.2em;
+  font-weight: 100;
+  background: rgb(var(--color-bg-orange));
+  color: rgb(var(--text-on-bg-ac-color));
+  border-color: rgb(var(--color-bg-orange));
+}
+#applications .fortaBanner .fortaBannerButtons .downloadOsStyleAlt:hover,
+#applications .fortaBanner .fortaBannerButtons .downloadOsStyle:hover {
+  background: rgb(var(--color-bg-orange));
+  border-color: rgb(var(--color-bg-orange));
+}
+#applications .fortaBanner .fortaBannerButtons .downloadOsStyleAlt {
+  background: transparent;
+  color: rgb(var(--color-bg-orange));
+  border-color: transparent;
+}
+#applications .fortaBanner .fortaBannerButtons .downloadOsStyleAlt:hover {
+  background: transparent;
+  border-color: rgb(var(--color-bg-orange));
+}
 #applications .oss {
   margin-top: 2em;
   display: grid;
@@ -178,6 +249,41 @@
 }
 /*t*/
 @media only screen and (max-width: 768px) {
+  #applications .fortaBanner {
+    height: auto;
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+  #applications .fortaBanner .fortaBannerInner {
+    position: relative;
+    left: auto;
+    top: auto;
+    right: auto;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2em 1em;
+    gap: 1em;
+  }
+  #applications .fortaBanner .fortaBannerImage {
+    width: 80px;
+    height: 80px;
+  }
+  #applications .fortaBanner .fortaBannerText {
+    max-width: 100%;
+  }
+  #applications .fortaBanner .fortaBannerButtons {
+    flex-direction: column;
+    gap: 0.5em;
+    width: 100%;
+  }
+  #applications .fortaBanner .fortaBannerButtons > div {
+    width: 100%;
+  }
+  #applications .fortaBanner .fortaBannerButtons > div button,
+  #applications .fortaBanner .fortaBannerButtons > div a {
+    width: 100%;
+  }
   #applications .oss {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto auto auto;

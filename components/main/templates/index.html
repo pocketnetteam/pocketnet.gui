@@ -13,8 +13,21 @@
 					return da.id == 'barteron.pocketnet.app'
 				})
 				
+				var showForta = Math.random() < 0.5;
 				
 				if (isMobile() && dapp && !app.television) {%>
+
+					<% if (showForta) { %>
+
+						<div class="fortachatbutton">
+							<div class="rightchatspacer">
+								<div class="work adj">
+									<button><span><%=e('gotofortachat')%></span></button>
+								</div>
+							</div>
+						</div>
+
+					<% } else { %>
 
 						<div class="barteronbutton">
 							<div class="rightchatspacer">
@@ -23,6 +36,8 @@
 								</div>
 							</div>
 						</div>
+
+					<% } %>
 
 			
 				<% } %>

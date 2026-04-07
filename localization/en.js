@@ -3250,7 +3250,12 @@ _l.buypkoinexchnagep2p='Buy via PKOIN Exchange';
 
 _l.appsdisclaimer='Every app is already a wallet for pcoin. Except for the IOS';
 
+_l.fortaBannerDesc = "Download the new Forta Chat messenger for Android or visit the website for more information."
+_l.downloadapk = "Download APK"
+_l.fortaVisitSite = "Visit forta.chat"
+
 _l.gotobarteron = "Go to Barteron"
+_l.gotofortachat = "Go to Forta Chat"
 _l.windows7 = "Download for Windows 7"
 _l.miniapps = "Mini Applications"
 

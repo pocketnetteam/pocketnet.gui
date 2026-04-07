@@ -8,7 +8,89 @@
         background: rgba(var(--color-bg-ac-bright));
         color : rgb(var(--text-on-bg-shadow-color));
     }
-    
+
+    .fortaBanner{
+        background: rgba(var(--background-secondary-theme));
+        margin-top: 4 * @rhythm;
+        margin-bottom: 4 * @rhythm;
+        border-radius: 10px;
+        overflow: hidden;
+        position: relative;
+        height: 300px;
+
+        .fortaBannerInner{
+            position: absolute;
+            left: 10%;
+            top: 10%;
+            right: 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 3 * @rhythm;
+        }
+
+        .fortaBannerImage{
+            flex-shrink: 0;
+            width: 120px;
+            height: 120px;
+
+            img{
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+        }
+
+        .fortaBannerContent{
+            flex: 1;
+        }
+
+        .fortaBannerTitle{
+            font-size: 2em;
+            font-weight: 700;
+            margin-bottom: @rhythm;
+        }
+
+        .fortaBannerText{
+            font-size: 1.3em;
+            margin-bottom: 4 * @rhythm;
+            max-width: 640px;
+        }
+
+        .fortaBannerButtons{
+            display: flex;
+            align-items: center;
+            gap: 2 * @rhythm;
+
+            .downloadOsStyleAlt,
+            .downloadOsStyle{
+                border-radius: 30px;
+                padding-left: 4 * @rhythm;
+                padding-right: 4 * @rhythm;
+                font-size: 1.2em;
+                font-weight: 100;
+                background: rgb(var(--color-bg-orange));
+                color: rgb(var(--text-on-bg-ac-color));
+                border-color: rgb(var(--color-bg-orange));
+
+                &:hover{
+                    background: rgb(var(--color-bg-orange));
+                    border-color: rgb(var(--color-bg-orange));
+                }
+            }
+
+            .downloadOsStyleAlt{
+                background: transparent;
+                color: rgb(var(--color-bg-orange));
+                border-color: transparent;
+
+                &:hover{
+                    background: transparent;
+                    border-color: rgb(var(--color-bg-orange));
+                }
+            }
+        }
+    }
+
     .oss{
         margin-top : 4 * @rhythm;
         display: grid;
@@ -241,7 +323,48 @@
 
 /*t*/ @media only screen and (max-width: 768px){
     #applications{
-        
+
+        .fortaBanner{
+            height: auto;
+            margin-top: 2 * @rhythm;
+            margin-bottom: 2 * @rhythm;
+
+            .fortaBannerInner{
+                position: relative;
+                left: auto;
+                top: auto;
+                right: auto;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding: 4 * @rhythm 2 * @rhythm;
+                gap: 2 * @rhythm;
+            }
+
+            .fortaBannerImage{
+                width: 80px;
+                height: 80px;
+            }
+
+            .fortaBannerText{
+                max-width: 100%;
+            }
+
+            .fortaBannerButtons{
+                flex-direction: column;
+                gap: @rhythm;
+                width: 100%;
+
+                > div{
+                    width: 100%;
+
+                    button, a{
+                        width: 100%;
+                    }
+                }
+            }
+        }
+
         .oss{
             grid-template-columns: 1fr;
             grid-template-rows: auto auto auto auto auto;

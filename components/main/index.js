@@ -1074,13 +1074,15 @@ var main = (function(){
 
 			el.c.find('.barteronbutton button').on('click', function(){
 
-				console.log('asd')
-
 				self.nav.api.go({
 					open : true,
 					href : 'application?id=barteron.pocketnet.app',
 					history : true
 				})
+			})
+
+			el.c.find('.fortachatbutton button').on('click', function(){
+				window.open('https://forta.chat', '_blank')
 			})
 
 			if(!self.app.mobileview){

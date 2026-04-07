@@ -12,6 +12,27 @@ var applications = (function(){
 
 		var actions = {
 
+			downloadForta : function(){
+				globalpreloader(true)
+
+				$.get('https://api.github.com/repos/greenShirtMystery/forta.chat/releases/latest', {}, function(d){
+					var assets = deep(d, 'assets') || [];
+
+					var l = _.find(assets, function(a){
+						return a.name && a.name.endsWith('.apk')
+					})
+
+					if (l){
+						var link = document.createElement('a');
+						link.setAttribute('href', l.browser_download_url);
+						link.setAttribute('download', 'download');
+						link.click();
+					}
+
+					globalpreloader(false)
+				})
+			},
+
 			download : function(os, clbk, githubalt){
 				if (os){
 
@@ -202,6 +223,12 @@ var applications = (function(){
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
+
+				el.c.find('.fortaDownloadApk').on('click', function(){
+					if(block) return
+					events.block()
+					actions.downloadForta()
+				})
 
 				initEvents();
 
