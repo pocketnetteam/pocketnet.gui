@@ -15,7 +15,7 @@ var applications = (function(){
 			downloadForta : function(){
 				globalpreloader(true)
 
-				$.get('https://api.github.com/repos/greenShirtMystery/forta.chat/releases/latest', {}, function(d){
+				$.get('https://api.github.com/repos/pocketnetteam/forta.chat/releases/latest', {}, function(d){
 					var assets = deep(d, 'assets') || [];
 
 					var l = _.find(assets, function(a){
