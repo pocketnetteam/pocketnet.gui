@@ -762,14 +762,28 @@ function createWindow() {
         autoLaunchManage(p.enable)
     })
 
-    ipcMain.on('electron-toggle-proxy', (e, isEnabled) => {
+    let torSessionProxyEnabled = null;
+
+    const shouldEnableTorSessionProxy = (payload) => {
+        if (payload && typeof payload === 'object') {
+            return payload.direct !== false && payload.torMode === 'always';
+        }
+
+        return payload === true;
+    };
+
+    ipcMain.on('electron-toggle-proxy', (e, payload) => {
         const ses = session.defaultSession;
+        const isEnabled = shouldEnableTorSessionProxy(payload);
+
+        if (torSessionProxyEnabled === isEnabled) return;
 
         if (isEnabled) {
             ses.setProxy({
                 proxyRules: 'socks5://127.0.0.1:9250',
                 proxyBypassRules: 'localhost'
             }).then(() => {
+                torSessionProxyEnabled = true;
                 console.log('Tor session proxy ON');
             }).catch(err => console.error('Tor toggle session proxy:', err));
         } else {
@@ -777,6 +791,7 @@ function createWindow() {
                 proxyRules: '',
                 proxyBypassRules: ''
             }).then(() => {
+                torSessionProxyEnabled = false;
                 console.log('Tor session proxy OFF');
             }).catch(err => console.error('Tor toggle session proxy:', err));
         }

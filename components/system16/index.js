@@ -832,10 +832,11 @@ var system16 = (function(){
 				return new Promise((resolve, reject) => {
 					if (typeof _Electron != 'undefined' && _Electron) {
 						var electron = require('electron');
-						if (electron && proxy?.direct && torMode == 'always') {
-							electron.ipcRenderer.send('electron-toggle-proxy', true);
-						} else if (electron) {
-							electron.ipcRenderer.send('electron-toggle-proxy', false);
+						if (electron) {
+							electron.ipcRenderer.send('electron-toggle-proxy', {
+								torMode: torMode,
+								direct: !!proxy?.direct
+							});
 						}
 					}
 					resolve();
