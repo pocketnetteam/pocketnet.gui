@@ -1,13 +1,15 @@
 
 var f = require('../functions');
 const WebSocket   = require('ws');
+const { SocksProxyAgent } = require('socks-proxy-agent');
 
-var Wss = function(node, service){
+var Wss = function(node, service, useTorProxy){
 
     var self = this
     
     var attempt = 0;
     var ws = null
+    var connecting = false
 
     self.closed = false;
     
@@ -71,6 +73,7 @@ var Wss = function(node, service){
     self.disconnect = function(){
 
         self.closed = true
+        connecting = false
 
         if (ws){
             ws.onerror = () => {};
@@ -94,72 +97,92 @@ var Wss = function(node, service){
 
         var path = `${wsprotocol}://${node.host}:${wsport}/ws`;
 
-        if(!ws){
+        if(!ws && !connecting){
             /*if(user)
                 console.log('new ws', path, user.address, f.rand(0, 100))
             else{
                 console.log('new ws', path, 'noaddress', f.rand(0, 100))
             }*/
-            ws = new WebSocket(path);        
 
-            attempt++
+            connecting = true
 
-            ws.onopen = (e) => {
+            Promise.resolve(useTorProxy?.(path))
+            .catch(() => false)
+            .then((useTor) => {
+                if (self.closed || ws) return
 
-                attempt = 0
+                var options = {}
 
-                authorize(user)
-
-                emit('open')
-                
-            };
-
-            ws.onclose = (e) => {
-
-                ws = null
-
-                if (self.closed) return
-
-                emit('close')
-
-                if (attempt > 2){
-
-                    emit('disconnected')
-                }
-                else{
-                  
-                    self.connect(user)
-                }
-            };
-
-            ws.onmessage = (e) => {
-
-
-                var data = {};
-
-                try{ data = JSON.parse(e.data) } catch(e){}
-
-                if(_.isEmpty(data)){
-                    return
+                if (useTor){
+                    options.agent = new SocksProxyAgent('socks5h://127.0.0.1:9250')
                 }
 
-                if (data.msg == 'new block' && service){
-                
-                    emit('block', data)
+                ws = new WebSocket(path, options);
+                connecting = false
 
-                    node.addblock(data)
+                attempt++
 
-                    node.notification(data)
+                ws.onopen = (e) => {
 
-                }
+                    attempt = 0
 
-                emit('message', data)
+                    authorize(user)
 
-            };
+                    emit('open')
+                    
+                };
 
-            ws.onerror = (e, msg) => {
+                ws.onclose = (e) => {
+
+                    ws = null
+
+                    if (self.closed) return
+
+                    emit('close')
+
+                    if (attempt > 2){
+
+                        emit('disconnected')
+                    }
+                    else{
+                    
+                        self.connect(user)
+                    }
+                };
+
+                ws.onmessage = (e) => {
+
+
+                    var data = {};
+
+                    try{ data = JSON.parse(e.data) } catch(e){}
+
+                    if(_.isEmpty(data)){
+                        return
+                    }
+
+                    if (data.msg == 'new block' && service){
+                    
+                        emit('block', data)
+
+                        node.addblock(data)
+
+                        node.notification(data)
+
+                    }
+
+                    emit('message', data)
+
+                };
+
+                ws.onerror = (e, msg) => {
+                    emit('error', e)
+                };
+            }).catch((e) => {
                 emit('error', e)
-            };
+            }).finally(() => {
+                connecting = false
+            });
         }
 
         
