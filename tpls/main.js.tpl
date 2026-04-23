@@ -357,7 +357,6 @@ function initApp() {
         //win.toggleDevTools();
     }
 
-    autoUpdater.checkForUpdates();
     setInterval(() => {
         autoUpdater.checkForUpdates();
     }, 60 * 60 * 1000); // Every 1 hour  
@@ -773,27 +772,48 @@ function createWindow() {
     };
 
     ipcMain.on('electron-toggle-proxy', (e, payload) => {
-        const ses = session.defaultSession;
+        const initialRun = torSessionProxyEnabled == null
+        const defaultSession = session.defaultSession;
+        const updaterSession = autoUpdater.netSession;
         const isEnabled = shouldEnableTorSessionProxy(payload);
 
         if (torSessionProxyEnabled === isEnabled) return;
 
+        const proxyConfig = isEnabled ? {
+            proxyRules: 'socks5://127.0.0.1:9250',
+            proxyBypassRules: 'localhost'
+        } : {
+            proxyRules: '',
+            proxyBypassRules: ''
+        };
+
         if (isEnabled) {
-            ses.setProxy({
-                proxyRules: 'socks5://127.0.0.1:9250',
-                proxyBypassRules: 'localhost'
-            }).then(() => {
+            defaultSession.setProxy(proxyConfig).then(() => {
                 torSessionProxyEnabled = true;
-                console.log('Tor session proxy ON');
-            }).catch(err => console.error('Tor toggle session proxy:', err));
-        } else {
-            ses.setProxy({
-                proxyRules: '',
-                proxyBypassRules: ''
+                console.log('Default session Tor proxy ON');
             }).then(() => {
+                return updaterSession.setProxy(proxyConfig);
+            }).then(() => {
+                console.log('Updater session Tor proxy ON');
+                if (initialRun) {
+                    setTimeout(
+                        () => autoUpdater.checkForUpdates(),
+                        5 * 60 * 1000 //5 minutes delay
+                    );
+                }
+            }).catch(err => console.error('Toggle Tor session proxy:', err));
+        } else {
+            defaultSession.setProxy(proxyConfig).then(() => {
                 torSessionProxyEnabled = false;
-                console.log('Tor session proxy OFF');
-            }).catch(err => console.error('Tor toggle session proxy:', err));
+                console.log('Default session Tor proxy OFF');
+            }).then(() => {
+                return updaterSession.setProxy(proxyConfig);
+            }).then(() => {
+                console.log('Updater session Tor proxy OFF');
+                if (initialRun) {
+                    autoUpdater.checkForUpdates();
+                }
+            }).catch(err => console.error('Toggle Tor session proxy:', err));
         }
     });
 
