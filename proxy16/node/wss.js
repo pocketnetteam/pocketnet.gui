@@ -1,9 +1,8 @@
 
 var f = require('../functions');
 const WebSocket   = require('ws');
-const { SocksProxyAgent } = require('socks-proxy-agent');
 
-var Wss = function(node, service, useTorProxy){
+var Wss = function(node, service, useTorProxy, getTorAgent){
 
     var self = this
     
@@ -114,7 +113,7 @@ var Wss = function(node, service, useTorProxy){
                 var options = {}
 
                 if (useTor){
-                    options.agent = new SocksProxyAgent('socks5h://127.0.0.1:9250')
+                    options.agent = getTorAgent?.()
                 }
 
                 ws = new WebSocket(path, options);
