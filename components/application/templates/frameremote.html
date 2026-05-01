@@ -38,6 +38,7 @@
     </div>
 
     <% } %> <% } else { %>
+    <% if(deep(app.platform.sdk, 'usersettings.meta.chatenabled.value') !== false) { %>
     <div class="chat iconwrapper">
       <div class="icon">
         <div class="icn">
@@ -61,6 +62,7 @@
         <div class="amount"></div>
       </div>
     </div>
+    <% } %>
     <% }%>
     <div class="caption">
       <span><%-application.manifest.name%></span>

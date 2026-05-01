@@ -1,4 +1,4 @@
-<% if(state && (app.mobileview)) {%>
+<% if(state && app.mobileview && deep(app.platform.sdk, 'usersettings.meta.chatenabled.value') !== false) {%>
     <div class="chatDoubleRow">
         <div class="icon">
             <div class="icn">

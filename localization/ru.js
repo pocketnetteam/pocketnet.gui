@@ -2984,6 +2984,7 @@ _l.fordevelopers = "Для разработчиков"
 
 _l.interfacemobilelayoutmenu = "Кнопка чата посередине нижней панели"
 _l.interface = "Интерфейс"
+_l.chatenabled = "Включить чат"
 
 _l.managePaidSubscription = "Привилегированные подписки"
 
