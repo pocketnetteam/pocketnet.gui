@@ -143,7 +143,12 @@ var Node = function(options, manager){
     var serviceConnection = function(){
         if(!wss.service && manager){
      
-            wss.service = (new Wss(self, manager.proxy.kit.service())).connect()
+            wss.service = (new Wss(
+                self,
+                manager.proxy.kit.service(),
+                useTorProxyForWss,
+                () => manager?.transports?.getTorAgent()
+            )).connect()
 
             wss.service.on('open', function(){
                 wssconnected = true
@@ -171,6 +176,20 @@ var Node = function(options, manager){
             wss.service.disconnect()
             wss.service = null
         }
+    }
+
+    var useTorProxyForWss = async function(url){
+        var mode = manager?.torapplications?.settings?.enabled3
+
+        if (mode === 'neveruse') return false
+
+        var useTor = await manager?.transports?.isTorNeeded(url)
+
+        if (useTor) {
+            manager?.torapplications?.resetTimer()
+        }
+
+        return useTor
     }
 
     var timedifference = function(time){ //nodetime
@@ -1221,7 +1240,12 @@ var Node = function(options, manager){
             delete wss.changing[user.address]
 
             if(!wss.users[user.address]){
-                wss.users[user.address] = (new Wss(self)).connect(user)
+                wss.users[user.address] = (new Wss(
+                    self,
+                    null,
+                    useTorProxyForWss,
+                    () => manager?.transports?.getTorAgent()
+                )).connect(user)
 
                 return wss.users[user.address]
             }

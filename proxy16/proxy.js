@@ -800,7 +800,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			let fileRead = offlinePeertubeList;
 
 			try {
-				const res = await fetch(config.peertubesListLink);
+				const res = await transports.fetch(config.peertubesListLink);
 				fileRead = await res.json();
 			} catch (e) {
 				console.error('No peertube servers list!');
@@ -2764,5 +2764,4 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 }
 
 module.exports = Proxy
-
 

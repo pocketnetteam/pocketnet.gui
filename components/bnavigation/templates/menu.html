@@ -35,7 +35,8 @@
 
 <% } else { %>
 
-<% if(!deep(app.platform.sdk, 'usersettings.meta.interfacemobilelayoutmenu.value')){  %>
+<% var chatEnabled = deep(app.platform.sdk, 'usersettings.meta.chatenabled.value') !== false; %>
+<% if(!deep(app.platform.sdk, 'usersettings.meta.interfacemobilelayoutmenu.value') || !chatEnabled){  %>
 
 	<div class="items">
 

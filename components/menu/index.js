@@ -1392,7 +1392,7 @@ var menu = (function(){
 					data.lkey = app.localization.current()
 					data.theme = self.app.platform.sdk.theme.current == "white" ? 'white' : 'black'
 
-					data.haschat = true ///self.app.platform.matrixchat.core || self.app.platform.matrixchat.inited || self.app.platform.matrixchat.initing
+					data.haschat = deep(self.app.platform.sdk, 'usersettings.meta.chatenabled.value') !== false
 
 				if(p.state){
 

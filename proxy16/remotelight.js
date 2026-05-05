@@ -12,6 +12,31 @@ var Remote = function(app){
 	var ogcache = [];
 	var ogloading = {};
 
+	var requestOptions = function(uri, p){
+		var options = {
+			uri : nremotelink + '?url=' + encodeURIComponent(uri) + '&validate=false' + (p.bitchute ? '&bitchute=true' : ''),
+			timeout : 30000,
+			type : "POST",
+			headers: {
+				'User-Agent': 'proxybot'
+			}
+		}
+
+		if(self.torapplications?.settings?.enabled3 === 'always'){
+			if(!self.transports?.getTorAgent) throw new Error('TOR_TRANSPORT_UNAVAILABLE')
+
+			options.agent = self.transports.getTorAgent()
+		}
+
+		return options
+	}
+
+	var cacheRequestError = function(uri, options){
+		if(options?.agent && !self.torapplications?.isStarted?.()) return
+
+		errors[uri] = 'nc'
+	}
+
 	var hexEncode = function(text)
 	{
 	    var ch = 0;
@@ -109,18 +134,26 @@ var Remote = function(app){
 				return
 			}
 
-			request({
-				uri : nremotelink + '?url=' + encodeURIComponent(uri) + '&validate=false' + (p.bitchute ? '&bitchute=true' : ''),
-				timeout : 30000,
-				type : "POST",
-				headers: {
-					'User-Agent': 'proxybot'
+			var options = null
+
+			try{
+				options = requestOptions(uri, p)
+			}
+			catch(e){
+				cacheRequestError(uri, options)
+
+				if (clbk){
+					clbk({})
 				}
-			}, function(error, response, body){
+
+				return
+			}
+
+			request(options, function(error, response, body){
 
 				if (error){
 
-					errors[uri] = 'nc'
+					cacheRequestError(uri, options)
 
 					if (clbk){
 						clbk({})

@@ -2571,6 +2571,7 @@ brtAccount = function(){
 	self.static = false;
 	self.radius = 0;
 	self.safeDeal = {};
+	self.metaData = {};
 
 	self.validation = function(){
 
@@ -2584,6 +2585,7 @@ brtAccount = function(){
 						s: self.static,
 						r: self.radius,
 						d: self.safeDeal,
+						m: self.metaData,
 					 });
 	}
 
@@ -2596,6 +2598,7 @@ brtAccount = function(){
 				static: self.static,
 				radius: self.radius,
 				safeDeal: self.safeDeal,
+				metaData: self.metaData,
 			};
 		}
 
@@ -2608,6 +2611,7 @@ brtAccount = function(){
 					s: self.static,
 					r: self.radius,
 					d: self.safeDeal,
+					m: self.metaData,
 				})
 			}
 		};
@@ -2620,6 +2624,7 @@ brtAccount = function(){
 		self.static = d.static;
 		self.radius = d.radius;
 		self.safeDeal = d.safeDeal;
+		self.metaData = d.metaData;
 	}
 
 	self.type = 'brtaccount';

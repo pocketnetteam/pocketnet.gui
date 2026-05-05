@@ -217,7 +217,7 @@ var system16 = (function(){
 						for (const line of lines) {
 							const obfs3 = /^obfs3\s+((?:\d{1,3}\.){3}\d{1,3}:\d{1,5}|\[[0-9a-fA-F:]+\]:\d{1,5})\s+([A-Fa-f0-9]{40})$/;
 							const obfs4 = /^obfs4\s+((?:\d{1,3}\.){3}\d{1,3}:\d{1,5}|\[[0-9a-fA-F:]+\]:\d{1,5})\s+([A-Fa-f0-9]{40})\s+cert=([A-Za-z0-9+/=]+)\s+iat-mode=\d+$/;
-							const webtunnel = /^webtunnel\s+((?:\d{1,3}\.){3}\d{1,3}:\d{1,5}|\[[0-9a-fA-F:]+\]:\d{1,5})\s+([A-Fa-f0-9]{40})\s+url=(https?:\/\/[^\s]+)\s+ver=\d+\.\d+\.\d+$/;
+							const webtunnel = /^webtunnel\s+((?:\d{1,3}\.){3}\d{1,3}:\d{1,5}|\[[0-9a-fA-F:]+\]:\d{1,5})\s+([A-Fa-f0-9]{40})\s+url=(https?:\/\/[^\s]+)(\s+ver=\d+\.\d+\.\d+)?$/;
 							const meekLite = /^meek_lite\s+(\d{1,3}(?:\.\d{1,3}){3}:\d{1,5})\s+url=(https?:\/\/[^\s]+)\s+front=([A-Za-z0-9.-]+)(\s+utls=([^\s]+))?$/;
 							const vanilla = /^((?:\d{1,3}\.){3}\d{1,3}:\d{1,5}|\[[0-9a-fA-F:]+\]:\d{1,5})\s+([A-Fa-f0-9]{40})$/;
 
@@ -797,6 +797,7 @@ var system16 = (function(){
 									action: 'tor.start',
 									data: { persistence: false },
 								});
+								actions.toggleTorElectronProxy(settings.tor.enabled3);
 							}
 						}
 
@@ -805,6 +806,7 @@ var system16 = (function(){
 								action: 'tor.stop',
 								data: { persistence: false },
 							});
+							actions.toggleTorElectronProxy('neveruse');
 						}
 
 						api.set.currentwithnode(selected.id, true).then(r => {
@@ -824,6 +826,21 @@ var system16 = (function(){
 						if(clbk) clbk()
 					})
 				}
+			},
+
+			toggleTorElectronProxy: function (torMode) {
+				return new Promise((resolve, reject) => {
+					if (typeof _Electron != 'undefined' && _Electron) {
+						var electron = require('electron');
+						if (electron) {
+							electron.ipcRenderer.send('electron-toggle-proxy', {
+								torMode: torMode,
+								direct: !!proxy?.direct
+							});
+						}
+					}
+					resolve();
+				})
 			}
 		}
 
@@ -3312,6 +3329,10 @@ var system16 = (function(){
 
 							var _make = function(){
 								globalpreloader(true)
+
+								if (changes.server.torenabled3) {
+									actions.toggleTorElectronProxy(changes.server.torenabled3);
+								}
 								
 								proxy.fetchauth('manage', {
 									action: 'set.server.settings',

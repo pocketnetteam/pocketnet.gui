@@ -16,9 +16,7 @@ var deleted = app.platform.sdk.user.myaccauntdeleted();
 					<% if(app.mobileview) {%>
 						<% if(state) {
 							
-							if(!deep(app.platform.sdk, 'usersettings.meta.interfacemobilelayoutmenu.value')){ 
-								
-								if(haschat) { %>
+							if(!deep(app.platform.sdk, 'usersettings.meta.interfacemobilelayoutmenu.value') && haschat){ %>
 									<div class="items chat">
 										<div elementsid="eventschats" class="item  chatwr" events="chats">
 											<div class="icon">
@@ -33,7 +31,6 @@ var deleted = app.platform.sdk.user.myaccauntdeleted();
 										</div>
 									</div>
 
-								<% } %>
 							<% } else { %>
 								<div class="items naviconwrapper">
 								

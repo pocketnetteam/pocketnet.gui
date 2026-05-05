@@ -80,7 +80,7 @@ class WrappedAxios {
         }
         let isTorReady = this.transports.isTorReady();
 
-        if (isDirectAccessRestricted) {
+        if (isDirectAccessRestricted && !isTorReady) {
             isTorReady = await this.transports.waitTorReady();
         }
         const useTor = (!useDirectAccess && isTorReady && isTorEnabledInSettings);
@@ -130,7 +130,7 @@ class WrappedAxios {
                 }
                 let isTorReady = this.transports.isTorReady();
 
-                if (isDirectAccessRestricted) {
+                if (isDirectAccessRestricted && !isTorReady) {
                     isTorReady = await this.transports.waitTorReady();
                 }
 
@@ -211,7 +211,7 @@ class WrappedFetch {
         }
         let isTorReady = this.transports.isTorReady();
 
-        if (isDirectAccessRestricted) {
+        if (isDirectAccessRestricted && !isTorReady) {
             isTorReady = await this.transports.waitTorReady();
         }
 
@@ -264,7 +264,7 @@ class WrappedFetch {
                 }
                 let isTorReady = this.transports.isTorReady();
 
-                if (isDirectAccessRestricted) {
+                if (isDirectAccessRestricted && !isTorReady) {
                     isTorReady = await this.transports.waitTorReady();
                 }
 
@@ -348,7 +348,7 @@ class WrappedRequest {
         }
         let isTorReady = this.transports.isTorReady();
 
-        if (isDirectAccessRestricted) {
+        if (isDirectAccessRestricted && !isTorReady) {
             isTorReady = await this.transports.waitTorReady();
         }
 
@@ -390,7 +390,7 @@ class WrappedRequest {
                 }
                 let isTorReady = this.transports.isTorReady();
 
-                if (isDirectAccessRestricted) {
+                if (isDirectAccessRestricted && !isTorReady) {
                     isTorReady = await this.transports.waitTorReady();
                 }
 
@@ -479,7 +479,7 @@ class Transports {
                 const now = Date.now();
                 if (now >= target) {
                     settled = true;
-                    resolve(orReturn);
+                    resolve(typeof orReturn === 'function' ? orReturn() : orReturn);
                 } else {
                     const remaining = target - now;
                     const next = remaining > 5000 ? 5000
@@ -678,7 +678,7 @@ class Transports {
     }
 
     async waitTorReady() {
-        const timeout = Transports.waitTimeoutFineGrained(60, false);
+        const timeout = Transports.waitTimeoutFineGrained(60, () => this.isTorReady());
 
         let torStart;
 
@@ -698,7 +698,13 @@ class Transports {
             this.torStartPromise = torStart;
         }
 
-        return Promise.race([ torStart, timeout ]);
+        return Promise.race([ torStart, timeout ]).finally(() => {
+            if (this.torStartPromise === torStart) {
+                this.torStartPromise = null;
+            }
+
+            timeout.cancel?.();
+        });
     }
 
     isTorReady() {

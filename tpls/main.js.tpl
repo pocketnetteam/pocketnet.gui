@@ -19,7 +19,7 @@ const electronLocalshortcut = require('electron-localshortcut');
 var win, nwin, badge, tray, proxyInterface, ipcbridge;
 var willquit = false;
 
-const { app, BrowserWindow, Menu, MenuItem, Tray, ipcMain, Notification, nativeImage, dialog, globalShortcut, OSBrowser, desktopCapturer } = require('electron')
+const { app, session, BrowserWindow, Menu, MenuItem, Tray, ipcMain, Notification, nativeImage, dialog, globalShortcut, OSBrowser, desktopCapturer } = require('electron')
 app.allowRendererProcessReuse = false
 
 const FetchHandler = require('./js/transports2/fetch/handler.js');
@@ -357,7 +357,6 @@ function initApp() {
         //win.toggleDevTools();
     }
 
-    autoUpdater.checkForUpdates();
     setInterval(() => {
         autoUpdater.checkForUpdates();
     }, 60 * 60 * 1000); // Every 1 hour  
@@ -761,7 +760,63 @@ function createWindow() {
         
         autoLaunchManage(p.enable)
     })
-    
+
+    let torSessionProxyEnabled = null;
+
+    const shouldEnableTorSessionProxy = (payload) => {
+        if (payload && typeof payload === 'object') {
+            return payload.direct !== false && payload.torMode === 'always';
+        }
+
+        return payload === true;
+    };
+
+    ipcMain.on('electron-toggle-proxy', (e, payload) => {
+        const initialRun = torSessionProxyEnabled == null
+        const defaultSession = session.defaultSession;
+        const updaterSession = autoUpdater.netSession;
+        const isEnabled = shouldEnableTorSessionProxy(payload);
+
+        if (torSessionProxyEnabled === isEnabled) return;
+
+        const proxyConfig = isEnabled ? {
+            proxyRules: 'socks5://127.0.0.1:9250',
+            proxyBypassRules: 'localhost'
+        } : {
+            proxyRules: '',
+            proxyBypassRules: ''
+        };
+
+        if (isEnabled) {
+            defaultSession.setProxy(proxyConfig).then(() => {
+                torSessionProxyEnabled = true;
+                console.log('Default session Tor proxy ON');
+            }).then(() => {
+                return updaterSession.setProxy(proxyConfig);
+            }).then(() => {
+                console.log('Updater session Tor proxy ON');
+                if (initialRun) {
+                    setTimeout(
+                        () => autoUpdater.checkForUpdates(),
+                        5 * 60 * 1000 //5 minutes delay
+                    );
+                }
+            }).catch(err => console.error('Toggle Tor session proxy:', err));
+        } else {
+            defaultSession.setProxy(proxyConfig).then(() => {
+                torSessionProxyEnabled = false;
+                console.log('Default session Tor proxy OFF');
+            }).then(() => {
+                return updaterSession.setProxy(proxyConfig);
+            }).then(() => {
+                console.log('Updater session Tor proxy OFF');
+                if (initialRun) {
+                    autoUpdater.checkForUpdates();
+                }
+            }).catch(err => console.error('Toggle Tor session proxy:', err));
+        }
+    });
+
     ipcMain.handle('get-desktop-sources', async () => {
         const sources = await desktopCapturer.getSources({
             types: ['window', 'screen'],

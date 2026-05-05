@@ -3207,6 +3207,7 @@ _l.postWaitDelayed = function(time){
 _l.fordevelopers = "За програмере"
 _l.interfacemobilelayoutmenu = "Дугме за ћаскање у средини доње траке"
 _l.interface = "Интерфејс"
+_l.chatenabled = "Омогући ћаскање"
 
 _l.managePaidSubscription = "Привилеговане претплате"
 

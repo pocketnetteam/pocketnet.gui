@@ -1017,7 +1017,7 @@ Application = function (p) {
 
 	var acceleration = function () {
 
-		self.api.wait.ready('use', 1000).then(r => {
+		return self.api.wait.ready('use', 1000).then(r => {
 
 			var canuse = self.api.ready.use()
 
@@ -1075,6 +1075,31 @@ Application = function (p) {
 		})
 	}
 
+	var initTorElectronProxyToggle = function () {
+		if (!self.isElectron()) return
+
+		const directProxy = self.api?.get?.direct?.()
+
+		if (!directProxy?.clbks?.tick) return
+
+		const key = 'toggleTorElectronProxy'
+
+		directProxy.clbks.tick[key] = function () {
+			const proxy = self.api?.get?.current?.()
+
+			if (!proxy?.get?.info) return
+
+			proxy.get.info().then(proxyInfo => {
+				electron.ipcRenderer.send('electron-toggle-proxy', {
+					torMode: proxyInfo.info?.tor?.enabled3,
+					direct: proxy.direct
+				});
+
+				delete directProxy.clbks.tick[key]
+			}).catch(err => console.error('Electron init session proxy error:', err));
+		}
+	}
+
 
 	self.preapi = function () {
 
@@ -1082,10 +1107,9 @@ Application = function (p) {
 
 		self.api = new Api(self)
 		self.api.initIf(() => {
-			acceleration()
-			
+			return acceleration()
 		}).then(() => {
-
+			initTorElectronProxyToggle()
 		})
 
 		self.localization = new Localization(self);

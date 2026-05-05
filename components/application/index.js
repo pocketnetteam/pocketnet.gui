@@ -498,10 +498,12 @@ var application = (function () {
           actions.openinfo();
         });
 
-        var chatel = p.el.find(".chat");
+        if (deep(self.app.platform.sdk, 'usersettings.meta.chatenabled.value') !== false) {
+          var chatel = p.el.find(".chat");
 
-        chatel.on("click", events.chats.click);
-        events.chats.init(chatel);
+          chatel.on("click", events.chats.click);
+          events.chats.init(chatel);
+        }
       },
 
       loaded: function (p) {

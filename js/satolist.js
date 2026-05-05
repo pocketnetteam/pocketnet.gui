@@ -1164,6 +1164,13 @@ Platform = function (app, listofnodes) {
                     value: false
                 },
 
+                chatenabled: {
+                    name: self.app.localization.e('chatenabled'),
+                    id: 'chatenabled',
+                    type: "BOOLEAN",
+                    value: true
+                },
+
                 commentsOrder: {
                     type: "VALUES",
                     name: self.app.localization.e('commentsOrder'),
@@ -9609,13 +9616,15 @@ Platform = function (app, listofnodes) {
                 }
 
 
-                if(self.app.mobileview){
-                    c.interface = {
-                        name: self.app.localization.e('interface'),
-                        options: {
-                            interfacemobilelayoutmenu: options.interfacemobilelayoutmenu,
-                        }
+                c.interface = {
+                    name: self.app.localization.e('interface'),
+                    options: {
+                        chatenabled: options.chatenabled
                     }
+                }
+
+                if(self.app.mobileview){
+                    c.interface.options.interfacemobilelayoutmenu = options.interfacemobilelayoutmenu
                 }
 
                 c.system.options.useanimations = options.useanimations
@@ -9702,6 +9711,31 @@ Platform = function (app, listofnodes) {
 
                             if (self.app.modules.menu)
                                 self.app.modules.menu.module.restart()
+                        }
+
+                        if(i == 'chatenabled'){
+                            if (m[i].value) {
+                                self.matrixchat.init()
+                            } else {
+                                if (electron) {
+                                    electron.ipcRenderer.send('electron-notification-close', 'all')
+                                }
+
+                                if (self.matrixchat.el) {
+                                    self.matrixchat.el.find('matrix-element').attr('fcmtoken', '')
+                                }
+
+                                self.matrixchat.destroy()
+                            }
+
+                            if (self.app.modules.bnavigation)
+                                self.app.modules.bnavigation.module.restart()
+
+                            if (self.app.modules.menu)
+                                self.app.modules.menu.module.restart()
+
+                            if (self.app.modules.application)
+                                self.app.modules.application.module.restart()
                         }
                     }
                 })
@@ -25367,6 +25401,12 @@ Platform = function (app, listofnodes) {
 
         importifneed: function (clbk) {
 
+            if (deep(self, 'sdk.usersettings.meta.chatenabled.value') === false) {
+                if (clbk) clbk()
+
+                return
+            }
+
             app.user.isState(function (state) {
 
                 if (self.matrixchat.inited || self.matrixchat.initing || _OpenApi || !state) {
@@ -25381,6 +25421,7 @@ Platform = function (app, listofnodes) {
 
         init: function () {
 
+            if (deep(self, 'sdk.usersettings.meta.chatenabled.value') === false) return
             if (self.matrixchat.inited) return
             if (self.matrixchat.initing) return
             if (_OpenApi) return
