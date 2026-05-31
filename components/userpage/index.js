@@ -222,7 +222,11 @@ var userpage = (function(){
 			if(self.app.user.validate()) {
 
 				reports.push({
-					name : self.app.localization.e('e13186'),
+					name : function() {
+						// Check if user is a group - default to false for regular users
+						var isGroup = self.app.user.isGroup || false;
+						return isGroup ? self.app.localization.e('edit_group') : self.app.localization.e('e13186');
+					}(),
 					id : 'test',
 					report : 'test',
 					mobile : true,

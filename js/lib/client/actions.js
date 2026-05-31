@@ -863,7 +863,7 @@ var Action = function(account, object, priority, settings){
         }) 
 
         if(!ActionOptions.testWithoutSend)
-            sendPromise = account.parent.api.rpc(method, parameters)
+            sendPromise = account.parent.api.rpc(method, parameters, self.settings.rpc ? { rpc: self.settings.rpc } : undefined)
         
 
         return sendPromise.catch(e => {
