@@ -8,6 +8,7 @@ global.MIN_NODES_COUNT = 3
 global.USE_TLS_NODES_ONLY = true
 global.SAVE_HOSTS_STATS = true
 global.USE_NODE_TRANSPORTS = true
+global.usecli = false
 
 
 var WssDummy = function(wc){
