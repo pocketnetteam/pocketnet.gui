@@ -9,6 +9,9 @@ class TorControl {
         this._settings = { ...settings };
         this.proxy = proxy;
         this.torRunner = null;
+        this.torRunnerInitTask = null;
+        this.torRunnerInitialized = false;
+        this.destroyRequested = false;
         this.listeners = [];
         this.localState = {
             status: 'stopped',
@@ -17,20 +20,20 @@ class TorControl {
     }
 
     get settings() {
-        return this.torRunner?.getSettings() || this._settings;
+        return this.torRunnerInitialized ? this.torRunner.getSettings() : this._settings;
     }
 
     get state() {
-        return this.torRunner?.getState() || this.localState;
+        return this.torRunnerInitialized ? this.torRunner.getState() : this.localState;
     }
 
     get instance() {
-        return this.torRunner?.getInstance() || null;
+        return this.torRunnerInitialized ? this.torRunner.getInstance() : null;
     }
 
-    isStarted = () => this.torRunner?.isStarted() || false;
-    isStopped = () => this.torRunner?.isStopped() ?? this.localState.status === 'stopped';
-    isRunning = () => this.torRunner?.isRunning() || false;
+    isStarted = () => this.torRunnerInitialized ? this.torRunner.isStarted() : false;
+    isStopped = () => this.torRunnerInitialized ? this.torRunner.isStopped() : this.localState.status === 'stopped';
+    isRunning = () => this.torRunnerInitialized ? this.torRunner.isRunning() : false;
 
     onStarted = (listener) => this.addListener('started', listener);
     onStopped = (listener) => this.addListener('stopped', listener);
@@ -38,15 +41,25 @@ class TorControl {
     onAny = (listener) => this.addListener('any', listener);
 
     init = async () => {
+        if (this.destroyRequested) {
+            return false;
+        }
+
         if (this.isPureProxyMode()) {
             return true;
         }
 
-        return this.provideTorRunner().init();
+        return this.initializeTorRunner()
+            .catch((e) => this.handleTorRunnerError('init', e));
     };
 
     settingChanged = async (settings) => {
         const nextSettings = { ...settings };
+
+        if (this.destroyRequested) {
+            this._settings = nextSettings;
+            return false;
+        }
 
         if (!this.torRunner && !this.isTorInAlwaysMode(nextSettings)) {
             this._settings = nextSettings;
@@ -55,21 +68,54 @@ class TorControl {
 
         if (!this.torRunner) {
             this._settings = nextSettings;
-            return this.provideTorRunner().init();
+            return this.initializeTorRunner()
+                .catch((e) => this.handleTorRunnerError('settingChanged', e));
         }
 
-        return this.torRunner.settingChanged(nextSettings);
+        if (!this.torRunnerInitialized) {
+            if (!this.isTorEnabled(nextSettings)) {
+                this._settings = nextSettings;
+                if (!this.torRunnerInitTask) {
+                    return true;
+                }
+
+                return this.torRunnerInitTask
+                    .then(() => this.destroyRequested ? false : this.torRunner.settingChanged(nextSettings))
+                    .catch(() => true);
+            }
+
+            return this.initializeTorRunner()
+                .then(() => this.destroyRequested ? false : this.torRunner.settingChanged(nextSettings))
+                .catch((e) => this.handleTorRunnerError('settingChanged', e));
+        }
+
+        return this.torRunner.settingChanged(nextSettings)
+            .catch((e) => this.handleTorRunnerError('settingChanged', e));
     };
 
     autorun = () => {
+        if (this.destroyRequested) {
+            return Promise.resolve(false);
+        }
+
         if (this.isPureProxyMode()) {
             return Promise.resolve(true);
         }
 
-        return this.provideTorRunner().autorun();
+        return this.initializeTorRunner()
+            .then(() => this.destroyRequested ? false : this.torRunner.autorun())
+            .catch((e) => this.handleTorRunnerError('autorun', e));
     };
 
-    start = () => this.provideTorRunner().startTor();
+    start = () => {
+        if (this.destroyRequested) {
+            return Promise.resolve(false);
+        }
+
+        return this.initializeTorRunner()
+            .then(() => this.destroyRequested ? false : this.torRunner.startTor())
+            .catch((e) => this.handleTorRunnerError('start', e));
+    };
 
     stop = () => {
         if (!this.torRunner) {
@@ -77,13 +123,33 @@ class TorControl {
             return Promise.resolve(true);
         }
 
-        return this.torRunner.stopTor();
+        if (!this.torRunnerInitialized) {
+            this.setLocalStatus('stopped');
+            if (!this.torRunnerInitTask) {
+                return Promise.resolve(true);
+            }
+
+            return this.torRunnerInitTask
+                .then(() => this.torRunner.stopTor())
+                .catch((e) => this.handleTorRunnerError('stop', e));
+        }
+
+        return this.torRunner.stopTor()
+            .catch((e) => this.handleTorRunnerError('stop', e));
     };
 
-    restart = () => this.provideTorRunner().restartTorFromFacade();
+    restart = () => {
+        if (this.destroyRequested) {
+            return Promise.resolve(false);
+        }
+
+        return this.initializeTorRunner()
+            .then(() => this.destroyRequested ? false : this.torRunner.restartTorFromFacade())
+            .catch((e) => this.handleTorRunnerError('restart', e));
+    };
 
     getsettingspath = () => {
-        if (this.torRunner) {
+        if (this.torRunnerInitialized) {
             return this.torRunner.getsettingspath();
         }
 
@@ -96,12 +162,12 @@ class TorControl {
         return f.path(settingsPath);
     };
 
-    getpath = () => this.torRunner?.getpath() || null;
-    gettordirpath = () => this.torRunner?.gettordirpath() || null;
+    getpath = () => this.torRunnerInitialized ? this.torRunner.getpath() : null;
+    gettordirpath = () => this.torRunnerInitialized ? this.torRunner.gettordirpath() : null;
     resetTimer = () => this.torRunner?.resetTimer?.();
 
     info = (compact) => {
-        if (this.torRunner) {
+        if (this.torRunnerInitialized) {
             return this.torRunner.info(compact);
         }
 
@@ -125,12 +191,19 @@ class TorControl {
     };
 
     destroy = async () => {
+        this.destroyRequested = true;
+
         if (!this.torRunner) {
             this.setLocalStatus('stopped');
             return true;
         }
 
-        return this.torRunner.destroy();
+        if (!this.torRunnerInitialized && this.torRunnerInitTask) {
+            await this.torRunnerInitTask.catch(() => {});
+        }
+
+        return this.torRunner.destroy()
+            .catch((e) => this.handleTorRunnerError('destroy', e));
     };
 
     isPureProxyMode() {
@@ -139,6 +212,10 @@ class TorControl {
 
     isTorInAlwaysMode(settings) {
         return settings.enabled3 === 'always';
+    }
+
+    isTorEnabled(settings) {
+        return settings.enabled3 === 'auto' || settings.enabled3 === 'always';
     }
 
     provideTorRunner() {
@@ -158,6 +235,30 @@ class TorControl {
         });
 
         return this.torRunner;
+    }
+
+    initializeTorRunner() {
+        this.provideTorRunner();
+
+        if (!this.torRunnerInitTask) {
+            this.torRunnerInitTask = this.torRunner.init()
+                .then((result) => {
+                    this.torRunnerInitialized = true;
+                    return result;
+                })
+                .catch((e) => {
+                    this.torRunnerInitTask = null;
+                    this.torRunnerInitialized = false;
+                    throw e;
+                });
+        }
+
+        return this.torRunnerInitTask;
+    }
+
+    handleTorRunnerError(action, error) {
+        console.error(`Tor control ${action} failed:`, error);
+        return false;
     }
 
     addListener(type, listener) {
