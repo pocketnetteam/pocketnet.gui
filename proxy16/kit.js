@@ -1436,6 +1436,13 @@ const kit = {
 
 		settings = state.expand(environmentDefaultSettings, settings)
 
+
+		if(typeof global.usecli != undefined && global.usecli){
+			if (settings.tor && settings.tor.enabled3){
+				settings.tor.enabled3 = 'neveruse'
+			}
+		}
+
 		db = new Datastore({
 			filename: f.path(settingsPath),
 		});
