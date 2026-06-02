@@ -1,8 +1,0 @@
-'use strict';
-
-module.exports = Object.freeze({
-    ETHERNET_NETWORK: 'ETHERNET_NETWORK',
-    WIFI_NETWORK: 'WIFI_NETWORK',
-    CELLULAR_NETWORK: 'CELLULAR_NETWORK',
-    UNKNOWN_NETWORK: 'UNKNOWN_NETWORK'
-});
