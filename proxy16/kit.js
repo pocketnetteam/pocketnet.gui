@@ -1440,6 +1440,8 @@ const kit = {
 		if(typeof global.usecli != undefined && global.usecli){
 			if (settings.tor && settings.tor.enabled3){
 				settings.tor.enabled3 = 'neveruse'
+
+				console.log('nus')
 			}
 		}
 
