@@ -1483,14 +1483,13 @@ const kit = {
 
 						var savedSettings = !err ? docs[0] || {} : {}
 
-
 						if(typeof global.usecli != undefined && global.usecli){
-			if (savedSettings.tor && savedSettings.tor.enabled3){
-				savedSettings.tor.enabled3 = 'neveruse'
+							if (savedSettings.tor && savedSettings.tor.enabled3){
+								savedSettings.tor.enabled3 = 'neveruse'
 
-				console.log('nus2')
-			}
-		}
+								console.log('nus2')
+							}
+						}
 
 						state.apply(state.expand(savedSettings, settings))
 
