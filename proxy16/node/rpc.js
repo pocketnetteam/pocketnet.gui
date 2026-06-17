@@ -106,6 +106,7 @@ const publics = {
     getrecomendedcontentsbyscoresfromaddress : true,
     getrecomendedaccountsbytags : true,
     getboostfeed : true,
+    getboostsbyaddress : true,
     getprofilefeed : true,
     getsubscribesfeed : true,
 
@@ -522,6 +523,7 @@ RpcClient.callspec = {
     getsubscribeschannels : 'str int int int obj',
 
     getboostfeed : 'int str int str obj obj obj obj obj str str',
+    getboostsbyaddress : 'str int str int int',
     getprofilefeed : 'int str int str obj str str str obj str str',
     getsubscribesfeed : 'int str int str obj obj obj obj obj str str',
 
