@@ -1477,7 +1477,6 @@ const kit = {
 
 			db.loadDatabase(function (err) {
 
-
 				if (!err) {
 					db.find({nedbkey: nedbkey}).exec(function (err, docs) {
 

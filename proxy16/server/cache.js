@@ -186,6 +186,12 @@ var Cache = function(p){
                 time : 1460,
             }, 
 
+            getboostsbyaddress: {
+                time : 460,
+                block : 0,
+                stats : true
+            },
+
             getprofilefeed: {
                 time : 460,
                 block : 0,

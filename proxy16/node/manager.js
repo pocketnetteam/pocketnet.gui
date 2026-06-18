@@ -30,6 +30,7 @@ const queuemethods = {
     getusercontents : true,
     getcontentsstatistic : true,
     getboostfeed : true,
+    getboostsbyaddress : true,
     getprofilefeed : true,
     getnotifications : true
 }

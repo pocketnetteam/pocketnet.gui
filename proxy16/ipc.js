@@ -10,7 +10,6 @@ global.SAVE_HOSTS_STATS = true
 global.USE_NODE_TRANSPORTS = true
 global.usecli = false
 
-
 var WssDummy = function(wc){
 	var self = this
 

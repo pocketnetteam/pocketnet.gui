@@ -252,6 +252,7 @@ var Testnode = function(node, manager){
         getuserprofile : ['getrandomaddress1'],
         getuserprofiles : ['getrandomaddress10'],
         getrawtransaction : ['adcd8bfa4695d02d00a9260b0a773d6334edd64c421b8b76335ff2a05c073302', 1],
+        getboostsbyaddress : ["TRWCZHGBgGBve3Ethz9wFnwqnfainFQpLj", 0, "both", 20, 0],
         getuseraddress : ['maxtest'],
         gettags : function(){
 
