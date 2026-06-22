@@ -49,7 +49,7 @@
 }
 #boosts .summaryGrid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(120px, 1fr));
+  grid-template-columns: repeat(3, minmax(120px, 1fr));
   gap: 10px;
   margin-bottom: 20px;
 }
@@ -79,7 +79,7 @@
 #boosts .boostsRow {
   display: grid;
   width: 100%;
-  grid-template-columns: minmax(150px, 1.15fr) minmax(105px, 0.75fr) minmax(90px, 0.65fr) minmax(260px, 2.4fr) minmax(200px, 1.6fr) minmax(180px, 1.45fr);
+  grid-template-columns: minmax(150px, 1.1fr) minmax(105px, 0.75fr) minmax(90px, 0.65fr) minmax(150px, 1.35fr) minmax(150px, 1.35fr) minmax(200px, 1.55fr) minmax(180px, 1.4fr);
   align-items: center;
   background: rgb(var(--background-total-theme));
   border-bottom: 1px solid rgba(var(--neutral-grad-0), 0.5);
@@ -118,33 +118,38 @@
   color: rgb(var(--color-good));
   background: rgba(var(--color-good), 0.1);
 }
-#boosts .participant {
-  display: flex;
-  align-items: center;
+#boosts .booster,
+#boosts .author {
   min-width: 0;
-  margin-bottom: 4px;
 }
-#boosts .participant:nth-last-child(1) {
-  margin-bottom: 0;
+#boosts .booster .cellLabel,
+#boosts .author .cellLabel {
+  display: none;
 }
-#boosts .participant label {
-  flex: 0 0 100px;
-  font-size: 0.7em;
-  color: rgb(var(--color-txt-gray-dark));
-}
-#boosts .participant span,
-#boosts .participant a {
+#boosts .booster span,
+#boosts .booster a,
+#boosts .booster .profileName,
+#boosts .author span,
+#boosts .author a,
+#boosts .author .profileName {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   font-size: 0.8em;
   font-weight: 700;
 }
-#boosts .participant a {
+#boosts .booster a,
+#boosts .booster .profileName,
+#boosts .author a,
+#boosts .author .profileName {
   color: rgb(var(--color-txt-ac));
+}
+#boosts .booster a,
+#boosts .author a {
   text-decoration: none;
 }
-#boosts .participant a:hover {
+#boosts .booster a:hover,
+#boosts .author a:hover {
   text-decoration: underline;
 }
 #boosts .transaction,
@@ -178,14 +183,20 @@
   margin-right: 5px;
 }
 #boosts .transaction .toblockexplorer,
-#boosts .content .toblockexplorer {
+#boosts .transaction .copyBoostTx,
+#boosts .content .copyBoostContentLink {
   color: rgb(var(--neutral-grad-2));
   cursor: pointer;
-  margin-left: auto;
+  flex: 0 0 auto;
+  margin-left: 5px;
 }
 #boosts .transaction .toblockexplorer:hover,
-#boosts .content .toblockexplorer:hover {
+#boosts .transaction .copyBoostTx:hover,
+#boosts .content .copyBoostContentLink:hover {
   color: rgb(var(--neutral-grad-4));
+}
+#boosts .transaction .toblockexplorer {
+  margin-left: auto;
 }
 #boosts .emptyState,
 #boosts .errorState {
@@ -231,7 +242,17 @@
     margin-bottom: 10px;
     border-top: 1px solid rgba(var(--neutral-grad-0), 0.5);
   }
-  #boosts .participant label {
-    flex-basis: 96px;
+  #boosts .booster,
+  #boosts .author {
+    display: flex;
+    align-items: center;
+  }
+  #boosts .booster .cellLabel,
+  #boosts .author .cellLabel {
+    display: block;
+    flex: 0 0 96px;
+    font-size: 0.7em;
+    color: rgb(var(--color-txt-gray-dark));
+    font-weight: 400;
   }
 }

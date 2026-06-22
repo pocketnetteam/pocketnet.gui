@@ -5,23 +5,25 @@
 			<span class="directionBadge <%-boost.direction%>"><%-boost.directionLabel%></span>
 		</div>
 		<div class="amount"><span><%-app.platform.mp.coin(boost.boostAmount || 0)%></span></div>
-		<div class="participants">
-			<div class="participant">
-				<label><%=e('boosts_booster')%></label>
-				<% if(boost.boostAddress) {%>
-					<a href="<%-app.platform.api.authorlink(boost.boostAddress)%>" title="<%-boost.boostAddress%>"><%-boost.boostAddressName || '---'%></a>
-				<% } else { %>
-					<span>---</span>
-				<% } %>
-			</div>
-			<div class="participant">
-				<label><%=e('boosts_contentauthor')%></label>
-				<% if(boost.contentAddress) {%>
-					<a href="<%-app.platform.api.authorlink(boost.contentAddress)%>" title="<%-boost.contentAddress%>"><%-boost.contentAddressName || '---'%></a>
-				<% } else { %>
-					<span>---</span>
-				<% } %>
-			</div>
+		<div class="booster">
+			<span class="cellLabel"><%=e('boosts_booster')%></span>
+			<% if(boost.boosterIsMe) {%>
+				<span class="profileName" title="<%-boost.boostAddress || ''%>"><%-boost.boostAddressName || '---'%></span>
+			<% } else if(boost.boostAddress) {%>
+				<a href="<%-app.platform.api.authorlink(boost.boostAddress)%>" title="<%-boost.boostAddress%>"><%-boost.boostAddressName || '---'%></a>
+			<% } else { %>
+				<span>---</span>
+			<% } %>
+		</div>
+		<div class="author">
+			<span class="cellLabel"><%=e('boosts_contentauthor')%></span>
+			<% if(boost.authorIsMe) {%>
+				<span class="profileName" title="<%-boost.contentAddress || ''%>"><%-boost.contentAddressName || '---'%></span>
+			<% } else if(boost.contentAddress) {%>
+				<a href="<%-app.platform.api.authorlink(boost.contentAddress)%>" title="<%-boost.contentAddress%>"><%-boost.contentAddressName || '---'%></a>
+			<% } else { %>
+				<span>---</span>
+			<% } %>
 		</div>
 		<div class="transaction">
 			<button class="boostTransaction" txid="<%-boost.txid || ''%>" title="<%-boost.txid || ''%>">
@@ -29,14 +31,19 @@
 				<span><%-boost.txidShort || '---'%></span>
 			</button>
 			<% if(boost.txid) {%>
+				<i class="far fa-copy copyBoostTx" txid="<%-boost.txid%>" title="<%=e('dcopyToClipboard')%>"></i>
 				<i class="fas fa-th toblockexplorer" type="transaction" txid="<%-boost.txid%>"></i>
 			<% } %>
 		</div>
 		<div class="content">
-			<button class="boostContent" txid="<%-boost.contentTxid || ''%>" title="<%-boost.contentTxid || ''%>">
-				<i class="far fa-file-alt"></i>
-				<span><%-boost.contentTxidShort || '---'%></span>
-			</button>
+			<% if(boost.contentTxid) {%>
+				<button class="boostContent" txid="<%-boost.contentTxid%>">
+					<span><%=e('boosts_show')%></span>
+				</button>
+				<i class="far fa-copy copyBoostContentLink" link="<%-boost.contentLink%>" title="<%=e('copylink')%>"></i>
+			<% } else { %>
+				<span>---</span>
+			<% } %>
 		</div>
 	</div>
 <% }) %>

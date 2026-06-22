@@ -65,7 +65,7 @@
 
 	.summaryGrid{
 		display: grid;
-		grid-template-columns: repeat(4, minmax(120px, 1fr));
+		grid-template-columns: repeat(3, minmax(120px, 1fr));
 		gap: @rhythm;
 		margin-bottom: 2 * @rhythm;
 	}
@@ -102,7 +102,7 @@
 	.boostsRow{
 		display: grid;
 		width: 100%;
-		grid-template-columns: minmax(150px, 1.15fr) minmax(105px, 0.75fr) minmax(90px, 0.65fr) minmax(260px, 2.4fr) minmax(200px, 1.6fr) minmax(180px, 1.45fr);
+		grid-template-columns: minmax(150px, 1.1fr) minmax(105px, 0.75fr) minmax(90px, 0.65fr) minmax(150px, 1.35fr) minmax(150px, 1.35fr) minmax(200px, 1.55fr) minmax(180px, 1.4fr);
 		align-items: center;
 		background: rgb(var(--background-total-theme));
 		border-bottom: 1px solid rgba(var(--neutral-grad-0), 0.5);
@@ -151,24 +151,17 @@
 		}
 	}
 
-	.participant{
-		display: flex;
-		align-items: center;
+	.booster,
+	.author{
 		min-width: 0;
-		margin-bottom: 0.4 * @rhythm;
 
-		&:nth-last-child(1){
-			margin-bottom: 0;
-		}
-
-		label{
-			flex: 0 0 100px;
-			font-size: 0.7em;
-			color: rgb(var(--color-txt-gray-dark));
+		.cellLabel{
+			display: none;
 		}
 
 		span,
-		a{
+		a,
+		.profileName{
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
@@ -176,8 +169,12 @@
 			font-weight: 700;
 		}
 
-		a{
+		a,
+		.profileName{
 			color: rgb(var(--color-txt-ac));
+		}
+
+		a{
 			text-decoration: none;
 
 			&:hover{
@@ -216,14 +213,21 @@
 			}
 		}
 
-		.toblockexplorer{
+		.toblockexplorer,
+		.copyBoostTx,
+		.copyBoostContentLink{
 			color: rgb(var(--neutral-grad-2));
 			cursor: pointer;
-			margin-left: auto;
+			flex: 0 0 auto;
+			margin-left: 0.5 * @rhythm;
 
 			&:hover{
 				color: rgb(var(--neutral-grad-4));
 			}
+		}
+
+		.toblockexplorer{
+			margin-left: auto;
 		}
 	}
 
@@ -284,8 +288,18 @@
 			border-top: 1px solid rgba(var(--neutral-grad-0), 0.5);
 		}
 
-		.participant label{
-			flex-basis: 96px;
+		.booster,
+		.author{
+			display: flex;
+			align-items: center;
+
+			.cellLabel{
+				display: block;
+				flex: 0 0 96px;
+				font-size: 0.7em;
+				color: rgb(var(--color-txt-gray-dark));
+				font-weight: 400;
+			}
 		}
 	}
 }

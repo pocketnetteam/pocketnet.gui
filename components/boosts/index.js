@@ -29,13 +29,6 @@ var boosts = (function(){
 				return (totals.sent || 0) + (totals.received || 0)
 			},
 
-			totalAmountByDirection : function(dir){
-				return _.reduce(items, function(m, item){
-					if(item.direction == dir) return m + Number(item.boostAmount || 0)
-					return m
-				}, 0)
-			},
-
 			collectAddresses : function(){
 				var addresses = []
 
@@ -71,6 +64,8 @@ var boosts = (function(){
 			prepare : function(item){
 				var boostAddressShort = helpers.shortid(item.boostAddress)
 				var contentAddressShort = helpers.shortid(item.contentAddress)
+				var boosterIsMe = item.direction == 'sent'
+				var authorIsMe = item.direction == 'received'
 
 				return _.extend({}, item, {
 					date : item.time ? moment.utc(item.time * 1000).format('YYYY-MM-DD, HH:mm') : '',
@@ -79,8 +74,11 @@ var boosts = (function(){
 					contentTxidShort : helpers.shortid(item.contentTxid),
 					boostAddressShort : boostAddressShort,
 					contentAddressShort : contentAddressShort,
+					boosterIsMe : boosterIsMe,
+					authorIsMe : authorIsMe,
 					boostAddressName : helpers.addressName(item.boostAddress, boostAddressShort),
-					contentAddressName : helpers.addressName(item.contentAddress, contentAddressShort)
+					contentAddressName : helpers.addressName(item.contentAddress, contentAddressShort),
+					contentLink : item.contentTxid ? ('https://' + self.app.options.url + '/post?s=' + item.contentTxid) : ''
 				})
 			}
 		}
@@ -201,6 +199,30 @@ var boosts = (function(){
 				return false
 			},
 
+			copytransaction : function(e){
+				var txid = $(this).attr('txid');
+
+				if(!txid) return;
+
+				copycleartext(txid)
+				sitemessage(self.app.localization.e('boosts_txcopied'))
+
+				e.stopPropagation()
+				return false
+			},
+
+			copycontentlink : function(e){
+				var link = $(this).attr('link');
+
+				if(!link) return;
+
+				copycleartext(link)
+				sitemessage(self.app.localization.e('urlsuccesscopied'))
+
+				e.stopPropagation()
+				return false
+			},
+
 			toblockexplorer : function(e){
 				var type = $(this).attr('type') || 'transaction';
 				var id = $(this).attr('txid');
@@ -252,10 +274,6 @@ var boosts = (function(){
 					el : el.summary,
 					data : {
 						totals : totals,
-						loaded : items.length,
-						total : helpers.totalCount(),
-						sentAmount : helpers.totalAmountByDirection('sent'),
-						receivedAmount : helpers.totalAmountByDirection('received'),
 						height : height
 					}
 				}, function(){})
@@ -331,6 +349,8 @@ var boosts = (function(){
 			el.c.on('click', '.boostDirection', events.changeDirection);
 			el.c.on('click', '.boostTransaction', events.opentransaction);
 			el.c.on('click', '.boostContent', events.opencontent);
+			el.c.on('click', '.copyBoostTx', events.copytransaction);
+			el.c.on('click', '.copyBoostContentLink', events.copycontentlink);
 			el.c.on('click', '.toblockexplorer', events.toblockexplorer);
 
 			if (scnt.hasClass('applicationhtml')) {

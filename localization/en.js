@@ -2937,6 +2937,9 @@ _l.boosts_loaded = "Loaded"
 _l.boosts_empty = "No boosts found"
 _l.boosts_error = "Boost history is unavailable"
 _l.boosts_loadmore = "Load more"
+_l.boosts_me = "me"
+_l.boosts_show = "Show"
+_l.boosts_txcopied = "Transaction copied"
 
 
 _l.grouping = "Group by"
