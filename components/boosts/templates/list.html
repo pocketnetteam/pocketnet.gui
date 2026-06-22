@@ -1,0 +1,42 @@
+<% _.each(boosts, function(boost){ %>
+	<div class="boostsRow boostItem <%-boost.direction%>">
+		<div class="date"><span><%-boost.date || '---'%></span></div>
+		<div class="direction">
+			<span class="directionBadge <%-boost.direction%>"><%-boost.directionLabel%></span>
+		</div>
+		<div class="amount"><span><%-app.platform.mp.coin(boost.boostAmount || 0)%></span></div>
+		<div class="participants">
+			<div class="participant">
+				<label><%=e('boosts_booster')%></label>
+				<% if(boost.boostAddress) {%>
+					<a href="<%-app.platform.api.authorlink(boost.boostAddress)%>" title="<%-boost.boostAddress%>"><%-boost.boostAddressName || '---'%></a>
+				<% } else { %>
+					<span>---</span>
+				<% } %>
+			</div>
+			<div class="participant">
+				<label><%=e('boosts_contentauthor')%></label>
+				<% if(boost.contentAddress) {%>
+					<a href="<%-app.platform.api.authorlink(boost.contentAddress)%>" title="<%-boost.contentAddress%>"><%-boost.contentAddressName || '---'%></a>
+				<% } else { %>
+					<span>---</span>
+				<% } %>
+			</div>
+		</div>
+		<div class="transaction">
+			<button class="boostTransaction" txid="<%-boost.txid || ''%>" title="<%-boost.txid || ''%>">
+				<i class="fas fa-hashtag"></i>
+				<span><%-boost.txidShort || '---'%></span>
+			</button>
+			<% if(boost.txid) {%>
+				<i class="fas fa-th toblockexplorer" type="transaction" txid="<%-boost.txid%>"></i>
+			<% } %>
+		</div>
+		<div class="content">
+			<button class="boostContent" txid="<%-boost.contentTxid || ''%>" title="<%-boost.contentTxid || ''%>">
+				<i class="far fa-file-alt"></i>
+				<span><%-boost.contentTxidShort || '---'%></span>
+			</button>
+		</div>
+	</div>
+<% }) %>

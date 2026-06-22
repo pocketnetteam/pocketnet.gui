@@ -125,6 +125,18 @@ var userpage = (function(){
 			})
 
 			if(!self.app.pkoindisable){
+				reports.push({
+					name : self.app.localization.e('boosts_title'),
+					id : 'boosts',
+					report : 'boosts',
+					mobile : true,
+					if : function(){
+						return !self.app.platform.sdk.user.myaccauntdeleted()
+					}
+				})
+			}
+
+			if(!self.app.pkoindisable){
 				if(self.app.user.validate() && self.app.platform.sdk.users.checkMonetizationOpportunity(self.app.user.address.value)) {
 
 					

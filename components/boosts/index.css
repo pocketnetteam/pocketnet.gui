@@ -1,0 +1,237 @@
+#boosts .loadingwrapper {
+  display: none;
+  padding: 20px;
+  text-align: center;
+}
+#boosts.loading .loadingwrapper {
+  display: block;
+}
+#boosts .boosts {
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+#boosts .boostsCaption {
+  padding-left: 10px;
+}
+#boosts .boostsCaption span {
+  font-size: 2em;
+}
+#boosts .boostsPanel {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+#boosts .boostsPanel .work {
+  display: flex;
+  align-items: center;
+}
+#boosts .boostsFilters {
+  display: flex;
+  background: rgba(var(--neutral-grad-0), 0.45);
+  border-radius: 4px;
+  padding: 2px;
+}
+#boosts .boostsFilters button {
+  border: 0;
+  background: transparent;
+  color: rgb(var(--color-txt-gray-dark));
+  cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 3px;
+  transition: all 0.15s;
+}
+#boosts .boostsFilters button.active {
+  background: rgb(var(--background-total-theme));
+  color: rgb(var(--color-txt-ac));
+  box-shadow: 0 1px 4px rgba(var(--color-shadow-base), 0.12);
+}
+#boosts .boostsFilters button:hover {
+  color: rgb(var(--color-txt-ac));
+}
+#boosts .summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(120px, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
+}
+#boosts .summaryItem {
+  background: rgba(var(--background-main), 0.5);
+  border: 1px solid rgba(var(--neutral-grad-0), 0.7);
+  border-radius: 6px;
+  padding: 15px;
+}
+#boosts .summaryItem .label span {
+  font-size: 0.75em;
+  color: rgb(var(--color-txt-gray-dark));
+}
+#boosts .summaryItem .value {
+  margin-top: 5px;
+}
+#boosts .summaryItem .value span {
+  font-weight: 700;
+}
+#boosts .summaryItem .value.accent span {
+  color: rgb(var(--color-txt-ac-1));
+}
+#boosts .boostsTable {
+  position: relative;
+  width: 100%;
+}
+#boosts .boostsRow {
+  display: grid;
+  width: 100%;
+  grid-template-columns: minmax(150px, 1.15fr) minmax(105px, 0.75fr) minmax(90px, 0.65fr) minmax(260px, 2.4fr) minmax(200px, 1.6fr) minmax(180px, 1.45fr);
+  align-items: center;
+  background: rgb(var(--background-total-theme));
+  border-bottom: 1px solid rgba(var(--neutral-grad-0), 0.5);
+}
+#boosts .boostsRow > div {
+  min-width: 0;
+  padding: 15px 15px;
+}
+#boosts .boostsHeader {
+  position: sticky;
+  top: calc(65px + var(--app-margin-top));
+  z-index: 2;
+  border-bottom: 1px solid rgb(var(--neutral-grad-0));
+}
+#boosts .boostsHeader span {
+  font-size: 0.75em;
+  font-weight: 700;
+  color: rgb(var(--color-txt-gray-dark));
+}
+#boosts .boostItem:nth-child(2n) {
+  background: rgba(var(--neutral-grad-0), 0.3);
+}
+#boosts .directionBadge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 14px;
+  padding: 4px 10px;
+  font-size: 0.75em;
+  font-weight: 700;
+}
+#boosts .directionBadge.sent {
+  color: rgb(var(--color-bad));
+  background: rgba(var(--color-bad), 0.1);
+}
+#boosts .directionBadge.received {
+  color: rgb(var(--color-good));
+  background: rgba(var(--color-good), 0.1);
+}
+#boosts .participant {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  margin-bottom: 4px;
+}
+#boosts .participant:nth-last-child(1) {
+  margin-bottom: 0;
+}
+#boosts .participant label {
+  flex: 0 0 100px;
+  font-size: 0.7em;
+  color: rgb(var(--color-txt-gray-dark));
+}
+#boosts .participant span,
+#boosts .participant a {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.8em;
+  font-weight: 700;
+}
+#boosts .participant a {
+  color: rgb(var(--color-txt-ac));
+  text-decoration: none;
+}
+#boosts .participant a:hover {
+  text-decoration: underline;
+}
+#boosts .transaction,
+#boosts .content {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+#boosts .transaction button,
+#boosts .content button {
+  min-width: 0;
+  flex: 1 1 auto;
+  border: 0;
+  background: transparent;
+  color: rgb(var(--color-txt-ac));
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+#boosts .transaction button span,
+#boosts .content button span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.8em;
+}
+#boosts .transaction button i,
+#boosts .content button i {
+  color: rgb(var(--neutral-grad-2));
+  margin-right: 5px;
+}
+#boosts .transaction .toblockexplorer,
+#boosts .content .toblockexplorer {
+  color: rgb(var(--neutral-grad-2));
+  cursor: pointer;
+  margin-left: auto;
+}
+#boosts .transaction .toblockexplorer:hover,
+#boosts .content .toblockexplorer:hover {
+  color: rgb(var(--neutral-grad-4));
+}
+#boosts .emptyState,
+#boosts .errorState {
+  margin: 20px;
+  padding: 40px;
+  text-align: center;
+  background: rgba(var(--background-main), 0.5);
+  border-radius: 6px;
+}
+#boosts .errorState {
+  color: rgb(var(--color-bad));
+}
+#boosts .boostsFooter {
+  padding: 20px 0;
+  text-align: center;
+}
+@media only screen and (max-width: 768px) {
+  #boosts .boostsCaption span {
+    font-size: 1.4em;
+  }
+  #boosts .summaryGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  #boosts .boostsFilters {
+    width: 100%;
+  }
+  #boosts .boostsFilters button {
+    flex: 1 1 0;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  #boosts .boostsHeader {
+    display: none;
+  }
+  #boosts .boostsRow {
+    grid-template-columns: 1fr;
+    padding: 10px 0;
+  }
+  #boosts .boostsRow > div {
+    padding: 5px 10px;
+  }
+  #boosts .boostItem {
+    margin-bottom: 10px;
+    border-top: 1px solid rgba(var(--neutral-grad-0), 0.5);
+  }
+  #boosts .participant label {
+    flex-basis: 96px;
+  }
+}

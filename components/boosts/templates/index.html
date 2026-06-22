@@ -1,0 +1,41 @@
+<div id="<%-module.map.id%>">
+	<div class="boosts">
+		<div class="rightchatspacer">
+			<div class="boostsCaption">
+				<div class="work">
+					<span><%=e('boosts_title')%></span>
+				</div>
+			</div>
+
+			<div class="boostsSummary"></div>
+
+			<div class="boostsPanel">
+				<div class="work">
+					<div class="boostsFilters">
+						<button class="boostDirection" direction="both"><%=e('boosts_both')%></button>
+						<button class="boostDirection" direction="sent"><%=e('boosts_sent')%></button>
+						<button class="boostDirection" direction="received"><%=e('boosts_received')%></button>
+					</div>
+				</div>
+			</div>
+
+			<div class="boostsTable work">
+				<div class="boostsHeader boostsRow">
+					<div class="date"><span><%=e('boosts_date')%></span></div>
+					<div class="direction"><span><%=e('boosts_direction')%></span></div>
+					<div class="amount"><span><%=e('boosts_amount')%></span></div>
+					<div class="participants"><span><%=e('boosts_participants')%></span></div>
+					<div class="transaction"><span><%=e('boosts_transaction')%></span></div>
+					<div class="content"><span><%=e('boosts_content')%></span></div>
+				</div>
+				<div class="boostsList"></div>
+			</div>
+
+			<div class="boostsFooter"></div>
+
+			<div class="loadingwrapper">
+				<div class="preloader5"><img src="./img/three-dots.svg"/></div>
+			</div>
+		</div>
+	</div>
+</div>

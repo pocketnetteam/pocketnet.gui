@@ -1,0 +1,22 @@
+<div class="work">
+	<div class="summaryGrid">
+		<div class="summaryItem">
+			<div class="label"><span><%=e('boosts_loaded')%></span></div>
+			<div class="value"><span><%-loaded%><% if(total) {%> / <%-total%><% } %></span></div>
+		</div>
+		<div class="summaryItem">
+			<div class="label"><span><%=e('boosts_sent')%></span></div>
+			<div class="value accent"><span><%-app.platform.mp.coin(sentAmount || 0)%> PKOIN</span></div>
+		</div>
+		<div class="summaryItem">
+			<div class="label"><span><%=e('boosts_received')%></span></div>
+			<div class="value accent"><span><%-app.platform.mp.coin(receivedAmount || 0)%> PKOIN</span></div>
+		</div>
+		<% if(height) {%>
+			<div class="summaryItem">
+				<div class="label"><span><%=e('boosts_height')%></span></div>
+				<div class="value"><span><%-height%></span></div>
+			</div>
+		<% } %>
+	</div>
+</div>
