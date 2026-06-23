@@ -29,6 +29,23 @@ var boosts = (function(){
 				return (totals.sent || 0) + (totals.received || 0)
 			},
 
+			totalAmountByDirection : function(dir){
+				return _.reduce(items, function(m, item){
+					if(item.direction == dir) return m + Number(item.boostAmount || 0)
+					return m
+				}, 0)
+			},
+
+			amountByDirection : function(dir){
+				var key = dir == 'sent' ? 'sentAmount' : 'receivedAmount';
+
+				if(typeof totals[key] !== 'undefined' && totals[key] !== null){
+					return Number(totals[key] || 0)
+				}
+
+				return helpers.totalAmountByDirection(dir)
+			},
+
 			collectAddresses : function(){
 				var addresses = []
 
@@ -223,18 +240,6 @@ var boosts = (function(){
 				return false
 			},
 
-			toblockexplorer : function(e){
-				var type = $(this).attr('type') || 'transaction';
-				var id = $(this).attr('txid');
-
-				if(!id) return;
-
-				self.app.apps.openInWndById('app.pocketnet.blockexplorer', function(){}, hexEncode(type + '/' + id))
-
-				e.stopPropagation()
-				return false
-			},
-
 			loadmorescroll : function(){
 				var nearEnd = scnt && scnt[0] ? scnt[0].offsetHeight + scnt[0].scrollTop >= scnt[0].scrollHeight - 500 : false;
 
@@ -269,14 +274,37 @@ var boosts = (function(){
 			summary : function(){
 				if(!el || !el.summary) return;
 
+				var sentAmount = helpers.amountByDirection('sent');
+				var receivedAmount = helpers.amountByDirection('received');
+
 				self.shell({
 					name : 'summary',
 					el : el.summary,
 					data : {
 						totals : totals,
-						height : height
+						sentStat : self.app.localization.e('boosts_summary_stat', {
+							count : totals.sent || 0,
+							amount : self.app.platform.mp.coin(sentAmount)
+						}),
+						receivedStat : self.app.localization.e('boosts_summary_stat', {
+							count : totals.received || 0,
+							amount : self.app.platform.mp.coin(receivedAmount)
+						})
 					}
 				}, function(){})
+
+				renders.heightMeta()
+			},
+
+			heightMeta : function(){
+				if(!el || !el.heightMeta) return;
+
+				if(height){
+					el.heightMeta.html('<span>' + self.app.localization.e('boosts_height_caption', height) + '</span>').show()
+				}
+				else{
+					el.heightMeta.hide()
+				}
 			},
 
 			list : function(){
@@ -351,7 +379,6 @@ var boosts = (function(){
 			el.c.on('click', '.boostContent', events.opencontent);
 			el.c.on('click', '.copyBoostTx', events.copytransaction);
 			el.c.on('click', '.copyBoostContentLink', events.copycontentlink);
-			el.c.on('click', '.toblockexplorer', events.toblockexplorer);
 
 			if (scnt.hasClass('applicationhtml')) {
 				self.app.events.scroll['boosts'] = events.loadmorescroll
@@ -410,6 +437,7 @@ var boosts = (function(){
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
 				el.summary = el.c.find('.boostsSummary');
+				el.heightMeta = el.c.find('.boostsHeightMeta');
 				el.filters = el.c.find('.boostsFilters');
 				el.list = el.c.find('.boostsList');
 				el.footer = el.c.find('.boostsFooter');

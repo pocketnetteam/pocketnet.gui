@@ -21,8 +21,17 @@
 	.boostsCaption{
 		padding-left: @rhythm;
 
-		span{
+		.captionTitle{
 			font-size: 2em;
+		}
+
+		.boostsHeightMeta{
+			margin-top: 0.4 * @rhythm;
+
+			span{
+				font-size: 0.75em;
+				color: rgb(var(--color-txt-gray-dark));
+			}
 		}
 	}
 
@@ -65,7 +74,7 @@
 
 	.summaryGrid{
 		display: grid;
-		grid-template-columns: repeat(3, minmax(120px, 1fr));
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 		gap: @rhythm;
 		margin-bottom: 2 * @rhythm;
 	}
@@ -86,10 +95,23 @@
 
 			span{
 				font-weight: 700;
+				font-size: 0.95em;
 			}
+		}
 
-			&.accent span{
-				color: rgb(var(--color-txt-ac-1));
+		&.sent{
+			border-left: 3px solid rgb(var(--color-bad));
+
+			.value.sent span{
+				color: rgb(var(--color-bad));
+			}
+		}
+
+		&.received{
+			border-left: 3px solid rgb(var(--color-good));
+
+			.value.received span{
+				color: rgb(var(--color-good));
 			}
 		}
 	}
@@ -102,7 +124,7 @@
 	.boostsRow{
 		display: grid;
 		width: 100%;
-		grid-template-columns: minmax(150px, 1.1fr) minmax(105px, 0.75fr) minmax(90px, 0.65fr) minmax(150px, 1.35fr) minmax(150px, 1.35fr) minmax(200px, 1.55fr) minmax(180px, 1.4fr);
+		grid-template-columns: minmax(148px, 1fr) minmax(96px, 0.7fr) minmax(108px, 0.85fr) minmax(140px, 1.25fr) minmax(140px, 1.25fr) minmax(168px, 1.35fr) minmax(120px, 0.95fr);
 		align-items: center;
 		background: rgb(var(--background-total-theme));
 		border-bottom: 1px solid rgba(var(--neutral-grad-0), 0.5);
@@ -126,6 +148,41 @@
 		}
 	}
 
+	.direction{
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+	}
+
+	.boostsHeader .direction span{
+		padding: 0.35 * @rhythm 0.65 * @rhythm;
+	}
+
+	.date{
+		font-variant-numeric: tabular-nums;
+
+		span{
+			font-size: 0.8em;
+		}
+	}
+
+	.amount{
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		text-align: right;
+		font-variant-numeric: tabular-nums;
+
+		span{
+			font-size: 0.9em;
+			font-weight: 700;
+		}
+	}
+
+	.boostsHeader .amount span{
+		font-size: 0.75em;
+	}
+
 	.boostItem{
 		&:nth-child(2n){
 			background: rgba(var(--neutral-grad-0), 0.3);
@@ -136,9 +193,10 @@
 		display: inline-flex;
 		align-items: center;
 		border-radius: 14px;
-		padding: 0.4 * @rhythm @rhythm;
+		padding: 0.35 * @rhythm 0.65 * @rhythm;
 		font-size: 0.75em;
 		font-weight: 700;
+		margin: 0;
 
 		&.sent{
 			color: rgb(var(--color-bad));
@@ -169,17 +227,18 @@
 			font-weight: 700;
 		}
 
-		a,
-		.profileName{
-			color: rgb(var(--color-txt-ac));
-		}
-
 		a{
+			color: rgb(var(--color-txt-ac));
 			text-decoration: none;
 
 			&:hover{
 				text-decoration: underline;
 			}
+		}
+
+		.profileName{
+			color: rgb(var(--color-txt-gray-dark));
+			font-weight: 600;
 		}
 	}
 
@@ -188,46 +247,56 @@
 		display: flex;
 		align-items: center;
 		min-width: 0;
+		gap: 0.5 * @rhythm;
 
-		button{
+		.txidMuted{
 			min-width: 0;
 			flex: 1 1 auto;
-			border: 0;
-			background: transparent;
-			color: rgb(var(--color-txt-ac));
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+			font-size: 0.72em;
+			color: rgb(var(--color-txt-gray-dark));
 			cursor: pointer;
-			display: flex;
-			align-items: center;
-			padding: 0;
-
-			span{
-				overflow: hidden;
-				text-overflow: ellipsis;
-				white-space: nowrap;
-				font-size: 0.8em;
-			}
-
-			i{
-				color: rgb(var(--neutral-grad-2));
-				margin-right: 0.5 * @rhythm;
-			}
-		}
-
-		.toblockexplorer,
-		.copyBoostTx,
-		.copyBoostContentLink{
-			color: rgb(var(--neutral-grad-2));
-			cursor: pointer;
-			flex: 0 0 auto;
-			margin-left: 0.5 * @rhythm;
 
 			&:hover{
 				color: rgb(var(--neutral-grad-4));
 			}
 		}
 
-		.toblockexplorer{
-			margin-left: auto;
+		button{
+			min-width: 0;
+			flex: 0 0 auto;
+			border: 0;
+			background: transparent;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			padding: 0;
+
+			span{
+				font-size: 0.75em;
+			}
+
+			&.ghost{
+				color: rgb(var(--color-txt-gray-dark));
+
+				&:hover{
+					color: rgb(var(--color-txt-ac));
+				}
+			}
+		}
+
+		.copyBoostTx,
+		.copyBoostContentLink{
+			color: rgb(var(--neutral-grad-2));
+			cursor: pointer;
+			flex: 0 0 auto;
+
+			&:hover{
+				color: rgb(var(--neutral-grad-4));
+			}
 		}
 	}
 
@@ -252,7 +321,8 @@
 
 @media only screen and (max-width: 768px){
 	#boosts{
-		.boostsCaption span{
+		.boostsCaption span,
+		.boostsCaption .captionTitle{
 			font-size: 1.4em;
 		}
 

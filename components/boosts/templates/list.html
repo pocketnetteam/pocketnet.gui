@@ -4,7 +4,7 @@
 		<div class="direction">
 			<span class="directionBadge <%-boost.direction%>"><%-boost.directionLabel%></span>
 		</div>
-		<div class="amount"><span><%-app.platform.mp.coin(boost.boostAmount || 0)%></span></div>
+		<div class="amount"><span><%-app.platform.mp.coin(boost.boostAmount || 0)%> PKOIN</span></div>
 		<div class="booster">
 			<span class="cellLabel"><%=e('boosts_booster')%></span>
 			<% if(boost.boosterIsMe) {%>
@@ -26,18 +26,16 @@
 			<% } %>
 		</div>
 		<div class="transaction">
-			<button class="boostTransaction" txid="<%-boost.txid || ''%>" title="<%-boost.txid || ''%>">
-				<i class="fas fa-hashtag"></i>
-				<span><%-boost.txidShort || '---'%></span>
-			</button>
 			<% if(boost.txid) {%>
+				<span class="txidMuted boostTransaction" txid="<%-boost.txid%>" title="<%-boost.txid%>"><%-boost.txidShort || '---'%></span>
 				<i class="far fa-copy copyBoostTx" txid="<%-boost.txid%>" title="<%=e('dcopyToClipboard')%>"></i>
-				<i class="fas fa-th toblockexplorer" type="transaction" txid="<%-boost.txid%>"></i>
+			<% } else { %>
+				<span>---</span>
 			<% } %>
 		</div>
 		<div class="content">
 			<% if(boost.contentTxid) {%>
-				<button class="boostContent" txid="<%-boost.contentTxid%>">
+				<button class="boostContent ghost" txid="<%-boost.contentTxid%>">
 					<span><%=e('boosts_show')%></span>
 				</button>
 				<i class="far fa-copy copyBoostContentLink" link="<%-boost.contentLink%>" title="<%=e('copylink')%>"></i>

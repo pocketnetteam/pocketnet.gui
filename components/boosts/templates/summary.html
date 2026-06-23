@@ -1,18 +1,12 @@
 <div class="work">
 	<div class="summaryGrid">
-		<div class="summaryItem">
+		<div class="summaryItem sent">
 			<div class="label"><span><%=e('boosts_sent')%></span></div>
-			<div class="value"><span><%-totals.sent || 0%></span></div>
+			<div class="value sent"><span><%=sentStat%></span></div>
 		</div>
-		<div class="summaryItem">
+		<div class="summaryItem received">
 			<div class="label"><span><%=e('boosts_received')%></span></div>
-			<div class="value"><span><%-totals.received || 0%></span></div>
+			<div class="value received"><span><%=receivedStat%></span></div>
 		</div>
-		<% if(height) {%>
-			<div class="summaryItem">
-				<div class="label"><span><%=e('boosts_height')%></span></div>
-				<div class="value"><span><%-height%></span></div>
-			</div>
-		<% } %>
 	</div>
 </div>

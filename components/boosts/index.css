@@ -13,8 +13,15 @@
 #boosts .boostsCaption {
   padding-left: 10px;
 }
-#boosts .boostsCaption span {
+#boosts .boostsCaption .captionTitle {
   font-size: 2em;
+}
+#boosts .boostsCaption .boostsHeightMeta {
+  margin-top: 4px;
+}
+#boosts .boostsCaption .boostsHeightMeta span {
+  font-size: 0.75em;
+  color: rgb(var(--color-txt-gray-dark));
 }
 #boosts .boostsPanel {
   margin-top: 0;
@@ -49,7 +56,7 @@
 }
 #boosts .summaryGrid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(120px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
   margin-bottom: 20px;
 }
@@ -58,6 +65,12 @@
   border: 1px solid rgba(var(--neutral-grad-0), 0.7);
   border-radius: 6px;
   padding: 15px;
+}
+#boosts .summaryItem.sent {
+  border-left: 3px solid rgb(var(--color-bad));
+}
+#boosts .summaryItem.received {
+  border-left: 3px solid rgb(var(--color-good));
 }
 #boosts .summaryItem .label span {
   font-size: 0.75em;
@@ -68,9 +81,13 @@
 }
 #boosts .summaryItem .value span {
   font-weight: 700;
+  font-size: 0.95em;
 }
-#boosts .summaryItem .value.accent span {
-  color: rgb(var(--color-txt-ac-1));
+#boosts .summaryItem .value.sent span {
+  color: rgb(var(--color-bad));
+}
+#boosts .summaryItem .value.received span {
+  color: rgb(var(--color-good));
 }
 #boosts .boostsTable {
   position: relative;
@@ -79,7 +96,7 @@
 #boosts .boostsRow {
   display: grid;
   width: 100%;
-  grid-template-columns: minmax(150px, 1.1fr) minmax(105px, 0.75fr) minmax(90px, 0.65fr) minmax(150px, 1.35fr) minmax(150px, 1.35fr) minmax(200px, 1.55fr) minmax(180px, 1.4fr);
+  grid-template-columns: minmax(148px, 1fr) minmax(96px, 0.7fr) minmax(108px, 0.85fr) minmax(140px, 1.25fr) minmax(140px, 1.25fr) minmax(168px, 1.35fr) minmax(120px, 0.95fr);
   align-items: center;
   background: rgb(var(--background-total-theme));
   border-bottom: 1px solid rgba(var(--neutral-grad-0), 0.5);
@@ -99,6 +116,34 @@
   font-weight: 700;
   color: rgb(var(--color-txt-gray-dark));
 }
+#boosts .direction {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+#boosts .boostsHeader .direction span {
+  padding: 3.5px 6.5px;
+}
+#boosts .date {
+  font-variant-numeric: tabular-nums;
+}
+#boosts .date span {
+  font-size: 0.8em;
+}
+#boosts .amount {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+#boosts .amount span {
+  font-size: 0.9em;
+  font-weight: 700;
+}
+#boosts .boostsHeader .amount span {
+  font-size: 0.75em;
+}
 #boosts .boostItem:nth-child(2n) {
   background: rgba(var(--neutral-grad-0), 0.3);
 }
@@ -106,9 +151,10 @@
   display: inline-flex;
   align-items: center;
   border-radius: 14px;
-  padding: 4px 10px;
+  padding: 3.5px 6.5px;
   font-size: 0.75em;
   font-weight: 700;
+  margin: 0;
 }
 #boosts .directionBadge.sent {
   color: rgb(var(--color-bad));
@@ -139,32 +185,48 @@
   font-weight: 700;
 }
 #boosts .booster a,
-#boosts .booster .profileName,
-#boosts .author a,
-#boosts .author .profileName {
-  color: rgb(var(--color-txt-ac));
-}
-#boosts .booster a,
 #boosts .author a {
+  color: rgb(var(--color-txt-ac));
   text-decoration: none;
 }
 #boosts .booster a:hover,
 #boosts .author a:hover {
   text-decoration: underline;
 }
+#boosts .booster .profileName,
+#boosts .author .profileName {
+  color: rgb(var(--color-txt-gray-dark));
+  font-weight: 600;
+}
 #boosts .transaction,
 #boosts .content {
   display: flex;
   align-items: center;
   min-width: 0;
+  gap: 5px;
+}
+#boosts .transaction .txidMuted,
+#boosts .content .txidMuted {
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.72em;
+  color: rgb(var(--color-txt-gray-dark));
+  cursor: pointer;
+}
+#boosts .transaction .txidMuted:hover,
+#boosts .content .txidMuted:hover {
+  color: rgb(var(--neutral-grad-4));
 }
 #boosts .transaction button,
 #boosts .content button {
   min-width: 0;
-  flex: 1 1 auto;
+  flex: 0 0 auto;
   border: 0;
   background: transparent;
-  color: rgb(var(--color-txt-ac));
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -172,31 +234,23 @@
 }
 #boosts .transaction button span,
 #boosts .content button span {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 0.8em;
+  font-size: 0.75em;
 }
-#boosts .transaction button i,
-#boosts .content button i {
-  color: rgb(var(--neutral-grad-2));
-  margin-right: 5px;
+#boosts .content button.ghost {
+  color: rgb(var(--color-txt-gray-dark));
 }
-#boosts .transaction .toblockexplorer,
+#boosts .content button.ghost:hover {
+  color: rgb(var(--color-txt-ac));
+}
 #boosts .transaction .copyBoostTx,
 #boosts .content .copyBoostContentLink {
   color: rgb(var(--neutral-grad-2));
   cursor: pointer;
   flex: 0 0 auto;
-  margin-left: 5px;
 }
-#boosts .transaction .toblockexplorer:hover,
 #boosts .transaction .copyBoostTx:hover,
 #boosts .content .copyBoostContentLink:hover {
   color: rgb(var(--neutral-grad-4));
-}
-#boosts .transaction .toblockexplorer {
-  margin-left: auto;
 }
 #boosts .emptyState,
 #boosts .errorState {
@@ -214,7 +268,8 @@
   text-align: center;
 }
 @media only screen and (max-width: 768px) {
-  #boosts .boostsCaption span {
+  #boosts .boostsCaption span,
+  #boosts .boostsCaption .captionTitle {
     font-size: 1.4em;
   }
   #boosts .summaryGrid {
