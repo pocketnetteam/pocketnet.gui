@@ -1,9 +1,16 @@
-#boosts .loadingwrapper {
+#boosts .boostsTable {
+  position: relative;
+  width: 100%;
+}
+#boosts .boostsTable .boostsList {
+  min-height: 80px;
+}
+#boosts .boostsTable .loadingwrapper {
   display: none;
-  padding: 20px;
+  padding: 30px 20px;
   text-align: center;
 }
-#boosts.loading .loadingwrapper {
+#boosts.loading .boostsTable .loadingwrapper {
   display: block;
 }
 #boosts .boosts {
@@ -15,13 +22,6 @@
 }
 #boosts .boostsCaption .captionTitle {
   font-size: 2em;
-}
-#boosts .boostsCaption .boostsHeightMeta {
-  margin-top: 4px;
-}
-#boosts .boostsCaption .boostsHeightMeta span {
-  font-size: 0.75em;
-  color: rgb(var(--color-txt-gray-dark));
 }
 #boosts .boostsPanel {
   margin-top: 0;
@@ -53,6 +53,9 @@
 }
 #boosts .boostsFilters button:hover {
   color: rgb(var(--color-txt-ac));
+}
+#boosts .boostsSummary {
+  margin-top: 20px;
 }
 #boosts .summaryGrid {
   display: grid;
@@ -88,10 +91,6 @@
 }
 #boosts .summaryItem .value.received span {
   color: rgb(var(--color-good));
-}
-#boosts .boostsTable {
-  position: relative;
-  width: 100%;
 }
 #boosts .boostsRow {
   display: grid;

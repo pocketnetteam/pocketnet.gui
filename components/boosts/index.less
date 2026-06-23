@@ -1,14 +1,23 @@
 @import "../../css/__cssvar";
 
 #boosts{
-	.loadingwrapper{
-		display: none;
-		padding: 2 * @rhythm;
-		text-align: center;
+	.boostsTable{
+		position: relative;
+		width: 100%;
+
+		.boostsList{
+			min-height: 8 * @rhythm;
+		}
+
+		.loadingwrapper{
+			display: none;
+			padding: 3 * @rhythm 2 * @rhythm;
+			text-align: center;
+		}
 	}
 
 	&.loading{
-		.loadingwrapper{
+		.boostsTable .loadingwrapper{
 			display: block;
 		}
 	}
@@ -23,15 +32,6 @@
 
 		.captionTitle{
 			font-size: 2em;
-		}
-
-		.boostsHeightMeta{
-			margin-top: 0.4 * @rhythm;
-
-			span{
-				font-size: 0.75em;
-				color: rgb(var(--color-txt-gray-dark));
-			}
 		}
 	}
 
@@ -70,6 +70,10 @@
 				color: rgb(var(--color-txt-ac));
 			}
 		}
+	}
+
+	.boostsSummary{
+		margin-top: 2 * @rhythm;
 	}
 
 	.summaryGrid{
@@ -114,11 +118,6 @@
 				color: rgb(var(--color-good));
 			}
 		}
-	}
-
-	.boostsTable{
-		position: relative;
-		width: 100%;
 	}
 
 	.boostsRow{

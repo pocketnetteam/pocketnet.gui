@@ -2940,7 +2940,6 @@ _l.boosts_loadmore = "Load more"
 _l.boosts_me = "me"
 _l.boosts_show = "Show"
 _l.boosts_txcopied = "Transaction copied"
-_l.boosts_height_caption = function(h){ return 'Data at block height ' + h }
 _l.boosts_summary_stat = function(p){ p = p || {}; return (p.count || 0) + ' boosts · ' + (p.amount || 0) + ' PKOIN' }
 
 

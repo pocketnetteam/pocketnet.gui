@@ -2743,7 +2743,6 @@ _l.boosts_loadmore = "Загрузить еще"
 _l.boosts_me = "Я"
 _l.boosts_show = "Показать"
 _l.boosts_txcopied = "Транзакция скопирована"
-_l.boosts_height_caption = function(h){ return 'Данные на высоте блока ' + h }
 _l.boosts_summary_stat = function(p){
 	p = p || {};
 	var count = p.count || 0;

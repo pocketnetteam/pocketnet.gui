@@ -14,10 +14,10 @@ var boosts = (function(){
 		var count = 20;
 		var offset = 0;
 		var topHeight = 0;
-		var height = 0;
 		var loading = false;
 		var end = false;
 		var totals = {};
+		var summaryTotals = {};
 		var items = [];
 		var requestid = 0;
 
@@ -39,8 +39,8 @@ var boosts = (function(){
 			amountByDirection : function(dir){
 				var key = dir == 'sent' ? 'sentAmount' : 'receivedAmount';
 
-				if(typeof totals[key] !== 'undefined' && totals[key] !== null){
-					return Number(totals[key] || 0)
+				if(typeof summaryTotals[key] !== 'undefined' && summaryTotals[key] !== null){
+					return Number(summaryTotals[key] || 0)
 				}
 
 				return helpers.totalAmountByDirection(dir)
@@ -101,18 +101,39 @@ var boosts = (function(){
 		}
 
 		var actions = {
+			ensureSummaryTotals : function(){
+				if((summaryTotals.sent || summaryTotals.received) &&
+					(typeof summaryTotals.sentAmount !== 'undefined' || typeof summaryTotals.receivedAmount !== 'undefined')){
+					return Promise.resolve();
+				}
+
+				return self.app.platform.sdk.node.transactions.getboostsbyaddress({
+					address : address,
+					topHeight : topHeight,
+					direction : 'both',
+					count : 1,
+					offset : 0
+				}, true).then(function(result){
+					result || (result = {})
+
+					if(result.totals){
+						summaryTotals = _.extend({}, result.totals)
+					}
+
+					if(result.height && !topHeight) topHeight = result.height;
+				})
+			},
+
 			reset : function(nextDirection){
 				requestid++;
 				direction = nextDirection || direction || 'both';
 				offset = 0;
-				height = 0;
 				topHeight = 0;
 				loading = false;
 				end = false;
 				totals = {};
 				items = [];
 
-				renders.summary()
 				renders.filters()
 				if(el && el.list) el.list.html('')
 				renders.footer()
@@ -139,9 +160,12 @@ var boosts = (function(){
 
 					result || (result = {})
 
-					height = result.height || height;
 					if(result.height && !topHeight) topHeight = result.height;
 					totals = result.totals || {};
+
+					if(direction == 'both' && result.totals){
+						summaryTotals = _.extend({}, result.totals)
+					}
 
 					var nextItems = result.boosts || [];
 					items = items.concat(nextItems);
@@ -281,30 +305,18 @@ var boosts = (function(){
 					name : 'summary',
 					el : el.summary,
 					data : {
-						totals : totals,
+						totals : summaryTotals,
 						sentStat : self.app.localization.e('boosts_summary_stat', {
-							count : totals.sent || 0,
+							count : summaryTotals.sent || 0,
 							amount : self.app.platform.mp.coin(sentAmount)
 						}),
 						receivedStat : self.app.localization.e('boosts_summary_stat', {
-							count : totals.received || 0,
+							count : summaryTotals.received || 0,
 							amount : self.app.platform.mp.coin(receivedAmount)
 						})
 					}
 				}, function(){})
 
-				renders.heightMeta()
-			},
-
-			heightMeta : function(){
-				if(!el || !el.heightMeta) return;
-
-				if(height){
-					el.heightMeta.html('<span>' + self.app.localization.e('boosts_height_caption', height) + '</span>').show()
-				}
-				else{
-					el.heightMeta.hide()
-				}
 			},
 
 			list : function(){
@@ -389,8 +401,21 @@ var boosts = (function(){
 		}
 
 		var make = function(){
-			renders.all();
-			actions.load();
+			loading = true;
+			renders.loading();
+
+			actions.ensureSummaryTotals().then(function(){
+				renders.summary();
+				renders.filters();
+				if(el && el.list) el.list.html('');
+				loading = false;
+				return actions.load();
+			}).catch(function(e){
+				end = true;
+				renders.error(e);
+				loading = false;
+				renders.loading();
+			});
 		}
 
 		return {
@@ -408,6 +433,7 @@ var boosts = (function(){
 				end = false;
 				items = [];
 				totals = {};
+				summaryTotals = {};
 
 				var data = {
 					ed : ed,
@@ -437,7 +463,6 @@ var boosts = (function(){
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
 				el.summary = el.c.find('.boostsSummary');
-				el.heightMeta = el.c.find('.boostsHeightMeta');
 				el.filters = el.c.find('.boostsFilters');
 				el.list = el.c.find('.boostsList');
 				el.footer = el.c.find('.boostsFooter');
