@@ -30,8 +30,11 @@
 	.boostsCaption{
 		padding-left: @rhythm;
 
-		.captionTitle{
+		.caption{
+			max-width: 700px;
+			padding-top: 2 * @rhythm;
 			font-size: 2em;
+			font-weight: 100;
 		}
 	}
 
@@ -223,14 +226,17 @@
 	.booster,
 	.author{
 		min-width: 0;
+		overflow: hidden;
 
 		.cellLabel{
 			display: none;
 		}
 
-		span,
+		span:not(.cellLabel),
 		a,
 		.profileName{
+			display: block;
+			max-width: 100%;
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
@@ -332,8 +338,7 @@
 
 @media only screen and (max-width: 768px){
 	#boosts{
-		.boostsCaption span,
-		.boostsCaption .captionTitle{
+		.boostsCaption .caption{
 			font-size: 1.4em;
 		}
 
@@ -373,6 +378,7 @@
 		.author{
 			display: flex;
 			align-items: center;
+			min-width: 0;
 
 			.cellLabel{
 				display: block;
@@ -380,6 +386,13 @@
 				font-size: 0.7em;
 				color: rgb(var(--color-txt-gray-dark));
 				font-weight: 400;
+			}
+
+			span:not(.cellLabel),
+			a,
+			.profileName{
+				min-width: 0;
+				flex: 1 1 auto;
 			}
 		}
 	}

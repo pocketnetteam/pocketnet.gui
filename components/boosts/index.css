@@ -20,8 +20,11 @@
 #boosts .boostsCaption {
   padding-left: 10px;
 }
-#boosts .boostsCaption .captionTitle {
+#boosts .boostsCaption .caption {
+  max-width: 700px;
+  padding-top: 20px;
   font-size: 2em;
+  font-weight: 100;
 }
 #boosts .boostsPanel {
   margin-top: 0;
@@ -177,17 +180,20 @@
 #boosts .booster,
 #boosts .author {
   min-width: 0;
+  overflow: hidden;
 }
 #boosts .booster .cellLabel,
 #boosts .author .cellLabel {
   display: none;
 }
-#boosts .booster span,
+#boosts .booster span:not(.cellLabel),
 #boosts .booster a,
 #boosts .booster .profileName,
-#boosts .author span,
+#boosts .author span:not(.cellLabel),
 #boosts .author a,
 #boosts .author .profileName {
+  display: block;
+  max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -278,8 +284,7 @@
   text-align: center;
 }
 @media only screen and (max-width: 768px) {
-  #boosts .boostsCaption span,
-  #boosts .boostsCaption .captionTitle {
+  #boosts .boostsCaption .caption {
     font-size: 1.4em;
   }
   #boosts .summaryGrid {
@@ -311,6 +316,7 @@
   #boosts .author {
     display: flex;
     align-items: center;
+    min-width: 0;
   }
   #boosts .booster .cellLabel,
   #boosts .author .cellLabel {
@@ -319,5 +325,14 @@
     font-size: 0.7em;
     color: rgb(var(--color-txt-gray-dark));
     font-weight: 400;
+  }
+  #boosts .booster span:not(.cellLabel),
+  #boosts .booster a,
+  #boosts .booster .profileName,
+  #boosts .author span:not(.cellLabel),
+  #boosts .author a,
+  #boosts .author .profileName {
+    min-width: 0;
+    flex: 1 1 auto;
   }
 }
