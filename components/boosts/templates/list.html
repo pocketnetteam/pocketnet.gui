@@ -4,7 +4,10 @@
 		<div class="direction">
 			<span class="directionBadge <%-boost.direction%>"><%-boost.directionLabel%></span>
 		</div>
-		<div class="amount"><span><%-app.platform.mp.coin(boost.boostAmount || 0)%> PKOIN</span></div>
+		<div class="amount">
+			<span class="amountValue"><%-app.platform.mp.coin(boost.boostAmount || 0)%></span>
+			<span class="amountCurrency">PKOIN</span>
+		</div>
 		<div class="booster">
 			<span class="cellLabel"><%=e('boosts_booster')%></span>
 			<% if(boost.boosterIsMe) {%>

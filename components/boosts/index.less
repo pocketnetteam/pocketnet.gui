@@ -124,7 +124,7 @@
 	.boostsRow{
 		display: grid;
 		width: 100%;
-		grid-template-columns: minmax(148px, 1fr) minmax(96px, 0.7fr) minmax(108px, 0.85fr) minmax(140px, 1.25fr) minmax(140px, 1.25fr) minmax(168px, 1.35fr) minmax(120px, 0.95fr);
+		grid-template-columns: minmax(148px, 1fr) minmax(96px, 0.7fr) minmax(118px, 1fr) minmax(140px, 1.25fr) minmax(140px, 1.25fr) minmax(168px, 1.35fr) minmax(120px, 0.95fr);
 		align-items: center;
 		background: rgb(var(--background-total-theme));
 		border-bottom: 1px solid rgba(var(--neutral-grad-0), 0.5);
@@ -168,19 +168,31 @@
 
 	.amount{
 		display: flex;
-		align-items: center;
-		justify-content: flex-end;
-		text-align: right;
+		align-items: baseline;
+		justify-content: flex-start;
+		gap: 0.35 * @rhythm;
 		font-variant-numeric: tabular-nums;
+		padding-left: @rhythm;
+		padding-right: 2 * @rhythm;
 
-		span{
+		.amountValue{
 			font-size: 0.9em;
 			font-weight: 700;
+			white-space: nowrap;
 		}
-	}
 
-	.boostsHeader .amount span{
-		font-size: 0.75em;
+		.amountCurrency{
+			font-size: 0.68em;
+			font-weight: 600;
+			color: rgb(var(--color-txt-gray-dark));
+			white-space: nowrap;
+		}
+
+		> span:only-child{
+			font-size: 0.75em;
+			font-weight: 700;
+			color: rgb(var(--color-txt-gray-dark));
+		}
 	}
 
 	.boostItem{

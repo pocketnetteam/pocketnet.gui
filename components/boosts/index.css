@@ -96,7 +96,7 @@
 #boosts .boostsRow {
   display: grid;
   width: 100%;
-  grid-template-columns: minmax(148px, 1fr) minmax(96px, 0.7fr) minmax(108px, 0.85fr) minmax(140px, 1.25fr) minmax(140px, 1.25fr) minmax(168px, 1.35fr) minmax(120px, 0.95fr);
+  grid-template-columns: minmax(148px, 1fr) minmax(96px, 0.7fr) minmax(118px, 1fr) minmax(140px, 1.25fr) minmax(140px, 1.25fr) minmax(168px, 1.35fr) minmax(120px, 0.95fr);
   align-items: center;
   background: rgb(var(--background-total-theme));
   border-bottom: 1px solid rgba(var(--neutral-grad-0), 0.5);
@@ -132,17 +132,28 @@
 }
 #boosts .amount {
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  text-align: right;
+  align-items: baseline;
+  justify-content: flex-start;
+  gap: 3.5px;
   font-variant-numeric: tabular-nums;
+  padding-left: 10px;
+  padding-right: 20px;
 }
-#boosts .amount span {
+#boosts .amount .amountValue {
   font-size: 0.9em;
   font-weight: 700;
+  white-space: nowrap;
 }
-#boosts .boostsHeader .amount span {
+#boosts .amount .amountCurrency {
+  font-size: 0.68em;
+  font-weight: 600;
+  color: rgb(var(--color-txt-gray-dark));
+  white-space: nowrap;
+}
+#boosts .amount > span:only-child {
   font-size: 0.75em;
+  font-weight: 700;
+  color: rgb(var(--color-txt-gray-dark));
 }
 #boosts .boostItem:nth-child(2n) {
   background: rgba(var(--neutral-grad-0), 0.3);
