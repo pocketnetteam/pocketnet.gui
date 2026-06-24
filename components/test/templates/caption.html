@@ -5,13 +5,14 @@
 			<div class="cell cellforimage">
 				<div class="icon">
 
-					<% 
+					<%
 						var src = tempInfo.image;
 						var name = tempInfo.name;
 						var letter = name ? name[0] : '';
+						var isGroup = (tempInfo.accountType === 'group');
 					%>
 
-					<div class="usericon" image="<%-src || '*'%>" contain="none">
+					<div class="usericon <% if(isGroup) { %>group-icon<% } %>" image="<%-src || '*'%>" contain="none">
 
 						<% if(!src && letter) {%>
 

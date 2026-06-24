@@ -1835,11 +1835,15 @@ var share = (function(){
 						currentShare.settings.f || (currentShare.settings.f = '0')
 						currentShare.settings.t || (currentShare.settings.t = '0')
 
-						self.sdk.paidsubscription.getcondition(self.app.user.address.value).then(value => {
+						// Load user communities and paid subscription condition in parallel
+						Promise.all([
+							self.sdk.paidsubscription.getcondition(self.app.user.address.value),
+							self.app.platform.sdk.users.getUserCommunities(self.app.user.address.value)
+						]).then(([value, userCommunities]) => {
 
 							var visvalues = ['0','1','2']
 							var visvaluesLabels = [
-								self.app.localization.e('visibletoeveryone'), 
+								self.app.localization.e('visibletoeveryone'),
 								self.app.localization.e('visibleonlytosubscribers'),
 								self.app.localization.e('visibleonlytoregistered')
 							]
@@ -1859,24 +1863,47 @@ var share = (function(){
 								possibleValuesLabels : visvaluesLabels,
 								defaultValue : currentShare.settings.f,
 								value : currentShare.settings.f
-	
+
 							})
-	
+
 							var timeselector = new Parameter({
-	
+
 								type : "VALUES",
 								name : "Time",
 								id : 'time',
 								possibleValues : ['0','1'],
 								possibleValuesLabels : [
-									self.app.localization.e('spostnow'), 
+									self.app.localization.e('spostnow'),
 									self.app.localization.e('sposttime')
 								],
 								defaultValue : '0',
 								value : currentShare.settings.t <= 1 ? (currentShare.settings.t || '0') : '1'
-	
+
 							})
-	
+
+							// Community selector - only show if user is member of communities
+							var communitySelector = null
+							if (userCommunities && userCommunities.length > 0) {
+								var communityValues = ['']
+								var communityLabels = [self.app.localization.e('post_to_my_profile') || 'My Profile']
+
+								_.each(userCommunities, function(communityAddr) {
+									var communityInfo = self.psdk.userInfo.get(communityAddr)
+									communityValues.push(communityAddr)
+									communityLabels.push(communityInfo ? communityInfo.name : communityAddr)
+								})
+
+								communitySelector = new Parameter({
+									type : "VALUES",
+									name : self.app.localization.e('post_to_community') || "Post to",
+									id : 'communitySelector',
+									possibleValues : communityValues,
+									possibleValuesLabels : communityLabels,
+									defaultValue : currentShare.community.v || '',
+									value : currentShare.community.v || ''
+								})
+							}
+
 							self.shell({
 								name :  'settings',
 								el : el.settings,
@@ -1884,44 +1911,54 @@ var share = (function(){
 									share : currentShare,
 									essenseData : essenseData,
 									selector : selector,
-									timeselector
+									timeselector,
+									communitySelector
 								},
-	
+
 							}, function(p){
-	
-								ParametersLive([selector, timeselector], p.el)
-	
-	
+
+								var paramsToInit = [selector, timeselector]
+								if (communitySelector) paramsToInit.push(communitySelector)
+								ParametersLive(paramsToInit, p.el)
+
+
 								selector._onChange = function(){
-	
+
 									currentShare.settings.f = selector.value
-	
+
 									state.save()
 								}
-	
+
 								timeselector._onChange = function(){
-	
+
 									currentShare.settings.t = timeselector.value
-	
+
 									if(timeselector.value == '0') delete currentShare.settings.t
-	
+
 									renders.settings();
-	
+
 									state.save()
 								}
-	
+
+								if (communitySelector) {
+									communitySelector._onChange = function(){
+										currentShare.community.set(communitySelector.value)
+										state.save()
+									}
+								}
+
 								p.el.find('.timelabel').on('click', function(){
-	
+
 									events.selectTimeWrapper()
 								})
-	
+
 								p.el.find('.cleartimelabel').on('click', function(){
 									delete currentShare.settings.t
-	
+
 									renders.settings();
 									state.save()
 								})
-	
+
 								if (clbk)
 									clbk();
 							})

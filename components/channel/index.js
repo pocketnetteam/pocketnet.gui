@@ -233,19 +233,36 @@ var channel = (function(){
 						author.address = ed.id;
 
 						var me = self.psdk.userInfo.getmy()
-							
+
 						author.following = me && me.relation(author.address, 'subscribes');
 						author.me = self.app.user.isItMe(author.address)
 
-						var data = {
-							author : author,
-							reports : reports,
-							connect : ed.connect,
-							domain : window.location.hostname || window.pocketnetdomain,
-							ed : ed
-						};
+						// Check if this is a community/group
+						self.sdk.users.getCommunity(ed.id).then(function(isCommunity) {
+							author.isGroup = !!isCommunity
 
-						clbk(data);
+							var data = {
+								author : author,
+								reports : reports,
+								connect : ed.connect,
+								domain : window.location.hostname || window.pocketnetdomain,
+								ed : ed
+							};
+
+							clbk(data);
+						}).catch(function() {
+							author.isGroup = false
+
+							var data = {
+								author : author,
+								reports : reports,
+								connect : ed.connect,
+								domain : window.location.hostname || window.pocketnetdomain,
+								ed : ed
+							};
+
+							clbk(data);
+						});
 
 					})
 

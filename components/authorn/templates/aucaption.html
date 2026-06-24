@@ -1,82 +1,99 @@
 <% 
-
 var me = psdk.userInfo.getmy()
-
 var sUserInfo = psdk.userInfo.getShortForm(author.address)
-
-
-
-
 %>
-
-<div class="aucaption">
-
-
+<div class="aucaption <% if(author.isGroup) { %>group-profile<% } %>">
     <% if(!sUserInfo.deleted) {%>
-
-        <div elementsid="author_usericon" ban=".gif" class="usericon" contain="none" <%=bgImagesClApplyTemplate(sUserInfo.image)%>>
+        <div elementsid="author_usericon" ban=".gif" class="usericon <% if(author.isGroup) { %>group-icon<% } %>" contain="none" <%=bgImagesClApplyTemplate(sUserInfo.image)%>>
             <% if(!sUserInfo.image && sUserInfo.letter) {%>
                 <span class="letter">
                     <%-sUserInfo.letter.toUpperCase()%>
                 </span>
             <% } else if (!sUserInfo.image) { %>
-                <i class="far fa-user"></i>
+                <% if(author.isGroup) { %>
+                    <i class="fas fa-users"></i>
+                <% } else { %>
+                    <i class="far fa-user"></i>
+                <% } %>
             <% } %>
             <%= app.platform.ui.markUser(author.address)%>
         </div>
-
         
-            <div class="contentinfo">
-                <div class="namewrapper">
-                    <span class="copyname"><%- app.platform.api.clearname(sUserInfo.name, true) %></span>
-                </div>
-
-                <% if(!author.reputationBlocked) {%>
-                    <div class="sminfo">
+        <div class="contentinfo">
+            <div class="namewrapper">
+                <span class="copyname"><%- app.platform.api.clearname(sUserInfo.name, true) %></span>
+                <% if(author.isGroup) { %>
+                    <span class="group-badge">
+                        <i class="fas fa-users"></i>
+                        <span><%=e('group')%></span>
+                    </span>
+                <% } %>
+            </div>
+            <% if(!author.reputationBlocked) {%>
+                <div class="sminfo">
+                    <% if(!author.isGroup) { %>
                         <div class="row">
                             <span class="value"><i class="fas fa-star"></i> <%- (sUserInfo.reputation || 0).toFixed(1) %></span>
                             <span class="label"><%=e('rstate')%></span>
                         </div>
-
-                        <div class="row showsubscribers">
-                            <span class="value"><%- (author.data.subscribers_count || 0) %></span>
-                            <span class="label"><%=e('followers2')%></span>
-                        </div>
-
-                        <div class="row showsubscribes" >
+                    <% } %>
+                    <div class="row showsubscribers">
+                        <span class="value"><%- (author.data.subscribers_count || 0) %></span>
+                        <span class="label">
+                            <% if(author.isGroup) { %>
+                                <%=e('group_members')%>
+                            <% } else { %>
+                                <%=e('followers2')%>
+                            <% } %>
+                        </span>
+                    </div>
+                    <% if(!author.isGroup) { %>
+                        <div class="row showsubscribes">
                             <span class="value"><%- (author.data.subscribes_count || 0) %></span>
                             <span class="label"><%=e('following2')%></span>
                         </div>
+                    <% } %>
+                </div>
+            <% } %>
+            <% if(author.me) {%>
+                <div class="editprofileWrapper">
+                    <span class="editprofile">
+                        <% if(author.isGroup) { %>
+                            <%-e('edit_group')%>
+                        <% } else { %>
+                            <%-e('e13186')%>
+                        <% } %>
+                    </span>
+                </div>
+            <% } %>
+            <% if(author.reputationBlocked) {%>
+                <div class="deletedAccount">
+                    <div class="deletedAccountText">
+                        <span>
+                            <% if(author.isGroup) { %>
+                                <%-e('lockedgroupa')%>
+                            <% } else { %>
+                                <%-e('lockedaccounta')%>
+                            <% } %>
+                        </span>
                     </div>
-                <% } %>
-
-                <% if(author.me) {%>
-                    <div class="editprofileWrapper">
-                        <span class="editprofile"><%-e('e13186')%></span>
-                    </div>
-                <% } %>
-
-                <% if(author.reputationBlocked) {%>
-                    <div class="deletedAccount">
-                        <div class="deletedAccountText">
-                            <span><%-e('lockedaccounta')%></span>
-                        </div>
-                        
-                    </div>
-                <% } %>
-            </div>
+                </div>
+            <% } %>
+        </div>
        
     <% } else { %> 
-        
         <div class="contentinfo">
             <div class="deletedAccount">
                 <div class="deletedAccountText">
-                    <span><%-e('deletedAccount_' + sUserInfo.deleted)%></span>
+                    <span>
+                        <% if(author.isGroup) { %>
+                            <%-e('deletedGroup_' + sUserInfo.deleted)%>
+                        <% } else { %>
+                            <%-e('deletedAccount_' + sUserInfo.deleted)%>
+                        <% } %>
+                    </span>
                 </div>
-                
             </div>
         </div>
-        
     <% } %>
-   
 </div>

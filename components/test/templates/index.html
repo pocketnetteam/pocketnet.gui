@@ -1,8 +1,12 @@
-<% var fcclass = 'firstTime';
+<%
+var fcclass = 'firstTime';
 
 if (firstTime){
 	fcclass = 'firstTime'
 }
+
+// Group detection logic
+var isGroup = tempInfo && (tempInfo.accountType === 'group') || false;
 
 %>
 
@@ -35,7 +39,11 @@ if (firstTime){
 		<div class="userPanel">
 
 			<div class="subcaption">
-				<%=e('uuserinfo')%>
+				<% if(isGroup) { %>
+					<%=e('group_info')%>
+				<% } else { %>
+					<%=e('uuserinfo')%>
+				<% } %>
 			</div>
 			
 			<div class="pgroupIconWrapper">
