@@ -83,8 +83,8 @@ class BridgesCustomRepositoryImpl extends BridgesCustomRepository {
         this.vanillaBridgePatternIPv6 = new RegExp(`\\[${IPv6_REGEX}]:(\\d+) +${FINGERPRINT_REGEX}`);
         this.obfs4BridgePatternIPv4 = new RegExp(`obfs4 +(${IPv4_REGEX}):(\\d+) +${FINGERPRINT_REGEX} +cert=.+ +iat-mode=\\d`);
         this.obfs4BridgePatternIPv6 = new RegExp(`obfs4 +\\[${IPv6_REGEX}]:(\\d+) +${FINGERPRINT_REGEX} +cert=.+ +iat-mode=\\d`);
-        this.webTunnelBridgePatternIPv4 = new RegExp(`webtunnel +(${IPv4_REGEX}):(\\d+) +${FINGERPRINT_REGEX} +url=http(s)?://[\\w./-]+`);
-        this.webTunnelBridgePatternIPv6 = new RegExp(`webtunnel +\\[${IPv6_REGEX}]:(\\d+) +${FINGERPRINT_REGEX} +url=http(s)?://[\\w./-]+`);
+        this.webTunnelBridgePatternIPv4 = new RegExp(`webtunnel +(${IPv4_REGEX}):(\\d+) +${FINGERPRINT_REGEX} +url=${URL_REGEX}`);
+        this.webTunnelBridgePatternIPv6 = new RegExp(`webtunnel +\\[${IPv6_REGEX}]:(\\d+) +${FINGERPRINT_REGEX} +url=${URL_REGEX}`);
     }
 
     generateCheckBridgesQueue(customBridges = this.getCustomBridges()) {
@@ -217,10 +217,16 @@ class BridgesCustomRepositoryImpl extends BridgesCustomRepository {
             return false;
         }
 
-        const domainWithPort = url.split('//').pop().split('/')[0];
-        const domain = domainWithPort.split(':')[0];
-        let port = domainWithPort.includes(':') ? domainWithPort.split(':').pop() : '443';
-        port = this.isValidPort(port) ? port : '443';
+        let parsedUrl;
+        try {
+            parsedUrl = new URL(url);
+        } catch (e) {
+            await this.deleteBridgeAsync(bridge);
+            return false;
+        }
+
+        const domain = parsedUrl.hostname;
+        const port = this.isValidPort(parsedUrl.port) ? parsedUrl.port : '443';
 
         const reachable = await this.addressCheckerRepository.isAddressReachable(
             new DomainToPort({ domain, port: Number(port) })
