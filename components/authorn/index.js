@@ -1786,7 +1786,7 @@ var authorn = (function(){
 				renders.subscribes()
 				renders.subscribers()
 				renders.blocking()
-				//renders.collections()
+				renders.collections()
 			}
 
 			renders.upbutton()

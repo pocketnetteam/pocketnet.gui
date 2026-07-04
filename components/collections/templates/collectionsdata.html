@@ -7,7 +7,17 @@
 
     <% } else { %> 
         <div class="items">
-            
+            <% _.each(items, function(item) { %>
+                <div class="collection disabled" collection="<%- item.txid %>">
+                    <div class="cover">
+                        <div class="img" image="<%- item.image || '' %>"></div>
+                    </div>
+                    <div class="info">
+                        <div class="caption"><%- item.caption %></div>
+                        <div class="count"><%- (item.contentIds || []).length %> <%- e('collectionMaterials') %></div>
+                    </div>
+                </div>
+            <% }) %>
         </div>
     <% } %>
 </div>

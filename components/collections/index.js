@@ -20,7 +20,7 @@ var collections = (function(){
 			loadcollections : function(clbk){
 				self.app.platform.sdk.collections.load.profile(author.address, (r) => {
 
-					var collections = r.contents
+					var collections = r && r.contents ? r.contents : (_.isArray(r) ? r : [])
 
 					if(clbk) clbk(collections)
 				}, ed.count)
@@ -42,7 +42,12 @@ var collections = (function(){
 					insertimmediately : true,
 				}, function(p){
 					if(items.length){
-						el.c.addClass('.hasitems')
+						el.c.addClass('hasitems')
+						el.c.find('.count').text('(' + items.length + ')')
+					}
+					else{
+						el.c.removeClass('hasitems')
+						el.c.find('.count').text('')
 					}
 
 					if(clbk) clbk()
@@ -65,6 +70,28 @@ var collections = (function(){
 				actions.newcollection()
 			})
 
+			el.c.find('.showmore').on('click', function(){
+
+				self.nav.api.load({
+
+					open : true,
+					id : 'collections',
+					animation : false,
+					inWnd: true,
+					history: true,
+					essenseData : {
+						address : author.address,
+						preview : false,
+						count : 100
+					},
+
+					clbk : function(e, p){
+					}
+
+				})
+
+			})
+
 			self.app.psdk.updatelisteners[mid] = self.app.platform.actionListeners[mid] = function({type, alias, status}){
 
 				if(type == 'collection'){
@@ -79,7 +106,10 @@ var collections = (function(){
 
 		var make = function(clbk){
 
+			el.c.addClass('loading')
+
 			actions.loadcollections(collections => {
+				el.c.removeClass('loading')
 				renders.collectionsdata(collections, clbk)
 			})
 			
@@ -140,7 +170,13 @@ var collections = (function(){
 				make()
 
 				p.clbk(null, p);
-			}
+			},
+
+			wnd : {
+				close : function(){
+				},
+				class : "userlistwindow normalizedmobile maxheight showbetter"
+			},
 		}
 	};
 

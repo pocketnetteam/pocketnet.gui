@@ -56,10 +56,6 @@ var newcollection = (function(){
 				self.app.Logger.info({
 					actionId: 'COLLECTION_CREATED',
 				});
-				
-				if(!window.testpocketnet){
-					return
-				}
 
 				el.c.addClass('loading')
 
