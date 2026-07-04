@@ -17872,6 +17872,28 @@ Platform = function (app, listofnodes) {
 
                 },
 
+                getboostsbyaddress : function(p, update){
+
+                    p || (p = {})
+
+                    if(!p.address){
+                        return Promise.reject('address')
+                    }
+
+                    var params = [
+                        p.address,
+                        Number(p.topHeight || 0),
+                        p.direction || 'both',
+                        Number(typeof p.count != 'undefined' ? p.count : 20),
+                        Number(p.offset || 0)
+                    ]
+
+                    return self.psdk.rpc.request('getboostsbyaddress', params, {
+                        update : update
+                    })
+
+                },
+
                 getCoibaseType: function (tx, address) {
 
                     var type = null;

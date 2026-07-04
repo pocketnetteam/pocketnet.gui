@@ -973,7 +973,13 @@ __map =  {
 			uri : "transactionslist",
 			href : "transactionslist",
 			add : insertingfunc,
-		},	
+		},
+
+		boosts : {
+			uri : "boosts",
+			href : "boosts",
+			add : insertingfunc,
+		},
 
 	
 		imageGalleryEdit : {
