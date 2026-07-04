@@ -3122,6 +3122,7 @@ _l.collectionshares = "Добавьте хотя бы одну публикац�
 _l.collectionimage = "Укажите обложку коллекции"
 _l.collectionby = "Коллекция"
 _l.collectionnochanges = "В коллекцию не внесено изменений"
+_l.collectionNotFound = "Коллекция не найдена"
 _l.newcollection = "Создать"
 _l.newcollectionex = "Создание новой коллекции"
 _l.edcollectionex = "Редактирование коллекции"

@@ -31,10 +31,12 @@
   padding: 0.5em 0;
   margin-top: 0.5em;
   margin-bottom: 0.5em;
-  cursor: default;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.15s ease;
 }
-#collections .collectionslist .collection.disabled {
-  opacity: 1;
+#collections .collectionslist .collection:hover {
+  background: rgba(var(--neutral-grad-1), 0.15);
 }
 #collections .collectionslist .collection .cover {
   flex-shrink: 0;

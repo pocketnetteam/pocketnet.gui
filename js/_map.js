@@ -1124,6 +1124,14 @@ __map =  {
 		add : insertingfunc
 	},
 
+	collection : {
+		uri : "collection",
+		href : "collection",
+		add : insertingfunc,
+		anonimus : true,
+		exportcss : true,
+	},
+
 	newcollection : {
 		uri : "newcollection",
 		href : "newcollection",

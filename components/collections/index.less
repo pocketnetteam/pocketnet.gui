@@ -42,10 +42,12 @@
 			padding : @rhythm 0;
 			margin-top: @rhythm;
 			margin-bottom: @rhythm;
-			cursor: default;
+			cursor: pointer;
+			border-radius: 6px;
+			transition: background 0.15s ease;
 
-			&.disabled{
-				opacity: 1;
+			&:hover{
+				background: rgba(var(--neutral-grad-1), 0.15);
 			}
 
 			.cover{

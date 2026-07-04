@@ -6721,7 +6721,7 @@ Platform = function (app, listofnodes) {
 
             load : {
                 byid : function(txid, clbk, refresh){
-                    self.sdk.collections.load([txid], function(collections, error, p){
+                    self.sdk.collections.load.byids([txid], function(collections, error, p){
 
                         if(!collections.length && !error){
                             error = 'collectionNotFound'

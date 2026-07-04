@@ -1,0 +1,87 @@
+#collection {
+  padding: 40px;
+  background: rgb(var(--background-total-theme));
+  max-width: 640px;
+  margin: 0 auto;
+}
+#collection .empty {
+  padding: 80px;
+  text-align: center;
+  opacity: 0.7;
+}
+#collection .collectionHeader {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+#collection .collectionHeader .coverWrapper {
+  flex-shrink: 0;
+  margin-right: 40px;
+}
+#collection .collectionHeader .coverWrapper .cover {
+  width: 120px;
+  height: 120px;
+  border-radius: 8px;
+  background: rgba(var(--neutral-grad-1), 0.5);
+  background-size: cover;
+  background-position: center;
+}
+#collection .collectionHeader .headerInfo {
+  flex-grow: 1;
+  min-width: 0;
+}
+#collection .collectionHeader .headerInfo .caption {
+  font-weight: 700;
+  font-size: 1.4em;
+  line-height: 1.3;
+  word-break: break-word;
+}
+#collection .collectionHeader .headerInfo .meta {
+  margin-top: 20px;
+  font-size: 0.85em;
+  opacity: 0.85;
+}
+#collection .collectionHeader .headerInfo .meta .authorLabel {
+  margin-right: 5px;
+}
+#collection .collectionHeader .headerInfo .meta a {
+  color: rgb(var(--color-txt-ac));
+  margin-right: 20px;
+}
+#collection .collectionHeader .headerInfo .meta .materialsCount {
+  display: block;
+  margin-top: 10px;
+}
+#collection .collectionHeader .headerInfo .ownerActions {
+  margin-top: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+#collection .collectionHeader .headerInfo .ownerActions .button {
+  margin: 0;
+}
+#collection .collectionHeader .headerInfo .ownerActions .deleteCollection[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+#collection .collectionFeed {
+  margin-top: 20px;
+}
+#collection .collectionFeedEmpty {
+  margin-top: 40px;
+}
+html.mobileview #collection {
+  padding: 20px;
+}
+html.mobileview #collection .collectionHeader {
+  flex-direction: column;
+}
+html.mobileview #collection .collectionHeader .coverWrapper {
+  margin-right: 0;
+  margin-bottom: 20px;
+}
+html.mobileview #collection .collectionHeader .coverWrapper .cover {
+  width: 100%;
+  height: 160px;
+}

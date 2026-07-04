@@ -1,0 +1,44 @@
+<div id="<%-module.map.id%>">
+
+	<% if(typeof notfound != 'undefined' && notfound) { %>
+
+		<div class="empty allb">
+			<%- e('collectionNotFound') %>
+		</div>
+
+	<% } else if(typeof collection != 'undefined' && collection) { %>
+
+		<%
+			var authorName = app.platform.api.name(author.address)
+			var materialsCount = (collection.contentIds || []).length
+		%>
+
+		<div class="collectionHeader">
+			<div class="coverWrapper">
+				<div class="cover" image="<%- collection.image || '' %>"></div>
+			</div>
+			<div class="headerInfo">
+				<div class="caption"><%- collection.caption %></div>
+				<div class="meta">
+					<span class="authorLabel"><%- e('collectionby') %></span>
+					<a href="<%- app.platform.api.authorlink(author.address) %>"><%- authorName %></a>
+					<span class="materialsCount"><%- materialsCount %> <%- e('collectionMaterials') %></span>
+				</div>
+				<% if(author.me) { %>
+					<div class="ownerActions">
+						<button class="button ghost editCollection"><%- e('edcollectionex') %></button>
+						<button class="button bad deleteCollection" disabled><%- e('deletecollection') %></button>
+					</div>
+				<% } %>
+			</div>
+		</div>
+
+		<div class="collectionFeedEmpty empty allb" style="display:none;">
+			<%- e('emptycollections') %>
+		</div>
+
+		<div class="collectionFeed"></div>
+
+	<% } %>
+
+</div>

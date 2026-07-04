@@ -70,6 +70,18 @@ var collections = (function(){
 				actions.newcollection()
 			})
 
+			el.c.on('click', '.collection', function(){
+				var txid = $(this).attr('collection')
+
+				if(!txid) return
+
+				self.nav.api.load({
+					open : true,
+					href : 'collection?c=' + txid,
+					history : true
+				})
+			})
+
 			el.c.find('.showmore').on('click', function(){
 
 				self.nav.api.load({
