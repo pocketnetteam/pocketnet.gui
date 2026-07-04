@@ -2225,10 +2225,8 @@ var pSDK = function ({ app, api, actions }) {
 
         tempAdd: function (objects = [], filter) {
 
-            _.each(actions.getAccounts(), (account) => {
+                _.each(actions.getAccounts(), (account) => {
                 var actions = _.filter(account.getTempActions('collection'), filter)
-
-                console.log('actions', actions)
 
                 _.each(actions, (a) => {
                     objects.unshift(a)

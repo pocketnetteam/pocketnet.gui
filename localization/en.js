@@ -3292,6 +3292,12 @@ _l.torHintStateStarting = "TOR module is starting"
 
 _l.collections = "Collections"
 _l.emptycollections = "No collections"
+_l.collectionemptymessage = "Collection description is empty"
+_l.collectioncaption = "Collection name is required"
+_l.collectionshares = "Add at least one publication"
+_l.collectionimage = "Collection cover is required"
+_l.collectionby = "Collection by"
+_l.collectionnochanges = "There are no changes in the collection"
 _l.newcollection = "Create"
 _l.newcollectionex = "Create a new collection"
 _l.edcollectionex = "Edit a collection"
@@ -3308,7 +3314,6 @@ _l.enabledEditModeCollections = "Select the publications in the interface that w
 _l.collectionMode = "Collection edit mode"
 _l.removeFromCollection = "Remove from collection"
 _l.addToCollection = "Add to collection"
-_l.e13163 = "There are no changes in the collection"
 
 _l.imageerror = "An error occurred while loading images. Please try again"
 

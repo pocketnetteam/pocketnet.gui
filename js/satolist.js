@@ -6747,7 +6747,7 @@ Platform = function (app, listofnodes) {
 
                     self.psdk.collection.load(txids, refresh).then(() => {
 
-                        var collections = self.psdk.share.gets(txids)
+                        var collections = self.psdk.collection.gets(txids)
 
                        
 
@@ -6772,8 +6772,6 @@ Platform = function (app, listofnodes) {
 
                     var method = 'getprofilecollections'
                     var parameters = [self.currentBlock, '', count, '', [], [], [], [], [], '', address]
-
-                    console.log('load profile collections')
 
                     /*
 

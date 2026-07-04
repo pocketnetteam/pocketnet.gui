@@ -3116,6 +3116,12 @@ _l.torHintStateStarting = "Модуль ТОР запускается"
 
 _l.collections = "Коллекции"
 _l.emptycollections = "Нет коллекций"
+_l.collectionemptymessage = "Описание коллекции пустое"
+_l.collectioncaption = "Укажите название коллекции"
+_l.collectionshares = "Добавьте хотя бы одну публикацию"
+_l.collectionimage = "Укажите обложку коллекции"
+_l.collectionby = "Коллекция"
+_l.collectionnochanges = "В коллекцию не внесено изменений"
 _l.newcollection = "Создать"
 _l.newcollectionex = "Создание новой коллекции"
 _l.edcollectionex = "Редактирование коллекции"
@@ -3132,8 +3138,6 @@ _l.enabledEditModeCollections = "Выберите в интерфейсе пуб
 _l.collectionMode = "Режим редактирования коллекции"
 _l.removeFromCollection = "Убрать из коллекции"
 _l.addToCollection = "Добавить в коллекцию"
-_l.e131632 = "В коллекцию не внесено изменений"
-
 
 _l.imageerror = "Произошла ошибка при загрузке изображений. Попробуйте ещё раз."
 

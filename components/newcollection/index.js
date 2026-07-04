@@ -19,7 +19,7 @@ var newcollection = (function(){
 			message : self.app.localization.e('collectionemptymessage'),
 			image : self.app.localization.e('collectionimage'),
 			caption : self.app.localization.e('collectioncaption'),
-			shares : self.app.localization.e('collectionshares'),
+			contentIds : self.app.localization.e('collectionshares'),
 		}
 
 		var actions = {
@@ -49,7 +49,7 @@ var newcollection = (function(){
 				if (error) return
 
 				if (ed.hash == currentCollection.shash()){
-					actions.errortext(self.app.localization.e('e13163'))
+					actions.errortext(self.app.localization.e('collectionnochanges'))
 					return
 				}
 
@@ -67,8 +67,6 @@ var newcollection = (function(){
 
 				currentCollection.uploadImages(self.app, function(){
 					if (currentCollection.checkloaded()){
-
-						console.log('currentCollection', currentCollection)
 
 						actions.fail({ text : self.app.localization.e('imageerror')})
 			
@@ -94,8 +92,6 @@ var newcollection = (function(){
 						successCheck()
 					}).catch(e => {
 						var t = self.app.platform.errorHandlerSimple(e);
-
-						console.log("TTT", t)
 
 						actions.fail({text : t})
 					})
@@ -214,20 +210,15 @@ var newcollection = (function(){
 			applyText : function(text){
 				currentCollection.message.set(findAndReplaceLinkClearReverse(text));
 
-				console.log('applyText ca')
-
 			},
 
 			caption : function(caption){
 				currentCollection.caption.set(findAndReplaceLinkClearReverse(caption));
 
-				console.log('applyText ca22', caption)
-
 				state.save()
 			},
 
 			eTextChange : function(c){
-				console.log('eTextChange')
 				var text = c.getText();
 
 				actions.applyText(text);
@@ -717,7 +708,6 @@ var newcollection = (function(){
 					wndObj = _wndObj;
 					wnd = _wnd;
 
-					console.log(wndObj, wnd)
 					if (clbk) {
 						clbk();
 					}
