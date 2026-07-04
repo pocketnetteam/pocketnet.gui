@@ -91,7 +91,7 @@
 #collections.preview .showmoreWrapper button {
   width: 100%;
 }
-#collections.preview.hasitems .showmoreWrapper {
+#collections.preview.hasmore .showmoreWrapper {
   display: block;
 }
 #collections .showmoreWrapper {

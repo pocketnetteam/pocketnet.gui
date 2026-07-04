@@ -643,6 +643,21 @@ var authorn = (function(){
 				})
 			},
 
+			openCollections : function(){
+				self.nav.api.load({
+					open : true,
+					id : 'collections',
+					animation : false,
+					inWnd : true,
+					history : true,
+					essenseData : {
+						address : author.address,
+						preview : false,
+						count : 100
+					}
+				})
+			},
+
 			sendcoins : function(){
 				self.app.platform.sdk.user.stateAction(() => {
 					self.app.platform.ui.wallet.send({address : author.address}).catch(e => {})
@@ -1134,6 +1149,7 @@ var authorn = (function(){
 					p.el.find('.startchat').on('click', events.startchat)
 					p.el.find('.openwallet').on('click', events.openwallet)
 					p.el.find('.videoCabinet').on('click', events.videoCabinet)
+					p.el.find('.openCollections').on('click', events.openCollections)
 					p.el.find('.sendcoins').on('click', events.sendcoins)
 					p.el.find('.donate').on('click', events.donate)
 					p.el.find('.settings').on('click', events.settings)
@@ -1566,8 +1582,6 @@ var authorn = (function(){
 					clbk : function(e, p){
 
 						modules['collections'] = p
-
-						el.collections.addClass('active')
 
 						if (clbk)
 							clbk(e, p)

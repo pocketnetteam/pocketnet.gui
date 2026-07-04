@@ -2075,7 +2075,7 @@ Collection = function(lang){
 		
 		return _.map(self.contentIds.v, function(t){ return (t) }).join(',') + 
 		
-		(self.language.v) + (self.caption.v) /*+ (self.message.v)*/ + (self.image.v)
+		(self.language.v) + (self.caption.v) + (self.message.v) + (self.image.v)
 
 		//+ (self.aliasid || "")
 	}
@@ -2089,7 +2089,7 @@ Collection = function(lang){
 		return {
 			type : self.type,
 			c : self.caption.v,
-			//message : self.message.v,
+			message : self.message.v,
 			i : self.image.v,
 			l : self.language.v,
 			txidEdit : self.aliasid || "",
@@ -2102,7 +2102,7 @@ Collection = function(lang){
 	self.import = function(v){
 
 		self.caption.set(v.c || v.caption)
-		//self.message.set(v.message)
+		self.message.set(v.message)
 		self.image.set(v.i || v.image)
 		self.language.set(v.l || v.language || 'en')
 		self.contentIds.set(v.contentIds || [])
@@ -3903,23 +3903,32 @@ pCollection = function(){
 
 	self.social = function(app){
 
-		var text = self.renders.text(self.message);
 		var name = app.platform.api.name(self.address)
+		var caption = self.renders.caption(self.caption)
+		var text = self.renders.message()
+		var title = caption || (app.localization.e('collectionby') + " " + name)
+		var preview = caption
+
+		if(text){
+			var trimmed = trimHtml(text, 130).replace(/ &hellip;/g, '...').replace(/&hellip;/g, '...')
+
+			preview = caption ? (caption + ' — ' + trimmed) : trimmed
+		}
 
 
 		var s = {
 			image : self.image ? self.image : '',
 			files : self.image ? [self.image] : [],
-			title : app.localization.e('collectionby') + " " + name,
+			title : title,
 			html : {
 				body : text,
-				preview : self.renders.caption(self.caption)
+				preview : preview
 			},
 
 			text : {
 				body : text,
-				preview : self.renders.caption(self.caption),
-				title: self.caption
+				preview : preview,
+				title: caption || (app.localization.e('collectionby') + " " + name)
 			}
 		
 		}

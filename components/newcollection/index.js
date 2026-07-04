@@ -29,7 +29,25 @@ var newcollection = (function(){
 			},
 			
 			remove : function(){
+				if(!currentCollection || !currentCollection.aliasid) return
 
+				dialog({
+					class: 'zindex',
+					html: self.app.localization.e('removeCollectionDialog'),
+					btn1text: self.app.localization.e('dyes'),
+					btn2text: self.app.localization.e('dno'),
+					success: function(){
+						el.c.addClass('loading')
+
+						self.app.platform.sdk.collections.delete(currentCollection.aliasid, function(err){
+							el.c.removeClass('loading')
+
+							if(err) return
+
+							self.closeContainer()
+						})
+					}
+				})
 			},
 
 			fail : function(e){
@@ -471,6 +489,13 @@ var newcollection = (function(){
 
 				actions.caption(caption)
 			},
+
+			message : function(){
+				var text = $(this).val()
+
+				actions.applyText(text)
+				state.save()
+			},
 		}
 
 		var renders = {
@@ -493,11 +518,14 @@ var newcollection = (function(){
 					renders.shares()
 
 					var elcaption = p.el.find('.collectionCaptionWrapper input')
+					var elmessage = p.el.find('.collectionDescription')
 
 
 					elcaption.on('keyup', events.caption)
+					elmessage.on('keyup', events.message)
 
 					elcaption.val(currentCollection.caption.v || "")
+					elmessage.val(currentCollection.message.v || "")
 
 
 					el.error = p.el.find('.error span')

@@ -18,12 +18,16 @@ var collections = (function(){
 			},
 
 			loadcollections : function(clbk){
+				var requestCount = ed.count
+
+				if(ed.preview) requestCount = ed.count + 1
+
 				self.app.platform.sdk.collections.load.profile(author.address, (r) => {
 
 					var collections = r && r.contents ? r.contents : (_.isArray(r) ? r : [])
 
 					if(clbk) clbk(collections)
-				}, ed.count)
+				}, requestCount)
 			}
 		}
 
@@ -33,21 +37,45 @@ var collections = (function(){
 
 		var renders = {
 			collectionsdata : function(items = [], clbk){
+				var displayItems = items
+				var hasMore = false
+
+				if(ed.preview){
+					hasMore = items.length > ed.count
+					displayItems = items.slice(0, ed.count)
+				}
+
 				self.shell({
 					name :  'collectionsdata',
 					el :   el.c.find('.collectionsdata'),
 					data : {
-						items : items,
+						items : displayItems,
 					},
 					insertimmediately : true,
 				}, function(p){
-					if(items.length){
+					if(displayItems.length){
 						el.c.addClass('hasitems')
-						el.c.find('.count').text('(' + items.length + ')')
+						el.c.find('.count').text('(' + displayItems.length + ')')
 					}
 					else{
 						el.c.removeClass('hasitems')
 						el.c.find('.count').text('')
+					}
+
+					if(ed.preview){
+						if(hasMore) el.c.addClass('hasmore')
+						else el.c.removeClass('hasmore')
+
+						var parent = el.c.closest('.collections')
+
+						if(parent.length){
+							if(displayItems.length || author.me){
+								parent.addClass('active')
+							}
+							else{
+								parent.removeClass('active')
+							}
+						}
 					}
 
 					if(clbk) clbk()
@@ -110,7 +138,10 @@ var collections = (function(){
 					if (author.address == alias.actor){
 						make()
 					}
-					
+				}
+
+				if(type == 'contentDelete'){
+					make()
 				}
 				
 			}

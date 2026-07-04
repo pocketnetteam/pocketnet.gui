@@ -42,6 +42,15 @@
 				word-break: break-word;
 			}
 
+			.collectionDescription{
+				margin-top: @rhythm;
+				font-size: 0.95em;
+				line-height: 1.5;
+				opacity: 0.9;
+				word-break: break-word;
+				white-space: pre-wrap;
+			}
+
 			.meta{
 				margin-top: @rhythm;
 				font-size: 0.85em;
@@ -60,9 +69,16 @@
 					display: block;
 					margin-top: 0.5 * @rhythm;
 				}
+
+				.materialsUnavailable{
+					display: block;
+					margin-top: 0.5 * @rhythm;
+					font-size: 0.9em;
+					opacity: 0.7;
+				}
 			}
 
-			.ownerActions{
+			.headerActions{
 				margin-top: 2 * @rhythm;
 				display: flex;
 				flex-wrap: wrap;
@@ -72,9 +88,8 @@
 					margin: 0;
 				}
 
-				.deleteCollection[disabled]{
-					opacity: 0.5;
-					cursor: not-allowed;
+				.deleteCollection{
+					margin: 0;
 				}
 			}
 		}
@@ -86,6 +101,26 @@
 
 	.collectionFeedEmpty{
 		margin-top: 2 * @rhythm;
+	}
+}
+
+html.openapipnet{
+	#collection{
+		padding : @rhythm;
+		max-width: none;
+
+		.collectionHeader{
+			margin-bottom: @rhythm;
+
+			.coverWrapper .cover{
+				width: 80px;
+				height: 80px;
+			}
+
+			.headerInfo .caption{
+				font-size: 1.1em;
+			}
+		}
 	}
 }
 

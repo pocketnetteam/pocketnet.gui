@@ -103,7 +103,23 @@ var PNWIDGETS = function(){
 
         var parsed_url = new URL(url)
 
+        var collectionid = parsed_url.searchParams.get('c')
         var postid = parsed_url.searchParams.get('s') || parsed_url.searchParams.get('v')
+
+        if (/collection/i.test(parsed_url.pathname) && collectionid) {
+            return {
+                action : 'collection',
+                id : collectionid,
+                p : '7b22626c61636b223a66616c73652c22636f6d6d656e7473223a226e6f222c22726566223a2250503538325634375038764376586a645633696e77594e677853635a437554577371227d',
+                additional : {
+                    commentPs : {
+                        commentid : parsed_url.searchParams.get('commentid'),
+                        parentid : parsed_url.searchParams.get('parentid'),
+                    },
+                    node : parsed_url.searchParams.get('node') || null
+                }
+            }
+        }
 
         var action = parsed_url.searchParams.get('commentid') ? 'comment' 
                                                     : postid ? 'lenta' : 'channel'

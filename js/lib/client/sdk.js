@@ -2216,7 +2216,7 @@ var pSDK = function ({ app, api, actions }) {
         tempExtend: function (object, txid) {
 
             return extendFromActions('collection', 
-                ['collection'],
+                ['collection', 'contentDelete'],
                 object,
                 txid
             )
@@ -2834,20 +2834,27 @@ var pSDK = function ({ app, api, actions }) {
         listener: function (exp, address, status) {
             if (status == 'completed') {
 
-                objects['share'][exp.txidEdit] = this.applyAction(objects['share'][exp.txidEdit], exp)
+                if (objects['share'][exp.txidEdit]) {
+                    objects['share'][exp.txidEdit] = this.applyAction(objects['share'][exp.txidEdit], exp)
+                }
+
+                if (objects['collection'][exp.txidEdit]) {
+                    objects['collection'][exp.txidEdit] = this.applyAction(objects['collection'][exp.txidEdit], exp)
+                }
 
                 clearallfromdb('shareRequest')
+                clearfromdb('collection', [exp.txidEdit])
             }
         },
-        applyAction: function (share, exp) {
+        applyAction: function (object, exp) {
 
-            if (share) {
-                if (share.txid == exp.txidEdit) { /// for me
-                    share.deleted = true
+            if (object) {
+                if (object.txid == exp.txidEdit) {
+                    object.deleted = true
                 }
             }
 
-            return share
+            return object
         }
     }
 

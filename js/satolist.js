@@ -3205,6 +3205,26 @@ Platform = function (app, listofnodes) {
             })
         },
 
+        collection: function (txid, el, clbk, p) {
+
+            if (!p) p = {}
+
+            app.nav.api.load({
+                open: true,
+                id: 'collection',
+                el: el,
+                eid: txid,
+                animation: false,
+                clbk: clbk,
+                essenseData: {
+                    txid: txid,
+                    openapi: typeof p.openapi === 'undefined' ? true : p.openapi,
+                    comments: p.comments,
+                    fullscreenvideo: p.fullscreenvideo,
+                }
+            })
+        },
+
         editImage: function (src, p, clbk) {
 
             if (!p) p = {}
@@ -6842,6 +6862,27 @@ Platform = function (app, listofnodes) {
 
                     })
                 }
+            },
+
+            delete: function (txid, clbk) {
+
+                var rm = new Remove()
+                rm.txidEdit.set(txid);
+
+                self.app.platform.actions.addActionAndSendIfCan(rm).then(action => {
+
+                    successCheck()
+
+                    if (clbk) clbk(null, action.get())
+
+                }).catch(e => {
+
+                    self.app.platform.errorHandler(e, true)
+
+                    if (clbk)
+                        clbk(e, null)
+
+                })
             }
         },
 

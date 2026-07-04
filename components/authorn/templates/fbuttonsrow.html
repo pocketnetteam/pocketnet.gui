@@ -91,4 +91,8 @@ var sUserInfo = psdk.userInfo.getShortForm(author.address)
 
         <% } %>
     <% } %>
+
+    <% if(app.mobileview && !sUserInfo.deleted) {%>
+        <button class="button openCollections"><%= e('collections') %> <i class="fas fa-layer-group"></i></button>
+    <% } %>
 </div>

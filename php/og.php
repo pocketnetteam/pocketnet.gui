@@ -23,7 +23,7 @@ class OG {
     private $config = NULL;
     
 
-    private $maphrefs = array("pkview","easynode","about","aboutHome","aboutYoutube","aboutFacebook","aboutHIW","aboutTwitter","abilityincrease","support","applications","application","boost","terms","page404","welcome","registration","anothersite","usersettings","popup","test","accounts","uploadpeertube","streampeertube","tagcloud","taginput","categories","staking","recommendations","recommendedusers","bestposts","lastcomments","pkoin","articlesv","articlev","video","system16","help","donations","faq","embeding","camerapreview","donate","recommendationinfo","userpage","wallet","share","comments","lenta","transactionview","imageGalleryEdit","imagegallery","aboutus","menu","navigation","footer","notifications","panel","leftpanel","nodecontrol","authorization","addaccount","complain","downloadMedia","postscores","socialshare2","main","author","channel","post","userslist","ustate","statistic","videoCabinet","dust","testApi","commentBanner", "index", "", "advertising", "earnings", "home");
+    private $maphrefs = array("pkview","easynode","about","aboutHome","aboutYoutube","aboutFacebook","aboutHIW","aboutTwitter","abilityincrease","support","applications","application","boost","terms","page404","welcome","registration","anothersite","usersettings","popup","test","accounts","uploadpeertube","streampeertube","tagcloud","taginput","categories","staking","recommendations","recommendedusers","bestposts","lastcomments","pkoin","articlesv","articlev","video","system16","help","donations","faq","embeding","camerapreview","donate","recommendationinfo","userpage","wallet","share","comments","lenta","transactionview","imageGalleryEdit","imagegallery","aboutus","menu","navigation","footer","notifications","panel","leftpanel","nodecontrol","authorization","addaccount","complain","downloadMedia","postscores","socialshare2","main","author","channel","post","collection","userslist","ustate","statistic","videoCabinet","dust","testApi","commentBanner", "index", "", "advertising", "earnings", "home");
 
     private $defaultOg = NULL;
 
@@ -91,6 +91,7 @@ class OG {
 
         if (isset($get['s'])) $this->txid = $this->clean($get['s']);
         if (isset($get['v'])) $this->txid = $this->clean($get['v']);
+        if (isset($get['c'])) $this->txid = $this->clean($get['c']);
 
         if ($this->author == NULL && isset($get['i'])) $this->txid = $this->clean($get['i']);
 
@@ -410,6 +411,33 @@ class OG {
                                 $pca = 'p';
             
                                 $this->author = $r->address;
+
+                                if (isset($r->contentIds) && is_array($r->contentIds)){
+
+                                    $pca = 'col';
+
+                                    if ($r->c != ''){
+                                        $this->currentOg['title']= urldecode($r->c);
+                                        $title = true;
+                                    }
+
+                                    $materialsCount = count($r->contentIds);
+                                    $this->currentOg['description'] = $materialsCount . ' publications';
+
+                                    if (isset($r->message) && $r->message != ''){
+                                        $this->currentOg['description'] = substr(strip_tags(urldecode($r->message)), 0, 130).'...';
+                                    }
+
+                                    $description = true;
+                                    $this->currentOg['type'] = 'article';
+
+                                    if (isset($r->i) && $r->i != ''){
+                                        $this->currentOg['image'] = is_array($r->i) ? $r->i[0] : $r->i;
+                                        $image = true;
+                                    }
+
+                                }
+                                else {
             
                                 if ($r->c != ''){
                                     $this->currentOg['title']= urldecode($r->c);
@@ -454,6 +482,8 @@ class OG {
                                         }
                                     }
             
+                                }
+
                                 }
             
                             }
@@ -507,6 +537,7 @@ class OG {
             
                                     if($pca == 'c') $this->currentOg['title'] = "Comment by " . $this->currentOg['title'];
                                     if($pca == 'p') $this->currentOg['title'] = "Post by " . $this->currentOg['title'];
+                                    if($pca == 'col') $this->currentOg['title'] = "Collection by " . $this->currentOg['title'];
             
                                     if($this->connect == TRUE) $this->currentOg['title'] = "Connect with " . $this->currentOg['title'];
                                 }
