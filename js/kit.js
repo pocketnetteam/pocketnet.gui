@@ -1865,7 +1865,11 @@ Collection = function(lang){
 			}
 			else
 			{
-				this.v = _v
+				// XSS protection - clean input
+				var cleaned = clearStringXss(_v)
+				// Limit length to 100 chars
+				if(cleaned.length > 100) cleaned = cleaned.substring(0, 100)
+				this.v = cleaned
 			}
 
 			_.each(self.on.change || {}, function(f){
@@ -1887,7 +1891,11 @@ Collection = function(lang){
 			}
 			else
 			{
-				this.v = _v
+				// XSS protection - clean input
+				var cleaned = clearStringXss(_v)
+				// Limit length to 1000 chars
+				if(cleaned.length > 1000) cleaned = cleaned.substring(0, 1000)
+				this.v = cleaned
 			}
 			
 			_.each(self.on.change || {}, function(f){
@@ -1941,14 +1949,25 @@ Collection = function(lang){
 			else
 			{
 				if(_.isArray(contentIds)){
-					this.v = contentIds;
+					// Validate each contentId and remove duplicates
+					var validated = []
+					_.each(contentIds, function(id){
+						// Validate format: must be 64-char hex string (txid)
+						if(_.isString(id) && /^[a-f0-9]{64}$/.test(id) && validated.indexOf(id) === -1){
+							validated.push(id)
+						}
+					})
+					this.v = validated
 				}
 
 				else{
 
 					if(!contentIds) return
 
-					this.v.push(contentIds)
+					// Validate single contentId
+					if(_.isString(contentIds) && /^[a-f0-9]{64}$/.test(contentIds) && this.v.indexOf(contentIds) === -1){
+						this.v.push(contentIds)
+					}
 				}
 			}
 
@@ -1989,7 +2008,36 @@ Collection = function(lang){
 			}
 			else
 			{
-				this.v = _v
+				// Validate image format
+				if(_.isString(_v)){
+					// Allow empty string
+					if(_v === ''){
+						this.v = ''
+					}
+					// Allow data URLs (base64 images)
+					else if(_v.indexOf('data:image') === 0){
+						// Validate base64 image format
+						if(_v.match(/^data:image\/[a-z]+;base64,/)){
+							this.v = _v
+						} else {
+							this.v = ''
+						}
+					}
+					// Allow URLs (already uploaded images)
+					else if(_v.indexOf('http://') === 0 || _v.indexOf('https://') === 0){
+						// Check if allowed domain
+						if(checkIfAllowedImage(_v)){
+							this.v = _v
+						} else {
+							this.v = ''
+						}
+					} else {
+						// Invalid format
+						this.v = ''
+					}
+				} else {
+					this.v = ''
+				}
 			}
 			
 			_.each(self.on.change || {}, function(f){
@@ -2066,7 +2114,17 @@ Collection = function(lang){
 			return 'contentIds'
 		}
 
+		// Validate contentIds format (each must be 64-char hex)
+		for(var i = 0; i < self.contentIds.v.length; i++){
+			if(!/^[a-f0-9]{64}$/.test(self.contentIds.v[i])){
+				return 'contentIds'
+			}
+		}
+
 		if(!self.caption.v) return 'caption'
+
+		// Validate caption length
+		if(self.caption.v.length > 100) return 'caption'
 
 		return false
 	}
@@ -3825,15 +3883,38 @@ pCollection = function(){
 
 	self._import = function(v){
 
-		self.message = v.message || ""
-		self.caption = v.c || v.caption || ""
-		self.contentIds = v.contentIds || []
+		// XSS protection for message
+		self.message = clearStringXss(v.message || "")
+		// Limit message length
+		if(self.message.length > 1000) self.message = self.message.substring(0, 1000)
+		
+		// XSS protection for caption
+		self.caption = clearStringXss(v.c || v.caption || "")
+		// Limit caption length
+		if(self.caption.length > 100) self.caption = self.caption.substring(0, 100)
+		
+		// Validate contentIds - only allow 64-char hex strings
+		self.contentIds = []
+		if(v.contentIds && _.isArray(v.contentIds)){
+			_.each(v.contentIds, function(id){
+				if(_.isString(id) && /^[a-f0-9]{64}$/.test(id)){
+					self.contentIds.push(id)
+				}
+			})
+		}
 
+		// Validate language
 		self.language =  v.l || v.language || 'en'
-		self.image = v.i || v.image || ''
-
-		if(self.image){
-			if(!checkIfAllowedImage(self.image)) self.image = ''
+		if(!_.isString(self.language) || self.language.length > 10){
+			self.language = 'en'
+		}
+		
+		// Validate image - only allow allowed domains or empty
+		var img = v.i || v.image || ''
+		if(img && checkIfAllowedImage(img)){
+			self.image = clearStringXss(img)
+		} else {
+			self.image = ''
 		}
 
 		if (v.deleted) self.deleted = true

@@ -222,12 +222,24 @@ var newcollection = (function(){
 			},
 
 			applyText : function(text){
-				currentCollection.message.set(findAndReplaceLinkClearReverse(text));
+				// Limit message length to 1000 chars
+				var maxLength = 1000
+				var cleanedText = text
+				if(cleanedText.length > maxLength){
+					cleanedText = cleanedText.substring(0, maxLength)
+				}
+				currentCollection.message.set(findAndReplaceLinkClearReverse(cleanedText));
 
 			},
 
 			caption : function(caption){
-				currentCollection.caption.set(findAndReplaceLinkClearReverse(caption));
+				// Limit caption length to 100 chars
+				var maxLength = 100
+				var cleanedCaption = caption
+				if(cleanedCaption.length > maxLength){
+					cleanedCaption = cleanedCaption.substring(0, maxLength)
+				}
+				currentCollection.caption.set(findAndReplaceLinkClearReverse(cleanedCaption));
 
 				state.save()
 			},
@@ -490,12 +502,23 @@ var newcollection = (function(){
 				actions.caption(caption)
 			},
 
-			message : function(){
-				var text = $(this).val()
+		}
 
-				actions.applyText(text)
-				state.save()
-			},
+		// Add length validation on input
+		var validateLength = function(){
+			var messageEl = el.c.find('.collectionDescription')
+			var captionEl = el.c.find('.captionshare')
+			
+			var messageLength = messageEl.text().length
+			var captionLength = captionEl.val().length
+			
+			if(messageLength > 1000){
+				actions.errortext(self.app.localization.e('collectionmessagelength'))
+			} else if(captionLength > 100){
+				actions.errortext(self.app.localization.e('collectioncaptionlength'))
+			} else {
+				actions.errortext('')
+			}
 		}
 
 		var renders = {
@@ -512,20 +535,24 @@ var newcollection = (function(){
 
 				}, function(p){
 
-					//helpers.emojioneArea(p.el.find('.message'))
+					try {
+						if (el.eMessage && el.eMessage[0] && el.eMessage[0].emojioneArea) {
+							el.eMessage[0].emojioneArea.destroy();
+							delete el.eMessage[0].emojioneArea;
+						}
+					} catch (e) {}
+
+					el.eMessage = p.el.find('#emjcontainer');
+					helpers.emojioneArea(el.eMessage);
+
 					imagesHelper.imageUploader(p.el.find('.textIcon'))
 
 					renders.shares()
 
 					var elcaption = p.el.find('.collectionCaptionWrapper input')
-					var elmessage = p.el.find('.collectionDescription')
-
 
 					elcaption.on('keyup', events.caption)
-					elmessage.on('keyup', events.message)
-
 					elcaption.val(currentCollection.caption.v || "")
-					elmessage.val(currentCollection.message.v || "")
 
 
 					el.error = p.el.find('.error span')

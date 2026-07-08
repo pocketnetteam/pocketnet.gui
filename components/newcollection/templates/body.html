@@ -1,13 +1,13 @@
 
 <div class="collectionCaptionWrapper">
     <div class="cpt">
-        <input type='text' value="" class="captionshare" placeholder="<%=e('collectionInputCaption')%>">
+        <input type='text' value="" class="captionshare" placeholder="<%=e('collectionInputCaption')%>" maxlength="100">
     </div>
 </div>
 
 <div class="collectionDescriptionWrapper">
     <div class="txt">
-        <textarea class="collectionDescription" placeholder="<%=e('collectionInputDescription')%>" spellcheck="true"></textarea>
+        <div elementsid='emjcontainer' class="message collectionDescription" placeholder="<%=e('collectionInputDescription')%>" id='emjcontainer' spellcheck="true" data-maxlength="1000"></div>
     </div>
 </div>
 
