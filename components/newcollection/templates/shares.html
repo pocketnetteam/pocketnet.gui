@@ -28,15 +28,48 @@
 
             <div class="allshares">
 
-            <% _.each(shares, function(share, i){ %>
-                <div class="shareWrapper draggablepart" share="<%-share.txid%>">
+            <% _.each(previews, function(pr, i){ %>
+                <div class="shareWrapper draggablepart type_<%-pr.type.type%>" share="<%-pr.share.txid%>">
                     <div class="handle">
                         <i class="fas fa-grip-vertical"></i>
                     </div>
-                    <div class="index"><%-i + 1%></div>
-                    <div class="notification">
-                        <%= tpl(share, null, true) %>
+
+                    <div class="spcover <%-pr.cover ? 'withcover' : 'nocover'%>">
+                        <% if(pr.cover) {%>
+                            <div class="spimage" image="<%-pr.cover%>"></div>
+                        <% } else { %>
+                            <i class="<%-pr.paid ? 'fas fa-lock' : pr.type.icon%>"></i>
+                        <% } %>
+
+                        <% if(pr.cover && pr.type.type != 'images' && pr.type.type != 'post') {%>
+                            <div class="sptypebadge"><i class="<%-pr.type.icon%>"></i></div>
+                        <% } %>
+
+                        <% if(pr.imagescount > 1) {%>
+                            <div class="spcount">+<%-pr.imagescount - 1%></div>
+                        <% } %>
+
+                        <div class="spindex"><%-i + 1%></div>
                     </div>
+
+                    <div class="spcontent">
+                        <div class="spauthor">
+                            <div class="spavatar" image="<%-pr.author.image || '*'%>">
+                                <% if(!pr.author.image) {%><span><%-pr.author.letter%></span><% } %>
+                            </div>
+                            <span class="spname"><%-pr.author.name%></span>
+                            <% if(pr.time) {%><span class="sptime">· <%-pr.time%></span><% } %>
+                        </div>
+
+                        <div class="sptext <%-pr.text ? '' : 'empty'%>"><%-pr.text || pr.type.label%></div>
+
+                        <div class="spmeta">
+                            <span class="sptype"><i class="<%-pr.type.icon%>"></i> <%-pr.type.label%></span>
+                            <% if(pr.repost) {%><span><i class="fas fa-share"></i> <%-e('reposted')%></span><% } %>
+                            <% if(pr.paid) {%><span class="sppaid"><i class="fas fa-lock"></i> <%-e('collectionTypePaid')%></span><% } %>
+                        </div>
+                    </div>
+
                     <div class="removeshare" title="<%- e('removeFromCollection') %>">
                         <i class="fas fa-times"></i>
                     </div>

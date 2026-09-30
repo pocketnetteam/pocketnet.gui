@@ -3329,6 +3329,10 @@ _l.collectionMaterialsDragHint = "Drag to change the order"
 _l.clearcollection = "Clear"
 _l.clearCollectionDialog = "Are you sure you want to clear the collection?"
 _l.collectionsEmptyHint = "Group publications into themed collections and share them with others"
+_l.collectionTypeArticle = "Article"
+_l.collectionTypeStream = "Stream"
+_l.collectionTypePoll = "Poll"
+_l.collectionTypePaid = "For subscribers"
 
 _l.imageerror = "An error occurred while loading images. Please try again"
 

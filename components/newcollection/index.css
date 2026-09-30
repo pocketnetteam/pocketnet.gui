@@ -291,6 +291,7 @@
   -o-transition: 0.2s;
   -webkit-transition: 0.2s;
   transition: 0.2s;
+  /* preview: cover | author, text, type */
 }
 #newcollection .shares .sharesContent .shareWrapper:first-child {
   margin-top: 0;
@@ -320,41 +321,143 @@
   -webkit-transition: 0.2s;
   transition: 0.2s;
 }
-#newcollection .shares .sharesContent .shareWrapper .index {
-  width: 20px;
-  flex-shrink: 0;
-  font-size: 0.75em;
-  font-weight: 600;
-  color: rgb(var(--neutral-grad-3));
-  font-variant-numeric: tabular-nums;
-}
-#newcollection .shares .sharesContent .shareWrapper .notification {
-  flex-grow: 2;
-  min-width: 0;
-  overflow: hidden;
-  font-size: 0.9em;
-}
-#newcollection .shares .sharesContent .shareWrapper .sharepreview {
-  padding: 0;
-}
-#newcollection .shares .sharesContent .shareWrapper .shareimages {
-  margin-top: 0.25em;
-}
-#newcollection .shares .sharesContent .shareWrapper .shareimages .imagesContainer {
-  display: flex;
-  gap: 0.25em;
-  overflow: hidden;
-  max-height: 56px;
-}
-#newcollection .shares .sharesContent .shareWrapper .shareimages .imagesWrapper {
-  flex-shrink: 0;
-}
-#newcollection .shares .sharesContent .shareWrapper .shareimages .image {
+#newcollection .shares .sharesContent .shareWrapper .spcover {
+  position: relative;
   width: 56px;
   height: 56px;
-  border-radius: 6px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-right: 0.75em;
+  background: rgb(var(--neutral-grad-0));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(var(--neutral-grad-3));
+}
+#newcollection .shares .sharesContent .shareWrapper .spcover > i {
+  font-size: 1.2em;
+}
+#newcollection .shares .sharesContent .shareWrapper .spcover .spimage {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
   background-size: cover;
   background-position: center;
+}
+#newcollection .shares .sharesContent .shareWrapper .spcover .sptypebadge {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 22px;
+  height: 22px;
+  margin: -11px 0 0 -11px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.55em;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.55);
+}
+#newcollection .shares .sharesContent .shareWrapper .spcover .spcount {
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  padding: 0 0.25em;
+  border-radius: 4px;
+  font-size: 0.6em;
+  font-weight: 600;
+  line-height: 1.5em;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.55);
+}
+#newcollection .shares .sharesContent .shareWrapper .spcover .spindex {
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  min-width: 16px;
+  height: 16px;
+  line-height: 16px;
+  padding: 0 3px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 0.6em;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: rgb(var(--text-color));
+  background: rgba(var(--background-total-theme), 0.85);
+}
+#newcollection .shares .sharesContent .shareWrapper .spcontent {
+  flex-grow: 2;
+  min-width: 0;
+}
+#newcollection .shares .sharesContent .shareWrapper .spauthor {
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+  font-size: 0.75em;
+  line-height: 1.4em;
+  min-width: 0;
+}
+#newcollection .shares .sharesContent .shareWrapper .spauthor .spavatar {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  background-color: rgb(var(--neutral-grad-1));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#newcollection .shares .sharesContent .shareWrapper .spauthor .spavatar span {
+  font-size: 0.7em;
+  font-weight: 700;
+  color: rgb(var(--neutral-grad-3));
+}
+#newcollection .shares .sharesContent .shareWrapper .spauthor .spname {
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+#newcollection .shares .sharesContent .shareWrapper .spauthor .sptime {
+  flex-shrink: 0;
+  color: rgb(var(--neutral-grad-3));
+  white-space: nowrap;
+}
+#newcollection .shares .sharesContent .shareWrapper .sptext {
+  margin-top: 0.125em;
+  font-size: 0.85em;
+  line-height: 1.35em;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-break: break-word;
+}
+#newcollection .shares .sharesContent .shareWrapper .sptext.empty {
+  color: rgb(var(--neutral-grad-3));
+  font-style: italic;
+}
+#newcollection .shares .sharesContent .shareWrapper .spmeta {
+  margin-top: 0.125em;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.75em;
+  font-size: 0.7em;
+  color: rgb(var(--neutral-grad-3));
+}
+#newcollection .shares .sharesContent .shareWrapper .spmeta i {
+  margin-right: 0.125em;
+}
+#newcollection .shares .sharesContent .shareWrapper .spmeta .sppaid {
+  color: rgb(var(--color-txt-orange));
 }
 #newcollection .shares .sharesContent .shareWrapper .removeshare {
   width: 36px;

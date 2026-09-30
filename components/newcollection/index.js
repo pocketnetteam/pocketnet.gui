@@ -464,6 +464,81 @@ var newcollection = (function(){
 			}
 		}
 
+		var previewHelper = {
+
+			plaintext : function(share){
+				if (_.isObject(share.message) && !share.caption) return ''
+
+				var text = share.renders.text() || ''
+
+				// renders.text strips tags, decode the remaining entities to plain text (escaped again in template)
+				return $('<div/>').html(text).text().replace(/\s+/g, ' ').trim().substring(0, 200)
+			},
+
+			type : function(share, meta){
+				var e = self.app.localization.e
+
+				if (share.itisarticle()) return { type : 'article', icon : 'fas fa-newspaper', label : e('collectionTypeArticle') }
+				if (share.itisstream()) return { type : 'stream', icon : 'fas fa-broadcast-tower', label : e('collectionTypeStream') }
+				if (share.itisaudio()) return { type : 'audio', icon : 'fas fa-music', label : e('audio') }
+				if (meta.type) return { type : 'video', icon : 'fas fa-play', label : e('video') }
+				if (deep(share, 'poll.list.length')) return { type : 'poll', icon : 'fas fa-poll-h', label : e('collectionTypePoll') }
+				if (share.images.length) return { type : 'images', icon : 'far fa-image', label : e('spost') }
+
+				return { type : 'post', icon : 'far fa-file-alt', label : e('spost') }
+			},
+
+			cover : function(share, meta){
+				if (share.images.length) return share.images[0]
+
+				if (!meta.type) return null
+
+				var info = self.app.platform.sdk.videos.storage[share.url] || {}
+
+				return deep(info, 'data.image') || videoImage(meta) || null
+			},
+
+			make : function(share){
+				var meta = parseVideo(share.url || '')
+				var paid = share.visibility() == 'paid'
+				var author = self.psdk.userInfo.get(share.address) || {}
+				var type = previewHelper.type(share, meta)
+
+				return {
+					share : share,
+					type : type,
+					paid : paid,
+					repost : !!share.repost,
+					text : paid ? '' : previewHelper.plaintext(share),
+					cover : paid ? null : previewHelper.cover(share, meta),
+					imagescount : paid ? 0 : share.images.length,
+					author : {
+						address : share.address,
+						name : author.name || share.address,
+						image : author.image || '',
+						letter : (author.name || '?')[0].toUpperCase()
+					},
+					time : share.time ? self.app.reltime(share.time) : ''
+				}
+			},
+
+			// authors and video covers are needed before render; failures just fall back to placeholders
+			load : function(shares){
+				var addresses = _.uniq(_.map(shares, function(s){ return s.address }))
+
+				var urls = _.filter(_.uniq(_.map(shares, function(s){ return s.url })), function(url){
+					return url && parseVideo(url).type
+				})
+
+				return Promise.all([
+					new Promise(function(resolve){
+						self.app.platform.sdk.users.get(addresses, function(){ resolve() }, true)
+					}),
+					urls.length ? self.app.platform.sdk.videos.info(urls).catch(function(){}) : Promise.resolve()
+				])
+			}
+		}
+
 		var imagesHelper = {
 			slowUploadGif : function(file, clbk){
 			
@@ -626,8 +701,16 @@ var newcollection = (function(){
 
 					if(!el.body) return
 
-					var total = currentCollection.contentIds.v.length
+					var ids = currentCollection.contentIds.v
+					var total = ids.length
 
+					shares = _.sortBy(shares || [], function(share){
+						return _.indexOf(ids, share.txid)
+					})
+
+					previewHelper.load(shares).catch(function(){}).then(function(){
+
+					if(!el.body) return
 
 					self.shell({
 						name :  'shares',
@@ -635,10 +718,10 @@ var newcollection = (function(){
 						data : {
 							collection : currentCollection,
 							shares,
+							previews : _.map(shares, previewHelper.make),
 							total : total,
 							missing : Math.max(total - shares.length, 0),
-							ed : ed,
-							tpl : self.app.platform.ws.tempates.share
+							ed : ed
 						},
 
 						insertimmediately : true
@@ -671,9 +754,11 @@ var newcollection = (function(){
 							renders.shares()
 						})
 					})
+
+					})
 				})
 
-				
+
 			}
 
 			

@@ -3326,3 +3326,7 @@ _l.collectionMaterialsDragHint = "Превуците да промените р�
 _l.clearcollection = "Очисти"
 _l.clearCollectionDialog = "Да ли стварно желите да очистите колекцију?"
 _l.collectionsEmptyHint = "Групишите објаве у тематске колекције и делите их"
+_l.collectionTypeArticle = "Чланак"
+_l.collectionTypeStream = "Пренос"
+_l.collectionTypePoll = "Анкета"
+_l.collectionTypePaid = "За претплатнике"

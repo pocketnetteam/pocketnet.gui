@@ -3153,6 +3153,10 @@ _l.collectionMaterialsDragHint = "Перетащите, чтобы измени�
 _l.clearcollection = "Очистить"
 _l.clearCollectionDialog = "Вы действительно хотите очистить коллекцию?"
 _l.collectionsEmptyHint = "Объединяйте публикации в тематические коллекции и делитесь ими"
+_l.collectionTypeArticle = "Статья"
+_l.collectionTypeStream = "Трансляция"
+_l.collectionTypePoll = "Опрос"
+_l.collectionTypePaid = "Для подписчиков"
 
 _l.imageerror = "Произошла ошибка при загрузке изображений. Попробуйте ещё раз."
 
