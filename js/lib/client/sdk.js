@@ -2129,7 +2129,6 @@ var pSDK = function ({ app, api, actions }) {
             }), c => c)
         },
 
-        //? TODO COLL
         load: function (txids, update) {
             
 

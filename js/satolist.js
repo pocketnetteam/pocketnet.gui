@@ -553,11 +553,7 @@ Platform = function (app, listofnodes) {
         'PNG6ibmQMmCdCBKk51SqC7K7Q7UqiUwAnr' : true,
         'PJiCkAihRHTg6SEBFeVe8hcHQ12HfuYwbr' : true,
         'PUWQv3myaZ2M4zsZRPn5rqAHKhMigMNcCD' : true,
-        '' : true,
-        '' : true,
-        '' : true,
-        '' : true,
-        '' : true,
+        'PLXceSgA3GAtragjqfDYaiHQKjS7KEdQaV' : true,
 
     }
 
@@ -10480,7 +10476,10 @@ Platform = function (app, listofnodes) {
                         return m + f
                     }, 0)
 
-                    if(tf > 50 && tf * 2 > ustate.likers_count) return true
+                    if(tf > 50 && tf * 2 > ustate.likers_count) {
+                        console.log('here');
+                        return true
+                    }
                 }
 
 
@@ -10503,23 +10502,32 @@ Platform = function (app, listofnodes) {
                     return true
                 }
 
+                if(ustate.reputation > 5000){
+                    isOverComplained = false
+                }
+
                 if (isOverComplained) {
+                    console.log('here');
                     return true
                 }
 
                 if (moment().diff(ustate.regdate, 'days') <= 7 && totalComplains > 20 && ustate.likers_count < totalComplainsFirstFlags) {
+                    console.log('here');
                     return true
                 }
 
                 if (totalComplainsFirstFlags > 20 && ustate.likers_count < totalComplainsFirstFlags) {
+                    console.log('here');
                     return true
                 }
 
                 if (totalComplains > 20 && ustate.likers_count * 2 < totalComplains) {
+                    console.log('here');
                     return true
                 }
 
                 if (this.isNotAllowedName(uinfo)) {
+                    console.log('here');
                     return true
                 }
             },
