@@ -3317,6 +3317,18 @@ _l.enabledEditModeCollections = "Select the publications in the interface that w
 _l.collectionMode = "Collection edit mode"
 _l.removeFromCollection = "Remove from collection"
 _l.addToCollection = "Add to collection"
+_l.collectionCoverAdd = "Add cover"
+_l.collectionCoverHint = "Click or drop an image. A square picture works best"
+_l.collectionCoverChange = "Change"
+_l.collectionInputCaptionPlaceholder = "For example: Best of the month"
+_l.collectionInputDescriptionPlaceholder = "What is this collection about?"
+_l.collectionOptional = "(optional)"
+_l.collectionMaterialsEmpty = "No publications yet"
+_l.collectionMaterialsEmptyHint = "Add publications to the collection. You can change their order by dragging"
+_l.collectionMaterialsDragHint = "Drag to change the order"
+_l.clearcollection = "Clear"
+_l.clearCollectionDialog = "Are you sure you want to clear the collection?"
+_l.collectionsEmptyHint = "Group publications into themed collections and share them with others"
 
 _l.imageerror = "An error occurred while loading images. Please try again"
 

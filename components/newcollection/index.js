@@ -22,6 +22,13 @@ var newcollection = (function(){
 			contentIds : self.app.localization.e('collectionshares'),
 		}
 
+		var fieldSelectors = {
+			image : '.ncCover',
+			caption : '.collectionCaptionWrapper',
+			message : '.collectionDescriptionWrapper',
+			contentIds : '.shares'
+		}
+
 		var actions = {
 
 			cancel : function(){
@@ -46,6 +53,33 @@ var newcollection = (function(){
 
 							self.closeContainer()
 						})
+					}
+				})
+			},
+
+			clear : function(){
+				if(!currentCollection || currentCollection.aliasid) return
+
+				new dialog({
+					html : self.app.localization.e('clearCollectionDialog'),
+					btn1text : self.app.localization.e('dyes'),
+					btn2text : self.app.localization.e('dno'),
+					class : 'zindex',
+					success : function(){
+
+						if (self.app.platform.sdk.collections.current == currentCollection){
+							self.app.platform.sdk.collections.enableEditMode(null)
+						}
+
+						currentCollection = new Collection(self.app.localization.key, self.app)
+						currentCollection.app = self.app
+						currentCollection.language.set(self.app.localization.key)
+
+						initEvents()
+
+						state.save()
+
+						renders.body()
 					}
 				})
 			},
@@ -184,20 +218,34 @@ var newcollection = (function(){
 				else{
 					if(!el.error) return
 
-					if(!text){
-						el.error.html('')
-					}
-	
-					else{
-						el.error.html(text)
-					}
+					el.error.text(text || '')
+					el.error.closest('.error').toggleClass('active', !!text)
 				}
 
-				
+
+			},
+
+			highlight : function(error){
+				if(!el.body) return
+
+				el.body.find('.invalid').removeClass('invalid')
+
+				var selector = fieldSelectors[error]
+
+				if(selector) el.body.find(selector).addClass('invalid')
+			},
+
+			counters : function(){
+				if(!el.body) return
+
+				el.body.find('.captionCounter').text((currentCollection.caption.v || '').length + '/100')
+				el.body.find('.messageCounter').text((currentCollection.message.v || '').length + '/1000')
 			},
 
 			error : function(onlyremove){
 				var error = currentCollection.validation();
+
+				if (!onlyremove) actions.highlight(error)
 
 				if (error && !onlyremove){
 
@@ -217,6 +265,7 @@ var newcollection = (function(){
 				else
 				{
 					actions.errortext('')
+					actions.highlight(null)
 					return false
 				}
 			},
@@ -241,6 +290,8 @@ var newcollection = (function(){
 				}
 				currentCollection.caption.set(findAndReplaceLinkClearReverse(cleanedCaption));
 
+				actions.counters()
+
 				state.save()
 			},
 
@@ -248,6 +299,8 @@ var newcollection = (function(){
 				var text = c.getText();
 
 				actions.applyText(text);
+
+				actions.counters()
 
 				state.save()
 			},
@@ -545,13 +598,13 @@ var newcollection = (function(){
 					el.eMessage = p.el.find('#emjcontainer');
 					helpers.emojioneArea(el.eMessage);
 
-					imagesHelper.imageUploader(p.el.find('.textIcon'))
+					imagesHelper.imageUploader(p.el.find('.ncCover'))
 
 					renders.shares()
 
 					var elcaption = p.el.find('.collectionCaptionWrapper input')
 
-					elcaption.on('keyup', events.caption)
+					elcaption.on('keyup input', events.caption)
 					elcaption.val(currentCollection.caption.v || "")
 
 
@@ -559,7 +612,8 @@ var newcollection = (function(){
 
 
 					p.el.find('.cancel').on('click', actions.cancel)
-					p.el.find('.remove').on('click', actions.remove)
+					p.el.find('.removecollection').on('click', actions.remove)
+					p.el.find('.clearcollection').on('click', actions.clear)
 					p.el.find('.save').on('click', actions.save)
 
 
@@ -570,6 +624,10 @@ var newcollection = (function(){
 
 				self.app.platform.sdk.node.shares.getbyid(currentCollection.contentIds.v, function(shares){
 
+					if(!el.body) return
+
+					var total = currentCollection.contentIds.v.length
+
 
 					self.shell({
 						name :  'shares',
@@ -577,6 +635,8 @@ var newcollection = (function(){
 						data : {
 							collection : currentCollection,
 							shares,
+							total : total,
+							missing : Math.max(total - shares.length, 0),
 							ed : ed,
 							tpl : self.app.platform.ws.tempates.share
 						},
@@ -600,7 +660,9 @@ var newcollection = (function(){
 							wndObj.hide()
 						})
 
-						p.el.find('.remove').on('click', function(){
+						p.el.find('.removeshare').on('click', function(e){
+							e.stopPropagation()
+
 							var txid = $(this).closest('.shareWrapper').attr('share')
 
 							currentCollection.contentIds.remove(txid)
@@ -667,6 +729,12 @@ var newcollection = (function(){
 
 		return {
 			primary : primary,
+
+			show : function(){
+				var v = deep(self, 'container.show')
+
+				if(v) v()
+			},
 
 			getdata : function(clbk, p){
 

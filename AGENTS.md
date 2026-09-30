@@ -26,7 +26,9 @@ This file is the project-specific operating guide for AI coding agents working i
 - Keep module changes scoped. Do not introduce broad refactors, new frameworks, or new architectural patterns for narrow fixes.
 - Avoid mutating shared objects and arrays when a small copy is reasonable. Be especially careful with SDK state, cached objects, user info, shares, comments, wallet data, and transaction objects.
 - Do not edit generated or minified bundles such as `js/join.min.js`, `chat/matrix-element*`, `dist/`, or compiled release artifacts unless the task explicitly requires generated output.
-- If editing styles, prefer source `index.less` and update compiled `index.css` only if this repo's current workflow expects checked-in CSS for that component.
+- Styles: when a `.css` file has a sibling `.less` file with the same base name (for example `components/<module>/index.less` and `index.css`), the `.less` file is the only source of truth. Edit only the `.less` file and never edit that `.css` by hand.
+- After changing any `.less` file, recompile it into the `.css` file with the same name in the same directory, e.g. `npx lessc components/<module>/index.less components/<module>/index.css`, and include both files in the change. If compilation fails, fix the LESS; do not patch the CSS instead.
+- Edit a `.css` file directly only when no `.less` file with the same base name exists next to it.
 - Keep functions small when adding new code. Use early returns to avoid deep nesting.
 - Preserve existing public names and URL shapes unless the task explicitly changes them.
 

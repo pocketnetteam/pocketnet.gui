@@ -1402,9 +1402,12 @@
         right : 0;
         top : 0;
         bottom : 0; 
-        background: rgba(var(--background-total-theme), 0.28);
+        /* light theme-aware tint: the publication must stay readable under it */
+        background: rgba(var(--background-total-theme), 0.12);
         z-index : 10;
         align-items: center;
+        border-radius: inherit;
+        .transition(0.2s);
 
         .removeFromCollection{
             display: none;
@@ -1418,24 +1421,51 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            padding : 2 * @rhythm;
 
             .label{
-                font-size: 0.8em;
-                margin-bottom : 2 * @rhythm;
+                font-size: 0.75em;
+                font-weight: 500;
+                margin-bottom : 1.5 * @rhythm;
                 border-radius: 16px;
-                padding : @rhythm 2 * @rhythm;
-                background: rgba(var(--background-total-theme), 0.88);
+                padding : 0.75 * @rhythm 2 * @rhythm;
+                color : rgb(var(--text-color));
+                background: rgba(var(--background-total-theme), 0.78);
+                border : 1px solid rgba(var(--neutral-grad-1), 0.9);
+                -webkit-backdrop-filter: blur(6px);
+                backdrop-filter: blur(6px);
+                .shadowSmaller();
+                text-align: center;
+                /* click expands the minimized collection window */
+                cursor: pointer;
+                .transition(0.2s);
+
+                &:hover{
+                    border-color: rgb(var(--color-bg-ac-bright));
+                }
             }
 
             button{
                 width : 180px;
                 border-radius: 30px;
                 font-size: 0.8em;
+                font-weight: 500;
+                padding-top : 1.25 * @rhythm;
+                padding-bottom : 1.25 * @rhythm;
+                .shadowSmall();
+            }
+
+            .removeFromCollection{
+                color : rgb(var(--color-bad));
+                background: rgba(var(--background-total-theme), 0.85);
+                border : 1px solid rgba(var(--color-bad), 0.45);
+                -webkit-backdrop-filter: blur(6px);
+                backdrop-filter: blur(6px);
             }
 
             .removeFromCollection,
             .addToCollection{
-                margin-top: 2 * @rhythm;
+                margin-top: 0;
             }
             
         }
@@ -1444,6 +1474,16 @@
 
     &.incollection{
         .collectionMode{
+            background: rgba(var(--color-bg-ac-bright), 0.06);
+            box-shadow: inset 0 0 0 2px rgb(var(--color-bg-ac-bright));
+
+            .collectionModeCell{
+                .label{
+                    color : rgb(var(--color-bg-ac-bright));
+                    border-color: rgba(var(--color-bg-ac-bright), 0.5);
+                }
+            }
+
             .addToCollection{
                 display: none;
             }
@@ -1788,6 +1828,14 @@ html.editcollection{
     .share_common{
         .collectionMode{
             display: block;
+        }
+
+        /*
+            pass the card radius down to the overlay: templates (share, article, video, post page)
+            have a different set of wrappers between .share_common and .collectionMode
+        */
+        :has(.collectionMode){
+            border-radius: inherit;
         }
 
         .commentsWrapperHb{

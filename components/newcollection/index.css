@@ -1,5 +1,411 @@
 #newcollection {
   position: relative;
+  /* layout: cover on the left, fields on the right */
+  /* cover */
+  /* fields */
+  /* publications */
+  /* footer */
+}
+#newcollection .required {
+  color: rgb(var(--color-bad));
+  font-weight: 400;
+}
+#newcollection .caption {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgb(var(--background-hidden-layer));
+  z-index: 20;
+  display: block;
+  padding: 1em 0 0.75em;
+}
+#newcollection .caption span {
+  font-size: 1.3em;
+  font-weight: 600;
+}
+#newcollection .editform {
+  display: block;
+}
+#newcollection .ncMain {
+  display: flex;
+  align-items: flex-start;
+  gap: 1em;
+  margin-bottom: 1em;
+}
+#newcollection .ncCoverWrapper {
+  flex-shrink: 0;
+  width: 168px;
+}
+#newcollection .ncFields {
+  flex-grow: 1;
+  min-width: 0;
+}
+#newcollection .ncCover {
+  width: 168px;
+  height: 168px;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  background: rgb(var(--background-main));
+  border: 2px dashed rgb(var(--neutral-grad-1));
+  -moz-transition: 0.2s;
+  -o-transition: 0.2s;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+#newcollection .ncCover .imagecover {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+}
+#newcollection .ncCover .coverEmpty {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.5em;
+  color: rgb(var(--neutral-grad-3));
+}
+#newcollection .ncCover .coverEmpty i {
+  font-size: 2em;
+  margin-bottom: 0.5em;
+  color: rgb(var(--color-bg-ac-bright));
+}
+#newcollection .ncCover .coverEmpty .coverTitle {
+  font-weight: 600;
+  font-size: 0.9em;
+  color: rgb(var(--text-color));
+}
+#newcollection .ncCover .coverEmpty .coverHint {
+  margin-top: 0.25em;
+  font-size: 0.7em;
+  line-height: 1.3em;
+}
+#newcollection .ncCover .coverOverlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1em 0.5em 0.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  color: #fff;
+  font-size: 0.8em;
+  font-weight: 500;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0));
+  opacity: 0.85;
+  -moz-transition: 0.2s;
+  -o-transition: 0.2s;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+#newcollection .ncCover.hasimage {
+  border-style: solid;
+  border-color: transparent;
+}
+#newcollection .ncCover:hover,
+#newcollection .ncCover.hover {
+  border-color: rgb(var(--color-bg-ac-bright));
+}
+#newcollection .ncCover:hover .coverOverlay,
+#newcollection .ncCover.hover .coverOverlay {
+  opacity: 1;
+  padding-top: 2em;
+}
+#newcollection .ncCover.invalid {
+  border-color: rgb(var(--color-bad));
+}
+#newcollection .ncField {
+  margin-bottom: 0.75em;
+}
+#newcollection .ncField:last-child {
+  margin-bottom: 0;
+}
+#newcollection .ncField.invalid .cpt input,
+#newcollection .ncField.invalid .txt .emojionearea-editor {
+  box-shadow: inset 0 0 0 1px rgb(var(--color-bad));
+}
+#newcollection .ncLabel {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 0.25em;
+  font-size: 0.8em;
+  font-weight: 600;
+}
+#newcollection .ncLabel .optional {
+  font-style: normal;
+  font-weight: 400;
+  color: rgb(var(--neutral-grad-3));
+}
+#newcollection .ncLabel .counter {
+  font-weight: 400;
+  font-size: 0.9em;
+  color: rgb(var(--neutral-grad-3));
+  font-variant-numeric: tabular-nums;
+}
+#newcollection .cpt input {
+  width: 100%;
+  border-radius: 10px;
+  border: 0;
+  background: rgb(var(--background-main));
+  outline: none;
+  padding: 0.75em 0.75em;
+  -moz-transition: 0.2s;
+  -o-transition: 0.2s;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+#newcollection .cpt input:focus {
+  box-shadow: inset 0 0 0 1px rgb(var(--color-bg-ac-bright));
+}
+#newcollection .txt textarea {
+  width: 100%;
+  min-height: 78px;
+  border-radius: 10px;
+  border: 0;
+  background: rgb(var(--background-main));
+  outline: none;
+  padding: 0.75em;
+  overflow: auto;
+}
+#newcollection .txt .emojionearea,
+#newcollection .txt .emojionearea.form-control {
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  box-shadow: none;
+}
+#newcollection .txt .emojionearea .emojionearea-editor,
+#newcollection .txt .emojionearea.form-control .emojionearea-editor {
+  margin-right: 0;
+}
+#newcollection .txt .emojionearea-editor {
+  padding: 0.75em;
+  padding-right: 2em;
+  background: rgb(var(--background-main));
+  outline: none;
+  border: 0;
+  min-height: 94px;
+  max-height: 200px;
+  border-radius: 10px;
+  -moz-transition: 0.2s;
+  -o-transition: 0.2s;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+#newcollection .txt .emojionearea-editor:focus {
+  box-shadow: inset 0 0 0 1px rgb(var(--color-bg-ac-bright));
+}
+#newcollection .shares {
+  padding-bottom: 1em;
+  padding-top: 1em;
+  border-top: 1px solid rgb(var(--neutral-grad-1));
+}
+#newcollection .shares .captionWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 36px;
+}
+#newcollection .shares .sharesCaption {
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+}
+#newcollection .shares .sharesCaption .count {
+  font-size: 0.7em;
+  font-weight: 600;
+  min-width: 22px;
+  height: 22px;
+  line-height: 22px;
+  padding: 0 0.5em;
+  border-radius: 11px;
+  text-align: center;
+  background: rgba(var(--color-bg-ac-bright), 0.12);
+  color: rgb(var(--color-bg-ac-bright));
+}
+#newcollection .shares .additems {
+  font-size: 0.9em;
+}
+#newcollection .shares .additems.ghost {
+  color: rgb(var(--color-bg-ac-bright));
+  text-decoration: none;
+  border-radius: 8px;
+}
+#newcollection .shares .additems.ghost:hover {
+  background: rgba(var(--color-bg-ac-bright), 0.1);
+  color: rgb(var(--color-bg-ac-bright));
+}
+#newcollection .shares .sharesHint {
+  font-size: 0.7em;
+  color: rgb(var(--neutral-grad-3));
+  margin-bottom: 0.5em;
+}
+#newcollection .shares .sharesHint i {
+  margin-right: 0.25em;
+}
+#newcollection .shares .sharesWarning {
+  font-size: 0.8em;
+  color: rgb(var(--color-txt-orange));
+  background: rgba(var(--color-bg-orange), 0.1);
+  border-radius: 8px;
+  padding: 0.5em 0.75em;
+  margin-bottom: 0.5em;
+}
+#newcollection .shares .sharesWarning i {
+  margin-right: 0.25em;
+}
+#newcollection .shares.invalid .emptywrapper {
+  border-color: rgb(var(--color-bad));
+}
+#newcollection .shares .sharesContent {
+  margin-top: 0.75em;
+}
+#newcollection .shares .sharesContent .shareWrapper {
+  margin-top: 0.5em;
+  padding: 0.5em;
+  padding-left: 0;
+  border-radius: 10px;
+  cursor: grab;
+  background: rgb(var(--background-main));
+  border: 1px solid transparent;
+  display: flex;
+  align-items: center;
+  -moz-transition: 0.2s;
+  -o-transition: 0.2s;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+#newcollection .shares .sharesContent .shareWrapper:first-child {
+  margin-top: 0;
+}
+#newcollection .shares .sharesContent .shareWrapper:hover {
+  border-color: rgb(var(--neutral-grad-1));
+}
+#newcollection .shares .sharesContent .shareWrapper:hover .handle {
+  color: rgb(var(--neutral-grad-3));
+}
+#newcollection .shares .sharesContent .shareWrapper.sortable-chosen,
+#newcollection .shares .sharesContent .shareWrapper.sortable-fallback {
+  box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
+  cursor: grabbing;
+}
+#newcollection .shares .sharesContent .shareWrapper.sortable-ghost {
+  opacity: 0.4;
+}
+#newcollection .shares .sharesContent .shareWrapper .handle {
+  width: 28px;
+  flex-shrink: 0;
+  text-align: center;
+  color: rgb(var(--neutral-grad-2));
+  font-size: 0.8em;
+  -moz-transition: 0.2s;
+  -o-transition: 0.2s;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+#newcollection .shares .sharesContent .shareWrapper .index {
+  width: 20px;
+  flex-shrink: 0;
+  font-size: 0.75em;
+  font-weight: 600;
+  color: rgb(var(--neutral-grad-3));
+  font-variant-numeric: tabular-nums;
+}
+#newcollection .shares .sharesContent .shareWrapper .notification {
+  flex-grow: 2;
+  min-width: 0;
+  overflow: hidden;
+  font-size: 0.9em;
+}
+#newcollection .shares .sharesContent .shareWrapper .sharepreview {
+  padding: 0;
+}
+#newcollection .shares .sharesContent .shareWrapper .shareimages {
+  margin-top: 0.25em;
+}
+#newcollection .shares .sharesContent .shareWrapper .shareimages .imagesContainer {
+  display: flex;
+  gap: 0.25em;
+  overflow: hidden;
+  max-height: 56px;
+}
+#newcollection .shares .sharesContent .shareWrapper .shareimages .imagesWrapper {
+  flex-shrink: 0;
+}
+#newcollection .shares .sharesContent .shareWrapper .shareimages .image {
+  width: 56px;
+  height: 56px;
+  border-radius: 6px;
+  background-size: cover;
+  background-position: center;
+}
+#newcollection .shares .sharesContent .shareWrapper .removeshare {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  margin-left: 0.5em;
+  border-radius: 50%;
+  cursor: pointer;
+  color: rgb(var(--neutral-grad-3));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  -moz-transition: 0.2s;
+  -o-transition: 0.2s;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+#newcollection .shares .sharesContent .shareWrapper .removeshare:hover {
+  color: rgb(var(--color-bad));
+  background: rgba(var(--color-bad), 0.1);
+}
+#newcollection .emptywrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 2em 1em;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 10px;
+  border: 2px dashed rgb(var(--neutral-grad-1));
+  -moz-transition: 0.2s;
+  -o-transition: 0.2s;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+#newcollection .emptywrapper .emptyicon {
+  font-size: 2em;
+  color: rgb(var(--neutral-grad-2));
+  margin-bottom: 0.5em;
+}
+#newcollection .emptywrapper .emptytitle {
+  font-weight: 600;
+}
+#newcollection .emptywrapper .emptyhint {
+  font-size: 0.8em;
+  color: rgb(var(--neutral-grad-3));
+  margin-top: 0.25em;
+  max-width: 340px;
+}
+#newcollection .emptywrapper .buttonsWrapper {
+  margin-top: 1em;
 }
 #newcollection .panelErrorWrapper {
   position: sticky;
@@ -9,204 +415,62 @@
   background: rgb(var(--background-hidden-layer));
   z-index: 20;
   width: 100%;
-  padding: 0.5em;
-  padding-bottom: 1em;
+  padding: 0.75em 0 1em;
+  border-top: 1px solid rgb(var(--neutral-grad-1));
+}
+#newcollection .panelErrorWrapper .error {
+  display: none;
+  align-items: center;
+  gap: 0.5em;
+  color: rgb(var(--color-bad));
+  background: rgba(var(--color-bad), 0.08);
+  border-radius: 8px;
+  padding: 0.5em 0.75em;
+  margin-bottom: 0.75em;
+  font-size: 0.8em;
+}
+#newcollection .panelErrorWrapper .error.active {
+  display: flex;
 }
 #newcollection .panelErrorWrapper .panel {
   display: flex;
-  justify-content: flex-end;
-}
-#newcollection .panelErrorWrapper .panel .error {
-  color: rgb(var(--color-bad));
-  font-weight: 400;
-  font-size: 0.8em;
-  margin-right: auto;
-  display: flex;
   align-items: center;
 }
-#newcollection .panelErrorWrapper .panel button {
-  margin-left: 1em;
-}
-#newcollection .caption {
-  position: sticky;
-  top: 0;
-  left: 0;
-  right: 0;
-  background: rgb(var(--background-hidden-layer));
-  z-index: 20;
-}
-#newcollection .shares {
-  padding-bottom: 3em;
-  margin-top: 1em;
-}
-#newcollection .shares .panel {
-  text-align: center;
-}
-#newcollection .shares .sharesCaption {
-  font-weight: 700;
-}
-#newcollection .shares .captionWrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-#newcollection .shares .sharesContent {
-  margin-top: 1.5em;
-}
-#newcollection .shares .sharesContent .shareWrapper {
-  margin-top: 0.5em;
-  padding: 0.5em;
-  border-radius: 6px;
-  cursor: pointer;
-  background: rgb(var(--background-main));
-  display: flex;
-  justify-content: center;
-}
-#newcollection .shares .sharesContent .shareWrapper .remove {
-  width: 44px;
-  height: 44px;
-  cursor: pointer;
-  text-align: center;
-  color: rgb(var(--neutral-grad-4));
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  -moz-transition: 0.3s;
-  -o-transition: 0.3s;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
-}
-#newcollection .shares .sharesContent .shareWrapper .remove i {
-  font-size: 0.8em;
-}
-#newcollection .shares .sharesContent .shareWrapper .remove:hover {
-  color: rgb(var(--color-bad));
-}
-#newcollection .shares .sharesContent .shareWrapper .notification {
-  flex-grow: 2;
-}
-#newcollection .shares .sharesContent .shareWrapper .sharepreview {
-  padding: 0;
-}
-#newcollection .editform {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-#newcollection .editform .imagecover {
-  height: 250px;
-  border-radius: 6px;
-  overflow: hidden;
-  aspect-ratio: 1;
-  margin-bottom: 0.5em;
-}
-#newcollection .editform .collectionImageWrapper {
-  width: 100%;
-  height: 44px;
-  margin-bottom: 0.5em;
-  position: relative;
-}
-#newcollection .editform .collectionImageWrapper .textIcon {
-  color: rgb(var(--neutral-grad-4));
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  display: flex;
-  align-items: center;
-  background: rgb(var(--background-main));
-  border-radius: 6px;
-  overflow: hidden;
-}
-#newcollection .editform .collectionImageWrapper .textIcon .icon {
+#newcollection .panelErrorWrapper .panel .rightbuttons {
   margin-left: auto;
-  width: 44px;
-  height: 100%;
-  border-radius: 6px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
+  gap: 0.5em;
 }
-#newcollection .editform .collectionImageWrapper .textIcon .text {
-  margin-left: 0.5em;
+#newcollection .panelErrorWrapper .panel .button {
+  border-radius: 8px;
+  font-size: 1em;
 }
-#newcollection .editform .collectionImageWrapper .textIcon .elContent {
-  display: flex;
-  align-items: center;
+#newcollection .panelErrorWrapper .panel .button.ghost {
+  text-decoration: none;
 }
-#newcollection .editform .collectionCaptionWrapper {
-  width: 100%;
+#newcollection .panelErrorWrapper .panel .button.ghost:hover {
+  background: rgb(var(--neutral-grad-0));
 }
-#newcollection .editform .collectionDescriptionWrapper {
-  width: 100%;
+#newcollection .panelErrorWrapper .panel .clearcollection {
+  color: rgb(var(--neutral-grad-3));
+  padding-left: 0.75em;
+  padding-right: 0.75em;
 }
-#newcollection .editform .collectionItemsWrapper {
-  width: 100%;
+#newcollection .panelErrorWrapper .panel .clearcollection:hover {
+  color: rgb(var(--text-color));
 }
-#newcollection .emptywrapper {
-  display: flex;
-  padding: 2em;
-  align-items: center;
-  justify-content: center;
+#newcollection .panelErrorWrapper .panel .removecollection {
+  color: rgb(var(--color-bad));
+  padding-left: 0.75em;
+  padding-right: 0.75em;
 }
-#newcollection .emptywrapper .buttonsWrapper {
-  text-align: center;
+#newcollection .panelErrorWrapper .panel .removecollection:hover {
+  background: rgba(var(--color-bad), 0.1);
+  color: rgb(var(--color-bad));
 }
-#newcollection .caption {
-  display: block;
-  padding: 1em 0;
-}
-#newcollection .caption span {
-  font-size: 1.5em;
-}
-#newcollection .cpt {
-  margin-bottom: 0.5em;
-}
-#newcollection .cpt input {
-  width: 100%;
-  border-radius: 6px;
-  border: 0;
-  background: rgb(var(--background-main));
-  outline: none;
-  padding: 1em 0;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
-}
-#newcollection .txt {
-  margin-bottom: 0.5em;
-}
-#newcollection .txt textarea {
-  width: 100%;
-  min-height: 78px;
-  border-radius: 6px;
-  border: 0;
-  background: rgb(var(--background-main));
-  outline: none;
-  padding: 1em 0;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
-  overflow: auto;
-}
-#newcollection .txt .emojionearea,
-#newcollection .txt .emojionearea.form-control {
-  border: 0;
-  border-radius: 6px;
-}
-#newcollection .txt .emojionearea .emojionearea-editor,
-#newcollection .txt .emojionearea.form-control .emojionearea-editor {
-  margin-right: 0;
-}
-#newcollection .txt .emojionearea-editor {
-  padding: 1em 0;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
-  background: rgb(var(--background-main));
-  outline: none;
-  border: 0;
-  min-height: 78px;
-  border-radius: 6px;
+#newcollection .panelErrorWrapper .panel .save {
+  min-width: 110px;
 }
 #newcollection .sLoader {
   display: none;
@@ -222,6 +486,35 @@
 #newcollection.loading .sLoader {
   display: block;
 }
+@media (max-width: 400px) {
+  #newcollection .panelErrorWrapper .panel .clearcollection,
+  #newcollection .panelErrorWrapper .panel .removecollection {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+  #newcollection .panelErrorWrapper .panel .clearcollection i,
+  #newcollection .panelErrorWrapper .panel .removecollection i {
+    display: none;
+  }
+}
+@media (max-width: 560px) {
+  #newcollection .ncMain {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  #newcollection .ncCoverWrapper {
+    width: 100%;
+  }
+  #newcollection .ncCover {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+  #newcollection .panelErrorWrapper .panel .rightbuttons {
+    flex-grow: 1;
+    justify-content: flex-end;
+  }
+}
 .wndnewcollection.wnd .wndcontent {
   padding-top: 0;
 }
@@ -229,7 +522,7 @@
   display: none;
 }
 .wndnewcollection.wnd .wndinner {
-  max-width: 540px;
+  max-width: 600px;
   max-height: 90vh;
 }
 .wndnewcollection.wnd #newcollection .container {
@@ -260,4 +553,83 @@
 }
 .wnd.wndnewcollection.hiddenState #newcollection .editform {
   display: none;
+}
+/*
+	mobile bottom sheet: main.less gives .wndcontent (the scroll container) padding-bottom 300px.
+	Chrome deflates the sticky area by the scroll container padding, so the sticky footer would
+	hang 300px above the bottom. Move the same spacing from .wndcontent into the module itself.
+*/
+html.mobileview .wnd.wndnewcollection #newcollection {
+  padding-left: 1em;
+  padding-right: 1em;
+}
+html.mobileview .wnd.wndnewcollection.normalizedmobile.maxheight:not(.hiddenState) .wndinner .wndcontent {
+  padding-bottom: 0;
+}
+html.mobileview .wnd.wndnewcollection.normalizedmobile.maxheight:not(.hiddenState) #newcollection {
+  padding-bottom: 300px;
+}
+/* minimized state on mobile: same compact bar as uploadpeertube */
+html.mobileview {
+  /* .sitemessage is width:auto on mobile, lightcenter's left:50% + translate squeezes it off screen */
+}
+html.mobileview .wnd.wndnewcollection.hiddenState {
+  box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
+  /* maxheight gives .wndcontent 92vh, it must not leak out of the 50px bar */
+}
+html.mobileview .wnd.wndnewcollection.hiddenState.maxheight .wndinner .wndcontent {
+  height: 100%;
+  padding-bottom: 0;
+}
+html.mobileview .wnd.wndnewcollection.hiddenState #newcollection {
+  padding-left: 0;
+  padding-right: 0;
+}
+html.mobileview .wnd.wndnewcollection.hiddenState #newcollection .caption {
+  padding: 0;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+html.mobileview .wnd.wndnewcollection.hiddenState #newcollection .caption span {
+  font-weight: 600;
+}
+html.mobileview .sitemessage.lightcenter {
+  left: 1em;
+  right: 1em;
+  -webkit-transform: translate3d(0, -50%, 0);
+  transform: translate3d(0, -50%, 0);
+}
+/*
+	hint shown while the user picks publications for the collection (sitemessage, class lightcenter).
+	Translucent theme-aware backdrop so the feed and "add to collection" buttons stay visible under it,
+	and it lets taps through so it never blocks those buttons.
+*/
+.sitemessage.lightcenter {
+  width: auto;
+  max-width: 420px;
+  padding: 1em 1.5em;
+  border-radius: 12px;
+  font-size: 0.9em;
+  line-height: 1.4em;
+  font-weight: 500;
+  color: rgb(var(--text-color));
+  background: rgba(var(--background-total-theme), 0.72);
+  border: 1px solid rgba(var(--neutral-grad-1), 0.8);
+  -webkit-backdrop-filter: blur(6px) saturate(1.2);
+  backdrop-filter: blur(6px) saturate(1.2);
+  box-shadow: 0 8px 24px -8px rgba(var(--color-shadow-base), 0.35);
+  pointer-events: none;
+}
+html.mobileview .sitemessage.lightcenter {
+  /* mobile .sitemessage sets bottom: 25px, with top: 50% it stretched the hint down to the screen bottom */
+  top: 50%;
+  bottom: auto;
+  height: auto;
+  max-width: none;
+  min-height: 0;
+  padding: 1em 1.5em;
+  border: 1px solid rgba(var(--neutral-grad-1), 0.8);
 }

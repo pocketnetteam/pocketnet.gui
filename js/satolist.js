@@ -6664,7 +6664,7 @@ Platform = function (app, listofnodes) {
                         collection : editing
 					},
 
-                    clbk : function( element){
+                    clbk : function(e, element){
 
 						self.sdk.collections.wnd = {
                             element, 
@@ -6673,6 +6673,16 @@ Platform = function (app, listofnodes) {
 
 					}
 				})
+            },
+
+            showwindow : function(){
+                var wnd = self.sdk.collections.wnd
+
+                if(!wnd || !wnd.element || !wnd.element.show) return false
+
+                wnd.element.show()
+
+                return true
             },
 
             addItem : function(id){

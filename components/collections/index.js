@@ -14,6 +14,12 @@ var collections = (function(){
 
 		var actions = {
 			newcollection : function(){
+
+				// on mobile the list window stays under the new collection window and shows up when it is minimized
+				if (self.app.mobileview && !ed.preview && el.c && el.c.closest('.wnd').length){
+					self.closeContainer()
+				}
+
 				self.app.platform.sdk.collections.opennewcollectionwindow()
 			},
 
@@ -50,16 +56,17 @@ var collections = (function(){
 					el :   el.c.find('.collectionsdata'),
 					data : {
 						items : displayItems,
+						me : author.me,
 					},
 					insertimmediately : true,
 				}, function(p){
 					if(displayItems.length){
 						el.c.addClass('hasitems')
-						el.c.find('.count').text('(' + displayItems.length + ')')
+						el.c.find('.headcount').text(displayItems.length)
 					}
 					else{
 						el.c.removeClass('hasitems')
-						el.c.find('.count').text('')
+						el.c.find('.headcount').text('')
 					}
 
 					if(ed.preview){
@@ -94,7 +101,7 @@ var collections = (function(){
 
 		var initEvents = function(){
 			
-			el.c.find('.newcollection').on('click', function(){
+			el.c.on('click', '.newcollection', function(){
 				actions.newcollection()
 			})
 

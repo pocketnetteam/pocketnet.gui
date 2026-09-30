@@ -2133,7 +2133,7 @@ Collection = function(lang){
 		
 		return _.map(self.contentIds.v, function(t){ return (t) }).join(',') + 
 		
-		(self.language.v) + (self.caption.v) + (self.message.v) + (self.image.v)
+		(self.language.v || "") + (self.caption.v || "") + (self.message.v || "") + (self.image.v || "")
 
 		//+ (self.aliasid || "")
 	}

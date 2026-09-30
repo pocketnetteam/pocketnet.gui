@@ -3173,6 +3173,10 @@ var lenta = (function(){
 
 			},
 
+			showCollectionWindow : function(){
+				self.app.platform.sdk.collections.showwindow()
+			},
+
 			showblockedpost : function(){
 				$(this).closest('.blockAuthor').remove()
 			},
@@ -5284,6 +5288,7 @@ var lenta = (function(){
 			el.c.on('click', '.unblockbutton', events.unblock)
 			el.c.on('click', '.addToCollection', events.addToCollection)
 			el.c.on('click', '.removeFromCollection', events.removeFromCollection)
+			el.c.on('click', '.collectionMode .label', events.showCollectionWindow)
 			el.c.on('click', '.showblockedpost', events.showblockedpost)
 			el.c.on('click', '.videoTips', events.fullScreenVideo)
 			el.c.on('click', '.videoOpen', events.fullScreenVideo)

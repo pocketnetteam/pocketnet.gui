@@ -1025,9 +1025,15 @@
   right: 0;
   top: 0;
   bottom: 0;
-  background: rgba(var(--background-total-theme), 0.28);
+  /* light theme-aware tint: the publication must stay readable under it */
+  background: rgba(var(--background-total-theme), 0.12);
   z-index: 10;
   align-items: center;
+  border-radius: inherit;
+  -moz-transition: 0.2s;
+  -o-transition: 0.2s;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
 }
 .share_common .collectionMode .removeFromCollection {
   display: none;
@@ -1040,22 +1046,58 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 1em;
 }
 .share_common .collectionMode .collectionModeCell .label {
-  font-size: 0.8em;
-  margin-bottom: 1em;
+  font-size: 0.75em;
+  font-weight: 500;
+  margin-bottom: 0.75em;
   border-radius: 16px;
-  padding: 0.5em 1em;
-  background: rgba(var(--background-total-theme), 0.88);
+  padding: 0.375em 1em;
+  color: rgb(var(--text-color));
+  background: rgba(var(--background-total-theme), 0.78);
+  border: 1px solid rgba(var(--neutral-grad-1), 0.9);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
+  text-align: center;
+  /* click expands the minimized collection window */
+  cursor: pointer;
+  -moz-transition: 0.2s;
+  -o-transition: 0.2s;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+.share_common .collectionMode .collectionModeCell .label:hover {
+  border-color: rgb(var(--color-bg-ac-bright));
 }
 .share_common .collectionMode .collectionModeCell button {
   width: 180px;
   border-radius: 30px;
   font-size: 0.8em;
+  font-weight: 500;
+  padding-top: 0.625em;
+  padding-bottom: 0.625em;
+  box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
+}
+.share_common .collectionMode .collectionModeCell .removeFromCollection {
+  color: rgb(var(--color-bad));
+  background: rgba(var(--background-total-theme), 0.85);
+  border: 1px solid rgba(var(--color-bad), 0.45);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
 }
 .share_common .collectionMode .collectionModeCell .removeFromCollection,
 .share_common .collectionMode .collectionModeCell .addToCollection {
-  margin-top: 1em;
+  margin-top: 0;
+}
+.share_common.incollection .collectionMode {
+  background: rgba(var(--color-bg-ac-bright), 0.06);
+  box-shadow: inset 0 0 0 2px rgb(var(--color-bg-ac-bright));
+}
+.share_common.incollection .collectionMode .collectionModeCell .label {
+  color: rgb(var(--color-bg-ac-bright));
+  border-color: rgba(var(--color-bg-ac-bright), 0.5);
 }
 .share_common.incollection .collectionMode .addToCollection {
   display: none;
@@ -1313,8 +1355,17 @@
 html.television .share_common .sharecaption {
   cursor: default;
 }
+html.editcollection .share_common {
+  /*
+            pass the card radius down to the overlay: templates (share, article, video, post page)
+            have a different set of wrappers between .share_common and .collectionMode
+        */
+}
 html.editcollection .share_common .collectionMode {
   display: block;
+}
+html.editcollection .share_common :has(.collectionMode) {
+  border-radius: inherit;
 }
 html.editcollection .share_common .commentsWrapperHb {
   display: none;

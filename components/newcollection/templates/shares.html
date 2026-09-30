@@ -1,39 +1,57 @@
 <div class="shares">
     <div class="captionWrapper">
 		<div class="sharesCaption">
-			<span><%- e('collectionMaterials') %></span> <% if(shares.length) {%><span class="count">(<%-shares.length%>)</span><% } %>
+			<span><%- e('collectionMaterials') %></span> <b class="required">*</b>
+			<% if(shares.length) {%><span class="count"><%-shares.length%></span><% } %>
 		</div>
 
         <% if(shares.length) {%>
             <div class="panel">
-                <button class="button small additems"><%- e('collectionMaterialsAdd') %> <i class="fas fa-plus-circle"></i></button>
+                <button class="button small ghost additems"><i class="fas fa-plus"></i> <%- e('collectionMaterialsAdd') %></button>
             </div>
         <% } %>
 
 	</div>
 
     <div class="sharesContent">
+        <% if(missing) {%>
+            <div class="sharesWarning">
+                <i class="fas fa-exclamation-triangle"></i> <span><%-missing%> / <%-total%> — <%- e('collectionMaterialsUnavailable') %></span>
+            </div>
+        <% } %>
+
         <% if(shares.length) {%>
+
+            <% if(shares.length > 1) {%>
+                <div class="sharesHint"><i class="fas fa-arrows-alt-v"></i> <%- e('collectionMaterialsDragHint') %></div>
+            <% } %>
 
             <div class="allshares">
 
-            <% _.each(shares, function(share){ %> 
+            <% _.each(shares, function(share, i){ %>
                 <div class="shareWrapper draggablepart" share="<%-share.txid%>">
+                    <div class="handle">
+                        <i class="fas fa-grip-vertical"></i>
+                    </div>
+                    <div class="index"><%-i + 1%></div>
                     <div class="notification">
                         <%= tpl(share, null, true) %>
                     </div>
-                    <div class="remove">
-                        <i class="fas fa-trash"></i>
+                    <div class="removeshare" title="<%- e('removeFromCollection') %>">
+                        <i class="fas fa-times"></i>
                     </div>
                 </div>
-                
+
             <% }) %>
 
             </div>
 
-        <% } else { %> 
+        <% } else { %>
             <div class="emptywrapper">
-                <div class="buttonsWrapper"><button class="button ghost additems"><%- e('collectionMaterialsAdd') %> <i class="fas fa-plus-circle"></i></button></div>
+                <div class="emptyicon"><i class="far fa-folder-open"></i></div>
+                <div class="emptytitle"><%- e('collectionMaterialsEmpty') %></div>
+                <div class="emptyhint"><%- e('collectionMaterialsEmptyHint') %></div>
+                <div class="buttonsWrapper"><button class="button small additems"><i class="fas fa-plus"></i> <%- e('collectionMaterialsAdd') %></button></div>
             </div>
         <% } %>
     </div>

@@ -1,54 +1,78 @@
 
-<div class="collectionCaptionWrapper">
-    <div class="cpt">
-        <input type='text' value="" class="captionshare" placeholder="<%=e('collectionInputCaption')%>" maxlength="100">
-    </div>
-</div>
+<div class="ncMain">
 
-<div class="collectionDescriptionWrapper">
-    <div class="txt">
-        <div elementsid='emjcontainer' class="message collectionDescription" placeholder="<%=e('collectionInputDescription')%>" id='emjcontainer' spellcheck="true" data-maxlength="1000"></div>
-    </div>
-</div>
+    <div class="ncCoverWrapper">
+        <div class="ncCover <%-collection.image.v ? 'hasimage' : 'noimage'%>" title="<%-e(collection.image.v ? 'collectionInputImageChange' : 'collectionInputImage')%>">
 
+            <% if(collection.image.v) {%>
 
+                <div class="imagecover" image="<%-collection.image.v || '*'%>"></div>
 
-<div class="collectionImageWrapper">
-    <div class="textIcon">
-        
-        <div class="text">
-            <span><%=e(collection.image.v ? 'collectionInputImageChange' : 'collectionInputImage')%></span>
+                <div class="coverOverlay">
+                    <i class="fas fa-camera"></i>
+                    <span><%=e('collectionCoverChange')%></span>
+                </div>
+
+            <% } else { %>
+
+                <div class="coverEmpty">
+                    <i class="far fa-image"></i>
+                    <span class="coverTitle"><%=e('collectionCoverAdd')%></span>
+                    <span class="coverHint"><%=e('collectionCoverHint')%></span>
+                </div>
+
+            <% } %>
+
         </div>
-        <div class="icon">
-            <i class="fas fa-camera"></i>
-        </div>
     </div>
+
+    <div class="ncFields">
+
+        <div class="ncField collectionCaptionWrapper">
+            <div class="ncLabel">
+                <span><%=e('collectionInputCaption')%> <b class="required">*</b></span>
+                <span class="counter captionCounter"><%-(collection.caption.v || '').length%>/100</span>
+            </div>
+            <div class="cpt">
+                <input type='text' value="" class="captionshare" placeholder="<%=e('collectionInputCaptionPlaceholder')%>" maxlength="100">
+            </div>
+        </div>
+
+        <div class="ncField collectionDescriptionWrapper">
+            <div class="ncLabel">
+                <span><%=e('collectionInputDescription')%> <i class="optional"><%=e('collectionOptional')%></i></span>
+                <span class="counter messageCounter"><%-(collection.message.v || '').length%>/1000</span>
+            </div>
+            <div class="txt">
+                <div elementsid='emjcontainer' class="message collectionDescription" placeholder="<%=e('collectionInputDescriptionPlaceholder')%>" id='emjcontainer' spellcheck="true" data-maxlength="1000"></div>
+            </div>
+        </div>
+
+    </div>
+
 </div>
-
-<% if(collection.image.v) {%>
-
-    <div class="imagecover" image="<%-collection.image.v || '*'%>"></div>
-
-<% } %>
 
 <div class="collectionItemsWrapper"></div>
 
 
 <div class="panelErrorWrapper">
     <div class="panelform">
+
+        <div class="error"><i class="fas fa-exclamation-circle"></i><span></span></div>
+
         <div class="panel">
 
-            <div class="error"><span></span></div>
-
-            <button class="button ghost cancel"><%=e('cancelcollection')%></button>
-
             <% if(collection.aliasid) {%>
-                <button class="button bad remove"><%=e('deletecollection')%></button>
+                <button class="button ghost bad removecollection"><i class="far fa-trash-alt"></i> <%=e('deletecollection')%></button>
+            <% } else { %>
+                <button class="button ghost clearcollection"><i class="fas fa-eraser"></i> <%=e('clearcollection')%></button>
             <% } %>
 
-            <button class="button save"><%=e(collection.aliasid ? 'savecollection' : 'savecollection')%></button>
-            
+            <div class="rightbuttons">
+                <button class="button ghost cancel"><%=e('cancelcollection')%></button>
+                <button class="button save"><%=e('savecollection')%></button>
+            </div>
+
         </div>
     </div>
 </div>
-

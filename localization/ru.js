@@ -3141,6 +3141,18 @@ _l.enabledEditModeCollections = "Выберите в интерфейсе пуб
 _l.collectionMode = "Режим редактирования коллекции"
 _l.removeFromCollection = "Убрать из коллекции"
 _l.addToCollection = "Добавить в коллекцию"
+_l.collectionCoverAdd = "Добавить обложку"
+_l.collectionCoverHint = "Нажмите или перетащите изображение. Лучше всего подходит квадратное"
+_l.collectionCoverChange = "Изменить"
+_l.collectionInputCaptionPlaceholder = "Например: Лучшее за месяц"
+_l.collectionInputDescriptionPlaceholder = "О чём эта коллекция?"
+_l.collectionOptional = "(необязательно)"
+_l.collectionMaterialsEmpty = "Публикаций пока нет"
+_l.collectionMaterialsEmptyHint = "Добавьте публикации в коллекцию. Порядок можно изменить перетаскиванием"
+_l.collectionMaterialsDragHint = "Перетащите, чтобы изменить порядок"
+_l.clearcollection = "Очистить"
+_l.clearCollectionDialog = "Вы действительно хотите очистить коллекцию?"
+_l.collectionsEmptyHint = "Объединяйте публикации в тематические коллекции и делитесь ими"
 
 _l.imageerror = "Произошла ошибка при загрузке изображений. Попробуйте ещё раз."
 

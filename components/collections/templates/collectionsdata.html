@@ -2,19 +2,28 @@
     <% if(items.length == 0) {%>
 
         <div class="empty">
-			<%- e('emptycollections') %>
-		</div>
+            <div class="emptyicon"><i class="far fa-folder-open"></i></div>
+            <div class="emptytitle"><%- e('emptycollections') %></div>
 
-    <% } else { %> 
+            <% if(me) {%>
+                <div class="emptyhint"><%- e('collectionsEmptyHint') %></div>
+                <div class="emptybuttons">
+                    <button class="button small newcollection"><i class="fas fa-plus"></i> <%- e('newcollectionex') %></button>
+                </div>
+            <% } %>
+        </div>
+
+    <% } else { %>
         <div class="items">
             <% _.each(items, function(item) { %>
                 <div class="collection" collection="<%- item.txid %>">
                     <div class="cover">
                         <div class="img" image="<%- item.image || '' %>"></div>
+                        <div class="coverbadge"><i class="fas fa-layer-group"></i> <%- (item.contentIds || []).length %></div>
                     </div>
                     <div class="info">
-                        <div class="caption"><%- item.caption %></div>
-                        <div class="count"><%- (item.contentIds || []).length %> <%- e('collectionMaterials') %></div>
+                        <div class="itemcaption"><%- item.caption %></div>
+                        <div class="itemcount"><%- (item.contentIds || []).length %> · <%- e('collectionMaterials') %></div>
                     </div>
                 </div>
             <% }) %>
