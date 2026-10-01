@@ -3157,6 +3157,9 @@ _l.collectionTypeArticle = "Статья"
 _l.collectionTypeStream = "Трансляция"
 _l.collectionTypePoll = "Опрос"
 _l.collectionTypePaid = "Для подписчиков"
+_l.collectionInRelay = "Скоро будет отправлена в блокчейн"
+_l.collectionWaitConf = "Ожидает подтверждения в блокчейне"
+_l.collectionPublishError = "Ошибка публикации"
 
 _l.imageerror = "Произошла ошибка при загрузке изображений. Попробуйте ещё раз."
 

@@ -32,6 +32,11 @@ var collections = (function(){
 
 					var collections = r && r.contents ? r.contents : (_.isArray(r) ? r : [])
 
+					// contentDelete that is still in progress is applied by psdk tempExtend
+					collections = _.filter(collections, function(c){
+						return c && !c.deleted
+					})
+
 					if(clbk) clbk(collections)
 				}, requestCount)
 			}
@@ -39,6 +44,18 @@ var collections = (function(){
 
 		var events = {
 			
+		}
+
+		var helpers = {
+
+			// same states as temp shares in lenta: relay (not sent yet), temp (waiting for confirmation), rejected
+			publishState : function(item){
+				if (item.rejected) return 'rejected'
+				if (item.relay) return 'relay'
+				if (item.temp) return 'temp'
+
+				return ''
+			}
 		}
 
 		var renders = {
@@ -56,6 +73,7 @@ var collections = (function(){
 					el :   el.c.find('.collectionsdata'),
 					data : {
 						items : displayItems,
+						publishState : helpers.publishState,
 						me : author.me,
 						preview : ed.preview,
 					},
@@ -110,6 +128,9 @@ var collections = (function(){
 				var txid = $(this).attr('collection')
 
 				if(!txid) return
+
+				// relay collection has no transaction yet, rejected one will never get it
+				if ($(this).hasClass('relay') || $(this).hasClass('rejected')) return
 
 				self.nav.api.load({
 					open : true,

@@ -3333,6 +3333,9 @@ _l.collectionTypeArticle = "Article"
 _l.collectionTypeStream = "Stream"
 _l.collectionTypePoll = "Poll"
 _l.collectionTypePaid = "For subscribers"
+_l.collectionInRelay = "Will soon be sent to the blockchain"
+_l.collectionWaitConf = "Waiting for a blockchain confirmation"
+_l.collectionPublishError = "Publishing error"
 
 _l.imageerror = "An error occurred while loading images. Please try again"
 

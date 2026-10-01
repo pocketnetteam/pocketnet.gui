@@ -754,6 +754,8 @@ Platform = function (app, listofnodes) {
         unblocking: function (alias, status) {},
         userInfo: function (alias, status) {},
         contentDelete: function (alias, status) {},
+        // without a listener actionFiltered stops here and module actionListeners never get collection updates
+        collection: function (alias, status) {},
         accSet: function () {},
         accDel: function () {},
         transaction: function () {}
@@ -6850,8 +6852,9 @@ Platform = function (app, listofnodes) {
                             return s.txid
                         }))
 
+                        // new collections that are still being published; edits are applied to loaded ones by psdk tempExtend
                         collections = self.psdk.collection.tempAdd(collections, (alias) => {
-                            return alias.actor == address
+                            return alias.actor == address && !alias.editing
                         })
 
                         d.contents = collections

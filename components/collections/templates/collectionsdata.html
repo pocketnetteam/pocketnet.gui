@@ -15,15 +15,34 @@
 
     <% } else { %>
         <div class="items">
-            <% _.each(items, function(item) { %>
-                <div class="collection" collection="<%- item.txid %>">
+            <% _.each(items, function(item) {
+
+                var pstate = publishState(item)
+                var pstatelabel = {
+                    relay : 'collectionInRelay',
+                    temp : 'collectionWaitConf',
+                    rejected : 'collectionPublishError'
+                }[pstate]
+            %>
+                <div class="collection <%- pstate ? 'publishing ' + pstate : '' %>" collection="<%- item.txid %>">
                     <div class="cover">
                         <div class="img" image="<%- item.image || '' %>"></div>
                         <div class="coverbadge"><i class="fas fa-layer-group"></i> <%- (item.contentIds || []).length %></div>
+
+                        <% if(pstate) {%>
+                            <div class="publishoverlay">
+                                <i class="<%- pstate == 'rejected' ? 'fas fa-exclamation-triangle' : 'fas fa-circle-notch fa-spin' %>"></i>
+                            </div>
+                        <% } %>
                     </div>
                     <div class="info">
                         <div class="itemcaption"><%- item.caption %></div>
-                        <div class="itemcount"><%- (item.contentIds || []).length %> · <%- e('collectionMaterials') %></div>
+
+                        <% if(pstate) {%>
+                            <div class="publishstate"><%- e(pstatelabel) %></div>
+                        <% } else { %>
+                            <div class="itemcount"><%- (item.contentIds || []).length %> · <%- e('collectionMaterials') %></div>
+                        <% } %>
                     </div>
                 </div>
             <% }) %>
