@@ -8,13 +8,43 @@ var collection = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, ed, collection, author = {}, externalLenta = null, notfound = false;
+		var mid = p.mid
+
+		var el, ed, collection, author = {}, externalLenta = null, notfound = false, materials = null;
 
 		var actions = {
 			edit : function(){
 				if(!collection || !author.me) return
 
-				self.app.platform.sdk.collections.opennewcollectionwindow(collection.alias())
+				if(helpers.editState() == 'editing') return
+
+				self.app.platform.sdk.collections.opennewcollectionwindow(collection.txid)
+			},
+
+			// collection changed by actions (edit sent, confirmed or rejected): take it from psdk with temp edits applied
+			refresh : function(){
+				if(!collection || !el.c) return
+
+				var updated = self.psdk.collection.get(collection.txid)
+
+				if(!updated) return
+
+				// delete is applied by psdk tempExtend while the contentDelete action is pending
+				if(updated.deleted){
+					collection = updated
+
+					renders.removed()
+
+					return
+				}
+
+				var feedChanged = (updated.contentIds || []).join(',') != (collection.contentIds || []).join(',')
+
+				collection = updated
+
+				renders.header()
+
+				if(feedChanged) renders.refeed()
 			},
 
 			share : function(){
@@ -71,7 +101,102 @@ var collection = (function(){
 
 		}
 
+		var helpers = {
+			// same states as temp shares in lenta: edit is not sent yet (relay) or waits for confirmation (temp)
+			editState : function(){
+				if(!collection || !collection.edit) return ''
+
+				if(collection.rejected) return 'rejected'
+
+				if(collection.relay || collection.temp) return 'editing'
+
+				return ''
+			}
+		}
+
 		var renders = {
+			removed : function(){
+
+				if(!el.c) return
+
+				if(externalLenta){
+					externalLenta.destroy()
+					externalLenta = null
+				}
+
+				self.shell({
+					name : 'removed',
+					el : el.c.find('.collectionWrapper'),
+					inner : html,
+					insertimmediately : true,
+					data : {
+						author : author
+					}
+				}, function(){})
+			},
+
+			header : function(clbk){
+
+				if(!el.c || !collection) return
+
+				self.shell({
+					name : 'header',
+					el : el.header,
+					insertimmediately : true,
+					data : {
+						collection : collection,
+						author : author,
+						ed : ed,
+						editState : helpers.editState()
+					}
+				}, function(p){
+
+					p.el.find('.editCollection').on('click', actions.edit)
+					p.el.find('.deleteCollection').on('click', actions.remove)
+					p.el.find('.shareCollection').on('click', actions.share)
+
+					renders.materials()
+					renders.authoricon()
+
+					if(clbk) clbk()
+				})
+			},
+
+			materials : function(){
+
+				if(!el.c || !materials) return
+
+				el.c.find('.materialsCount').text(
+					materials.available + ' ' + self.app.localization.e('collectionMaterials')
+				)
+
+				var missing = materials.total - materials.available
+
+				if(missing > 0){
+					el.c.find('.materialsUnavailable').text(
+						missing + ' / ' + materials.total + ' — ' + self.app.localization.e('collectionMaterialsUnavailable')
+					).show()
+				}
+				else{
+					el.c.find('.materialsUnavailable').hide()
+				}
+			},
+
+			refeed : function(){
+
+				if(externalLenta){
+					externalLenta.destroy()
+					externalLenta = null
+				}
+
+				materials = null
+
+				el.feed.html('')
+				el.c.find('.collectionFeedEmpty').hide()
+
+				renders.feed()
+			},
+
 			// user info may get its image only after the feed loads users
 			authoricon : function(){
 
@@ -115,21 +240,13 @@ var collection = (function(){
 					})
 
 					var availableCount = availableTxids.length
-					var totalCount = collection.contentIds.length
-					var missingCount = totalCount - availableCount
 
-					el.c.find('.materialsCount').text(
-						availableCount + ' ' + self.app.localization.e('collectionMaterials')
-					)
+					materials = {
+						available : availableCount,
+						total : collection.contentIds.length
+					}
 
-					if(missingCount > 0){
-						el.c.find('.materialsUnavailable').text(
-							missingCount + ' / ' + totalCount + ' — ' + self.app.localization.e('collectionMaterialsUnavailable')
-						).show()
-					}
-					else{
-						el.c.find('.materialsUnavailable').hide()
-					}
+					renders.materials()
 
 					if(!availableCount){
 						el.c.find('.collectionFeedEmpty').show()
@@ -161,22 +278,24 @@ var collection = (function(){
 		}
 
 		var initEvents = function(){
-			el.c.find('.editCollection').on('click', function(){
-				actions.edit()
-			})
 
-			el.c.find('.deleteCollection').on('click', function(){
-				actions.remove()
-			})
+			self.app.psdk.updatelisteners[mid] = self.app.platform.actionListeners[mid] = function({type, alias}){
 
-			el.c.find('.shareCollection').on('click', function(){
-				actions.share()
-			})
+				if(!alias || !collection) return
+
+				// an edit action has txid of the edited collection
+				if(type == 'collection' && alias.txid == collection.txid) actions.refresh()
+
+				if(type == 'contentDelete' && alias.txidEdit == collection.txid) actions.refresh()
+			}
 		}
 
 		var make = function(){
 			if(notfound) return
 
+			if(collection.deleted) return renders.removed()
+
+			renders.header()
 			renders.feed()
 		}
 
@@ -243,6 +362,11 @@ var collection = (function(){
 
 			destroy : function(){
 
+				delete self.app.platform.actionListeners[mid]
+				delete self.app.psdk.updatelisteners[mid]
+
+				materials = null
+
 				if(externalLenta){
 					externalLenta.destroy()
 					externalLenta = null
@@ -262,6 +386,7 @@ var collection = (function(){
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
 				el.feed = el.c.find('.collectionFeed')
+				el.header = el.c.find('.collectionHeaderWrapper')
 
 				initEvents();
 

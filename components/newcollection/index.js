@@ -793,7 +793,7 @@ var newcollection = (function(){
 			},
 			load : function(){
 
-				if(ed.dontsave) return
+				if(ed.dontsave || ed.collection) return
 
 				var last = self.app.settings.get(self.map.id, 'currentCollection')
 
@@ -832,16 +832,41 @@ var newcollection = (function(){
 					ed
 				};
 
+				if (ed.txid){
+
+					// editing: take the collection from psdk (with not yet applied edits), like editing a share
+					self.app.platform.sdk.collections.load.byid(ed.txid, function(collection, error){
+
+						if (error || !collection || !self.app.user.isItMe(collection.address)){
+							sitemessage(self.app.localization.e('collectionNotFound'))
+
+							clbk(null, error || 'collectionNotFound')
+
+							return
+						}
+
+						currentCollection = collection.alias()
+						currentCollection.app = self.app
+
+						ed.collection = currentCollection
+						ed.hash = currentCollection.shash()
+
+						clbk(data)
+					})
+
+					return
+				}
+
 				currentCollection = ed.collection || new Collection(self.app.localization.key, self.app);
 				currentCollection.app = self.app
 
-				
+
 				if(!ed.collection){
 
 					if(!state.load()){
-						
+
 					}
-					
+
 					currentCollection.language.set(self.app.localization.key)
 				}
 

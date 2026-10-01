@@ -31,6 +31,15 @@
 			font-weight: 600;
 			color : rgb(var(--neutral-grad-3));
 		}
+
+		.emptylink{
+			margin-top: @rhythm;
+			font-size: 0.85em;
+
+			a{
+				color : rgb(var(--color-txt-ac));
+			}
+		}
 	}
 
 	/* header */
@@ -233,6 +242,36 @@
 			}
 		}
 
+		/* edit is sent but not applied on the node yet */
+		.collectionEditing{
+			display: inline-flex;
+			align-items: center;
+			gap : @rhythm;
+			padding : 1.5 * @rhythm 3 * @rhythm;
+			border-radius: 8px;
+			font-size: 0.8em;
+			font-weight: 600;
+			color : rgb(var(--color-txt-ac));
+			background: rgba(var(--color-bg-ac-bright), 0.1);
+		}
+
+		.collectionEditError{
+			position: relative;
+			margin-top: 1.5 * @rhythm;
+			display: flex;
+			align-items: center;
+			gap : @rhythm;
+			font-size: 0.75em;
+			color : rgb(var(--color-bad));
+		}
+
+		&.edit_editing{
+			.headerContent,
+			.collectionDescription{
+				opacity: 0.85;
+			}
+		}
+
 		&.nocover{
 			.headerContent{
 				align-items: center;
@@ -342,6 +381,12 @@ html.mobileview{
 					&.danger{
 						margin-left: 0;
 					}
+				}
+
+				.collectionEditing{
+					flex: 1 1 0;
+					justify-content: center;
+					padding : 1.5 * @rhythm @rhythm;
 				}
 			}
 		}

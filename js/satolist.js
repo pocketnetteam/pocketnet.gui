@@ -6631,6 +6631,7 @@ Platform = function (app, listofnodes) {
                 self.sdk.collections.wnd = null
             },
 
+            // editing : txid of the collection, newcollection loads it from psdk itself
             opennewcollectionwindow : function(editing){
 
                 var type = editing ? 'edit' : 'new'
@@ -6663,7 +6664,7 @@ Platform = function (app, listofnodes) {
 					inWnd : true,
 
 					essenseData : {
-                        collection : editing
+                        txid : editing || null
 					},
 
                     clbk : function(e, element){

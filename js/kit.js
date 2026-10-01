@@ -3990,6 +3990,9 @@ pCollection = function(){
 
 		if (v.deleted) self.deleted = true
 
+		if (v.address)
+			self.address = v.address;
+
 		if (v.txid)
 			self.txid = v.txid;
 
