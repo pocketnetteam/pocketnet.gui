@@ -3,7 +3,8 @@
 	<% if(typeof notfound != 'undefined' && notfound) { %>
 
 		<div class="empty allb">
-			<%- e('collectionNotFound') %>
+			<%= app.platform.ws.tempates.collectionIllustration('empty') %>
+			<div class="emptytitle"><%- e('collectionNotFound') %></div>
 		</div>
 
 	<% } else if(typeof collection != 'undefined' && collection) { %>
@@ -41,7 +42,8 @@
 		</div>
 
 		<div class="collectionFeedEmpty empty allb" style="display:none;">
-			<%- e('emptycollections') %>
+			<%= app.platform.ws.tempates.collectionIllustration('empty') %>
+			<div class="emptytitle"><%- e('collectionMaterialsEmpty') %></div>
 		</div>
 
 		<div class="collectionFeed"></div>

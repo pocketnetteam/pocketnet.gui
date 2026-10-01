@@ -176,9 +176,13 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 3em 1em;
+  padding: 2.5em 1em;
   border-radius: 10px;
-  border: 2px dashed rgb(var(--neutral-grad-1));
+  background: rgb(var(--background-main));
+}
+#collections .collectionslist .empty .collectionIllustration {
+  width: 170px;
+  margin-bottom: 1em;
 }
 #collections .collectionslist .empty .emptyicon {
   font-size: 2.4em;
@@ -186,7 +190,7 @@
   margin-bottom: 0.75em;
 }
 #collections .collectionslist .empty .emptytitle {
-  font-weight: 600;
+  font-weight: 700;
 }
 #collections .collectionslist .empty .emptyhint {
   margin-top: 0.5em;
@@ -197,10 +201,20 @@
 }
 #collections .collectionslist .empty .emptybuttons {
   margin-top: 1.25em;
+  /* soft accent pill, same as in the collection editor */
 }
 #collections .collectionslist .empty .emptybuttons .button {
   font-size: 0.9em;
-  border-radius: 8px;
+  border-radius: 18px;
+  padding-left: 1.25em;
+  padding-right: 1.25em;
+  color: rgb(var(--color-bg-ac-bright));
+  background: rgba(var(--color-bg-ac-bright), 0.1);
+  border-color: transparent;
+}
+#collections .collectionslist .empty .emptybuttons .button:hover {
+  background: rgba(var(--color-bg-ac-bright), 0.18);
+  color: rgb(var(--color-bg-ac-bright));
 }
 #collections .showmoreWrapper {
   display: none;

@@ -87,10 +87,9 @@
 			padding : @rhythm;
 			color : rgb(var(--neutral-grad-3));
 
-			i{
-				font-size: 2em;
-				margin-bottom: @rhythm;
-				color : rgb(var(--color-bg-ac-bright));
+			.collectionIllustration{
+				width: 76px;
+				margin-bottom: 0.5 * @rhythm;
 			}
 
 			.coverTitle{
@@ -549,29 +548,43 @@
 		justify-content: center;
 		text-align: center;
 		border-radius: @ncRadius;
-		border : 2px dashed rgb(var(--neutral-grad-1));
+		border : 2px dashed transparent;
+		background: rgb(var(--background-main));
 		.transition(0.2s);
 
-		.emptyicon{
-			font-size: 2em;
-			color : rgb(var(--neutral-grad-2));
-			margin-bottom: @rhythm;
-		}
-
 		.emptytitle{
-			font-weight: 600;
+			font-weight: 700;
 		}
 
 		.emptyhint{
 			font-size: 0.8em;
+			line-height: 1.45em;
 			color : rgb(var(--neutral-grad-3));
 			margin-top: 0.5 * @rhythm;
-			max-width: 340px;
+			max-width: 300px;
 		}
 
 		.buttonsWrapper{
 			margin-top: 2 * @rhythm;
 		}
+
+		.emptyadd.ghost{
+			background: rgba(var(--color-bg-ac-bright), 0.1);
+			border-radius: 18px;
+			padding-left : 2.5 * @rhythm;
+			padding-right : 2.5 * @rhythm;
+
+			&:hover{
+				background: rgba(var(--color-bg-ac-bright), 0.18);
+			}
+		}
+	}
+
+	/* illustration itself: .collectionIllustration in css/common.less */
+
+	.collectionIllustration{
+		width: 170px;
+		margin-bottom: 1.5 * @rhythm;
 	}
 
 	/* footer */
@@ -763,9 +776,33 @@
     #newcollection{
         .caption{
 			position: static;
+			display: flex;
+			align-items: center;
+			gap : @rhythm;
+
 			span{
 				font-size: 1em;
 
+			}
+
+			/* how many publications are already picked while the window is minimized */
+			.captioncount{
+				display: inline-block;
+				min-width: 22px;
+				height: 22px;
+				line-height: 22px;
+				padding : 0 @rhythm;
+				border-radius: 11px;
+				text-align: center;
+				font-size: 0.75em;
+				font-weight: 700;
+				color : rgb(var(--text-on-bg-ac-color));
+				background: rgb(var(--color-bg-ac-bright));
+				animation: collectionButtonPop 0.4s ease-out;
+
+				&:empty{
+					display: none;
+				}
 			}
 		}
 
@@ -773,6 +810,14 @@
 			display: none;
 		}
     }
+}
+
+#newcollection{
+	.caption{
+		.captioncount{
+			display: none;
+		}
+	}
 }
 
 /*

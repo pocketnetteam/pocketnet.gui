@@ -219,9 +219,14 @@
 			align-items: center;
 			justify-content: center;
 			text-align: center;
-			padding : 6 * @rhythm 2 * @rhythm;
+			padding : 5 * @rhythm 2 * @rhythm;
 			border-radius: @clRadius;
-			border : 2px dashed rgb(var(--neutral-grad-1));
+			background: rgb(var(--background-main));
+
+			.collectionIllustration{
+				width: 170px;
+				margin-bottom: 2 * @rhythm;
+			}
 
 			.emptyicon{
 				font-size: 2.4em;
@@ -230,7 +235,7 @@
 			}
 
 			.emptytitle{
-				font-weight: 600;
+				font-weight: 700;
 			}
 
 			.emptyhint{
@@ -244,9 +249,20 @@
 			.emptybuttons{
 				margin-top: 2.5 * @rhythm;
 
+				/* soft accent pill, same as in the collection editor */
 				.button{
 					font-size: 0.9em;
-					border-radius: 8px;
+					border-radius: 18px;
+					padding-left : 2.5 * @rhythm;
+					padding-right : 2.5 * @rhythm;
+					color : rgb(var(--color-bg-ac-bright));
+					background: rgba(var(--color-bg-ac-bright), 0.1);
+					border-color: transparent;
+
+					&:hover{
+						background: rgba(var(--color-bg-ac-bright), 0.18);
+						color : rgb(var(--color-bg-ac-bright));
+					}
 				}
 			}
 		}

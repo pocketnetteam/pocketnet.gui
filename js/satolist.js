@@ -6695,15 +6695,36 @@ Platform = function (app, listofnodes) {
                 if(self.sdk.collections.clbks.change) self.sdk.collections.clbks.change(self.sdk.collections.current)
 
                 app.el.html.find('.share_common#' + id).addClass('incollection')
+
+                self.sdk.collections.feedback(id, 'collectionadded')
             },
 
             removeItem : function(id){
+                if(!self.sdk.collections.current) return
+
                 self.sdk.collections.current.contentIds.remove(id)
 
                 if(self.sdk.collections.clbks.change) self.sdk.collections.clbks.change(self.sdk.collections.current)
 
                 app.el.html.find('.share_common#' + id).removeClass('incollection')
-                
+
+                self.sdk.collections.feedback(id, 'collectionremoved')
+            },
+
+            // short visual response on the publication in the feed (animations: css/common.less)
+            feedback : function(id, cls){
+                var share = app.el.html.find('.share_common#' + id)
+
+                share.removeClass('collectionadded collectionremoved')
+
+                // restart the animation if the user clicks again quickly
+                if (share[0]) void share[0].offsetWidth
+
+                share.addClass(cls)
+
+                setTimeout(function(){
+                    share.removeClass(cls)
+                }, 700)
             },
 
             enableEditMode : function(collection, clbks = {}){
@@ -20627,6 +20648,51 @@ Platform = function (app, listofnodes) {
 
 
         self.tempates = {
+
+            /*
+                decorative inline svg for collection empty states (styles: css/common.less, .collectionIllustration).
+                Colors come from theme variables via classes, so it follows light and dark themes
+            */
+            collectionIllustration: function (type) {
+
+                var badge = function (cx, cy) {
+                    return '<g class="ill-badge"><circle cx="' + cx + '" cy="' + cy + '" r="11"/>' +
+                        '<path class="ill-plus" d="M' + cx + ' ' + (cy - 5) + ' V ' + (cy + 5) + ' M' + (cx - 5) + ' ' + cy + ' H ' + (cx + 5) + '"/></g>'
+                }
+
+                var svg = ''
+
+                if (type == 'cover') {
+
+                    svg = '<svg viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">' +
+                        '<path class="ill-doodle" d="M14 24 L 7 19 M12 34 L 3 34 M21 15 L 19 7"/>' +
+                        '<g class="ill-cards"><rect class="ill-card ill-card2" x="22" y="18" width="70" height="56" rx="9" transform="rotate(-9 57 46)"/></g>' +
+                        '<rect class="ill-paper" x="27" y="25" width="72" height="58" rx="10"/>' +
+                        '<path class="ill-folder" d="M33 77 L 51 55 L 62 67 L 71 58 L 93 77 Z"/>' +
+                        '<circle class="ill-card3" cx="81" cy="41" r="6"/>' +
+                        badge(97, 27) +
+                        '</svg>'
+                }
+                else {
+
+                    svg = '<svg viewBox="0 0 180 140" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">' +
+                        '<path class="ill-doodle" d="M10 24 C 20 10, 34 13, 31 22 C 28 30, 19 26, 24 19 C 30 11, 42 18, 45 33 M45 33 L 39 30 M45 33 L 47 27"/>' +
+                        '<path class="ill-doodle" d="M158 24 L 165 16 M163 33 L 173 31 M152 17 L 152 8"/>' +
+                        '<path class="ill-folderback" d="M36 50 a8 8 0 0 1 8 -8 h24 a8 8 0 0 1 6 3 l6 7 h50 a8 8 0 0 1 8 8 v58 a8 8 0 0 1 -8 8 h-86 a8 8 0 0 1 -8 -8 z"/>' +
+                        '<path class="ill-foldershade" d="M36 50 a8 8 0 0 1 8 -8 h24 a8 8 0 0 1 6 3 l6 7 h50 a8 8 0 0 1 8 8 v58 a8 8 0 0 1 -8 8 h-86 a8 8 0 0 1 -8 -8 z"/>' +
+                        '<g class="ill-cards">' +
+                        '<rect class="ill-card ill-card1" x="44" y="24" width="86" height="62" rx="9" transform="rotate(-7 87 55)"/>' +
+                        '<rect class="ill-card ill-card2" x="54" y="20" width="86" height="62" rx="9" transform="rotate(6 97 51)"/>' +
+                        '<rect class="ill-card ill-card3" x="48" y="32" width="84" height="58" rx="9" transform="rotate(-1 90 61)"/>' +
+                        '</g>' +
+                        '<path class="ill-folder" d="M30 72 a8 8 0 0 1 8 -8 h104 a8 8 0 0 1 8 8 v46 a8 8 0 0 1 -8 8 h-104 a8 8 0 0 1 -8 -8 z"/>' +
+                        '<path class="ill-wave" d="M30 100 C 58 86, 92 114, 150 94 V 118 a8 8 0 0 1 -8 8 H 38 a8 8 0 0 1 -8 -8 z"/>' +
+                        (type == 'folder' ? badge(146, 62) : '') +
+                        '</svg>'
+                }
+
+                return '<div class="collectionIllustration ci-' + (type || 'empty') + '">' + svg + '</div>'
+            },
 
             _share: function (share, c) {
                 var m = share.caption || share.message;

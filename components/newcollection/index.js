@@ -697,6 +697,9 @@ var newcollection = (function(){
 
 			shares : function(){
 
+				// visible on the minimized window bar while the user picks publications in the feed
+				if (el.c) el.c.find('.caption .captioncount').text(currentCollection.contentIds.v.length || '')
+
 				self.app.platform.sdk.node.shares.getbyid(currentCollection.contentIds.v, function(shares){
 
 					if(!el.body) return
@@ -906,7 +909,7 @@ var newcollection = (function(){
 			wnd: {
 				allowHide: true,
 				minimizeOnBgClick : true,
-				class: 'wndnewcollection normalizedmobile maxheight withoutButtons',
+				class: 'wndnewcollection normalizedmobile maxheight withoutButtons nobfilter',
 
 				postRender: function (_wnd, _wndObj, clbk) {
 					wndObj = _wndObj;

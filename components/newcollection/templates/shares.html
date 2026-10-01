@@ -81,10 +81,10 @@
 
         <% } else { %>
             <div class="emptywrapper">
-                <div class="emptyicon"><i class="far fa-folder-open"></i></div>
+                <%= app.platform.ws.tempates.collectionIllustration('folder') %>
                 <div class="emptytitle"><%- e('collectionMaterialsEmpty') %></div>
                 <div class="emptyhint"><%- e('collectionMaterialsEmptyHint') %></div>
-                <div class="buttonsWrapper"><button class="button small additems"><i class="fas fa-plus"></i> <%- e('collectionMaterialsAdd') %></button></div>
+                <div class="buttonsWrapper"><button class="button small ghost additems emptyadd"><i class="fas fa-plus"></i> <%- e('collectionMaterialsAdd') %></button></div>
             </div>
         <% } %>
     </div>

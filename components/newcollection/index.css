@@ -4,6 +4,7 @@
   /* cover */
   /* fields */
   /* publications */
+  /* illustration itself: .collectionIllustration in css/common.less */
   /* footer */
 }
 #newcollection .required {
@@ -78,10 +79,9 @@
   padding: 0.5em;
   color: rgb(var(--neutral-grad-3));
 }
-#newcollection .ncCover .coverEmpty i {
-  font-size: 2em;
-  margin-bottom: 0.5em;
-  color: rgb(var(--color-bg-ac-bright));
+#newcollection .ncCover .coverEmpty .collectionIllustration {
+  width: 76px;
+  margin-bottom: 0.25em;
 }
 #newcollection .ncCover .coverEmpty .coverTitle {
   font-weight: 600;
@@ -487,28 +487,38 @@
   justify-content: center;
   text-align: center;
   border-radius: 10px;
-  border: 2px dashed rgb(var(--neutral-grad-1));
+  border: 2px dashed transparent;
+  background: rgb(var(--background-main));
   -moz-transition: 0.2s;
   -o-transition: 0.2s;
   -webkit-transition: 0.2s;
   transition: 0.2s;
 }
-#newcollection .emptywrapper .emptyicon {
-  font-size: 2em;
-  color: rgb(var(--neutral-grad-2));
-  margin-bottom: 0.5em;
-}
 #newcollection .emptywrapper .emptytitle {
-  font-weight: 600;
+  font-weight: 700;
 }
 #newcollection .emptywrapper .emptyhint {
   font-size: 0.8em;
+  line-height: 1.45em;
   color: rgb(var(--neutral-grad-3));
   margin-top: 0.25em;
-  max-width: 340px;
+  max-width: 300px;
 }
 #newcollection .emptywrapper .buttonsWrapper {
   margin-top: 1em;
+}
+#newcollection .emptywrapper .emptyadd.ghost {
+  background: rgba(var(--color-bg-ac-bright), 0.1);
+  border-radius: 18px;
+  padding-left: 1.25em;
+  padding-right: 1.25em;
+}
+#newcollection .emptywrapper .emptyadd.ghost:hover {
+  background: rgba(var(--color-bg-ac-bright), 0.18);
+}
+#newcollection .collectionIllustration {
+  width: 170px;
+  margin-bottom: 0.75em;
 }
 #newcollection .panelErrorWrapper {
   position: sticky;
@@ -650,11 +660,35 @@
 }
 .wnd.wndnewcollection.hiddenState #newcollection .caption {
   position: static;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  /* how many publications are already picked while the window is minimized */
 }
 .wnd.wndnewcollection.hiddenState #newcollection .caption span {
   font-size: 1em;
 }
+.wnd.wndnewcollection.hiddenState #newcollection .caption .captioncount {
+  display: inline-block;
+  min-width: 22px;
+  height: 22px;
+  line-height: 22px;
+  padding: 0 0.5em;
+  border-radius: 11px;
+  text-align: center;
+  font-size: 0.75em;
+  font-weight: 700;
+  color: rgb(var(--text-on-bg-ac-color));
+  background: rgb(var(--color-bg-ac-bright));
+  animation: collectionButtonPop 0.4s ease-out;
+}
+.wnd.wndnewcollection.hiddenState #newcollection .caption .captioncount:empty {
+  display: none;
+}
 .wnd.wndnewcollection.hiddenState #newcollection .editform {
+  display: none;
+}
+#newcollection .caption .captioncount {
   display: none;
 }
 /*

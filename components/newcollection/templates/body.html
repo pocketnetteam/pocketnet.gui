@@ -16,7 +16,7 @@
             <% } else { %>
 
                 <div class="coverEmpty">
-                    <i class="far fa-image"></i>
+                    <%= app.platform.ws.tempates.collectionIllustration('cover') %>
                     <span class="coverTitle"><%=e('collectionCoverAdd')%></span>
                     <span class="coverHint"><%=e('collectionCoverHint')%></span>
                 </div>

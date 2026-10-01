@@ -2,7 +2,11 @@
     <% if(items.length == 0) {%>
 
         <div class="empty">
-            <div class="emptyicon"><i class="far fa-folder-open"></i></div>
+            <% if(preview) {%>
+                <div class="emptyicon"><i class="far fa-folder-open"></i></div>
+            <% } else { %>
+                <%= app.platform.ws.tempates.collectionIllustration(me ? 'folder' : 'empty') %>
+            <% } %>
             <div class="emptytitle"><%- e('emptycollections') %></div>
 
             <% if(me && !preview) {%>

@@ -5,9 +5,16 @@
   margin: 0 auto;
 }
 #collection .empty {
-  padding: 80px;
+  padding: 2.5em 1em;
   text-align: center;
-  opacity: 0.7;
+}
+#collection .empty .collectionIllustration {
+  width: 150px;
+  margin-bottom: 1em;
+}
+#collection .empty .emptytitle {
+  font-weight: 600;
+  color: rgb(var(--neutral-grad-3));
 }
 #collection .collectionHeader {
   display: flex;
