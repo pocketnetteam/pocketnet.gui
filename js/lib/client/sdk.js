@@ -54,11 +54,15 @@ var pSDK = function ({ app, api, actions }) {
         },
 
         shareRequest: {
-            time: 60 // temp
+            time: 60
         },
 
         collectionRequest: {
-            time: 60 // temp
+            time: 60
+        },
+        
+        collection : {
+            time: 60
         },
 
         getboostfeed : {
@@ -2121,7 +2125,14 @@ var pSDK = function ({ app, api, actions }) {
 
                     c.s = collectionSettings.clean(settings)
 
-                    c.contentIds = _.filter(_.map(c.contentIds || [], function(i){return (clearStringXss(i))}), function(i){return i});
+                    // getprofilecollections may return contentIds as a JSON string
+                    if (_.isString(c.contentIds)) {
+                        try { c.contentIds = JSON.parse(c.contentIds) } catch (e) { c.contentIds = [] }
+                    }
+
+                    if (!_.isArray(c.contentIds)) c.contentIds = []
+
+                    c.contentIds = _.filter(_.map(c.contentIds, function(i){return (clearStringXss(i))}), function(i){return i});
 
                 }
                 catch (e) {

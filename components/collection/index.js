@@ -72,6 +72,24 @@ var collection = (function(){
 		}
 
 		var renders = {
+			// user info may get its image only after the feed loads users
+			authoricon : function(){
+
+				if(!el.c) return
+
+				var icon = el.c.find('.authorLink .usericon')
+
+				if(!icon.find('.letter, .fa-user').length) return
+
+				var image = self.psdk.userInfo.getShortForm(author.address).image
+
+				if(!image) return
+
+				icon.html('').attr('image', image).removeAttr('imageloaded')
+
+				bgImagesCl(el.c.find('.authorLink'))
+			},
+
 			feed : function(){
 				if(!collection || !collection.contentIds || !collection.contentIds.length){
 					el.c.find('.collectionFeedEmpty').show()
@@ -81,6 +99,8 @@ var collection = (function(){
 				self.app.platform.sdk.node.shares.getbyid(collection.contentIds, function(shares){
 
 					if(!el.c) return
+
+					renders.authoricon()
 
 					var availableMap = {}
 

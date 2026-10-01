@@ -1,10 +1,22 @@
 @import "../../css/__cssvar";
 
+@clRadius : 12px;
+@clCover : 160px;
+
 #collection{
+	background: rgb(var(--background-main));
+	min-height: 100vh;
 	padding : 2 * @rhythm;
-	background: rgb(var(--background-total-theme));
-	max-width: 640px;
-	margin: 0 auto;
+
+	.collectionWrapper{
+		max-width: 736px;
+		margin: 0 auto;
+	}
+
+	.collectionCard{
+		background: rgb(var(--background-total-theme));
+		border-radius: @clRadius;
+	}
 
 	.empty{
 		padding : 5 * @rhythm 2 * @rhythm;
@@ -21,85 +33,209 @@
 		}
 	}
 
+	/* header */
+
 	.collectionHeader{
-		display: flex;
-		align-items: flex-start;
-		margin-bottom: 2 * @rhythm;
+		position: relative;
+		overflow: hidden;
+		padding : 3 * @rhythm;
+
+		/* blurred cover behind the header, fades into the card */
+		.coverBackdrop{
+			position: absolute;
+			left: -10%;
+			right: -10%;
+			top: -40px;
+			height: @clCover + 6 * @rhythm + 40px;
+			background-size: cover;
+			background-position: center;
+			filter: blur(40px) saturate(1.3);
+			opacity: 0;
+			pointer-events: none;
+
+			&[imageloaded="true"]{
+				opacity: 0.35;
+			}
+
+			&:after{
+				content: '';
+				position: absolute;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				height: 60%;
+				background: linear-gradient(180deg, rgba(var(--background-total-theme), 0) 0%, rgb(var(--background-total-theme)) 100%);
+			}
+		}
+
+		.headerContent{
+			position: relative;
+			display: flex;
+			align-items: flex-end;
+			gap : 3 * @rhythm;
+		}
 
 		.coverWrapper{
 			flex-shrink: 0;
-			margin-right: 2 * @rhythm;
 
 			.cover{
-				width: 120px;
-				height: 120px;
-				border-radius: 8px;
-				background: rgba(var(--neutral-grad-1), 0.5);
+				width: @clCover;
+				height: @clCover;
+				border-radius: @clRadius;
+				background-color: rgb(var(--neutral-grad-0));
 				background-size: cover;
 				background-position: center;
+				.shadow();
+			}
+
+			.coverPlaceholder{
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 3em;
+				color : rgb(var(--neutral-grad-2));
+				box-shadow: none;
 			}
 		}
 
 		.headerInfo{
 			flex-grow: 1;
 			min-width: 0;
+			padding-bottom: 0.5 * @rhythm;
+		}
 
-			.caption{
-				font-weight: 700;
-				font-size: 1.4em;
-				line-height: 1.3;
-				word-break: break-word;
+		.collectionLabel{
+			display: inline-flex;
+			align-items: center;
+			gap : @rhythm;
+			font-size: 0.7em;
+			font-weight: 600;
+			text-transform: uppercase;
+			letter-spacing: 0.08em;
+			color : rgb(var(--color-txt-ac));
+		}
+
+		.caption{
+			margin-top: @rhythm;
+			font-weight: 700;
+			font-size: 1.8em;
+			line-height: 1.2;
+			word-break: break-word;
+		}
+
+		.meta{
+			margin-top: 2 * @rhythm;
+			display: flex;
+			align-items: center;
+			flex-wrap: wrap;
+			gap : @rhythm 1.5 * @rhythm;
+			font-size: 0.85em;
+			color : rgb(var(--neutral-grad-3));
+
+			.authorLink{
+				display: inline-flex;
+				align-items: center;
+				gap : @rhythm;
+				min-width: 0;
+				font-weight: 600;
+				color : rgb(var(--text-color));
+				.transition(0.3s);
+
+				.usericon{
+					flex-shrink: 0;
+					width: 4 * @rhythm;
+					height: 4 * @rhythm;
+					line-height: 4 * @rhythm;
+					box-shadow: none;
+
+					.letter{
+						font-size: 1em;
+					}
+				}
+
+				.authorName{
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+				}
+
+				@media (pointer:hover) {
+					&:hover{
+						color : rgb(var(--color-txt-ac));
+					}
+				}
 			}
 
-			.collectionDescription{
-				margin-top: @rhythm;
-				font-size: 0.95em;
-				line-height: 1.5;
-				opacity: 0.9;
-				word-break: break-word;
-				white-space: pre-wrap;
+			.metaSeparator{
+				width: 4px;
+				height: 4px;
+				border-radius: 50%;
+				background: rgb(var(--neutral-grad-2));
 			}
 
-			.meta{
-				margin-top: @rhythm;
-				font-size: 0.85em;
-				opacity: 0.85;
+			.materialsCountWrapper{
+				display: inline-flex;
+				align-items: center;
+				gap : @rhythm;
+			}
+		}
 
-				.authorLabel{
-					margin-right: 0.25 * @rhythm;
+		.materialsUnavailable{
+			margin-top: @rhythm;
+			font-size: 0.75em;
+			color : rgb(var(--neutral-grad-3));
+		}
+
+		.collectionDescription{
+			position: relative;
+			margin-top: 3 * @rhythm;
+			font-size: 0.95em;
+			line-height: 1.6;
+			word-break: break-word;
+			white-space: pre-wrap;
+		}
+
+		.headerActions{
+			position: relative;
+			margin-top: 3 * @rhythm;
+			padding-top: 3 * @rhythm;
+			border-top: 1px solid rgba(var(--color-medium-theme), 0.5);
+			display: flex;
+			flex-wrap: wrap;
+			gap : @rhythm;
+
+			.button{
+				margin: 0;
+				display: inline-flex;
+				align-items: center;
+				gap : @rhythm;
+				padding : 1.5 * @rhythm 3 * @rhythm;
+				font-size: 0.8em;
+				font-weight: 600;
+
+				&.secondary{
+					background: rgb(var(--neutral-grad-0));
+					border-color: rgb(var(--neutral-grad-0));
+					color : rgb(var(--text-color));
 				}
 
-				a{
-					color: rgb(var(--color-txt-ac));
-					margin-right: @rhythm;
+				&.danger{
+					margin-left: auto;
+					color : rgb(var(--color-bad));
 				}
 
-				.materialsCount{
-					display: block;
-					margin-top: 0.5 * @rhythm;
-				}
-
-				.materialsUnavailable{
-					display: block;
-					margin-top: 0.5 * @rhythm;
-					font-size: 0.9em;
-					opacity: 0.7;
+				@media (pointer:hover) {
+					&.secondary:hover{
+						background: rgb(var(--neutral-grad-1));
+						border-color: rgb(var(--neutral-grad-1));
+					}
 				}
 			}
+		}
 
-			.headerActions{
-				margin-top: 2 * @rhythm;
-				display: flex;
-				flex-wrap: wrap;
-				gap: @rhythm;
-
-				.button{
-					margin: 0;
-				}
-
-				.deleteCollection{
-					margin: 0;
-				}
+		&.nocover{
+			.headerContent{
+				align-items: center;
 			}
 		}
 	}
@@ -116,18 +252,34 @@
 html.openapipnet{
 	#collection{
 		padding : @rhythm;
-		max-width: none;
+		min-height: 0;
+
+		.collectionWrapper{
+			max-width: none;
+		}
 
 		.collectionHeader{
-			margin-bottom: @rhythm;
+			padding : 2 * @rhythm;
+
+			.coverBackdrop{
+				height: 80px + 4 * @rhythm + 40px;
+			}
+
+			.headerContent{
+				gap : 2 * @rhythm;
+			}
 
 			.coverWrapper .cover{
 				width: 80px;
 				height: 80px;
 			}
 
-			.headerInfo .caption{
-				font-size: 1.1em;
+			.coverWrapper .coverPlaceholder{
+				font-size: 1.8em;
+			}
+
+			.caption{
+				font-size: 1.2em;
 			}
 		}
 	}
@@ -138,15 +290,58 @@ html.mobileview{
 		padding : @rhythm;
 
 		.collectionHeader{
-			flex-direction: column;
+			padding : 2 * @rhythm;
+			text-align: center;
 
-			.coverWrapper{
-				margin-right: 0;
-				margin-bottom: @rhythm;
+			.coverBackdrop{
+				height: 240px;
+			}
 
-				.cover{
-					width: 100%;
-					height: 160px;
+			.headerContent{
+				flex-direction: column;
+				align-items: center;
+				gap : 2 * @rhythm;
+			}
+
+			.coverWrapper .cover{
+				width: 180px;
+				height: 180px;
+			}
+
+			.headerInfo{
+				width: 100%;
+				padding-bottom: 0;
+			}
+
+			.caption{
+				font-size: 1.4em;
+			}
+
+			.meta{
+				justify-content: center;
+			}
+
+			.collectionDescription{
+				margin-top: 2 * @rhythm;
+				text-align: left;
+			}
+
+			.headerActions{
+				margin-top: 2 * @rhythm;
+				padding-top: 2 * @rhythm;
+
+				.button{
+					flex: 1 1 0;
+					justify-content: center;
+					padding : 1.5 * @rhythm @rhythm;
+
+					&.shareCollection{
+						flex-basis: 100%;
+					}
+
+					&.danger{
+						margin-left: 0;
+					}
 				}
 			}
 		}

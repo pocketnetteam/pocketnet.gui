@@ -1,8 +1,10 @@
 <div id="<%-module.map.id%>">
 
+	<div class="collectionWrapper">
+
 	<% if(typeof notfound != 'undefined' && notfound) { %>
 
-		<div class="empty allb">
+		<div class="empty collectionCard allb">
 			<%= app.platform.ws.tempates.collectionIllustration('empty') %>
 			<div class="emptytitle"><%- e('collectionNotFound') %></div>
 		</div>
@@ -11,37 +13,87 @@
 
 		<%
 			var authorName = app.platform.api.name(author.address)
+			var sUserInfo = psdk.userInfo.getShortForm(author.address)
 			var materialsCount = (collection.contentIds || []).length
 		%>
 
-		<div class="collectionHeader">
-			<div class="coverWrapper">
-				<div class="cover" image="<%- collection.image || '' %>"></div>
-			</div>
-			<div class="headerInfo">
-				<div class="caption"><%- collection.caption %></div>
-				<% if(collection.settings && collection.settings.m) { %>
-					<div class="collectionDescription"><%- collection.settings.m %></div>
-				<% } %>
-				<div class="meta">
-					<span class="authorLabel"><%- e('collectionby') %></span>
-					<a href="<%- app.platform.api.authorlink(author.address) %>"><%- authorName %></a>
-					<span class="materialsCount"><%- materialsCount %> <%- e('collectionMaterials') %></span>
-					<span class="materialsUnavailable" style="display:none;"></span>
+		<div class="collectionHeader collectionCard <%- collection.image ? 'hascover' : 'nocover' %>">
+
+			<% if(collection.image) { %>
+				<div class="coverBackdrop" image="<%- collection.image %>"></div>
+			<% } %>
+
+			<div class="headerContent">
+
+				<div class="coverWrapper">
+					<% if(collection.image) { %>
+						<div class="cover" image="<%- collection.image %>"></div>
+					<% } else { %>
+						<div class="cover coverPlaceholder"><i class="fas fa-layer-group"></i></div>
+					<% } %>
 				</div>
-				<% if(typeof ed == 'undefined' || !ed.openapi) { %>
-					<div class="headerActions">
-						<button class="button ghost shareCollection"><%- e('e13133') %></button>
-						<% if(author.me) { %>
-							<button class="button ghost editCollection"><%- e('edcollectionex') %></button>
-							<button class="button bad deleteCollection"><%- e('deletecollection') %></button>
-						<% } %>
+
+				<div class="headerInfo">
+
+					<div class="collectionLabel">
+						<i class="fas fa-layer-group"></i>
+						<span><%- e('collectionLabel') %></span>
 					</div>
-				<% } %>
+
+					<div class="caption"><%- collection.caption %></div>
+
+					<div class="meta">
+						<a class="authorLink" href="<%- app.platform.api.authorlink(author.address) %>">
+							<div class="usericon" ban=".gif" contain="none" <%= bgImagesClApplyTemplate(sUserInfo.image) %>>
+								<% if(!sUserInfo.image && sUserInfo.letter) { %>
+									<span class="letter"><%- sUserInfo.letter %></span>
+								<% } else if (!sUserInfo.image) { %>
+									<i class="far fa-user"></i>
+								<% } %>
+							</div>
+							<span class="authorName"><%- authorName %></span>
+						</a>
+
+						<span class="metaSeparator"></span>
+
+						<span class="materialsCountWrapper">
+							<i class="far fa-file-alt"></i>
+							<span class="materialsCount"><%- materialsCount %> <%- e('collectionMaterials') %></span>
+						</span>
+					</div>
+
+					<div class="materialsUnavailable" style="display:none;"></div>
+
+				</div>
+
 			</div>
+
+			<% if(collection.settings && collection.settings.m) { %>
+				<div class="collectionDescription"><%- collection.settings.m %></div>
+			<% } %>
+
+			<% if(typeof ed == 'undefined' || !ed.openapi) { %>
+				<div class="headerActions">
+					<button class="button small shareCollection">
+						<i class="fas fa-share-alt"></i>
+						<span><%- e('e13133') %></span>
+					</button>
+					<% if(author.me) { %>
+						<button class="button small secondary editCollection">
+							<i class="fas fa-pen"></i>
+							<span><%- e('collectionEdit') %></span>
+						</button>
+						<button class="button small secondary danger deleteCollection">
+							<i class="far fa-trash-alt"></i>
+							<span><%- e('deletecollection') %></span>
+						</button>
+					<% } %>
+				</div>
+			<% } %>
+
 		</div>
 
-		<div class="collectionFeedEmpty empty allb" style="display:none;">
+		<div class="collectionFeedEmpty empty collectionCard allb" style="display:none;">
 			<%= app.platform.ws.tempates.collectionIllustration('empty') %>
 			<div class="emptytitle"><%- e('collectionMaterialsEmpty') %></div>
 		</div>
@@ -49,5 +101,7 @@
 		<div class="collectionFeed"></div>
 
 	<% } %>
+
+	</div>
 
 </div>
