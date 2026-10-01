@@ -6010,6 +6010,15 @@ Platform = function (app, listofnodes) {
                             close()
                         })
 
+                        el.find('.addtocollection').on('click', function () {
+
+                            self.app.mobile.vibration.small()
+
+                            close()
+
+                            self.sdk.collections.addcontent(id)
+                        })
+
                         el.find('.opennewwindow').on('click', function () {
 
                             self.app.mobile.vibration.small()
@@ -6632,7 +6641,8 @@ Platform = function (app, listofnodes) {
             },
 
             // editing : txid of the collection, newcollection loads it from psdk itself
-            opennewcollectionwindow : function(editing){
+            // addContent : txid of a publication to put at the first place of the collection
+            opennewcollectionwindow : function(editing, addContent){
 
                 var type = editing ? 'edit' : 'new'
 
@@ -6649,6 +6659,8 @@ Platform = function (app, listofnodes) {
                         else{
                             var external = self.sdk.collections.wnd.element
 
+                            if (addContent && external.addcontent) external.addcontent(addContent)
+
 						    external.show()
 
                             return
@@ -6664,7 +6676,8 @@ Platform = function (app, listofnodes) {
 					inWnd : true,
 
 					essenseData : {
-                        txid : editing || null
+                        txid : editing || null,
+                        addContent : addContent || null
 					},
 
                     clbk : function(e, element){
@@ -6676,6 +6689,62 @@ Platform = function (app, listofnodes) {
 
 					}
 				})
+            },
+
+            // post menu "add to collection": no collections - new one with the publication,
+            // otherwise choose a collection and edit it with the publication at the first place
+            addcontent : function(txid){
+
+                var address = app.user.address.value
+
+                if (!txid || !address) return
+
+                globalpreloader(true)
+
+                self.sdk.collections.load.profile(address, (r, e) => {
+
+                    globalpreloader(false)
+
+                    if (e) {
+                        self.app.platform.errorHandler(e, true)
+
+                        return
+                    }
+
+                    var collections = _.filter(r && r.contents ? r.contents : [], (c) => {
+                        return c && !c.deleted
+                    })
+
+                    if (!collections.length){
+                        self.sdk.collections.opennewcollectionwindow(null, txid)
+
+                        return
+                    }
+
+                    app.nav.api.load({
+                        open : true,
+                        id : 'collections',
+                        inWnd : true,
+                        history : true,
+
+                        essenseData : {
+                            address : address,
+                            preview : false,
+                            count : 100,
+                            select : true,
+                            addContent : txid,
+
+                            onselect : function(collectionTxid){
+                                self.sdk.collections.opennewcollectionwindow(collectionTxid, txid)
+                            },
+
+                            oncreate : function(){
+                                self.sdk.collections.opennewcollectionwindow(null, txid)
+                            }
+                        }
+                    })
+
+                }, 100)
             },
 
             showwindow : function(){

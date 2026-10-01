@@ -1,8 +1,8 @@
-<div id="<%-module.map.id%>" class="<%- ed.preview ? 'preview' : ''%>">
+<div id="<%-module.map.id%>" class="<%- ed.preview ? 'preview' : ''%> <%- ed.select ? 'select' : ''%>">
 
 	<div class="captionWrapper">
 		<div class="caption">
-			<span><%- e('collections') %></span> <span class="headcount"></span>
+			<span><%- e(ed.select ? 'addToCollection' : 'collections') %></span> <span class="headcount"></span>
 		</div>
 		<% if(author.me) {%>
 

@@ -34,6 +34,15 @@ var newcollection = (function(){
 			cancel : function(){
 				self.closeContainer();
 			},
+
+			// publication from the post menu "add to collection" goes to the first place
+			addcontent : function(txid){
+				if(!txid || !currentCollection) return
+
+				var ids = _.without(currentCollection.contentIds.get(), txid)
+
+				currentCollection.contentIds.set([txid].concat(ids))
+			},
 			
 			remove : function(){
 				if(!currentCollection || !currentCollection.aliasid) return
@@ -824,6 +833,17 @@ var newcollection = (function(){
 				if(v) v()
 			},
 
+			// window is already open (minimized new collection)
+			addcontent : function(txid){
+				if(!el || !el.c) return
+
+				actions.addcontent(txid)
+
+				state.save()
+
+				renders.shares()
+			},
+
 			getdata : function(clbk, p){
 
 				ed = p.settings.essenseData || {}
@@ -851,6 +871,9 @@ var newcollection = (function(){
 						ed.collection = currentCollection
 						ed.hash = currentCollection.shash()
 
+						// after the hash, so the added publication counts as a change
+						actions.addcontent(ed.addContent)
+
 						clbk(data)
 					})
 
@@ -868,6 +891,12 @@ var newcollection = (function(){
 					}
 
 					currentCollection.language.set(self.app.localization.key)
+				}
+
+				if (ed.addContent){
+					actions.addcontent(ed.addContent)
+
+					state.save()
 				}
 
 

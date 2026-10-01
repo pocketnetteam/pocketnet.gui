@@ -75,6 +75,7 @@
   border-radius: 10px;
   overflow: hidden;
   background: rgb(var(--neutral-grad-0));
+  /* select mode: the publication is already in this collection */
 }
 #collections .collectionslist .collection .cover .img {
   position: absolute;
@@ -104,6 +105,20 @@
 #collections .collectionslist .collection .cover .coverbadge i {
   margin-right: 0.125em;
   font-size: 0.9em;
+}
+#collections .collectionslist .collection .cover .containsbadge {
+  position: absolute;
+  left: 0.5em;
+  top: 0.5em;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7em;
+  color: rgb(var(--text-on-bg-ac-color));
+  background: rgb(var(--color-bg-ac-bright));
 }
 #collections .collectionslist .collection .info {
   padding: 0.5em 0.125em 0;

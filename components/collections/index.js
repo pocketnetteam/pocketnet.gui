@@ -15,12 +15,27 @@ var collections = (function(){
 		var actions = {
 			newcollection : function(){
 
+				// select mode (post menu "add to collection"): new collection gets the publication
+				if (ed.select){
+					self.closeContainer()
+
+					if (ed.oncreate) ed.oncreate()
+
+					return
+				}
+
 				// on mobile the list window stays under the new collection window and shows up when it is minimized
 				if (self.app.mobileview && !ed.preview && el.c && el.c.closest('.wnd').length){
 					self.closeContainer()
 				}
 
 				self.app.platform.sdk.collections.opennewcollectionwindow()
+			},
+
+			select : function(txid){
+				self.closeContainer()
+
+				if (ed.onselect) ed.onselect(txid)
 			},
 
 			loadcollections : function(clbk){
@@ -76,6 +91,8 @@ var collections = (function(){
 						publishState : helpers.publishState,
 						me : author.me,
 						preview : ed.preview,
+						select : ed.select,
+						addContent : ed.addContent,
 					},
 					insertimmediately : true,
 				}, function(p){
@@ -131,6 +148,17 @@ var collections = (function(){
 
 				// relay collection has no transaction yet, rejected one will never get it
 				if ($(this).hasClass('relay') || $(this).hasClass('rejected')) return
+
+				if (ed.select){
+
+					if ($(this).hasClass('contains')){
+						sitemessage(self.app.localization.e('collectionAlreadyContains'))
+
+						return
+					}
+
+					return actions.select(txid)
+				}
 
 				self.nav.api.load({
 					open : true,
