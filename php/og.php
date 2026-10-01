@@ -424,8 +424,19 @@ class OG {
                                     $materialsCount = count($r->contentIds);
                                     $this->currentOg['description'] = $materialsCount . ' publications';
 
-                                    if (isset($r->message) && $r->message != ''){
-                                        $this->currentOg['description'] = substr(strip_tags(urldecode($r->message)), 0, 130).'...';
+                                    // collection description is stored in settings json: { "m" : "..." }
+                                    $collectionMessage = '';
+
+                                    if (isset($r->s)){
+                                        $collectionSettings = is_string($r->s) ? json_decode($r->s) : $r->s;
+
+                                        if (is_object($collectionSettings) && isset($collectionSettings->m) && is_string($collectionSettings->m)){
+                                            $collectionMessage = $collectionSettings->m;
+                                        }
+                                    }
+
+                                    if ($collectionMessage != ''){
+                                        $this->currentOg['description'] = substr(strip_tags(urldecode($collectionMessage)), 0, 130).'...';
                                     }
 
                                     $description = true;

@@ -41,7 +41,7 @@
         <div class="ncField collectionDescriptionWrapper">
             <div class="ncLabel">
                 <span><%=e('collectionInputDescription')%> <i class="optional"><%=e('collectionOptional')%></i></span>
-                <span class="counter messageCounter"><%-(collection.message.v || '').length%>/1000</span>
+                <span class="counter messageCounter"><%-collection.settings.message().length%>/1000</span>
             </div>
             <div class="txt">
                 <div elementsid='emjcontainer' class="message collectionDescription" placeholder="<%=e('collectionInputDescriptionPlaceholder')%>" id='emjcontainer' spellcheck="true" data-maxlength="1000"></div>

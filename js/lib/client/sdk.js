@@ -2109,10 +2109,17 @@ var pSDK = function ({ app, api, actions }) {
                     c.image = clearStringXss(trydecode(c.i || ''));
 
                     
-                    c.message = trimrn((superXSS(trydecode(c.message || ''), {
-                        whiteList: [],
-                        stripIgnoreTag: true,
-                    }))).replace(/\n{2,}/g, '\n\n')
+                    // the node has no message field for collections, the description is settings.m (payload s)
+                    var settings = collectionSettings.parse(c.s)
+
+                    if (_.isString(settings.m)) {
+                        settings.m = trimrn((superXSS(trydecode(settings.m), {
+                            whiteList: [],
+                            stripIgnoreTag: true,
+                        }))).replace(/\n{2,}/g, '\n\n')
+                    }
+
+                    c.s = collectionSettings.clean(settings)
 
                     c.contentIds = _.filter(_.map(c.contentIds || [], function(i){return (clearStringXss(i))}), function(i){return i});
 
@@ -2189,7 +2196,7 @@ var pSDK = function ({ app, api, actions }) {
 
                 if (exp.txid == object.txid) {
 
-                    object.message = exp.message
+                    object.settings = _.clone(exp.settings || {})
                     object.image = exp.image
                     object.contentIds = exp.contentIds
                     object.caption = exp.caption

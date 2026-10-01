@@ -239,7 +239,7 @@ var newcollection = (function(){
 				if(!el.body) return
 
 				el.body.find('.captionCounter').text((currentCollection.caption.v || '').length + '/100')
-				el.body.find('.messageCounter').text((currentCollection.message.v || '').length + '/1000')
+				el.body.find('.messageCounter').text(currentCollection.settings.message().length + '/1000')
 			},
 
 			error : function(onlyremove){
@@ -277,7 +277,7 @@ var newcollection = (function(){
 				if(cleanedText.length > maxLength){
 					cleanedText = cleanedText.substring(0, maxLength)
 				}
-				currentCollection.message.set(findAndReplaceLinkClearReverse(cleanedText));
+				currentCollection.settings.setMessage(findAndReplaceLinkClearReverse(cleanedText));
 
 			},
 
@@ -460,7 +460,7 @@ var newcollection = (function(){
 					}
 				});
 
-				_el[0].emojioneArea.setText(currentCollection.message.v);
+				_el[0].emojioneArea.setText(currentCollection.settings.message());
 			}
 		}
 

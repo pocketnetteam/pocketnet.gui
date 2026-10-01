@@ -57,6 +57,7 @@ var collections = (function(){
 					data : {
 						items : displayItems,
 						me : author.me,
+						preview : ed.preview,
 					},
 					insertimmediately : true,
 				}, function(p){

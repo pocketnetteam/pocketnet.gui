@@ -5,7 +5,7 @@
             <div class="emptyicon"><i class="far fa-folder-open"></i></div>
             <div class="emptytitle"><%- e('emptycollections') %></div>
 
-            <% if(me) {%>
+            <% if(me && !preview) {%>
                 <div class="emptyhint"><%- e('collectionsEmptyHint') %></div>
                 <div class="emptybuttons">
                     <button class="button small newcollection"><i class="fas fa-plus"></i> <%- e('newcollectionex') %></button>

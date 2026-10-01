@@ -1838,6 +1838,61 @@ Share = function(lang){
 	return self;
 }
 
+/*
+	Collection payload on the node (pocketdb Collection.cpp) has no message field:
+	l, c, i, s (settings, string) + contentIds + contentTypes.
+	The description is stored in settings json as { m : message }.
+*/
+collectionSettings = {
+
+	messageLength : 1000,
+
+	parse : function(s){
+
+		if (!s) return {}
+
+		if (_.isString(s)){
+			try{
+				s = JSON.parse(s)
+			}
+			catch(e){
+				return {}
+			}
+		}
+
+		if (!_.isObject(s) || _.isArray(s)) return {}
+
+		return s
+	},
+
+	// same cleaning rules the old message field had; unknown keys are kept to not lose them on edit
+	clean : function(s){
+
+		var settings = _.clone(collectionSettings.parse(s))
+
+		if (_.isString(settings.m) && settings.m){
+			var m = clearStringXss(settings.m)
+
+			if (m.length > collectionSettings.messageLength) m = m.substring(0, collectionSettings.messageLength)
+
+			settings.m = m
+		}
+
+		if (!settings.m || !_.isString(settings.m)) delete settings.m
+
+		return settings
+	},
+
+	// settings go to the node as a string: the same bytes are hashed on both sides, empty settings are not sent
+	stringify : function(s){
+		var settings = collectionSettings.clean(s)
+
+		if (_.isEmpty(settings)) return ''
+
+		return JSON.stringify(settings)
+	}
+}
+
 Collection = function(lang){
 
 	var self = this;
@@ -1845,13 +1900,11 @@ Collection = function(lang){
 	self.internalid = makeid()
 
 	self.clear = function(){
-		
-		self.message.set()
-		self.images.set()
-		self.tags.set()
-		self.url.set()
+
+		self.settings.set()
+		self.image.set()
+		self.contentIds.set()
 		self.caption.set()
-		self.repost.set()
 		self.language.set(lang)
 		self.aliasid = ""
 		
@@ -1883,27 +1936,40 @@ Collection = function(lang){
 		drag : false
 	};
 	
-	self.message = {
+	/*
+		settings json (payload s). The description lives here as settings.m,
+		the node has no separate message field for collections
+	*/
+	self.settings = {
 		set : function(_v){
 
-			if(!_v){
-				this.v = ''
-			}
-			else
-			{
-				// XSS protection - clean input
-				var cleaned = clearStringXss(_v)
-				// Limit length to 1000 chars
-				if(cleaned.length > 1000) cleaned = cleaned.substring(0, 1000)
-				this.v = cleaned
-			}
-			
+			var settings = collectionSettings.clean(_v)
+
+			this.v = settings
+
 			_.each(self.on.change || {}, function(f){
-				f('message', this.v)
+				f('settings', settings)
 			})
 
 		},
-		v : '',
+
+		get : function(){
+			return _.clone(this.v)
+		},
+
+		message : function(){
+			return this.v.m || ''
+		},
+
+		setMessage : function(m){
+			var settings = _.clone(this.v)
+
+			settings.m = m || ''
+
+			this.set(settings)
+		},
+
+		v : {},
 
 		drag : true
 	};
@@ -2098,7 +2164,7 @@ Collection = function(lang){
 			return false;
 		}
 
-		/*if(!self.message.v && !self.caption.v){
+		/*if(!self.settings.message() && !self.caption.v){
 			return 'message'
 		}*/
 
@@ -2129,13 +2195,15 @@ Collection = function(lang){
 		return false
 	}
 
+	// must match Collection::BuildHash on the node:
+	// root txid (edit) + contentTypes (not sent) + contentIds joined by ',' + l + c + i + s
 	self.serialize = function(){
-		
-		return _.map(self.contentIds.v, function(t){ return (t) }).join(',') + 
-		
-		(self.language.v || "") + (self.caption.v || "") + (self.message.v || "") + (self.image.v || "")
 
-		//+ (self.aliasid || "")
+		return (self.aliasid || "") +
+
+		_.map(self.contentIds.v, function(t){ return (t) }).join(',') +
+
+		(self.language.v || "") + (self.caption.v || "") + (self.image.v || "") + collectionSettings.stringify(self.settings.v)
 	}
 
 	self.shash = function(){
@@ -2147,20 +2215,24 @@ Collection = function(lang){
 		return {
 			type : self.type,
 			c : self.caption.v,
-			message : self.message.v,
 			i : self.image.v,
 			l : self.language.v,
 			txidEdit : self.aliasid || "",
 			contentIds : self.contentIds.v,
-			s : ""
+			s : collectionSettings.stringify(self.settings.v)
 		}
 
 	}
 
 	self.import = function(v){
 
+		var settings = collectionSettings.parse(v.s || v.settings)
+
+		// local drafts saved before the description moved to settings
+		if (!settings.m && _.isString(v.message)) settings = _.extend({}, settings, { m : v.message })
+
+		self.settings.set(settings)
 		self.caption.set(v.c || v.caption)
-		self.message.set(v.message)
 		self.image.set(v.i || v.image)
 		self.language.set(v.l || v.language || 'en')
 		self.contentIds.set(v.contentIds || [])
@@ -3860,7 +3932,8 @@ pCollection = function(){
 
 	var self = this;
 
-	self.message = ''
+	// settings json (payload s), the description is settings.m
+	self.settings = {}
 	self.caption = ''
 	self.image = '';
 	self.txid = '';
@@ -3883,10 +3956,8 @@ pCollection = function(){
 
 	self._import = function(v){
 
-		// XSS protection for message
-		self.message = clearStringXss(v.message || "")
-		// Limit message length
-		if(self.message.length > 1000) self.message = self.message.substring(0, 1000)
+		// XSS protection and length limit for the description (settings.m)
+		self.settings = collectionSettings.clean(v.s || v.settings)
 		
 		// XSS protection for caption
 		self.caption = clearStringXss(v.c || v.caption || "")
@@ -3957,7 +4028,7 @@ pCollection = function(){
 
 		var v = {}
 		
-		v.message = (self.message)
+		v.settings = _.clone(self.settings || {})
 		v.caption = (self.caption)
 		v.contentIds = _.map(self.contentIds || [], function(t){ return (t) })
 		v.image = _.clone(self.image)
@@ -4031,7 +4102,7 @@ pCollection = function(){
 
 		message : function(m){
 
-			var m = trimrn(filterXSS(m || self.message, {
+			var m = trimrn(filterXSS(m || self.settings.m || '', {
 				whiteList: [],
 				stripIgnoreTag: true,
 			}))
