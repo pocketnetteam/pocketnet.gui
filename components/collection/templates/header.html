@@ -59,6 +59,15 @@
 		<div class="collectionDescription"><%- collection.settings.m %></div>
 	<% } %>
 
+	<% if(typeof ed != 'undefined' && ed.jury) { %>
+		<div class="headerActions">
+			<button class="button small secondary openCollection">
+				<i class="fas fa-external-link-alt"></i>
+				<span><%- e('collectionOpen') %></span>
+			</button>
+		</div>
+	<% } %>
+
 	<% if(typeof ed == 'undefined' || !ed.openapi) { %>
 		<div class="headerActions">
 			<button class="button small shareCollection">
@@ -82,6 +91,11 @@
 				<button class="button small secondary danger deleteCollection">
 					<i class="far fa-trash-alt"></i>
 					<span><%- e('deletecollection') %></span>
+				</button>
+			<% } else if(state) { %>
+				<button class="button small secondary danger complainCollection">
+					<i class="fas fa-ban"></i>
+					<span><%- e('complain') %></span>
 				</button>
 			<% } %>
 		</div>

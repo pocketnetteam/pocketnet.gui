@@ -3219,6 +3219,7 @@ Platform = function (app, listofnodes) {
                     openapi: typeof p.openapi === 'undefined' ? true : p.openapi,
                     comments: p.comments,
                     fullscreenvideo: p.fullscreenvideo,
+                    jury: p.jury
                 }
             })
         },

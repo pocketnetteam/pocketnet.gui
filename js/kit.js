@@ -4115,6 +4115,17 @@ pCollection = function(){
 		
 	}
 
+	// complain on the collection (caption, description, cover), same as for a share
+	self.modFlag = function(reason){
+		var modFlag = new ModFlag();
+
+		modFlag.s2.set(self.txid);
+		modFlag.s3.set(self.address);
+		modFlag.i1.set(reason);
+
+		return modFlag;
+	}
+
 	self.alias = function(){
 		var collection = new Collection();
 

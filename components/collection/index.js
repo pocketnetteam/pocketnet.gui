@@ -69,6 +69,39 @@ var collection = (function(){
 				})
 			},
 
+			// jury: full collection with publications in a window, id goes through essenseData, not the url
+			openwindow : function(){
+				if(!collection || !collection.txid) return
+
+				self.nav.api.load({
+					open : true,
+					id : 'collection',
+					inWnd : true,
+					history : true,
+					essenseData : {
+						txid : collection.txid
+					}
+				})
+			},
+
+			complain : function(){
+				if(!collection || author.me || !collection.txid) return
+
+				self.nav.api.load({
+					open : true,
+					id : 'complain',
+					inWnd : true,
+					essenseData : {
+						item : 'collection',
+						obj : collection,
+
+						success : function(){
+
+						}
+					}
+				})
+			},
+
 			remove : function(){
 				if(!collection || !author.me || !collection.txid) return
 
@@ -154,6 +187,8 @@ var collection = (function(){
 					p.el.find('.editCollection').on('click', actions.edit)
 					p.el.find('.deleteCollection').on('click', actions.remove)
 					p.el.find('.shareCollection').on('click', actions.share)
+					p.el.find('.complainCollection').on('click', actions.complain)
+					p.el.find('.openCollection').on('click', actions.openwindow)
 
 					renders.materials()
 					renders.authoricon()
@@ -296,6 +331,10 @@ var collection = (function(){
 			if(collection.deleted) return renders.removed()
 
 			renders.header()
+
+			// jury checks only the collection itself (caption, description, cover)
+			if(ed.jury) return
+
 			renders.feed()
 		}
 
@@ -393,6 +432,11 @@ var collection = (function(){
 				make()
 
 				p.clbk(null, p);
+			},
+
+			wnd : {
+				showbetter : true,
+				class : 'withoutButtons collectionwindow nobfilter normalizedmobile maxheight'
 			}
 		}
 	};

@@ -3599,6 +3599,15 @@ var lenta = (function(){
 					return
 				}
 
+				if (item.type == 'collection'){
+
+					self.app.platform.papi.collection(item.key, _elcnt, () => {
+						c()
+					}, {jury : true})
+
+					return
+				}
+
 				c()
 
 				

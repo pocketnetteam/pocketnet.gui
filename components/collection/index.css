@@ -320,3 +320,19 @@ html.mobileview #collection .collectionHeader .headerActions .collectionEditing 
   justify-content: center;
   padding: 0.75em 0.5em;
 }
+/* collection opened in a window (jury "open collection") */
+.collectionwindow #collection {
+  min-height: 0;
+}
+/* jury card: only the header, the card itself is the background */
+.juryitem #collection {
+  min-height: 0;
+  padding: 0;
+  background: transparent;
+}
+.juryitem #collection .collectionWrapper {
+  max-width: none;
+}
+.juryitem #collection .collectionHeader {
+  border-radius: 0;
+}

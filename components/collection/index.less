@@ -392,3 +392,27 @@ html.mobileview{
 		}
 	}
 }
+
+/* collection opened in a window (jury "open collection") */
+.collectionwindow{
+	#collection{
+		min-height: 0;
+	}
+}
+
+/* jury card: only the header, the card itself is the background */
+.juryitem{
+	#collection{
+		min-height: 0;
+		padding : 0;
+		background: transparent;
+
+		.collectionWrapper{
+			max-width: none;
+		}
+
+		.collectionHeader{
+			border-radius: 0;
+		}
+	}
+}

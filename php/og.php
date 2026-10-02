@@ -136,6 +136,17 @@ class OG {
 
     }
 
+    // cut by characters (not bytes), so utf-8 text is not broken
+    public function shorttext($text, $length) {
+        $text = trim($text);
+
+        if (!function_exists('mb_strlen')) return substr($text, 0, $length).'...';
+
+        if (mb_strlen($text, 'UTF-8') <= $length) return $text;
+
+        return mb_substr($text, 0, $length, 'UTF-8').'...';
+    }
+
     public function clean($value) {
         $value = trim($value);
         $value = stripslashes($value);
@@ -412,16 +423,21 @@ class OG {
             
                                 $this->author = $r->address;
 
-                                if (isset($r->contentIds) && is_array($r->contentIds)){
+                                if (isset($r->contentIds)){
 
                                     $pca = 'col';
 
-                                    if ($r->c != ''){
+                                    // contentIds may come as a json string
+                                    $contentIds = is_string($r->contentIds) ? json_decode($r->contentIds) : $r->contentIds;
+
+                                    if (!is_array($contentIds)) $contentIds = array();
+
+                                    if (isset($r->c) && $r->c != ''){
                                         $this->currentOg['title']= urldecode($r->c);
                                         $title = true;
                                     }
 
-                                    $materialsCount = count($r->contentIds);
+                                    $materialsCount = count($contentIds);
                                     $this->currentOg['description'] = $materialsCount . ' publications';
 
                                     // collection description is stored in settings json: { "m" : "..." }
@@ -436,14 +452,15 @@ class OG {
                                     }
 
                                     if ($collectionMessage != ''){
-                                        $this->currentOg['description'] = substr(strip_tags(urldecode($collectionMessage)), 0, 130).'...';
+                                        $this->currentOg['description'] = $this->shorttext(strip_tags(urldecode($collectionMessage)), 130);
                                     }
 
                                     $description = true;
                                     $this->currentOg['type'] = 'article';
 
+                                    // cover is url encoded like caption (client decodes it with trydecode)
                                     if (isset($r->i) && $r->i != ''){
-                                        $this->currentOg['image'] = is_array($r->i) ? $r->i[0] : $r->i;
+                                        $this->currentOg['image'] = urldecode(is_array($r->i) ? $r->i[0] : $r->i);
                                         $image = true;
                                     }
 
@@ -593,7 +610,7 @@ class OG {
 
             if(isset($this->currentOg[$key])) $v = $this->currentOg[$key];
 
-            echo '<meta property="'.$prefix.''.$key.'" content="'.$v.'">';
+            echo '<meta property="'.$prefix.''.$key.'" content="'.htmlspecialchars($v, ENT_QUOTES, 'UTF-8').'">';
             
         }
 
@@ -606,7 +623,7 @@ class OG {
             if(strpos($key, 'twitter') !== false) $prefix = '';
 
             if(!isset($this->defaultOg[$key])) {
-                echo '<meta property="'.$prefix.''.$key.'" content="'.$v.'">';
+                echo '<meta property="'.$prefix.''.$key.'" content="'.htmlspecialchars($v, ENT_QUOTES, 'UTF-8').'">';
             }
 
            
