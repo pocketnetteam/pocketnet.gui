@@ -3224,6 +3224,27 @@ Platform = function (app, listofnodes) {
             })
         },
 
+        // shared collection in chat: header only (cover, caption, description, author, count), publications are not loaded
+        collectionpreview: function (txid, el, clbk, p) {
+
+            var id = 'collectionpreview' + makeid()
+
+            app.nav.api.load({
+                open: true,
+                id: 'collection',
+                el: el,
+                eid: id,
+                mid: id,
+                animation: false,
+                clbk: clbk,
+                essenseData: {
+                    txid: txid,
+                    openapi: true,
+                    preview: true
+                }
+            })
+        },
+
         editImage: function (src, p, clbk) {
 
             if (!p) p = {}

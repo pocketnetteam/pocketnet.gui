@@ -332,8 +332,8 @@ var collection = (function(){
 
 			renders.header()
 
-			// jury checks only the collection itself (caption, description, cover)
-			if(ed.jury) return
+			// jury checks only the collection itself (caption, description, cover), chat preview shows only the header
+			if(ed.jury || ed.preview) return
 
 			renders.feed()
 		}

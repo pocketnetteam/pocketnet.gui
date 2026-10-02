@@ -336,3 +336,72 @@ html.mobileview #collection .collectionHeader .headerActions .collectionEditing 
 .juryitem #collection .collectionHeader {
   border-radius: 0;
 }
+/* shared collection in chat: compact header only, without publications;
+   .openapipnet is on the chat widget container and on html in openapi.html, it also wins over html.mobileview rules */
+.openapipnet #collection.collectionPreview {
+  min-height: 0;
+  padding: 0;
+  background: transparent;
+}
+.openapipnet #collection.collectionPreview .collectionWrapper {
+  max-width: none;
+}
+.openapipnet #collection.collectionPreview .empty {
+  padding: 1.5em 1em;
+}
+.openapipnet #collection.collectionPreview .empty .collectionIllustration {
+  width: 80px;
+  margin-bottom: 0.5em;
+}
+.openapipnet #collection.collectionPreview .collectionHeader {
+  padding: 1em;
+  text-align: left;
+}
+.openapipnet #collection.collectionPreview .collectionHeader .coverBackdrop {
+  height: 106px;
+}
+.openapipnet #collection.collectionPreview .collectionHeader .headerContent {
+  flex-direction: row;
+  align-items: center;
+  gap: 1em;
+}
+.openapipnet #collection.collectionPreview .collectionHeader .coverWrapper .cover {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+}
+.openapipnet #collection.collectionPreview .collectionHeader .coverWrapper .coverPlaceholder {
+  font-size: 1.5em;
+}
+.openapipnet #collection.collectionPreview .collectionHeader .headerInfo {
+  width: auto;
+  padding-bottom: 0;
+}
+.openapipnet #collection.collectionPreview .collectionHeader .caption {
+  margin-top: 0.25em;
+  font-size: 1.1em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.openapipnet #collection.collectionPreview .collectionHeader .meta {
+  margin-top: 0.5em;
+  justify-content: flex-start;
+  font-size: 0.8em;
+}
+.openapipnet #collection.collectionPreview .collectionHeader .meta .authorLink .usericon {
+  width: 1.5em;
+  height: 1.5em;
+  line-height: 1.5em;
+}
+.openapipnet #collection.collectionPreview .collectionHeader .collectionDescription {
+  margin-top: 0.75em;
+  font-size: 0.85em;
+  line-height: 1.5;
+  text-align: left;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

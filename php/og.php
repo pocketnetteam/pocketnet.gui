@@ -423,9 +423,17 @@ class OG {
             
                                 $this->author = $r->address;
 
-                                if (isset($r->contentIds)){
+                                if (isset($r->contentIds) || (isset($r->type) && $r->type == 'collection')){
 
                                     $pca = 'col';
+
+                                    // getrawtransactionwithmessagebyid returns a collection in the share format:
+                                    // contentIds in repost, cover in m, settings in t
+                                    if (!isset($r->contentIds) && isset($r->repost)) $r->contentIds = $r->repost;
+                                    if (!isset($r->i) && isset($r->m)) $r->i = $r->m;
+                                    if (!isset($r->s) && isset($r->t)) $r->s = $r->t;
+
+                                    if (!isset($r->contentIds)) $r->contentIds = array();
 
                                     // contentIds may come as a json string
                                     $contentIds = is_string($r->contentIds) ? json_decode($r->contentIds) : $r->contentIds;

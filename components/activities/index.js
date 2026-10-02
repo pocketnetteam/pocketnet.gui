@@ -21,6 +21,10 @@ var activities = (function () {
 
 		var activitiesByGroup = {}
 
+		// the node has no collection activities: my collections are merged into "all" on the client
+		var collectionsPromise = null
+		var collectionsUsed = {}
+
 		var getters = {
 			getFilters: function (filter) {
 				if (filter === 'all') return []
@@ -123,6 +127,81 @@ var activities = (function () {
 			}
 		}
 
+		var collections = {
+
+			activity : function(collection, time){
+				return {
+					hash : collection.txid,
+					txType : 'collection',
+					type : 'collection',
+					height : collection.height,
+					time : time,
+					collection : collection
+				}
+			},
+
+			// getprofilecollections gives height, the raw transaction gives time
+			load : function(){
+
+				if (collectionsPromise) return collectionsPromise
+
+				var address = self.user.address.value
+
+				collectionsPromise = new Promise((resolve) => {
+
+					self.app.platform.sdk.collections.load.profile(address, (r) => {
+
+						var items = _.filter(r && r.contents ? r.contents : [], (c) => {
+							return c && c.txid && c.height && !c.deleted
+						})
+
+						if (!items.length) return resolve([])
+
+						self.app.api.rpc('getrawtransactionwithmessagebyid', [_.map(items, (c) => c.txid)]).then((raw) => {
+
+							var times = {}
+
+							_.each(raw || [], (t) => {
+								if (t && t.txid && t.time) times[t.txid] = t.time
+							})
+
+							resolve(_.filter(_.map(items, (c) => {
+								return times[c.txid] ? collections.activity(c, times[c.txid]) : null
+							}), (a) => a))
+
+						}).catch((e) => {
+							console.error(e)
+							resolve([])
+						})
+
+					}, 100)
+				})
+
+				return collectionsPromise
+			},
+
+			// a page gets collections not older than its last activity (pages go by block height), the rest - after the end
+			merge : function(data){
+
+				var lastHeight = data.length ? data[data.length - 1].height : 0
+
+				return collections.load().then((items) => {
+
+					var add = _.filter(items, (a) => {
+						return !collectionsUsed[a.hash] && (end || a.height >= lastHeight)
+					})
+
+					if (!add.length) return data
+
+					_.each(add, (a) => {
+						collectionsUsed[a.hash] = true
+					})
+
+					return _.sortBy(data.concat(add), (a) => -a.height)
+				})
+			}
+		}
+
 		var actions = {
 
 			applyFilter : function(filter){
@@ -186,6 +265,11 @@ var activities = (function () {
 
 				if(clear) activitiesByGroup[filter] = []
 
+				if(clear && filter == 'all'){
+					collectionsPromise = null
+					collectionsUsed = {}
+				}
+
 				var activities = activitiesByGroup[filter]
 
 				var blockNumber = activities.length ? activities[activities.length - 1].height : self.app.platform.currentBlock
@@ -202,7 +286,10 @@ var activities = (function () {
 						return d.hash
 					})
 
-					
+					return filter == 'all' ? collections.merge(data) : data
+
+				}).then((data) => {
+
 					activitiesByGroup[filter].push(...data)
 
 					return Promise.resolve(data)
@@ -355,6 +442,21 @@ var activities = (function () {
 							parentid: parent,
 							noaction: true
 						} : null
+					}
+				})
+			},
+
+			openCollection(txid) {
+				if (!txid) return
+
+				self.nav.api.load({
+					open: true,
+					id: 'collection',
+					inWnd: true,
+					history: true,
+
+					essenseData: {
+						txid: txid
 					}
 				})
 			},
@@ -545,6 +647,10 @@ var activities = (function () {
 			el.c.on('click', '.video', function(){
 				var tid = $(this).attr('tid')
 				actions.openPost(getters.activity(tid))
+			})
+
+			el.c.on('click', '.collectionactivity', function(){
+				actions.openCollection($(this).attr('tid'))
 			})
 
 			el.c.on('click', '.blocking', function(){

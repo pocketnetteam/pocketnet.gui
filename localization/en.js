@@ -114,6 +114,7 @@ _l.ranswer= "You have responded to the comment";
 _l.sentmoney = "You transferred funds to";
 _l.a_unsubscribe = "You have unsubscribed from";
 _l.a_subscribe = "You have subscribed to";
+_l.a_collection = "You created a collection";
 _l.a_block = function(c){
     return c ? `You have blocked ${c} users` : `You have blocked`
 };

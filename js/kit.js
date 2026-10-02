@@ -3993,6 +3993,10 @@ pCollection = function(){
 		if (v.address)
 			self.address = v.address;
 
+		// block height (getprofilecollections), used to place the collection in activities
+		if (v.height)
+			self.height = v.height;
+
 		if (v.txid)
 			self.txid = v.txid;
 
@@ -4042,6 +4046,7 @@ pCollection = function(){
 
 		v.address = self.address
 		v.txid = self.txid
+		v.height = self.height
 		v.txidEdit = self.txidEdit
 		v.edit = self.edit
 		v.___temp = self.___temp

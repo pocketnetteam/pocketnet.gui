@@ -2110,6 +2110,12 @@ var pSDK = function ({ app, api, actions }) {
                 if(!c) return false
 
                 try {
+                    // getrawtransactionwithmessagebyid returns a collection in the share format:
+                    // contentIds in repost, cover in m, settings in t (getprofilecollections: contentIds, i, s)
+                    if (typeof c.contentIds == 'undefined' && typeof c.repost != 'undefined') c.contentIds = c.repost
+                    if (typeof c.i == 'undefined' && typeof c.m != 'undefined') c.i = c.m
+                    if (typeof c.s == 'undefined' && typeof c.t != 'undefined') c.s = c.t
+
                     c.caption = clearStringXss(trydecode(c.c || '')).replace(/&nbsp;/g, ' ');
                     c.image = clearStringXss(trydecode(c.i || ''));
 
