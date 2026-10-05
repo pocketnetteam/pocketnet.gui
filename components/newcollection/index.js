@@ -19,7 +19,14 @@ var newcollection = (function(){
 			message : self.app.localization.e('collectionemptymessage'),
 			image : self.app.localization.e('collectionimage'),
 			caption : self.app.localization.e('collectioncaption'),
-			shares : self.app.localization.e('collectionshares'),
+			contentIds : self.app.localization.e('collectionshares'),
+		}
+
+		var fieldSelectors = {
+			image : '.ncCover',
+			caption : '.collectionCaptionWrapper',
+			message : '.collectionDescriptionWrapper',
+			contentIds : '.shares'
 		}
 
 		var actions = {
@@ -27,9 +34,63 @@ var newcollection = (function(){
 			cancel : function(){
 				self.closeContainer();
 			},
+
+			// publication from the post menu "add to collection" goes to the first place
+			addcontent : function(txid){
+				if(!txid || !currentCollection) return
+
+				var ids = _.without(currentCollection.contentIds.get(), txid)
+
+				currentCollection.contentIds.set([txid].concat(ids))
+			},
 			
 			remove : function(){
+				if(!currentCollection || !currentCollection.aliasid) return
 
+				dialog({
+					class: 'zindex',
+					html: self.app.localization.e('removeCollectionDialog'),
+					btn1text: self.app.localization.e('dyes'),
+					btn2text: self.app.localization.e('dno'),
+					success: function(){
+						el.c.addClass('loading')
+
+						self.app.platform.sdk.collections.delete(currentCollection.aliasid, function(err){
+							el.c.removeClass('loading')
+
+							if(err) return
+
+							self.closeContainer()
+						})
+					}
+				})
+			},
+
+			clear : function(){
+				if(!currentCollection || currentCollection.aliasid) return
+
+				new dialog({
+					html : self.app.localization.e('clearCollectionDialog'),
+					btn1text : self.app.localization.e('dyes'),
+					btn2text : self.app.localization.e('dno'),
+					class : 'zindex',
+					success : function(){
+
+						if (self.app.platform.sdk.collections.current == currentCollection){
+							self.app.platform.sdk.collections.enableEditMode(null)
+						}
+
+						currentCollection = new Collection(self.app.localization.key, self.app)
+						currentCollection.app = self.app
+						currentCollection.language.set(self.app.localization.key)
+
+						initEvents()
+
+						state.save()
+
+						renders.body()
+					}
+				})
 			},
 
 			fail : function(e){
@@ -49,17 +110,13 @@ var newcollection = (function(){
 				if (error) return
 
 				if (ed.hash == currentCollection.shash()){
-					actions.errortext(self.app.localization.e('e13163'))
+					actions.errortext(self.app.localization.e('collectionnochanges'))
 					return
 				}
 
 				self.app.Logger.info({
 					actionId: 'COLLECTION_CREATED',
 				});
-				
-				if(!window.testpocketnet){
-					return
-				}
 
 				el.c.addClass('loading')
 
@@ -67,8 +124,6 @@ var newcollection = (function(){
 
 				currentCollection.uploadImages(self.app, function(){
 					if (currentCollection.checkloaded()){
-
-						console.log('currentCollection', currentCollection)
 
 						actions.fail({ text : self.app.localization.e('imageerror')})
 			
@@ -94,8 +149,6 @@ var newcollection = (function(){
 						successCheck()
 					}).catch(e => {
 						var t = self.app.platform.errorHandlerSimple(e);
-
-						console.log("TTT", t)
 
 						actions.fail({text : t})
 					})
@@ -174,20 +227,34 @@ var newcollection = (function(){
 				else{
 					if(!el.error) return
 
-					if(!text){
-						el.error.html('')
-					}
-	
-					else{
-						el.error.html(text)
-					}
+					el.error.text(text || '')
+					el.error.closest('.error').toggleClass('active', !!text)
 				}
 
-				
+
+			},
+
+			highlight : function(error){
+				if(!el.body) return
+
+				el.body.find('.invalid').removeClass('invalid')
+
+				var selector = fieldSelectors[error]
+
+				if(selector) el.body.find(selector).addClass('invalid')
+			},
+
+			counters : function(){
+				if(!el.body) return
+
+				el.body.find('.captionCounter').text((currentCollection.caption.v || '').length + '/100')
+				el.body.find('.messageCounter').text(currentCollection.settings.message().length + '/1000')
 			},
 
 			error : function(onlyremove){
 				var error = currentCollection.validation();
+
+				if (!onlyremove) actions.highlight(error)
 
 				if (error && !onlyremove){
 
@@ -207,30 +274,42 @@ var newcollection = (function(){
 				else
 				{
 					actions.errortext('')
+					actions.highlight(null)
 					return false
 				}
 			},
 
 			applyText : function(text){
-				currentCollection.message.set(findAndReplaceLinkClearReverse(text));
-
-				console.log('applyText ca')
+				// Limit message length to 1000 chars
+				var maxLength = 1000
+				var cleanedText = text
+				if(cleanedText.length > maxLength){
+					cleanedText = cleanedText.substring(0, maxLength)
+				}
+				currentCollection.settings.setMessage(findAndReplaceLinkClearReverse(cleanedText));
 
 			},
 
 			caption : function(caption){
-				currentCollection.caption.set(findAndReplaceLinkClearReverse(caption));
+				// Limit caption length to 100 chars
+				var maxLength = 100
+				var cleanedCaption = caption
+				if(cleanedCaption.length > maxLength){
+					cleanedCaption = cleanedCaption.substring(0, maxLength)
+				}
+				currentCollection.caption.set(findAndReplaceLinkClearReverse(cleanedCaption));
 
-				console.log('applyText ca22', caption)
+				actions.counters()
 
 				state.save()
 			},
 
 			eTextChange : function(c){
-				console.log('eTextChange')
 				var text = c.getText();
 
 				actions.applyText(text);
+
+				actions.counters()
 
 				state.save()
 			},
@@ -390,7 +469,82 @@ var newcollection = (function(){
 					}
 				});
 
-				_el[0].emojioneArea.setText(currentCollection.message.v);
+				_el[0].emojioneArea.setText(currentCollection.settings.message());
+			}
+		}
+
+		var previewHelper = {
+
+			plaintext : function(share){
+				if (_.isObject(share.message) && !share.caption) return ''
+
+				var text = share.renders.text() || ''
+
+				// renders.text strips tags, decode the remaining entities to plain text (escaped again in template)
+				return $('<div/>').html(text).text().replace(/\s+/g, ' ').trim().substring(0, 200)
+			},
+
+			type : function(share, meta){
+				var e = self.app.localization.e
+
+				if (share.itisarticle()) return { type : 'article', icon : 'fas fa-newspaper', label : e('collectionTypeArticle') }
+				if (share.itisstream()) return { type : 'stream', icon : 'fas fa-broadcast-tower', label : e('collectionTypeStream') }
+				if (share.itisaudio()) return { type : 'audio', icon : 'fas fa-music', label : e('audio') }
+				if (meta.type) return { type : 'video', icon : 'fas fa-play', label : e('video') }
+				if (deep(share, 'poll.list.length')) return { type : 'poll', icon : 'fas fa-poll-h', label : e('collectionTypePoll') }
+				if (share.images.length) return { type : 'images', icon : 'far fa-image', label : e('collectionTypePost') }
+
+				return { type : 'post', icon : 'far fa-file-alt', label : e('collectionTypePost') }
+			},
+
+			cover : function(share, meta){
+				if (share.images.length) return share.images[0]
+
+				if (!meta.type) return null
+
+				var info = self.app.platform.sdk.videos.storage[share.url] || {}
+
+				return deep(info, 'data.image') || videoImage(meta) || null
+			},
+
+			make : function(share){
+				var meta = parseVideo(share.url || '')
+				var paid = share.visibility() == 'paid'
+				var author = self.psdk.userInfo.get(share.address) || {}
+				var type = previewHelper.type(share, meta)
+
+				return {
+					share : share,
+					type : type,
+					paid : paid,
+					repost : !!share.repost,
+					text : paid ? '' : previewHelper.plaintext(share),
+					cover : paid ? null : previewHelper.cover(share, meta),
+					imagescount : paid ? 0 : share.images.length,
+					author : {
+						address : share.address,
+						name : author.name || share.address,
+						image : author.image || '',
+						letter : (author.name || '?')[0].toUpperCase()
+					},
+					time : share.time ? self.app.reltime(share.time) : ''
+				}
+			},
+
+			// authors and video covers are needed before render; failures just fall back to placeholders
+			load : function(shares){
+				var addresses = _.uniq(_.map(shares, function(s){ return s.address }))
+
+				var urls = _.filter(_.uniq(_.map(shares, function(s){ return s.url })), function(url){
+					return url && parseVideo(url).type
+				})
+
+				return Promise.all([
+					new Promise(function(resolve){
+						self.app.platform.sdk.users.get(addresses, function(){ resolve() }, true)
+					}),
+					urls.length ? self.app.platform.sdk.videos.info(urls).catch(function(){}) : Promise.resolve()
+				])
 			}
 		}
 
@@ -484,6 +638,24 @@ var newcollection = (function(){
 
 				actions.caption(caption)
 			},
+
+		}
+
+		// Add length validation on input
+		var validateLength = function(){
+			var messageEl = el.c.find('.collectionDescription')
+			var captionEl = el.c.find('.captionshare')
+			
+			var messageLength = messageEl.text().length
+			var captionLength = captionEl.val().length
+			
+			if(messageLength > 1000){
+				actions.errortext(self.app.localization.e('collectionmessagelength'))
+			} else if(captionLength > 100){
+				actions.errortext(self.app.localization.e('collectioncaptionlength'))
+			} else {
+				actions.errortext('')
+			}
 		}
 
 		var renders = {
@@ -500,16 +672,23 @@ var newcollection = (function(){
 
 				}, function(p){
 
-					//helpers.emojioneArea(p.el.find('.message'))
-					imagesHelper.imageUploader(p.el.find('.textIcon'))
+					try {
+						if (el.eMessage && el.eMessage[0] && el.eMessage[0].emojioneArea) {
+							el.eMessage[0].emojioneArea.destroy();
+							delete el.eMessage[0].emojioneArea;
+						}
+					} catch (e) {}
+
+					el.eMessage = p.el.find('#emjcontainer');
+					helpers.emojioneArea(el.eMessage);
+
+					imagesHelper.imageUploader(p.el.find('.ncCover'))
 
 					renders.shares()
 
 					var elcaption = p.el.find('.collectionCaptionWrapper input')
 
-
-					elcaption.on('keyup', events.caption)
-
+					elcaption.on('keyup input', events.caption)
 					elcaption.val(currentCollection.caption.v || "")
 
 
@@ -517,7 +696,8 @@ var newcollection = (function(){
 
 
 					p.el.find('.cancel').on('click', actions.cancel)
-					p.el.find('.remove').on('click', actions.remove)
+					p.el.find('.removecollection').on('click', actions.remove)
+					p.el.find('.clearcollection').on('click', actions.clear)
 					p.el.find('.save').on('click', actions.save)
 
 
@@ -526,8 +706,23 @@ var newcollection = (function(){
 
 			shares : function(){
 
+				// visible on the minimized window bar while the user picks publications in the feed
+				if (el.c) el.c.find('.caption .captioncount').text(currentCollection.contentIds.v.length || '')
+
 				self.app.platform.sdk.node.shares.getbyid(currentCollection.contentIds.v, function(shares){
 
+					if(!el.body) return
+
+					var ids = currentCollection.contentIds.v
+					var total = ids.length
+
+					shares = _.sortBy(shares || [], function(share){
+						return _.indexOf(ids, share.txid)
+					})
+
+					previewHelper.load(shares).catch(function(){}).then(function(){
+
+					if(!el.body) return
 
 					self.shell({
 						name :  'shares',
@@ -535,8 +730,10 @@ var newcollection = (function(){
 						data : {
 							collection : currentCollection,
 							shares,
-							ed : ed,
-							tpl : self.app.platform.ws.tempates.share
+							previews : _.map(shares, previewHelper.make),
+							total : total,
+							missing : Math.max(total - shares.length, 0),
+							ed : ed
 						},
 
 						insertimmediately : true
@@ -558,7 +755,9 @@ var newcollection = (function(){
 							wndObj.hide()
 						})
 
-						p.el.find('.remove').on('click', function(){
+						p.el.find('.removeshare').on('click', function(e){
+							e.stopPropagation()
+
 							var txid = $(this).closest('.shareWrapper').attr('share')
 
 							currentCollection.contentIds.remove(txid)
@@ -567,9 +766,11 @@ var newcollection = (function(){
 							renders.shares()
 						})
 					})
+
+					})
 				})
 
-				
+
 			}
 
 			
@@ -601,7 +802,7 @@ var newcollection = (function(){
 			},
 			load : function(){
 
-				if(ed.dontsave) return
+				if(ed.dontsave || ed.collection) return
 
 				var last = self.app.settings.get(self.map.id, 'currentCollection')
 
@@ -626,6 +827,23 @@ var newcollection = (function(){
 		return {
 			primary : primary,
 
+			show : function(){
+				var v = deep(self, 'container.show')
+
+				if(v) v()
+			},
+
+			// window is already open (minimized new collection)
+			addcontent : function(txid){
+				if(!el || !el.c) return
+
+				actions.addcontent(txid)
+
+				state.save()
+
+				renders.shares()
+			},
+
 			getdata : function(clbk, p){
 
 				ed = p.settings.essenseData || {}
@@ -634,17 +852,51 @@ var newcollection = (function(){
 					ed
 				};
 
+				if (ed.txid){
+
+					// editing: take the collection from psdk (with not yet applied edits), like editing a share
+					self.app.platform.sdk.collections.load.byid(ed.txid, function(collection, error){
+
+						if (error || !collection || !self.app.user.isItMe(collection.address)){
+							sitemessage(self.app.localization.e('collectionNotFound'))
+
+							clbk(null, error || 'collectionNotFound')
+
+							return
+						}
+
+						currentCollection = collection.alias()
+						currentCollection.app = self.app
+
+						ed.collection = currentCollection
+						ed.hash = currentCollection.shash()
+
+						// after the hash, so the added publication counts as a change
+						actions.addcontent(ed.addContent)
+
+						clbk(data)
+					})
+
+					return
+				}
+
 				currentCollection = ed.collection || new Collection(self.app.localization.key, self.app);
 				currentCollection.app = self.app
 
-				
+
 				if(!ed.collection){
 
 					if(!state.load()){
-						
+
 					}
-					
+
 					currentCollection.language.set(self.app.localization.key)
+				}
+
+				if (ed.addContent){
+					actions.addcontent(ed.addContent)
+
+					state.save()
 				}
 
 
@@ -711,13 +963,12 @@ var newcollection = (function(){
 			wnd: {
 				allowHide: true,
 				minimizeOnBgClick : true,
-				class: 'wndnewcollection normalizedmobile maxheight withoutButtons',
+				class: 'wndnewcollection normalizedmobile maxheight withoutButtons nobfilter',
 
 				postRender: function (_wnd, _wndObj, clbk) {
 					wndObj = _wndObj;
 					wnd = _wnd;
 
-					console.log(wndObj, wnd)
 					if (clbk) {
 						clbk();
 					}

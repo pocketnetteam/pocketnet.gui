@@ -10,6 +10,7 @@ _.each(shares, function(item){ %>
                     <% if(item.type == 'share') {%><%-e('juryCaptionPost')%><% } %>
                     <% if(item.type == 'comment') {%><%-e('juryCaptionComment')%><% } %>
                     <% if(item.type == 'channel') {%><%-e('juryCaptionUser')%><% } %>
+                    <% if(item.type == 'collection') {%><%-e('juryCaptionCollection')%><% } %>
                     </span>
                 </div>
 

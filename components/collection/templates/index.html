@@ -1,0 +1,33 @@
+<div id="<%-module.map.id%>" class="<%- typeof ed != 'undefined' && ed && ed.preview ? 'collectionPreview' : '' %>">
+
+	<div class="collectionWrapper">
+
+	<% if(typeof notfound != 'undefined' && notfound) { %>
+
+		<div class="empty collectionCard allb">
+			<%= app.platform.ws.tempates.collectionIllustration('empty') %>
+			<div class="emptytitle"><%- e('collectionNotFound') %></div>
+		</div>
+
+	<% } else if(typeof collection != 'undefined' && collection && collection.deleted) { %>
+
+		<!-- removed.html is rendered here by renders.removed -->
+
+	<% } else if(typeof collection != 'undefined' && collection) { %>
+
+		<div class="collectionHeaderWrapper"></div>
+
+		<div class="collectionFeedEmpty empty collectionCard allb" style="display:none;">
+			<%= app.platform.ws.tempates.collectionIllustration('empty') %>
+			<div class="emptytitle"><%- e('collectionMaterialsEmpty') %></div>
+		</div>
+
+		<div class="collectionFeed"></div>
+
+		<div class="authorCollectionsWrapper waitfeed"></div>
+
+	<% } %>
+
+	</div>
+
+</div>

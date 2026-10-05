@@ -1217,15 +1217,15 @@ var component = Object(componentNormalizer["a" /* default */])(
 
       /*while (i >= 0 && !event) {
       	var e = this.chat.timeline[i];
-      			var type = (e.event.type || "")
-      			if (type.indexOf('m.call') > -1){
+      		var type = (e.event.type || "")
+      		if (type.indexOf('m.call') > -1){
       		if(type.indexOf('candidates') > -1 ) {
       			return
       		}
       	}
-      			if(e.readed) return
-      			if (!this.core.mtrx.me(e.sender.userId)) {
-      				if(!this.core.mtrx.isReaded(e)){
+      		if(e.readed) return
+      		if (!this.core.mtrx.me(e.sender.userId)) {
+      			if(!this.core.mtrx.isReaded(e)){
       			event = e;
       		}
       		
@@ -1233,7 +1233,7 @@ var component = Object(componentNormalizer["a" /* default */])(
       	else{
       	
       	}
-      			i--;
+      		i--;
       }*/
 
       if (event) {

@@ -1230,6 +1230,11 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		return bitcoin.crypto.sha256(Buffer.from(hash, 'utf8')).toString('hex') == '7b4e4601c461d23919a34d8ea2d9e25b9ab95cf0a93c1e6eae51ba79c82fbcf3'
 	}
 
+	// methods that client can request without proxy cache (options.updateRPCCache), fresh result is cached again
+	var updateRPCCacheMethods = {
+		getprofilecollections : true
+	}
+
 	self.api = {
 		node: {
 			rpcex : {
@@ -1282,6 +1287,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					var smartresult = null
 
 					var cparameters = _.clone(parameters)
+
+					var updateRPCCache = options.updateRPCCache && updateRPCCacheMethods[method] ? true : false
 
 					
 					return new Promise((resolve, reject) => {
@@ -1336,7 +1343,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 						return new Promise((resolve, reject) => {
 
-							if(!noderating && !options.cache) {
+							if((!noderating && !options.cache) || updateRPCCache) {
 
 								resolve('nocaching')
 
@@ -1372,7 +1379,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 							});
 						}
 
-						var cached = server.cache.get(method, cparameters, cachehash);
+						var cached = updateRPCCache ? undefined : server.cache.get(method, cparameters, cachehash);
 
 
 						if (typeof cached != 'undefined') {

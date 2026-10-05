@@ -23,7 +23,7 @@ class OG {
     private $config = NULL;
     
 
-    private $maphrefs = array("pkview","easynode","about","aboutHome","aboutYoutube","aboutFacebook","aboutHIW","aboutTwitter","abilityincrease","support","applications","application","boost","terms","page404","welcome","registration","anothersite","usersettings","popup","test","accounts","uploadpeertube","streampeertube","tagcloud","taginput","categories","staking","recommendations","recommendedusers","bestposts","lastcomments","pkoin","articlesv","articlev","video","system16","help","donations","faq","embeding","camerapreview","donate","recommendationinfo","userpage","wallet","share","comments","lenta","transactionview","imageGalleryEdit","imagegallery","aboutus","menu","navigation","footer","notifications","panel","leftpanel","nodecontrol","authorization","addaccount","complain","downloadMedia","postscores","socialshare2","main","author","channel","post","userslist","ustate","statistic","videoCabinet","dust","testApi","commentBanner", "index", "", "advertising", "earnings", "home");
+    private $maphrefs = array("pkview","easynode","about","aboutHome","aboutYoutube","aboutFacebook","aboutHIW","aboutTwitter","abilityincrease","support","applications","application","boost","terms","page404","welcome","registration","anothersite","usersettings","popup","test","accounts","uploadpeertube","streampeertube","tagcloud","taginput","categories","staking","recommendations","recommendedusers","bestposts","lastcomments","pkoin","articlesv","articlev","video","system16","help","donations","faq","embeding","camerapreview","donate","recommendationinfo","userpage","wallet","share","comments","lenta","transactionview","imageGalleryEdit","imagegallery","aboutus","menu","navigation","footer","notifications","panel","leftpanel","nodecontrol","authorization","addaccount","complain","downloadMedia","postscores","socialshare2","main","author","channel","post","collection","userslist","ustate","statistic","videoCabinet","dust","testApi","commentBanner", "index", "", "advertising", "earnings", "home");
 
     private $defaultOg = NULL;
 
@@ -91,6 +91,7 @@ class OG {
 
         if (isset($get['s'])) $this->txid = $this->clean($get['s']);
         if (isset($get['v'])) $this->txid = $this->clean($get['v']);
+        if (isset($get['c'])) $this->txid = $this->clean($get['c']);
 
         if ($this->author == NULL && isset($get['i'])) $this->txid = $this->clean($get['i']);
 
@@ -133,6 +134,17 @@ class OG {
         
         return true;
 
+    }
+
+    // cut by characters (not bytes), so utf-8 text is not broken
+    public function shorttext($text, $length) {
+        $text = trim($text);
+
+        if (!function_exists('mb_strlen')) return substr($text, 0, $length).'...';
+
+        if (mb_strlen($text, 'UTF-8') <= $length) return $text;
+
+        return mb_substr($text, 0, $length, 'UTF-8').'...';
     }
 
     public function clean($value) {
@@ -410,6 +422,58 @@ class OG {
                                 $pca = 'p';
             
                                 $this->author = $r->address;
+
+                                if (isset($r->contentIds) || (isset($r->type) && $r->type == 'collection')){
+
+                                    $pca = 'col';
+
+                                    // getrawtransactionwithmessagebyid returns a collection in the share format:
+                                    // contentIds in repost, cover in m, settings in t
+                                    if (!isset($r->contentIds) && isset($r->repost)) $r->contentIds = $r->repost;
+                                    if (!isset($r->i) && isset($r->m)) $r->i = $r->m;
+                                    if (!isset($r->s) && isset($r->t)) $r->s = $r->t;
+
+                                    if (!isset($r->contentIds)) $r->contentIds = array();
+
+                                    // contentIds may come as a json string
+                                    $contentIds = is_string($r->contentIds) ? json_decode($r->contentIds) : $r->contentIds;
+
+                                    if (!is_array($contentIds)) $contentIds = array();
+
+                                    if (isset($r->c) && $r->c != ''){
+                                        $this->currentOg['title']= urldecode($r->c);
+                                        $title = true;
+                                    }
+
+                                    $materialsCount = count($contentIds);
+                                    $this->currentOg['description'] = $materialsCount . ' publications';
+
+                                    // collection description is stored in settings json: { "m" : "..." }
+                                    $collectionMessage = '';
+
+                                    if (isset($r->s)){
+                                        $collectionSettings = is_string($r->s) ? json_decode($r->s) : $r->s;
+
+                                        if (is_object($collectionSettings) && isset($collectionSettings->m) && is_string($collectionSettings->m)){
+                                            $collectionMessage = $collectionSettings->m;
+                                        }
+                                    }
+
+                                    if ($collectionMessage != ''){
+                                        $this->currentOg['description'] = $this->shorttext(strip_tags(urldecode($collectionMessage)), 130);
+                                    }
+
+                                    $description = true;
+                                    $this->currentOg['type'] = 'article';
+
+                                    // cover is url encoded like caption (client decodes it with trydecode)
+                                    if (isset($r->i) && $r->i != ''){
+                                        $this->currentOg['image'] = urldecode(is_array($r->i) ? $r->i[0] : $r->i);
+                                        $image = true;
+                                    }
+
+                                }
+                                else {
             
                                 if ($r->c != ''){
                                     $this->currentOg['title']= urldecode($r->c);
@@ -454,6 +518,8 @@ class OG {
                                         }
                                     }
             
+                                }
+
                                 }
             
                             }
@@ -507,6 +573,7 @@ class OG {
             
                                     if($pca == 'c') $this->currentOg['title'] = "Comment by " . $this->currentOg['title'];
                                     if($pca == 'p') $this->currentOg['title'] = "Post by " . $this->currentOg['title'];
+                                    if($pca == 'col') $this->currentOg['title'] = "Collection by " . $this->currentOg['title'];
             
                                     if($this->connect == TRUE) $this->currentOg['title'] = "Connect with " . $this->currentOg['title'];
                                 }
@@ -551,7 +618,7 @@ class OG {
 
             if(isset($this->currentOg[$key])) $v = $this->currentOg[$key];
 
-            echo '<meta property="'.$prefix.''.$key.'" content="'.$v.'">';
+            echo '<meta property="'.$prefix.''.$key.'" content="'.htmlspecialchars($v, ENT_QUOTES, 'UTF-8').'">';
             
         }
 
@@ -564,7 +631,7 @@ class OG {
             if(strpos($key, 'twitter') !== false) $prefix = '';
 
             if(!isset($this->defaultOg[$key])) {
-                echo '<meta property="'.$prefix.''.$key.'" content="'.$v.'">';
+                echo '<meta property="'.$prefix.''.$key.'" content="'.htmlspecialchars($v, ENT_QUOTES, 'UTF-8').'">';
             }
 
            
