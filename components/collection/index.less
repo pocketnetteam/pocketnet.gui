@@ -1,4 +1,5 @@
 @import "../../css/__cssvar";
+@import "../../css/__bokeh";
 
 @clRadius : 12px;
 @clCover : 160px;
@@ -49,32 +50,12 @@
 		overflow: hidden;
 		padding : 3 * @rhythm;
 
-		/* blurred cover behind the header, fades into the card */
-		.coverBackdrop{
-			position: absolute;
-			left: -10%;
-			right: -10%;
-			top: -40px;
-			height: @clCover + 6 * @rhythm + 40px;
-			background-size: cover;
-			background-position: center;
-			filter: blur(40px) saturate(1.3);
-			opacity: 0;
-			pointer-events: none;
+		/* bokeh circles behind the header, fade into the card at the bottom */
+		.bokehLayer();
 
-			&[imageloaded="true"]{
-				opacity: 0.35;
-			}
-
-			&:after{
-				content: '';
-				position: absolute;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				height: 60%;
-				background: linear-gradient(180deg, rgba(var(--background-total-theme), 0) 0%, rgb(var(--background-total-theme)) 100%);
-			}
+		.bokeh{
+			-webkit-mask-image: linear-gradient(180deg, #000 40%, transparent 100%);
+			mask-image: linear-gradient(180deg, #000 40%, transparent 100%);
 		}
 
 		.headerContent{
@@ -447,9 +428,6 @@ html.openapipnet{
 		.collectionHeader{
 			padding : 2 * @rhythm;
 
-			.coverBackdrop{
-				height: 80px + 4 * @rhythm + 40px;
-			}
 
 			.headerContent{
 				gap : 2 * @rhythm;
@@ -479,9 +457,6 @@ html.mobileview{
 			padding : 2 * @rhythm;
 			text-align: center;
 
-			.coverBackdrop{
-				height: 240px;
-			}
 
 			.headerContent{
 				flex-direction: column;
@@ -616,9 +591,6 @@ html.mobileview{
 			}
 		}
 
-		.coverBackdrop{
-			height: 64px + 4 * @rhythm + 40px;
-		}
 
 		.headerContent{
 			flex-direction: row;

@@ -1,4 +1,5 @@
 @import "../../css/__cssvar";
+@import "../../css/__bokeh";
 
 @ringsize : 112px;
 @ringlength : 301.6;
@@ -58,39 +59,11 @@ html.pinlockreveal{
 /* wnd for set / change / disable */
 
 .wnd.pinlockwnd{
-	/* the app's blurred backdrop would be re-rendered on every frame of the aurora drift */
+	/* the app's blurred backdrop would be re-rendered on every frame of the bokeh drift */
 	.wndback{
 		background: rgba(var(--color-shadow-base), .85) !important;
 		backdrop-filter: none !important;
 		-webkit-backdrop-filter: none !important;
-	}
-
-	/* keep aurora layers card-sized, vmax would make them viewport-sized */
-	.aurora{
-		.blob{
-			width: 140%;
-			height: 90%;
-		}
-
-		.b1{
-			top: -30%;
-			left: -50%;
-			animation-name: pinlockDriftCard1;
-		}
-
-		.b2{
-			bottom: -30%;
-			right: -60%;
-			animation-name: pinlockDriftCard2;
-		}
-
-		.b3{
-			width: 100%;
-			height: 60%;
-			top: 35%;
-			left: 20%;
-			animation-name: pinlockDriftCard3;
-		}
 	}
 
 	.wndinner{
@@ -145,60 +118,18 @@ html.pinlockreveal{
 		-webkit-tap-highlight-color: transparent;
 	}
 
-	/* aurora background */
+	/* bokeh background: random circles from lightCircles(), the whole layer drifts slowly */
 
-	.aurora{
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		pointer-events: none;
+	.bokehLayer();
+
+	.bokeh{
 		opacity: 0;
 		animation: pinlockFadeIn .3s ease-out forwards;
+	}
 
-		.blob{
-			position: absolute;
-			width: 60vmax;
-			height: 60vmax;
-			/* soft spot via radial gradient: no filter, so the drift is a cheap composited transform */
-			opacity: .22;
-			will-change: transform;
-		}
-
-		.b1{
-			top: -20vmax;
-			left: -15vmax;
-			background: radial-gradient(closest-side, rgb(var(--color-bg-ac)), rgba(var(--color-bg-ac), 0));
-			animation: pinlockDrift1 48s ease-in-out infinite alternate;
-		}
-
-		.b2{
-			bottom: -25vmax;
-			right: -20vmax;
-			background: radial-gradient(closest-side, @color-azure, fade(@color-azure, 0));
-			animation: pinlockDrift2 56s ease-in-out infinite alternate;
-		}
-
-		.b3{
-			top: 30%;
-			left: 40%;
-			width: 40vmax;
-			height: 40vmax;
-			background: radial-gradient(closest-side, rgb(var(--color-bg-ac-bright)), rgba(var(--color-bg-ac-bright), 0));
-			opacity: .15;
-			animation: pinlockDrift3 42s ease-in-out infinite alternate;
-		}
-
-		.grain{
-			position: absolute;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			opacity: .03;
-			background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-		}
+	.bokehField{
+		will-change: transform;
+		animation: pinlockFloat 40s ease-in-out infinite alternate;
 	}
 
 	.pinlockBody{
@@ -828,7 +759,7 @@ html.pinlockreveal{
 	}
 
 	@media (prefers-reduced-motion: reduce){
-		.aurora .blob,
+		.bokehField,
 		.ringWrapper:before,
 		.pinlockBody,
 		.pinlockInput,
@@ -853,14 +784,6 @@ html.pinlockreveal{
 :root[theme='black'], :root[theme='gray']{
 	.pinlockModule{
 		background: linear-gradient(160deg, @color-black4, @color-black2);
-
-		.aurora .blob{
-			opacity: .4;
-		}
-
-		.aurora .b3{
-			opacity: .3;
-		}
 
 		.keypad .key:not(.backspace){
 			background: rgba(255, 255, 255, .06);
@@ -941,32 +864,7 @@ html.pinlockreveal{
 	to { stroke-dashoffset: 0; }
 }
 
-@keyframes pinlockDrift1{
+@keyframes pinlockFloat{
 	from { transform: translate(0, 0) scale(1); }
-	to { transform: translate(18vmax, 12vmax) scale(1.15); }
-}
-
-@keyframes pinlockDrift2{
-	from { transform: translate(0, 0) scale(1.1); }
-	to { transform: translate(-16vmax, -14vmax) scale(.95); }
-}
-
-@keyframes pinlockDriftCard1{
-	from { transform: translate(0, 0) scale(1); }
-	to { transform: translate(20%, 15%) scale(1.1); }
-}
-
-@keyframes pinlockDriftCard2{
-	from { transform: translate(0, 0) scale(1.05); }
-	to { transform: translate(-20%, -15%) scale(.95); }
-}
-
-@keyframes pinlockDriftCard3{
-	from { transform: translate(0, 0); }
-	to { transform: translate(-25%, 15%); }
-}
-
-@keyframes pinlockDrift3{
-	from { transform: translate(0, 0); }
-	to { transform: translate(-20vmax, 10vmax); }
+	to { transform: translate(-3%, 2%) scale(1.08); }
 }

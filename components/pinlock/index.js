@@ -518,6 +518,8 @@ var pinlock = (function(){
 				el.ring = el.c.find('.ring .progress')
 				el.forgot = el.c.find('.forgot')
 
+				lightCircles(el.c.find('.bokehField')[0], { quantity : 10 })
+
 				initEvents()
 
 				renders.step()
