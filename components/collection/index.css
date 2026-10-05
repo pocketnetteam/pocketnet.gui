@@ -263,8 +263,9 @@
 }
 #collection .authorCollections .authorCollectionsScroll {
   position: relative;
-  margin-top: 1em;
-  padding: 0 1em 1em;
+  /* side space is margin, not padding: the scrollbar track takes the full element width, padding does not shorten it */
+  margin: 1em 1em 0;
+  padding: 0 0 1em;
   display: flex;
   gap: 1em;
   overflow-x: auto;
@@ -485,6 +486,21 @@ html.mobileview #collection .authorCollections .authorCollection .cover {
 .openapipnet #collection.collectionPreview .collectionHeader {
   padding: 1em;
   text-align: left;
+  /* card embedded in an article opens the collection */
+}
+.openapipnet #collection.collectionPreview .collectionHeader.openonclick {
+  cursor: pointer;
+}
+.openapipnet #collection.collectionPreview .collectionHeader.openonclick .caption {
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+@media (pointer: hover) {
+  .openapipnet #collection.collectionPreview .collectionHeader.openonclick:hover .caption {
+    color: rgb(var(--color-txt-ac));
+  }
 }
 .openapipnet #collection.collectionPreview .collectionHeader .coverBackdrop {
   height: 106px;

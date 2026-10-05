@@ -310,8 +310,9 @@
 
 		.authorCollectionsScroll{
 			position: relative;
-			margin-top: 2 * @rhythm;
-			padding : 0 2 * @rhythm 2 * @rhythm;
+			/* side space is margin, not padding: the scrollbar track takes the full element width, padding does not shorten it */
+			margin : 2 * @rhythm 2 * @rhythm 0;
+			padding : 0 0 2 * @rhythm;
 			display: flex;
 			gap : 2 * @rhythm;
 			overflow-x: auto;
@@ -589,6 +590,21 @@ html.mobileview{
 	.collectionHeader{
 		padding : 2 * @rhythm;
 		text-align: left;
+
+		/* card embedded in an article opens the collection */
+		&.openonclick{
+			cursor: pointer;
+
+			.caption{
+				.transition(0.3s);
+			}
+
+			@media (pointer:hover) {
+				&:hover .caption{
+					color : rgb(var(--color-txt-ac));
+				}
+			}
+		}
 
 		.coverBackdrop{
 			height: 64px + 4 * @rhythm + 40px;

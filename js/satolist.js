@@ -3235,6 +3235,8 @@ Platform = function (app, listofnodes) {
         // shared collection in chat: header only (cover, caption, description, author, count), publications are not loaded
         collectionpreview: function (txid, el, clbk, p) {
 
+            if (!p) p = {}
+
             var id = 'collectionpreview' + makeid()
 
             app.nav.api.load({
@@ -3248,7 +3250,9 @@ Platform = function (app, listofnodes) {
                 essenseData: {
                     txid: txid,
                     openapi: true,
-                    preview: true
+                    preview: true,
+                    // embedded in an article: the card opens the collection (chat handles the click itself)
+                    openonclick: p.openonclick || false
                 }
             })
         },

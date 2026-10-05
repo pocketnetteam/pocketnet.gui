@@ -44,6 +44,17 @@ var collection = (function(){
 				})
 			},
 
+			// preview card embedded in an article
+			openpage : function(){
+				if(!collection || !collection.txid) return
+
+				self.nav.api.load({
+					open : true,
+					href : 'collection?c=' + collection.txid,
+					history : true
+				})
+			},
+
 			open : function(txid){
 				self.nav.api.load({
 					open : true,
@@ -264,6 +275,15 @@ var collection = (function(){
 					p.el.find('.shareCollection').on('click', actions.share)
 					p.el.find('.complainCollection').on('click', actions.complain)
 					p.el.find('.openCollection').on('click', actions.openwindow)
+
+					if(ed.preview && ed.openonclick){
+						p.el.find('.collectionHeader').addClass('openonclick').on('click', function(e){
+							// author link opens the author
+							if($(e.target).closest('a').length) return
+
+							actions.openpage()
+						})
+					}
 
 					renders.materials()
 					renders.authoricon()
