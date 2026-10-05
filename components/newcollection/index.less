@@ -831,6 +831,15 @@ html.mobileview{
 		#newcollection{
 			padding-left : 2 * @rhythm;
 			padding-right : 2 * @rhythm;
+
+			/* button.small has wide side padding: the add button text stays at the right edge of the fields and publications */
+			.shares{
+				.additems{
+					padding-left : @rhythm;
+					padding-right : @rhythm;
+					margin-right : -@rhythm;
+				}
+			}
 		}
 
 		&.normalizedmobile.maxheight:not(.hiddenState){

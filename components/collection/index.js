@@ -15,6 +15,9 @@ var collection = (function(){
 		// last requested collection: a slow answer for the previous one is ignored
 		var loadid = 0;
 
+		// last feed: publications or lenta of a cleared feed (refeed, other collection, destroy) are not rendered
+		var feedid = 0;
+
 		var actions = {
 			// another collection of the author is opened on the same page (url parameter changed)
 			change : function(txid){
@@ -199,11 +202,19 @@ var collection = (function(){
 				el.authorcollections = el.c.find('.authorCollectionsWrapper')
 			},
 
+			// clearessense destroys the lenta and removes it from the lenta module essenses
+			destroyfeed : function(lenta){
+				if(!lenta) return
+
+				if(lenta.clearessense) lenta.clearessense()
+				else if(lenta.destroy) lenta.destroy()
+			},
+
 			clearfeed : function(){
-				if(externalLenta){
-					externalLenta.destroy()
-					externalLenta = null
-				}
+				feedid++
+
+				helpers.destroyfeed(externalLenta)
+				externalLenta = null
 
 				materials = null
 			},
@@ -211,6 +222,11 @@ var collection = (function(){
 			// list of the author collections is shown only on the page (collection from the url)
 			showauthorcollections : function(){
 				return !ed.txid && !ed.openapi && !ed.jury && !ed.preview
+			},
+
+			// author collections are under the feed: shown when the feed is rendered, otherwise the list jumps down
+			feedready : function(){
+				if(el.authorcollections) el.authorcollections.removeClass('waitfeed')
 			},
 
 			publishState : function(item){
@@ -238,10 +254,7 @@ var collection = (function(){
 
 				if(!el.c) return
 
-				if(externalLenta){
-					externalLenta.destroy()
-					externalLenta = null
-				}
+				helpers.clearfeed()
 
 				self.shell({
 					name : 'removed',
@@ -395,12 +408,25 @@ var collection = (function(){
 			feed : function(){
 				if(!collection || !collection.contentIds || !collection.contentIds.length){
 					el.c.find('.collectionFeedEmpty').show()
+					helpers.feedready()
 					return
 				}
 
+				// another collection may be opened meanwhile: its list waits for its own feed
+				var request = loadid
+
+				var feedready = _.once(function(){
+					if(request == loadid) helpers.feedready()
+				})
+
+				// lenta may fail without render callback
+				setTimeout(feedready, 5000)
+
+				var feedrequest = feedid
+
 				self.app.platform.sdk.node.shares.getbyid(collection.contentIds, function(shares){
 
-					if(!el.c) return
+					if(!el.c || feedrequest != feedid) return
 
 					renders.authoricon()
 
@@ -425,21 +451,32 @@ var collection = (function(){
 
 					renders.materials()
 
+					// deleted and unavailable publications are filtered above; nothing left: empty state, the lenta is not created
 					if(!availableCount){
 						el.c.find('.collectionFeedEmpty').show()
+						feedready()
 						return
 					}
 
 					el.c.find('.collectionFeedEmpty').hide()
 
 					self.app.platform.papi.lenta(availableTxids, el.feed, (e, p) => {
+
+						// the feed was cleared while the lenta was loading
+						if(!el.c || feedrequest != feedid){
+							helpers.destroyfeed(p)
+
+							return
+						}
+
 						externalLenta = p
 					}, {
 						second : true,
 						notscrollloading : true,
 						openapi : ed.openapi || false,
 						comments : ed.comments,
-						fullscreenvideo : ed.fullscreenvideo
+						fullscreenvideo : ed.fullscreenvideo,
+						renderClbk : feedready
 					})
 				})
 			}

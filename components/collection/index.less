@@ -296,6 +296,16 @@
 		}
 	}
 
+	/* hidden until the feed above is rendered, so it does not jump while publications appear */
+	.authorCollectionsWrapper{
+		.transition(0.3s);
+
+		&.waitfeed{
+			opacity: 0;
+			pointer-events: none;
+		}
+	}
+
 	/* all collections of the author, horizontal scroll */
 	.authorCollections{
 		margin-top: 3 * @rhythm;

@@ -3201,6 +3201,8 @@ Platform = function (app, listofnodes) {
                     enterFullScreenVideo: p.fullscreenvideo,
                     openapi: p.openapi,
                     renderclbk: p.renderclbk,
+                    // lenta calls renderClbk after shares are rendered
+                    renderClbk: p.renderClbk,
                     ready: p.ready,
                     second: true,
                     allowblocked: true,

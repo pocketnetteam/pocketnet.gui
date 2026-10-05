@@ -699,6 +699,12 @@
 html.mobileview .wnd.wndnewcollection #newcollection {
   padding-left: 1em;
   padding-right: 1em;
+  /* button.small has wide side padding: the add button text stays at the right edge of the fields and publications */
+}
+html.mobileview .wnd.wndnewcollection #newcollection .shares .additems {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  margin-right: -0.5em;
 }
 html.mobileview .wnd.wndnewcollection.normalizedmobile.maxheight:not(.hiddenState) .wndinner .wndcontent {
   padding-bottom: 0;
