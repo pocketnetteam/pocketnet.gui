@@ -971,3 +971,52 @@ _l.collectionTypePaid = "Für Abonnenten"
 _l.collectionInRelay = "Sammlung wird veröffentlicht…"
 _l.collectionWaitConf = "Sammlung wird veröffentlicht…"
 _l.collectionPublishError = "Fehler beim Veröffentlichen"
+
+//pin lock
+
+_l.pinlock_title = "PIN-Sperre"
+_l.pinlock_welcome = function(v){
+	return "Willkommen zurück, " + v
+}
+_l.pinlock_welcomeanon = "Willkommen zurück"
+_l.pinlock_enter = "PIN eingeben"
+_l.pinlock_current = "Aktuelle PIN eingeben"
+_l.pinlock_new = "PIN festlegen"
+_l.pinlock_repeat = "PIN wiederholen"
+_l.pinlock_done = "Fertig"
+_l.pinlock_mismatch = "Die PINs stimmen nicht überein"
+_l.pinlock_wrong = "Falsche PIN"
+_l.pinlock_attemptsleft = function(v){
+	return "verbleibende Versuche: " + v
+}
+_l.pinlock_blocked = function(v){
+	return "Zu viele Versuche. Erneut versuchen in " + v
+}
+_l.pinlock_error = "Etwas ist schiefgelaufen. Bitte erneut versuchen"
+_l.pinlock_entered = function(v){
+	return v + " von 4 eingegeben"
+}
+_l.pinlock_digit = function(v){
+	return "Ziffer " + v
+}
+_l.pinlock_delete = "Löschen"
+_l.pinlock_keyboardhint = "Sie können über die Tastatur eingeben"
+_l.pinlock_forgot = "PIN vergessen?"
+_l.pinlock_forgotwarning = "Um sich erneut anzumelden, benötigen Sie Ihre Mnemonic-Phrase oder Ihren privaten Schlüssel. Ohne sie geht der Zugang zum Konto für immer verloren."
+_l.pinlock_signout = "Abmelden"
+_l.pinlock_purpose = "Die PIN schützt die App vor anderen Personen, die Zugriff darauf erhalten. Sie ersetzt keine Sicherung Ihrer Mnemonic-Phrase."
+_l.pinlock_enabled = "PIN ist festgelegt"
+_l.pinlock_changed = "PIN geändert"
+_l.pinlock_disabled = "PIN deaktiviert"
+_l.pinlock_lockafter = "Sperren nach"
+_l.pinlock_minutes = function(v){
+	return v + " Min."
+}
+_l.pinlock_security = "Sicherheit"
+_l.pinlock_settingname = "PIN"
+_l.pinlock_stateon = "An"
+_l.pinlock_stateoff = "Aus"
+_l.pinlock_set = "PIN festlegen"
+_l.pinlock_change = "PIN ändern"
+_l.pinlock_disable = "PIN deaktivieren"
+_l.pinlock_locknow = "Jetzt sperren"

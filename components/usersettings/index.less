@@ -412,6 +412,98 @@
 			}
 		}
 	}
+
+	.security{
+		.parameter{
+			display: flex;
+			align-items: center;
+			flex-wrap: wrap;
+			gap: @rhythm 2 * @rhythm;
+			padding: @rhythm 0;
+
+			> div{
+				padding: 0;
+			}
+
+			.pName{
+				width: auto;
+				padding: 0;
+
+				.pNameW{
+					padding-top: 0;
+				}
+			}
+		}
+
+		.pinlockstate{
+			font-size: 0.9em;
+			color: rgb(var(--color-txt-gray));
+
+			&.on{
+				color: rgb(var(--color-txt-ac));
+			}
+		}
+
+		.pinlockpurpose{
+			font-size: 0.85em;
+			line-height: 1.4;
+			color: rgb(var(--color-txt-gray));
+			padding: @rhythm 0 2 * @rhythm;
+		}
+
+		.pinlockbuttons{
+			display: flex;
+			flex-wrap: wrap;
+			gap: @rhythm;
+			padding-bottom: 2 * @rhythm;
+
+			.pinlockaction{
+				min-height: 34px;
+				padding: 0 2 * @rhythm;
+				border-radius: 17px;
+				border: 1px solid rgb(var(--color-bg-ac));
+				background: transparent;
+				color: rgb(var(--color-txt-ac));
+				font-size: 0.9em;
+				cursor: pointer;
+
+				&.main{
+					background: rgb(var(--color-bg-ac));
+					color: rgb(var(--text-on-bg-ac-color));
+				}
+
+				&.bad{
+					border-color: rgb(var(--color-bad));
+					color: rgb(var(--color-bad));
+				}
+			}
+		}
+
+		.pinlocktimeout{
+			.pInput{
+				display: flex;
+				flex-wrap: wrap;
+				gap: @rhythm / 2;
+			}
+
+			.pinlocktimeoutchip{
+				height: 30px;
+				line-height: 30px;
+				padding: 0 12px;
+				border-radius: 15px;
+				font-size: 9pt;
+				font-weight: bold;
+				cursor: pointer;
+				background: rgb(var(--neutral-grad-1));
+				color: rgb(var(--neutral-grad-4));
+
+				&.active{
+					background: rgb(var(--color-bg-ac));
+					color: rgb(var(--text-on-bg-ac-color));
+				}
+			}
+		}
+	}
 }
 
 /*t*/ @media only screen and (max-width: 768px){

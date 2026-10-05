@@ -3347,3 +3347,52 @@ _l.collectionTypePaid = "За претплатнике"
 _l.collectionInRelay = "Колекција се објављује…"
 _l.collectionWaitConf = "Колекција се објављује…"
 _l.collectionPublishError = "Грешка при објављивању"
+
+//pin lock
+
+_l.pinlock_title = "Закључавање PIN-ом"
+_l.pinlock_welcome = function(v){
+	return "Добро дошли назад, " + v
+}
+_l.pinlock_welcomeanon = "Добро дошли назад"
+_l.pinlock_enter = "Унесите PIN"
+_l.pinlock_current = "Унесите тренутни PIN"
+_l.pinlock_new = "Направите PIN"
+_l.pinlock_repeat = "Поновите PIN"
+_l.pinlock_done = "Готово"
+_l.pinlock_mismatch = "PIN-ови се не поклапају"
+_l.pinlock_wrong = "Погрешан PIN"
+_l.pinlock_attemptsleft = function(v){
+	return "преосталих покушаја: " + v
+}
+_l.pinlock_blocked = function(v){
+	return "Превише покушаја. Покушајте поново за " + v
+}
+_l.pinlock_error = "Нешто није у реду. Покушајте поново"
+_l.pinlock_entered = function(v){
+	return "Унето " + v + " од 4"
+}
+_l.pinlock_digit = function(v){
+	return "Цифра " + v
+}
+_l.pinlock_delete = "Обриши"
+_l.pinlock_keyboardhint = "Можете куцати на тастатури"
+_l.pinlock_forgot = "Заборавили сте PIN?"
+_l.pinlock_forgotwarning = "За поновну пријаву биће вам потребна мнемоничка фраза или приватни кључ. Без њих ће приступ налогу бити трајно изгубљен."
+_l.pinlock_signout = "Одјави се"
+_l.pinlock_purpose = "PIN штити апликацију од других особа које до ње дођу. Не замењује резервну копију мнемоничке фразе."
+_l.pinlock_enabled = "PIN је постављен"
+_l.pinlock_changed = "PIN је промењен"
+_l.pinlock_disabled = "PIN је искључен"
+_l.pinlock_lockafter = "Закључај након"
+_l.pinlock_minutes = function(v){
+	return v + " мин"
+}
+_l.pinlock_security = "Безбедност"
+_l.pinlock_settingname = "PIN"
+_l.pinlock_stateon = "Укључен"
+_l.pinlock_stateoff = "Искључен"
+_l.pinlock_set = "Постави PIN"
+_l.pinlock_change = "Промени PIN"
+_l.pinlock_disable = "Искључи PIN"
+_l.pinlock_locknow = "Закључај сада"

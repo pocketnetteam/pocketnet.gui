@@ -1,0 +1,60 @@
+<div class="settingsGroup security">
+
+	<div class="mwork gk">
+		<div class="groupCaption"><%=e('pinlock_security')%></div>
+	</div>
+
+	<div class="mwork wh">
+		<div class="groupOptions">
+
+			<div class="parameterMaketWrapper pinlockstatus" parameter="pinlock">
+				<div class="parameter table">
+
+					<div class="pName">
+						<div class="pNameW">
+							<%=e('pinlock_settingname')%>
+						</div>
+					</div>
+
+					<div class="pInput">
+						<span class="pinlockstate <% if(enabled) { %>on<% } %>"><%=e(enabled ? 'pinlock_stateon' : 'pinlock_stateoff')%></span>
+					</div>
+
+				</div>
+			</div>
+
+			<div class="pinlockpurpose"><%=e('pinlock_purpose')%></div>
+
+			<div class="pinlockbuttons">
+				<% if(enabled) { %>
+					<button class="pinlockaction" mode="change"><%=e('pinlock_change')%></button>
+					<button class="pinlockaction bad" mode="disable"><%=e('pinlock_disable')%></button>
+				<% } else { %>
+					<button class="pinlockaction main" mode="set"><%=e('pinlock_set')%></button>
+				<% } %>
+			</div>
+
+			<% if(enabled) { %>
+				<div class="parameterMaketWrapper pinlocktimeout" parameter="pinlocktimeout">
+					<div class="parameter table">
+
+						<div class="pName">
+							<div class="pNameW">
+								<%=e('pinlock_lockafter')%>
+							</div>
+						</div>
+
+						<div class="pInput" role="radiogroup">
+							<% _.each(timeouts, function(t){ %>
+								<div class="pinlocktimeoutchip <% if(t == timeout) { %>active<% } %>" value="<%-t%>" role="radio" tabindex="0" aria-checked="<%- t == timeout ? 'true' : 'false' %>"><%=e('pinlock_minutes', t)%></div>
+							<% }) %>
+						</div>
+
+					</div>
+				</div>
+			<% } %>
+
+		</div>
+	</div>
+
+</div>

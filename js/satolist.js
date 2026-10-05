@@ -20588,23 +20588,19 @@ Platform = function (app, listofnodes) {
                         if (data.room_id) {
 
                             if (data.tap) {
-                                // Wait until we can navigate Matrix
-                                retry(function () {
+                                // Wait for pin unlock and until we can navigate Matrix
+                                platform.matrixchat.gateWaitFor('chat').then(function (core) {
 
-                                    return platform && platform.matrixchat && platform.matrixchat.core;
-
-                                }, function () {
+                                    if (!core) return
 
                                     setTimeout(function () {
 
-                                        platform.matrixchat.core.goto(data.room_id);
+                                        core.goto(data.room_id);
 
-                                        if (platform.matrixchat.core.apptochat)
-                                            platform.matrixchat.core.apptochat();
+                                        if (core.apptochat)
+                                            core.apptochat();
 
                                     }, 50)
-
-
 
                                 });
                             }
@@ -20620,49 +20616,57 @@ Platform = function (app, listofnodes) {
                             const body = JSON.parse(data?.json);
                             body.url = body?.url.replace("/index", "");
 
-                            if (body.url) {
-                                if (body.url === "/userpage?id=wallet") {
+                            var navgate = platform.app.pinlock ? platform.app.pinlock.gate('nav') : Promise.resolve(true)
+
+                            navgate.then(function (ok) {
+
+                                if (!ok) return
+
+                                if (body.url) {
+                                    if (body.url === "/userpage?id=wallet") {
+                                        platform.app.nav.api.go({
+                                            open: true,
+                                            href: 'wallet',
+                                            history: true,
+                                            inWnd: true,
+                                            essenseData: {},
+                                        });
+                                    } else {
+
+                                        const params = new URLSearchParams(body.url);
+
+                                        platform.app.nav.api.load({
+                                            open: true,
+                                            href: 'post?s=' + params.get('s'),
+                                            inWnd: true,
+                                            history: true,
+                                            clbk: function (d, p) {
+                                                app.nav.wnds['post'] = p
+                                            },
+
+                                            essenseData: {
+                                                share: params.get('s'),
+
+                                                reply: {
+                                                    answerid: params.get('commentid') || "",
+                                                    parentid: params.get('parentid') || "",
+                                                    noaction: true
+                                                }
+                                            }
+                                        })
+
+                                    }
+                                } else {
                                     platform.app.nav.api.go({
                                         open: true,
-                                        href: 'wallet',
-                                        history: true,
-                                        inWnd: true,
-                                        essenseData: {},
-                                    });
-                                } else {
-
-                                    const params = new URLSearchParams(body.url);
-
-                                    platform.app.nav.api.load({
-                                        open: true,
-                                        href: 'post?s=' + params.get('s'),
+                                        href: 'notifications',
                                         inWnd: true,
                                         history: true,
-                                        clbk: function (d, p) {
-                                            app.nav.wnds['post'] = p
-                                        },
-
-                                        essenseData: {
-                                            share: params.get('s'),
-
-                                            reply: {
-                                                answerid: params.get('commentid') || "",
-                                                parentid: params.get('parentid') || "",
-                                                noaction: true
-                                            }
-                                        }
+                                        essenseData: {}
                                     })
-
                                 }
-                            } else {
-                                platform.app.nav.api.go({
-                                    open: true,
-                                    href: 'notifications',
-                                    inWnd: true,
-                                    history: true,
-                                    essenseData: {}
-                                })
-                            }
+
+                            })
                         } else {
 
                             if (typeof cordova != 'undefined') {
@@ -26084,6 +26088,30 @@ Platform = function (app, listofnodes) {
             })
         },
 
+        /* bounded wait for chat core; never rejects, resolves null if chat is disabled or not loaded in time */
+        waitFor: function (totaltime) {
+            if (deep(self, 'sdk.usersettings.meta.chatenabled.value') === false) return Promise.resolve(null)
+
+            if (self.matrixchat.core) return Promise.resolve(self.matrixchat.core)
+
+            return pretry(function () {
+                return self.matrixchat.core
+            }, 100, totaltime || 60000).then(() => {
+                return self.matrixchat.core || null
+            }).catch(() => {
+                return null
+            })
+        },
+
+        /* waits for pin unlock (if locked), then for chat core */
+        gateWaitFor: function (slot) {
+            var gate = self.app.pinlock ? self.app.pinlock.gate(slot) : Promise.resolve(true)
+
+            return gate.then((ok) => {
+                return ok ? self.matrixchat.waitFor() : null
+            })
+        },
+
         showed: function () {
             if (!self.matrixchat.core) {
                 return false
@@ -26376,6 +26404,12 @@ Platform = function (app, listofnodes) {
             if (!self.matrixchat.connectWith && !self.matrixchat.joinRoom) return
             if (!self.matrixchat.core) return
 
+            // startup connect / publicroom and deeplinks: wait for pin unlock
+            if (self.app.pinlock && self.app.pinlock.locked()) {
+                return self.app.pinlock.gate('connect').then(ok => {
+                    if (ok) return self.matrixchat.connect()
+                })
+            }
 
             self.matrixchat.core.apptochat()
 
@@ -26445,6 +26479,8 @@ Platform = function (app, listofnodes) {
 
             self.focus = true;
 
+            if (self.app.pinlock) self.app.pinlock.check()
+
             if (time > 120 && (window.cordova || electron || isInStandaloneMode())) {
                 self.clearStorageLight()
 
@@ -26511,6 +26547,8 @@ Platform = function (app, listofnodes) {
             self.focus = false;
 
             unfocustime = platform.currentTime()
+
+            if (self.app.pinlock) self.app.pinlock.flush()
 
             self.clbks.unfocus();
 
@@ -26806,6 +26844,12 @@ Platform = function (app, listofnodes) {
                         cordova.openwith.exit();
                     }
 
+                    return self.app.pinlock ? self.app.pinlock.gate('share') : true
+
+                }).then(ok => {
+
+                    if (!ok) return
+
                     if (_.isEmpty(sharing)) {
                         sitemessage(self.app.localization.e('e13293') + ' /ul101')
                     } else {
@@ -26821,7 +26865,9 @@ Platform = function (app, listofnodes) {
                                         class: 'itemmain',
                                         action: function (clbk) {
 
-                                            self.matrixchat.wait().then(r => {
+                                            self.matrixchat.waitFor().then(core => {
+                                                if (!core) return Promise.reject('core')
+
                                                 return self.matrixchat.share.object(sharing)
                                             }).catch(r => {
 
@@ -26923,6 +26969,12 @@ Platform = function (app, listofnodes) {
 
             }).then(r => {
 
+                return app.pinlock ? app.pinlock.gate('nav') : true
+
+            }).then(ok => {
+
+                if (!ok) return
+
                 app.user.isState(function (state) {
 
                     var url = route
@@ -26962,8 +27014,8 @@ Platform = function (app, listofnodes) {
                     }
 
                     setTimeout(function () {
-                        self.matrixchat.wait().then(r => {
-                            self.matrixchat.connect()
+                        self.matrixchat.waitFor().then(core => {
+                            if (core) self.matrixchat.connect()
                         })
                     }, 500)
 
@@ -26992,10 +27044,8 @@ Platform = function (app, listofnodes) {
     
                     var chatLink = '/chat?id=' + data.roomid;
     
-                    return self.app.platform.matrixchat.wait().then((core) => {
-                        core.gopage(chatLink)    
-                        return Promise.resolve()
-    
+                    return self.app.platform.matrixchat.gateWaitFor('chat').then((core) => {
+                        if (core) core.gopage(chatLink)
                     })
                 }
             })

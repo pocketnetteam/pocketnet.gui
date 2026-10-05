@@ -3381,3 +3381,52 @@ _l.mustInstallToRate = "You must install the app before rating"
 _l.reviewsAndRatingsMenu = "Reviews and Ratings"
 _l.rateAppPromptMessage = "Are you enjoying this app? Please take a moment to rate it!"
 _l.rateAppButton = "Rate App"
+
+//pin lock
+
+_l.pinlock_title = "PIN lock"
+_l.pinlock_welcome = function(v){
+	return "Welcome back, " + v
+}
+_l.pinlock_welcomeanon = "Welcome back"
+_l.pinlock_enter = "Enter PIN code"
+_l.pinlock_current = "Enter current PIN code"
+_l.pinlock_new = "Create a PIN code"
+_l.pinlock_repeat = "Repeat PIN code"
+_l.pinlock_done = "Done"
+_l.pinlock_mismatch = "PIN codes do not match"
+_l.pinlock_wrong = "Wrong PIN code"
+_l.pinlock_attemptsleft = function(v){
+	return "attempts left: " + v
+}
+_l.pinlock_blocked = function(v){
+	return "Too many attempts. Try again in " + v
+}
+_l.pinlock_error = "Something went wrong. Please try again"
+_l.pinlock_entered = function(v){
+	return "Entered " + v + " of 4"
+}
+_l.pinlock_digit = function(v){
+	return "Digit " + v
+}
+_l.pinlock_delete = "Delete"
+_l.pinlock_keyboardhint = "You can type on your keyboard"
+_l.pinlock_forgot = "Forgot PIN code?"
+_l.pinlock_forgotwarning = "To sign in again, you will need your mnemonic phrase or private key. Without them, access to the account will be lost forever."
+_l.pinlock_signout = "Sign out"
+_l.pinlock_purpose = "The PIN code protects the app from other people who get access to it. It does not replace a backup of your mnemonic phrase."
+_l.pinlock_enabled = "PIN code is set"
+_l.pinlock_changed = "PIN code changed"
+_l.pinlock_disabled = "PIN code disabled"
+_l.pinlock_lockafter = "Lock after"
+_l.pinlock_minutes = function(v){
+	return v + " min"
+}
+_l.pinlock_security = "Security"
+_l.pinlock_settingname = "PIN code"
+_l.pinlock_stateon = "On"
+_l.pinlock_stateoff = "Off"
+_l.pinlock_set = "Set PIN code"
+_l.pinlock_change = "Change PIN code"
+_l.pinlock_disable = "Disable PIN code"
+_l.pinlock_locknow = "Lock now"

@@ -1495,3 +1495,52 @@ _l.collectionTypePaid = "Pour les abonnés"
 _l.collectionInRelay = "La collection est en cours de publication…"
 _l.collectionWaitConf = "La collection est en cours de publication…"
 _l.collectionPublishError = "Erreur de publication"
+
+//pin lock
+
+_l.pinlock_title = "Verrouillage par code PIN"
+_l.pinlock_welcome = function(v){
+	return "Bon retour, " + v
+}
+_l.pinlock_welcomeanon = "Bon retour"
+_l.pinlock_enter = "Saisissez le code PIN"
+_l.pinlock_current = "Saisissez le code PIN actuel"
+_l.pinlock_new = "Créez un code PIN"
+_l.pinlock_repeat = "Répétez le code PIN"
+_l.pinlock_done = "Terminé"
+_l.pinlock_mismatch = "Les codes PIN ne correspondent pas"
+_l.pinlock_wrong = "Code PIN incorrect"
+_l.pinlock_attemptsleft = function(v){
+	return "tentatives restantes : " + v
+}
+_l.pinlock_blocked = function(v){
+	return "Trop de tentatives. Réessayez dans " + v
+}
+_l.pinlock_error = "Une erreur s'est produite. Veuillez réessayer"
+_l.pinlock_entered = function(v){
+	return v + " sur 4 saisis"
+}
+_l.pinlock_digit = function(v){
+	return "Chiffre " + v
+}
+_l.pinlock_delete = "Effacer"
+_l.pinlock_keyboardhint = "Vous pouvez saisir au clavier"
+_l.pinlock_forgot = "Code PIN oublié ?"
+_l.pinlock_forgotwarning = "Pour vous reconnecter, vous aurez besoin de votre phrase mnémonique ou de votre clé privée. Sans elles, l'accès au compte sera définitivement perdu."
+_l.pinlock_signout = "Se déconnecter"
+_l.pinlock_purpose = "Le code PIN protège l'application contre les personnes qui y ont accès. Il ne remplace pas la sauvegarde de votre phrase mnémonique."
+_l.pinlock_enabled = "Code PIN défini"
+_l.pinlock_changed = "Code PIN modifié"
+_l.pinlock_disabled = "Code PIN désactivé"
+_l.pinlock_lockafter = "Verrouiller après"
+_l.pinlock_minutes = function(v){
+	return v + " min"
+}
+_l.pinlock_security = "Sécurité"
+_l.pinlock_settingname = "Code PIN"
+_l.pinlock_stateon = "Activé"
+_l.pinlock_stateoff = "Désactivé"
+_l.pinlock_set = "Définir un code PIN"
+_l.pinlock_change = "Modifier le code PIN"
+_l.pinlock_disable = "Désactiver le code PIN"
+_l.pinlock_locknow = "Verrouiller maintenant"

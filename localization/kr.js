@@ -971,3 +971,52 @@ _l.collectionTypePaid = "구독자 전용"
 _l.collectionInRelay = "컬렉션 게시 중…"
 _l.collectionWaitConf = "컬렉션 게시 중…"
 _l.collectionPublishError = "게시 오류"
+
+//pin lock
+
+_l.pinlock_title = "PIN 잠금"
+_l.pinlock_welcome = function(v){
+	return "다시 오신 것을 환영합니다, " + v
+}
+_l.pinlock_welcomeanon = "다시 오신 것을 환영합니다"
+_l.pinlock_enter = "PIN 코드를 입력하세요"
+_l.pinlock_current = "현재 PIN 코드를 입력하세요"
+_l.pinlock_new = "PIN 코드를 만드세요"
+_l.pinlock_repeat = "PIN 코드를 다시 입력하세요"
+_l.pinlock_done = "완료"
+_l.pinlock_mismatch = "PIN 코드가 일치하지 않습니다"
+_l.pinlock_wrong = "잘못된 PIN 코드"
+_l.pinlock_attemptsleft = function(v){
+	return "남은 시도: " + v
+}
+_l.pinlock_blocked = function(v){
+	return "시도 횟수가 너무 많습니다. " + v + " 후에 다시 시도하세요"
+}
+_l.pinlock_error = "문제가 발생했습니다. 다시 시도하세요"
+_l.pinlock_entered = function(v){
+	return "4자리 중 " + v + "자리 입력됨"
+}
+_l.pinlock_digit = function(v){
+	return "숫자 " + v
+}
+_l.pinlock_delete = "삭제"
+_l.pinlock_keyboardhint = "키보드로 입력할 수 있습니다"
+_l.pinlock_forgot = "PIN 코드를 잊으셨나요?"
+_l.pinlock_forgotwarning = "다시 로그인하려면 니모닉 문구 또는 개인 키가 필요합니다. 이것이 없으면 계정에 대한 접근 권한을 영원히 잃게 됩니다."
+_l.pinlock_signout = "로그아웃"
+_l.pinlock_purpose = "PIN 코드는 앱에 접근한 다른 사람으로부터 앱을 보호합니다. 니모닉 문구 백업을 대신하지 않습니다."
+_l.pinlock_enabled = "PIN 코드가 설정되었습니다"
+_l.pinlock_changed = "PIN 코드가 변경되었습니다"
+_l.pinlock_disabled = "PIN 코드가 해제되었습니다"
+_l.pinlock_lockafter = "잠금 시간"
+_l.pinlock_minutes = function(v){
+	return v + "분"
+}
+_l.pinlock_security = "보안"
+_l.pinlock_settingname = "PIN 코드"
+_l.pinlock_stateon = "켜짐"
+_l.pinlock_stateoff = "꺼짐"
+_l.pinlock_set = "PIN 코드 설정"
+_l.pinlock_change = "PIN 코드 변경"
+_l.pinlock_disable = "PIN 코드 해제"
+_l.pinlock_locknow = "지금 잠그기"

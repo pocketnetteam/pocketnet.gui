@@ -1337,6 +1337,8 @@ Application = function (p) {
 				if (!_OpenApi)
 					self.nav.init(p.nav, function () {
 
+						if (self.pinlockscreen) self.pinlockscreen.ready()
+
 						if (typeof hideSplashScreen != 'undefined') {
 							hideSplashScreen();
 						}
@@ -1511,7 +1513,18 @@ Application = function (p) {
 		self.el.html.attr('chatposition', attr)
 	}
 
+	self.initPinlock = function () {
+
+		if (typeof PinLock == 'undefined' || self.pinlock) return
+
+		self.pinlock = new PinLock(self)
+		self.pinlockscreen = new PinLockScreen(self, self.pinlock)
+		self.pinlock.init()
+	}
+
 	self.deviceReadyInit = function (p) {
+
+		self.initPinlock()
 
 		//self.hasTor = (window.cordova?.plugins?.torRunner && !isios()) || self.electronview || false
 		self.hasTor = (window.cordova && !isios()) || self.electronview || false

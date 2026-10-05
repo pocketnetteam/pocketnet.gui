@@ -306,6 +306,80 @@
 #usersettings.unathorized .settingsGroup.notifications {
   display: none;
 }
+#usersettings .security .parameter {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5em 1em;
+  padding: 0.5em 0;
+}
+#usersettings .security .parameter > div {
+  padding: 0;
+}
+#usersettings .security .parameter .pName {
+  width: auto;
+  padding: 0;
+}
+#usersettings .security .parameter .pName .pNameW {
+  padding-top: 0;
+}
+#usersettings .security .pinlockstate {
+  font-size: 0.9em;
+  color: rgb(var(--color-txt-gray));
+}
+#usersettings .security .pinlockstate.on {
+  color: rgb(var(--color-txt-ac));
+}
+#usersettings .security .pinlockpurpose {
+  font-size: 0.85em;
+  line-height: 1.4;
+  color: rgb(var(--color-txt-gray));
+  padding: 0.5em 0 1em;
+}
+#usersettings .security .pinlockbuttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  padding-bottom: 1em;
+}
+#usersettings .security .pinlockbuttons .pinlockaction {
+  min-height: 34px;
+  padding: 0 1em;
+  border-radius: 17px;
+  border: 1px solid rgb(var(--color-bg-ac));
+  background: transparent;
+  color: rgb(var(--color-txt-ac));
+  font-size: 0.9em;
+  cursor: pointer;
+}
+#usersettings .security .pinlockbuttons .pinlockaction.main {
+  background: rgb(var(--color-bg-ac));
+  color: rgb(var(--text-on-bg-ac-color));
+}
+#usersettings .security .pinlockbuttons .pinlockaction.bad {
+  border-color: rgb(var(--color-bad));
+  color: rgb(var(--color-bad));
+}
+#usersettings .security .pinlocktimeout .pInput {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em / 2;
+}
+#usersettings .security .pinlocktimeout .pinlocktimeoutchip {
+  height: 30px;
+  line-height: 30px;
+  padding: 0 12px;
+  border-radius: 15px;
+  font-size: 9pt;
+  font-weight: bold;
+  cursor: pointer;
+  background: rgb(var(--neutral-grad-1));
+  color: rgb(var(--neutral-grad-4));
+}
+#usersettings .security .pinlocktimeout .pinlocktimeoutchip.active {
+  background: rgb(var(--color-bg-ac));
+  color: rgb(var(--text-on-bg-ac-color));
+}
 /*t*/
 @media only screen and (max-width: 768px) {
   #usersettings {

@@ -122,6 +122,7 @@ __map =  {
 		{path : "js/peertube.js", babelify : true},
 		{path : "js/lib/apps/index.js", babelify : true},
 		{path : "js/lib/external/index.min.js"},
+		{path : "js/pinlock.js", babelify : true},
 
 		{path : "js/satolist.js", babelify : true},
 		"js/bastyonCalls/bastyonCalls.min.js",
@@ -220,6 +221,7 @@ __map =  {
 		{ c : 'post', n : 'preshell'},
 		{ c : 'commentBanner', n : 'index' },
 		{ c : 'updatenotifier', n : 'index' },
+		{ c : 'pinlock', n : 'index' },
 		{ c : 'registration', n : 'index' },
 		{ c : 'test', n : 'options' },
 		{ c : 'test', n : 'icon' },
@@ -1314,6 +1316,14 @@ __map =  {
 	updatenotifier : {
 		uri : "updatenotifier",
 		href : "updatenotifier",
+		add : insertingfunc,
+		anonimus : true,
+		exportcss : true,
+	},
+
+	pinlock : {
+		uri : "pinlock",
+		href : "pinlock",
 		add : insertingfunc,
 		anonimus : true,
 		exportcss : true,
