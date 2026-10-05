@@ -286,6 +286,142 @@
 	.collectionFeedEmpty{
 		margin-top: 2 * @rhythm;
 	}
+
+	/* other collection of the author is loading or the collection is being removed */
+	&.loading{
+		.collectionWrapper{
+			opacity: 0.5;
+			pointer-events: none;
+			.transition(0.3s);
+		}
+	}
+
+	/* all collections of the author, horizontal scroll */
+	.authorCollections{
+		margin-top: 3 * @rhythm;
+		padding : 2 * @rhythm 0;
+		background: rgb(var(--background-total-theme));
+		border-radius: @clRadius;
+
+		.authorCollectionsCaption{
+			padding : 0 2 * @rhythm;
+			font-weight: 700;
+		}
+
+		.authorCollectionsScroll{
+			position: relative;
+			margin-top: 2 * @rhythm;
+			padding : 0 2 * @rhythm 2 * @rhythm;
+			display: flex;
+			gap : 2 * @rhythm;
+			overflow-x: auto;
+			overflow-y: hidden;
+			scroll-behavior: smooth;
+			-webkit-overflow-scrolling: touch;
+
+			/* thin scrollbar without arrow buttons (windows) */
+			&::-webkit-scrollbar{
+				height: 6px;
+			}
+
+			&::-webkit-scrollbar-button{
+				display: none;
+				width: 0;
+				height: 0;
+			}
+
+			&::-webkit-scrollbar-track{
+				background: transparent;
+			}
+
+			&::-webkit-scrollbar-thumb{
+				border-radius: 3px;
+				background: rgb(var(--neutral-grad-1));
+
+				&:hover{
+					background: rgb(var(--neutral-grad-2));
+				}
+			}
+		}
+
+		.authorCollection{
+			flex: 0 0 140px;
+			min-width: 0;
+			cursor: pointer;
+			.transition(0.3s);
+
+			.cover{
+				position: relative;
+				width: 140px;
+				height: 140px;
+				border-radius: @clRadius;
+				overflow: hidden;
+				background-color: rgb(var(--neutral-grad-0));
+
+				.img{
+					width: 100%;
+					height: 100%;
+					background-size: cover;
+					background-position: center;
+				}
+
+				.coverPlaceholder{
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					font-size: 2em;
+					color : rgb(var(--neutral-grad-2));
+				}
+
+				.publishoverlay{
+					position: absolute;
+					left: 0;
+					top: 0;
+					right: 0;
+					bottom: 0;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					font-size: 1.5em;
+					color : #fff;
+					background: rgba(0, 0, 0, 0.35);
+				}
+			}
+
+			.itemcaption{
+				margin-top: @rhythm;
+				font-size: 0.85em;
+				font-weight: 600;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+
+			.itemcount{
+				margin-top: 0.5 * @rhythm;
+				font-size: 0.75em;
+				color : rgb(var(--neutral-grad-3));
+			}
+
+			&.current{
+				opacity: 0.5;
+				cursor: default;
+			}
+
+			&.relay,
+			&.rejected{
+				cursor: default;
+			}
+
+			@media (pointer:hover) {
+				&:not(.current):not(.relay):not(.rejected):hover{
+					.itemcaption{
+						color : rgb(var(--color-txt-ac));
+					}
+				}
+			}
+		}
+	}
 }
 
 html.openapipnet{
@@ -387,6 +523,19 @@ html.mobileview{
 					flex: 1 1 0;
 					justify-content: center;
 					padding : 1.5 * @rhythm @rhythm;
+				}
+			}
+		}
+
+		.authorCollections{
+			margin-top: 2 * @rhythm;
+
+			.authorCollection{
+				flex-basis: 110px;
+
+				.cover{
+					width: 110px;
+					height: 110px;
 				}
 			}
 		}

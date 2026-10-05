@@ -7005,9 +7005,16 @@ Platform = function (app, listofnodes) {
                             return s.txid
                         }))
 
-                        // new collections that are still being published; edits are applied to loaded ones by psdk tempExtend
+                        var loaded = {}
+
+                        _.each(collections, (c) => {
+                            if (c && c.txid) loaded[c.txid] = true
+                        })
+
+                        // new collections that are still being published; edits are applied to loaded ones by psdk tempExtend.
+                        // the node may already return the transaction while the action is not completed yet (no proxy cache): no duplicate
                         collections = self.psdk.collection.tempAdd(collections, (alias) => {
-                            return alias.actor == address && !alias.editing
+                            return alias.actor == address && !alias.editing && !loaded[alias.txid]
                         })
 
                         d.contents = collections

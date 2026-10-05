@@ -12,7 +12,47 @@ var collection = (function(){
 
 		var el, ed, collection, author = {}, externalLenta = null, notfound = false, materials = null;
 
+		// last requested collection: a slow answer for the previous one is ignored
+		var loadid = 0;
+
 		var actions = {
+			// another collection of the author is opened on the same page (url parameter changed)
+			change : function(txid){
+				if(!el.c) return
+
+				helpers.clearfeed()
+
+				el.c.addClass('loading')
+
+				var request = ++loadid
+
+				load(txid, function(data){
+
+					if(!el.c || request != loadid) return
+
+					self.shell({
+						name : 'index',
+						el : el.c,
+						inner : replaceWith,
+						insertimmediately : true,
+						data : data
+					}, function(){
+						helpers.setel()
+
+						make()
+					})
+				})
+			},
+
+			open : function(txid){
+				self.nav.api.load({
+					open : true,
+					href : 'collection?c=' + txid,
+					history : true,
+					handler : true
+				})
+			},
+
 			edit : function(){
 				if(!collection || !author.me) return
 
@@ -141,6 +181,35 @@ var collection = (function(){
 		}
 
 		var helpers = {
+			setel : function(){
+				el.c = el.container.find('#' + self.map.id)
+				el.feed = el.c.find('.collectionFeed')
+				el.header = el.c.find('.collectionHeaderWrapper')
+				el.authorcollections = el.c.find('.authorCollectionsWrapper')
+			},
+
+			clearfeed : function(){
+				if(externalLenta){
+					externalLenta.destroy()
+					externalLenta = null
+				}
+
+				materials = null
+			},
+
+			// list of the author collections is shown only on the page (collection from the url)
+			showauthorcollections : function(){
+				return !ed.txid && !ed.openapi && !ed.jury && !ed.preview
+			},
+
+			publishState : function(item){
+				if (item.rejected) return 'rejected'
+				if (item.relay) return 'relay'
+				if (item.temp) return 'temp'
+
+				return ''
+			},
+
 			// same states as temp shares in lenta: edit is not sent yet (relay) or waits for confirmation (temp)
 			editState : function(){
 				if(!collection || !collection.edit) return ''
@@ -225,17 +294,64 @@ var collection = (function(){
 
 			refeed : function(){
 
-				if(externalLenta){
-					externalLenta.destroy()
-					externalLenta = null
-				}
-
-				materials = null
+				helpers.clearfeed()
 
 				el.feed.html('')
 				el.c.find('.collectionFeedEmpty').hide()
 
 				renders.feed()
+			},
+
+			// horizontal list of all author collections for a quick switch, current one is centered
+			authorcollections : function(){
+
+				if(!el.c || !collection || !helpers.showauthorcollections()) return
+
+				var address = author.address
+				var txid = collection.txid
+
+				self.app.platform.sdk.collections.load.profile(address, function(r){
+
+					if(!el.c || !collection || collection.txid != txid) return
+
+					var items = _.filter(r && r.contents ? r.contents : [], function(c){
+						return c && !c.deleted
+					})
+
+					if(items.length < 2){
+						el.authorcollections.html('')
+
+						return
+					}
+
+					self.shell({
+						name : 'authorcollections',
+						el : el.authorcollections,
+						insertimmediately : true,
+						data : {
+							items : items,
+							current : txid,
+							publishState : helpers.publishState
+						}
+					}, function(p){
+
+						p.el.find('.authorCollection').on('click', function(){
+							var t = $(this)
+
+							if (t.hasClass('current') || t.hasClass('relay') || t.hasClass('rejected')) return
+
+							actions.open(t.attr('collection'))
+						})
+
+						var scroll = p.el.find('.authorCollectionsScroll')[0]
+						var current = p.el.find('.authorCollection.current')[0]
+
+						if(scroll && current){
+							scroll.scrollLeft = current.offsetLeft - (scroll.clientWidth - current.offsetWidth) / 2
+						}
+					})
+
+				}, 100)
 			},
 
 			// user info may get its image only after the feed loads users
@@ -328,6 +444,9 @@ var collection = (function(){
 				if(type == 'collection' && alias.txid == collection.txid) actions.refresh()
 
 				if(type == 'contentDelete' && alias.txidEdit == collection.txid) actions.refresh()
+
+				// own collection created, changed or removed: the list of the author collections is changed
+				if((type == 'collection' || type == 'contentDelete') && alias.actor == author.address) renders.authorcollections()
 			}
 		}
 
@@ -342,24 +461,29 @@ var collection = (function(){
 			if(ed.jury || ed.preview) return
 
 			renders.feed()
+			renders.authorcollections()
 		}
 
-		return {
-			primary : primary,
+		var load = function(txid, clbk){
 
-			clearparameters : ['c', 's'],
+			collection = null
+			notfound = false
+			author = {}
 
-			getdata : function(clbk, p){
+			if(!txid){
+				notfound = true
 
-				ed = deep(p, 'settings.essenseData') || {}
+				clbk({
+					ed,
+					notfound : true
+				})
 
-				var txid = ed.txid || parameters().c || parameters().s
+				return
+			}
 
-				collection = null
-				notfound = false
-				author = {}
+			self.app.platform.sdk.collections.load.byid(txid, function(_collection, error){
 
-				if(!txid){
+				if(error || !_collection){
 					notfound = true
 
 					clbk({
@@ -370,38 +494,50 @@ var collection = (function(){
 					return
 				}
 
-				self.app.platform.sdk.collections.load.byid(txid, function(_collection, error){
+				collection = _collection
 
-					if(error || !_collection){
-						notfound = true
+				author.address = collection.address
 
-						clbk({
-							ed,
-							notfound : true
-						})
+				self.sdk.users.get(author.address, function(){
 
-						return
-					}
+					author.data = self.psdk.userInfo.get(author.address)
+					author.me = self.app.user.isItMe(author.address)
 
-					collection = _collection
-
-					author.address = collection.address
-
-					self.sdk.users.get(author.address, function(){
-
-						author.data = self.psdk.userInfo.get(author.address)
-						author.me = self.app.user.isItMe(author.address)
-
-						clbk({
-							ed,
-							collection,
-							author,
-							notfound : false
-						})
-
+					clbk({
+						ed,
+						collection,
+						author,
+						notfound : false
 					})
 
-				}, ed.refresh)
+				})
+
+			}, ed.refresh)
+		}
+
+		return {
+			primary : primary,
+
+			clearparameters : ['c', 's'],
+
+			// same page, other collection in the url (author collections list, back / forward)
+			parametersHandler : function(clbk){
+
+				if(ed && !ed.txid){
+
+					var txid = parameters().c || parameters().s
+
+					if(txid && (!collection || collection.txid != txid)) actions.change(txid)
+				}
+
+				if(clbk) clbk()
+			},
+
+			getdata : function(clbk, p){
+
+				ed = deep(p, 'settings.essenseData') || {}
+
+				load(ed.txid || parameters().c || parameters().s, clbk)
 
 			},
 
@@ -410,12 +546,9 @@ var collection = (function(){
 				delete self.app.platform.actionListeners[mid]
 				delete self.app.psdk.updatelisteners[mid]
 
-				materials = null
+				helpers.clearfeed()
 
-				if(externalLenta){
-					externalLenta.destroy()
-					externalLenta = null
-				}
+				loadid++
 
 				ed = {}
 				collection = null
@@ -429,9 +562,9 @@ var collection = (function(){
 				state.load();
 
 				el = {};
-				el.c = p.el.find('#' + self.map.id);
-				el.feed = el.c.find('.collectionFeed')
-				el.header = el.c.find('.collectionHeaderWrapper')
+				el.container = p.el
+
+				helpers.setel()
 
 				initEvents();
 

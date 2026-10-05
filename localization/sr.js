@@ -3317,6 +3317,7 @@ _l.collectionInputImageChange = "Промени насловну слику ко
 _l.collectionMaterialsAdd = "Додај објаве"
 _l.collectionMaterials = "Објаве"
 _l.collectionsShowAll = "Прикажи све колекције"
+_l.collectionAuthorCollections = "Колекције аутора"
 _l.collectionMaterialsUnavailable = "Неке објаве нису доступне"
 _l.enabledEditModeCollections = "Изаберите у интерфејсу објаве које желите да укључите у ову колекцију"
 _l.collectionMode = "Режим уређивања колекције"

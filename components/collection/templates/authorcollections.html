@@ -1,0 +1,30 @@
+<div class="authorCollections">
+	<div class="authorCollectionsCaption"><%- e('collectionAuthorCollections') %></div>
+
+	<div class="authorCollectionsScroll">
+		<% _.each(items, function(item) {
+
+			var pstate = publishState(item)
+			var iscurrent = item.txid == current
+		%>
+			<div class="authorCollection <%- iscurrent ? 'current' : '' %> <%- pstate %>" collection="<%- item.txid %>">
+				<div class="cover">
+					<% if(item.image) {%>
+						<div class="img" image="<%- item.image %>"></div>
+					<% } else { %>
+						<div class="img coverPlaceholder"><i class="fas fa-layer-group"></i></div>
+					<% } %>
+
+					<% if(pstate) {%>
+						<div class="publishoverlay">
+							<i class="<%- pstate == 'rejected' ? 'fas fa-exclamation-triangle' : 'fas fa-circle-notch fa-spin' %>"></i>
+						</div>
+					<% } %>
+				</div>
+
+				<div class="itemcaption"><%- item.caption %></div>
+				<div class="itemcount"><%- (item.contentIds || []).length %> · <%- e('collectionMaterials') %></div>
+			</div>
+		<% }) %>
+	</div>
+</div>

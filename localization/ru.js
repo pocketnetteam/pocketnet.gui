@@ -3144,6 +3144,7 @@ _l.collectionInputImageChange = "Изменить обложку коллекц�
 _l.collectionMaterialsAdd = "Добавить публикации"
 _l.collectionMaterials = "Публикации"
 _l.collectionsShowAll = "Показать все коллекции"
+_l.collectionAuthorCollections = "Коллекции автора"
 _l.collectionMaterialsUnavailable = "Некоторые публикации недоступны"
 _l.enabledEditModeCollections = "Выберите в интерфейсе публикации, которые хотите включить в эту коллекцию"
 _l.collectionMode = "Режим редактирования коллекции"
