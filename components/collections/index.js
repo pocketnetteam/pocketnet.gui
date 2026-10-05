@@ -285,8 +285,6 @@ var collections = (function(){
 			
 			init : function(p){
 
-				console.log("HERE COLLECTIONS")
-
 				state.load();
 
 				el = {};
