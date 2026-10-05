@@ -76,6 +76,10 @@ var sUserInfo = psdk.userInfo.getShortForm(author.address)
                 
             <% } %>
 
+            <% if(app.mobileview) {%>
+                <button class="button openCollections"><%= e('collections') %> <i class="fas fa-layer-group"></i></button>
+            <% } %>
+
             <% if(state) {%>
                 <button class="button metmenu icon"><i class="fas fa-ellipsis-h"></i></button>
             <% } %>
@@ -92,7 +96,7 @@ var sUserInfo = psdk.userInfo.getShortForm(author.address)
         <% } %>
     <% } %>
 
-    <% if(app.mobileview && !sUserInfo.deleted) {%>
+    <% if(author.me && app.mobileview && !sUserInfo.deleted) {%>
         <button class="button openCollections"><%= e('collections') %> <i class="fas fa-layer-group"></i></button>
     <% } %>
 </div>
