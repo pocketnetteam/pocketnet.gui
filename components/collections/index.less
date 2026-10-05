@@ -398,6 +398,152 @@
 	}
 }
 
+/* select mode (post menu "add to collection"): picker list */
+
+#collections.select{
+
+	.selectHeader{
+		padding-right: 4 * @rhythm; /* window cross */
+		margin-bottom: 2.5 * @rhythm;
+
+		.selectTitle{
+			font-weight: 700;
+			font-size: 1.25em;
+			line-height: 1.3em;
+		}
+
+		.selectHint{
+			margin-top: 0.5 * @rhythm;
+			font-size: 0.85em;
+			line-height: 1.4em;
+			color : rgb(var(--neutral-grad-3));
+		}
+	}
+
+	.collectionslist{
+
+		.items{
+			display: flex;
+			flex-direction: column;
+			gap : 0.5 * @rhythm;
+		}
+
+		.collection{
+			display: flex;
+			align-items: center;
+			gap : 1.5 * @rhythm;
+			padding : @rhythm;
+			margin : 0 -1 * @rhythm;
+			border-radius: @clRadius;
+			.transition(0.15s);
+
+			.cover{
+				flex-shrink: 0;
+				width: 56px;
+				height: 56px;
+				aspect-ratio: auto;
+				border-radius: 8px;
+
+				.coverbadge,
+				.containsbadge{
+					display: none;
+				}
+			}
+
+			.info{
+				flex-grow: 1;
+				padding : 0;
+			}
+
+			.itemcaption{
+				font-size: 0.95em;
+				-webkit-line-clamp: 1;
+			}
+
+			.itemcount{
+				display: block;
+			}
+
+			.publishoverlay{
+				font-size: 1em;
+			}
+
+			.selectmark{
+				flex-shrink: 0;
+				width: 32px;
+				height: 32px;
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 0.8em;
+				color : rgb(var(--neutral-grad-3));
+				border : 1px solid rgb(var(--neutral-grad-1));
+				.transition(0.15s);
+			}
+
+			&:hover{
+				background: rgb(var(--neutral-grad-0));
+
+				.cover .img{
+					transform: none;
+				}
+
+				.selectmark{
+					color : rgb(var(--color-bg-ac-bright));
+					border-color: rgb(var(--color-bg-ac-bright));
+				}
+			}
+
+			&.contains{
+				cursor: default;
+
+				&:hover{
+					background: transparent;
+
+					.itemcaption{
+						color : inherit;
+					}
+				}
+
+				.selectmark{
+					color : rgb(var(--text-on-bg-ac-color));
+					background: rgb(var(--color-bg-ac-bright));
+					border-color: rgb(var(--color-bg-ac-bright));
+				}
+			}
+
+			&.publishing{
+				.selectmark{
+					visibility: hidden;
+				}
+			}
+
+			/* first row: create a new collection with the publication */
+			&.newitem{
+
+				.cover{
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					font-size: 1.1em;
+					color : rgb(var(--color-bg-ac-bright));
+					background: rgba(var(--color-bg-ac-bright), 0.08);
+					border : 1.5px dashed rgba(var(--color-bg-ac-bright), 0.5);
+				}
+
+				.itemcaption{
+					color : rgb(var(--color-bg-ac-bright));
+				}
+
+				&:hover{
+					background: rgba(var(--color-bg-ac-bright), 0.06);
+				}
+			}
+		}
+	}
+}
+
 .wnd.userlistwindow{
 	.wndinner {
 		max-width: 440px;
@@ -407,6 +553,12 @@
 	#collections{
 		padding : 3 * @rhythm;
 		min-height: 300px;
+	}
+
+	&.collectionsselect{
+		#collections{
+			min-height: 0;
+		}
 	}
 }
 

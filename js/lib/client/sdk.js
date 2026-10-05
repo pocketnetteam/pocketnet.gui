@@ -1963,7 +1963,7 @@ var pSDK = function ({ app, api, actions }) {
             return sobj
         },
 
-        request: function (executor, hash, cacheIndex) {
+        request: function (executor, hash, cacheIndex, update) {
 
             return request('collection', hash, (data) => {
                 
@@ -1989,6 +1989,7 @@ var pSDK = function ({ app, api, actions }) {
 
             }, {
                 requestIndexedDb: cacheIndex || 'collectionRequest',
+                update: update,
 
                 insertFromResponse: (r) => this.insertFromResponseEx(r)
             })

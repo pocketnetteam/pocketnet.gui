@@ -8,6 +8,10 @@ var collections = (function(){
 
 		var mid = p.mid
 
+		// profile preview and collections window are loaded without mid: own key per instance,
+		// otherwise closing the window removes the listener of the preview and it is not updated
+		var listenerKey = 'collections_' + (mid || makeid())
+
 		var primary = deep(p, 'history');
 
 		var el, ed, author = {};
@@ -17,31 +21,30 @@ var collections = (function(){
 
 				// select mode (post menu "add to collection"): new collection gets the publication
 				if (ed.select){
-					self.closeContainer()
-
-					if (ed.oncreate) ed.oncreate()
-
-					return
+					return helpers.closeThen(ed.oncreate)
 				}
 
 				// on mobile the list window stays under the new collection window and shows up when it is minimized
-				if (self.app.mobileview && !ed.preview && el.c && el.c.closest('.wnd').length){
-					self.closeContainer()
+				var open = function(){
+					self.app.platform.sdk.collections.opennewcollectionwindow()
 				}
 
-				self.app.platform.sdk.collections.opennewcollectionwindow()
+				if (self.app.mobileview && !ed.preview && el.c && el.c.closest('.wnd').length){
+					return helpers.closeThen(open)
+				}
+
+				open()
 			},
 
 			select : function(txid){
-				self.closeContainer()
-
-				if (ed.onselect) ed.onselect(txid)
+				helpers.closeThen(ed.onselect, txid)
 			},
 
 			loadcollections : function(clbk){
 				var requestCount = ed.count
 
-				if(ed.preview) requestCount = ed.count + 1
+				// preview shows a few collections, the full amount is needed for the counter in the caption
+				if(ed.preview) requestCount = 100
 
 				self.app.platform.sdk.collections.load.profile(author.address, (r) => {
 
@@ -62,6 +65,18 @@ var collections = (function(){
 		}
 
 		var helpers = {
+
+			// closing destroys the essense (ed is cleared), so the callback is taken before;
+			// next window opens after the close animation
+			closeThen : function(clbk, arg){
+				self.closeContainer()
+
+				if (!clbk) return
+
+				setTimeout(function(){
+					clbk(arg)
+				}, 300)
+			},
 
 			// same states as temp shares in lenta: relay (not sent yet), temp (waiting for confirmation), rejected
 			publishState : function(item){
@@ -98,7 +113,7 @@ var collections = (function(){
 				}, function(p){
 					if(displayItems.length){
 						el.c.addClass('hasitems')
-						el.c.find('.headcount').text(displayItems.length)
+						el.c.find('.headcount').text(items.length)
 					}
 					else{
 						el.c.removeClass('hasitems')
@@ -189,7 +204,7 @@ var collections = (function(){
 
 			})
 
-			self.app.psdk.updatelisteners[mid] = self.app.platform.actionListeners[mid] = function({type, alias, status}){
+			self.app.psdk.updatelisteners[listenerKey] = self.app.platform.actionListeners[listenerKey] = function({type, alias, status}){
 
 				if(type == 'collection'){
 					if (author.address == alias.actor){
@@ -228,6 +243,16 @@ var collections = (function(){
 
 				if(ed.count > 100) ed.count = 100
 
+				// profile preview: the rest is opened by "show all collections" in a window
+				if(ed.preview) ed.count = 2
+
+				// select window is closed by its cross or by choosing an item, no bottom buttons
+				if(ed.select && p.settings.wnd){
+					p.settings.wnd = _.extend({}, p.settings.wnd, {
+						class : p.settings.wnd.class + ' withoutButtons collectionsselect'
+					})
+				}
+
 				var data = {
 					ed
 				};
@@ -254,8 +279,8 @@ var collections = (function(){
 				ed = {}
 				el = {};
 
-				delete self.app.platform.actionListeners[mid]
-				delete self.app.psdk.updatelisteners[mid]
+				delete self.app.platform.actionListeners[listenerKey]
+				delete self.app.psdk.updatelisteners[listenerKey]
 			},
 			
 			init : function(p){

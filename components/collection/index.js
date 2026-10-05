@@ -105,22 +105,28 @@ var collection = (function(){
 			remove : function(){
 				if(!collection || !author.me || !collection.txid) return
 
+				// module may be destroyed before delete finishes: keep what is needed for redirect
+				var txid = collection.txid
+				var address = author.address
+
 				dialog({
 					class: 'zindex',
 					html: self.app.localization.e('removeCollectionDialog'),
 					btn1text: self.app.localization.e('dyes'),
 					btn2text: self.app.localization.e('dno'),
 					success: function(){
-						el.c.addClass('loading')
+						if(el.c) el.c.addClass('loading')
 
-						self.app.platform.sdk.collections.delete(collection.txid, function(err){
+						self.app.platform.sdk.collections.delete(txid, function(err){
+							if(!el.c) return
+
 							el.c.removeClass('loading')
 
 							if(err) return
 
 							self.nav.api.load({
 								open : true,
-								href : 'authorn?address=' + author.address,
+								href : self.app.platform.api.authorlink(address),
 								history : true,
 								reload : true
 							})

@@ -753,9 +753,17 @@ Platform = function (app, listofnodes) {
         blocking: function (alias, status) {},
         unblocking: function (alias, status) {},
         userInfo: function (alias, status) {},
-        contentDelete: function (alias, status) {},
+        contentDelete: function (alias, status) {
+            if (status == 'rejected') return
+
+            if (alias.txidEdit && self.psdk.collection.get(alias.txidEdit)) self.sdk.collections.setchanged(alias.actor)
+        },
         // without a listener actionFiltered stops here and module actionListeners never get collection updates
-        collection: function (alias, status) {},
+        collection: function (alias, status) {
+            if (status == 'rejected') return
+
+            self.sdk.collections.setchanged(alias.actor)
+        },
         accSet: function () {},
         accDel: function () {},
         transaction: function () {}
@@ -6658,6 +6666,31 @@ Platform = function (app, listofnodes) {
             clbks : {},
             wnd : null,
 
+            // proxy caches the list of collections: after own change it is requested without cache for a while
+            changedtime : 15 * 60 * 1000,
+
+            setchanged : function(address){
+                if(!address) return
+
+                try{
+                    localStorage['collectionschanged_' + address] = Date.now()
+                }
+                catch(e){}
+            },
+
+            waschanged : function(address){
+                if(!address || address != app.user.address.value) return false
+
+                try{
+                    var time = Number(localStorage['collectionschanged_' + address] || 0)
+
+                    return Date.now() - time < self.sdk.collections.changedtime
+                }
+                catch(e){
+                    return false
+                }
+            },
+
             unregisternewcollectionwindow : function(){
                 self.sdk.collections.wnd = null
             },
@@ -6914,6 +6947,13 @@ Platform = function (app, listofnodes) {
                     var method = 'getprofilecollections'
                     var parameters = [self.currentBlock, '', count, '', [], [], [], [], [], '', address]
 
+                    // own list was changed recently: skip both local (indexeddb) and proxy caches
+                    var changed = self.sdk.collections.waschanged(address)
+                    var update = changed
+                    var rpcoptions = _.extend({}, rpc || {})
+
+                    if (changed) rpcoptions.updateRPCCache = true
+
                     /*
 
                      var parameters = [Number(p.height), p.txid, p.count, p.lang == 'all' ? '' : p.lang, p.tagsfilter, p.type ? [p.type] : [],
@@ -6943,7 +6983,7 @@ Platform = function (app, listofnodes) {
                     self.psdk.collection.request(() => {
 
                         return self.app.api.rpc(method, parameters, {
-                            rpc: rpc
+                            rpc: rpcoptions
                         }).then(data => {
 
                             if (_.isArray(data)) {
@@ -6959,7 +6999,7 @@ Platform = function (app, listofnodes) {
                     }, {
                         method,
                         parameters
-                    }).then(d => {
+                    }, null, update).then(d => {
 
                         var collections = self.psdk.collection.gets(_.map(d.contents, (s) => {
                             return s.txid

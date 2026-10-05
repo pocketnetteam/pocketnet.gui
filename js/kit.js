@@ -4971,7 +4971,9 @@ kits = {
 		accSet : Settings,
 		brtoffer : brtOffer,
 		brtaccount : brtAccount,
-		miniapp : Miniapp
+		miniapp : Miniapp,
+		// actions are restored by this map (other tabs, reload); without it collection actions are dropped
+		collection : Collection
 
 	},
 

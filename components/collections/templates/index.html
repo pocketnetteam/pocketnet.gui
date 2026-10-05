@@ -1,8 +1,17 @@
 <div id="<%-module.map.id%>" class="<%- ed.preview ? 'preview' : ''%> <%- ed.select ? 'select' : ''%>">
 
+	<% if(ed.select) {%>
+
+		<div class="selectHeader">
+			<div class="selectTitle"><%- e('addToCollection') %></div>
+			<div class="selectHint"><%- e('addToCollectionHint') %></div>
+		</div>
+
+	<% } else { %>
+
 	<div class="captionWrapper">
 		<div class="caption">
-			<span><%- e(ed.select ? 'addToCollection' : 'collections') %></span> <span class="headcount"></span>
+			<span><%- e('collections') %></span> <span class="headcount"></span>
 		</div>
 		<% if(author.me) {%>
 
@@ -19,6 +28,8 @@
 		<% } %>
 	</div>
 
+	<% } %>
+
 	<div class="collectionsdata">
 		<div class="loaderWrapper">
 			<div class="loader">
@@ -29,7 +40,7 @@
 
 	<% if(ed.preview) {%>
 		<div class="showmoreWrapper">
-			<button class="button ghost showmore"><%-e('e13021')%></button>
+			<button class="button ghost showmore"><%- e('collectionsShowAll') %></button>
 		</div>
 	<% } %>
 

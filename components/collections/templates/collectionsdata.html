@@ -19,6 +19,15 @@
 
     <% } else { %>
         <div class="items">
+            <% if(select) {%>
+                <div class="collection newitem newcollection">
+                    <div class="cover"><i class="fas fa-plus"></i></div>
+                    <div class="info">
+                        <div class="itemcaption"><%- e('collectionNewItem') %></div>
+                    </div>
+                </div>
+            <% } %>
+
             <% _.each(items, function(item) {
 
                 var pstate = publishState(item)
@@ -55,6 +64,12 @@
                             <div class="itemcount"><%- (item.contentIds || []).length %> · <%- e('collectionMaterials') %></div>
                         <% } %>
                     </div>
+
+                    <% if(select) {%>
+                        <div class="selectmark" title="<%- contains ? e('collectionContains') : '' %>">
+                            <i class="<%- contains ? 'fas fa-check' : 'fas fa-plus' %>"></i>
+                        </div>
+                    <% } %>
                 </div>
             <% }) %>
         </div>

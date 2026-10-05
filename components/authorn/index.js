@@ -1855,7 +1855,7 @@ var authorn = (function(){
 					self.app.mobile.statusbar.topfadebackground()
 				})
 
-				ed = p.settings.essenseData
+				ed = p.settings.essenseData || {}
 
 				var data = {
 					ed

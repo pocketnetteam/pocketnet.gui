@@ -492,9 +492,9 @@ var newcollection = (function(){
 				if (share.itisaudio()) return { type : 'audio', icon : 'fas fa-music', label : e('audio') }
 				if (meta.type) return { type : 'video', icon : 'fas fa-play', label : e('video') }
 				if (deep(share, 'poll.list.length')) return { type : 'poll', icon : 'fas fa-poll-h', label : e('collectionTypePoll') }
-				if (share.images.length) return { type : 'images', icon : 'far fa-image', label : e('spost') }
+				if (share.images.length) return { type : 'images', icon : 'far fa-image', label : e('collectionTypePost') }
 
-				return { type : 'post', icon : 'far fa-file-alt', label : e('spost') }
+				return { type : 'post', icon : 'far fa-file-alt', label : e('collectionTypePost') }
 			},
 
 			cover : function(share, meta){
