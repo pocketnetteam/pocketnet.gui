@@ -1,0 +1,676 @@
+@import "../../css/__cssvar";
+
+@clRadius : 12px;
+@clCover : 160px;
+
+#collection{
+	background: rgb(var(--background-main));
+	min-height: 100vh;
+	padding : 2 * @rhythm;
+
+	.collectionWrapper{
+		max-width: 736px;
+		margin: 0 auto;
+	}
+
+	.collectionCard{
+		background: rgb(var(--background-total-theme));
+		border-radius: @clRadius;
+	}
+
+	.empty{
+		padding : 5 * @rhythm 2 * @rhythm;
+		text-align: center;
+
+		.collectionIllustration{
+			width: 150px;
+			margin-bottom: 2 * @rhythm;
+		}
+
+		.emptytitle{
+			font-weight: 600;
+			color : rgb(var(--neutral-grad-3));
+		}
+
+		.emptylink{
+			margin-top: @rhythm;
+			font-size: 0.85em;
+
+			a{
+				color : rgb(var(--color-txt-ac));
+			}
+		}
+	}
+
+	/* header */
+
+	.collectionHeader{
+		position: relative;
+		overflow: hidden;
+		padding : 3 * @rhythm;
+
+		/* blurred cover behind the header, fades into the card */
+		.coverBackdrop{
+			position: absolute;
+			left: -10%;
+			right: -10%;
+			top: -40px;
+			height: @clCover + 6 * @rhythm + 40px;
+			background-size: cover;
+			background-position: center;
+			filter: blur(40px) saturate(1.3);
+			opacity: 0;
+			pointer-events: none;
+
+			&[imageloaded="true"]{
+				opacity: 0.35;
+			}
+
+			&:after{
+				content: '';
+				position: absolute;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				height: 60%;
+				background: linear-gradient(180deg, rgba(var(--background-total-theme), 0) 0%, rgb(var(--background-total-theme)) 100%);
+			}
+		}
+
+		.headerContent{
+			position: relative;
+			display: flex;
+			align-items: flex-end;
+			gap : 3 * @rhythm;
+		}
+
+		.coverWrapper{
+			flex-shrink: 0;
+
+			.cover{
+				width: @clCover;
+				height: @clCover;
+				border-radius: @clRadius;
+				background-color: rgb(var(--neutral-grad-0));
+				background-size: cover;
+				background-position: center;
+				.shadow();
+			}
+
+			.coverPlaceholder{
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 3em;
+				color : rgb(var(--neutral-grad-2));
+				box-shadow: none;
+			}
+		}
+
+		.headerInfo{
+			flex-grow: 1;
+			min-width: 0;
+			padding-bottom: 0.5 * @rhythm;
+		}
+
+		.collectionLabel{
+			display: inline-flex;
+			align-items: center;
+			gap : @rhythm;
+			font-size: 0.7em;
+			font-weight: 600;
+			text-transform: uppercase;
+			letter-spacing: 0.08em;
+			color : rgb(var(--color-txt-ac));
+		}
+
+		.caption{
+			margin-top: @rhythm;
+			font-weight: 700;
+			font-size: 1.8em;
+			line-height: 1.2;
+			word-break: break-word;
+		}
+
+		.meta{
+			margin-top: 2 * @rhythm;
+			display: flex;
+			align-items: center;
+			flex-wrap: wrap;
+			gap : @rhythm 1.5 * @rhythm;
+			font-size: 0.85em;
+			color : rgb(var(--neutral-grad-3));
+
+			.authorLink{
+				display: inline-flex;
+				align-items: center;
+				gap : @rhythm;
+				min-width: 0;
+				font-weight: 600;
+				color : rgb(var(--text-color));
+				.transition(0.3s);
+
+				.usericon{
+					flex-shrink: 0;
+					width: 4 * @rhythm;
+					height: 4 * @rhythm;
+					line-height: 4 * @rhythm;
+					box-shadow: none;
+
+					.letter{
+						font-size: 1em;
+					}
+				}
+
+				.authorName{
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+				}
+
+				@media (pointer:hover) {
+					&:hover{
+						color : rgb(var(--color-txt-ac));
+					}
+				}
+			}
+
+			.metaSeparator{
+				width: 4px;
+				height: 4px;
+				border-radius: 50%;
+				background: rgb(var(--neutral-grad-2));
+			}
+
+			.materialsCountWrapper{
+				display: inline-flex;
+				align-items: center;
+				gap : @rhythm;
+			}
+		}
+
+		.materialsUnavailable{
+			margin-top: @rhythm;
+			font-size: 0.75em;
+			color : rgb(var(--neutral-grad-3));
+		}
+
+		.collectionDescription{
+			position: relative;
+			margin-top: 3 * @rhythm;
+			font-size: 0.95em;
+			line-height: 1.6;
+			word-break: break-word;
+			white-space: pre-wrap;
+		}
+
+		.headerActions{
+			position: relative;
+			margin-top: 3 * @rhythm;
+			padding-top: 3 * @rhythm;
+			border-top: 1px solid rgba(var(--color-medium-theme), 0.5);
+			display: flex;
+			flex-wrap: wrap;
+			gap : @rhythm;
+
+			.button{
+				margin: 0;
+				display: inline-flex;
+				align-items: center;
+				gap : @rhythm;
+				padding : 1.5 * @rhythm 3 * @rhythm;
+				font-size: 0.8em;
+				font-weight: 600;
+
+				&.secondary{
+					background: rgb(var(--neutral-grad-0));
+					border-color: rgb(var(--neutral-grad-0));
+					color : rgb(var(--text-color));
+				}
+
+				&.danger{
+					margin-left: auto;
+					color : rgb(var(--color-bad));
+				}
+
+				@media (pointer:hover) {
+					&.secondary:hover{
+						background: rgb(var(--neutral-grad-1));
+						border-color: rgb(var(--neutral-grad-1));
+					}
+				}
+			}
+		}
+
+		/* edit is sent but not applied on the node yet */
+		.collectionEditing{
+			display: inline-flex;
+			align-items: center;
+			gap : @rhythm;
+			padding : 1.5 * @rhythm 3 * @rhythm;
+			border-radius: 8px;
+			font-size: 0.8em;
+			font-weight: 600;
+			color : rgb(var(--color-txt-ac));
+			background: rgba(var(--color-bg-ac-bright), 0.1);
+		}
+
+		.collectionEditError{
+			position: relative;
+			margin-top: 1.5 * @rhythm;
+			display: flex;
+			align-items: center;
+			gap : @rhythm;
+			font-size: 0.75em;
+			color : rgb(var(--color-bad));
+		}
+
+		&.edit_editing{
+			.headerContent,
+			.collectionDescription{
+				opacity: 0.85;
+			}
+		}
+
+		&.nocover{
+			.headerContent{
+				align-items: center;
+			}
+		}
+	}
+
+	.collectionFeed{
+		margin-top: @rhythm;
+	}
+
+	.collectionFeedEmpty{
+		margin-top: 2 * @rhythm;
+	}
+
+	/* other collection of the author is loading or the collection is being removed */
+	&.loading{
+		.collectionWrapper{
+			opacity: 0.5;
+			pointer-events: none;
+			.transition(0.3s);
+		}
+	}
+
+	/* hidden until the feed above is rendered, so it does not jump while publications appear */
+	.authorCollectionsWrapper{
+		.transition(0.3s);
+
+		&.waitfeed{
+			opacity: 0;
+			pointer-events: none;
+		}
+	}
+
+	/* all collections of the author, horizontal scroll */
+	.authorCollections{
+		margin-top: 3 * @rhythm;
+		padding : 2 * @rhythm 0;
+		background: rgb(var(--background-total-theme));
+		border-radius: @clRadius;
+
+		.authorCollectionsCaption{
+			padding : 0 2 * @rhythm;
+			font-weight: 700;
+		}
+
+		.authorCollectionsScroll{
+			position: relative;
+			/* side space is margin, not padding: the scrollbar track takes the full element width, padding does not shorten it */
+			margin : 2 * @rhythm 2 * @rhythm 0;
+			padding : 0 0 2 * @rhythm;
+			display: flex;
+			gap : 2 * @rhythm;
+			overflow-x: auto;
+			overflow-y: hidden;
+			scroll-behavior: smooth;
+			-webkit-overflow-scrolling: touch;
+
+			/* thin scrollbar without arrow buttons (windows) */
+			&::-webkit-scrollbar{
+				height: 6px;
+			}
+
+			&::-webkit-scrollbar-button{
+				display: none;
+				width: 0;
+				height: 0;
+			}
+
+			&::-webkit-scrollbar-track{
+				background: transparent;
+			}
+
+			&::-webkit-scrollbar-thumb{
+				border-radius: 3px;
+				background: rgb(var(--neutral-grad-1));
+
+				&:hover{
+					background: rgb(var(--neutral-grad-2));
+				}
+			}
+		}
+
+		.authorCollection{
+			flex: 0 0 140px;
+			min-width: 0;
+			cursor: pointer;
+			.transition(0.3s);
+
+			.cover{
+				position: relative;
+				width: 140px;
+				height: 140px;
+				border-radius: @clRadius;
+				overflow: hidden;
+				background-color: rgb(var(--neutral-grad-0));
+
+				.img{
+					width: 100%;
+					height: 100%;
+					background-size: cover;
+					background-position: center;
+				}
+
+				.coverPlaceholder{
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					font-size: 2em;
+					color : rgb(var(--neutral-grad-2));
+				}
+
+				.publishoverlay{
+					position: absolute;
+					left: 0;
+					top: 0;
+					right: 0;
+					bottom: 0;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					font-size: 1.5em;
+					color : #fff;
+					background: rgba(0, 0, 0, 0.35);
+				}
+			}
+
+			.itemcaption{
+				margin-top: @rhythm;
+				font-size: 0.85em;
+				font-weight: 600;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+
+			.itemcount{
+				margin-top: 0.5 * @rhythm;
+				font-size: 0.75em;
+				color : rgb(var(--neutral-grad-3));
+			}
+
+			&.current{
+				opacity: 0.5;
+				cursor: default;
+			}
+
+			&.relay,
+			&.rejected{
+				cursor: default;
+			}
+
+			@media (pointer:hover) {
+				&:not(.current):not(.relay):not(.rejected):hover{
+					.itemcaption{
+						color : rgb(var(--color-txt-ac));
+					}
+				}
+			}
+		}
+	}
+}
+
+html.openapipnet{
+	#collection{
+		padding : @rhythm;
+		min-height: 0;
+
+		.collectionWrapper{
+			max-width: none;
+		}
+
+		.collectionHeader{
+			padding : 2 * @rhythm;
+
+			.coverBackdrop{
+				height: 80px + 4 * @rhythm + 40px;
+			}
+
+			.headerContent{
+				gap : 2 * @rhythm;
+			}
+
+			.coverWrapper .cover{
+				width: 80px;
+				height: 80px;
+			}
+
+			.coverWrapper .coverPlaceholder{
+				font-size: 1.8em;
+			}
+
+			.caption{
+				font-size: 1.2em;
+			}
+		}
+	}
+}
+
+html.mobileview{
+	#collection{
+		padding : @rhythm;
+
+		.collectionHeader{
+			padding : 2 * @rhythm;
+			text-align: center;
+
+			.coverBackdrop{
+				height: 240px;
+			}
+
+			.headerContent{
+				flex-direction: column;
+				align-items: center;
+				gap : 2 * @rhythm;
+			}
+
+			.coverWrapper .cover{
+				width: 180px;
+				height: 180px;
+			}
+
+			.headerInfo{
+				width: 100%;
+				padding-bottom: 0;
+			}
+
+			.caption{
+				font-size: 1.4em;
+			}
+
+			.meta{
+				justify-content: center;
+			}
+
+			.collectionDescription{
+				margin-top: 2 * @rhythm;
+				text-align: left;
+			}
+
+			.headerActions{
+				margin-top: 2 * @rhythm;
+				padding-top: 2 * @rhythm;
+
+				.button{
+					flex: 1 1 0;
+					justify-content: center;
+					padding : 1.5 * @rhythm @rhythm;
+
+					&.shareCollection{
+						flex-basis: 100%;
+					}
+
+					&.danger{
+						margin-left: 0;
+					}
+				}
+
+				.collectionEditing{
+					flex: 1 1 0;
+					justify-content: center;
+					padding : 1.5 * @rhythm @rhythm;
+				}
+			}
+		}
+
+		.authorCollections{
+			margin-top: 2 * @rhythm;
+
+			.authorCollection{
+				flex-basis: 110px;
+
+				.cover{
+					width: 110px;
+					height: 110px;
+				}
+			}
+		}
+	}
+}
+
+/* collection opened in a window (jury "open collection") */
+.collectionwindow{
+	#collection{
+		min-height: 0;
+	}
+}
+
+/* jury card: only the header, the card itself is the background */
+.juryitem{
+	#collection{
+		min-height: 0;
+		padding : 0;
+		background: transparent;
+
+		.collectionWrapper{
+			max-width: none;
+		}
+
+		.collectionHeader{
+			border-radius: 0;
+		}
+	}
+}
+
+/* shared collection in chat: compact header only, without publications;
+   .openapipnet is on the chat widget container and on html in openapi.html, it also wins over html.mobileview rules */
+.openapipnet #collection.collectionPreview{
+	min-height: 0;
+	padding : 0;
+	background: transparent;
+
+	.collectionWrapper{
+		max-width: none;
+	}
+
+	.empty{
+		padding : 3 * @rhythm 2 * @rhythm;
+
+		.collectionIllustration{
+			width: 80px;
+			margin-bottom: @rhythm;
+		}
+	}
+
+	.collectionHeader{
+		padding : 2 * @rhythm;
+		text-align: left;
+
+		/* card embedded in an article opens the collection */
+		&.openonclick{
+			cursor: pointer;
+
+			.caption{
+				.transition(0.3s);
+			}
+
+			@media (pointer:hover) {
+				&:hover .caption{
+					color : rgb(var(--color-txt-ac));
+				}
+			}
+		}
+
+		.coverBackdrop{
+			height: 64px + 4 * @rhythm + 40px;
+		}
+
+		.headerContent{
+			flex-direction: row;
+			align-items: center;
+			gap : 2 * @rhythm;
+		}
+
+		.coverWrapper .cover{
+			width: 64px;
+			height: 64px;
+			border-radius: 8px;
+		}
+
+		.coverWrapper .coverPlaceholder{
+			font-size: 1.5em;
+		}
+
+		.headerInfo{
+			width: auto;
+			padding-bottom: 0;
+		}
+
+		.caption{
+			margin-top: 0.5 * @rhythm;
+			font-size: 1.1em;
+			display: -webkit-box;
+			-webkit-line-clamp: 2;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
+		}
+
+		.meta{
+			margin-top: @rhythm;
+			justify-content: flex-start;
+			font-size: 0.8em;
+
+			.authorLink .usericon{
+				width: 3 * @rhythm;
+				height: 3 * @rhythm;
+				line-height: 3 * @rhythm;
+			}
+		}
+
+		.collectionDescription{
+			margin-top: 1.5 * @rhythm;
+			font-size: 0.85em;
+			line-height: 1.5;
+			text-align: left;
+			display: -webkit-box;
+			-webkit-line-clamp: 3;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
+		}
+	}
+}

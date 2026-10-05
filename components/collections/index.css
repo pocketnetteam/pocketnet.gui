@@ -1,21 +1,52 @@
 #collections {
   padding: 2.5em;
   background: rgb(var(--background-total-theme));
-}
-#collections.preview {
-  padding: 0;
-}
-#collections .caption {
-  font-weight: 100;
-  font-size: 2em;
-}
-#collections .panel {
-  text-align: center;
+  /* header */
+  /* loader */
+  /* grid of collections (window / full page) */
+  /* compact list (profile sidebar preview) */
 }
 #collections .captionWrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0.5em;
+  margin-bottom: 1em;
+}
+#collections .caption {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-weight: 600;
+  font-size: 1.3em;
+}
+#collections .caption .headcount {
+  font-size: 0.55em;
+  font-weight: 600;
+  min-width: 22px;
+  height: 22px;
+  line-height: 22px;
+  padding: 0 0.5em;
+  border-radius: 11px;
+  text-align: center;
+  background: rgba(var(--color-bg-ac-bright), 0.12);
+  color: rgb(var(--color-bg-ac-bright));
+}
+#collections .caption .headcount:empty {
+  display: none;
+}
+#collections .panel {
+  flex-shrink: 0;
+}
+#collections .panel .button {
+  font-size: 0.9em;
+  border-radius: 8px;
+}
+#collections .iconbutton {
+  cursor: pointer;
+  color: rgb(var(--color-txt-ac));
+  padding: 0.5em;
+  padding-right: 0;
 }
 #collections .loaderWrapper {
   display: none;
@@ -25,31 +56,180 @@
 #collections.loading .loaderWrapper {
   display: block;
 }
+#collections .collectionslist {
+  /* empty state */
+}
+#collections .collectionslist .items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1em;
+}
 #collections .collectionslist .collection {
-  padding: 0.5em 0;
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
+  cursor: pointer;
+  min-width: 0;
+  /* collection that is still being published (temp actions), like temp shares in lenta */
+}
+#collections .collectionslist .collection .cover {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgb(var(--neutral-grad-0));
+  /* select mode: the publication is already in this collection */
+}
+#collections .collectionslist .collection .cover .img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+#collections .collectionslist .collection .cover .coverbadge {
+  position: absolute;
+  right: 0.5em;
+  bottom: 0.5em;
+  padding: 0.25em 0.5em;
+  border-radius: 6px;
+  font-size: 0.7em;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+}
+#collections .collectionslist .collection .cover .coverbadge i {
+  margin-right: 0.125em;
+  font-size: 0.9em;
+}
+#collections .collectionslist .collection .cover .containsbadge {
+  position: absolute;
+  left: 0.5em;
+  top: 0.5em;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7em;
+  color: rgb(var(--text-on-bg-ac-color));
+  background: rgb(var(--color-bg-ac-bright));
+}
+#collections .collectionslist .collection .info {
+  padding: 0.5em 0.125em 0;
+  min-width: 0;
+}
+#collections .collectionslist .collection .itemcaption {
+  font-weight: 600;
+  font-size: 0.9em;
+  line-height: 1.3em;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-break: break-word;
+}
+#collections .collectionslist .collection .itemcount {
+  display: none;
+  font-size: 0.75em;
+  color: rgb(var(--neutral-grad-3));
+  margin-top: 0.125em;
+}
+#collections .collectionslist .collection:hover .cover .img {
+  transform: scale(1.04);
+}
+#collections .collectionslist .collection:hover .itemcaption {
+  color: rgb(var(--color-txt-ac));
+}
+#collections .collectionslist .collection .publishoverlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6em;
+  color: rgb(var(--color-bg-ac-bright));
+  background: rgba(var(--background-total-theme), 0.55);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+}
+#collections .collectionslist .collection .publishstate {
+  font-size: 0.75em;
+  line-height: 1.3em;
+  margin-top: 0.125em;
+  color: rgb(var(--color-txt-ac));
+}
+#collections .collectionslist .collection.publishing .coverbadge {
+  display: none;
+}
+#collections .collectionslist .collection.publishing:hover .cover .img {
+  transform: none;
+}
+#collections .collectionslist .collection.relay,
+#collections .collectionslist .collection.rejected {
+  cursor: default;
+}
+#collections .collectionslist .collection.relay:hover .itemcaption,
+#collections .collectionslist .collection.rejected:hover .itemcaption {
+  color: inherit;
+}
+#collections .collectionslist .collection.rejected .publishoverlay,
+#collections .collectionslist .collection.rejected .publishstate {
+  color: rgb(var(--color-bad));
 }
 #collections .collectionslist .empty {
-  padding: 0.5em 0;
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2.5em 1em;
+  border-radius: 10px;
+  background: rgb(var(--background-main));
 }
-#collections .iconbutton {
-  cursor: pointer;
-  color: rgb(var(--color-txt-ac));
-  padding: 0.5em;
-  padding-right: 0;
+#collections .collectionslist .empty .collectionIllustration {
+  width: 170px;
+  margin-bottom: 1em;
 }
-#collections.preview {
-  padding: 0;
+#collections .collectionslist .empty .emptyicon {
+  font-size: 2.4em;
+  color: rgb(var(--neutral-grad-2));
+  margin-bottom: 0.75em;
 }
-#collections.preview .caption {
+#collections .collectionslist .empty .emptytitle {
   font-weight: 700;
-  font-size: 1em;
 }
-#collections.preview .showmoreWrapper button {
-  width: 100%;
+#collections .collectionslist .empty .emptyhint {
+  margin-top: 0.5em;
+  font-size: 0.85em;
+  line-height: 1.4em;
+  color: rgb(var(--neutral-grad-3));
+  max-width: 320px;
+}
+#collections .collectionslist .empty .emptybuttons {
+  margin-top: 1.25em;
+  /* soft accent pill, same as in the collection editor */
+}
+#collections .collectionslist .empty .emptybuttons .button {
+  font-size: 0.9em;
+  border-radius: 18px;
+  padding-left: 1.25em;
+  padding-right: 1.25em;
+  color: rgb(var(--color-bg-ac-bright));
+  background: rgba(var(--color-bg-ac-bright), 0.1);
+  border-color: transparent;
+}
+#collections .collectionslist .empty .emptybuttons .button:hover {
+  background: rgba(var(--color-bg-ac-bright), 0.18);
+  color: rgb(var(--color-bg-ac-bright));
 }
 #collections .showmoreWrapper {
   display: none;
@@ -57,15 +237,215 @@
 #collections.hasitems {
   display: block;
 }
+#collections.preview {
+  padding: 0;
+}
+#collections.preview .captionWrapper {
+  margin-bottom: 0.5em;
+}
+#collections.preview .caption {
+  font-weight: 700;
+  font-size: 1em;
+}
+#collections.preview .collectionslist .items {
+  display: block;
+}
+#collections.preview .collectionslist .collection {
+  display: flex;
+  align-items: center;
+  padding: 0.5em;
+  margin: 0 -0.5em;
+  border-radius: 8px;
+  -moz-transition: 0.15s;
+  -o-transition: 0.15s;
+  -webkit-transition: 0.15s;
+  transition: 0.15s;
+}
+#collections.preview .collectionslist .collection:hover {
+  background: rgb(var(--neutral-grad-0));
+}
+#collections.preview .collectionslist .collection:hover .cover .img {
+  transform: none;
+}
+#collections.preview .collectionslist .collection .cover {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  margin-right: 0.75em;
+}
+#collections.preview .collectionslist .collection .coverbadge {
+  display: none;
+}
+#collections.preview .collectionslist .collection .info {
+  flex-grow: 1;
+  padding: 0;
+}
+#collections.preview .collectionslist .collection .itemcaption {
+  -webkit-line-clamp: 1;
+}
+#collections.preview .collectionslist .collection .itemcount {
+  display: block;
+}
+#collections.preview .collectionslist .collection .publishoverlay {
+  font-size: 1em;
+}
+#collections.preview .collectionslist .empty {
+  padding: 1em;
+  border-width: 1px;
+}
+#collections.preview .collectionslist .empty .emptyicon {
+  font-size: 1.6em;
+  margin-bottom: 0.5em;
+}
+#collections.preview .collectionslist .empty .emptytitle {
+  font-weight: 400;
+  font-size: 0.9em;
+  color: rgb(var(--neutral-grad-3));
+}
+#collections.preview .collectionslist .empty .emptyhint {
+  font-size: 0.8em;
+}
+#collections.preview .collectionslist .empty .emptybuttons {
+  margin-top: 0.75em;
+}
+#collections.preview .showmoreWrapper {
+  margin-top: 0.5em;
+}
+#collections.preview .showmoreWrapper button {
+  width: 100%;
+}
+#collections.preview.hasmore .showmoreWrapper {
+  display: block;
+}
+/* select mode (post menu "add to collection"): picker list */
+#collections.select .selectHeader {
+  padding-right: 2em;
+  /* window cross */
+  margin-bottom: 1.25em;
+}
+#collections.select .selectHeader .selectTitle {
+  font-weight: 700;
+  font-size: 1.25em;
+  line-height: 1.3em;
+}
+#collections.select .selectHeader .selectHint {
+  margin-top: 0.25em;
+  font-size: 0.85em;
+  line-height: 1.4em;
+  color: rgb(var(--neutral-grad-3));
+}
+#collections.select .collectionslist .items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+}
+#collections.select .collectionslist .collection {
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+  padding: 0.5em;
+  margin: 0 -0.5em;
+  border-radius: 10px;
+  -moz-transition: 0.15s;
+  -o-transition: 0.15s;
+  -webkit-transition: 0.15s;
+  transition: 0.15s;
+  /* first row: create a new collection with the publication */
+}
+#collections.select .collectionslist .collection .cover {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  aspect-ratio: auto;
+  border-radius: 8px;
+}
+#collections.select .collectionslist .collection .cover .coverbadge,
+#collections.select .collectionslist .collection .cover .containsbadge {
+  display: none;
+}
+#collections.select .collectionslist .collection .info {
+  flex-grow: 1;
+  padding: 0;
+}
+#collections.select .collectionslist .collection .itemcaption {
+  font-size: 0.95em;
+  -webkit-line-clamp: 1;
+}
+#collections.select .collectionslist .collection .itemcount {
+  display: block;
+}
+#collections.select .collectionslist .collection .publishoverlay {
+  font-size: 1em;
+}
+#collections.select .collectionslist .collection .selectmark {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8em;
+  color: rgb(var(--neutral-grad-3));
+  border: 1px solid rgb(var(--neutral-grad-1));
+  -moz-transition: 0.15s;
+  -o-transition: 0.15s;
+  -webkit-transition: 0.15s;
+  transition: 0.15s;
+}
+#collections.select .collectionslist .collection:hover {
+  background: rgb(var(--neutral-grad-0));
+}
+#collections.select .collectionslist .collection:hover .cover .img {
+  transform: none;
+}
+#collections.select .collectionslist .collection:hover .selectmark {
+  color: rgb(var(--color-bg-ac-bright));
+  border-color: rgb(var(--color-bg-ac-bright));
+}
+#collections.select .collectionslist .collection.contains {
+  cursor: default;
+}
+#collections.select .collectionslist .collection.contains:hover {
+  background: transparent;
+}
+#collections.select .collectionslist .collection.contains:hover .itemcaption {
+  color: inherit;
+}
+#collections.select .collectionslist .collection.contains .selectmark {
+  color: rgb(var(--text-on-bg-ac-color));
+  background: rgb(var(--color-bg-ac-bright));
+  border-color: rgb(var(--color-bg-ac-bright));
+}
+#collections.select .collectionslist .collection.publishing .selectmark {
+  visibility: hidden;
+}
+#collections.select .collectionslist .collection.newitem .cover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1em;
+  color: rgb(var(--color-bg-ac-bright));
+  background: rgba(var(--color-bg-ac-bright), 0.08);
+  border: 1.5px dashed rgba(var(--color-bg-ac-bright), 0.5);
+}
+#collections.select .collectionslist .collection.newitem .itemcaption {
+  color: rgb(var(--color-bg-ac-bright));
+}
+#collections.select .collectionslist .collection.newitem:hover {
+  background: rgba(var(--color-bg-ac-bright), 0.06);
+}
 .wnd.userlistwindow .wndinner {
   max-width: 440px;
   max-height: 650px;
 }
 .wnd.userlistwindow #collections {
-  padding: 0;
+  padding: 1.5em;
+  min-height: 300px;
 }
-.wnd.userlistwindow #collections {
-  padding: 1em;
+.wnd.userlistwindow.collectionsselect #collections {
+  min-height: 0;
 }
 html.mobileview .wnd #collections {
   padding: 1em;

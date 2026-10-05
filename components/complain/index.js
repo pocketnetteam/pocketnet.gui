@@ -48,6 +48,30 @@ var complain = (function () {
 				}
 
 			],
+			// caption, description and cover of a collection
+			collection: [
+				{
+					name: self.app.localization.e('lowstar_reason_1'),
+					gid: 1
+				},
+				{
+					name: self.app.localization.e('lowstar_reason_2'),
+					gid: 2
+				},
+				{
+					name: self.app.localization.e('lowstar_reason_3'),
+					gid: 3
+				},
+				{
+					name: self.app.localization.e('lowstar_reason_4'),
+					gid: 4
+				},
+				{
+					name: self.app.localization.e('lowstar_reason_6'),
+					gid: 6
+				}
+
+			],
 			miniapp: [
 				{
 					name: self.app.localization.e('lowstar_reason_1'),
@@ -203,6 +227,47 @@ var complain = (function () {
 							//   if (clbk)
 							//     clbk(r)
 							// })
+						}
+					}
+
+					if (ess == 'collection') {
+
+						if ((typeof mestate != 'undefined' && mestate.badges && Object.values(mestate.badges).includes('shark'))) {
+
+							var modFlag = sobj.modFlag(selected);
+
+							self.app.platform.actions.addActionAndSendIfCan(modFlag).then(action => {
+
+								successCheck()
+								sitemessage(self.app.localization.e('complain_success'))
+
+								if (clbk) clbk(true)
+
+							}).catch(e => {
+								self.app.platform.errorHandler(e, true)
+
+								if (clbk) clbk(true)
+							})
+
+						}
+
+						else {
+							try {
+								self.app.Logger.info({
+									actionId: 'COLLECTION_COMPLAIN',
+									actionValue: actions.actionValue(selected),
+									actionSubType: sobj.txid,
+
+									active : true
+								});
+
+								clbk(true)
+								sitemessage(self.app.localization.e('complain_success'))
+							} catch (error) {
+								self.app.platform.errorHandler(error, true)
+
+								if (clbk) clbk(false)
+							}
 						}
 					}
 

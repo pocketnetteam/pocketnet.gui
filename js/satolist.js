@@ -553,11 +553,7 @@ Platform = function (app, listofnodes) {
         'PNG6ibmQMmCdCBKk51SqC7K7Q7UqiUwAnr' : true,
         'PJiCkAihRHTg6SEBFeVe8hcHQ12HfuYwbr' : true,
         'PUWQv3myaZ2M4zsZRPn5rqAHKhMigMNcCD' : true,
-        '' : true,
-        '' : true,
-        '' : true,
-        '' : true,
-        '' : true,
+        'PLXceSgA3GAtragjqfDYaiHQKjS7KEdQaV' : true,
 
     }
 
@@ -757,7 +753,17 @@ Platform = function (app, listofnodes) {
         blocking: function (alias, status) {},
         unblocking: function (alias, status) {},
         userInfo: function (alias, status) {},
-        contentDelete: function (alias, status) {},
+        contentDelete: function (alias, status) {
+            if (status == 'rejected') return
+
+            if (alias.txidEdit && self.psdk.collection.get(alias.txidEdit)) self.sdk.collections.setchanged(alias.actor)
+        },
+        // without a listener actionFiltered stops here and module actionListeners never get collection updates
+        collection: function (alias, status) {
+            if (status == 'rejected') return
+
+            self.sdk.collections.setchanged(alias.actor)
+        },
         accSet: function () {},
         accDel: function () {},
         transaction: function () {}
@@ -3195,6 +3201,8 @@ Platform = function (app, listofnodes) {
                     enterFullScreenVideo: p.fullscreenvideo,
                     openapi: p.openapi,
                     renderclbk: p.renderclbk,
+                    // lenta calls renderClbk after shares are rendered
+                    renderClbk: p.renderClbk,
                     ready: p.ready,
                     second: true,
                     allowblocked: true,
@@ -3202,6 +3210,52 @@ Platform = function (app, listofnodes) {
                 },
 
                 clbk: clbk
+            })
+        },
+
+        collection: function (txid, el, clbk, p) {
+
+            if (!p) p = {}
+
+            app.nav.api.load({
+                open: true,
+                id: 'collection',
+                el: el,
+                eid: txid,
+                animation: false,
+                clbk: clbk,
+                essenseData: {
+                    txid: txid,
+                    openapi: typeof p.openapi === 'undefined' ? true : p.openapi,
+                    comments: p.comments,
+                    fullscreenvideo: p.fullscreenvideo,
+                    jury: p.jury
+                }
+            })
+        },
+
+        // shared collection in chat: header only (cover, caption, description, author, count), publications are not loaded
+        collectionpreview: function (txid, el, clbk, p) {
+
+            if (!p) p = {}
+
+            var id = 'collectionpreview' + makeid()
+
+            app.nav.api.load({
+                open: true,
+                id: 'collection',
+                el: el,
+                eid: id,
+                mid: id,
+                animation: false,
+                clbk: clbk,
+                essenseData: {
+                    txid: txid,
+                    openapi: true,
+                    preview: true,
+                    // embedded in an article: the card opens the collection (chat handles the click itself)
+                    openonclick: p.openonclick || false
+                }
             })
         },
 
@@ -5992,6 +6046,15 @@ Platform = function (app, listofnodes) {
                             close()
                         })
 
+                        el.find('.addtocollection').on('click', function () {
+
+                            self.app.mobile.vibration.small()
+
+                            close()
+
+                            self.sdk.collections.addcontent(id)
+                        })
+
                         el.find('.opennewwindow').on('click', function () {
 
                             self.app.mobile.vibration.small()
@@ -6609,11 +6672,38 @@ Platform = function (app, listofnodes) {
             clbks : {},
             wnd : null,
 
+            // proxy caches the list of collections: after own change it is requested without cache for a while
+            changedtime : 15 * 60 * 1000,
+
+            setchanged : function(address){
+                if(!address) return
+
+                try{
+                    localStorage['collectionschanged_' + address] = Date.now()
+                }
+                catch(e){}
+            },
+
+            waschanged : function(address){
+                if(!address || address != app.user.address.value) return false
+
+                try{
+                    var time = Number(localStorage['collectionschanged_' + address] || 0)
+
+                    return Date.now() - time < self.sdk.collections.changedtime
+                }
+                catch(e){
+                    return false
+                }
+            },
+
             unregisternewcollectionwindow : function(){
                 self.sdk.collections.wnd = null
             },
 
-            opennewcollectionwindow : function(editing){
+            // editing : txid of the collection, newcollection loads it from psdk itself
+            // addContent : txid of a publication to put at the first place of the collection
+            opennewcollectionwindow : function(editing, addContent){
 
                 var type = editing ? 'edit' : 'new'
 
@@ -6630,6 +6720,8 @@ Platform = function (app, listofnodes) {
                         else{
                             var external = self.sdk.collections.wnd.element
 
+                            if (addContent && external.addcontent) external.addcontent(addContent)
+
 						    external.show()
 
                             return
@@ -6645,10 +6737,11 @@ Platform = function (app, listofnodes) {
 					inWnd : true,
 
 					essenseData : {
-                        collection : editing
+                        txid : editing || null,
+                        addContent : addContent || null
 					},
 
-                    clbk : function( element){
+                    clbk : function(e, element){
 
 						self.sdk.collections.wnd = {
                             element, 
@@ -6659,6 +6752,72 @@ Platform = function (app, listofnodes) {
 				})
             },
 
+            // post menu "add to collection": no collections - new one with the publication,
+            // otherwise choose a collection and edit it with the publication at the first place
+            addcontent : function(txid){
+
+                var address = app.user.address.value
+
+                if (!txid || !address) return
+
+                globalpreloader(true)
+
+                self.sdk.collections.load.profile(address, (r, e) => {
+
+                    globalpreloader(false)
+
+                    if (e) {
+                        self.app.platform.errorHandler(e, true)
+
+                        return
+                    }
+
+                    var collections = _.filter(r && r.contents ? r.contents : [], (c) => {
+                        return c && !c.deleted
+                    })
+
+                    if (!collections.length){
+                        self.sdk.collections.opennewcollectionwindow(null, txid)
+
+                        return
+                    }
+
+                    app.nav.api.load({
+                        open : true,
+                        id : 'collections',
+                        inWnd : true,
+                        history : true,
+
+                        essenseData : {
+                            address : address,
+                            preview : false,
+                            count : 100,
+                            select : true,
+                            addContent : txid,
+
+                            onselect : function(collectionTxid){
+                                self.sdk.collections.opennewcollectionwindow(collectionTxid, txid)
+                            },
+
+                            oncreate : function(){
+                                self.sdk.collections.opennewcollectionwindow(null, txid)
+                            }
+                        }
+                    })
+
+                }, 100)
+            },
+
+            showwindow : function(){
+                var wnd = self.sdk.collections.wnd
+
+                if(!wnd || !wnd.element || !wnd.element.show) return false
+
+                wnd.element.show()
+
+                return true
+            },
+
             addItem : function(id){
                 if(!self.sdk.collections.current) return
 
@@ -6667,15 +6826,36 @@ Platform = function (app, listofnodes) {
                 if(self.sdk.collections.clbks.change) self.sdk.collections.clbks.change(self.sdk.collections.current)
 
                 app.el.html.find('.share_common#' + id).addClass('incollection')
+
+                self.sdk.collections.feedback(id, 'collectionadded')
             },
 
             removeItem : function(id){
+                if(!self.sdk.collections.current) return
+
                 self.sdk.collections.current.contentIds.remove(id)
 
                 if(self.sdk.collections.clbks.change) self.sdk.collections.clbks.change(self.sdk.collections.current)
 
                 app.el.html.find('.share_common#' + id).removeClass('incollection')
-                
+
+                self.sdk.collections.feedback(id, 'collectionremoved')
+            },
+
+            // short visual response on the publication in the feed (animations: css/common.less)
+            feedback : function(id, cls){
+                var share = app.el.html.find('.share_common#' + id)
+
+                share.removeClass('collectionadded collectionremoved')
+
+                // restart the animation if the user clicks again quickly
+                if (share[0]) void share[0].offsetWidth
+
+                share.addClass(cls)
+
+                setTimeout(function(){
+                    share.removeClass(cls)
+                }, 700)
             },
 
             enableEditMode : function(collection, clbks = {}){
@@ -6721,7 +6901,7 @@ Platform = function (app, listofnodes) {
 
             load : {
                 byid : function(txid, clbk, refresh){
-                    self.sdk.collections.load([txid], function(collections, error, p){
+                    self.sdk.collections.load.byids([txid], function(collections, error, p){
 
                         if(!collections.length && !error){
                             error = 'collectionNotFound'
@@ -6747,7 +6927,7 @@ Platform = function (app, listofnodes) {
 
                     self.psdk.collection.load(txids, refresh).then(() => {
 
-                        var collections = self.psdk.share.gets(txids)
+                        var collections = self.psdk.collection.gets(txids)
 
                        
 
@@ -6773,7 +6953,12 @@ Platform = function (app, listofnodes) {
                     var method = 'getprofilecollections'
                     var parameters = [self.currentBlock, '', count, '', [], [], [], [], [], '', address]
 
-                    console.log('load profile collections')
+                    // own list was changed recently: skip both local (indexeddb) and proxy caches
+                    var changed = self.sdk.collections.waschanged(address)
+                    var update = changed
+                    var rpcoptions = _.extend({}, rpc || {})
+
+                    if (changed) rpcoptions.updateRPCCache = true
 
                     /*
 
@@ -6804,7 +6989,7 @@ Platform = function (app, listofnodes) {
                     self.psdk.collection.request(() => {
 
                         return self.app.api.rpc(method, parameters, {
-                            rpc: rpc
+                            rpc: rpcoptions
                         }).then(data => {
 
                             if (_.isArray(data)) {
@@ -6820,14 +7005,22 @@ Platform = function (app, listofnodes) {
                     }, {
                         method,
                         parameters
-                    }).then(d => {
+                    }, null, update).then(d => {
 
                         var collections = self.psdk.collection.gets(_.map(d.contents, (s) => {
                             return s.txid
                         }))
 
+                        var loaded = {}
+
+                        _.each(collections, (c) => {
+                            if (c && c.txid) loaded[c.txid] = true
+                        })
+
+                        // new collections that are still being published; edits are applied to loaded ones by psdk tempExtend.
+                        // the node may already return the transaction while the action is not completed yet (no proxy cache): no duplicate
                         collections = self.psdk.collection.tempAdd(collections, (alias) => {
-                            return alias.actor == address
+                            return alias.actor == address && !alias.editing && !loaded[alias.txid]
                         })
 
                         d.contents = collections
@@ -6844,6 +7037,27 @@ Platform = function (app, listofnodes) {
 
                     })
                 }
+            },
+
+            delete: function (txid, clbk) {
+
+                var rm = new Remove()
+                rm.txidEdit.set(txid);
+
+                self.app.platform.actions.addActionAndSendIfCan(rm).then(action => {
+
+                    successCheck()
+
+                    if (clbk) clbk(null, action.get())
+
+                }).catch(e => {
+
+                    self.app.platform.errorHandler(e, true)
+
+                    if (clbk)
+                        clbk(e, null)
+
+                })
             }
         },
 
@@ -10441,7 +10655,10 @@ Platform = function (app, listofnodes) {
                         return m + f
                     }, 0)
 
-                    if(tf > 50 && tf * 2 > ustate.likers_count) return true
+                    if(tf > 50 && tf * 2 > ustate.likers_count) {
+                        console.log('here');
+                        return true
+                    }
                 }
 
 
@@ -10464,23 +10681,32 @@ Platform = function (app, listofnodes) {
                     return true
                 }
 
+                if(ustate.reputation > 5000){
+                    isOverComplained = false
+                }
+
                 if (isOverComplained) {
+                    console.log('here');
                     return true
                 }
 
                 if (moment().diff(ustate.regdate, 'days') <= 7 && totalComplains > 20 && ustate.likers_count < totalComplainsFirstFlags) {
+                    console.log('here');
                     return true
                 }
 
                 if (totalComplainsFirstFlags > 20 && ustate.likers_count < totalComplainsFirstFlags) {
+                    console.log('here');
                     return true
                 }
 
                 if (totalComplains > 20 && ustate.likers_count * 2 < totalComplains) {
+                    console.log('here');
                     return true
                 }
 
                 if (this.isNotAllowedName(uinfo)) {
+                    console.log('here');
                     return true
                 }
             },
@@ -20567,6 +20793,51 @@ Platform = function (app, listofnodes) {
 
 
         self.tempates = {
+
+            /*
+                decorative inline svg for collection empty states (styles: css/common.less, .collectionIllustration).
+                Colors come from theme variables via classes, so it follows light and dark themes
+            */
+            collectionIllustration: function (type) {
+
+                var badge = function (cx, cy) {
+                    return '<g class="ill-badge"><circle cx="' + cx + '" cy="' + cy + '" r="11"/>' +
+                        '<path class="ill-plus" d="M' + cx + ' ' + (cy - 5) + ' V ' + (cy + 5) + ' M' + (cx - 5) + ' ' + cy + ' H ' + (cx + 5) + '"/></g>'
+                }
+
+                var svg = ''
+
+                if (type == 'cover') {
+
+                    svg = '<svg viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">' +
+                        '<path class="ill-doodle" d="M14 24 L 7 19 M12 34 L 3 34 M21 15 L 19 7"/>' +
+                        '<g class="ill-cards"><rect class="ill-card ill-card2" x="22" y="18" width="70" height="56" rx="9" transform="rotate(-9 57 46)"/></g>' +
+                        '<rect class="ill-paper" x="27" y="25" width="72" height="58" rx="10"/>' +
+                        '<path class="ill-folder" d="M33 77 L 51 55 L 62 67 L 71 58 L 93 77 Z"/>' +
+                        '<circle class="ill-card3" cx="81" cy="41" r="6"/>' +
+                        badge(97, 27) +
+                        '</svg>'
+                }
+                else {
+
+                    svg = '<svg viewBox="0 0 180 140" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">' +
+                        '<path class="ill-doodle" d="M10 24 C 20 10, 34 13, 31 22 C 28 30, 19 26, 24 19 C 30 11, 42 18, 45 33 M45 33 L 39 30 M45 33 L 47 27"/>' +
+                        '<path class="ill-doodle" d="M158 24 L 165 16 M163 33 L 173 31 M152 17 L 152 8"/>' +
+                        '<path class="ill-folderback" d="M36 50 a8 8 0 0 1 8 -8 h24 a8 8 0 0 1 6 3 l6 7 h50 a8 8 0 0 1 8 8 v58 a8 8 0 0 1 -8 8 h-86 a8 8 0 0 1 -8 -8 z"/>' +
+                        '<path class="ill-foldershade" d="M36 50 a8 8 0 0 1 8 -8 h24 a8 8 0 0 1 6 3 l6 7 h50 a8 8 0 0 1 8 8 v58 a8 8 0 0 1 -8 8 h-86 a8 8 0 0 1 -8 -8 z"/>' +
+                        '<g class="ill-cards">' +
+                        '<rect class="ill-card ill-card1" x="44" y="24" width="86" height="62" rx="9" transform="rotate(-7 87 55)"/>' +
+                        '<rect class="ill-card ill-card2" x="54" y="20" width="86" height="62" rx="9" transform="rotate(6 97 51)"/>' +
+                        '<rect class="ill-card ill-card3" x="48" y="32" width="84" height="58" rx="9" transform="rotate(-1 90 61)"/>' +
+                        '</g>' +
+                        '<path class="ill-folder" d="M30 72 a8 8 0 0 1 8 -8 h104 a8 8 0 0 1 8 8 v46 a8 8 0 0 1 -8 8 h-104 a8 8 0 0 1 -8 -8 z"/>' +
+                        '<path class="ill-wave" d="M30 100 C 58 86, 92 114, 150 94 V 118 a8 8 0 0 1 -8 8 H 38 a8 8 0 0 1 -8 -8 z"/>' +
+                        (type == 'folder' ? badge(146, 62) : '') +
+                        '</svg>'
+                }
+
+                return '<div class="collectionIllustration ci-' + (type || 'empty') + '">' + svg + '</div>'
+            },
 
             _share: function (share, c) {
                 var m = share.caption || share.message;

@@ -87716,7 +87716,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
           return {
             time: event.origin_server_ts || 1,
             membership: membership,
-            id: membership == "invite" ? _application_functions__WEBPACK_IMPORTED_MODULE_13__[/* default */ "a"].getmatrixid(event.state_key) : _application_functions__WEBPACK_IMPORTED_MODULE_13__[/* default */ "a"].getmatrixid(event.sender)
+            id: _application_functions__WEBPACK_IMPORTED_MODULE_13__[/* default */ "a"].getmatrixid(event.state_key || event.sender)
           };
         }
         return null;

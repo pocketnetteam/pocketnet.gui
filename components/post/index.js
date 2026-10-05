@@ -1502,6 +1502,10 @@ var post = (function () {
 							actions.addToCollection()
 						})
 
+						_p.el.find('.collectionMode .label').on('click', function(){
+							self.app.platform.sdk.collections.showwindow()
+						})
+
 
 						_p.el.find('.translateto').on('click', events.translateto)
 
