@@ -340,7 +340,11 @@ import ContactsUI
                     } else {
                         completionHandler(false)
                     }
-                }
+                case .limited:
+                    completionHandler(false)
+            }
+            
+                
     }
 
     func returnError(error: ErrorCodes, message: String = "") {

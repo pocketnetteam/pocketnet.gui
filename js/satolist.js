@@ -25216,14 +25216,19 @@ Platform = function (app, listofnodes) {
 
         //initOnlineListener() // /remove for test
 
-
+        console.log('prepare')
 
         self.app.api.wait.ready('use', 6000).then(r => {
+
+            console.log('prepare use')
+
 
             return new Promise((resolve, reject) => {
                 setTimeout(function () {
 
                     self.app.api.changeProxyIfNeed().then(l => {
+
+                        console.log('prepare use changeProxyIfNeedchangeProxyIfNeed', l)
 
                         if (!l) {
 
@@ -25312,7 +25317,12 @@ Platform = function (app, listofnodes) {
 
             self.preparePeertubeServer();
 
+            console.log('prepareUser')
+
             self.prepareUser(function () {
+
+            console.log('prepareUser2')
+
 
                 self.ui.externalFromCurrentUrl()
 
@@ -26689,7 +26699,7 @@ Platform = function (app, listofnodes) {
                 clearInterval(interval);
 
             if (!initial) {
-                initial = document.title || app.meta.fullname //fullName
+          al = document.title || app.meta.fullname //fullName
             }
 
             var i = 0;
