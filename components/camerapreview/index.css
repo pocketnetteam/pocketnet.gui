@@ -41,6 +41,18 @@
   display: none;
   margin-top: 2em;
 }
+#camerapreview .gallery .limitedlibrary {
+  display: none;
+  margin-bottom: 1em;
+  padding: 1em;
+  border-radius: 6px;
+  background: rgba(var(--text-on-bg-shadow-color), 0.08);
+  color: rgba(var(--text-on-bg-shadow-color), 0.8);
+}
+#camerapreview .gallery .limitedlibrary .limitedlibrarytext {
+  font-size: 0.9em;
+  margin-bottom: 0.75em;
+}
 #camerapreview .gallery .caption {
   padding: 1em 0;
   color: rgba(var(--text-on-bg-shadow-color), 0.8);
@@ -93,6 +105,9 @@
   content: "\f058";
 }
 #camerapreview.photolibraryaccessdeclined .gallery .declinedlibrary {
+  display: block;
+}
+#camerapreview.photolibraryaccesslimited .gallery .limitedlibrary {
   display: block;
 }
 #camerapreview .gallerymode {

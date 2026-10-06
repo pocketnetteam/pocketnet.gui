@@ -2584,7 +2584,7 @@ Application = function (p) {
 		},
 
 		supportimagegallery: function () {
-			return window.cordova && !isios()
+			return !!(window.cordova && window.cordova.plugins && window.cordova.plugins.photoLibrary)
 		},
 
 		safearea: function () {

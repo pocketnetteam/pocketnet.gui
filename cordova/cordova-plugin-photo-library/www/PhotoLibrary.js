@@ -1,419 +1,129 @@
 var exec = require('cordova/exec');
 
-var async = cordova.require('cordova-plugin-photo-library.async');
-
-var defaultThumbnailWidth = 512; // optimal for android
-var defaultThumbnailHeight = 384; // optimal for android
-
-var defaultQuality = 0.5;
-
-var isBrowser = cordova.platformId == 'browser';
+// Authorization statuses:
+// 'full'          - access to all photos
+// 'limited'       - access to photos selected by the user (iOS 14+, Android 14+)
+// 'notDetermined' - the user has not been asked yet
+// 'denied'        - denied, the system dialog can be shown again (Android)
+// 'blocked'       - denied permanently, can be changed only in the app settings
 
 var photoLibrary = {};
 
-// Will start caching for specified size
+// success(status) when access is full or limited, otherwise error(status)
+photoLibrary.requestAuthorization = function (success, error) {
+  exec(success, error, 'PhotoLibrary', 'requestAuthorization', []);
+};
+
+photoLibrary.getAuthorizationStatus = function (success, error) {
+  exec(success, error, 'PhotoLibrary', 'getAuthorizationStatus', []);
+};
+
+// In limited mode shows the system screen to change the selected photos.
+// success(status) after the user finished, otherwise behaves as requestAuthorization
+photoLibrary.manageLimitedAccess = function (success, error) {
+  exec(success, error, 'PhotoLibrary', 'manageLimitedAccess', []);
+};
+
+photoLibrary.openSettings = function (success, error) {
+  exec(success, error, 'PhotoLibrary', 'openSettings', []);
+};
+
+// Images only, newest first. success({ library, isLastChunk }) is called for every chunk.
+// Library item: { id, width, height, creationDate }
 photoLibrary.getLibrary = function (success, error, options) {
 
-  if (!options) {
-    options = {};
-  }
+  options = options || {};
 
-  options = {
-    thumbnailWidth: options.thumbnailWidth || defaultThumbnailWidth,
-    thumbnailHeight: options.thumbnailHeight || defaultThumbnailHeight,
-    quality: options.quality || defaultQuality,
+  var params = {
     itemsInChunk: options.itemsInChunk || 0,
-    chunkTimeSec: options.chunkTimeSec || 0,
-    useOriginalFileNames: options.useOriginalFileNames || false,
-    includeImages: options.includeImages !== undefined ? options.includeImages : true,
-    includeAlbumData: options.includeAlbumData || false,
-    includeCloudData: options.includeCloudData !== undefined ? options.includeCloudData : true,
-    includeVideos: options.includeVideos || false,
     maxItems: options.maxItems || 0
   };
 
-  // queue that keeps order of async processing
-  var q = async.queue(function(chunk, done) {
+  // keep chunks in order
+  var pending = {};
+  var nextChunkNum = 0;
 
-    var library = chunk.library;
-    var isLastChunk = chunk.isLastChunk;
+  exec(function (chunk) {
 
-    processLibrary(library, function(library) {
-      var result = { library: library, isLastChunk: isLastChunk };
-      success(result);
-      done();
-    }, options);
+    pending[chunk.chunkNum] = chunk;
 
-  });
+    while (pending[nextChunkNum]) {
+      var current = pending[nextChunkNum];
 
-  var chunksToProcess = []; // chunks are stored in its index
-  var currentChunkNum = 0;
+      delete pending[nextChunkNum];
+      nextChunkNum += 1;
 
-  this.requestAuthorization(function () {
-    cordova.exec(
-      function (chunk) {
-        // callbacks arrive from cordova.exec not in order, restoring the order here
-        if (chunk.chunkNum === currentChunkNum) {
-          // the chunk arrived in order
-          q.push(chunk);
-          currentChunkNum += 1;
-          while (chunksToProcess[currentChunkNum]) {
-            q.push(chunksToProcess[currentChunkNum]);
-            delete chunksToProcess[currentChunkNum];
-            currentChunkNum += 1;
-          }
-        } else {
-          // the chunk arrived not in order
-          chunksToProcess[chunk.chunkNum] = chunk;
-        }
-      },
-      error,
-      'PhotoLibrary',
-      'getLibrary', [options]
-    );
-  }, error, {
-    read: true,
-    write: false
-  });
-};
-
-photoLibrary.getAlbums = function (success, error) {
-
-  cordova.exec(
-    function (result) {
-      success(result);
-    },
-    error,
-    'PhotoLibrary',
-    'getAlbums', []
-  );
-
-};
-
-photoLibrary.getPhotosFromAlbum = function (albumTitle, success, error) {
-
-  cordova.exec(
-    function (result) {
-      success(result);
-    },
-    error,
-    'PhotoLibrary',
-    'getPhotosFromAlbum', [albumTitle]
-  );
-
-};
-
-photoLibrary.isAuthorized = function (success, error) {
-
-  cordova.exec(
-    function (result) {
-      success(result);
-    },
-    error,
-    'PhotoLibrary',
-    'isAuthorized', []
-  );
-
-};
-
-// Generates url that can be accessed directly, so it will work more efficiently than getThumbnail, which does base64 encode/decode.
-// If success callback not provided, will return value immediately, but use overload with success as it browser-friendly
-photoLibrary.getThumbnailURL = function (photoIdOrLibraryItem, success, error, options) {
-
-  var photoId = typeof photoIdOrLibraryItem.id !== 'undefined' ? photoIdOrLibraryItem.id : photoIdOrLibraryItem;
-
-  if (typeof success !== 'function' && typeof options === 'undefined') {
-    options = success;
-    success = undefined;
-  }
-
-  options = getThumbnailOptionsWithDefaults(options);
-
-  var urlParams = 'photoId=' + fixedEncodeURIComponent(photoId) +
-    '&width=' + fixedEncodeURIComponent(options.thumbnailWidth) +
-    '&height=' + fixedEncodeURIComponent(options.thumbnailHeight) +
-    '&quality=' + fixedEncodeURIComponent(options.quality);
-  var thumbnailURL = 'cdvphotolibrary://thumbnail?' + urlParams;
-
-  if (success) {
-    if (isBrowser) {
-      cordova.exec(function(thumbnailURL) { success(thumbnailURL + '#' + urlParams); }, error, 'PhotoLibrary', '_getThumbnailURLBrowser', [photoId, options]);
-    } else {
-      if (window.WkWebView) {
-        thumbnailURL = window.WkWebView.convertFilePath(thumbnailURL.replace("cdvphotolibrary://", "file://"));
-      } else if (typeof device !== "undefined" && device.platform === "Android") {
-        thumbnailURL = window.location.origin + "/cdvphotolibrary/thumbnail/" + urlParams;
-      }
-      success(thumbnailURL);
+      success({
+        library: parseDates(current.library || []),
+        isLastChunk: current.isLastChunk
+      });
     }
-  } else {
-    return thumbnailURL;
-  }
 
+  }, error, 'PhotoLibrary', 'getLibrary', [params]);
 };
 
-// Generates url that can be accessed directly, so it will work more efficiently than getPhoto, which does base64 encode/decode.
-// If success callback not provided, will return value immediately, but use overload with success as it browser-friendly
-photoLibrary.getPhotoURL = function (photoIdOrLibraryItem, success, error, options) {
-
-  var photoId = typeof photoIdOrLibraryItem.id !== 'undefined' ? photoIdOrLibraryItem.id : photoIdOrLibraryItem;
-
-  if (typeof success !== 'function' && typeof options === 'undefined') {
-    options = success;
-    success = undefined;
-  }
-
-  if (!options) {
-    options = {};
-  }
-
-  var urlParams = 'photoId=' + fixedEncodeURIComponent(photoId);
-  var photoURL = 'cdvphotolibrary://photo?' + urlParams;
-
-  if (success) {
-    if (isBrowser) {
-      cordova.exec(function(photoURL) { success(photoURL + '#' + urlParams); }, error, 'PhotoLibrary', '_getPhotoURLBrowser', [photoId, options]);
-    } else {
-      if (window.WkWebView) {
-        photoURL = window.WkWebView.convertFilePath(photoURL.replace("cdvphotolibrary://", "file://"));
-        success(photoURL);
-      } else if (typeof device !== "undefined" && device.platform === "Android") {
-        photoURL = window.location.origin + "/cdvphotolibrary/photo/" + urlParams;
-      }
-      success(photoURL);
-    }
-  } else {
-    return photoURL;
-  }
-
-};
-
-// Provide same size as when calling getLibrary for better performance
+// success(blob)
 photoLibrary.getThumbnail = function (photoIdOrLibraryItem, success, error, options) {
 
-  var photoId = typeof photoIdOrLibraryItem.id !== 'undefined' ? photoIdOrLibraryItem.id : photoIdOrLibraryItem;
+  options = options || {};
 
-  options = getThumbnailOptionsWithDefaults(options);
-
-  cordova.exec(
-    function (data, mimeType) {
-      var blob = dataAndMimeTypeToBlob(data, mimeType);
-      success(blob);
-    },
-    error,
-    'PhotoLibrary',
-    'getThumbnail', [photoId, options]
-  );
-
+  exec(function (data, mimeType) {
+    success(dataAndMimeTypeToBlob(data, mimeType));
+  }, error, 'PhotoLibrary', 'getThumbnail', [getPhotoId(photoIdOrLibraryItem), {
+    thumbnailWidth: options.thumbnailWidth || 256,
+    thumbnailHeight: options.thumbnailHeight || 256,
+    quality: options.quality || 0.7
+  }]);
 };
 
+// success(blob) with the photo scaled down to fit maxWidth x maxHeight
 photoLibrary.getPhoto = function (photoIdOrLibraryItem, success, error, options) {
 
-  var photoId = typeof photoIdOrLibraryItem.id !== 'undefined' ? photoIdOrLibraryItem.id : photoIdOrLibraryItem;
+  options = options || {};
 
-  if (!options) {
-    options = {};
-  }
-
-  cordova.exec(
-    function (data, mimeType) {
-      var blob = dataAndMimeTypeToBlob(data, mimeType);
-      success(blob);
-    },
-    error,
-    'PhotoLibrary',
-    'getPhoto', [photoId, options]
-  );
-
+  exec(function (data, mimeType) {
+    success(dataAndMimeTypeToBlob(data, mimeType));
+  }, error, 'PhotoLibrary', 'getPhoto', [getPhotoId(photoIdOrLibraryItem), {
+    maxWidth: options.maxWidth || 2048,
+    maxHeight: options.maxHeight || 2048,
+    quality: options.quality || 0.9
+  }]);
 };
 
-photoLibrary.getLibraryItem = function (libraryItem, success, error, options) {
+// url is a dataURL. success(libraryItem)
+photoLibrary.saveImage = function (url, success, error) {
 
-  if (!options) {
-    options = {};
-  }
-
-  cordova.exec(
-    function (data, mimeType) {
-      var blob = dataAndMimeTypeToBlob(data, mimeType);
-      success(blob);
-    },
-    error,
-    'PhotoLibrary',
-    'getLibraryItem', [libraryItem, options]
-  );
-
-};
-
-// Call when thumbnails are not longer needed for better performance
-photoLibrary.stopCaching = function (success, error) {
-
-  cordova.exec(
-    success,
-    error,
-    'PhotoLibrary',
-    'stopCaching', []
-  );
-
-};
-
-// Call when getting errors that begin with 'Permission Denial'
-photoLibrary.requestAuthorization = function (success, error, options) {
-
-  options = getRequestAuthenticationOptionsWithDefaults(options);
-
-  cordova.exec(
-    success,
-    error,
-    'PhotoLibrary',
-    'requestAuthorization', [options]
-  );
-
-};
-
-// url is file url or dataURL
-photoLibrary.saveImage = function (url, album, success, error, options) {
-
-  options = getThumbnailOptionsWithDefaults(options);
-
-  if (album.title) {
-    album = album.title;
-  }
-
-  cordova.exec(
-    function (libraryItem) {
-      var library = libraryItem ? [libraryItem] : [];
-
-      processLibrary(library, function(library) {
-        success(library[0] || null);
-      }, options);
-
-    },
-    error,
-    'PhotoLibrary',
-    'saveImage', [url, album]
-  );
-
-};
-
-// url is file url or dataURL
-photoLibrary.saveVideo = function (url, album, success, error) {
-
-  if (album.title) {
-    album = album.title;
-  }
-
-  cordova.exec(
-    success,
-    error,
-    'PhotoLibrary',
-    'saveVideo', [url, album]
-  );
-
+  exec(function (libraryItem) {
+    success(libraryItem ? parseDates([libraryItem])[0] : null);
+  }, error, 'PhotoLibrary', 'saveImage', [url]);
 };
 
 module.exports = photoLibrary;
 
-var getThumbnailOptionsWithDefaults = function (options) {
-
-  if (!options) {
-    options = {};
-  }
-
-  options = {
-    thumbnailWidth: options.thumbnailWidth || defaultThumbnailWidth,
-    thumbnailHeight: options.thumbnailHeight || defaultThumbnailHeight,
-    quality: options.quality || defaultQuality,
-  };
-
-  return options;
-
-};
-
-var getRequestAuthenticationOptionsWithDefaults = function (options) {
-
-  if (!options) {
-    options = {};
-  }
-
-  options = {
-    read: options.read || true,
-    write: options.write || false,
-  };
-
-  return options;
-
-};
-
-var processLibrary = function (library, success, options) {
-
-  parseDates(library);
-
-  addUrlsToLibrary(library, success, options);
-
+var getPhotoId = function (photoIdOrLibraryItem) {
+  return photoIdOrLibraryItem && typeof photoIdOrLibraryItem.id !== 'undefined' ? photoIdOrLibraryItem.id : photoIdOrLibraryItem;
 };
 
 var parseDates = function (library) {
-  var i;
-  for (i = 0; i < library.length; i++) {
-    var libraryItem = library[i];
-    if (libraryItem.creationDate) {
-      libraryItem.creationDate = new Date(libraryItem.creationDate);
+  for (var i = 0; i < library.length; i++) {
+    if (library[i].creationDate) {
+      library[i].creationDate = new Date(library[i].creationDate);
     }
   }
-};
 
-var addUrlsToLibrary = function (library, callback, options) {
-
-  var urlsLeft = library.length;
-
-  var handlePhotoURL = function (libraryItem, photoURL) {
-    libraryItem.photoURL = photoURL;
-    urlsLeft -= 1;
-    if (urlsLeft === 0) {
-      callback(library);
-    }
-  };
-
-  var handleThumbnailURL = function (libraryItem, thumbnailURL) {
-    if (window.WkWebView) {
-      libraryItem.thumbnailURL = window.WkWebView.convertFilePath(thumbnailURL.replace("cdvphotolibrary://", "file://"));
-    } else {
-      libraryItem.thumbnailURL = thumbnailURL;
-    }
-    photoLibrary.getPhotoURL(libraryItem, handlePhotoURL.bind(null, libraryItem), handleUrlError);
-  };
-
-  var handleUrlError = function () {}; // Should never happen
-
-  var i;
-  for (i = 0; i < library.length; i++) {
-    var libraryItem = library[i];
-    photoLibrary.getThumbnailURL(libraryItem, handleThumbnailURL.bind(null, libraryItem), handleUrlError, options);
-  }
-
+  return library;
 };
 
 var dataAndMimeTypeToBlob = function (data, mimeType) {
-  if (!mimeType && data.data && data.mimeType) {
-    // workaround for browser platform cannot return multipart result
+  // android sends { data: base64, mimeType }
+  if (!mimeType && data && data.data && data.mimeType) {
     mimeType = data.mimeType;
     data = data.data;
   }
+
   if (typeof data === 'string') {
-    // workaround for data arrives as base64 instead of arrayBuffer, with cordova-android 6.x
     data = cordova.require('cordova/base64').toArrayBuffer(data);
   }
-  var blob = new Blob([data], {
-    type: mimeType
-  });
 
-  return blob;
+  return new Blob([data], { type: mimeType });
 };
-
-// from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
-function fixedEncodeURIComponent(str) {
-  return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {
-    return '%' + c.charCodeAt(0).toString(16);
-  });
-}

@@ -19,9 +19,17 @@ var camerapreview = (function(){
 		var data = {
 			current : null,
 			selected : {},
-			photolibraryaccessdecline : false,
+			libraryaccess : null,
 			gallery : false,
 			direction : 'BACK'
+		}
+
+		var photolibrary = function(){
+			return window.cordova && window.cordova.plugins && window.cordova.plugins.photoLibrary
+		}
+
+		var canreadlibrary = function(status){
+			return status == 'full' || status == 'limited'
 		}
 
 		var getcameraoptions = function(){
@@ -45,6 +53,8 @@ var camerapreview = (function(){
 		var thubnails = {}
 		var imagesadding = false
 		var libraryProcessId = null
+		var libraryGeneration = 0
+		var authorizing = false
 
 		
 
@@ -66,25 +76,28 @@ var camerapreview = (function(){
                     
                     resolve(libraryItem)
                 }
-                if (window.cordova && window.cordova.plugins.photoLibrary && window.cordova.plugins.photoLibrary.saveImage ){
+                if (photolibrary()){
 
 					permissions.get().then(() => {
-						window.cordova.plugins.photoLibrary.saveImage(url, null, function (libraryItem) {
+						photolibrary().saveImage(url, function (libraryItem) {
+
+							if(!libraryItem) return dummy()
+
+							thubnails[libraryItem.id] = url
+							images[libraryItem.id] = url
+
 							resolve(libraryItem)
 						}, (e) => {
-	
+
 							console.error('e', e)
-		
+
 							dummy()
-							
+
 						});
 					}).catch(e => {
 						console.error(e)
 						dummy()
 					})
-					
-					
-				
 
                 }
                 else{
@@ -211,21 +224,21 @@ var camerapreview = (function(){
 			}
 
 			return new Promise((resolve, reject) => {
-				cordova.plugins.photoLibrary.getThumbnail(id, (data) => {
-	
+				photolibrary().getThumbnail(id, (data) => {
+
 					var urlCreator = window.URL || window.webkitURL;
-	
+
 					thubnails[id] = urlCreator.createObjectURL(data);
 
 					resolve(thubnails[id])
-				
+
 				}, (e) => {
-					
+
 					reject(e)
-	
-				},{ // optional options
-					thumbnailWidth: 125,
-					thumbnailHeight: 125,
+
+				},{
+					thumbnailWidth: 250,
+					thumbnailHeight: 250,
 					quality: 0.8
 				})
 			})
@@ -235,125 +248,183 @@ var camerapreview = (function(){
 
 		var permissions = {
 			get : function(){
+
+				if (!photolibrary()) return Promise.resolve()
+
+				authorizing = true
+
 				return new Promise((resolve, reject) => {
-	
-					if (window.cordova && window.cordova.plugins.photoLibrary){
-						window.cordova.plugins.photoLibrary.requestAuthorization(() => {
-							setDeclineLibrary(false)
-	
-							resolve()
-						}, () => {
-							setDeclineLibrary(true)
-		
-							reject('decline')
-						}, {
-							read: true,
-							write : true
-						});
-					}
-	
-					else
-					{
-						resolve()
-					}
-	
-					
+
+					photolibrary().requestAuthorization((status) => {
+						authorizing = false
+						setLibraryAccess(status)
+
+						resolve(status)
+					}, (status) => {
+						authorizing = false
+						setLibraryAccess(status || 'blocked')
+
+						reject('decline')
+					})
+
 				})
 			},
+
+			// "Grant access" button: ask again or, when the system will not ask anymore, open the app settings
 			getagain : function(){
-				return permissions.get().then(getlibrary)
-			},
-			init : function(){
-	
-				if (!data.photolibraryaccessdecline){
-					return permissions.get().then(getlibrary)
+
+				if (!photolibrary()) return Promise.reject('notsupported')
+
+				if (data.libraryaccess == 'blocked'){
+					return new Promise((resolve, reject) => {
+						photolibrary().openSettings(resolve, reject)
+					})
 				}
 
-				return Promise.reject()
-				
+				return permissions.get().then(reloadlibrary)
+			},
+
+			// "Change selection" in limited mode
+			manage : function(){
+
+				if (!photolibrary()) return Promise.reject('notsupported')
+
+				authorizing = true
+
+				return new Promise((resolve, reject) => {
+
+					photolibrary().manageLimitedAccess((status) => {
+						authorizing = false
+						setLibraryAccess(status)
+
+						resolve(status)
+					}, (status) => {
+						authorizing = false
+						setLibraryAccess(status || 'blocked')
+
+						reject('decline')
+					})
+
+				}).then(reloadlibrary)
+			},
+
+			// The user may change access in the system settings while the app is in background
+			check : function(){
+
+				if (!photolibrary() || authorizing) return
+
+				photolibrary().getAuthorizationStatus((status) => {
+
+					if (authorizing || status == data.libraryaccess) return
+
+					var hadaccess = canreadlibrary(data.libraryaccess)
+
+					setLibraryAccess(status)
+
+					if (hadaccess || canreadlibrary(status)) reloadlibrary()
+
+				}, (e) => {
+					console.error(e)
+				})
+			},
+
+			init : function(){
+
+				if (!photolibrary()){
+					setLibraryAccess('blocked')
+
+					return Promise.reject('notsupported')
+				}
+
+				return permissions.get().then(getlibrary)
 			},
 		}
 
 		var getlibrary = function(){
 
-			if(window.cordova){
-
-				if (window.cordova.plugins.photoLibrary)
-					return new Promise((resolve, reject) => {
-
-						var pid = libraryProcessId = makeid()
-
-						window.cordova.plugins.photoLibrary.getLibrary(
-							(result) => {
-
-								if(pid != libraryProcessId) return
-
-								photos = photos.concat(result.library)
-
-								if(result.isLastChunk){
-									libraryProcessId = null
-								}
-	
-								//photos = result.library
-								
-	
-								/*_.each(photos, (p) => {
-									getthubnail(p.id)
-								})*/
-
-								//// ?
-
-
-								resolve()
-	
-							},
-							(err) => {
-
-								libraryProcessId = null
-								
-								permissions.init().then(resolve).catch(reject)
-	
-							},
-							{ // optional options
-								chunkTimeSec: 0.5,
-								//thumbnailWidth: 128,
-								itemsInChunk: 20,
-								//thumbnailHeight: 128,
-								//quality: 0.5,
-								includeAlbumData: true // default
-							}
-						)
-
-					})
+			if (!photolibrary() || !canreadlibrary(data.libraryaccess)){
+				return Promise.reject('decline')
 			}
 
-			/**/ 
+			return new Promise((resolve, reject) => {
 
-			/*for(var i = 0; i < 40; i++){
-				photos.push({id : i})
-				thubnails[i] = exim
-				images[i] = exim
-			}*/
+				var pid = libraryProcessId = makeid()
+				var resolved = false
 
-				
+				photolibrary().getLibrary(
+					(result) => {
 
-			//return Promise.resolve()
+						if(pid != libraryProcessId) return
 
-			/* */
+						photos = photos.concat(result.library)
 
-			setDeclineLibrary(true)
+						if(result.isLastChunk){
+							libraryProcessId = null
+						}
 
-			return Promise.reject('notsupported')
+						if(!resolved){
+							resolved = true
+
+							resolve()
+						}
+
+					},
+					(err) => {
+
+						if(pid == libraryProcessId) libraryProcessId = null
+
+						reject(err)
+
+					},
+					{
+						itemsInChunk: 60
+					}
+				)
+
+			})
 		}
 
-		var setDeclineLibrary = function(v){
-			data.photolibraryaccessdecline = v
+		var reloadlibrary = function(){
 
-			if(v){
-				el.c.addClass('photolibraryaccessdeclined')
+			if (!el.c) return Promise.resolve()
+
+			libraryGeneration++
+			libraryProcessId = null
+			imagesadding = false
+
+			photos = []
+			renderedphotos = {}
+			data.selected = {}
+
+			el.galleryimages.find('.imagescontent').html('')
+			renders.selectedButton()
+
+			return getlibrary().then(() => {
+
+				if (el.c && data.gallery) renders.images()
+
+			}).catch(e => {
+				console.log(e)
+			})
+		}
+
+		var setLibraryAccess = function(status){
+			data.libraryaccess = status
+
+			if (!el.c) return
+
+			if (canreadlibrary(status)){
+				el.c.removeClass('photolibraryaccessdeclined')
 			}
 			else{
-				el.c.removeClass('photolibraryaccessdeclined')
+				el.c.addClass('photolibraryaccessdeclined')
+			}
+
+			if (status == 'limited'){
+				el.c.addClass('photolibraryaccesslimited')
+			}
+			else{
+				el.c.removeClass('photolibraryaccesslimited')
 			}
 		}
 
@@ -363,30 +434,31 @@ var camerapreview = (function(){
                 return Promise.resolve(images[id])
             }
 
-            if(window.cordova && window.cordova.plugins.photoLibrary){
+            if(photolibrary()){
 
                 return new Promise((resolve, reject) => {
 
-                    cordova.plugins.photoLibrary.getPhoto(id, (data) => {
-
+                    photolibrary().getPhoto(id, (data) => {
 
 						return Base64Helper.fromFile(data).then(base64 => {
 							images[id] = base64;
 
 							resolve(images[id])
-						})
+						}).catch(reject)
 
-    
                     }, (e) => {
     
                         console.error("E", e)
         
                         reject(e)
                         
-                    })
+                    }, {
+						maxWidth : 2048,
+						maxHeight : 2048,
+						quality : 0.9
+					})
                 })
                
-                
             }
             else{
                 return Promise.reject('empty')
@@ -563,9 +635,14 @@ var camerapreview = (function(){
 
 					imagesadding = true
 
+					var generation = libraryGeneration
+
 					getthubnails(_.map(images, (image) => {
 						return image.id
 					})).then(() => {
+
+						if (generation != libraryGeneration || !el.c) return
+
 						_.each(images, (p) => {
 							renderedphotos[p.id] = true
 						})
@@ -666,9 +743,17 @@ var camerapreview = (function(){
 
 			el.c.find('.addAccessToLibrary').on('click', function(){
 				permissions.getagain().catch(e => {
-
+					console.log(e)
 				})
 			})
+
+			el.c.find('.manageLibraryAccess').on('click', function(){
+				permissions.manage().catch(e => {
+					console.log(e)
+				})
+			})
+
+			document.addEventListener('resume', permissions.check, false)
 
 			el.c.find('.gallerytoggle').on('click', () => {
 				data.gallery = !data.gallery
@@ -762,6 +847,11 @@ var camerapreview = (function(){
 				delete self.app.platform.clbks._unfocus.camera
 				delete self.app.platform.clbks._focus.camera
 
+				document.removeEventListener('resume', permissions.check, false)
+
+				libraryGeneration++
+				libraryProcessId = null
+
 				data.selected = {}
 
 				if(prlx) prlx.destroy()
@@ -813,6 +903,9 @@ var camerapreview = (function(){
 				renderedphotos = {}
 				imagesadding = false
 				photos = []
+				data.libraryaccess = null
+				authorizing = false
+				libraryGeneration++
 
 				window.rifticker.add(() => {
 			
@@ -849,7 +942,7 @@ var camerapreview = (function(){
 
 				compute()
 
-				getlibrary().catch(e => {
+				permissions.init().catch(e => {
 					console.log(e)
 				}).then(() => {
 
