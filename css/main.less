@@ -8625,7 +8625,7 @@ html.mobileview{
         width: auto;
         left: @rhythm;
         right: @rhythm;
-        bottom: 25px;
+        bottom: calc(25px + env(safe-area-inset-bottom, 0px));
         padding : 4 * @rhythm;
         z-index: 20100;
         min-height: 50px;

@@ -2782,11 +2782,7 @@ Application = function (p) {
 							}
 
 							// Android resets the system bars after PiP: restore the current status bar mode
-							if (!self.fullscreenmode) {
-								var restore = self.mobile.statusbar[self.mobile.statusbar.status] || self.mobile.statusbar.background
-
-								restore()
-							}
+							self.mobile.statusbar.restore()
 						}
 
 						self.mobile.pip.enabled = res
@@ -2929,11 +2925,33 @@ Application = function (p) {
 		},
 		statusbar: {
 			status : 'background',
+			hidden : false,
 			initial : function(){
 				/*if (window.NavigationBar)
 					window.NavigationBar.hide()*/
 
-			
+				if (!window.cordova || isios()) return
+
+				// System dialogs and app switching may show the hidden system bars again (fullscreen video, calls).
+				// Colors are not reset: the core SystemBarPlugin is disabled in cordova-plugin-statusbar
+				document.addEventListener('resume', function(){
+					if (self.mobile.statusbar.hidden) self.mobile.statusbar.hide()
+				}, false)
+			},
+
+			// Applies the current mode again
+			restore : function(){
+				if (self.mobile.statusbar.hidden) {
+					self.mobile.statusbar.hide()
+					return
+				}
+
+				var status = self.mobile.statusbar.status
+
+				// topfadebackground changes only the status bar and relies on the navigation bar set by background
+				if (status != 'gallerybackground') self.mobile.statusbar.background()
+
+				if (status != 'background' && self.mobile.statusbar[status]) self.mobile.statusbar[status]()
 			},
 			background: function () {
 
@@ -2994,6 +3012,8 @@ Application = function (p) {
 			},
 
 			hide: function () {
+				self.mobile.statusbar.hidden = true
+
 				if (window.StatusBar) {
 					window.StatusBar.hide()
 					//window.StatusBar.overlaysWebView(true);
@@ -3004,6 +3024,8 @@ Application = function (p) {
 				}
 			},
 			show: function () {
+				self.mobile.statusbar.hidden = false
+
 				if (window.StatusBar) {
 					window.StatusBar.show()
 					//window.StatusBar.overlaysWebView(false);

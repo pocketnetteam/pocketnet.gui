@@ -13,7 +13,7 @@
 #camerapreview .useselectedWrapper {
   display: none;
   position: absolute;
-  bottom: 3em;
+  bottom: calc(6 * 0.5em + env(safe-area-inset-bottom, 0px));
   left: 0;
   right: 0;
   text-align: center;
@@ -63,6 +63,7 @@
   right: 0;
   top: calc(65px + var(--app-margin-top));
   padding: 0.5em 1em;
+  padding-bottom: calc(12 * 0.5em + env(safe-area-inset-bottom, 0px));
   overflow-y: scroll;
 }
 #camerapreview .gallery .images .imagescontent {
@@ -189,7 +190,7 @@
   margin: 0 auto;
   position: absolute;
   left: 50%;
-  bottom: 3em;
+  bottom: calc(6 * 0.5em + env(safe-area-inset-bottom, 0px));
   margin-left: -27px;
   z-index: 150;
 }
