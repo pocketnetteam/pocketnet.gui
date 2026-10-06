@@ -180,6 +180,7 @@
             "icon": "res/electron/icons/mac/icon.icns",
             "extendInfo": "bastyon",
             "hardenedRuntime": true,
+            "x64ArchFiles": "Contents/Resources/app.asar.unpacked/node_modules/node-notifier/vendor/**",
             "entitlements": "./node_modules/electron-builder-notarize/entitlements.mac.inherit.plist",
             "notarize": true
         },

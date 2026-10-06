@@ -554,6 +554,7 @@ Platform = function (app, listofnodes) {
         'PJiCkAihRHTg6SEBFeVe8hcHQ12HfuYwbr' : true,
         'PUWQv3myaZ2M4zsZRPn5rqAHKhMigMNcCD' : true,
         'PLXceSgA3GAtragjqfDYaiHQKjS7KEdQaV' : true,
+        'PKT3U4kdx8sJF4tS7RsururJPqkoxsmw5L' : true
 
     }
 
