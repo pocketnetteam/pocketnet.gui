@@ -74,7 +74,7 @@ jobs:
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 22
       - name: Prepare building
         run: |
           npm i
@@ -117,7 +117,7 @@ jobs:
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 22
       - name: Prepare building
         run: |
           apt update && apt install -y binutils rpm
@@ -151,7 +151,7 @@ jobs:
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 22
       - name: Prepare building
         run: |
           npm i
@@ -240,7 +240,8 @@ jobs:
           ls -l build.json
       - name: Fixing Android Build Tool Issue
         run: |
-            cd $ANDROID_HOME/build-tools/35.0.0
+            yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "build-tools;36.0.0" "platforms;android-36" > /dev/null
+            cd $ANDROID_HOME/build-tools/36.0.0
             mv d8 dx
             cd lib
             mv d8.jar dx.jar
@@ -300,7 +301,8 @@ jobs:
           echo "${{ secrets.ANDROID_FIREBASE_CONF }}" | base64 -d > google-services.json
       - name: Fixing Android Build Tool Issue
         run: |
-            cd $ANDROID_HOME/build-tools/35.0.0
+            yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "build-tools;36.0.0" "platforms;android-36" > /dev/null
+            cd $ANDROID_HOME/build-tools/36.0.0
             mv d8 dx
             cd lib
             mv d8.jar dx.jar

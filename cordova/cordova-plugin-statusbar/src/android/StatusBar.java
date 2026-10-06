@@ -22,11 +22,15 @@ package org.apache.cordova.statusbar;
 import android.graphics.Color;
 import android.os.Build;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 
 import org.apache.cordova.CallbackContext;
@@ -76,7 +80,12 @@ public class StatusBar extends CordovaPlugin {
             window.clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 
             // Read 'StatusBarOverlaysWebView' from config.xml, default is true.
-            setStatusBarTransparent(preferences.getBoolean("StatusBarOverlaysWebView", true));
+            boolean overlaysWebView = preferences.getBoolean("StatusBarOverlaysWebView", true);
+            setStatusBarTransparent(overlaysWebView);
+
+            if (overlaysWebView) {
+                keepWebViewFullScreen();
+            }
 
             // Read 'StatusBarBackgroundColor' from config.xml, default is #000000.
             setStatusBarBackgroundColor(preferences.getString("StatusBarBackgroundColor", "#000000"));
@@ -194,6 +203,57 @@ public class StatusBar extends CordovaPlugin {
         if (isTransparent) {
             window.setStatusBarColor(Color.TRANSPARENT);
         }
+    }
+
+    /**
+     * cordova-android 15 offsets the WebView with margins for the system bars and the keyboard
+     * (even with adjustNothing). The app draws under the system bars itself (CSS safe-area insets)
+     * and the keyboard must overlay the content, so keep the WebView full screen.
+     * The insets are still dispatched to the WebView, so env(safe-area-inset-*) keeps working.
+     */
+    private void keepWebViewFullScreen() {
+        final View webViewView = webView.getView();
+
+        if (!(webViewView.getParent() instanceof ViewGroup)) return;
+
+        final ViewGroup root = (ViewGroup) webViewView.getParent();
+
+        ViewCompat.setOnApplyWindowInsetsListener(root, (v, insets) -> {
+            clearMargins(webViewView);
+
+            // Cordova's colored view behind the status bar must not cover the WebView.
+            View statusBarView = root.findViewWithTag("statusBarView");
+
+            if (statusBarView != null && statusBarView.getLayoutParams() != null
+                    && statusBarView.getLayoutParams().height != 0) {
+                ViewGroup.LayoutParams params = statusBarView.getLayoutParams();
+                params.height = 0;
+                statusBarView.setLayoutParams(params);
+            }
+
+            // Hide the keyboard from the WebView: otherwise Chromium shrinks the visual viewport,
+            // fires resize and shifts the page scroll when the keyboard closes. The keyboard plugin
+            // still reads the real keyboard height from the root window insets.
+            return new WindowInsetsCompat.Builder(insets)
+                .setInsets(WindowInsetsCompat.Type.ime(), Insets.NONE)
+                .setVisible(WindowInsetsCompat.Type.ime(), false)
+                .build();
+        });
+
+        ViewCompat.requestApplyInsets(root);
+    }
+
+    private void clearMargins(final View view) {
+        if (!(view.getLayoutParams() instanceof ViewGroup.MarginLayoutParams)) return;
+
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+
+        // Only update when needed to avoid layout loops.
+        if (params.leftMargin == 0 && params.topMargin == 0
+                && params.rightMargin == 0 && params.bottomMargin == 0) return;
+
+        params.setMargins(0, 0, 0, 0);
+        view.setLayoutParams(params);
     }
 
     private void setStatusBarStyle(final String style) {

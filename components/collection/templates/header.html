@@ -6,9 +6,9 @@
 
 <div class="collectionHeader collectionCard <%- collection.image ? 'hascover' : 'nocover' %> <%- editState ? 'edit_' + editState : '' %>">
 
-	<% if(collection.image) { %>
-		<div class="coverBackdrop" image="<%- collection.image %>"></div>
-	<% } %>
+	<div class="bokeh" aria-hidden="true">
+		<div class="bokehField"></div>
+	</div>
 
 	<div class="headerContent">
 

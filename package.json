@@ -2,10 +2,10 @@
     "name": "pocketnet",
     "project": "Bastyon",
 
-    "version": "0.9.139",
+    "version": "0.9.140",
     "versionsuffix": "0",
-    "cordovaversion": "1.8.139",
-    "cordovaversioncode": "1801390",
+    "cordovaversion": "1.8.140",
+    "cordovaversioncode": "1801401",
 
     "description": "Bastyon desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
@@ -35,6 +35,7 @@
         "minimize:cordova:store": "node minimize.js -prodaction=true -vendor=30069 -path=/pocketnet/ -project=Bastyon -composetemplates=true -store=true",
         "minimize:cordova:gfree": "node minimize.js -prodaction=true -vendor=30069 -path=/pocketnet/ -project=Bastyon -composetemplates=true -gfree=true",
         "minimize:cordova:test": "node minimize.js -prodaction=true -test=true -vendor=30069 -path=/pocketnet/ -project=Bastyon -composetemplates=true",
+        "check:android": "npm run minimize:cordova:store && cd cordova && (cordova platform rm android || echo android platform not installed) && npm run android-add && npm run android-run",
         "minimize:bastyon": "node minimize.js -prodaction=true -vendor=30069 -path=/ -project=Bastyon",
         "minimize:bastyon:papp": "node minimize.js -prodaction=true -vendor=30069 -path=/ -project=BastyonPapp",
         "minimize:bastyon:test": "node minimize.js -prodaction=true -vendor=30069 -test=true -path=/ -project=Bastyon",
@@ -52,7 +53,7 @@
         "@types/grunt": "^0.4.31",
         "babel-plugin-remove-use-strict": "^1.0.1",
         "electron": "^39.2.6",
-        "electron-builder": "^25.1.8",
+        "electron-builder": "^26.17.0",
         "electron-builder-notarize": "^1.5.1",
         "electron-notarize": "",
         "grunt": "^1.6.1",
@@ -179,10 +180,9 @@
             "icon": "res/electron/icons/mac/icon.icns",
             "extendInfo": "bastyon",
             "hardenedRuntime": true,
+            "x64ArchFiles": "Contents/Resources/app.asar.unpacked/node_modules/node-notifier/vendor/**",
             "entitlements": "./node_modules/electron-builder-notarize/entitlements.mac.inherit.plist",
-            "notarize": {
-                "teamId": "Y5JW9JU787"
-            }
+            "notarize": true
         },
         "linux": {
             "target": [
@@ -207,7 +207,9 @@
             "executableName": "bastyon",
             "description": "Revolutionary anti-censorship decentralized publishing and social platform. Based on blockchain technology, running on computers worldwide without central control. Self-policed by users with good reputation, protecting your privacy.",
             "desktop": {
-                "StartupWMClass": "pocketnet"
+                "entry": {
+                    "StartupWMClass": "pocketnet"
+                }
             }
         },
         "appImage": {

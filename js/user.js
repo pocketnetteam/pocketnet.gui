@@ -255,6 +255,8 @@ User = function(app, p) {
 		var cache = self.smcache('mncache' + (window.testpocketnet ? 'test' : 'production'), true)
 			cache.clear()
 
+		if (app.pinlock) app.pinlock.clear()
+
 		settings.clear();
 
 		keys.public.set();

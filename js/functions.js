@@ -10755,6 +10755,44 @@ function Circles(params) {
     if (typeof params == 'object') {this.init(params);}
     else {this.init({});}
 }
+// random semi-transparent circles for light backgrounds (pinlock, collection header), new set on every call
+function lightCircles(target, p) {
+    if (!target) return
+
+    p = p || {}
+
+    var theme = document.documentElement.getAttribute('theme')
+    var k = (theme == 'black' || theme == 'gray') ? 1.6 : 1
+    var size = Math.max(target.offsetWidth, target.offsetHeight) || 600
+    var radMax = Math.round(size * (p.scale || 0.45))
+
+    target.innerHTML = ''
+
+    // cool blue / teal base
+    Circles({
+        target: target,
+        quantity: p.quantity || 8,
+        radius: { min: 6, max: radMax },
+        zIndex: { min: 0, max: 20 },
+        hue: { min: 175, max: 215 },
+        saturation: { min: 60, max: 95 },
+        light: { min: 55, max: 72 },
+        alpha: { min: 0.04 * k, max: 0.14 * k }
+    })
+
+    // a few warm accents
+    Circles({
+        target: target,
+        quantity: Math.ceil((p.quantity || 8) / 3),
+        radius: { min: 6, max: Math.round(radMax * 0.7) },
+        zIndex: { min: 0, max: 20 },
+        hue: { min: 30, max: 48 },
+        saturation: { min: 80, max: 100 },
+        light: { min: 60, max: 72 },
+        alpha: { min: 0.05 * k, max: 0.16 * k }
+    })
+}
+
 function randInt(min, max) {
     return Math.floor(this.randNum(min, max));
 }

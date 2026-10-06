@@ -10,7 +10,7 @@
     <content src="indexcordova.html" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="24" />
-    <preference name="android-targetSdkVersion" value="35" />
+    <preference name="android-targetSdkVersion" value="36" />
     <preference name="loadUrlTimeoutValue" value="700000" />
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashShowOnlyFirstTime" value="true" />
@@ -42,7 +42,6 @@
         <icon density="xxhdpi" src="resources/android/icon/drawable-xxhdpi-icon.png" />
         <icon density="xxxhdpi" src="resources/android/icon/drawable-xxxhdpi-icon.png" />
 
-        <resource-file src="resources/android/colors.xml" target="app/src/main/res/values/colors.xml" />
         <resource-file src="resources/android/notification/drawable-mdpi/notification_icon.png" target="app/src/main/res/drawable-mdpi/notification_icon.png" />
         <resource-file src="resources/android/notification/drawable-mdpi/notification_icon.png" target="app/src/main/res/drawable/notification_icon.png" />
         <resource-file src="resources/android/notification/drawable-hdpi/notification_icon.png" target="app/src/main/res/drawable-hdpi/notification_icon.png" />
@@ -193,9 +192,10 @@
         <resource-file src="resources/android/raw/isrg_root_x1.der" target="app/src/main/res/raw/isrg_root_x1.der" />
         <resource-file src="resources/android/raw/isrg_root_x2.der" target="app/src/main/res/raw/isrg_root_x2.der" />
         <resource-file src="resources/android/xml/network_security_config.xml" target="app/src/main/res/xml/network_security_config.xml" />
+        <resource-file src="resources/android/xml/data_extraction_rules.xml" target="app/src/main/res/xml/data_extraction_rules.xml" />
 
         <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application">
-            <application android:hardwareAccelerated="true" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" android:largeHeap="true" android:banner="@drawable/banner" android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true" android:networkSecurityConfig="@xml/network_security_config" android:name="pan.alexander.cordova.torrunner.App"/>
+            <application android:hardwareAccelerated="true" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" android:largeHeap="true" android:banner="@drawable/banner" android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true" android:networkSecurityConfig="@xml/network_security_config" android:allowBackup="false" android:fullBackupContent="false" android:dataExtractionRules="@xml/data_extraction_rules" tools:replace="android:allowBackup" android:name="pan.alexander.cordova.torrunner.App"/>
         </edit-config>
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">

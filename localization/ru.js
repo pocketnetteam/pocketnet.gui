@@ -3205,3 +3205,52 @@ _l.mustInstallToRate = "Вы должны установить приложен�
 _l.reviewsAndRatingsMenu = "Отзывы и оценки"
 _l.rateAppPromptMessage = "Вам нравится это приложение? Пожалуйста, оцените его!"
 _l.rateAppButton = "Оценить"
+
+//pin lock
+
+_l.pinlock_title = "Блокировка PIN-кодом"
+_l.pinlock_welcome = function(v){
+	return "С возвращением, " + v
+}
+_l.pinlock_welcomeanon = "С возвращением"
+_l.pinlock_enter = "Введите PIN-код"
+_l.pinlock_current = "Введите текущий PIN-код"
+_l.pinlock_new = "Придумайте PIN-код"
+_l.pinlock_repeat = "Повторите PIN-код"
+_l.pinlock_done = "Готово"
+_l.pinlock_mismatch = "PIN-коды не совпадают"
+_l.pinlock_wrong = "Неверный PIN-код"
+_l.pinlock_attemptsleft = function(v){
+	return "осталось попыток: " + v
+}
+_l.pinlock_blocked = function(v){
+	return "Слишком много попыток. Повторите через " + v
+}
+_l.pinlock_error = "Что-то пошло не так. Попробуйте ещё раз"
+_l.pinlock_entered = function(v){
+	return "Введено " + v + " из 4"
+}
+_l.pinlock_digit = function(v){
+	return "Цифра " + v
+}
+_l.pinlock_delete = "Удалить"
+_l.pinlock_keyboardhint = "Можно вводить с клавиатуры"
+_l.pinlock_forgot = "Забыли PIN-код?"
+_l.pinlock_forgotwarning = "Чтобы снова войти, понадобится мнемоническая фраза или приватный ключ. Без них доступ к аккаунту будет потерян навсегда."
+_l.pinlock_signout = "Выйти из аккаунта"
+_l.pinlock_purpose = "PIN-код защищает приложение от посторонних. Он не заменяет резервную копию мнемонической фразы."
+_l.pinlock_enabled = "PIN-код установлен"
+_l.pinlock_changed = "PIN-код изменён"
+_l.pinlock_disabled = "PIN-код отключён"
+_l.pinlock_lockafter = "Блокировать через"
+_l.pinlock_minutes = function(v){
+	return v + " мин"
+}
+_l.pinlock_security = "Безопасность"
+_l.pinlock_settingname = "PIN-код"
+_l.pinlock_stateon = "Включён"
+_l.pinlock_stateoff = "Выключен"
+_l.pinlock_set = "Установить PIN-код"
+_l.pinlock_change = "Сменить PIN-код"
+_l.pinlock_disable = "Отключить PIN-код"
+_l.pinlock_locknow = "Заблокировать сейчас"
