@@ -27,23 +27,6 @@
   transform: translateY(-24px) scale(1.04);
   transition: transform 0.35s 0.15s ease-out;
 }
-html.pinlocked {
-  overflow: hidden;
-}
-html.pinlocked body {
-  overflow: hidden;
-}
-html.pinlockreveal #application {
-  animation: pinlockReveal 0.35s ease-out;
-}
-@keyframes pinlockReveal {
-  from {
-    transform: scale(0.98);
-  }
-  to {
-    transform: scale(1);
-  }
-}
 /* wnd for set / change / disable */
 .wnd.pinlockwnd {
   /* the app's blurred backdrop would be re-rendered on every frame of the bokeh drift */
@@ -710,9 +693,6 @@ html.pinlockreveal #application {
   }
   .pinlockOverlay.leaving .pinlockModule {
     transform: none;
-  }
-  html.pinlockreveal #application {
-    animation: none;
   }
 }
 @keyframes pinlockFadeIn {

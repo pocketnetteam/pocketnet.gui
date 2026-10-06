@@ -37,25 +37,6 @@
 	}
 }
 
-html.pinlocked{
-	overflow: hidden;
-
-	body{
-		overflow: hidden;
-	}
-}
-
-html.pinlockreveal{
-	#application{
-		animation: pinlockReveal .35s ease-out;
-	}
-}
-
-@keyframes pinlockReveal{
-	from { transform: scale(.98); }
-	to { transform: scale(1); }
-}
-
 /* wnd for set / change / disable */
 
 .wnd.pinlockwnd{
@@ -813,10 +794,6 @@ html.pinlockreveal{
 		.pinlockModule{
 			transform: none;
 		}
-	}
-
-	html.pinlockreveal #application{
-		animation: none;
 	}
 }
 

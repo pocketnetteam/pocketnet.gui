@@ -27132,10 +27132,15 @@ Platform = function (app, listofnodes) {
                 },
                 onInitCall: (call) => {
 
+                    if (self.app.pinlock) self.app.pinlock.activity(true)
+
                 },
                 onEnded: (call, ui) => {
 
                     self.activecall = null
+
+                    // call window leaves, pin timeout starts from the end of the call
+                    if (self.app.pinlock) self.app.pinlock.call(false)
 
                     self.app.mobile.unsleep(false)
 
@@ -27172,11 +27177,16 @@ Platform = function (app, listofnodes) {
                         ui
                     }
 
+                    if (self.app.pinlock) self.app.pinlock.call('active')
+
                     clbks.view()
 
                 },
 
                 onIncomingCall: function () {
+
+                    // answer without pin: call window is shown over the lock screen
+                    if (self.app.pinlock) self.app.pinlock.call('incoming')
 
                     if (self.app.playingvideo) {
                         self.app.playingvideo.exitFullScreen()

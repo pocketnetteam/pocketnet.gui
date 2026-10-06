@@ -18,6 +18,7 @@ var PinLock = function (app) {
 	var MAXFAILS = 5;
 	var ACTIVITY_WRITE_INTERVAL = 15000;
 	var MOUSEMOVE_THROTTLE = 1000;
+	var CALL_RING_MAX = 90 * 1000; /* safety: drop the incoming state if neither onConnected nor onEnded came */
 
 	var net = window.testpocketnet ? 'test' : 'production';
 	var configkey = 'pinlock_' + net;
@@ -32,11 +33,14 @@ var PinLock = function (app) {
 	var lastMousemove = 0;
 	var slots = {};
 	var backbuttonBound = false;
+	var callShown = false;
+	var callTimer = null;
 
 	self.clbks = {
 		lock: {},
 		unlock: {},
 		change: {},
+		call: {},
 		state: {}
 	};
 
@@ -213,8 +217,13 @@ var PinLock = function (app) {
 		return 15 * 60 * 1000;
 	};
 
+	/* connected call (platform.activecall is set in onConnected and cleared in onEnded) */
+	var callActive = function () {
+		return !!deep(app, 'platform.activecall');
+	};
+
 	var mediaActive = function () {
-		if (deep(app, 'platform.activecall')) return true;
+		if (callActive()) return true;
 
 		var video = app.playingvideo;
 
@@ -481,6 +490,9 @@ var PinLock = function (app) {
 
 		if (state.locked) return;
 
+		/* call may go on in background/pip longer than the timeout, the app is in use */
+		if (callActive()) return self.activity(true);
+
 		if (now() - lastActivity() >= timeoutMs()) return self.lock();
 
 		if (localActivity > (state.lastActivity || 0)) {
@@ -649,6 +661,35 @@ var PinLock = function (app) {
 	};
 
 	/*
+		Call window state from platform call hooks: 'incoming' | 'active' | false.
+		Like on phones, a call can be answered and held without the pin: the call window
+		is shown over the lock screen, after the call the lock screen is there again.
+	*/
+	self.call = function (callstate) {
+		clearTimeout(callTimer);
+		callTimer = null;
+
+		if (callstate == 'incoming') {
+			callTimer = setTimeout(function () {
+				if (!callActive()) self.call(false);
+			}, CALL_RING_MAX);
+		}
+
+		/* pin timeout counts from the call events, after the call from its end */
+		self.activity(true);
+
+		if (callShown == !!callstate) return;
+
+		callShown = !!callstate;
+
+		emit('call', callShown);
+	};
+
+	self.callshown = function () {
+		return callShown;
+	};
+
+	/*
 		Waits for unlock before an external action (push tap, deeplink, share intent).
 		Never rejects. Resolves false when displaced by a newer request of the same slot,
 		on clear/signout, or if the account changed meanwhile.
@@ -685,6 +726,7 @@ var PinLockScreen = function (app, pinlock) {
 	var moduleP = null;
 	var loading = false;
 	var hideTimer = null;
+	var scrollOff = false;
 
 	var stubBackgrounds = {
 		black: 'linear-gradient(160deg, rgb(3, 15, 27), rgb(14, 28, 43))',
@@ -702,8 +744,44 @@ var PinLockScreen = function (app, pinlock) {
 		return stubBackgrounds[theme] || stubBackgrounds.white;
 	};
 
+	/* app scroll lock is a counter shared with windows, so call offScroll/onScroll strictly in pairs */
+	var toggleScroll = function (off) {
+		if (scrollOff == off || !deep(app, 'actions.offScroll')) return;
+
+		scrollOff = off;
+
+		if (off) app.actions.offScroll();
+		else app.actions.onScroll();
+	};
+
+	var callsEl = function () {
+		return document.getElementById('bastyonCalls');
+	};
+
+	/* call window over the lock screen while a call is shown (see PinLock.call), only while locked */
+	var liftCalls = function (lift) {
+		var c = callsEl();
+
+		if (!c) return;
+
+		lift = !!(lift && el);
+
+		c.style.position = lift ? 'relative' : '';
+		c.style.zIndex = lift ? '10000020' : '';
+	};
+
+	var onCall = function (shown) {
+		liftCalls(shown);
+
+		if (!shown && el) el[0].focus();
+	};
+
 	var onFocusIn = function (e) {
 		if (!el || el[0].contains(e.target)) return;
+
+		var c = callsEl();
+
+		if (pinlock.callshown() && c && c.contains(e.target)) return;
 
 		el[0].focus();
 	};
@@ -734,12 +812,16 @@ var PinLockScreen = function (app, pinlock) {
 		$('body').append(el);
 		$('html').addClass('pinlocked');
 
+		toggleScroll(true);
+
 		document.addEventListener('focusin', onFocusIn, true);
 		window.addEventListener('keydown', onKey, true);
 
 		if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
 
 		el[0].focus();
+
+		liftCalls(pinlock.callshown());
 	};
 
 	var destroyModule = function () {
@@ -758,7 +840,11 @@ var PinLockScreen = function (app, pinlock) {
 
 		el = null;
 
+		liftCalls(false);
+
 		$('html').removeClass('pinlocked');
+
+		toggleScroll(false);
 	};
 
 	var load = function () {
@@ -804,12 +890,6 @@ var PinLockScreen = function (app, pinlock) {
 
 		var finish = function () {
 			remove();
-
-			$('html').addClass('pinlockreveal');
-
-			setTimeout(function () {
-				$('html').removeClass('pinlockreveal');
-			}, 400);
 		};
 
 		el.addClass('leaving');
@@ -829,6 +909,7 @@ var PinLockScreen = function (app, pinlock) {
 
 	pinlock.clbks.lock.screen = self.show;
 	pinlock.clbks.unlock.screen = self.hide;
+	pinlock.clbks.call.screen = onCall;
 
 	return self;
 };
