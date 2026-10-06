@@ -85,6 +85,23 @@ This file is the project-specific operating guide for AI coding agents working i
 - Pin Cordova dependencies to published npm versions. Do not use `git+https://...` or `github:...` master refs: upstream master moves without notice (for example, `cordova-plugin-file` master moved to 9.0.0-dev and broke `cordova-plugin-media`, which requires `^8.0.0`). `cordova-plugin-file` must stay `^8.1.3`.
 - Local plugins in `cordova/<plugin>/` (for example, `cordova-plugin-deeplinks`) are tracked in git. Their hooks run `npm install` against their own `package.json`, so keep those dependency ranges capped as well (for example, `plist@5` is ESM-only and breaks `require('plist')`).
 
+## Build Failures Without Code Changes
+
+When a Cordova (Android/iOS) or Electron (macOS/Windows/Linux) build suddenly fails and nothing relevant changed in this repository, assume an external cause first and search the internet early, before rewriting code or secrets.
+
+- Common external causes seen here:
+  - A new major version of a dependency pulled through an open range (`>=`, `*`, `latest`, git master refs). Example: `plist@5` (ESM-only) broke the `cordova-plugin-deeplinks` hooks.
+  - Upstream master moving under a `git+https://` or `github:` dependency. Example: `cordova-plugin-file` 9.0.0-dev.
+  - GitHub Actions runner image updates (`macos-latest`, `ubuntu-latest`, `windows-latest`). Example: the macOS image of 2026-08-31 started rejecting electron-builder ≤ 26.15's keychain password in `security set-key-partition-list` with "The user name or passphrase you entered is not correct". Fixed by upgrading to electron-builder 26.17.0.
+  - Toolchain mismatches: system Gradle vs JDK (Gradle 6.x on JDK 17 fails with "Unsupported class file major version 61"), Node version required by build tooling (electron-builder 26 needs Node ≥ 22.12 via `@electron/rebuild`).
+  - Expired or changed credentials, agreements, or certificates on Apple/Google/GitHub.
+- How to investigate:
+  1. Read the full error and find the exact failing step (hook, plugin, tool, command).
+  2. Search the web for the exact error message together with the tool name and the current year (for example, `electron-builder "<error text>" github actions macos`). Check GitHub issues and PRs from the last few weeks: other projects usually hit the same breakage at the same time.
+  3. Compare what changed outside the repo: release dates of dependencies on npm (`npm view <pkg> time`), runner image version in the CI log (`Set up job` → `Image`), tool versions (`gradle --version`, `java -version`, `node -v`).
+  4. Confirm the cause in local code or `node_modules` before changing anything, then prefer the smallest fix: pin or upgrade a version, or update the template/config.
+- Cite the sources you used when reporting the cause to the user.
+
 ## Current Boost Context
 
 - Boost is a content advertising action, not just a generic wallet transaction.
