@@ -85,6 +85,7 @@ This file is the project-specific operating guide for AI coding agents working i
 - Pin Cordova dependencies to published npm versions. Do not use `git+https://...` or `github:...` master refs: upstream master moves without notice (for example, `cordova-plugin-file` master moved to 9.0.0-dev and broke `cordova-plugin-media`, which requires `^8.0.0`). `cordova-plugin-file` must stay `^8.1.3`.
 - Local plugins in `cordova/<plugin>/` (for example, `cordova-plugin-deeplinks`) are tracked in git. Their hooks run `npm install` against their own `package.json`, so keep those dependency ranges capped as well (for example, `plist@5` is ESM-only and breaks `require('plist')`).
 
+
 ## Build Failures Without Code Changes
 
 When a Cordova (Android/iOS) or Electron (macOS/Windows/Linux) build suddenly fails and nothing relevant changed in this repository, assume an external cause first and search the internet early, before rewriting code or secrets.
@@ -101,6 +102,7 @@ When a Cordova (Android/iOS) or Electron (macOS/Windows/Linux) build suddenly fa
   3. Compare what changed outside the repo: release dates of dependencies on npm (`npm view <pkg> time`), runner image version in the CI log (`Set up job` → `Image`), tool versions (`gradle --version`, `java -version`, `node -v`).
   4. Confirm the cause in local code or `node_modules` before changing anything, then prefer the smallest fix: pin or upgrade a version, or update the template/config.
 - Cite the sources you used when reporting the cause to the user.
+
 
 ## Current Boost Context
 
