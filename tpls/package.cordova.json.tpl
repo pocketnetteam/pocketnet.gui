@@ -80,7 +80,7 @@
             "cordova-plugin-apkupdater": "~4.0.0",
         <% } %>
         
-        "cordova-plugin-firebasex": "18.0.7",
+        "cordova-plugin-firebasex": "file:cordova-plugin-firebasex",
         "np": "^5.0.3",
         "sync-cordova-xml": "^0.4.0"
     },
