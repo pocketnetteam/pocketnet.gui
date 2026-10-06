@@ -2389,7 +2389,7 @@ var post = (function () {
 				if(allcontentenabled){
 					window.rifticker.add(() => {
 						self.app.el.html.removeClass('allcontent')
-						self.app.mobile.statusbar.background()
+						self.app.mobile.statusbar.set('page', null)
 					})
 				}
 
@@ -2443,7 +2443,7 @@ var post = (function () {
 
 					window.rifticker.add(() => {
 						self.app.el.html.addClass('allcontent')
-						self.app.mobile.statusbar.topfadebackground()
+						self.app.mobile.statusbar.set('page', 'topfade')
 					})
 				}
 

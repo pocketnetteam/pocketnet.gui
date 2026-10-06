@@ -1838,7 +1838,7 @@ var lenta = (function(){
 
 					actions.fullScreenVideoParallax(_el, id)
 
-					self.app.mobile.statusbar.gallerybackground()
+					self.app.mobile.statusbar.push('lentafullscreen', 'gallery')
 
 					self.app.nav.api.history.addParameters({
 						v : id
@@ -1927,7 +1927,7 @@ var lenta = (function(){
 
 				//player.p.muted = true;
 
-				self.app.mobile.statusbar.background()
+				self.app.mobile.statusbar.pop('lentafullscreen')
 				self.app.pseudofullscreenmode = false
 
 				actions.fullScreenVideoParallax(null)
