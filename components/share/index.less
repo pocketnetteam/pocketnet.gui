@@ -1654,7 +1654,7 @@ html.mobileview{
 				position : absolute;
 				left: 0;
 				right: 0;
-				bottom: 6 * @rhythm;
+				bottom: calc(6 * @rhythm + env(safe-area-inset-bottom, 0px));
 
 				.prwrappermiddle{
 					text-align: center;
