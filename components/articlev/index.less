@@ -168,7 +168,7 @@
     .showpreview{
         position: fixed;
         left: @rhythm;
-        bottom : @rhythm;
+        bottom : calc(@rhythm + env(safe-area-inset-bottom, 0px));
         z-index: 2;
 
         button{
