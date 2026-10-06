@@ -199,7 +199,8 @@ jobs:
           ls -l build.json
       - name: Fixing Android Build Tool Issue
         run: |
-          cd $ANDROID_HOME/build-tools/35.0.0
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "build-tools;36.0.0" "platforms;android-36" > /dev/null
+          cd $ANDROID_HOME/build-tools/36.0.0
           mv d8 dx
           cd lib
           mv d8.jar dx.jar

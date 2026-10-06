@@ -2780,6 +2780,13 @@ Application = function (p) {
 								self.mobile.pip.element.removeClass('pipped')
 								self.mobile.pip.element = null
 							}
+
+							// Android resets the system bars after PiP: restore the current status bar mode
+							if (!self.fullscreenmode) {
+								var restore = self.mobile.statusbar[self.mobile.statusbar.status] || self.mobile.statusbar.background
+
+								restore()
+							}
 						}
 
 						self.mobile.pip.enabled = res

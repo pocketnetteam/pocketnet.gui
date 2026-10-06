@@ -194,15 +194,15 @@ public class CDVIonicKeyboard extends CordovaPlugin {
 
                             list.onGlobalLayout();
 
-                            return insets;
+                            // A listener replaces the WebView's own insets handling, so pass the
+                            // insets on to it: Chromium needs them for env(safe-area-inset-*).
+                            return ViewCompat.onApplyWindowInsets(v, insets);
                         });
                     }
                     else{
 
-                        ViewCompat.setOnApplyWindowInsetsListener((View) webView.getView(), (v, insets) -> {
-                            return insets;
-                        });
-
+                        // No insets listener on the WebView here: it would hide the system bar
+                        // insets from Chromium and break env(safe-area-inset-*).
                         rootView.getViewTreeObserver().addOnGlobalLayoutListener(list);
                     }
 

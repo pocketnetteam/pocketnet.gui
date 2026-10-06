@@ -64,6 +64,7 @@ This file is the project-specific operating guide for AI coding agents working i
 - For full GUI build verification, use `npm run build`.
 - For proxy changes, run `npm run build:proxy16` from the repository root or `npm run build` inside `proxy16`.
 - For Electron runtime checks, use `npm start` or `npm run start:test` when the task needs the desktop shell.
+- For any Android change (Cordova plugins, npm packages, `cordova-android` or SDK/Gradle versions, `tpls/package.cordova.json.tpl`, `tpls/config.xml.tpl`, local plugins in `cordova/<plugin>/`, or Android CI steps), run `npm run check:android` from the repository root. It regenerates the Cordova files from the templates, recreates the Android platform from scratch, and builds/runs the app. Run it in the background and report the result. If `cordova platform rm android` fails with `EBUSY` (files locked), stop the Gradle/Kotlin daemons first (`cordova/platforms/android/tools/gradlew.bat --stop`) and retry.
 - If a command is unavailable or too expensive for the current task, state exactly what was not run and why.
 
 ## Git And Generated State
@@ -84,6 +85,25 @@ This file is the project-specific operating guide for AI coding agents working i
 - Cordova dependency and plugin versions are changed in `tpls/package.cordova.json.tpl`. Updating the generated `package.cordova.json` and `cordova/package.json` too is fine for local testing, but only the template counts.
 - Pin Cordova dependencies to published npm versions. Do not use `git+https://...` or `github:...` master refs: upstream master moves without notice (for example, `cordova-plugin-file` master moved to 9.0.0-dev and broke `cordova-plugin-media`, which requires `^8.0.0`). `cordova-plugin-file` must stay `^8.1.3`.
 - Local plugins in `cordova/<plugin>/` (for example, `cordova-plugin-deeplinks`) are tracked in git. Their hooks run `npm install` against their own `package.json`, so keep those dependency ranges capped as well (for example, `plist@5` is ESM-only and breaks `require('plist')`).
+
+
+## Build Failures Without Code Changes
+
+When a Cordova (Android/iOS) or Electron (macOS/Windows/Linux) build suddenly fails and nothing relevant changed in this repository, assume an external cause first and search the internet early, before rewriting code or secrets.
+
+- Common external causes seen here:
+  - A new major version of a dependency pulled through an open range (`>=`, `*`, `latest`, git master refs). Example: `plist@5` (ESM-only) broke the `cordova-plugin-deeplinks` hooks.
+  - Upstream master moving under a `git+https://` or `github:` dependency. Example: `cordova-plugin-file` 9.0.0-dev.
+  - GitHub Actions runner image updates (`macos-latest`, `ubuntu-latest`, `windows-latest`). Example: the macOS image of 2026-08-31 started rejecting electron-builder ≤ 26.15's keychain password in `security set-key-partition-list` with "The user name or passphrase you entered is not correct". Fixed by upgrading to electron-builder 26.17.0.
+  - Toolchain mismatches: system Gradle vs JDK (Gradle 6.x on JDK 17 fails with "Unsupported class file major version 61"), Node version required by build tooling (electron-builder 26 needs Node ≥ 22.12 via `@electron/rebuild`).
+  - Expired or changed credentials, agreements, or certificates on Apple/Google/GitHub.
+- How to investigate:
+  1. Read the full error and find the exact failing step (hook, plugin, tool, command).
+  2. Search the web for the exact error message together with the tool name and the current year (for example, `electron-builder "<error text>" github actions macos`). Check GitHub issues and PRs from the last few weeks: other projects usually hit the same breakage at the same time.
+  3. Compare what changed outside the repo: release dates of dependencies on npm (`npm view <pkg> time`), runner image version in the CI log (`Set up job` → `Image`), tool versions (`gradle --version`, `java -version`, `node -v`).
+  4. Confirm the cause in local code or `node_modules` before changing anything, then prefer the smallest fix: pin or upgrade a version, or update the template/config.
+- Cite the sources you used when reporting the cause to the user.
+
 
 ## Current Boost Context
 
