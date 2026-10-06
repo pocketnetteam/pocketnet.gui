@@ -42,7 +42,7 @@ jobs:
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 22
       - name: Prepare building
         run: |
           npm i
@@ -84,7 +84,7 @@ jobs:
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 22
       - name: Prepare building
         run: |
           apt update && apt install -y binutils rpm
@@ -116,7 +116,7 @@ jobs:
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 22
       - name: Prepare building
         run: |
           npm i

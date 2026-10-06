@@ -52,7 +52,7 @@
         "@types/grunt": "^0.4.31",
         "babel-plugin-remove-use-strict": "^1.0.1",
         "electron": "^39.2.6",
-        "electron-builder": "^25.1.8",
+        "electron-builder": "^26.17.0",
         "electron-builder-notarize": "^1.5.1",
         "electron-notarize": "",
         "grunt": "^1.6.1",
@@ -180,9 +180,7 @@
             "extendInfo": "bastyon",
             "hardenedRuntime": true,
             "entitlements": "./node_modules/electron-builder-notarize/entitlements.mac.inherit.plist",
-            "notarize": {
-                "teamId": "Y5JW9JU787"
-            }
+            "notarize": true
         },
         "linux": {
             "target": [
@@ -207,7 +205,9 @@
             "executableName": "bastyon",
             "description": "Revolutionary anti-censorship decentralized publishing and social platform. Based on blockchain technology, running on computers worldwide without central control. Self-policed by users with good reputation, protecting your privacy.",
             "desktop": {
-                "StartupWMClass": "pocketnet"
+                "entry": {
+                    "StartupWMClass": "pocketnet"
+                }
             }
         },
         "appImage": {
