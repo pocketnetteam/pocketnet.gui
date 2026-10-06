@@ -472,6 +472,12 @@ var Peertube = function (settings) {
 		})
 
 		roys = {}
+		
+		// Clear global instance registry to prevent stale references
+		self.instanses = {}
+		
+		// Reset initialization flag
+		inited = false
 
 		return Promise.resolve()
 	};
