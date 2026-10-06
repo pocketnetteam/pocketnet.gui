@@ -363,7 +363,7 @@
 #usersettings .security .pinlocktimeout .pInput {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5em / 2;
+  gap: 0.5em;
 }
 #usersettings .security .pinlocktimeout .pinlocktimeoutchip {
   height: 30px;
