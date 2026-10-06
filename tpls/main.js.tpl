@@ -361,11 +361,20 @@ function initApp() {
         autoUpdater.checkForUpdates();
     }, 60 * 60 * 1000); // Every 1 hour  
 
+    const pinlockLock = () => {
+        if (win && !win.isDestroyed()) win.webContents.send('pinlock-lock')
+    }
+
     powerMonitor.on('suspend', () => {
 
         win.webContents.send('pause-message', { msg: 'pause', type: 'info' })
 
+        pinlockLock()
+
     })
+
+    // macOS and Windows only
+    powerMonitor.on('lock-screen', pinlockLock)
 
     powerMonitor.on('resume', () => {
 

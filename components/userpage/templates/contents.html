@@ -222,6 +222,13 @@
 
         <div class="additional">
 
+            <% if(app.pinlock && app.pinlock.available()) {%>
+                <div class="reportCaption pinlocknow" <% if(!app.pinlock.enabled()) {%> style="display:none" <% } %>>
+                    <div elementsid="userpage_pinlocknow" class="label" action="pinlocknow"><%=e('pinlock_locknow').toUpperCase()%> <i class="fas fa-lock"
+                            aria-hidden="true"></i></div>
+                </div>
+            <% } %>
+
             <div class="reportCaption signout">
                 <div elementsid="userpage_signout" class="label" action="signout"><%=e('signout').toUpperCase()%> <i class="fas fa-sign-out"
                         aria-hidden="true"></i></div>

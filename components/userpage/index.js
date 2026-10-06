@@ -1118,6 +1118,18 @@ var userpage = (function(){
 
 			})
 
+			el.c.on('click', '.pinlocknow', function(){
+
+				self.app.mobile.vibration.small()
+
+				if (self.app.pinlock) self.app.pinlock.lock()
+
+			})
+
+			if (self.app.pinlock) self.app.pinlock.clbks.change.userpage = function(){
+				if (el.c) el.c.find('.pinlocknow').toggle(self.app.pinlock.enabled())
+			}
+
 			el.c.find('.backtabletmenu').on('click', function(){
 				
 				makerep()
@@ -1237,6 +1249,8 @@ var userpage = (function(){
 			destroy : function(){
 
 				delete self.iclbks.mn
+
+				if (self.app.pinlock) delete self.app.pinlock.clbks.change.userpage
 
 				hcready = false;
 

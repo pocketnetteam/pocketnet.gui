@@ -283,6 +283,8 @@ var collection = (function(){
 					}
 				}, function(p){
 
+					lightCircles(p.el.find('.bokehField')[0])
+
 					p.el.find('.editCollection').on('click', actions.edit)
 					p.el.find('.deleteCollection').on('click', actions.remove)
 					p.el.find('.shareCollection').on('click', actions.share)

@@ -970,3 +970,52 @@ _l.collectionTypePaid = "Para suscriptores"
 _l.collectionInRelay = "La colección se está publicando…"
 _l.collectionWaitConf = "La colección se está publicando…"
 _l.collectionPublishError = "Error de publicación"
+
+//pin lock
+
+_l.pinlock_title = "Bloqueo con PIN"
+_l.pinlock_welcome = function(v){
+	return "Bienvenido de nuevo, " + v
+}
+_l.pinlock_welcomeanon = "Bienvenido de nuevo"
+_l.pinlock_enter = "Introduce el PIN"
+_l.pinlock_current = "Introduce el PIN actual"
+_l.pinlock_new = "Crea un PIN"
+_l.pinlock_repeat = "Repite el PIN"
+_l.pinlock_done = "Listo"
+_l.pinlock_mismatch = "Los PIN no coinciden"
+_l.pinlock_wrong = "PIN incorrecto"
+_l.pinlock_attemptsleft = function(v){
+	return "intentos restantes: " + v
+}
+_l.pinlock_blocked = function(v){
+	return "Demasiados intentos. Inténtalo de nuevo en " + v
+}
+_l.pinlock_error = "Algo salió mal. Inténtalo de nuevo"
+_l.pinlock_entered = function(v){
+	return "Introducidos " + v + " de 4"
+}
+_l.pinlock_digit = function(v){
+	return "Dígito " + v
+}
+_l.pinlock_delete = "Borrar"
+_l.pinlock_keyboardhint = "Puedes escribir con el teclado"
+_l.pinlock_forgot = "¿Olvidaste el PIN?"
+_l.pinlock_forgotwarning = "Para volver a iniciar sesión necesitarás tu frase mnemotécnica o tu clave privada. Sin ellas, perderás el acceso a la cuenta para siempre."
+_l.pinlock_signout = "Cerrar sesión"
+_l.pinlock_purpose = "El PIN protege la aplicación de otras personas que accedan a ella. No sustituye la copia de seguridad de tu frase mnemotécnica."
+_l.pinlock_enabled = "PIN establecido"
+_l.pinlock_changed = "PIN cambiado"
+_l.pinlock_disabled = "PIN desactivado"
+_l.pinlock_lockafter = "Bloquear tras"
+_l.pinlock_minutes = function(v){
+	return v + " min"
+}
+_l.pinlock_security = "Seguridad"
+_l.pinlock_settingname = "PIN"
+_l.pinlock_stateon = "Activado"
+_l.pinlock_stateoff = "Desactivado"
+_l.pinlock_set = "Establecer PIN"
+_l.pinlock_change = "Cambiar PIN"
+_l.pinlock_disable = "Desactivar PIN"
+_l.pinlock_locknow = "Bloquear ahora"

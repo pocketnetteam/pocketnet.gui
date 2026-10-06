@@ -1142,3 +1142,52 @@ _l.collectionTypePaid = "订阅者专享"
 _l.collectionInRelay = "合集正在发布中…"
 _l.collectionWaitConf = "合集正在发布中…"
 _l.collectionPublishError = "发布失败"
+
+//pin lock
+
+_l.pinlock_title = "PIN 锁"
+_l.pinlock_welcome = function(v){
+	return "欢迎回来，" + v
+}
+_l.pinlock_welcomeanon = "欢迎回来"
+_l.pinlock_enter = "请输入 PIN 码"
+_l.pinlock_current = "请输入当前 PIN 码"
+_l.pinlock_new = "设置 PIN 码"
+_l.pinlock_repeat = "再次输入 PIN 码"
+_l.pinlock_done = "完成"
+_l.pinlock_mismatch = "两次输入的 PIN 码不一致"
+_l.pinlock_wrong = "PIN 码错误"
+_l.pinlock_attemptsleft = function(v){
+	return "剩余尝试次数：" + v
+}
+_l.pinlock_blocked = function(v){
+	return "尝试次数过多。请在 " + v + " 后重试"
+}
+_l.pinlock_error = "出现问题，请重试"
+_l.pinlock_entered = function(v){
+	return "已输入 " + v + "/4"
+}
+_l.pinlock_digit = function(v){
+	return "数字 " + v
+}
+_l.pinlock_delete = "删除"
+_l.pinlock_keyboardhint = "可以使用键盘输入"
+_l.pinlock_forgot = "忘记 PIN 码？"
+_l.pinlock_forgotwarning = "重新登录需要助记词或私钥。没有它们，将永久失去对账户的访问权限。"
+_l.pinlock_signout = "退出账户"
+_l.pinlock_purpose = "PIN 码可防止他人使用您的应用。它不能替代助记词的备份。"
+_l.pinlock_enabled = "PIN 码已设置"
+_l.pinlock_changed = "PIN 码已更改"
+_l.pinlock_disabled = "PIN 码已关闭"
+_l.pinlock_lockafter = "锁定时间"
+_l.pinlock_minutes = function(v){
+	return v + " 分钟"
+}
+_l.pinlock_security = "安全"
+_l.pinlock_settingname = "PIN 码"
+_l.pinlock_stateon = "已开启"
+_l.pinlock_stateoff = "已关闭"
+_l.pinlock_set = "设置 PIN 码"
+_l.pinlock_change = "更改 PIN 码"
+_l.pinlock_disable = "关闭 PIN 码"
+_l.pinlock_locknow = "立即锁定"
