@@ -2480,6 +2480,8 @@ _l.recommendations_tags_anotherShares = 'Остале публикације к�
 _l.profanity_tag = 'псовне речи'
 _l.addAccessToLibrary = 'Одобри приступ галерији'
 _l.cameranotavailable = 'Камера није доступна'
+_l.photolibrarylimited = 'Дозволили сте приступ само изабраним фотографијама. Можете изабрати које фотографије ће апликација видети.'
+_l.photolibrarymanage = 'Промени избор'
 
 _l.rtip4 = 'Овај кључ је ваша лозинка! Немојте је изгубити.'
 

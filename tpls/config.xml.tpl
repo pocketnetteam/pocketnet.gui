@@ -148,6 +148,20 @@
             <string>Allow the application access to the photo gallery to select photos for publication.</string>
         </config-file>
 
+        <config-file overwrite="true" parent="NSPhotoLibraryAddUsageDescription" target="*-Info.plist">
+            <string>Allow the application to save photos and videos to your photo gallery.</string>
+        </config-file>
+
+        <config-file overwrite="true" parent="NSContactsUsageDescription" target="*-Info.plist">
+            <string>The application uses your contacts so you can find friends and invite them to chat.</string>
+        </config-file>
+
+        <config-file parent="ITSAppUsesNonExemptEncryption" target="*-Info.plist">
+            <false/>
+        </config-file>
+
+        <preference name="deployment-target" value="13.0" />
+
         <resource-file src="configs/de.lproj" />
         <resource-file src="configs/es.lproj" />
         <resource-file src="configs/fr.lproj" />
@@ -219,6 +233,7 @@
             <uses-permission android:name="android.permission.CAMERA" />
             <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
             <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+            <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
             <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
             <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
         </config-file>

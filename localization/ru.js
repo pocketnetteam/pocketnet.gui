@@ -2233,6 +2233,8 @@ _l.recommendations_tags_anotherShares = 'Другие публикации ре�
 _l.profanity_tag = 'ненормативная_лексика'
 _l.addAccessToLibrary = 'Предоставить доступ к галерее'
 _l.cameranotavailable = 'Камера недоступна'
+_l.photolibrarylimited = 'Вы разрешили доступ только к выбранным фото. Вы можете выбрать, какие фото будут доступны приложению.'
+_l.photolibrarymanage = 'Изменить выбор'
 
 _l.rtip4 = 'Этот ключ - ваш пароль! Не потеряйте его и не показывайте никому.'
 
