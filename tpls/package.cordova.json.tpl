@@ -93,7 +93,7 @@
             "cordova-plugin-statusbar": {},
             "cordova-plugin-x-socialsharing": {
                 "ANDROID_SUPPORT_V4_VERSION": "24.1.1+",
-                "PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION": "Allow the application access to the photo gallery to select photos for publication.",
+                "PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION": "Allow the application to save photos and videos to your photo gallery.",
                 "PHOTO_LIBRARY_USAGE_DESCRIPTION": "Allow the application access to the photo gallery to select photos for publication."
             },
             "cordova-plugin-buildinfo": {},
@@ -121,13 +121,13 @@
             "cordova-plugin-background-mode" : {},
             "cordova-plugin-camera": {
                 "ANDROIDX_CORE_VERSION": "1.6.+",
-                "PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION": "Allow the application access to the photo gallery to select photos for publication.",
+                "PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION": "Allow the application to save photos and videos to your photo gallery.",
                 "PHOTO_LIBRARY_USAGE_DESCRIPTION": "Allow the application access to the photo gallery to select photos for publication.",
                 "CAMERA_USAGE_DESCRIPTION": "Allow the application access to the camera to select photos for publication.",
                 "PHOTOLIBRARY_USAGE_DESCRIPTION": "Allow the application access to the photo gallery to select photos for publication."
             },
             "cordova-plugin-photo-library": {
-                "PHOTO_LIBRARY_USAGE_DESCRIPTION": " "
+                "PHOTO_LIBRARY_USAGE_DESCRIPTION": "Allow the application access to the photo gallery to select photos for publication."
             },
             "cordova-plugin-network-information": {},
             "cordova-plugin-vibration": {},
@@ -143,8 +143,8 @@
             "cordova-plugin-android-permissions": {},
             "cordova-plugin-navigationbar-color": {},
             "cordova-plugin-gallery-refresh": {
-                "CAMERA_USAGE_DESCRIPTION": "",
-                "PHOTOLIBRARY_USAGE_DESCRIPTION": ""
+                "CAMERA_USAGE_DESCRIPTION": "Allow the application access to the camera to select photos for publication.",
+                "PHOTOLIBRARY_USAGE_DESCRIPTION": "Allow the application access to the photo gallery to select photos for publication."
             },
         
         <% if(!store) {%>
