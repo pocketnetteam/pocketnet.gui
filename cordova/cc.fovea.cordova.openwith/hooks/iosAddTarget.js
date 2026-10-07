@@ -31,7 +31,6 @@
 
 const PLUGIN_ID = 'cc.fovea.cordova.openwith';
 const BUNDLE_SUFFIX = '.shareextension';
-const DEPLOYMENT_TARGET = '13.0';
 
 var fs = require('fs');
 var path = require('path');
@@ -305,7 +304,6 @@ module.exports = function (context) {
           var productName = buildSettingsObj['PRODUCT_NAME'];
           if (productName.indexOf('ShareExt') >= 0) {
             buildSettingsObj['PRODUCT_BUNDLE_IDENTIFIER'] = bundleIdentifier+BUNDLE_SUFFIX;
-            buildSettingsObj['IPHONEOS_DEPLOYMENT_TARGET'] = DEPLOYMENT_TARGET;
           }
         }
       }
