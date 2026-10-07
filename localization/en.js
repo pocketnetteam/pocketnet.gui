@@ -2420,6 +2420,8 @@ _l.recommendations_tags_anotherShares = 'Other publications recommended by these
 _l.profanity_tag = 'profanity'
 _l.addAccessToLibrary = 'Grant access to the gallery'
 _l.cameranotavailable = 'Camera not available'
+_l.photolibrarylimited = 'You have allowed access to selected photos only. You can choose which photos the app can see.'
+_l.photolibrarymanage = 'Change selection'
 
 _l.rtip4 = 'This key is your password! Do not lose it.'
 
