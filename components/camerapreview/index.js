@@ -862,7 +862,7 @@ var camerapreview = (function(){
 
 
 				window.rifticker.add(() => {
-					self.app.mobile.statusbar.background()
+					self.app.mobile.statusbar.pop('camerapreview')
 					app.el.html.addClass('cameraenabledend')
 					app.el.html.removeClass('cameraenabled')
 					app.el.html.removeClass('cameraenabledrun')
@@ -910,7 +910,7 @@ var camerapreview = (function(){
 				window.rifticker.add(() => {
 			
 					app.el.html.addClass('cameraenabledrun')
-					self.app.mobile.statusbar.gallerybackground()
+					self.app.mobile.statusbar.push('camerapreview', 'gallery')
 				})
 
 				setTimeout(() => {

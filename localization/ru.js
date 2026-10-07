@@ -2208,6 +2208,7 @@ _l.removeAccount_undefinedError = 'Возникла непредвиденная
 _l.deletedAccount_temp = "Аккаунт находится в процессе удаления"
 _l.deletedAccount_deleted = "Аккаунт удалён"
 _l.deletedAccount_true = "Аккаунт удалён"
+_l.deletedAccountName = "Удалённый аккаунт"
 
 
 _l.utipdeleted = "Ваш аккаунт удалён, вы можете пользоваться только кошельком"

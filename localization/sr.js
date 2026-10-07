@@ -2456,6 +2456,7 @@ _l.removeAccount_undefinedError = 'Дошло је до неочекиване �
 _l.deletedAccount_temp = "Налог је у процесу брисања"
 _l.deletedAccount_deleted = "Налог је обрисан"
 _l.deletedAccount_true = "Налог је обрисан"
+_l.deletedAccountName = "Обрисан налог"
 
 _l.utipdeleted = "Ваш налог је обрисан. Можете користити само новчаник"
 _l.applydonate = "Примени"
