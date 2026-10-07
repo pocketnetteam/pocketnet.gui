@@ -1,3 +1,5 @@
 "NSMicrophoneUsageDescription" = "The application uses a microphone to create voice messages in chat";
 "NSCameraUsageDescription" = "The app uses a camera so you can take a photo and post it to your news feed.";
 "NSPhotoLibraryUsageDescription" = "The app uses a photo gallery, so you can select photos from the gallery to post on your feed.";
+"NSPhotoLibraryAddUsageDescription" = "The app saves photos and videos to your photo gallery when you download them.";
+"NSContactsUsageDescription" = "The app uses your contacts so you can find friends and invite them to chat.";
