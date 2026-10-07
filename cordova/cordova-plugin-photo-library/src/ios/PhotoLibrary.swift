@@ -1,5 +1,6 @@
 import Foundation
 import Photos
+import PhotosUI
 import UIKit
 
 // Authorization statuses returned to JavaScript:

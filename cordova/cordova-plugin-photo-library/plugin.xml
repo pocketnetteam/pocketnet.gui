@@ -37,6 +37,7 @@
             <true/>
         </config-file>
         <framework src="Photos.framework" />
+        <framework src="PhotosUI.framework" />
         <source-file src="src/ios/PhotoLibrary.swift" />
     </platform>
 </plugin>
