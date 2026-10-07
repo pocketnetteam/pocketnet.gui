@@ -196,11 +196,41 @@ static const void *kStatusBarStyle = &kStatusBarStyle;
     }
 }
 
+// UIApplication.statusBarFrame/statusBarOrientation are deprecated since iOS 13 and return zero values
+// under the UIScene life cycle (cordova-ios 8, apache/cordova-ios#1693): use the window scene when available
+- (CGRect) currentStatusBarFrame
+{
+    UIWindowScene* windowScene = self.viewController.view.window.windowScene;
+
+    if (windowScene) {
+        return windowScene.statusBarManager.statusBarFrame;
+    }
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    return [UIApplication sharedApplication].statusBarFrame;
+#pragma clang diagnostic pop
+}
+
+- (UIInterfaceOrientation) currentInterfaceOrientation
+{
+    UIWindowScene* windowScene = self.viewController.view.window.windowScene;
+
+    if (windowScene) {
+        return windowScene.interfaceOrientation;
+    }
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    return [[UIApplication sharedApplication] statusBarOrientation];
+#pragma clang diagnostic pop
+}
+
 - (void) initializeStatusBarBackgroundView
 {
-    CGRect statusBarFrame = [UIApplication sharedApplication].statusBarFrame;
+    CGRect statusBarFrame = [self currentStatusBarFrame];
 
-    if ([[UIApplication sharedApplication]statusBarOrientation] == UIInterfaceOrientationPortraitUpsideDown &&
+    if ([self currentInterfaceOrientation] == UIInterfaceOrientationPortraitUpsideDown &&
         statusBarFrame.size.height + statusBarFrame.origin.y == [self.viewController.view.window bounds].size.height) {
 
         // When started in upside-down orientation on iOS 7, status bar will be bound to lower edge of the
@@ -419,7 +449,7 @@ static const void *kStatusBarStyle = &kStatusBarStyle;
 }
 
 -(void)resizeStatusBarBackgroundView {
-    CGRect statusBarFrame = [UIApplication sharedApplication].statusBarFrame;
+    CGRect statusBarFrame = [self currentStatusBarFrame];
     CGRect sbBgFrame = _statusBarBackgroundView.frame;
     sbBgFrame.size = statusBarFrame.size;
     _statusBarBackgroundView.frame = sbBgFrame;
@@ -436,7 +466,7 @@ static const void *kStatusBarStyle = &kStatusBarStyle;
 
     self.webView.frame = bounds;
 
-    CGRect statusBarFrame = [UIApplication sharedApplication].statusBarFrame;
+    CGRect statusBarFrame = [self currentStatusBarFrame];
     CGRect frame = self.webView.frame;
     CGFloat height = statusBarFrame.size.height;
 

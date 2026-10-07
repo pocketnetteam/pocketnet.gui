@@ -43,6 +43,5 @@
             <string>This app requires access to the contacts to manage them.</string>
         </config-file>
 
-        <dependency id="cordova-plugin-add-swift-support" version="2.0.2"/>
     </platform>
 </plugin>

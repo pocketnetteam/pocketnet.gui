@@ -2,11 +2,11 @@
     "name": "pocketnet",
     "project": "Bastyon",
 
-    "version": "0.9.140",
+    "version": "0.9.141",
     "versionsuffix": "0",
-    "cordovaversion": "1.8.140",
+    "cordovaversion": "1.8.141",
 
-    "cordovaversioncode": "1801402",
+    "cordovaversioncode": "1801410",
 
 
     "description": "Bastyon desktop application",
@@ -38,6 +38,7 @@
         "minimize:cordova:gfree": "node minimize.js -prodaction=true -vendor=30069 -path=/pocketnet/ -project=Bastyon -composetemplates=true -gfree=true",
         "minimize:cordova:test": "node minimize.js -prodaction=true -test=true -vendor=30069 -path=/pocketnet/ -project=Bastyon -composetemplates=true",
         "check:android": "npm run minimize:cordova:store && cd cordova && (cordova platform rm android || echo android platform not installed) && node -e \"require('fs').rmSync('plugins',{recursive:true,force:true})\" && npm run android-add && npm run android-run",
+        "check:ios": "npm run minimize:cordova:store && cd cordova && (cordova platform rm ios || echo ios platform not installed) && node -e \"require('fs').rmSync('plugins',{recursive:true,force:true})\" && npm run ios-add && npm run ios-run",
         "minimize:bastyon": "node minimize.js -prodaction=true -vendor=30069 -path=/ -project=Bastyon",
         "minimize:bastyon:papp": "node minimize.js -prodaction=true -vendor=30069 -path=/ -project=BastyonPapp",
         "minimize:bastyon:test": "node minimize.js -prodaction=true -vendor=30069 -test=true -path=/ -project=Bastyon",
