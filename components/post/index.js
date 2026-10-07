@@ -654,7 +654,6 @@ var post = (function () {
 
 								}
 
-								console.log('muted', player)
 
 								if (player.enableHotKeys && !ed.repost) player.enableHotKeys()
 							}

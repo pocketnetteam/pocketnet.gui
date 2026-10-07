@@ -61,7 +61,8 @@ var lenta = (function(){
 			optimized = {},
 			cachedHeight = 0,
 			optimizedCount = 0,
-			fullscreenvideoShowed = null;
+			fullscreenvideoShowed = null,
+			horizontalLoadmorescroll = null;
 
 		var countshares = 0;
 
@@ -766,7 +767,9 @@ var lenta = (function(){
 				players = {}
 				sharesInview = []
 				visibilityStatus = {}
-				
+
+				if (el) el.share = {}
+
 			},
 
 			next : function(txid, clbk){
@@ -1113,7 +1116,6 @@ var lenta = (function(){
 
 					var callback = (player) => {
 
-						console.log("LENTA PLAYER CLBK", player)
 
 						if(!el.share) return
 
@@ -2838,7 +2840,7 @@ var lenta = (function(){
 
 					if (
 						!loading &&  (!ended && (recommended != 'recommended' || recommended != 'best')) &&
-						(el.w.scrollLeft() + el.w.width() > el.c.find('.shares').width() - 1000)
+						(el.w.scrollLeft() + el.w.width() > el.shares.width() - 1000)
 
 						) {
 
@@ -5434,9 +5436,9 @@ var lenta = (function(){
 
 
 					if (essenseData.horizontal){
-						el.w.on('scroll', function(){
-							events.loadmorescroll()
-						});
+						horizontalLoadmorescroll = _.throttle(events.loadmorescroll, 100)
+
+						el.w.on('scroll', horizontalLoadmorescroll);
 					}
 					else{
 						self.app.events.scroll['loadmore' + mid] = events.loadmorescroll
@@ -6225,6 +6227,13 @@ var lenta = (function(){
 					el.w.off('scroll', events.videosInview);
 					el.w.off('scroll', events.loadmorescroll);
 					el.w.off('resize', events.resize);
+
+					if (horizontalLoadmorescroll) el.w.off('scroll', horizontalLoadmorescroll);
+				}
+
+				if (horizontalLoadmorescroll){
+					horizontalLoadmorescroll.cancel()
+					horizontalLoadmorescroll = null
 				}
 				
 				

@@ -2150,7 +2150,6 @@ var share = (function(){
 
                             Plyr.setup('#' + self.map.id + ' .js-player', function(_player) {
 
-								console.log("player clbk plyr", _player)
 
 								if(_player){
 									player = _player
@@ -2791,7 +2790,6 @@ var share = (function(){
 
 		var destroyPlayer = function(){
 
-			console.log('player', player)
 
 			if (player) {
 
