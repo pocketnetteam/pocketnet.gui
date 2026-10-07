@@ -9,7 +9,7 @@ Which is:
 var path = require('path');
 var compare = require('node-version-compare');
 var ConfigXmlHelper = require('../configXmlHelper.js');
-var IOS_DEPLOYMENT_TARGET = '8.0';
+var IOS_DEPLOYMENT_TARGET = '13.0';
 var COMMENT_KEY = /_comment$/;
 var context;
 
@@ -147,7 +147,7 @@ function loadProjectFile() {
           projectFile = platform_ios.parseProjectFile(iosPlatformPath());
       } catch (e) {
           // Then cordova 7.0
-          var project_files = require('glob').sync(path.join(iosPlatformPath(), '*.xcodeproj', 'project.pbxproj'));
+          var project_files = findPbxprojFiles(iosPlatformPath());
           
           if (project_files.length === 0) {
               throw new Error('does not appear to be an xcode project (no xcode project file)');
@@ -155,7 +155,7 @@ function loadProjectFile() {
           
           var pbxPath = project_files[0];
           
-          var xcodeproj = require('xcode').project(pbxPath);
+          var xcodeproj = requireXcode().project(pbxPath);
           xcodeproj.parseSync();
           
           projectFile = {
@@ -172,17 +172,50 @@ function loadProjectFile() {
               fs.writeFileSync(pbxPath, xcodeproj.writeSync());
                   if (Object.keys(frameworks).length === 0){
                       // If there is no framework references remain in the project, just remove this file
-                      require('shelljs').rm('-rf', frameworks_file);
+                      fs.rmSync(frameworks_file, { force: true });
                       return;
                   }
-                  fs.writeFileSync(frameworks_file, JSON.stringify(this.frameworks, null, 4));
+                  fs.writeFileSync(frameworks_file, JSON.stringify(frameworks, null, 4));
               }
           };
       }
   }
   
   return projectFile;
-  } 
+  }
+
+// glob, xcode and shelljs are not dependencies of this plugin:
+// use fs and the xcode module that comes with cordova-ios
+function findPbxprojFiles(platformPath) {
+  var fs = require('fs');
+
+  return fs.readdirSync(platformPath).filter(function (name) {
+    return /\.xcodeproj$/.test(name);
+  }).map(function (name) {
+    return path.join(platformPath, name, 'project.pbxproj');
+  }).filter(function (file) {
+    return fs.existsSync(file);
+  });
+}
+
+function requireXcode() {
+  var root = context.opts.projectRoot;
+  var places = [
+    'xcode',
+    path.join(root, 'node_modules', 'xcode'),
+    path.join(root, 'node_modules', 'cordova-ios', 'node_modules', 'xcode')
+  ];
+
+  for (var i = 0; i < places.length; i++) {
+    try {
+      return require(places[i]);
+    } catch (e) {
+      if (e.code !== 'MODULE_NOT_FOUND') throw e;
+    }
+  }
+
+  throw new Error('cordova-plugin-deeplinks: module "xcode" not found');
+}
 
 /**
  * Remove comments from the file.
