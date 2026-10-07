@@ -1,322 +1,379 @@
 import Foundation
 import Photos
-import WebKit
+import UIKit
+
+// Authorization statuses returned to JavaScript:
+// "full"          - access to the whole library
+// "limited"       - access to photos selected by the user (iOS 14+)
+// "notDetermined" - the user has not been asked yet
+// "blocked"       - denied or restricted, can be changed only in Settings
 
 @objc(PhotoLibrary) class PhotoLibrary : CDVPlugin {
-    
-    var interceptor: PhotoLibraryInterceptor?
-    
-    lazy var concurrentQueue: DispatchQueue = DispatchQueue(label: "photo-library.queue.plugin", qos: DispatchQoS.utility, attributes: [.concurrent])
 
-    override func pluginInitialize() {
-        // Do not call PhotoLibraryService here, as it will cause permission prompt to appear on app start.
-        interceptor = PhotoLibraryInterceptor()
+    static let PERMISSION_ERROR = "Permission Denial: This application is not allowed to access Photo data."
+
+    struct PictureData {
+        var data: Data
+        var mimeType: String
     }
 
-    override func onMemoryWarning() {
-        // self.service.stopCaching()
-        NSLog("-- MEMORY WARNING --")
-    }
-    
-    @objc func overrideSchemeTask(_ urlSchemeTask: WKURLSchemeTask?) -> Bool {
-        guard let urlSchemeTask = urlSchemeTask else {
-            return false
+    let queue: DispatchQueue = DispatchQueue(label: "photo-library.queue.plugin", qos: DispatchQoS.userInitiated, attributes: [.concurrent])
+
+    let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+        return formatter
+    }()
+
+    // MARK: - Authorization
+
+    static func currentStatus() -> PHAuthorizationStatus {
+        if #available(iOS 14, *) {
+            return PHPhotoLibrary.authorizationStatus(for: .readWrite)
         }
-        
-        return interceptor?.handleSchemeTask(urlSchemeTask) ?? false
+        return PHPhotoLibrary.authorizationStatus()
     }
 
+    static func statusString() -> String {
+        let status = currentStatus()
 
-    // Will sort by creation date
-    @objc func getLibrary(_ command: CDVInvokedUrlCommand) {
-        concurrentQueue.async {
+        if status == .authorized {
+            return "full"
+        }
 
-            if PHPhotoLibrary.authorizationStatus() != .authorized {
-                let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: PhotoLibraryService.PERMISSION_ERROR)
-                self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+        if status == .notDetermined {
+            return "notDetermined"
+        }
+
+        if #available(iOS 14, *) {
+            if status == .limited {
+                return "limited"
+            }
+        }
+
+        return "blocked"
+    }
+
+    static func canRead() -> Bool {
+        let status = statusString()
+        return status == "full" || status == "limited"
+    }
+
+    @objc func getAuthorizationStatus(_ command: CDVInvokedUrlCommand) {
+        sendString(command, PhotoLibrary.statusString())
+    }
+
+    @objc func requestAuthorization(_ command: CDVInvokedUrlCommand) {
+        if PhotoLibrary.currentStatus() != .notDetermined {
+            sendAuthorizationResult(command)
+            return
+        }
+
+        let handler: (PHAuthorizationStatus) -> Void = { _ in
+            self.sendAuthorizationResult(command)
+        }
+
+        if #available(iOS 14, *) {
+            PHPhotoLibrary.requestAuthorization(for: .readWrite, handler: handler)
+            return
+        }
+
+        PHPhotoLibrary.requestAuthorization(handler)
+    }
+
+    // Lets the user change the set of photos available in limited mode
+    @objc func manageLimitedAccess(_ command: CDVInvokedUrlCommand) {
+        guard #available(iOS 14, *) else {
+            sendAuthorizationResult(command)
+            return
+        }
+
+        DispatchQueue.main.async {
+            guard PhotoLibrary.currentStatus() == .limited, let controller = self.viewController else {
+                self.sendAuthorizationResult(command)
                 return
             }
 
-            let service = PhotoLibraryService.instance
-
-            let options = command.arguments[0] as! NSDictionary
-
-
-            let thumbnailWidth = options["thumbnailWidth"] as! Int
-            let thumbnailHeight = options["thumbnailHeight"] as! Int
-            let itemsInChunk = options["itemsInChunk"] as! Int
-            let chunkTimeSec = options["chunkTimeSec"] as! Double
-            let useOriginalFileNames = options["useOriginalFileNames"] as! Bool
-            let includeAlbumData = options["includeAlbumData"] as! Bool
-            let includeCloudData = options["includeCloudData"] as! Bool
-            let includeVideos = options["includeVideos"] as! Bool
-            let includeImages = options["includeImages"] as! Bool
-            let maxItems = options["maxItems"] as! Int
-
-            func createResult (library: [NSDictionary], chunkNum: Int, isLastChunk: Bool) -> [String: AnyObject] {
-                let result: NSDictionary = [
-                    "chunkNum": chunkNum,
-                    "isLastChunk": isLastChunk,
-                    "library": library
-                ]
-                return result as! [String: AnyObject]
-            }
-
-            let getLibraryOptions = PhotoLibraryGetLibraryOptions(thumbnailWidth: thumbnailWidth,
-                                                                  thumbnailHeight: thumbnailHeight,
-                                                                  itemsInChunk: itemsInChunk,
-                                                                  chunkTimeSec: chunkTimeSec,
-                                                                  useOriginalFileNames: useOriginalFileNames,
-                                                                  includeImages: includeImages,
-                                                                  includeAlbumData: includeAlbumData,
-                                                                  includeCloudData: includeCloudData,
-                                                                  includeVideos: includeVideos,
-                                                                  maxItems: maxItems)
-
-            service.getLibrary(getLibraryOptions,
-                completion: { (library, chunkNum, isLastChunk) in
-
-                    let result = createResult(library: library, chunkNum: chunkNum, isLastChunk: isLastChunk)
-                    let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: result)
-                    pluginResult!.setKeepCallbackAs(!isLastChunk)
-                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+            if #available(iOS 15, *) {
+                PHPhotoLibrary.shared().presentLimitedLibraryPicker(from: controller) { _ in
+                    self.sendAuthorizationResult(command)
                 }
-            )
-        }
-    }
-
-    @objc func getAlbums(_ command: CDVInvokedUrlCommand) {
-        concurrentQueue.async {
-
-            if PHPhotoLibrary.authorizationStatus() != .authorized {
-                let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: PhotoLibraryService.PERMISSION_ERROR)
-                self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
                 return
             }
 
-            let service = PhotoLibraryService.instance
-
-            let albums = service.getAlbums()
-
-            let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: albums)
-            self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
-
+            PHPhotoLibrary.shared().presentLimitedLibraryPicker(from: controller)
+            self.sendAuthorizationResult(command)
         }
     }
 
-    @objc(getPhotosFromAlbum:) func getPhotosFromAlbum(_ command: CDVInvokedUrlCommand) {
-        print("C getPhotosFromAlbum 0");
-        concurrentQueue.async {
-
-            print("C getPhotosFromAlbum 1");
-
-            if PHPhotoLibrary.authorizationStatus() != .authorized {
-                let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: PhotoLibraryService.PERMISSION_ERROR)
-                self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+    @objc func openSettings(_ command: CDVInvokedUrlCommand) {
+        DispatchQueue.main.async {
+            guard let url = URL(string: UIApplication.openSettingsURLString) else {
+                self.sendError(command, "Could not open settings")
                 return
             }
 
-            print("C getPhotosFromAlbum 2");
-
-            let service = PhotoLibraryService.instance
-
-            let albumTitle = command.arguments[0] as! String
-
-            let photos = service.getPhotosFromAlbum(albumTitle);
-
-            print("C getPhotosFromAlbum 3");
-
-            let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: photos)
-            self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
-
+            UIApplication.shared.open(url, options: [:]) { opened in
+                if opened {
+                    self.sendString(command, "opened")
+                } else {
+                    self.sendError(command, "Could not open settings")
+                }
+            }
         }
     }
 
-    @objc func isAuthorized(_ command: CDVInvokedUrlCommand) {
-        concurrentQueue.async {
-            let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: PHPhotoLibrary.authorizationStatus() != .authorized)
-            self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+    // MARK: - Library
+
+    // Images only, newest first
+    @objc func getLibrary(_ command: CDVInvokedUrlCommand) {
+        queue.async {
+            if !PhotoLibrary.canRead() {
+                self.sendError(command, PhotoLibrary.PERMISSION_ERROR)
+                return
+            }
+
+            let options = command.arguments.first as? NSDictionary
+            let itemsInChunk = options?["itemsInChunk"] as? Int ?? 0
+            let maxItems = options?["maxItems"] as? Int ?? 0
+
+            let fetchOptions = PHFetchOptions()
+            fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+            fetchOptions.predicate = NSPredicate(format: "mediaType == %d", PHAssetMediaType.image.rawValue)
+
+            let assets = PHAsset.fetchAssets(with: fetchOptions)
+
+            var total = assets.count
+            if maxItems > 0 {
+                total = min(total, maxItems)
+            }
+
+            if total == 0 {
+                self.sendChunk(command, [], chunkNum: 0, isLastChunk: true)
+                return
+            }
+
+            var chunk = [NSDictionary]()
+            var chunkNum = 0
+
+            for index in 0..<total {
+                chunk.append(self.libraryItem(assets.object(at: index)))
+
+                let isLastChunk = index == total - 1
+
+                if isLastChunk || (itemsInChunk > 0 && chunk.count >= itemsInChunk) {
+                    self.sendChunk(command, chunk, chunkNum: chunkNum, isLastChunk: isLastChunk)
+                    chunk = [NSDictionary]()
+                    chunkNum += 1
+                }
+            }
         }
     }
-
 
     @objc func getThumbnail(_ command: CDVInvokedUrlCommand) {
-        concurrentQueue.async {
-
-            if PHPhotoLibrary.authorizationStatus() != .authorized {
-                let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: PhotoLibraryService.PERMISSION_ERROR)
-                self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+        queue.async {
+            if !PhotoLibrary.canRead() {
+                self.sendError(command, PhotoLibrary.PERMISSION_ERROR)
                 return
             }
 
-            let service = PhotoLibraryService.instance
-
-            let photoId = command.arguments[0] as! String
-            let options = command.arguments[1] as! NSDictionary
-            let thumbnailWidth = options["thumbnailWidth"] as! Int
-            let thumbnailHeight = options["thumbnailHeight"] as! Int
-            let quality = options["quality"] as! Float
-
-            service.getThumbnail(photoId, thumbnailWidth: thumbnailWidth, thumbnailHeight: thumbnailHeight, quality: quality) { (imageData) in
-
-                let pluginResult = imageData != nil ?
-                    CDVPluginResult(
-                        status: CDVCommandStatus_OK,
-                        messageAsMultipart: [imageData!.data, imageData!.mimeType])
-                    :
-                    CDVPluginResult(
-                        status: CDVCommandStatus_ERROR,
-                        messageAs: "Could not fetch the thumbnail")
-
-                self.commandDelegate!.send(pluginResult, callbackId: command.callbackId )
-
+            guard let photoId = command.arguments.first as? String else {
+                self.sendError(command, "Photo id is missing")
+                return
             }
 
+            let options = command.arguments.count > 1 ? command.arguments[1] as? NSDictionary : nil
+            let width = options?["thumbnailWidth"] as? Int ?? 256
+            let height = options?["thumbnailHeight"] as? Int ?? 256
+            let quality = (options?["quality"] as? NSNumber)?.floatValue ?? 0.7
+
+            let picture = self.requestImage(photoId, maxSize: CGSize(width: width, height: height), contentMode: .aspectFill, quality: quality)
+
+            self.sendPicture(command, picture, "Could not fetch the thumbnail")
         }
     }
 
+    // Returns the photo scaled down to fit maxWidth x maxHeight
     @objc func getPhoto(_ command: CDVInvokedUrlCommand) {
-        concurrentQueue.async {
-
-            if PHPhotoLibrary.authorizationStatus() != .authorized {
-                let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: PhotoLibraryService.PERMISSION_ERROR)
-                self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+        queue.async {
+            if !PhotoLibrary.canRead() {
+                self.sendError(command, PhotoLibrary.PERMISSION_ERROR)
                 return
             }
 
-            let service = PhotoLibraryService.instance
-
-            let photoId = command.arguments[0] as! String
-
-            service.getPhoto(photoId) { (imageData) in
-
-                let pluginResult = imageData != nil ?
-                    CDVPluginResult(
-                        status: CDVCommandStatus_OK,
-                        messageAsMultipart: [imageData!.data, imageData!.mimeType])
-                    :
-                    CDVPluginResult(
-                        status: CDVCommandStatus_ERROR,
-                        messageAs: "Could not fetch the image")
-
-                self.commandDelegate!.send(pluginResult, callbackId: command.callbackId	)
+            guard let photoId = command.arguments.first as? String else {
+                self.sendError(command, "Photo id is missing")
+                return
             }
 
+            let options = command.arguments.count > 1 ? command.arguments[1] as? NSDictionary : nil
+            let width = options?["maxWidth"] as? Int ?? 2048
+            let height = options?["maxHeight"] as? Int ?? 2048
+            let quality = (options?["quality"] as? NSNumber)?.floatValue ?? 0.9
+
+            let picture = self.requestImage(photoId, maxSize: CGSize(width: width, height: height), contentMode: .aspectFit, quality: quality)
+
+            self.sendPicture(command, picture, "Could not fetch the image")
         }
     }
 
-    @objc func getLibraryItem(_ command: CDVInvokedUrlCommand) {
-        concurrentQueue.async {
-
-            if PHPhotoLibrary.authorizationStatus() != .authorized {
-                let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: PhotoLibraryService.PERMISSION_ERROR)
-                self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+    // url is a dataURL or a file url
+    @objc func saveImage(_ command: CDVInvokedUrlCommand) {
+        queue.async {
+            guard let url = command.arguments.first as? String, let data = PhotoLibrary.dataFromURL(url) else {
+                self.sendError(command, "Could not read the image")
                 return
             }
 
-            let service = PhotoLibraryService.instance
-            let info = command.arguments[0] as! NSDictionary
-            let mime_type = info["mimeType"] as! String
-            service.getLibraryItem(info["id"] as! String, mimeType: mime_type, completion: { (base64: String?) in
-                self.returnPictureData(callbackId: command.callbackId, base64: base64, mimeType: mime_type)
+            var placeholder: PHObjectPlaceholder?
+
+            PHPhotoLibrary.shared().performChanges({
+                let request = PHAssetCreationRequest.forAsset()
+                request.addResource(with: .photo, data: data, options: nil)
+                placeholder = request.placeholderForCreatedAsset
+            }, completionHandler: { success, error in
+                guard success, let localIdentifier = placeholder?.localIdentifier else {
+                    self.sendError(command, "Could not save the image: \(error?.localizedDescription ?? "unknown error")")
+                    return
+                }
+
+                guard let asset = PHAsset.fetchAssets(withLocalIdentifiers: [localIdentifier], options: nil).firstObject else {
+                    self.sendDictionary(command, ["id": localIdentifier])
+                    return
+                }
+
+                self.sendDictionary(command, self.libraryItem(asset))
             })
         }
     }
 
+    // MARK: - Helpers
 
-    @objc func returnPictureData(callbackId : String, base64: String?, mimeType: String?) {
-        let pluginResult = (base64 != nil) ?
-            CDVPluginResult(
-                status: CDVCommandStatus_OK,
-                messageAsMultipart: [base64!, mimeType!])
-            :
-            CDVPluginResult(
-                status: CDVCommandStatus_ERROR,
-                messageAs: "Could not fetch the image")
+    func libraryItem(_ asset: PHAsset) -> NSDictionary {
+        let item = NSMutableDictionary()
 
-        self.commandDelegate!.send(pluginResult, callbackId: callbackId)
+        item["id"] = asset.localIdentifier
+        item["width"] = asset.pixelWidth
+        item["height"] = asset.pixelHeight
 
+        if let creationDate = asset.creationDate {
+            item["creationDate"] = dateFormatter.string(from: creationDate)
+        }
+
+        return item
     }
 
+    // Must be called on a background queue: the request is synchronous and may download from iCloud
+    func requestImage(_ photoId: String, maxSize: CGSize, contentMode: PHImageContentMode, quality: Float) -> PictureData? {
+        guard let asset = PHAsset.fetchAssets(withLocalIdentifiers: [photoId], options: nil).firstObject else {
+            return nil
+        }
 
-    @objc func stopCaching(_ command: CDVInvokedUrlCommand) {
+        let options = PHImageRequestOptions()
+        options.isSynchronous = true
+        options.deliveryMode = .highQualityFormat
+        options.resizeMode = .exact
+        options.version = .current
+        options.isNetworkAccessAllowed = true
 
-        let service = PhotoLibraryService.instance
+        var targetSize = maxSize
 
-        service.stopCaching()
+        // Do not upscale photos that already fit
+        if contentMode == .aspectFit && CGFloat(asset.pixelWidth) <= maxSize.width && CGFloat(asset.pixelHeight) <= maxSize.height {
+            targetSize = PHImageManagerMaximumSize
+        }
 
-        let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
-        self.commandDelegate!.send(pluginResult, callbackId: command.callbackId	)
+        var result: UIImage?
 
+        PHImageManager.default().requestImage(for: asset, targetSize: targetSize, contentMode: contentMode, options: options) { image, _ in
+            result = image
+        }
+
+        guard let image = result else {
+            return nil
+        }
+
+        return PhotoLibrary.pictureData(image, quality: quality)
     }
 
-    @objc func requestAuthorization(_ command: CDVInvokedUrlCommand) {
+    static func pictureData(_ image: UIImage, quality: Float) -> PictureData? {
+        if imageHasAlpha(image), let data = image.pngData() {
+            return PictureData(data: data, mimeType: "image/png")
+        }
 
-        let service = PhotoLibraryService.instance
+        guard let data = image.jpegData(compressionQuality: CGFloat(quality)) else {
+            return nil
+        }
 
-        service.requestAuthorization({
-            let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK)
-            self.commandDelegate!.send(pluginResult, callbackId: command.callbackId	)
-        }, failure: { (err) in
-            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: err)
-            self.commandDelegate!.send(pluginResult, callbackId: command.callbackId	)
-        })
-
+        return PictureData(data: data, mimeType: "image/jpeg")
     }
 
-    @objc func saveImage(_ command: CDVInvokedUrlCommand) {
-        concurrentQueue.async {
-            if PHPhotoLibrary.authorizationStatus() != .authorized {
-                let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: PhotoLibraryService.PERMISSION_ERROR)
-                self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
-                return
+    static func imageHasAlpha(_ image: UIImage) -> Bool {
+        let alphaInfo = image.cgImage?.alphaInfo
+        return alphaInfo == .first || alphaInfo == .last || alphaInfo == .premultipliedFirst || alphaInfo == .premultipliedLast
+    }
+
+    static func dataFromURL(_ url: String) -> Data? {
+        if url.hasPrefix("data:") {
+            guard let range = url.range(of: ";base64,") else {
+                return nil
             }
 
-            let service = PhotoLibraryService.instance
+            return Data(base64Encoded: String(url[range.upperBound...]), options: .ignoreUnknownCharacters)
+        }
 
-            let url = command.arguments[0] as! String
-            let album = command.arguments[1] as! String
+        guard let fileURL = URL(string: url), fileURL.isFileURL else {
+            return nil
+        }
 
-            NSLog("album: %@, %@", album, url);
+        return try? Data(contentsOf: fileURL)
+    }
 
-            service.saveImage(url, album: album) { (libraryItem: NSDictionary?, error: String?) in
-                if (error != nil) {
-                    let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error)
-                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
-                } else {
-                    let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: libraryItem as! [String: AnyObject]?)
-                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId    )
-                }
-            }
+    func sendAuthorizationResult(_ command: CDVInvokedUrlCommand) {
+        let status = PhotoLibrary.statusString()
+
+        if PhotoLibrary.canRead() {
+            sendString(command, status)
+        } else {
+            sendError(command, status)
         }
     }
 
-    @objc func saveVideo(_ command: CDVInvokedUrlCommand) {
-        concurrentQueue.async {
+    func sendChunk(_ command: CDVInvokedUrlCommand, _ library: [NSDictionary], chunkNum: Int, isLastChunk: Bool) {
+        let result: [String: Any] = [
+            "chunkNum": chunkNum,
+            "isLastChunk": isLastChunk,
+            "library": library
+        ]
 
-            if PHPhotoLibrary.authorizationStatus() != .authorized {
-                let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: PhotoLibraryService.PERMISSION_ERROR)
-                self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
-                return
-            }
-
-            let service = PhotoLibraryService.instance
-
-            let url = command.arguments[0] as! String
-            let album = command.arguments[1] as! String
-
-
-            service.saveVideo(url, album: album) { (_ libraryItem: NSDictionary?, error: String?) in
-                if (error != nil) {
-                    let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error)
-                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
-                } else {
-                    let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: libraryItem as! [String: AnyObject]?)
-                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId    )
-                }
-            }
-
-        }
+        let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: result)
+        pluginResult?.setKeepCallbackAs(!isLastChunk)
+        commandDelegate.send(pluginResult, callbackId: command.callbackId)
     }
 
+    func sendPicture(_ command: CDVInvokedUrlCommand, _ picture: PictureData?, _ errorMessage: String) {
+        guard let picture = picture else {
+            sendError(command, errorMessage)
+            return
+        }
+
+        let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAsMultipart: [picture.data, picture.mimeType])
+        commandDelegate.send(pluginResult, callbackId: command.callbackId)
+    }
+
+    func sendDictionary(_ command: CDVInvokedUrlCommand, _ dictionary: NSDictionary) {
+        let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: dictionary as? [AnyHashable: Any])
+        commandDelegate.send(pluginResult, callbackId: command.callbackId)
+    }
+
+    func sendString(_ command: CDVInvokedUrlCommand, _ value: String) {
+        let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: value)
+        commandDelegate.send(pluginResult, callbackId: command.callbackId)
+    }
+
+    func sendError(_ command: CDVInvokedUrlCommand, _ message: String) {
+        let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: message)
+        commandDelegate.send(pluginResult, callbackId: command.callbackId)
+    }
 }
