@@ -539,16 +539,9 @@ var post = (function () {
 						},
 
 						pictureInPictureRequest : function(){
-							self.closeContainer()
-
-							var startTime = player && player.getPosition ? player.getPosition() : 0
-
-							setTimeout(function(){
-								self.app.platform.ui.pipvideo(share.txid, null, {
-									startTime
-								})
-							}, 300)
-							
+							self.app.actions.requestpip(share.txid, player, function(){
+								self.closeContainer()
+							})
 						},
 
 						

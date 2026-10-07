@@ -1,5 +1,6 @@
 import Foundation
 import Photos
+import PhotosUI
 import UIKit
 
 // Authorization statuses returned to JavaScript:
@@ -18,6 +19,8 @@ import UIKit
     }
 
     let queue: DispatchQueue = DispatchQueue(label: "photo-library.queue.plugin", qos: DispatchQoS.userInitiated, attributes: [.concurrent])
+
+    var limitedChangeWaiter: LibraryChangeWaiter?
 
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -95,15 +98,29 @@ import UIKit
                 return
             }
 
+            // The picker closes before PhotoKit applies the new selection, so an immediate
+            // fetch returns the old photos: answer when the library reports the change.
+            // The observer is registered before the picker to not miss an early change.
+            self.limitedChangeWaiter?.finish()
+
+            let waiter = LibraryChangeWaiter { [weak self] in
+                self?.limitedChangeWaiter = nil
+                self?.sendAuthorizationResult(command)
+            }
+
+            self.limitedChangeWaiter = waiter
+
             if #available(iOS 15, *) {
-                PHPhotoLibrary.shared().presentLimitedLibraryPicker(from: controller) { _ in
-                    self.sendAuthorizationResult(command)
+                PHPhotoLibrary.shared().presentLimitedLibraryPicker(from: controller) { identifiers in
+                    // Nothing new selected: only removals, if any, are left to arrive
+                    waiter.finish(after: identifiers.isEmpty ? 1 : 3)
                 }
                 return
             }
 
+            // iOS 14 has no completion handler: wait for the change while the picker is open
             PHPhotoLibrary.shared().presentLimitedLibraryPicker(from: controller)
-            self.sendAuthorizationResult(command)
+            waiter.finish(after: 60)
         }
     }
 
@@ -347,8 +364,8 @@ import UIKit
             "library": library
         ]
 
-        let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: result)
-        pluginResult?.setKeepCallbackAs(!isLastChunk)
+        let pluginResult = CDVPluginResult(status: .ok, messageAs: result)
+        pluginResult.setKeepCallbackAs(!isLastChunk)
         commandDelegate.send(pluginResult, callbackId: command.callbackId)
     }
 
@@ -358,22 +375,58 @@ import UIKit
             return
         }
 
-        let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAsMultipart: [picture.data, picture.mimeType])
+        let pluginResult = CDVPluginResult(status: .ok, messageAsMultipart: [picture.data, picture.mimeType])
         commandDelegate.send(pluginResult, callbackId: command.callbackId)
     }
 
     func sendDictionary(_ command: CDVInvokedUrlCommand, _ dictionary: NSDictionary) {
-        let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: dictionary as? [AnyHashable: Any])
+        let pluginResult = CDVPluginResult(status: .ok, messageAs: dictionary as? [AnyHashable: Any] ?? [:])
         commandDelegate.send(pluginResult, callbackId: command.callbackId)
     }
 
     func sendString(_ command: CDVInvokedUrlCommand, _ value: String) {
-        let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: value)
+        let pluginResult = CDVPluginResult(status: .ok, messageAs: value)
         commandDelegate.send(pluginResult, callbackId: command.callbackId)
     }
 
     func sendError(_ command: CDVInvokedUrlCommand, _ message: String) {
-        let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: message)
+        let pluginResult = CDVPluginResult(status: .error, messageAs: message)
         commandDelegate.send(pluginResult, callbackId: command.callbackId)
+    }
+}
+
+// Calls done once when the photo library reports a change, or when the timeout set
+// by finish(after:) expires, or right away on finish(). Holds itself registered as
+// an observer until then.
+class LibraryChangeWaiter: NSObject, PHPhotoLibraryChangeObserver {
+
+    private var done: (() -> Void)?
+
+    init(done: @escaping () -> Void) {
+        self.done = done
+        super.init()
+        PHPhotoLibrary.shared().register(self)
+    }
+
+    func photoLibraryDidChange(_ changeInstance: PHChange) {
+        finish()
+    }
+
+    func finish(after seconds: Double) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+            self.finish()
+        }
+    }
+
+    func finish() {
+        DispatchQueue.main.async {
+            guard let done = self.done else {
+                return
+            }
+
+            self.done = nil
+            PHPhotoLibrary.shared().unregisterChangeObserver(self)
+            done()
+        }
     }
 }

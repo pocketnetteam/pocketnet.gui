@@ -1721,6 +1721,7 @@ Application = function (p) {
 	self.pipwindow = null
 
 	var blockScroll = false
+	var pipRequested = null
 	var scrollmodechanging = false
 	var optimizeTimeout = null
 	var scrollrif = null
@@ -1731,6 +1732,34 @@ Application = function (p) {
 				self.pipwindow.container.close()
 				self.pipwindow = null
 			}
+		},
+
+		// Moves the video from an inline player to the pip window.
+		// before: the caller closes its own view of the video (fullscreen mode, post window)
+		requestpip: function (txid, player, before) {
+
+			// the player may emit 'play' right after the request, see piprequested
+			pipRequested = {
+				player: player,
+				time: Date.now()
+			}
+
+			var startTime = player && player.getPosition ? player.getPosition() : 0
+
+			self.actions.playingvideo(null)
+
+			if (before) before()
+
+			setTimeout(function () {
+				self.platform.ui.pipvideo(txid, null, {
+					startTime: startTime
+				})
+			}, 300)
+		},
+
+		// true while the player that requested pip must stay paused
+		piprequested: function (player) {
+			return !!(player && pipRequested && pipRequested.player === player && Date.now() - pipRequested.time < 2000)
 		},
 		pipwindow: function (p) {
 
@@ -2022,8 +2051,8 @@ Application = function (p) {
 
 	var initevents = function () {
 
-		self.height = self.el.window.height()
-		self.width = self.el.window.width()
+		self.height = self.el.window[0].innerHeight || self.el.window.height()
+		self.width = self.el.window[0].innerWidth || self.el.window.width()
 
 
 
@@ -2192,8 +2221,8 @@ Application = function (p) {
 
 
 			var scrollTop = self.actions.getScroll(),
-				height = self.el.window.height(),
-				width = self.el.window.width();
+				height = self.el.window[0].innerHeight || self.el.window.height(),
+				width = self.el.window[0].innerWidth || self.el.window.width();
 
 			self.height = height
 			self.width = width

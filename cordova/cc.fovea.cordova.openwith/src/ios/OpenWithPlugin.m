@@ -137,6 +137,15 @@ static NSDictionary* launchOptions = nil;
 
     // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onPause) name:UIApplicationDidEnterBackgroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onResume) name:UIApplicationWillEnterForegroundNotification object:nil];
+
+    // Also wake on DidBecomeActive and on Cordova's openURL notification.
+    // Without these, the host app never picks up a fresh share when:
+    //   - it was already foregrounded when the user hit Post (#94), or
+    //   - it is brought forward via the ShareExt URL scheme while the OS
+    //     does not fire WillEnterForeground (#106).
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onResume) name:UIApplicationDidBecomeActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onHandleOpenURL:) name:CDVPluginHandleOpenURLNotification object:nil];
+
     // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onOrientationWillChange) name:UIApplicationWillChangeStatusBarOrientationNotification object:nil];
     // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onOrientationDidChange) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
 
@@ -164,6 +173,13 @@ static NSDictionary* launchOptions = nil;
 
 - (void) onResume {
     [self debug:@"[onResume]"];
+    [self checkForFileToShare];
+}
+
+- (void) onHandleOpenURL:(NSNotification*)notification {
+    // Cordova posts this when the host app is launched (or re-foregrounded)
+    // via a URL scheme — including the scheme the ShareExt uses to wake us.
+    [self debug:@"[onHandleOpenURL]"];
     [self checkForFileToShare];
 }
 
@@ -227,11 +243,30 @@ static NSDictionary* launchOptions = nil;
         return;
     }
     NSDictionary *dict = (NSDictionary*)object;
-    NSData *data = dict[@"data"];
     NSString *text = dict[@"text"];
     NSString *name = dict[@"name"];
     self.backURL = dict[@"backURL"];
     NSString *type = [self mimeTypeFromUti:dict[@"uti"]];
+
+    // Prefer the spooled file path written by ShareViewController.m. Fall
+    // back to inline @"data" for backwards compatibility with older
+    // ShareExt builds and for the small-payload path. See #79.
+    NSData *data = nil;
+    NSString *dataPath = dict[@"dataPath"];
+    if ([dataPath isKindOfClass:NSString.class] && dataPath.length > 0) {
+        NSURL *fileURL = [NSURL fileURLWithPath:dataPath];
+        NSError *readError = nil;
+        data = [NSData dataWithContentsOfURL:fileURL options:0 error:&readError];
+        if (data == nil) {
+            [self debug:[NSString stringWithFormat:@"[checkForFileToShare] Failed to read spooled payload: %@", readError]];
+        }
+        // Clean up the spooled file regardless of read success so we
+        // don't leak files in the shared container.
+        [[NSFileManager defaultManager] removeItemAtURL:fileURL error:nil];
+    } else {
+        data = dict[@"data"];
+    }
+
     if (![data isKindOfClass:NSData.class] || ![text isKindOfClass:NSString.class]) {
         [self debug:@"[checkForFileToShare] Data content is invalid"];
         return;
@@ -291,7 +326,8 @@ static NSDictionary* launchOptions = nil;
         UIApplication *app = [UIApplication sharedApplication];
         NSURL *url = [NSURL URLWithString:self.backURL];
         if ([app canOpenURL:url]) {
-            [app openURL:url];
+            // openURL: without options always fails since iOS 18 (apache/cordova-ios#1511)
+            [app openURL:url options:@{} completionHandler:nil];
         }
     }
     CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];

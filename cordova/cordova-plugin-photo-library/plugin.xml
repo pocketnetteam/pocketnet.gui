@@ -32,11 +32,8 @@
         <config-file target="*-Info.plist" parent="NSPhotoLibraryUsageDescription">
             <string>$PHOTO_LIBRARY_USAGE_DESCRIPTION</string>
         </config-file>
-        <!-- The app shows its own "manage selected photos" banner in limited mode -->
-        <config-file target="*-Info.plist" parent="PHPhotoLibraryPreventAutomaticLimitedAccessAlert">
-            <true/>
-        </config-file>
         <framework src="Photos.framework" />
+        <framework src="PhotosUI.framework" />
         <source-file src="src/ios/PhotoLibrary.swift" />
     </platform>
 </plugin>

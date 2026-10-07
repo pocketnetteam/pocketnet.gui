@@ -1354,7 +1354,9 @@ lazyActions = function(farray, clbk){
         array : farray,
         action : function(p){
 
+            console.log('p.item', p.item)
             p.item(function(){
+            console.log('p.item2', p.item)
 
 
                 p.success()

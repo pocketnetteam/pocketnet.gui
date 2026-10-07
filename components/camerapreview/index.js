@@ -172,6 +172,8 @@ var camerapreview = (function(){
 
                     photos.unshift(r)
 
+                    setLibraryEmpty(false)
+
                     data.current = null
 					
 
@@ -360,6 +362,8 @@ var camerapreview = (function(){
 
 						if(result.isLastChunk){
 							libraryProcessId = null
+
+							setLibraryEmpty(!photos.length)
 						}
 
 						if(!resolved){
@@ -396,6 +400,8 @@ var camerapreview = (function(){
 			renderedphotos = {}
 			data.selected = {}
 
+			setLibraryEmpty(false)
+
 			el.galleryimages.find('.imagescontent').html('')
 			renders.selectedButton()
 
@@ -425,6 +431,17 @@ var camerapreview = (function(){
 			}
 			else{
 				el.c.removeClass('photolibraryaccesslimited')
+			}
+		}
+
+		var setLibraryEmpty = function(empty){
+			if (!el.c) return
+
+			if (empty){
+				el.c.addClass('photolibraryempty')
+			}
+			else{
+				el.c.removeClass('photolibraryempty')
 			}
 		}
 

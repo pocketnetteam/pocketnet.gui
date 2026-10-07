@@ -15,7 +15,9 @@
 				
 				var showForta = Math.random() < 0.5;
 				
-				if (isMobile() && dapp && !app.television) {%>
+
+				if (isMobile() && dapp && !(window.cordova && isios())) {%>
+
 
 					<% if (showForta) { %>
 

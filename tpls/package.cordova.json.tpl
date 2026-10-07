@@ -6,7 +6,7 @@
     "main": "index.js",
     "scripts": {
         "android-add": "cordova platform add android@15.1.0",
-        "ios-add": "cordova platform add ios@6.3.0",
+        "ios-add": "cordova platform add ios@8.1.1",
         "ios-run": "cordova run ios --buildConfig build.json",
         "ios-build-debug": "cordova build ios --buildConfig build.json",
         "android-build": "cordova build android --prod --release --buildConfig build.json --verbose",
@@ -27,9 +27,9 @@
         "cordova-plugin-camera": "6.0.0",
         "cordova-plugin-fullscreen": "^1.3.0",
         "cordova-plugin-gallery-refresh": "1.0.61",
-        "cordova-plugin-inappbrowser": "6.0.0",
-        "cordova-plugin-network-information": "3.0.0",
-        "cordova-plugin-screen-orientation": "^3.0.1",
+        "cordova-plugin-inappbrowser": "7.0.0",
+        "cordova-plugin-network-information": "3.1.0",
+        "cordova-plugin-screen-orientation": "^3.0.4",
         "cordova-plugin-vibration": "3.1.1",
         "cordova-support-android-plugin": "1.0.1",
         "es6-promise-plugin": "^4.2.2",
@@ -43,14 +43,12 @@
     "devDependencies": {
         "@ahovakimyan/cordova-plugin-wkwebviewxhrfix": "^1.0.1",
         "@cordova/eslint-config": "^4.0.0",
-        "@globules-io/cordova-plugin-ios-xhr": "^1.2.1",
         "cc.fovea.cordova.openwith": "file:cc.fovea.cordova.openwith",
         "cordova-android": "^15.1.0",
         "cordova-androidx-build": "^1.0.4",
-        "cordova-ios": "^6.3.0",
+        "cordova-ios": "^8.1.1",
         "cordova-plugin-actionsheet": "^2.3.3",
         "cordova-plugin-navigationbar-color": "file:cordova-plugin-navigationbar-color",
-        "cordova-plugin-add-swift-support": "^2.0.2",
         "cordova-plugin-android-enumeratedevices": "file:cordova-plugin-android-enumeratedevices",
         "cordova-plugin-android-packagemanager": "file:cordova-plugin-android-packagemanager",
         "cordova-plugin-audioinput": "^1.0.2",
@@ -61,7 +59,7 @@
         "cordova-plugin-buildinfo": "^4.0.0",
         "cordova-plugin-camera-preview": "^0.12.3",
         "cordova-plugin-contacts-x": "file:cordova-plugin-contacts-x",
-        "cordova-plugin-device": "^1.1.7",
+        "cordova-plugin-device": "^3.0.0",
         "cordova-plugin-file": "^8.1.3",
         "cordova-plugin-file-transfer": "file:cordova-plugin-file-transfer",
         "cordova-plugin-insomnia": "file:cordova-plugin-insomnia",
@@ -94,12 +92,11 @@
             "cordova-plugin-statusbar": {},
             "cordova-plugin-x-socialsharing": {
                 "ANDROID_SUPPORT_V4_VERSION": "24.1.1+",
-                "PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION": "Allow the application access to the photo gallery to select photos for publication.",
+                "PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION": "Allow the application to save photos and videos to your photo gallery.",
                 "PHOTO_LIBRARY_USAGE_DESCRIPTION": "Allow the application access to the photo gallery to select photos for publication."
             },
             "cordova-plugin-buildinfo": {},
             "cordova-plugin-inappbrowser": {},
-            "@globules-io/cordova-plugin-ios-xhr": {},
             "cordova-plugin-file": {
                 "ANDROIDX_WEBKIT_VERSION": "1.4.0"
             },
@@ -123,13 +120,13 @@
             "cordova-plugin-background-mode" : {},
             "cordova-plugin-camera": {
                 "ANDROIDX_CORE_VERSION": "1.6.+",
-                "PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION": "Allow the application access to the photo gallery to select photos for publication.",
+                "PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION": "Allow the application to save photos and videos to your photo gallery.",
                 "PHOTO_LIBRARY_USAGE_DESCRIPTION": "Allow the application access to the photo gallery to select photos for publication.",
                 "CAMERA_USAGE_DESCRIPTION": "Allow the application access to the camera to select photos for publication.",
                 "PHOTOLIBRARY_USAGE_DESCRIPTION": "Allow the application access to the photo gallery to select photos for publication."
             },
             "cordova-plugin-photo-library": {
-                "PHOTO_LIBRARY_USAGE_DESCRIPTION": " "
+                "PHOTO_LIBRARY_USAGE_DESCRIPTION": "Allow the application access to the photo gallery to select photos for publication."
             },
             "cordova-plugin-network-information": {},
             "cordova-plugin-vibration": {},
@@ -145,8 +142,8 @@
             "cordova-plugin-android-permissions": {},
             "cordova-plugin-navigationbar-color": {},
             "cordova-plugin-gallery-refresh": {
-                "CAMERA_USAGE_DESCRIPTION": "",
-                "PHOTOLIBRARY_USAGE_DESCRIPTION": ""
+                "CAMERA_USAGE_DESCRIPTION": "Allow the application access to the camera to select photos for publication.",
+                "PHOTOLIBRARY_USAGE_DESCRIPTION": "Allow the application access to the photo gallery to select photos for publication."
             },
         
         <% if(!store) {%>
