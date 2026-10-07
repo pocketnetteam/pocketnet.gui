@@ -1,6 +1,8 @@
 // Patches native sources of npm plugins in platforms/ios that have no fixed release.
 // - cordova-plugin-x-socialsharing 6.0.4: UIApplication openURL: without options always
 //   returns NO since iOS 18, so sharing text to WhatsApp did nothing (apache/cordova-ios#1511)
+// - cordova-plugin-camera-preview 0.12.3 (same in 0.14.0 and master): CameraSessionManager uses UIKit
+//   without importing it; cordova-ios 8 removed the prefix header that imported UIKit everywhere
 // Patches are idempotent. Never fails the build: problems are only logged.
 
 var fs = require('fs');
@@ -12,6 +14,12 @@ var patches = [
 		file: 'SocialSharing.m',
 		from: '[[UIApplication sharedApplication] openURL: whatsappURL];',
 		to: '[[UIApplication sharedApplication] openURL: whatsappURL options:@{} completionHandler:nil];'
+	},
+	{
+		plugin: 'cordova-plugin-camera-preview',
+		file: 'CameraSessionManager.h',
+		from: '#import <CoreImage/CoreImage.h>',
+		to: '#import <UIKit/UIKit.h>\n#import <CoreImage/CoreImage.h>'
 	}
 ]
 
@@ -30,7 +38,7 @@ var applyPatch = function (projectFolder, patch) {
 
 	var content = fs.readFileSync(filePath, 'utf8');
 
-	if (content.indexOf(patch.from) == -1) return;
+	if (content.indexOf(patch.to) != -1 || content.indexOf(patch.from) == -1) return;
 
 	fs.writeFileSync(filePath, content.split(patch.from).join(patch.to));
 
