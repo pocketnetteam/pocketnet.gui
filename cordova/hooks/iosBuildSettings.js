@@ -1,7 +1,9 @@
-// Writes SWIFT_VERSION from the UseSwiftLanguageVersion preference into every
-// build configuration of the iOS project on each prepare/build.
-// cordova-plugin-add-swift-support sets it only on "platform add"/"prepare"
-// and only when it is undefined, so Xcode was left with "Unspecified".
+// Writes iOS build settings into the Xcode project on each prepare/build:
+// - SWIFT_VERSION from the UseSwiftLanguageVersion preference (add-swift-support
+//   sets it only on "platform add"/"prepare", so Xcode showed "Unspecified")
+// - IPHONEOS_DEPLOYMENT_TARGET from the deployment-target preference for every
+//   target, including the share extension that cordova-ios does not manage.
+// Never fails the build: problems are only logged.
 
 var fs = require('fs');
 var path = require('path');
@@ -20,21 +22,48 @@ var findPbxproj = function (iosPath) {
 	return project ? path.join(iosPath, project, 'project.pbxproj') : null;
 }
 
-module.exports = function (context) {
-	if ((context.opts.platforms || []).indexOf('ios') == -1) return;
+// xcode is a cordova-ios dependency and may be not hoisted to node_modules
+var requireXcode = function (projectRoot) {
+	var places = [
+		'xcode',
+		path.join(projectRoot, 'node_modules', 'xcode'),
+		path.join(projectRoot, 'node_modules', 'cordova-ios', 'node_modules', 'xcode')
+	];
 
-	var projectRoot = context.opts.projectRoot;
+	for (var i = 0; i < places.length; i++) {
+		try {
+			return require(places[i]);
+		} catch (e) {}
+	}
+
+	return null;
+}
+
+var lowerVersion = function (current, target) {
+	if (!current) return true;
+
+	return parseFloat(String(current).replace(/"/g, '')) < parseFloat(target);
+}
+
+var apply = function (projectRoot) {
 	var iosPath = path.join(projectRoot, 'platforms', 'ios');
 
 	if (!fs.existsSync(iosPath)) return;
 
 	var configXml = fs.readFileSync(path.join(projectRoot, 'config.xml'), 'utf8');
 	var swiftVersion = getPreference(configXml, 'UseSwiftLanguageVersion');
+	var deploymentTarget = getPreference(configXml, 'deployment-target');
 	var pbxprojPath = findPbxproj(iosPath);
 
-	if (!swiftVersion || !pbxprojPath) return;
+	if (!pbxprojPath) return;
 
-	var xcode = require('xcode');
+	var xcode = requireXcode(projectRoot);
+
+	if (!xcode) {
+		console.warn('iosBuildSettings: xcode module not found, skipped');
+		return;
+	}
+
 	var project = xcode.project(pbxprojPath);
 
 	project.parseSync();
@@ -46,10 +75,24 @@ module.exports = function (context) {
 
 		if (!buildSettings) return;
 
-		buildSettings['SWIFT_VERSION'] = swiftVersion;
+		if (swiftVersion) buildSettings['SWIFT_VERSION'] = swiftVersion;
+
+		if (deploymentTarget && lowerVersion(buildSettings['IPHONEOS_DEPLOYMENT_TARGET'], deploymentTarget)) {
+			buildSettings['IPHONEOS_DEPLOYMENT_TARGET'] = deploymentTarget;
+		}
 	});
 
 	fs.writeFileSync(pbxprojPath, project.writeSync());
 
-	console.log('iosBuildSettings: SWIFT_VERSION = ' + swiftVersion);
+	console.log('iosBuildSettings: SWIFT_VERSION = ' + swiftVersion + ', IPHONEOS_DEPLOYMENT_TARGET >= ' + deploymentTarget);
+}
+
+module.exports = function (context) {
+	if ((context.opts.platforms || []).indexOf('ios') == -1) return;
+
+	try {
+		apply(context.opts.projectRoot);
+	} catch (e) {
+		console.warn('iosBuildSettings: skipped, ' + (e && e.message ? e.message : e));
+	}
 }
