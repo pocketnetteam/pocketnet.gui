@@ -33,11 +33,22 @@ var camerapreview = (function(){
 		}
 
 		var getcameraoptions = function(){
+
+			var width = self.app.width
+			var height = self.app.height
+
+			// iOS: the window height may not include the bottom safe area,
+			// the camera is behind the transparent webview and must cover the whole screen
+			if (isios()){
+				width = Math.max(width, window.screen.width)
+				height = Math.max(height, window.screen.height)
+			}
+
 			return {
 				x: 0,
 				y: 0,
-				width: self.app.width,
-				height: self.app.height,
+				width: width,
+				height: height,
 				camera: typeof CameraPreview != 'undefined' ? CameraPreview.CAMERA_DIRECTION[data.direction] : '',
 				toBack: true,
 				tapFocus: true,

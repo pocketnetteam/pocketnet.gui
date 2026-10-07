@@ -128,6 +128,13 @@ static const void *kStatusBarStyle = &kStatusBarStyle;
 
     self.viewController.view.autoresizesSubviews = YES;
 
+    // The webview is transparent (camera preview), so the root view shows through
+    // where the page or the camera do not reach: use the app background, not white
+    UIColor* backgroundColor = [UIColor colorNamed:@"BackgroundColor"];
+    if (backgroundColor) {
+        self.viewController.view.backgroundColor = backgroundColor;
+    }
+
     NSString* setting;
 
     setting  = @"StatusBarBackgroundColor";
