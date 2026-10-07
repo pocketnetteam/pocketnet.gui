@@ -2051,8 +2051,8 @@ Application = function (p) {
 
 	var initevents = function () {
 
-		self.height = self.el.window.height()
-		self.width = self.el.window.width()
+		self.height = self.el.window[0].innerHeight || self.el.window.height()
+		self.width = self.el.window[0].innerWidth || self.el.window.width()
 
 
 
