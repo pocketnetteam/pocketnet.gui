@@ -206,7 +206,7 @@ import ContactsUI
                 var newMails: [CNLabeledValue<NSString>] = [];
                 outer: for newMail in contact.emails! {
                     for mail in editContact.emailAddresses {
-                        if(mail.identifier == newMail.id!) {
+                        if(newMail.id != nil && mail.identifier == newMail.id!) {
                             newMails.append(mail.settingLabel(ContactsX.mapStringToLabel(string: newMail.type), value: newMail.value as NSString));
                             continue outer;
                         }
@@ -341,10 +341,11 @@ import ContactsUI
                         completionHandler(false)
                     }
                 case .limited:
+                    // iOS 18+: access to the contacts selected by the user
+                    completionHandler(true)
+                @unknown default:
                     completionHandler(false)
             }
-            
-                
     }
 
     func returnError(error: ErrorCodes, message: String = "") {

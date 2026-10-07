@@ -154,6 +154,39 @@ function projectPlistJson(context, projectName) {
   return plist.parse(fs.readFileSync(path, 'utf8'));
 }
 
+// Merge the App Group identifier into the main app's entitlements files.
+// Cordova generates separate Entitlements-Debug.plist and Entitlements-Release.plist
+// in platforms/ios/<ProjectName>/. Previously we only wired App Groups into the
+// Debug file via Xcode's automatic signing; Release builds shipped without the
+// capability and the ShareExt could not talk to the host app. See #66.
+function addAppGroupToMainEntitlements(context, projectName, groupIdentifier) {
+  var plist = utils.requireModule(context, 'plist');
+  var configs = ['Entitlements-Debug.plist', 'Entitlements-Release.plist'];
+  var APP_GROUPS_KEY = 'com.apple.security.application-groups';
+
+  configs.forEach(function(fileName) {
+    var filePath = path.join(iosFolder(context), projectName, fileName);
+    if (!fs.existsSync(filePath)) {
+      console.log('    Skipping ' + fileName + ' (not present).');
+      return;
+    }
+    var contents;
+    try {
+      contents = plist.parse(fs.readFileSync(filePath, 'utf8'));
+    } catch (e) {
+      console.log('    Could not parse ' + fileName + ': ' + e.message);
+      return;
+    }
+    var groups = contents[APP_GROUPS_KEY] || [];
+    if (groups.indexOf(groupIdentifier) < 0) {
+      groups.push(groupIdentifier);
+      contents[APP_GROUPS_KEY] = groups;
+      fs.writeFileSync(filePath, plist.build(contents));
+      console.log('    Added App Group to ' + fileName + '.');
+    }
+  });
+}
+
 function getPreferences(context, configXml, projectName) {
   var plist = projectPlistJson(context, projectName);
   var group = "group." + bundleIdentifier + BUNDLE_SUFFIX;
@@ -243,6 +276,10 @@ module.exports = function (context) {
     // printShareExtensionFiles(files);
 
     var preferences = getPreferences(context, configXml, projectName);
+    var groupIdentifier = preferences.filter(function(p) { return p.key === '__GROUP_IDENTIFIER__'; })[0];
+    if (groupIdentifier && groupIdentifier.value) {
+      addAppGroupToMainEntitlements(context, projectName, groupIdentifier.value);
+    }
     files.plist.concat(files.source).forEach(function(file) {
       replacePreferencesInFile(file.path, preferences);
       // console.log('    Successfully updated ' + file.name);
@@ -300,9 +337,12 @@ module.exports = function (context) {
       if (typeof configurations[key].buildSettings !== 'undefined') {
         var buildSettingsObj = configurations[key].buildSettings;
         if (typeof buildSettingsObj['PRODUCT_NAME'] !== 'undefined') {
-          buildSettingsObj['CODE_SIGN_ENTITLEMENTS'] = '"ShareExtension/ShareExtension-Entitlements.plist"';
           var productName = buildSettingsObj['PRODUCT_NAME'];
+          // Only patch the ShareExt target. Previously CODE_SIGN_ENTITLEMENTS
+          // was assigned unconditionally, which clobbered the main app's
+          // entitlements (push, associated domains, keychain sharing, ...).
           if (productName.indexOf('ShareExt') >= 0) {
+            buildSettingsObj['CODE_SIGN_ENTITLEMENTS'] = '"ShareExtension/ShareExtension-Entitlements.plist"';
             buildSettingsObj['PRODUCT_BUNDLE_IDENTIFIER'] = bundleIdentifier+BUNDLE_SUFFIX;
           }
         }
