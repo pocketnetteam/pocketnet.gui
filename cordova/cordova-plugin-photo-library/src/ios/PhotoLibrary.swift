@@ -348,8 +348,8 @@ import UIKit
             "library": library
         ]
 
-        let pluginResult: CDVPluginResult? = CDVPluginResult(status: .ok, messageAs: result)
-        pluginResult?.setKeepCallbackAs(!isLastChunk)
+        let pluginResult = CDVPluginResult(status: .ok, messageAs: result)
+        pluginResult.setKeepCallbackAs(!isLastChunk)
         commandDelegate.send(pluginResult, callbackId: command.callbackId)
     }
 
@@ -364,7 +364,7 @@ import UIKit
     }
 
     func sendDictionary(_ command: CDVInvokedUrlCommand, _ dictionary: NSDictionary) {
-        let pluginResult = CDVPluginResult(status: .ok, messageAs: dictionary as? [AnyHashable: Any])
+        let pluginResult = CDVPluginResult(status: .ok, messageAs: dictionary as? [AnyHashable: Any] ?? [:])
         commandDelegate.send(pluginResult, callbackId: command.callbackId)
     }
 
