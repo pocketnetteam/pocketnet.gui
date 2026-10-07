@@ -134,6 +134,8 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
 
+        <preference name="deployment-target" value="13.0" />
+
         <config-file parent="NSMicrophoneUsageDescription" target="*-Info.plist">
             <string>This Application uses your microphone to make voice messages</string>
         </config-file>
@@ -158,8 +160,7 @@
             <false/>
         </config-file>
 
-        <preference name="deployment-target" value="13.0" />
-
+        <resource-file src="configs/en.lproj" />
         <resource-file src="configs/de.lproj" />
         <resource-file src="configs/es.lproj" />
         <resource-file src="configs/fr.lproj" />
@@ -168,7 +169,8 @@
         <resource-file src="configs/ru.lproj" />
         <resource-file src="configs/zh.lproj" />
        
-        <preference name="UseSwiftLanguageVersion" value="4.2" />
+        <preference name="UseSwiftLanguageVersion" value="5.0" />
+        <hook type="after_prepare" src="hooks/iosBuildSettings.js" />
         <preference name="NativeXHRLogging" value="full" />
         <preference name="AllowUntrustedCerts"  value="true" />
         <preference name="InterceptRemoteRequests" value="all" />
