@@ -9602,7 +9602,7 @@ Platform = function (app, listofnodes) {
                         self.app.apps.emit('theme', t.all[value])
                 }
 
-                app.mobile.statusbar.background()
+                app.mobile.statusbar.apply()
 
 
 
@@ -26202,6 +26202,8 @@ Platform = function (app, listofnodes) {
                 if (!self.matrixchat.el.hasClass('active')) return
                 self.matrixchat.el.removeClass('active')
 
+                self.app.mobile.statusbar.pop('chat')
+
 
                 if (app.chatposition)
                     app.chatposition(false)
@@ -26300,6 +26302,8 @@ Platform = function (app, listofnodes) {
                 if (self.matrixchat.el.hasClass('active')) return
                 self.matrixchat.el.addClass('active')
 
+                if (self.app.mobileview) self.app.mobile.statusbar.push('chat', 'theme')
+
                 if (app.chatposition)
                     app.chatposition(true)
 
@@ -26373,6 +26377,8 @@ Platform = function (app, listofnodes) {
 
             self.matrixchat.connectWith = null
             self.matrixchat.joinRoom = null
+
+            self.app.mobile.statusbar.pop('chat')
 
             delete self.app.platform.ws.messages["new block"].clbks.matrixchat
             delete self.matrixchat.core
@@ -27099,11 +27105,9 @@ Platform = function (app, listofnodes) {
 
                 setTimeout(() => {
 
-                    if (!self.activecall || self.activecall.ui.view == 'mini') {
-                        self.app.mobile.statusbar.show()
-                    } else {
-                        self.app.mobile.statusbar.hide()
-                    }
+                    var expanded = self.activecall && self.activecall.ui.view != 'mini'
+
+                    self.app.mobile.statusbar.set('call', expanded ? 'fullscreen' : null)
 
                 }, 100)
             }

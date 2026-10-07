@@ -831,6 +831,7 @@ var main = (function(){
 							observe : searchvalue || searchtags ? null : mode,
 							page : 0,
 							fixposition : true,
+							contentvisibility : true,
 
 							//recommendedUsers : self.app.mobileview,
 							//recommendedUsersCount : self.app.mobileview ? 15 : 3,

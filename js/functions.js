@@ -562,6 +562,8 @@ wnd = function (p) {
 
 			if (p.class) wnd.addClass(p.class);
 
+			statusbarSheet(true)
+
 			wnd.css("display", "block");
 			wnd.addClass('asette')
 
@@ -841,6 +843,8 @@ wnd = function (p) {
 			delete app.events.resize[id]
 			delete app.events.scroll[id]
 
+			statusbarSheet(false)
+
 			window.rifticker.add(() => {
 				destroySwipable()
 
@@ -885,6 +889,8 @@ wnd = function (p) {
 			wnd.find('.buttons').addClass('hidden');
 			wnd.addClass('hiddenState');
 
+			statusbarSheet(false)
+
 			wnd.find('.wndcontent > div').addClass('rolledUp');
 
 			if (!nooverflow) {
@@ -898,6 +904,8 @@ wnd = function (p) {
 
 			wnd.find('.buttons').removeClass('hidden');
 			wnd.removeClass('hiddenState');
+
+			statusbarSheet(true)
 			wnd.find('.wndcontent > div').removeClass('rolledUp');
 
 
@@ -905,6 +913,14 @@ wnd = function (p) {
 				app.actions.offScroll(wnd);
 			}
 		},
+	}
+
+	// Mobile bottom sheets: the navigation bar follows the theme while the sheet is open
+	var statusbarSheet = function (show) {
+
+		if (!app.mobileview || !wnd || !wnd.hasClass('normalizedmobile') || wnd.hasClass('fromtop')) return
+
+		app.mobile.statusbar.set('sheet:' + id, show ? 'sheet' : null)
 	}
 
 	self.unhidenormalized = function () {
@@ -1002,7 +1018,7 @@ tooltipMobileDialog = function (p) {
 
 	var c = p.clbk || function () { }
 
-	var statusbg = ''
+	var statuslayer = 'dialog:' + makeid()
 
 	p.clbk = function (el) {
 
@@ -1015,18 +1031,15 @@ tooltipMobileDialog = function (p) {
 		}, 20)
 
 		if (p.app){
-
-			statusbg = p.app.mobile.statusbar.status
-
-			p.app.mobile.statusbar.gallerybackground()
+			p.app.mobile.statusbar.push(statuslayer, 'gallery')
 		}
 
 		c(el)
 	}
 
 	p.onDestroy = function(){
-		if (p.app && statusbg && p.app.mobile.statusbar[statusbg]){
-			p.app.mobile.statusbar[statusbg]()
+		if (p.app){
+			p.app.mobile.statusbar.pop(statuslayer)
 		}
 	}
 

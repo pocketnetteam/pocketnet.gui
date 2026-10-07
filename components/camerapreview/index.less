@@ -10,7 +10,7 @@
     .useselectedWrapper{
         display: none;
         position: absolute;
-        bottom : 6 * @rhythm;
+        bottom : calc(6 * @rhythm + env(safe-area-inset-bottom, 0px));
         left : 0;
         right: 0;
         text-align: center;
@@ -70,6 +70,7 @@
             right: 0;
             top : calc(65px + var(--app-margin-top));
             padding : @rhythm 2 * @rhythm;
+            padding-bottom: calc(12 * @rhythm + env(safe-area-inset-bottom, 0px));
             overflow-y: scroll;
             .imagescontent{
                 display: grid;
@@ -242,7 +243,7 @@
         margin : 0 auto;
         position: absolute;
         left : 50%;
-        bottom : 6 * @rhythm;
+        bottom : calc(6 * @rhythm + env(safe-area-inset-bottom, 0px));
         margin-left: -27px;
         z-index: 150;
 

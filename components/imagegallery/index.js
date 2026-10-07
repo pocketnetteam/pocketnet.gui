@@ -697,13 +697,13 @@ var imagegallery = (function(){
 
 				el = {};
 
-				self.app.mobile.statusbar.background()
+				self.app.mobile.statusbar.pop('imagegallery')
 
 			},
 			clearparameters : ['i', 'num', 'com'],
 			init : function(p){
 				
-				self.app.mobile.statusbar.gallerybackground()
+				self.app.mobile.statusbar.push('imagegallery', 'gallery')
 
 				currentImage = null;
 				making = false;
