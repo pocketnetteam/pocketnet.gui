@@ -42,7 +42,7 @@ var authorn = (function(){
 
 				window.rifticker.add(() => {
 					self.app.el.html.removeClass('allcontent')
-					self.app.mobile.statusbar.background()
+					self.app.mobile.statusbar.set('page', null)
 				})
 
 				setTimeout(() => {
@@ -178,7 +178,7 @@ var authorn = (function(){
 				el.c.addClass('opensvishowedWillremoved')
 
 				self.app.el.html.addClass('allcontent')
-				self.app.mobile.statusbar.topfadebackground()
+				self.app.mobile.statusbar.set('page', 'topfade')
 
 				renders.upbutton()
 				renders.post(null)
@@ -1408,6 +1408,7 @@ var authorn = (function(){
 
 					},
 					fixposition : true,
+					contentvisibility : true,
 					canloadmorescroll : function(){
 
 						if(openedpost) return false
@@ -1431,7 +1432,7 @@ var authorn = (function(){
 
 					var monetizationPromise = (() => {return Promise.resolve(false)})()
 
-					var monetizationStatic = /*!self.user.isItMe(author.address) && */!params.searchValue && !params.searchTags && !params.read && !params.audio && !params.video
+					var monetizationStatic = !self.user.isItMe(author.address) && !params.searchValue && !params.searchTags && !params.read && !params.audio && !params.video
 
 					if (monetizationStatic) 
 						monetizationPromise = self.app.platform.sdk.users.checkMonetization(author.address)
@@ -1730,7 +1731,7 @@ var authorn = (function(){
 
 			window.rifticker.add(() => {
 				self.app.el.html.removeClass('allcontent')
-				self.app.mobile.statusbar.background()
+				self.app.mobile.statusbar.set('page', null)
 			})
 
 			if (page){
@@ -1852,7 +1853,7 @@ var authorn = (function(){
 
 				window.rifticker.add(() => {
 					self.app.el.html.addClass('allcontent')
-					self.app.mobile.statusbar.topfadebackground()
+					self.app.mobile.statusbar.set('page', 'topfade')
 				})
 
 				ed = p.settings.essenseData || {}
@@ -1895,7 +1896,7 @@ var authorn = (function(){
 
 				if (href != 'author') {
 					self.app.el.html.removeClass('allcontent')
-					self.app.mobile.statusbar.background()
+					self.app.mobile.statusbar.set('page', null)
 				}
 
 				delete self.app.platform.actionListeners.authorn

@@ -7169,6 +7169,7 @@ html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner .wndcontent {
   margin: 0 auto;
   padding-left: 0;
   padding-right: 0;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
   -moz-transition: padding-bottom 0.3s;
   -o-transition: padding-bottom 0.3s;
   -webkit-transition: padding-bottom 0.3s;
@@ -7210,6 +7211,7 @@ html.mobileview .wnd.normalizedmobile:not(.hiddenState).fromtop .wndinner {
 html.television .wnd.normalizedmobile:not(.hiddenState).fromtop .wndinner .wndcontent,
 html.mobileview .wnd.normalizedmobile:not(.hiddenState).fromtop .wndinner .wndcontent {
   padding-top: 0;
+  padding-bottom: 0;
   border-radius: 0;
   border-bottom-right-radius: 24px;
   border-bottom-left-radius: 24px;
