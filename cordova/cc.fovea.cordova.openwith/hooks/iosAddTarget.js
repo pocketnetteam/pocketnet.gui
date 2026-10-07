@@ -194,8 +194,9 @@ function getPreferences(context, configXml, projectName) {
     group = getCordovaParameter(configXml, 'IOS_GROUP_IDENTIFIER');
   }
   return [{
+    // cordova-ios 8 always names the Xcode project "App": use the app name from Info.plist
     key: '__DISPLAY_NAME__',
-    value: projectName
+    value: plist.CFBundleDisplayName && plist.CFBundleDisplayName.indexOf('$(') < 0 ? plist.CFBundleDisplayName : projectName
   }, {
     key: '__BUNDLE_IDENTIFIER__',
     value: bundleIdentifier + BUNDLE_SUFFIX

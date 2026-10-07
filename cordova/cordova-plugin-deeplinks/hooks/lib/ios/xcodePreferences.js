@@ -4,11 +4,15 @@ Which is:
 - deployment target set to iOS 9.0
 - .entitlements file added to project PBXGroup and PBXFileReferences section
 - path to .entitlements file added to Code Sign Entitlements preference
+
+cordova-ios 6+ signs the app with its own Entitlements-Debug/Release.plist (domains are written there
+by projectEntitlements.js), so Code Sign Entitlements is not overridden: otherwise the entitlements of
+other plugins (aps-environment, app groups) and of the share extension target are lost.
 */
 
 var path = require('path');
 var compare = require('node-version-compare');
-var ConfigXmlHelper = require('../configXmlHelper.js');
+var projectPaths = require('./projectPaths.js');
 var IOS_DEPLOYMENT_TARGET = '13.0';
 var COMMENT_KEY = /_comment$/;
 var context;
@@ -28,12 +32,15 @@ function enableAssociativeDomainsCapability(cordovaContext) {
   context = cordovaContext;
 
   var projectFile = loadProjectFile();
+  var useCordovaEntitlements = projectPaths.getCordovaEntitlementsFiles(context).length > 0;
 
   // adjust preferences
-  activateAssociativeDomains(projectFile.xcode);
+  activateAssociativeDomains(projectFile.xcode, useCordovaEntitlements);
 
   // add entitlements file to pbxfilereference
-  addPbxReference(projectFile.xcode);
+  if (!useCordovaEntitlements) {
+    addPbxReference(projectFile.xcode);
+  }
 
   // save changes
   projectFile.write();
@@ -50,16 +57,28 @@ function enableAssociativeDomainsCapability(cordovaContext) {
  *
  * @param {Object} xcodeProject - xcode project preferences; all changes are made in that instance
  */
-function activateAssociativeDomains(xcodeProject) {
+function activateAssociativeDomains(xcodeProject, useCordovaEntitlements) {
   var configurations = nonComments(xcodeProject.pbxXCBuildConfigurationSection());
   var entitlementsFilePath = pathToEntitlementsFile();
+  var legacyCodeSignEntitlements = '"' + entitlementsFilePath + '"';
   var config;
   var buildSettings;
   var deploymentTargetIsUpdated;
 
   for (config in configurations) {
     buildSettings = configurations[config].buildSettings;
-    buildSettings['CODE_SIGN_ENTITLEMENTS'] = '"' + entitlementsFilePath + '"';
+
+    if (!useCordovaEntitlements) {
+      buildSettings['CODE_SIGN_ENTITLEMENTS'] = legacyCodeSignEntitlements;
+    } else if (buildSettings['CODE_SIGN_ENTITLEMENTS'] === legacyCodeSignEntitlements) {
+      // set by the previous version of this hook: return the cordova default for the app,
+      // the share extension (cc.fovea.cordova.openwith) sets its own value on prepare
+      if (String(buildSettings['PRODUCT_NAME'] || '').indexOf('ShareExt') >= 0) {
+        delete buildSettings['CODE_SIGN_ENTITLEMENTS'];
+      } else {
+        buildSettings['CODE_SIGN_ENTITLEMENTS'] = projectPaths.CORDOVA_CODE_SIGN_ENTITLEMENTS;
+      }
+    }
 
     // if deployment target is less then the required one - increase it
     if (buildSettings['IPHONEOS_DEPLOYMENT_TARGET']) {
@@ -77,7 +96,9 @@ function activateAssociativeDomains(xcodeProject) {
     console.log('IOS project now has deployment target set as: ' + IOS_DEPLOYMENT_TARGET);
   }
 
-  console.log('IOS project Code Sign Entitlements now set to: ' + entitlementsFilePath);
+  if (!useCordovaEntitlements) {
+    console.log('IOS project Code Sign Entitlements now set to: ' + entitlementsFilePath);
+  }
 }
 
 // endregion
@@ -249,8 +270,7 @@ function projectRoot() {
 }
 
 function pathToEntitlementsFile() {
-  var configXmlHelper = new ConfigXmlHelper(context),
-    projectName = configXmlHelper.getProjectName(),
+  var projectName = projectPaths.getProjectName(context),
     fileName = projectName + '.entitlements';
 
   return path.join(projectName, 'Resources', fileName);

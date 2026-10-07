@@ -1,3 +1,5 @@
+import Foundation
+import UIKit
 import Contacts
 import ContactsUI
 
@@ -42,7 +44,7 @@ import ContactsUI
                 for contact in contacts {
                     resultArray.append(contact.getJson());
                 }
-                let result:CDVPluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: resultArray);
+                let result:CDVPluginResult = CDVPluginResult(status: .ok, messageAs: resultArray);
                 self.commandDelegate.send(result, callbackId: self._callbackId)
             }
         }
@@ -93,7 +95,7 @@ import ContactsUI
         ];
         let options = ContactsXOptions(options: ["fields": fields]);
         let contactResult = ContactX(contact: contact, options: options).getJson() as! [String : Any];
-        let result: CDVPluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: contactResult);
+        let result: CDVPluginResult = CDVPluginResult(status: .ok, messageAs: contactResult);
         self.commandDelegate.send(result, callbackId: self._callbackId);
     }
 
@@ -124,7 +126,7 @@ import ContactsUI
             if(retId != nil) {
                 let contact = self.findById(id: retId!);
                 if(contact != nil) {
-                    let result:CDVPluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: contact?.getJson()  as! [String : Any]);
+                    let result:CDVPluginResult = CDVPluginResult(status: .ok, messageAs: contact?.getJson()  as! [String : Any]);
                     self.commandDelegate.send(result, callbackId: self._callbackId)
                 }
             }
@@ -281,7 +283,7 @@ import ContactsUI
             do {
                try store.execute(request);
 
-                let result:CDVPluginResult = CDVPluginResult(status: CDVCommandStatus_OK);
+                let result:CDVPluginResult = CDVPluginResult(status: .ok);
                 self.commandDelegate.send(result, callbackId: self._callbackId)
            } catch {
             self.returnError(error: ErrorCodes.UnknownError)
@@ -299,7 +301,7 @@ import ContactsUI
                 "write": granted
             ];
 
-            let result:CDVPluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: dict);
+            let result:CDVPluginResult = CDVPluginResult(status: .ok, messageAs: dict);
             self.commandDelegate.send(result, callbackId: self._callbackId)
         }
     }
@@ -314,7 +316,7 @@ import ContactsUI
                 "write": granted
             ];
 
-            let result:CDVPluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: dict);
+            let result:CDVPluginResult = CDVPluginResult(status: .ok, messageAs: dict);
             self.commandDelegate.send(result, callbackId: self._callbackId)
         }, requestIfNotAvailable: true)
     }
@@ -351,7 +353,7 @@ import ContactsUI
     func returnError(error: ErrorCodes, message: String = "") {
         if(_callbackId != nil) {
             let result:CDVPluginResult = CDVPluginResult(
-                status: CDVCommandStatus_ERROR, messageAs: [
+                status: .error, messageAs: [
                     "error": error.rawValue,
                     "message": message
             ]);

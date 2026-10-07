@@ -1,6 +1,6 @@
 // Writes iOS build settings into the Xcode project on each prepare/build:
-// - SWIFT_VERSION from the UseSwiftLanguageVersion preference (add-swift-support
-//   sets it only on "platform add"/"prepare", so Xcode showed "Unspecified")
+// - SWIFT_VERSION from the SwiftVersion preference (UseSwiftLanguageVersion of the
+//   removed add-swift-support plugin is still read) for every target, including the share extension
 // - IPHONEOS_DEPLOYMENT_TARGET from the deployment-target preference for every
 //   target, including the share extension that cordova-ios does not manage.
 // Never fails the build: problems are only logged.
@@ -51,7 +51,7 @@ var apply = function (projectRoot) {
 	if (!fs.existsSync(iosPath)) return;
 
 	var configXml = fs.readFileSync(path.join(projectRoot, 'config.xml'), 'utf8');
-	var swiftVersion = getPreference(configXml, 'UseSwiftLanguageVersion');
+	var swiftVersion = getPreference(configXml, 'SwiftVersion') || getPreference(configXml, 'UseSwiftLanguageVersion');
 	var deploymentTarget = getPreference(configXml, 'deployment-target');
 	var pbxprojPath = findPbxproj(iosPath);
 

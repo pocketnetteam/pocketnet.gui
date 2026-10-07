@@ -7,6 +7,7 @@ If file name has no changed - hook will do nothing.
 var path = require('path');
 var fs = require('fs');
 var ConfigXmlHelper = require('./lib/configXmlHelper.js');
+var projectPaths = require('./lib/ios/projectPaths.js');
 
 module.exports = function(ctx) {
   run(ctx);
@@ -18,6 +19,12 @@ module.exports = function(ctx) {
  * @param {Object} ctx - cordova context object
  */
 function run(ctx) {
+  // cordova-ios 6+: domains are in Entitlements-*.plist, the <name>.entitlements file is not used.
+  // cordova-ios 8 always names the project "App", so the names would never match.
+  if (projectPaths.getCordovaEntitlementsFiles(ctx).length) {
+    return;
+  }
+
   var projectRoot = ctx.opts.projectRoot;
   var iosProjectFilePath = path.join(projectRoot, 'platforms', 'ios');
   var configXmlHelper = new ConfigXmlHelper(ctx);

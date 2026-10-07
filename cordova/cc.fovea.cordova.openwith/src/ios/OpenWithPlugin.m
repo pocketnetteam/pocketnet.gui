@@ -326,7 +326,8 @@ static NSDictionary* launchOptions = nil;
         UIApplication *app = [UIApplication sharedApplication];
         NSURL *url = [NSURL URLWithString:self.backURL];
         if ([app canOpenURL:url]) {
-            [app openURL:url];
+            // openURL: without options always fails since iOS 18 (apache/cordova-ios#1511)
+            [app openURL:url options:@{} completionHandler:nil];
         }
     }
     CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];

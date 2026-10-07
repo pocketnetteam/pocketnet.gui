@@ -348,7 +348,7 @@ import UIKit
             "library": library
         ]
 
-        let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: result)
+        let pluginResult: CDVPluginResult? = CDVPluginResult(status: .ok, messageAs: result)
         pluginResult?.setKeepCallbackAs(!isLastChunk)
         commandDelegate.send(pluginResult, callbackId: command.callbackId)
     }
@@ -359,22 +359,22 @@ import UIKit
             return
         }
 
-        let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAsMultipart: [picture.data, picture.mimeType])
+        let pluginResult = CDVPluginResult(status: .ok, messageAsMultipart: [picture.data, picture.mimeType])
         commandDelegate.send(pluginResult, callbackId: command.callbackId)
     }
 
     func sendDictionary(_ command: CDVInvokedUrlCommand, _ dictionary: NSDictionary) {
-        let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: dictionary as? [AnyHashable: Any])
+        let pluginResult = CDVPluginResult(status: .ok, messageAs: dictionary as? [AnyHashable: Any])
         commandDelegate.send(pluginResult, callbackId: command.callbackId)
     }
 
     func sendString(_ command: CDVInvokedUrlCommand, _ value: String) {
-        let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: value)
+        let pluginResult = CDVPluginResult(status: .ok, messageAs: value)
         commandDelegate.send(pluginResult, callbackId: command.callbackId)
     }
 
     func sendError(_ command: CDVInvokedUrlCommand, _ message: String) {
-        let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: message)
+        let pluginResult = CDVPluginResult(status: .error, messageAs: message)
         commandDelegate.send(pluginResult, callbackId: command.callbackId)
     }
 }
