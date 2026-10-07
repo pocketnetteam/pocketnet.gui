@@ -34,6 +34,7 @@ const BUNDLE_SUFFIX = '.shareextension';
 
 var fs = require('fs');
 var path = require('path');
+var utils = require('./lib/utils');
 var packageJson;
 var bundleIdentifier;
 
@@ -113,12 +114,12 @@ function getBundleId(context, configXml) {
 }
 
 function parsePbxProject(context, pbxProjectPath) {
-  var xcode = require('xcode');
   console.log('    Parsing existing project at location: ' + pbxProjectPath + '...');
   var pbxProject;
   if (context.opts.cordova.project) {
     pbxProject = context.opts.cordova.project.parseProjectFile(context.opts.projectRoot).xcode;
   } else {
+    var xcode = utils.requireModule(context, 'xcode');
     pbxProject = xcode.project(pbxProjectPath);
     pbxProject.parseSync();
   }
@@ -148,7 +149,7 @@ function projectPlistPath(context, projectName) {
 }
 
 function projectPlistJson(context, projectName) {
-  var plist = require('plist');
+  var plist = utils.requireModule(context, 'plist');
   var path = projectPlistPath(context, projectName);
   return plist.parse(fs.readFileSync(path, 'utf8'));
 }
@@ -216,8 +217,7 @@ console.log('Adding target "' + PLUGIN_ID + '/ShareExtension" to XCode project')
 
 module.exports = function (context) {
 
-  var Q = require('q');
-  var deferral = new Q.defer();
+  var deferral = utils.defer();
 
   packageJson = require(path.join(context.opts.projectRoot, 'package.json'));
 
