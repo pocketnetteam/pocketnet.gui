@@ -1178,21 +1178,11 @@ var lenta = (function(){
 						television : app.television,
 
 						pictureInPictureRequest : function(){
-							
-							var player = players[share.txid].p
 
-							self.app.actions.playingvideo(null)
-
-							actions.exitFullScreenVideo(share.txid)
-
-							var startTime = player && player.getPosition ? player.getPosition() : 0
-
-							setTimeout(function(){
-								self.app.platform.ui.pipvideo(share.txid, null, {
-									startTime
-								})
-							}, 300)
-						},	
+							self.app.actions.requestpip(share.txid, players[share.txid].p, function(){
+								actions.exitFullScreenVideo(share.txid)
+							})
+						},
 						
 						volumeChange : function(v){
 							videosVolume = v
@@ -1203,6 +1193,14 @@ var lenta = (function(){
 						fullscreenchange : self.app.mobile.fullscreenmode,
 
 						play : function(){
+
+							// must not open the fullscreen video again after the pip request
+							if (self.app.actions.piprequested(players[share.txid].p)){
+								players[share.txid].p.pause()
+
+								return
+							}
+
 							videopaused = false
 
 							self.app.actions.playingvideo(players[share.txid].p)
