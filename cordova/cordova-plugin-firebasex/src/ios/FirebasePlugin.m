@@ -25,7 +25,7 @@
 @synthesize notificationStack;
 
 static NSString*const LOG_TAG = @"FirebasePlugin[native]";
-static NSInteger const kNotificationStackSize = 32;
+static NSInteger const kNotificationStackSize = 10;
 static NSString*const FIREBASE_CRASHLYTICS_COLLECTION_ENABLED = @"FIREBASE_CRASHLYTICS_COLLECTION_ENABLED"; //preference
 static NSString*const FirebaseCrashlyticsCollectionEnabled = @"FirebaseCrashlyticsCollectionEnabled"; //plist
 static NSString*const FIREBASE_ANALYTICS_COLLECTION_ENABLED = @"FIREBASE_ANALYTICS_COLLECTION_ENABLED";
@@ -40,10 +40,8 @@ static NSString*const GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_PERSONALIZATION_SIGNALS 
 static NSString*const FIREBASEX_IOS_FCM_ENABLED = @"FIREBASEX_IOS_FCM_ENABLED";
 
 static FirebasePlugin* firebasePlugin;
-static BOOL pluginInitialized = NO;
 static BOOL registeredForRemoteNotifications = NO;
 static BOOL openSettingsEmitted = NO;
-static BOOL immediateMessagePayloadDelivery = NO;
 static NSMutableDictionary* authCredentials;
 static NSString* currentNonce; // used for Apple Sign In
 static FIRFirestore* firestore;
@@ -54,7 +52,6 @@ static NSString* currentInstallationId;
 static NSMutableDictionary* traces;
 static FIRMultiFactorResolver* multiFactorResolver;
 static FIROAuthProvider* oauthProvider;
-static NSMutableArray* pendingGlobalJS = nil;
 
 
 + (FirebasePlugin*) firebasePlugin {
@@ -83,7 +80,6 @@ static NSMutableArray* pendingGlobalJS = nil;
     @try {
         preferences = [NSUserDefaults standardUserDefaults];
         googlePlist = [NSMutableDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"GoogleService-Info" ofType:@"plist"]];
-        immediateMessagePayloadDelivery = [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"FIREBASE_MESSAGING_IMMEDIATE_PAYLOAD_DELIVERY"] boolValue];
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationLaunchedWithUrl:) name:CDVPluginHandleOpenURLNotification object:nil];
 
@@ -137,9 +133,6 @@ static NSMutableArray* pendingGlobalJS = nil;
         authCredentials = [[NSMutableDictionary alloc] init];
         firestoreListeners = [[NSMutableDictionary alloc] init];
         traces = [[NSMutableDictionary alloc] init];
-
-        pluginInitialized = YES;
-        [self executePendingGlobalJavascript];
     }@catch (NSException *exception) {
         [self handlePluginExceptionWithoutContext:exception];
     }
@@ -573,20 +566,17 @@ static NSMutableArray* pendingGlobalJS = nil;
 }
 
 - (void)onMessageReceived:(CDVInvokedUrlCommand *)command {
-    self.notificationCallbackId = command.callbackId;
-    [self sendPendingNotifications];
-}
+    @try {
+        self.notificationCallbackId = command.callbackId;
 
-- (void)sendPendingNotifications {
-    if (self.notificationCallbackId != nil && self.notificationStack != nil && [self.notificationStack count]) {
-        @try {
+        if (self.notificationStack != nil && [self.notificationStack count]) {
             for (NSDictionary *userInfo in self.notificationStack) {
                 [self sendNotification:userInfo];
             }
             [self.notificationStack removeAllObjects];
-        } @catch (NSException *exception) {
-            [self handlePluginExceptionWithoutContext:exception];
         }
+    }@catch (NSException *exception) {
+        [self handlePluginExceptionWithContext:exception :command];
     }
 }
 
@@ -629,7 +619,7 @@ static NSMutableArray* pendingGlobalJS = nil;
             [self _logMessage:@"Message handled by custom receiver"];
             return;
         }
-        if (self.notificationCallbackId != nil && ([AppDelegate.instance.applicationInBackground isEqual:@(NO)] || immediateMessagePayloadDelivery )) {
+        if (self.notificationCallbackId != nil) {
             [self sendPluginDictionaryResultAndKeepCallback:userInfo command:self.commandDelegate callbackId:self.notificationCallbackId];
         } else {
             if (!self.notificationStack) {
@@ -1035,33 +1025,32 @@ static NSMutableArray* pendingGlobalJS = nil;
     @try {
         __weak __auto_type weakSelf = self;
         GIDConfiguration* googleSignInConfig = [[GIDConfiguration alloc] initWithClientID:[FIRApp defaultApp].options.clientID];
-        GIDSignIn.sharedInstance.configuration = googleSignInConfig;
-        [GIDSignIn.sharedInstance signInWithPresentingViewController:self.viewController completion:^(GIDSignInResult * _Nullable signInResult, NSError * _Nullable error) {
-            __auto_type strongSelf = weakSelf;
-            if (strongSelf == nil) { return; }
+        [GIDSignIn.sharedInstance signInWithConfiguration:googleSignInConfig presentingViewController:self.viewController callback:^(GIDGoogleUser * _Nullable user, NSError * _Nullable error) {
+          __auto_type strongSelf = weakSelf;
+          if (strongSelf == nil) { return; }
 
-              @try{
-                  CDVPluginResult* pluginResult;
-                  if (error == nil) {
-                      GIDGoogleUser* gidUser = signInResult.user;
-                      FIRAuthCredential *credential =
-                      [FIRGoogleAuthProvider credentialWithIDToken:gidUser.idToken.tokenString
-                                                       accessToken:gidUser.accessToken.tokenString];
+            @try{
+                CDVPluginResult* pluginResult;
+                if (error == nil) {
+                    GIDAuthentication *authentication = user.authentication;
+                    FIRAuthCredential *credential =
+                    [FIRGoogleAuthProvider credentialWithIDToken:authentication.idToken
+                                                   accessToken:authentication.accessToken];
 
-                      NSNumber* key = [[FirebasePlugin firebasePlugin] saveAuthCredential:credential];
-                      NSString *idToken = gidUser.idToken.tokenString;
-                      NSMutableDictionary* result = [[NSMutableDictionary alloc] init];
-                      [result setValue:@"true" forKey:@"instantVerification"];
-                      [result setValue:key forKey:@"id"];
-                      [result setValue:idToken forKey:@"idToken"];
-                      pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:result];
-                  } else {
-                      pluginResult = [self createAuthErrorResult:error];
-                  }
-                  [[FirebasePlugin firebasePlugin].commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-              }@catch (NSException *exception) {
-                  [FirebasePlugin.firebasePlugin handlePluginExceptionWithoutContext:exception];
-              }
+                    NSNumber* key = [[FirebasePlugin firebasePlugin] saveAuthCredential:credential];
+                    NSString *idToken = user.authentication.idToken;
+                    NSMutableDictionary* result = [[NSMutableDictionary alloc] init];
+                    [result setValue:@"true" forKey:@"instantVerification"];
+                    [result setValue:key forKey:@"id"];
+                    [result setValue:idToken forKey:@"idToken"];
+                    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:result];
+                } else {
+                    pluginResult = [self createAuthErrorResult:error];
+                }
+                [[FirebasePlugin firebasePlugin].commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+            }@catch (NSException *exception) {
+                [FirebasePlugin.firebasePlugin handlePluginExceptionWithoutContext:exception];
+            }
         }];
 
         [self sendPluginNoResultAndKeepCallback:command callbackId:command.callbackId];
@@ -1245,7 +1234,7 @@ static NSMutableArray* pendingGlobalJS = nil;
         // If signed in with Google
         if([GIDSignIn.sharedInstance currentUser] != nil){
             // Sign out of Google
-            [GIDSignIn.sharedInstance disconnectWithCompletion:^(NSError * _Nullable error) {
+            [GIDSignIn.sharedInstance disconnectWithCallback:^(NSError * _Nullable error) {
                 if (error) {
                     [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[NSString stringWithFormat:@"Error signing out of Google: %@", error]] callbackId:command.callbackId];
                 }
@@ -1584,7 +1573,7 @@ static NSMutableArray* pendingGlobalJS = nil;
         if([self userNotSignedInError:command]) return;
         FIRUser* user = [FIRAuth auth].currentUser;
 
-        [user getIDTokenResultForcingRefresh:YES completion:^(FIRAuthTokenResult * _Nullable tokenResult, NSError * _Nullable error) {
+        [user getIDTokenResultWithCompletion:^(FIRAuthTokenResult * _Nullable tokenResult, NSError * _Nullable error) {
             if(error != nil){
                 [self sendPluginErrorWithError:error command:command];
                 return;
@@ -2837,31 +2826,6 @@ static NSMutableArray* pendingGlobalJS = nil;
 
 - (void)executeGlobalJavascript: (NSString*)jsString
 {
-    if(pluginInitialized){
-        [self doExecuteGlobalJavascript:jsString];
-    }else{
-        if(pendingGlobalJS == nil){
-            pendingGlobalJS = [[NSMutableArray alloc] init];
-        }
-        [pendingGlobalJS addObject:jsString];
-    }
-}
-
-- (void) executePendingGlobalJavascript
-{
-    if(pendingGlobalJS == nil){
-        NSLog(@"%@ No pending global JS calls", LOG_TAG);
-        return;
-    }
-    NSLog(@"%@ Executing %lu pending global JS calls", LOG_TAG, (unsigned long)pendingGlobalJS.count);
-    for (NSString* jsString in pendingGlobalJS) {
-        [self doExecuteGlobalJavascript:jsString];
-    }
-    pendingGlobalJS = nil;
-}
-
-- (void)doExecuteGlobalJavascript: (NSString*)jsString
-{
     [self.commandDelegate evalJs:jsString];
 }
 
@@ -2974,41 +2938,7 @@ static NSMutableArray* pendingGlobalJS = nil;
         [result setValue:secondFactors forKey:@"secondFactors"];
 
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:result];
-    }else if (error.code == FIRAuthErrorCodeCredentialAlreadyInUse){
-        NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithDictionary:[error userInfo]];
-        FIROAuthCredential* updatedCredential = userInfo[FIRAuthErrorUserInfoUpdatedCredentialKey];
-        NSMutableDictionary *responseDict = [[NSMutableDictionary alloc] init];
-
-        [responseDict setValue:@(error.code) forKey:@"errorCode"];
-        [responseDict setValue:error.domain forKey:@"errorDomain"];
-        [responseDict setValue:userInfo.description forKey:@"errorDescription"];
-        if (userInfo[FIRAuthErrorUserInfoNameKey]) {
-            [responseDict setValue:userInfo[FIRAuthErrorUserInfoNameKey] forKey:FIRAuthErrorUserInfoNameKey];
-        }
-        if (userInfo[FIRAuthErrorUserInfoEmailKey]) {
-            [responseDict setValue:userInfo[FIRAuthErrorUserInfoEmailKey] forKey:FIRAuthErrorUserInfoEmailKey];
-        }
-        if (userInfo[FIRAuthErrorUserInfoNameKey]) {
-            [responseDict setValue:userInfo[FIRAuthErrorUserInfoNameKey] forKey:FIRAuthErrorUserInfoNameKey];
-        }
-
-        if (updatedCredential) {
-            NSMutableDictionary *updatedCredentialDict = [[NSMutableDictionary alloc] init];
-            if (updatedCredential.provider) {
-                [updatedCredentialDict setValue:updatedCredential.provider forKey:@"provider"];
-            }
-            if (updatedCredential.IDToken) {
-                [updatedCredentialDict setValue:updatedCredential.IDToken forKey:@"IDToken"];
-            }
-            NSNumber* key = [self saveAuthCredential:updatedCredential];
-            [updatedCredentialDict setValue:key forKey:@"id"];
-            [responseDict setValue:updatedCredentialDict forKey:@"updatedCredential"];
-        }
-
-        // TODO: Make messageAsDictionary work with error status- currently it returns undefined
-        NSString *jsonString = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:responseDict options:0 error:nil] encoding:NSUTF8StringEncoding];
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:jsonString];
-    } else {
+    }else{
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:error.description];
     }
     return pluginResult;
@@ -3071,28 +3001,28 @@ static NSMutableArray* pendingGlobalJS = nil;
 
 # pragma mark - Stubs
 - (void)createChannel:(CDVInvokedUrlCommand *)command {
-    [self.commandDelegate runInBackground:^{
+	[self.commandDelegate runInBackground:^{
         CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     }];
 }
 
 - (void)setDefaultChannel:(CDVInvokedUrlCommand *)command {
-    [self.commandDelegate runInBackground:^{
+	[self.commandDelegate runInBackground:^{
         CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     }];
 }
 
 - (void)deleteChannel:(CDVInvokedUrlCommand *)command {
-    [self.commandDelegate runInBackground:^{
+	[self.commandDelegate runInBackground:^{
         CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     }];
 }
 
 - (void)listChannels:(CDVInvokedUrlCommand *)command {
-    [self.commandDelegate runInBackground:^{
+	[self.commandDelegate runInBackground:^{
         CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     }];

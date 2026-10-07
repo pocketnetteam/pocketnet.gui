@@ -49,11 +49,6 @@ static __weak id <UNUserNotificationCenterDelegate> _prevUserNotificationCenterD
 - (BOOL)application:(UIApplication *)application swizzledDidFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [self application:application swizzledDidFinishLaunchingWithOptions:launchOptions];
     
-    #if DEBUG
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"/google/firebase/debug_mode"];
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"/google/measurement/debug_mode"];
-    #endif
-    
     @try{
         instance = self;
         
@@ -158,7 +153,6 @@ static __weak id <UNUserNotificationCenterDelegate> _prevUserNotificationCenterD
     @try {
         [FirebasePlugin.firebasePlugin _logMessage:@"Enter foreground"];
         [FirebasePlugin.firebasePlugin executeGlobalJavascript:@"FirebasePlugin._applicationDidBecomeActive()"];
-        [FirebasePlugin.firebasePlugin sendPendingNotifications];
     }@catch (NSException *exception) {
         [FirebasePlugin.firebasePlugin handlePluginExceptionWithoutContext:exception];
     }
@@ -530,8 +524,6 @@ static __weak id <UNUserNotificationCenterDelegate> _prevUserNotificationCenterD
                     [result setValue:@"true" forKey:@"instantVerification"];
                     [result setValue:key forKey:@"id"];
                     [result setValue:idToken forKey:@"idToken"];
-                    [result setValue:rawNonce forKey:@"rawNonce"];
-
                     if(appleIDCredential.fullName != nil){
                         if(appleIDCredential.fullName.givenName != nil){
                             [result setValue:appleIDCredential.fullName.givenName forKey:@"givenName"];

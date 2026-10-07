@@ -7,7 +7,6 @@
 
 - (void)setAutoInitEnabled:(CDVInvokedUrlCommand*)command;
 - (void)isAutoInitEnabled:(CDVInvokedUrlCommand*)command;
-- (void)sendPendingNotifications;
 
 // Authentication
 - (void)verifyPhoneNumber:(CDVInvokedUrlCommand*)command;
