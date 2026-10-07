@@ -2221,8 +2221,8 @@ Application = function (p) {
 
 
 			var scrollTop = self.actions.getScroll(),
-				height = self.el.window.height(),
-				width = self.el.window.width();
+				height = self.el.window[0].innerHeight || self.el.window.height(),
+				width = self.el.window[0].innerWidth || self.el.window.width();
 
 			self.height = height
 			self.width = width
