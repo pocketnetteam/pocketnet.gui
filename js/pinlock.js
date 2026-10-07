@@ -844,6 +844,8 @@ var PinLockScreen = function (app, pinlock) {
 
 		$('html').removeClass('pinlocked');
 
+		if (app.mobile) app.mobile.statusbar.pop('pinlock');
+
 		toggleScroll(false);
 	};
 
@@ -875,6 +877,8 @@ var PinLockScreen = function (app, pinlock) {
 
 	self.show = function () {
 		clearTimeout(hideTimer);
+
+		if (app.mobile) app.mobile.statusbar.push('pinlock', 'theme');
 
 		if (el) {
 			el.removeClass('leaving');
