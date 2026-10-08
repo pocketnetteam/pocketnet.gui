@@ -20122,7 +20122,7 @@ Platform = function (app, listofnodes) {
                 pushlog('debugPushers: matrix', {
                     userId: deep(client, 'credentials.userId'),
                     baseUrl: core.mtrx.baseUrl,
-                    savedToken: masktoken(localStorage.getItem('fcmtoken6')),
+                    savedToken: masktoken(localStorage.getItem('fcmtoken7')),
                     currentToken: masktoken(currenttoken)
                 })
 
