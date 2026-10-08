@@ -18662,6 +18662,28 @@ var getUrl = function (data) {
     return links[0].href;
   }
 };
+/* forta.chat sends PKOIN transfers as JSON body instead of stx link */
+var parseTransfer = function (body) {
+  if (typeof body !== "string" || body.indexOf('"_transfer"') === -1) return null;
+  var data = null;
+  try {
+    data = JSON.parse(body);
+  } catch (e) {
+    return null;
+  }
+  if (!data || data._transfer !== true) return null;
+  if (typeof data.txId !== "string" || !/^[0-9a-f]{64}$/i.test(data.txId)) return null;
+  var amount = Number(data.amount);
+  return {
+    txId: data.txId,
+    amount: isFinite(amount) && amount > 0 ? amount : null,
+    from: typeof data.from === "string" ? data.from : "",
+    to: typeof data.to === "string" ? data.to : ""
+  };
+};
+var transferUrl = function (transfer) {
+  return "bastyon://i?stx=" + transfer.txId;
+};
 var getTxt = function (data) {
   return data.replace(/\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/g, "");
 };
@@ -19399,6 +19421,8 @@ f.hexDecode = hexDecode;
 f.imgDimensions = imgDimensions;
 f.getUrl = getUrl;
 f.getTxt = getTxt;
+f.parseTransfer = parseTransfer;
+f.transferUrl = transferUrl;
 f.poketnetUrlParser = poketnetUrlParser;
 f.textFormatter = textFormatter;
 f.urlSeparator = urlSeparator;
@@ -60716,10 +60740,15 @@ class notifier_Notifier {
     if (["m.room.redaction"].indexOf(t) > -1) ctype = "redaction";
     if (functions["a" /* default */].deep(event, "event.content.msgtype") == "m.encrypted") ctype = "encrypted";
     var c = () => {
+      var body = event.event.content.body;
+      var transfer = functions["a" /* default */].parseTransfer(body);
+      if (transfer) {
+        body = this.core.vm.$i18n.t("caption.sent") + (transfer.amount ? " " + transfer.amount : "") + " PKOIN";
+      }
       var msg = {
         title: user.name,
         event: event,
-        message: event.event.content.type == "m.encrypted" ? "***" : event.event.content.body,
+        message: event.event.content.type == "m.encrypted" ? "***" : body,
         // event.content.body,
         roomId: event.event.room_id,
         icon: user.image,
