@@ -757,9 +757,9 @@ const kit = {
 
 					var st = settings.server.iplimiter
 
-					if (v.interval) st.interval = interval
-					if (v.count) st.count = count
-					if (v.blacklistcount) st.blacklistcount = blacklistcount
+					if (v.interval) st.interval = v.interval
+					if (v.count) st.count = v.count
+					if (v.blacklistcount) st.blacklistcount = v.blacklistcount
 
 
 					return kit.save()
