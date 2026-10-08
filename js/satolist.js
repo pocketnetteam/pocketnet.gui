@@ -20089,6 +20089,62 @@ Platform = function (app, listofnodes) {
             return null
         }
 
+        var masktoken = function (token) {
+            if (!token) return String(token)
+
+            return token.substr(0, 8) + '...' + token.substr(-6) + ' (len ' + token.length + ')'
+        }
+
+        var pushlog = function () {
+            var args = ['[push]'].concat(Array.prototype.slice.call(arguments))
+
+            console.log.apply(console, args)
+        }
+
+        pushlog('init', {
+            using: using,
+            usingWeb: usingWeb,
+            appid: appid,
+            platformId: deep(window, 'cordova.platformId')
+        })
+
+        self.debugPushers = function () {
+            var core = platform.matrixchat.core
+
+            if (!core || !core.mtrx) {
+                pushlog('debugPushers: matrix core not linked')
+                return Promise.resolve()
+            }
+
+            return core.mtrx.wait().then(function () {
+                var client = core.mtrx.client
+
+                pushlog('debugPushers: matrix', {
+                    userId: deep(client, 'credentials.userId'),
+                    baseUrl: core.mtrx.baseUrl,
+                    savedToken: masktoken(localStorage.getItem('fcmtoken6')),
+                    currentToken: masktoken(currenttoken)
+                })
+
+                return client.getPushers()
+            }).then(function (r) {
+                var pushers = _.map((r && r.pushers) || [], function (p) {
+                    return {
+                        app_id: p.app_id,
+                        kind: p.kind,
+                        pushkey: masktoken(p.pushkey),
+                        matchesCurrent: p.pushkey == currenttoken,
+                        url: deep(p, 'data.url'),
+                        device: p.device_display_name
+                    }
+                })
+
+                pushlog('debugPushers: registered on server', pushers.length, JSON.stringify(pushers))
+            }).catch(function (e) {
+                pushlog('debugPushers: error', e)
+            })
+        }
+
 
         self.storage = {
             data: {},
@@ -20469,6 +20525,8 @@ Platform = function (app, listofnodes) {
 
                 FirebasePlugin.getToken(function (token) {
 
+                    pushlog('getToken', masktoken(token))
+
                     currenttoken = token
                     platform.fcmtoken = token
 
@@ -20480,6 +20538,7 @@ Platform = function (app, listofnodes) {
                         clbk(currenttoken)
 
                 }, function (error) {
+                    pushlog('getToken error', error)
                     console.error(error, 'fcmToken not set on server');
 
                     if (clbk)
@@ -20532,8 +20591,12 @@ Platform = function (app, listofnodes) {
             if (using) {
                 FirebasePlugin.hasPermission(function (hasPermission) {
 
+                    pushlog('hasPermission', hasPermission)
+
                     if (!hasPermission) {
                         FirebasePlugin.grantPermission(function (hasPermission) {
+
+                            pushlog('grantPermission', hasPermission)
 
                             if (hasPermission) {
                                 self.get(clbk)
@@ -20573,6 +20636,13 @@ Platform = function (app, listofnodes) {
         self.events = function () {
             if (using) {
                 FirebasePlugin.onMessageReceived((data) => {
+
+                    pushlog('onMessageReceived', {
+                        keys: _.keys(data || {}),
+                        room_id: data && data.room_id,
+                        tap: data && data.tap,
+                        messageType: data && data.messageType
+                    })
 
                     pretry(function () {
 
@@ -20685,6 +20755,8 @@ Platform = function (app, listofnodes) {
 
                 // When token is refreshed, update the matrix element for the Vue app
                 FirebasePlugin?.onTokenRefresh(function (token) {
+
+                    pushlog('onTokenRefresh', masktoken(token))
 
                     platform.fcmtoken = token
                     currenttoken = token
@@ -25836,9 +25908,22 @@ Platform = function (app, listofnodes) {
         },
 
         changeFcm: function () {
+            var element = self.matrixchat.el ? self.matrixchat.el.find('matrix-element') : null
+
+            console.log('[push] changeFcm', {
+                hasToken: !!self.fcmtoken,
+                hasElement: !!(element && element.length),
+                hasCore: !!self.matrixchat.core
+            })
+
             if (self.matrixchat.el) {
                 self.matrixchat.el.find('matrix-element').attr('fcmtoken', self.fcmtoken)
             }
+
+            // chat sets the pusher with a 5s delay after mount, check the server state after that
+            setTimeout(function () {
+                if (self.firebase && self.firebase.debugPushers) self.firebase.debugPushers()
+            }, 15000)
         },
 
         changeMobile: function () {
@@ -26705,7 +26790,7 @@ Platform = function (app, listofnodes) {
                 clearInterval(interval);
 
             if (!initial) {
-          al = document.title || app.meta.fullname //fullName
+                initial = document.title || app.meta.fullname //fullName
             }
 
             var i = 0;

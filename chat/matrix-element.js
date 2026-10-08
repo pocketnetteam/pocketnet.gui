@@ -59945,7 +59945,7 @@ class mtrx_MTRX {
   deletePusher() {
     if (!window.cordova) return;
     var savedToken;
-    if (localStorage) savedToken = localStorage.getItem("fcmtoken5");
+    if (localStorage) savedToken = localStorage.getItem("fcmtoken6");
     if (savedToken && this.client.setPusher) {
       var appName = "pocketnet";
       var pusherData = {
@@ -59967,7 +59967,7 @@ class mtrx_MTRX {
         pushkey: savedToken
       };
       this.client.setPusher(pusherData).then(() => {
-        localStorage.removeItem("fcmtoken5");
+        localStorage.removeItem("fcmtoken6");
       }, err => {
         console.log(err);
       });
@@ -64357,7 +64357,7 @@ var scriptsadded = false;
     setPusher(fcmtoken) {
       // Try to get a saved token
       var savedToken;
-      if (localStorage) savedToken = localStorage.getItem("fcmtoken5");
+      if (localStorage) savedToken = localStorage.getItem("fcmtoken6");
       // If we need to set a new pusher, or delete one
       if (savedToken != fcmtoken) {
         // Wait for Matrix client
@@ -64378,7 +64378,7 @@ var scriptsadded = false;
             pushkey: fcmtoken
           };
           this.core.mtrx.client.setPusher(pusherData).then(() => {
-            localStorage.setItem("fcmtoken5", fcmtoken);
+            localStorage.setItem("fcmtoken6", fcmtoken);
           }, err => {
             console.log(err);
           });
