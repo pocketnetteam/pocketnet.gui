@@ -633,8 +633,7 @@ class TorRestarterReconnector {
     }
 
     async getDelayForCheckingBridges() {
-        const queueLength = await this.bridgesDefaultRepository.getCheckQueueLengthAsync() +
-            await this.bridgesCustomRepository.getCheckQueueLengthAsync();
+        const queueLength = await this.bridgesDefaultRepository.getCheckQueueLengthAsync() * 2;
         const divisor = queueLength > 0 ? queueLength : 1;
         return 1000 * 60 * MIN_DELAY_CHECK_BRIDGE_MINUTES * Math.ceil(this.checkBridgesCounter / divisor);
     }
