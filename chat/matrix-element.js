@@ -48134,6 +48134,7 @@ var store = new vuex_esm["a" /* default */].Store({
     isCallsActive: null,
     readreciepts: {},
     ChatStatuses: {},
+    reactionsVersion: 0,
     share: null
     //share : {url : 'https://yandex.ru/'} //null
   },
@@ -48155,6 +48156,9 @@ var store = new vuex_esm["a" /* default */].Store({
     }
   },
   mutations: {
+    REACTIONS_UPDATED(state) {
+      state.reactionsVersion++;
+    },
     SET_CHAT_STATUSES(state, payload) {
       state.ChatStatuses = {
         ...state.ChatStatuses,
@@ -48721,6 +48725,9 @@ var store = new vuex_esm["a" /* default */].Store({
             return false;
           }
           if (e.event.type === "m.room.redaction") {
+            return false;
+          }
+          if (e.event.type === "m.reaction") {
             return false;
           }
           if (e.event.type === "m.room.callsEnabled") {
@@ -59492,6 +59499,7 @@ var SearchEngine = function (mtrx) {
 
 
 
+
 const sdk = __webpack_require__("c567");
 
 
@@ -59937,7 +59945,7 @@ class mtrx_MTRX {
       }
       if (message.event.type === "m.reaction") {
         this.core.store.dispatch("FETCH_EVENTS");
-        this.core.store.commit("UPDATE_TIMESTAMP", Date.now());
+        this.core.store.commit("REACTIONS_UPDATED");
         return;
       }
       if (message.getSender() !== userId) {
@@ -59945,6 +59953,13 @@ class mtrx_MTRX {
         if (message.event.content["m.relates_to"] && message.event.content["m.relates_to"]["rel_type"] == "m.replace") return false;
         if (m_chat && this.core.pcrypto.rooms[message.event.room_id]) this.core.notifier.event(message, m_chat);
       }
+    });
+
+    // A removed reaction arrives as a redaction; the SDK drops it from
+    // room.relations before emitting Room.redaction
+    this.client.on("Room.redaction", () => {
+      if (!this.chatsready) return;
+      this.core.store.commit("REACTIONS_UPDATED");
     });
     this.client.on("RoomMember.typing", (event, member) => {
       this.core.store.dispatch("TYPING_EVENT", member);
@@ -60538,100 +60553,56 @@ class mtrx_MTRX {
       reason: "reaction_removed"
     });
   }
-  getReactionsForMessage(messageEvent) {
+  getReactionRelations(messageEvent) {
     var _messageEvent$event, _messageEvent$getRoom;
-    if (!messageEvent) {
-      return [];
-    }
-    const messageId = messageEvent.getId();
-    const roomId = ((_messageEvent$event = messageEvent.event) === null || _messageEvent$event === void 0 ? void 0 : _messageEvent$event.room_id) || ((_messageEvent$getRoom = messageEvent.getRoomId) === null || _messageEvent$getRoom === void 0 ? void 0 : _messageEvent$getRoom.call(messageEvent));
-    if (!roomId || !messageId) {
-      return [];
-    }
-    const room = this.client.getRoom(roomId);
-    if (!room) {
-      return [];
-    }
-    try {
-      if (messageEvent.getRelation && typeof messageEvent.getRelation === "function") {
-        const relations = messageEvent.getRelation("m.annotation");
-        if (relations) {
-          var _relations$getEvents;
-          const reactionEvents = (_relations$getEvents = relations.getEvents) === null || _relations$getEvents === void 0 ? void 0 : _relations$getEvents.call(relations);
-          if (reactionEvents && reactionEvents.length) {
-            return this._processReactionEvents(reactionEvents);
-          }
-        }
-      }
-    } catch (e) {}
-    try {
-      var _room$getUnfilteredTi, _room$getLiveTimeline, _room$getLiveTimeline2, _room$getLiveTimeline3;
-      const timelineSet = ((_room$getUnfilteredTi = room.getUnfilteredTimelineSet) === null || _room$getUnfilteredTi === void 0 ? void 0 : _room$getUnfilteredTi.call(room)) || ((_room$getLiveTimeline = room.getLiveTimeline) === null || _room$getLiveTimeline === void 0 ? void 0 : (_room$getLiveTimeline2 = (_room$getLiveTimeline3 = _room$getLiveTimeline.call(room)).getTimelineSet) === null || _room$getLiveTimeline2 === void 0 ? void 0 : _room$getLiveTimeline2.call(_room$getLiveTimeline3));
-      if (timelineSet && timelineSet.relations) {
-        var _timelineSet$relation, _timelineSet$relation2;
-        const relations = (_timelineSet$relation = (_timelineSet$relation2 = timelineSet.relations).getChildEventsForEvent) === null || _timelineSet$relation === void 0 ? void 0 : _timelineSet$relation.call(_timelineSet$relation2, messageId, "m.annotation", "m.reaction");
-        if (relations) {
-          var _relations$getRelatio;
-          const reactionEvents = ((_relations$getRelatio = relations.getRelations) === null || _relations$getRelatio === void 0 ? void 0 : _relations$getRelatio.call(relations)) || [];
-          if (reactionEvents.length) {
-            return this._processReactionEvents(reactionEvents);
-          }
-        }
-      }
-    } catch (e) {}
-    const reactionEvents = [];
-    try {
-      var _room$getTimelines, _room$getLiveTimeline4;
-      const timelines = ((_room$getTimelines = room.getTimelines) === null || _room$getTimelines === void 0 ? void 0 : _room$getTimelines.call(room)) || [(_room$getLiveTimeline4 = room.getLiveTimeline) === null || _room$getLiveTimeline4 === void 0 ? void 0 : _room$getLiveTimeline4.call(room)].filter(Boolean);
-      for (const timeline of timelines) {
-        var _timeline$getEvents;
-        const events = ((_timeline$getEvents = timeline.getEvents) === null || _timeline$getEvents === void 0 ? void 0 : _timeline$getEvents.call(timeline)) || [];
-        for (const event of events) {
-          var _event$getType, _event$event, _event$event$content, _event$event$content$, _event$isRedacted;
-          if (((_event$getType = event.getType) === null || _event$getType === void 0 ? void 0 : _event$getType.call(event)) === "m.reaction" && ((_event$event = event.event) === null || _event$event === void 0 ? void 0 : (_event$event$content = _event$event.content) === null || _event$event$content === void 0 ? void 0 : (_event$event$content$ = _event$event$content["m.relates_to"]) === null || _event$event$content$ === void 0 ? void 0 : _event$event$content$.event_id) === messageId && !((_event$isRedacted = event.isRedacted) !== null && _event$isRedacted !== void 0 && _event$isRedacted.call(event))) {
-            reactionEvents.push(event);
-          }
-        }
-      }
-    } catch (e) {
-      console.warn("Failed to get reactions from timelines:", e);
-    }
-    return this._processReactionEvents(reactionEvents);
+    if (!(messageEvent !== null && messageEvent !== void 0 && (_messageEvent$event = messageEvent.event) !== null && _messageEvent$event !== void 0 && _messageEvent$event.content)) return null;
+    const roomId = ((_messageEvent$getRoom = messageEvent.getRoomId) === null || _messageEvent$getRoom === void 0 ? void 0 : _messageEvent$getRoom.call(messageEvent)) || messageEvent.event.room_id;
+    const room = roomId && this.client.getRoom(roomId);
+    if (!room || !room.relations) return null;
+
+    // Reactions target the original event, also when the message was edited
+    return room.relations.getChildEventsForEvent(this.clearEventId(messageEvent), "m.annotation", "m.reaction");
   }
-  _processReactionEvents(reactionEvents) {
-    if (!reactionEvents || !Array.isArray(reactionEvents)) {
-      return [];
-    }
-    const grouped = {};
-    reactionEvents.forEach(event => {
-      try {
-        var _event$isRedacted2, _event$event2, _event$event2$content, _event$event2$content2, _event$getSender, _event$getId;
-        if ((_event$isRedacted2 = event.isRedacted) !== null && _event$isRedacted2 !== void 0 && _event$isRedacted2.call(event)) return;
-        const emoji = (_event$event2 = event.event) === null || _event$event2 === void 0 ? void 0 : (_event$event2$content = _event$event2.content) === null || _event$event2$content === void 0 ? void 0 : (_event$event2$content2 = _event$event2$content["m.relates_to"]) === null || _event$event2$content2 === void 0 ? void 0 : _event$event2$content2.key;
-        if (!emoji) return;
-        if (!grouped[emoji]) {
-          grouped[emoji] = {
-            emoji: emoji,
-            count: 0,
-            users: [],
-            myReaction: null
-          };
-        }
+
+  /** Emoji of the newest reaction on the message, for the chat list preview */
+  getLastReaction(messageEvent) {
+    var _this$getReactionRela, _this$getReactionRela2, _last$getRelation, _last$getRelation$cal;
+    const events = ((_this$getReactionRela = this.getReactionRelations(messageEvent)) === null || _this$getReactionRela === void 0 ? void 0 : (_this$getReactionRela2 = _this$getReactionRela.getRelations) === null || _this$getReactionRela2 === void 0 ? void 0 : _this$getReactionRela2.call(_this$getReactionRela)) || [];
+    const last = events.reduce((newest, event) => {
+      if (event.isRedacted()) return newest;
+      return !newest || event.getTs() > newest.getTs() ? event : newest;
+    }, null);
+    return (last === null || last === void 0 ? void 0 : (_last$getRelation = last.getRelation) === null || _last$getRelation === void 0 ? void 0 : (_last$getRelation$cal = _last$getRelation.call(last)) === null || _last$getRelation$cal === void 0 ? void 0 : _last$getRelation$cal.key) || null;
+  }
+  getReactionsForMessage(messageEvent) {
+    var _relations$getSortedA;
+    const relations = this.getReactionRelations(messageEvent);
+    const sorted = (relations === null || relations === void 0 ? void 0 : (_relations$getSortedA = relations.getSortedAnnotationsByKey) === null || _relations$getSortedA === void 0 ? void 0 : _relations$getSortedA.call(relations)) || [];
+    const result = [];
+    sorted.forEach(([emoji, events]) => {
+      const reaction = {
+        emoji,
+        count: 0,
+        users: [],
+        myReaction: null
+      };
+      events.forEach(event => {
+        var _event$isRedacted, _event$getSender;
+        if ((_event$isRedacted = event.isRedacted) !== null && _event$isRedacted !== void 0 && _event$isRedacted.call(event)) return;
         const sender = (_event$getSender = event.getSender) === null || _event$getSender === void 0 ? void 0 : _event$getSender.call(event);
-        const reactionEventId = (_event$getId = event.getId) === null || _event$getId === void 0 ? void 0 : _event$getId.call(event);
-        if (!sender || !reactionEventId) return;
-        grouped[emoji].count++;
-        grouped[emoji].users.push({
+
+        // One vote per user per emoji
+        if (!sender || reaction.users.some(user => user.id === sender)) return;
+        reaction.users.push({
           id: sender,
-          reactionEventId: reactionEventId
+          reactionEventId: event.getId()
         });
-        if (this.me(sender)) {
-          grouped[emoji].myReaction = reactionEventId;
-        }
-      } catch (e) {}
+        reaction.count++;
+        if (this.me(sender)) reaction.myReaction = event.getId();
+      });
+      if (reaction.count) result.push(reaction);
     });
-    const result = Object.values(grouped).sort((a, b) => b.count - a.count);
-    return result;
+    return result.sort((a, b) => b.count - a.count);
   }
 }
 /* harmony default export */ var application_mtrx = (mtrx_MTRX);
