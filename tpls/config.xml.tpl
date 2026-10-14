@@ -134,7 +134,7 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
 
-        <preference name="deployment-target" value="13.0" />
+        <preference name="deployment-target" value="15.6" />
 
         <config-file parent="NSMicrophoneUsageDescription" target="*-Info.plist">
             <string>This Application uses your microphone to make voice messages</string>

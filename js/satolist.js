@@ -24974,7 +24974,7 @@ Platform = function (app, listofnodes) {
 
                             fail: function () {
                                 d = null;
-                                setTimeout(updateReady, 86400000)
+                                setTimeout(updateAvailable, 86400000)
                             }
                         })
                     }

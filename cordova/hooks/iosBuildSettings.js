@@ -3,6 +3,7 @@
 //   removed add-swift-support plugin is still read) for every target, including the share extension
 // - IPHONEOS_DEPLOYMENT_TARGET from the deployment-target preference for every
 //   target, including the share extension that cordova-ios does not manage.
+// - the Crashlytics run script of firebasex is moved to the end of build phases (Release build cycle).
 // Never fails the build: problems are only logged.
 
 var fs = require('fs');
@@ -45,6 +46,46 @@ var lowerVersion = function (current, target) {
 	return parseFloat(String(current).replace(/"/g, '')) < parseFloat(target);
 }
 
+var isCrashlyticsPhase = function (scripts, phase) {
+	var script = scripts[phase.value];
+
+	return !!(script && script.shellScript && String(script.shellScript).indexOf('FirebaseCrashlytics/run') != -1);
+}
+
+// firebasex appends the Crashlytics run script when the plugin is installed, so the
+// share extension embed phase (Copy Files) ends up after it. The script needs the finished
+// bundle and dSYM, which makes a build cycle in Release. The script has to be the last phase.
+var moveCrashlyticsLast = function (project) {
+	var objects = project.hash.project.objects;
+	var scripts = objects.PBXShellScriptBuildPhase || {};
+	var targets = objects.PBXNativeTarget || {};
+	var moved = 0;
+
+	Object.keys(targets).forEach(function (key) {
+		var phases = targets[key].buildPhases;
+
+		if (key.indexOf('_comment') != -1 || !phases || !phases.length) return;
+
+		var crashlytics = phases.filter(function (phase) {
+			return isCrashlyticsPhase(scripts, phase);
+		});
+
+		if (!crashlytics.length) return;
+
+		var rest = phases.filter(function (phase) {
+			return !isCrashlyticsPhase(scripts, phase);
+		});
+
+		if (phases.length - crashlytics.length == phases.indexOf(crashlytics[0])) return;
+
+		targets[key].buildPhases = rest.concat(crashlytics);
+
+		moved++;
+	});
+
+	return moved;
+}
+
 var apply = function (projectRoot) {
 	var iosPath = path.join(projectRoot, 'platforms', 'ios');
 
@@ -82,9 +123,13 @@ var apply = function (projectRoot) {
 		}
 	});
 
+	var movedCrashlytics = moveCrashlyticsLast(project);
+
 	fs.writeFileSync(pbxprojPath, project.writeSync());
 
 	console.log('iosBuildSettings: SWIFT_VERSION = ' + swiftVersion + ', IPHONEOS_DEPLOYMENT_TARGET >= ' + deploymentTarget);
+
+	if (movedCrashlytics) console.log('iosBuildSettings: Crashlytics build phase moved to the end in ' + movedCrashlytics + ' target(s)');
 }
 
 module.exports = function (context) {
