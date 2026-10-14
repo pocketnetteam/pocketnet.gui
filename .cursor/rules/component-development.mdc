@@ -1,0 +1,436 @@
+---
+description: Patterns and conventions for developing UI components
+globs: components/**/*.{js,html,css,less}
+alwaysApply: false
+---
+
+# Component Development Guidelines
+
+## Component Structure
+
+Every component in `components/` follows this file structure:
+
+```
+components/componentname/
+  ├── index.js          # Component logic
+  ├── index.css         # Compiled styles
+  ├── index.less        # LESS source (if using)
+  └── templates/
+      └── index.html    # Component template
+```
+
+## Standard Component Pattern
+
+```javascript
+var componentname = (function () {
+  var self = new nModule();
+  var essenses = {};
+
+  var Essense = function (p) {
+    var primary = deep(p, "history");
+    var el, ed;
+
+    // ===== Actions (User Interactions) =====
+    var actions = {
+      someAction: function () {
+        // Handle user action
+      }
+    };
+
+    // ===== Events (Event Handlers) =====
+    var events = {
+      someEvent: function () {
+        // Handle events
+      }
+    };
+
+    // ===== Renders (Template Rendering) =====
+    var renders = {
+      mainTemplate: function (container, data) {
+        self.shell({
+          name: "index",
+          el: container,
+          data: data || {}
+        }, function (_el) {
+          el = _el;
+          // Bind events
+          el.c.find(".someButton").on("click", actions.someAction);
+        });
+      }
+    };
+
+    // ===== State Management =====
+    var state = {
+      load: function () {
+        // Load state
+      }
+    };
+
+    // ===== Initialization =====
+    var init = function () {
+      state.load();
+      renders.mainTemplate(el.c);
+    };
+
+    // ===== Cleanup =====
+    var destroy = function () {
+      if (el) {
+        el.c.empty();
+      }
+      ed = {};
+    };
+
+    return {
+      primary: primary,
+      init: init,
+      destroy: destroy
+    };
+  };
+
+  // ===== Module Initialization =====
+  self.run = function (p) {
+    var essense = self.addEssense(essenses, Essense, p);
+    self.init(essense, p);
+  };
+
+  self.stop = function () {
+    _.each(essenses, function (essense, i) {
+      essense.destroy();
+    });
+  };
+
+  return self;
+})();
+```
+
+## Key Concepts
+
+### 1. **Module Base (`nModule`)**
+- All components extend `nModule`
+- Provides common functionality (shell loading, event management)
+- Access platform via `self.app`
+
+### 2. **Essense (Component Instance)**
+- Each instance of a component is called an "Essense"
+- Multiple instances can exist simultaneously
+- Stored in `essenses` object
+
+### 3. **Element References (`el`)**
+```javascript
+var el = {
+  c: $(".container"),      // Main container
+  header: $(".header"),    // Sub-elements
+  content: $(".content")
+};
+```
+
+### 4. **Event Data (`ed`)**
+Store event handlers for cleanup:
+```javascript
+ed.someEvent = function() { /* handler */ };
+el.c.find(".button").on("click", ed.someEvent);
+
+// Cleanup
+el.c.find(".button").off("click", ed.someEvent);
+```
+
+## Template Loading
+
+### Shell Method
+Load HTML templates using `self.shell()`:
+
+```javascript
+self.shell({
+  name: "index",           // Template filename (index.html)
+  el: container,           // Target element
+  data: {                  // Template data
+    title: "My Title",
+    items: []
+  },
+  inner: html              // Optional: inline HTML instead of template
+}, function (_el) {
+  el = _el;
+  // Template loaded, bind events
+});
+```
+
+### Multiple Templates
+A component can have multiple templates:
+
+```javascript
+// components/home/templates/
+//   ├── index.html
+//   ├── applications.html
+//   └── filterChips.html
+
+renders.applications = function (container) {
+  self.shell({
+    name: "applications",  // Loads applications.html
+    el: container,
+    data: {}
+  });
+};
+```
+
+## Data Access
+
+### Platform SDK
+```javascript
+// Access blockchain data
+self.sdk.users.getone(address, function(user) {
+  // User data
+});
+
+self.sdk.node.shares.getbyid(postid, function(post) {
+  // Post data
+});
+
+// User actions
+self.app.actions.upvote(postid, function(result) {
+  // Vote result
+});
+```
+
+### Application State
+```javascript
+// Current user
+var myAddress = self.app.user.address.value;
+var myProfile = self.app.user;
+
+// Platform settings
+var settings = self.app.settings;
+
+// Localization
+var text = self.app.localization.e("key");
+```
+
+## Event Handling
+
+### Component Events
+```javascript
+// Bind events in renders
+renders.mainTemplate = function(container) {
+  self.shell({ /* ... */ }, function(_el) {
+    el = _el;
+    
+    // Click events
+    el.c.find(".button").on("click", actions.handleClick);
+    
+    // Form events
+    el.c.find("form").on("submit", actions.handleSubmit);
+    
+    // Delegated events (for dynamic content)
+    el.c.on("click", ".dynamicButton", actions.handleDynamic);
+  });
+};
+
+// Cleanup in destroy
+destroy = function() {
+  if (el && el.c) {
+    el.c.find(".button").off("click", actions.handleClick);
+    el.c.off("click", ".dynamicButton", actions.handleDynamic);
+    el.c.empty();
+  }
+};
+```
+
+### Platform Events
+```javascript
+// Subscribe to platform events
+self.app.platform.sdk.node.shares.clbks.added.componentname = function(shares) {
+  // New posts added
+  renders.updatePosts();
+};
+
+// Cleanup
+delete self.app.platform.sdk.node.shares.clbks.added.componentname;
+```
+
+## Styling
+
+### CSS/LESS Organization
+```less
+// components/componentname/index.less
+
+.componentnameWrapper {
+  // Component-specific prefix to avoid conflicts
+  
+  .header {
+    // Styles
+  }
+  
+  .content {
+    // Styles
+  }
+}
+```
+
+### Responsive Design
+```less
+@media (max-width: 768px) {
+  .componentnameWrapper {
+    // Mobile styles
+  }
+}
+```
+
+## Common Patterns
+
+### 1. **Loading States**
+```javascript
+var state = {
+  loading: false,
+  loaded: false
+};
+
+actions.load = function() {
+  if (state.loading) return;
+  
+  state.loading = true;
+  renders.showLoader();
+  
+  self.sdk.someMethod(function(data) {
+    state.loading = false;
+    state.loaded = true;
+    renders.showData(data);
+  });
+};
+```
+
+### 2. **Pagination**
+```javascript
+var state = {
+  page: 0,
+  pageSize: 20,
+  hasMore: true
+};
+
+actions.loadMore = function() {
+  if (!state.hasMore || state.loading) return;
+  
+  state.page++;
+  // Load next page
+};
+```
+
+### 3. **Forms**
+```javascript
+actions.submitForm = function(e) {
+  e.preventDefault();
+  
+  var formData = {
+    field1: el.c.find("#field1").val(),
+    field2: el.c.find("#field2").val()
+  };
+  
+  // Validation
+  if (!formData.field1) {
+    self.app.platform.errorHandler("Field 1 is required");
+    return;
+  }
+  
+  // Submit
+  self.app.actions.someAction(formData, function(result) {
+    if (result.success) {
+      renders.showSuccess();
+    }
+  });
+};
+```
+
+### 4. **Navigation**
+```javascript
+actions.navigate = function(path) {
+  self.app.nav.api.go({
+    open: true,
+    href: path,
+    history: true
+  });
+};
+```
+
+## Template Data Binding
+
+Templates use basic string interpolation:
+
+```html
+<!-- templates/index.html -->
+<div class="componentnameWrapper">
+  <h1><%= title %></h1>
+  
+  <% if (items.length > 0) { %>
+    <ul>
+      <% _.each(items, function(item) { %>
+        <li><%= item.name %></li>
+      <% }); %>
+    </ul>
+  <% } else { %>
+    <p>No items</p>
+  <% } %>
+</div>
+```
+
+## Best Practices
+
+### ✅ DO:
+- Follow the established module pattern
+- Prefix CSS classes with component name
+- Clean up events in `destroy()`
+- Use `self.shell()` for template loading
+- Store element references in `el` object
+- Use `actions` for user interactions
+- Use `renders` for DOM updates
+- Access platform via `self.app`
+
+### ❌ DON'T:
+- Don't use ES6 classes
+- Don't use arrow functions for main methods
+- Don't create global variables
+- Don't manipulate DOM outside renders
+- Don't forget to cleanup in destroy()
+- Don't directly modify platform state
+
+## Common Issues
+
+### 1. **Template Not Loading**
+- Check template path: `components/componentname/templates/index.html`
+- Verify template is included in build
+- Check console for errors
+
+### 2. **Events Not Working**
+- Ensure events bound after template loaded (inside shell callback)
+- Check selectors are correct
+- Verify elements exist in DOM
+
+### 3. **Memory Leaks**
+- Always implement `destroy()` method
+- Remove event listeners
+- Clear intervals/timeouts
+- Delete platform callbacks
+
+### 4. **Component Not Rendering**
+- Check `self.run()` is called
+- Verify container element exists
+- Check data is passed correctly
+- Look for JavaScript errors
+
+## Testing Components
+
+```javascript
+// Manual testing in console
+// Load component
+componentname.run({
+  el: $("#testContainer"),
+  history: true
+});
+
+// Stop component
+componentname.stop();
+```
+
+## References
+
+- Review existing components in `components/` directory
+- Check `js/satolist.js` for SDK methods
+- See `js/app.js` for application features
+- Read `ARCHITECTURE.md` for overall structure
