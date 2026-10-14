@@ -59726,9 +59726,15 @@ class mtrx_MTRX {
           throw "Signup error, username is not available: " + e;
         }
       }
+
+      // v6 caches could hold events with a stale `decrypted: {}` written into
+      // the raw event, which rendered them empty forever; drop that cache
+      try {
+        window.indexedDB.deleteDatabase("matrix-js-sdk:matrix-js-sdk-v6:" + _this3.credentials.username);
+      } catch (e) {}
       var store = new sdk.IndexedDBStore({
         indexedDB: window.indexedDB,
-        dbName: "matrix-js-sdk-v6:" + _this3.credentials.username,
+        dbName: "matrix-js-sdk-v7:" + _this3.credentials.username,
         localStorage: window.localStorage
       });
       Object.assign(userClientData, {
