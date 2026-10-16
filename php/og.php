@@ -484,7 +484,7 @@ class OG {
                                     $this->currentOg['description'] = '';
                                 }
                                 else{
-                                    $this->currentOg['description'] = substr(strip_tags(urldecode($r->m)), 0, 130).'...';
+                                    $this->currentOg['description'] = $this->shorttext(strip_tags(urldecode($r->m)), 130);
                                 }
                                 
                                 $description = true;
@@ -547,7 +547,7 @@ class OG {
             
                                         $pca = 'c';
             
-                                        $this->currentOg['description'] = substr(strip_tags(urldecode($msg->message)), 0, 130).'...';                         
+                                        $this->currentOg['description'] = $this->shorttext(strip_tags(urldecode($msg->message)), 130);
                                         
                                     } 
                                     

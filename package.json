@@ -2,11 +2,11 @@
     "name": "pocketnet",
     "project": "Bastyon",
 
-    "version": "0.9.142",
+    "version": "0.9.143",
     "versionsuffix": "0",
-    "cordovaversion": "1.8.142",
+    "cordovaversion": "1.8.143",
 
-    "cordovaversioncode": "1801420",
+    "cordovaversioncode": "1801430",
 
 
     "description": "Bastyon desktop application",
@@ -16,6 +16,8 @@
     "main": "main.js",
     "repository": "github:pocketnetapp/pocketnet.gui",
     "scripts": {
+        "test": "node --test \"tests/**/*.test.js\"",
+        "test:live": "node --test \"tests/**/*.live.js\"",
         "start": "electron . --development",
         "startinspect": "electron . --development --inspect=9229",
         "start:test": "electron . --development --test",

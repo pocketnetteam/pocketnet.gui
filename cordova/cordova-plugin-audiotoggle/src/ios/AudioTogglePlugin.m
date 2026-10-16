@@ -4,6 +4,24 @@
 
 @implementation AudioTogglePlugin
 
+// UIAlertView is unavailable in UIScene based apps (cordova-ios 8) and throws NSObjectNotAvailableException
+- (void)showPermissionAlert:(NSString *)message
+{
+	dispatch_async(dispatch_get_main_queue(), ^{
+		UIViewController *presenter = self.viewController;
+
+		while (presenter.presentedViewController) {
+			presenter = presenter.presentedViewController;
+		}
+
+		if (!presenter) return;
+
+		UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:message preferredStyle:UIAlertControllerStyleAlert];
+		[alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+		[presenter presentViewController:alert animated:YES completion:nil];
+	});
+}
+
 - (void)setAudioMode:(CDVInvokedUrlCommand *)command
 {
 	NSError* __autoreleasing err = nil;
@@ -33,13 +51,7 @@
 		[AVCaptureDevice requestAccessForMediaType:mediaType completionHandler:^(BOOL granted) {
 			if (!granted) {
 				//Not granted access to mediaType
-				dispatch_async(dispatch_get_main_queue(), ^{
-					[[[UIAlertView alloc] initWithTitle:@"Error"
-					message:@"Camera permission not found. Please, check your privacy settings."
-					delegate:self
-					cancelButtonTitle:@"OK"
-					otherButtonTitles:nil] show];
-				});
+				[self showPermissionAlert:@"Camera permission not found. Please, check your privacy settings."];
 
 				
 			}
@@ -67,13 +79,7 @@
 		[AVCaptureDevice requestAccessForMediaType:mediaType completionHandler:^(BOOL granted) {
 			if (!granted) {
 				//Not granted access to mediaType
-				dispatch_async(dispatch_get_main_queue(), ^{
-					[[[UIAlertView alloc] initWithTitle:@"Error"
-					message:@"Microphone permission not found. Please, check your privacy settings."
-					delegate:self
-					cancelButtonTitle:@"OK"
-					otherButtonTitles:nil] show];
-				});
+				[self showPermissionAlert:@"Microphone permission not found. Please, check your privacy settings."];
 
 				
 			}

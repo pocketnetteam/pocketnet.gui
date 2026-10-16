@@ -2,7 +2,7 @@
 
 class RPC {
 
-    protected $node = 'https://5.pocketnet.app:8899/rpc/';
+    protected $node = 'https://2.pocketnet.app:8899/rpc/';
 
 	public function __construct ($proxypath)
 	{
@@ -39,6 +39,9 @@ class RPC {
         curl_setopt($ch,CURLOPT_POSTFIELDS, json_encode($fields));
         curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        // bots (telegram etc.) give up on slow pages, so a dead proxy must not hang the page
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
         
         $result = curl_exec($ch);
 

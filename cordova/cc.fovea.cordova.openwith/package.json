@@ -44,7 +44,7 @@
     "file-system": "^2.2.2",
     "path": "^0.12.7",
     "plist": "^2.1.0",
-    "xcode": "git+https://github.com/apache/cordova-node-xcode.git"
+    "xcode": "^3.0.1"
   },
   "# Dependencies required to run tests": "",
   "devDependencies": {
