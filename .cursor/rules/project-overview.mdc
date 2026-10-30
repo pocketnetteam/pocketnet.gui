@@ -1,0 +1,169 @@
+---
+description: Core project architecture and patterns for Bastyon/Pocketnet
+alwaysApply: true
+---
+
+# Bastyon/Pocketnet Project Overview
+
+## Project Type
+This is a **decentralized blockchain-based social network** with:
+- Custom JavaScript framework (pre-dates React/Vue)
+- Multi-platform support (Web, Electron Desktop, Cordova Mobile)
+- Node.js backend (proxy16 server)
+- Bitcoin-based blockchain (Pocketcoin/PKOIN)
+
+## Critical Architecture Facts
+
+### 1. **Legacy Codebase**
+This is a mature project with a **custom-built framework** from before modern JS frameworks existed:
+- ❌ NO React, Vue, Angular, or similar frameworks
+- ❌ NO ES6 classes (uses function constructors)
+- ❌ NO modern bundlers (uses custom minimize.js)
+- ✅ Uses jQuery, Underscore.js, custom module pattern
+- ✅ Component-based but with legacy patterns
+
+### 2. **Main Code Location**
+- `js/satolist.js` - **26,792 lines** of core platform code (SDK, blockchain interface)
+- `js/app.js` - Application lifecycle and initialization
+- `components/` - 100+ modular UI components
+- `proxy16/` - Backend Node.js server
+
+### 3. **Module Pattern**
+All components follow this pattern:
+
+```javascript
+var componentname = (function () {
+  var self = new nModule();
+  var essenses = {};
+
+  var Essense = function (p) {
+    var el, ed;
+    var actions = {};
+    var renders = {};
+    
+    var init = function() {
+      // Component initialization
+    };
+
+    return { init: init, destroy: destroy };
+  };
+
+  self.create = function(params) {
+    // Create instance
+  };
+
+  return self;
+})();
+```
+
+### 4. **Hybrid JavaScript Approach**
+**Legacy code (existing files):**
+- Uses `var` not `const`/`let`
+- IIFE pattern instead of ES6 modules
+- Function constructors instead of classes
+- Callback-based patterns
+
+**Modern code (new files allowed):**
+- Can use `const`/`let`, arrow functions, classes
+- Async/await for new utilities
+- ES6+ features in backend (proxy16)
+- Modern patterns in isolated modules
+
+**Golden Rule:** Match the style of the file you're editing!
+
+## When Making Changes
+
+### DO:
+- ✅ **Match the file's existing style** (most important!)
+- ✅ Use modern syntax in new utility files
+- ✅ Use `const`/`let` in backend (proxy16)
+- ✅ Follow IIFE pattern in component files
+- ✅ Use async/await in new code
+- ✅ Check `ARCHITECTURE.md` for detailed documentation
+- ✅ Test in multiple platforms (Web, Electron, Cordova if applicable)
+
+### DON'T:
+- ❌ Don't introduce modern frameworks (React, Vue, etc.)
+- ❌ Don't modernize existing component files (keep IIFE pattern)
+- ❌ Don't use ES6 modules without bundling (script tag loading)
+- ❌ Don't assume standard build tools (Webpack, Vite, etc.)
+- ❌ Don't modify `js/satolist.js` lightly (it's 26k lines, high risk)
+- ❌ Don't mix styles within a single file
+
+## File Organization
+
+```
+Frontend:
+- js/satolist.js          # Main platform code (core SDK)
+- js/app.js               # Application initialization
+- components/*/index.js   # Component logic
+- components/*/templates/index.html  # Component HTML
+
+Backend:
+- proxy16/proxy.js        # Main server
+- proxy16/node/           # Blockchain node management
+- proxy16/server/         # HTTPS/WebSocket servers
+- proxy16/wallet/         # Wallet operations
+
+Build:
+- minimize.js             # Custom build script
+- tpls/*.tpl              # Build templates
+```
+
+## Key Concepts
+
+### Authentication
+- Uses blockchain private keys (WIF format)
+- NO username/password system
+- NO password recovery (keys cannot be recovered if lost)
+
+### Data Storage
+- Blockchain: Posts, comments, votes, transactions (immutable)
+- LocalStorage: User preferences, cache
+- IndexedDB: Offline data
+
+### Communication
+- WebSocket: Real-time updates (proxy16/server/wss.js)
+- HTTP: API calls (proxy16/server/https.js)
+- RPC: Blockchain communication (proxy16/node/rpc.js)
+
+## Development Commands
+
+```bash
+# Development
+npm run dev:bastyon        # Build for development
+npm start                  # Run Electron app
+
+# Build
+npm run minimize:bastyon   # Production web build
+npm run build              # Full build (backend + frontend)
+
+# Distribution
+npm run dist               # Windows distributable
+npm run distm              # macOS distributable
+npm run distl              # Linux distributable
+```
+
+## Important Files to Reference
+
+Before making changes, review:
+- `ARCHITECTURE.md` - Comprehensive architecture documentation
+- `js/satolist.js` - Platform core (understand before modifying)
+- `package.json` - Dependencies and build scripts
+- `proxy16/config.json` - Backend configuration
+
+## Common Pitfalls
+
+1. **Don't assume modern JS**: This uses legacy patterns throughout
+2. **Component coupling**: Many components reference `self.app` globally
+3. **Large files**: `satolist.js` is monolithic (26k lines)
+4. **Build process**: Custom `minimize.js`, not Webpack/Vite
+5. **Multi-platform**: Changes may affect Web/Electron/Cordova differently
+
+## When Stuck
+
+1. Read `ARCHITECTURE.md` for detailed documentation
+2. Search existing components for similar functionality
+3. Check `js/satolist.js` for SDK methods
+4. Review `js/app.js` for application-level features
+5. Ask user for clarification on architecture decisions
