@@ -119,6 +119,7 @@ _l.a_block = function(c){
     return c ? `You have blocked ${c} users` : `You have blocked`
 };
 _l.a_unblock= "You have unblocked";
+_l.a_boost = "You boosted the post ";
 _l.a_empty = "No statistics for the last 3 months";
 //user page
 
@@ -527,6 +528,7 @@ _l.embeddingSettings = "Embedding Settings"
 _l.blackTheme = "Black Theme"
 _l.includeComments = "Include comments"
 _l.showOnlyLast = "Show Only last comment"
+_l.inclueComments = "Comments"
 _l.showAll = "Show all comments"
 _l.dontShow = "Don't show comments"
 _l.removeDescription = "Remove description"
@@ -585,6 +587,7 @@ _l.e13055 = "Edit Proxy"
 _l.save = "Save"
 _l.e13056 = "Node Host"
 _l.close = "Close"
+_l.ok = "OK"
 _l.e13057 = "Please fill all fields"
 _l.e13058 = "You alredy have this proxy in list."
 _l.delete = "Delete"
@@ -728,6 +731,8 @@ _l.e13136 = "All Posts"
 _l.e13137 = "My Subscriptions" // This is the equivalent of a ‘News feed’. Don’t change the word ‘Pocket’ however, it’s a feature of "+appname+".
 _l.e13138 = "Top posts"
 _l["Top Posts Over"] = "Top Posts Over"
+_l["Most Discussed Over"] = "Most Discussed Over"
+_l["Top videos"] = "Top videos"
 _l.bestFirst = "The best first"
 _l.topnext = "Next"
 _l.topprevious = "Previous"
@@ -810,6 +815,7 @@ _l.e13192 = "Level"
 _l.e13193 = "BONUS"
 _l.e13194 = "Reputation and Status"
 _l.e13195 = "Limitations"
+_l.e13196 = "It may take"
 _l.с= "It much take up"
 _l.e13197 = "Recieve Pocketcoins"
 _l.e13198 = "Approximate waiting time is"
@@ -933,6 +939,7 @@ _l.e13270d = "Downvotes receive"
 
 _l.e13271 = "Comment receive"
 _l.e13272 = "Answer receive"
+_l.downvote = "Negative rating"
 _l.e13273 = "New Followers"
 _l.e13274 = "Rescued Users"
 _l.e13275 = "Comment Score"
@@ -1230,6 +1237,7 @@ _l.selectAudioFile = "Select audio file"
 _l.uploadVideoProgress_binaries = "Preparing binaries:"
 _l.uploadVideoProgress_processing = "Processing video:"
 _l.uploadVideoProgress_uploading = "Uploading video:"
+_l.uploadVideoProgress = "Progress:"
 _l.uploadAudioProgress_uploading = "Uploading audio:"
 _l.uploadVideoProgress_start = "Video download initialization:"
 _l.uploadAudioProgress_start = "Audio download initialization:"
@@ -1927,6 +1935,7 @@ _l.HIVTable20 = 'Transparent, open to public';
 _l.HIVTable21 = 'No';
 _l.HIVTable22 = 'No';
 _l.HIVTable23 = 'Yes';
+_l.HIVTable24 = 'This means decentralized cryptocurrencies such as Bitcoin or Pocketcoin';
 
 
 
@@ -2338,6 +2347,7 @@ _l.lowstar_reason_5 = "Copyrighted content"
 _l.lowstar_reason_6 = "Spam"
 
 _l.lowstar2 = "Please do not use 1 and 2 star ratings for other reasons. After the new moderation is released in mid. May you will be able to use low ratings for other reasons"
+_l.lowstar3 = "If you give 1 or 2 stars for reasons not listed above, then after the moderation algorithm is released, jury members will permanently take away your account seniority."
 _l.lowstaragree = "I confirm that this post contains one of four types of prohibited content"
 
 _l.usetor = "Connection via Tor network"
@@ -2958,6 +2968,7 @@ _l.fastmessagemonetization = "as a reward under the monetization program"
 _l.fastmessagemonetization = "as a donate"
 
 _l.sendcoinssm = "Send"
+_l.fastmessagedonate = "as a donation"
 _l.e130961donate = "How much PKOIN do you want to donate?"
 _l.statsWallet = "Wallet information"
 _l.paymentsDate = "Date"
@@ -3062,6 +3073,7 @@ _l.miniApp_missingNameError = "The application name is missing in the manifest. 
 _l.miniApp_missingVersionError = "The application version is missing in the manifest. The `version` field must be filled.";
 _l.miniApp_missingDescriptionEnError = "The application description in English is missing in the `descriptions` section.";
 _l.miniApp_missingScopeError = "The `scope` information is missing in the manifest. Ensure a valid `scope` value is provided.";
+_l.miniApp_missingDescriptionError = "The application description is missing in the `b_manifest` file. Make sure the `descriptions['en']` or `description` field is provided.";
 _l.miniApp_brokenAuthorError = "Invalid application author. This may be caused by a missing or incorrectly formatted `author` field (expected a Base58 address).";
 _l.miniApp_discrepancyIdError = "Discrepancy between the application ID in the manifest and the application ID specified during installation.";
 _l.miniApp_discrepancyDevelopError = "Discrepancy in the development status (`develop`) between the manifest and the specified application.";
@@ -3091,6 +3103,7 @@ _l.miniApp_localhostScopeWarningMessage = "Publishing an application with a loca
 _l.miniApp_createTitle = "Create a New Mini-Application";
 _l.miniApp_tagsRequiredMessage = "Please specify tags for the application.";
 _l.miniApp_scopeInvalidMessage = "This field must be in the format of a subdomain, for example, app.pocketnet. Use only lowercase letters, numbers, and dots without https:// or www prefixes.";
+_l.miniApp_idInvalidMessage = "The ID must be in domain name format, for example, app.pocketnet or example.app. Use only lowercase letters and at least one dot.";
 _l.miniApp_extendedTags = "The maximum number of tags you can add is ";
 
 _l.miniApp_devModeLabel = "Development Environment:";
@@ -3375,6 +3388,7 @@ _l.tellAboutExperience = "Tell us about your experience with the app..."
 _l.yourComment = "Your comment"
 _l.submitReview = "Submit Review"
 _l.cancel = "Cancel"
+_l.all = "All"
 _l.howDoYouRate = "How do you rate this app?"
 _l.clickStarToRate = "Click on a star to rate"
 _l.outOf5 = "out of 5"

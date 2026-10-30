@@ -2,7 +2,9 @@
 // - cordova-plugin-x-socialsharing 6.0.4: UIApplication openURL: without options always
 //   returns NO since iOS 18, so sharing text to WhatsApp did nothing (apache/cordova-ios#1511)
 // - cordova-plugin-camera-preview 0.12.3 (same in 0.14.0 and master): CameraSessionManager uses UIKit
-//   without importing it; cordova-ios 8 removed the prefix header that imported UIKit everywhere
+//   without importing it; cordova-ios 8 removed the prefix header that imported UIKit everywhere.
+//   checkDeviceAuthorizationStatus shows UIAlertView when camera access is denied; it is unavailable
+//   in UIScene based apps (cordova-ios 8) and crashes with NSObjectNotAvailableException
 // Patches are idempotent. Never fails the build: problems are only logged.
 
 var fs = require('fs');
@@ -20,6 +22,20 @@ var patches = [
 		file: 'CameraSessionManager.h',
 		from: '#import <CoreImage/CoreImage.h>',
 		to: '#import <UIKit/UIKit.h>\n#import <CoreImage/CoreImage.h>'
+	},
+	{
+		plugin: 'cordova-plugin-camera-preview',
+		file: 'CameraSessionManager.m',
+		from: [
+			'      dispatch_async(dispatch_get_main_queue(), ^{',
+			'          [[[UIAlertView alloc] initWithTitle:@"Error"',
+			'                                      message:@"Camera permission not found. Please, check your privacy settings."',
+			'                                     delegate:self',
+			'                            cancelButtonTitle:@"OK"',
+			'                            otherButtonTitles:nil] show];',
+			'      });'
+		].join('\n'),
+		to: '      NSLog(@"CameraPreview: camera permission not granted");'
 	}
 ]
 

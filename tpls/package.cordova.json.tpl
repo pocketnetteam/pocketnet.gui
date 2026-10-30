@@ -69,7 +69,7 @@
         "cordova-plugin-pip": "file:cordova-plugin-pip",
         "cordova-plugin-statusbar": "file:cordova-plugin-statusbar",
         "cordova-plugin-taptic-engine": "^2.2.0",
-        "cordova-plugin-tor-runner": "github:Gedsh/cordova-plugin-tor-runner",
+        "cordova-plugin-tor-runner": "github:Gedsh/cordova-plugin-tor-runner#4160b408dd8abdccd48f070bf5b09195ade5f9df",
         "cordova-plugin-webview-checker": "^1.0.1",
         "cordova-plugin-x-socialsharing": "^6.0.4",
         "cordova-plugin-file-opener2":"^4.0.0",

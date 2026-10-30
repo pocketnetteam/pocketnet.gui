@@ -249,11 +249,11 @@ edjsHTMLCnt = function (a, app) {
 
 			var src = replaceArchiveInImage(t.file && t.file.url ? t.file.url : t.file)
 
-			return '<div class="article_image ' + cl.join(' ') + '"><img src="' + checkIfAllowedImageApply(_.escape(src)) + '" alt="' + (r) + '" />' +
+			return ('<div class="article_image ' + cl.join(' ') + '"><img src="' + checkIfAllowedImageApply(_.escape(src)) + '" alt="' + _.escape(r) + '" />' +
 
-				(r ? ('<div class="article_image_caption">' + r + '</div>') : '')
+				(r ? ('<div class="article_image_caption">' + _.escape(r) + '</div>') : '')
 
-				+ '</div>'
+				+ '</div>')
 
 		},
 
@@ -332,7 +332,7 @@ edjsHTMLCnt = function (a, app) {
 				if (deep(t, 'meta.image.url'))
 					img = '<div class="article_link_custom_image"><div class="img" image="' + _.escape(deep(t, 'meta.image.url')) + '"></div></div>'
 
-				return '<a href="' + t.link + '" donottrust="true"><div class="article_link_custom">' + img + '<div class="article_link_custom_content"><div class="article_link_custom_title">' + _.escape(deep(t, 'meta.title') || url.host || 'Undefined Link') + '</div><div class="article_link_custom_description">' + _.escape(deep(t, 'meta.description') || '') + '</div><div class="article_link_custom_href">' + _.escape(t.link) + '</div></div></div></a>'
+				return ('<a href="' + _.escape(t.link) + '" donottrust="true"><div class="article_link_custom">' + _.escape(img) + '<div class="article_link_custom_content"><div class="article_link_custom_title">' + _.escape(deep(t, 'meta.title') || url.host || 'Undefined Link') + '</div><div class="article_link_custom_description">' + _.escape(deep(t, 'meta.description') || '') + '</div><div class="article_link_custom_href">' + _.escape(t.link) + '</div></div></div></a>')
 			}
 
 

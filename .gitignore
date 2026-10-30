@@ -71,3 +71,5 @@ package.cordova.json
 dcs
 /proxy16/peertube-servers.json
 peertube-servers.json
+/proxy16/deploy/_proxy16-src.tgz
+/proxy16/deploy/*.tgz
