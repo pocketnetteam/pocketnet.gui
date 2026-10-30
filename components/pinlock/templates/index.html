@@ -1,0 +1,148 @@
+<%
+	var pe = function(key, args){
+		return e('pinlock_' + key, args)
+	}
+%>
+<div id="<%-module.map.id%>" class="pinlockModule mode_<%-mode%> <%- touch ? 'touch' : 'desktop' %>" step="<%-steps[0]%>" filled="0" role="dialog" aria-modal="true" aria-label="<%-pe('title')%>">
+
+	<div class="bokeh" aria-hidden="true">
+		<div class="bokehField"></div>
+	</div>
+
+	<div class="pinlockBody">
+
+		<div class="pinlockInfo">
+
+			<% if(mode == 'unlock') { %>
+
+				<div class="ringWrapper">
+					<svg class="ring" viewBox="0 0 100 100" aria-hidden="true">
+						<circle class="track" cx="50" cy="50" r="48"></circle>
+						<circle class="progress" cx="50" cy="50" r="48"></circle>
+					</svg>
+
+					<div class="avatar" <% if(user.image) { %> <%= bgImagesClApplyTemplate(user.image) %> <% } %>>
+						<% if(!user.image && user.letter) { %>
+							<span class="letter"><%-user.letter.toUpperCase()%></span>
+						<% } else if(!user.image) { %>
+							<i class="fas fa-user letter"></i>
+						<% } %>
+					</div>
+
+					<div class="countdown"></div>
+
+					<div class="badge" aria-hidden="true">
+						<i class="fas fa-lock locked"></i>
+						<i class="fas fa-lock-open opened"></i>
+					</div>
+				</div>
+
+				<div class="title">
+					<% if(user.name) { %>
+						<%-pe('welcome', user.name)%>
+					<% } else { %>
+						<%-pe('welcomeanon')%>
+					<% } %>
+				</div>
+
+				<div class="subtitle"><%-pe('enter')%></div>
+
+			<% } else { %>
+
+				<div class="setupIcon" aria-hidden="true">
+					<i class="fas fa-lock"></i>
+				</div>
+
+				<% if(steps.length > 1) { %>
+					<div class="stepper" aria-hidden="true">
+						<% _.each(steps, function(s, i){ %>
+							<span class="stepdot <% if(!i) { %>active<% } %>"></span>
+						<% }) %>
+					</div>
+				<% } %>
+
+				<div class="subtitle"></div>
+
+				<% if(mode == 'set') { %>
+					<div class="purpose"><%-pe('purpose')%></div>
+				<% } %>
+
+			<% } %>
+
+		</div>
+
+		<div class="pinlockInput">
+
+			<div class="dots" role="status" aria-live="polite">
+				<% for(var i = 0; i < 4; i++) { %>
+					<span class="dot"></span>
+				<% } %>
+			</div>
+
+			<div class="message" aria-live="polite"></div>
+
+			<div class="keypad">
+				<% _.each(['1','2','3','4','5','6','7','8','9'], function(d){ %>
+					<button type="button" class="key" digit="<%-d%>" aria-label="<%-pe('digit', d)%>"><%-d%></button>
+				<% }) %>
+
+				<span class="key empty" aria-hidden="true"></span>
+
+				<button type="button" class="key" digit="0" aria-label="<%-pe('digit', '0')%>">0</button>
+
+				<button type="button" class="key backspace" aria-label="<%-pe('delete')%>"><i class="fas fa-backspace"></i></button>
+			</div>
+
+			<% if(!touch) { %>
+				<div class="keyboardhint"><%-pe('keyboardhint')%></div>
+			<% } %>
+
+			<div class="pinlockFooter">
+				<% if(mode == 'unlock') { %>
+					<button type="button" class="linkbutton forgotlink"><%-pe('forgot')%></button>
+				<% } else { %>
+					<button type="button" class="linkbutton cancelbutton"><%-e('cancel')%></button>
+				<% } %>
+			</div>
+
+		</div>
+
+		<% if(mode == 'set') { %>
+			<div class="pinlockDone">
+				<svg class="check" viewBox="0 0 52 52" aria-hidden="true">
+					<circle cx="26" cy="26" r="24"></circle>
+					<path d="M15 27 l7 7 l15 -16"></path>
+				</svg>
+
+				<div class="donetitle"><%-pe('enabled')%></div>
+
+				<div class="timeoutcaption"><%-pe('lockafter')%></div>
+
+				<div class="timeouts" role="radiogroup" aria-label="<%-pe('lockafter')%>">
+					<% _.each(timeouts, function(t){ %>
+						<button type="button" class="timeoutchip <% if(t == timeout) { %>active<% } %>" value="<%-t%>" role="radio" aria-checked="<%- t == timeout ? 'true' : 'false' %>"><%-pe('minutes', t)%></button>
+					<% }) %>
+				</div>
+
+				<button type="button" class="donebutton"><%-pe('done')%></button>
+			</div>
+		<% } %>
+
+	</div>
+
+	<% if(mode == 'unlock') { %>
+		<div class="forgot" role="alertdialog" aria-modal="true">
+			<div class="forgotShade"></div>
+			<div class="forgotSheet">
+				<div class="forgotIcon"><i class="fas fa-exclamation-triangle"></i></div>
+				<div class="forgotTitle"><%-pe('forgot')%></div>
+				<div class="forgotText"><%-pe('forgotwarning')%></div>
+				<div class="forgotButtons">
+					<button type="button" class="forgotcancel"><%-e('cancel')%></button>
+					<button type="button" class="forgotsignout disabled"><%-pe('signout')%></button>
+				</div>
+			</div>
+		</div>
+	<% } %>
+
+</div>

@@ -10,7 +10,7 @@
     <content src="indexcordova.html" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="24" />
-    <preference name="android-targetSdkVersion" value="35" />
+    <preference name="android-targetSdkVersion" value="36" />
     <preference name="loadUrlTimeoutValue" value="700000" />
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashShowOnlyFirstTime" value="true" />
@@ -42,7 +42,6 @@
         <icon density="xxhdpi" src="resources/android/icon/drawable-xxhdpi-icon.png" />
         <icon density="xxxhdpi" src="resources/android/icon/drawable-xxxhdpi-icon.png" />
 
-        <resource-file src="resources/android/colors.xml" target="app/src/main/res/values/colors.xml" />
         <resource-file src="resources/android/notification/drawable-mdpi/notification_icon.png" target="app/src/main/res/drawable-mdpi/notification_icon.png" />
         <resource-file src="resources/android/notification/drawable-mdpi/notification_icon.png" target="app/src/main/res/drawable/notification_icon.png" />
         <resource-file src="resources/android/notification/drawable-hdpi/notification_icon.png" target="app/src/main/res/drawable-hdpi/notification_icon.png" />
@@ -135,6 +134,8 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
 
+        <preference name="deployment-target" value="13.0" />
+
         <config-file parent="NSMicrophoneUsageDescription" target="*-Info.plist">
             <string>This Application uses your microphone to make voice messages</string>
         </config-file>
@@ -147,6 +148,19 @@
             <string>Allow the application access to the photo gallery to select photos for publication.</string>
         </config-file>
 
+        <config-file overwrite="true" parent="NSPhotoLibraryAddUsageDescription" target="*-Info.plist">
+            <string>Allow the application to save photos and videos to your photo gallery.</string>
+        </config-file>
+
+        <config-file overwrite="true" parent="NSContactsUsageDescription" target="*-Info.plist">
+            <string>The application uses your contacts so you can find friends and invite them to chat.</string>
+        </config-file>
+
+        <config-file parent="ITSAppUsesNonExemptEncryption" target="*-Info.plist">
+            <false/>
+        </config-file>
+
+        <resource-file src="configs/en.lproj" />
         <resource-file src="configs/de.lproj" />
         <resource-file src="configs/es.lproj" />
         <resource-file src="configs/fr.lproj" />
@@ -154,8 +168,60 @@
         <resource-file src="configs/kr.lproj" />
         <resource-file src="configs/ru.lproj" />
         <resource-file src="configs/zh.lproj" />
+
+        <!-- Privacy manifest required by the App Store (cordova-ios writes it to PrivacyInfo.xcprivacy).
+             UserDefaults: app settings (CA92.1), app group shared with the share extension (1C8F.1).
+             FileTimestamp: files in the app container (cordova-plugin-file, cordova-plugin-buildinfo).
+             SystemBootTime: elapsed time measurement (cordova-plugin-buildinfo, mach_absolute_time).
+             DiskSpace: free space check before writing files (cordova-plugin-file). -->
+        <privacy-manifest>
+            <key>NSPrivacyTracking</key>
+            <false/>
+            <key>NSPrivacyTrackingDomains</key>
+            <array/>
+            <key>NSPrivacyCollectedDataTypes</key>
+            <array/>
+            <key>NSPrivacyAccessedAPITypes</key>
+            <array>
+                <dict>
+                    <key>NSPrivacyAccessedAPIType</key>
+                    <string>NSPrivacyAccessedAPICategoryUserDefaults</string>
+                    <key>NSPrivacyAccessedAPITypeReasons</key>
+                    <array>
+                        <string>CA92.1</string>
+                        <string>1C8F.1</string>
+                    </array>
+                </dict>
+                <dict>
+                    <key>NSPrivacyAccessedAPIType</key>
+                    <string>NSPrivacyAccessedAPICategoryFileTimestamp</string>
+                    <key>NSPrivacyAccessedAPITypeReasons</key>
+                    <array>
+                        <string>C617.1</string>
+                    </array>
+                </dict>
+                <dict>
+                    <key>NSPrivacyAccessedAPIType</key>
+                    <string>NSPrivacyAccessedAPICategorySystemBootTime</string>
+                    <key>NSPrivacyAccessedAPITypeReasons</key>
+                    <array>
+                        <string>35F9.1</string>
+                    </array>
+                </dict>
+                <dict>
+                    <key>NSPrivacyAccessedAPIType</key>
+                    <string>NSPrivacyAccessedAPICategoryDiskSpace</string>
+                    <key>NSPrivacyAccessedAPITypeReasons</key>
+                    <array>
+                        <string>E174.1</string>
+                    </array>
+                </dict>
+            </array>
+        </privacy-manifest>
        
-        <preference name="UseSwiftLanguageVersion" value="4.2" />
+        <preference name="SwiftVersion" value="5.0" />
+        <hook type="after_prepare" src="hooks/iosBuildSettings.js" />
+        <hook type="after_prepare" src="hooks/iosPluginPatches.js" />
         <preference name="NativeXHRLogging" value="full" />
         <preference name="AllowUntrustedCerts"  value="true" />
         <preference name="InterceptRemoteRequests" value="all" />
@@ -193,9 +259,10 @@
         <resource-file src="resources/android/raw/isrg_root_x1.der" target="app/src/main/res/raw/isrg_root_x1.der" />
         <resource-file src="resources/android/raw/isrg_root_x2.der" target="app/src/main/res/raw/isrg_root_x2.der" />
         <resource-file src="resources/android/xml/network_security_config.xml" target="app/src/main/res/xml/network_security_config.xml" />
+        <resource-file src="resources/android/xml/data_extraction_rules.xml" target="app/src/main/res/xml/data_extraction_rules.xml" />
 
         <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application">
-            <application android:hardwareAccelerated="true" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" android:largeHeap="true" android:banner="@drawable/banner" android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true" android:networkSecurityConfig="@xml/network_security_config" android:name="pan.alexander.cordova.torrunner.App"/>
+            <application android:hardwareAccelerated="true" android:theme="@android:style/Theme.DeviceDefault.NoActionBar" android:largeHeap="true" android:banner="@drawable/banner" android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true" android:networkSecurityConfig="@xml/network_security_config" android:allowBackup="false" android:fullBackupContent="false" android:dataExtractionRules="@xml/data_extraction_rules" tools:replace="android:allowBackup" android:name="pan.alexander.cordova.torrunner.App"/>
         </edit-config>
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
@@ -217,6 +284,7 @@
             <uses-permission android:name="android.permission.CAMERA" />
             <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
             <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+            <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
             <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
             <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
         </config-file>

@@ -7481,7 +7481,8 @@ html.allcontent_application{
     width: 100%;
     height: 100%;
     background-color: #011621;
-    z-index: 5000;
+    /* above pinlock overlay (10000010) and call lift (10000020) while booting */
+    z-index: 10000030;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -8625,7 +8626,7 @@ html.mobileview{
         width: auto;
         left: @rhythm;
         right: @rhythm;
-        bottom: 25px;
+        bottom: calc(25px + env(safe-area-inset-bottom, 0px));
         padding : 4 * @rhythm;
         z-index: 20100;
         min-height: 50px;
@@ -8821,6 +8822,7 @@ html.mobileview{
                     margin : 0 auto;
                     padding-left: 0;
                     padding-right: 0;
+                    padding-bottom: env(safe-area-inset-bottom, 0px);
                     .transition(0.3s, padding-bottom);
                     
 
@@ -8858,6 +8860,7 @@ html.mobileview{
                     
                     .wndcontent{
                         padding-top: 0;
+                        padding-bottom: 0;
                         border-radius: 0;
                         border-bottom-right-radius: 24px;
                         border-bottom-left-radius: 24px;

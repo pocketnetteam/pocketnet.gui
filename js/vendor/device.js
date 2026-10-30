@@ -299,7 +299,11 @@
   } else if (typeof module !== 'undefined' && module.exports) {
     module.exports = device;
   } else {
-    window.device = device;
+    // Keep cordova-plugin-device (device.platform etc.) if it is already loaded: Cordova plugins
+    // such as cordova-plugin-tor-runner read it from window.device. This library stays in window._device.
+    var isCordovaDevice = previousDevice && Object.prototype.hasOwnProperty.call(previousDevice, 'platform');
+
+    window.device = isCordovaDevice ? previousDevice : device;
     window._device = device
   }
 

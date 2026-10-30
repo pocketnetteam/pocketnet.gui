@@ -10,7 +10,7 @@ var path = require('path');
 var fs = require('fs');
 var plist = require('plist');
 var mkpath = require('mkpath');
-var ConfigXmlHelper = require('../configXmlHelper.js');
+var projectPaths = require('./projectPaths.js');
 var ASSOCIATED_DOMAINS = 'com.apple.developer.associated-domains';
 var context;
 var projectRoot;
@@ -31,6 +31,19 @@ module.exports = {
  */
 function generateEntitlements(cordovaContext, pluginPreferences) {
   context = cordovaContext;
+
+  var cordovaEntitlementsFiles = projectPaths.getCordovaEntitlementsFiles(context);
+
+  // cordova-ios 6+: add domains to the files the app is signed with
+  if (cordovaEntitlementsFiles.length) {
+    cordovaEntitlementsFiles.forEach(function(filePath) {
+      var entitlements = plist.parse(fs.readFileSync(filePath, 'utf8'));
+
+      fs.writeFileSync(filePath, plist.build(injectPreferences(entitlements, pluginPreferences)), 'utf8');
+    });
+
+    return;
+  }
 
   var currentEntitlements = getEntitlementsFileContent();
   var newEntitlements = injectPreferences(currentEntitlements, pluginPreferences);
@@ -158,14 +171,13 @@ function getProjectRoot() {
 }
 
 /**
- * Name of the project from config.xml
+ * Name of the Xcode project
  *
  * @return {String} project name
  */
 function getProjectName() {
   if (projectName === undefined) {
-    var configXmlHelper = new ConfigXmlHelper(context);
-    projectName = configXmlHelper.getProjectName();
+    projectName = projectPaths.getProjectName(context);
   }
 
   return projectName;

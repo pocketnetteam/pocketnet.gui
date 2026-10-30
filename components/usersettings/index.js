@@ -114,10 +114,51 @@ var usersettings = (function(){
 			},
 			removeAccount : function(){
 				actions.removeAccount()
+			},
+			pinlock : function(mode){
+				self.nav.api.load({
+					open : true,
+					id : 'pinlock',
+					eid : 'pinlocksettings',
+					inWnd : true,
+					essenseData : {
+						mode : mode
+					}
+				})
 			}
 		}
 
 		var renders = {
+
+			security : function(){
+
+				var pinlock = self.app.pinlock
+
+				if (!el.security || !el.security.length || !pinlock || !pinlock.available()) return
+
+				self.shell({
+					name : 'security',
+					el : el.security,
+					data : {
+						enabled : pinlock.enabled(),
+						timeouts : pinlock.timeouts(),
+						timeout : pinlock.getTimeout()
+					}
+
+				}, function(p){
+
+					p.el.find('.pinlockaction').on('click', function(){
+						events.pinlock($(this).attr('mode'))
+					})
+
+					p.el.find('.pinlocktimeoutchip').on('click keydown', function(e){
+
+						if (e.type == 'keydown' && e.key != 'Enter' && e.key != ' ') return
+
+						pinlock.setTimeout($(this).attr('value'))
+					})
+				})
+			},
 
 			downloadedvideoscontent : function(clbk){
 
@@ -374,9 +415,12 @@ var usersettings = (function(){
 		var make = function(){
 
 			renders.options()
+			renders.security()
 			renders.cache()
 			renders.diagnostics()
 			renders.downloadedvideoscontent()
+
+			if (self.app.pinlock) self.app.pinlock.clbks.change.usersettings = renders.security
 
 			self.app.platform.actionListeners['settings'] = function(){
 				renders.cache()
@@ -438,6 +482,8 @@ var usersettings = (function(){
 
 				delete self.app.platform.actionListeners['settings']
 
+				if (self.app.pinlock) delete self.app.pinlock.clbks.change.usersettings
+
 				//delete self.app.platform.sdk.node.transactions.clbks.settings
 
 				/*if (self.app.user.features.telegram){
@@ -459,6 +505,7 @@ var usersettings = (function(){
 				el.options = el.c.find('.options')
 				el.cache = el.c.find('.cache')
 				el.diagnostics = el.c.find('.diagnostics')
+				el.security = el.c.find('.securityWrapper')
 
 				initEvents();
 

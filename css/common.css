@@ -1,5 +1,6 @@
 .share_common {
   background: rgb(var(--background-total-theme));
+  /* short response after add / remove (class is set by sdk.collections.feedback) */
 }
 .share_common .commentsWrapperHb {
   min-height: 1em;
@@ -1025,9 +1026,15 @@
   right: 0;
   top: 0;
   bottom: 0;
-  background: rgba(var(--background-total-theme), 0.28);
+  /* light theme-aware tint: the publication must stay readable under it */
+  background: rgba(var(--background-total-theme), 0.12);
   z-index: 10;
   align-items: center;
+  border-radius: inherit;
+  -moz-transition: 0.2s;
+  -o-transition: 0.2s;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
 }
 .share_common .collectionMode .removeFromCollection {
   display: none;
@@ -1040,22 +1047,82 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 1em;
+  /* width follows the text: long labels (remove, other languages) stay on one line */
 }
 .share_common .collectionMode .collectionModeCell .label {
-  font-size: 0.8em;
-  margin-bottom: 1em;
+  font-size: 0.75em;
+  font-weight: 500;
+  margin-bottom: 0.75em;
   border-radius: 16px;
-  padding: 0.5em 1em;
-  background: rgba(var(--background-total-theme), 0.88);
+  padding: 0.375em 1em;
+  color: rgb(var(--text-color));
+  background: rgba(var(--background-total-theme), 0.92);
+  border: 1px solid rgba(var(--neutral-grad-1), 0.9);
+  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
+  text-align: center;
+  /* click expands the minimized collection window */
+  cursor: pointer;
+  -moz-transition: 0.2s;
+  -o-transition: 0.2s;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+.share_common .collectionMode .collectionModeCell .label:hover {
+  border-color: rgb(var(--color-bg-ac-bright));
 }
 .share_common .collectionMode .collectionModeCell button {
-  width: 180px;
+  width: auto;
+  min-width: 180px;
+  max-width: 100%;
+  white-space: nowrap;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
   border-radius: 30px;
   font-size: 0.8em;
+  font-weight: 500;
+  padding-top: 0.625em;
+  padding-bottom: 0.625em;
+  box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
+}
+.share_common .collectionMode .collectionModeCell .removeFromCollection {
+  color: rgb(var(--color-bad));
+  background: rgba(var(--background-total-theme), 0.95);
+  border: 1px solid rgba(var(--color-bad), 0.45);
 }
 .share_common .collectionMode .collectionModeCell .removeFromCollection,
 .share_common .collectionMode .collectionModeCell .addToCollection {
-  margin-top: 1em;
+  margin-top: 0;
+}
+.share_common .collectionMode .collectionModeCell .removeFromCollection:before,
+.share_common .collectionMode .collectionModeCell .addToCollection:before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  margin-right: 0.5em;
+  font-size: 0.9em;
+}
+.share_common .collectionMode .collectionModeCell .addToCollection:before {
+  content: "\f067";
+}
+.share_common .collectionMode .collectionModeCell .removeFromCollection:before {
+  content: "\f068";
+}
+.share_common.collectionadded .collectionMode {
+  animation: collectionAddedRing 0.6s ease-out;
+}
+.share_common.collectionadded .collectionModeCell .removeFromCollection {
+  animation: collectionButtonPop 0.4s ease-out;
+}
+.share_common.collectionremoved .collectionModeCell .addToCollection {
+  animation: collectionButtonPop 0.4s ease-out;
+}
+.share_common.incollection .collectionMode {
+  background: rgba(var(--color-bg-ac-bright), 0.06);
+  box-shadow: inset 0 0 0 2px rgb(var(--color-bg-ac-bright));
+}
+.share_common.incollection .collectionMode .collectionModeCell .label {
+  color: rgb(var(--color-bg-ac-bright));
+  border-color: rgba(var(--color-bg-ac-bright), 0.5);
 }
 .share_common.incollection .collectionMode .addToCollection {
   display: none;
@@ -1313,8 +1380,17 @@
 html.television .share_common .sharecaption {
   cursor: default;
 }
+html.editcollection .share_common {
+  /*
+            pass the card radius down to the overlay: templates (share, article, video, post page)
+            have a different set of wrappers between .share_common and .collectionMode
+        */
+}
 html.editcollection .share_common .collectionMode {
   display: block;
+}
+html.editcollection .share_common :has(.collectionMode) {
+  border-radius: inherit;
 }
 html.editcollection .share_common .commentsWrapperHb {
   display: none;
@@ -2134,4 +2210,114 @@ html.mobileview.ios .share_common.fullScreenVideo .video-js {
   content: '\f04c';
   top: -13px;
   left: 7px;
+}
+/*
+    collection illustrations (inline svg from platform.ws.tempates.collectionIllustration):
+    pastel cards, folder in the accent color, plus badge and hand drawn doodles.
+    Folder, badge and doodles use theme variables, so it works in light and dark themes
+*/
+.collectionIllustration {
+  width: 160px;
+  max-width: 100%;
+  margin: 0 auto;
+  /* back wall is a shade darker than the front of the folder */
+  /* one short entrance only: an infinite animation repaints the window every frame over the blurred .wndback and makes scrolling lag */
+}
+.collectionIllustration svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.collectionIllustration .ill-doodle {
+  fill: none;
+  stroke: rgb(var(--text-color));
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.75;
+}
+.collectionIllustration .ill-card {
+  opacity: 0.95;
+}
+.collectionIllustration .ill-card1 {
+  fill: #5fd3c6;
+}
+.collectionIllustration .ill-card2 {
+  fill: #ffd56b;
+}
+.collectionIllustration .ill-card3 {
+  fill: #f49ad6;
+}
+.collectionIllustration .ill-paper {
+  fill: rgb(var(--background-total-theme));
+  stroke: rgb(var(--neutral-grad-1));
+  stroke-width: 1.5;
+}
+.collectionIllustration .ill-folderback,
+.collectionIllustration .ill-folder {
+  fill: rgb(var(--color-bg-ac-bright));
+}
+.collectionIllustration .ill-foldershade {
+  fill: #000;
+  opacity: 0.22;
+}
+.collectionIllustration .ill-wave {
+  fill: #fff;
+  opacity: 0.16;
+}
+.collectionIllustration .ill-badge circle {
+  fill: rgb(var(--text-color));
+}
+.collectionIllustration .ill-badge .ill-plus {
+  fill: none;
+  stroke: rgb(var(--background-total-theme));
+  stroke-width: 2.4;
+  stroke-linecap: round;
+}
+.collectionIllustration .ill-cards {
+  animation: collectionIllIn 0.6s ease-out 1 both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .collectionIllustration .ill-cards {
+    animation: none;
+  }
+}
+@keyframes collectionIllIn {
+  0% {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+/* lenta: response when a publication is added to / removed from a collection (sdk.collections.feedback) */
+@keyframes collectionAddedRing {
+  0% {
+    background: rgba(var(--color-bg-ac-bright), 0.2);
+    box-shadow: inset 0 0 0 6px rgba(var(--color-bg-ac-bright), 0.6);
+  }
+  100% {
+    background: rgba(var(--color-bg-ac-bright), 0.06);
+    box-shadow: inset 0 0 0 2px rgb(var(--color-bg-ac-bright));
+  }
+}
+@keyframes collectionButtonPop {
+  0% {
+    transform: scale(0.9);
+  }
+  60% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .share_common.collectionadded .collectionMode,
+  .share_common .collectionModeCell button {
+    animation: none !important;
+  }
 }

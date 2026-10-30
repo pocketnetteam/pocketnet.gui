@@ -1,3 +1,5 @@
+import Foundation
+import UIKit
 import Contacts
 import ContactsUI
 
@@ -42,8 +44,8 @@ import ContactsUI
                 for contact in contacts {
                     resultArray.append(contact.getJson());
                 }
-                let result:CDVPluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: resultArray);
-                self.commandDelegate.send(result, callbackId: self._callbackId)
+                let result:CDVPluginResult = CDVPluginResult(status: .ok, messageAs: resultArray);
+                self.sendResult(result)
             }
         }
     }
@@ -93,8 +95,8 @@ import ContactsUI
         ];
         let options = ContactsXOptions(options: ["fields": fields]);
         let contactResult = ContactX(contact: contact, options: options).getJson() as! [String : Any];
-        let result: CDVPluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: contactResult);
-        self.commandDelegate.send(result, callbackId: self._callbackId);
+        let result: CDVPluginResult = CDVPluginResult(status: .ok, messageAs: contactResult);
+        self.sendResult(result)
     }
 
     @objc(save:)
@@ -124,8 +126,8 @@ import ContactsUI
             if(retId != nil) {
                 let contact = self.findById(id: retId!);
                 if(contact != nil) {
-                    let result:CDVPluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: contact?.getJson()  as! [String : Any]);
-                    self.commandDelegate.send(result, callbackId: self._callbackId)
+                    let result:CDVPluginResult = CDVPluginResult(status: .ok, messageAs: contact?.getJson()  as! [String : Any]);
+                    self.sendResult(result)
                 }
             }
             self.returnError(error: ErrorCodes.UnknownError);
@@ -206,7 +208,7 @@ import ContactsUI
                 var newMails: [CNLabeledValue<NSString>] = [];
                 outer: for newMail in contact.emails! {
                     for mail in editContact.emailAddresses {
-                        if(mail.identifier == newMail.id!) {
+                        if(newMail.id != nil && mail.identifier == newMail.id!) {
                             newMails.append(mail.settingLabel(ContactsX.mapStringToLabel(string: newMail.type), value: newMail.value as NSString));
                             continue outer;
                         }
@@ -281,8 +283,8 @@ import ContactsUI
             do {
                try store.execute(request);
 
-                let result:CDVPluginResult = CDVPluginResult(status: CDVCommandStatus_OK);
-                self.commandDelegate.send(result, callbackId: self._callbackId)
+                let result:CDVPluginResult = CDVPluginResult(status: .ok);
+                self.sendResult(result)
            } catch {
             self.returnError(error: ErrorCodes.UnknownError)
            }
@@ -299,8 +301,8 @@ import ContactsUI
                 "write": granted
             ];
 
-            let result:CDVPluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: dict);
-            self.commandDelegate.send(result, callbackId: self._callbackId)
+            let result:CDVPluginResult = CDVPluginResult(status: .ok, messageAs: dict);
+            self.sendResult(result)
         }
     }
 
@@ -314,8 +316,8 @@ import ContactsUI
                 "write": granted
             ];
 
-            let result:CDVPluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: dict);
-            self.commandDelegate.send(result, callbackId: self._callbackId)
+            let result:CDVPluginResult = CDVPluginResult(status: .ok, messageAs: dict);
+            self.sendResult(result)
         }, requestIfNotAvailable: true)
     }
 
@@ -340,17 +342,30 @@ import ContactsUI
                     } else {
                         completionHandler(false)
                     }
-                }
+                case .limited:
+                    // iOS 18+: access to the contacts selected by the user
+                    completionHandler(true)
+                @unknown default:
+                    completionHandler(false)
+            }
+    }
+
+    // cordova-ios 8: send(_:callbackId:) takes a non-optional callback id
+    func sendResult(_ result: CDVPluginResult) {
+        guard let callbackId = _callbackId else {
+            return
+        }
+        self.commandDelegate.send(result, callbackId: callbackId)
     }
 
     func returnError(error: ErrorCodes, message: String = "") {
         if(_callbackId != nil) {
             let result:CDVPluginResult = CDVPluginResult(
-                status: CDVCommandStatus_ERROR, messageAs: [
+                status: .error, messageAs: [
                     "error": error.rawValue,
                     "message": message
             ]);
-            self.commandDelegate.send(result, callbackId: _callbackId)
+            self.sendResult(result)
             _callbackId = nil;
         }
     }

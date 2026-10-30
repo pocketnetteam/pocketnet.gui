@@ -106,6 +106,7 @@ _l.ranswer = "Одговорили сте на коментар";
 _l.sentmoney = "Послали сте средства кориснику";
 _l.a_unsubscribe = "Поништили сте праћење";
 _l.a_subscribe = "Запратили сте";
+_l.a_collection = "Креирали сте колекцију";
 _l.a_block = function(c){
     return c ? `Блокирали сте ${c} корисника` : `Блокирали сте`;
 };
@@ -2455,6 +2456,7 @@ _l.removeAccount_undefinedError = 'Дошло је до неочекиване �
 _l.deletedAccount_temp = "Налог је у процесу брисања"
 _l.deletedAccount_deleted = "Налог је обрисан"
 _l.deletedAccount_true = "Налог је обрисан"
+_l.deletedAccountName = "Обрисан налог"
 
 _l.utipdeleted = "Ваш налог је обрисан. Можете користити само новчаник"
 _l.applydonate = "Примени"
@@ -2478,6 +2480,10 @@ _l.recommendations_tags_anotherShares = 'Остале публикације к�
 _l.profanity_tag = 'псовне речи'
 _l.addAccessToLibrary = 'Одобри приступ галерији'
 _l.cameranotavailable = 'Камера није доступна'
+_l.photolibrarylimited = 'Одобрили сте само ограничен приступ фотографијама.'
+_l.photolibrarymanage = 'Изабери још фотографија'
+_l.photolibrarylimitedempty = 'Још нисте изабрали ниједну фотографију'
+_l.photolibraryempty = 'У галерији нема фотографија'
 
 _l.rtip4 = 'Овај кључ је ваша лозинка! Немојте је изгубити.'
 
@@ -3190,6 +3196,7 @@ _l.miniApp_fieldsLockedInfo = "ИД, назив и опсег ваше апли�
 _l.juryCaptionPost = "Да ли публикација крши правила за објављивање садржаја на "+appname+"?";
 _l.juryCaptionComment = "Да ли коментар крши правила за објављивање садржаја на "+appname+"?";
 _l.juryCaptionUser = "Да ли кориснички профил крши правила за објављивање садржаја на "+appname+"?";
+_l.juryCaptionCollection = "Да ли колекција (наслов, опис, насловна слика) крши правила за објављивање садржаја на "+appname+"?";
 _l.juryCaptionReason = "Разлог"
 _l.juryYes = "Да, крши"
 _l.juryNo = "Не, не крши"
@@ -3285,3 +3292,188 @@ _l.appsdisclaimer='Свака апликација је већ новчаник 
 _l.gotobarteron = "Прећи у Barteron"
 _l.windows7 = "Преузми за Windows 7"
 _l.miniapps = "Мини апликације"
+
+/** Collections */
+_l.collections = "Колекције"
+_l.emptycollections = "Нема колекција"
+_l.collectionemptymessage = "Опис колекције је празан"
+_l.collectioncaption = "Назив колекције је обавезан"
+_l.collectionshares = "Додајте бар једну објаву"
+_l.collectionimage = "Насловна слика колекције је обавезна"
+_l.collectionby = "Колекција аутора"
+_l.collectionLabel = "Колекција"
+_l.collectionEdit = "Уреди"
+_l.collectionOpen = "Отвори колекцију"
+_l.collectionEditing = "Чување измена…"
+_l.collectionnochanges = "Нема измена у колекцији"
+_l.collectionNotFound = "Колекција није пронађена"
+_l.collectionDeleted = "Колекција је обрисана"
+_l.newcollection = "Направи"
+_l.newcollectionex = "Направи нову колекцију"
+_l.edcollectionex = "Уреди колекцију"
+_l.savecollection = "Сачувај"
+_l.deletecollection = "Обриши"
+_l.removeCollectionDialog = "Да ли заиста желите да обришете ову колекцију?"
+_l.cancelcollection = "Откажи"
+_l.collectionInputCaption = "Назив колекције"
+_l.collectionInputDescription = "Опис колекције"
+_l.collectionInputImage = "Насловна слика колекције"
+_l.collectionInputImageChange = "Промени насловну слику колекције"
+_l.collectionMaterialsAdd = "Додај објаве"
+_l.collectionMaterials = "Објаве"
+_l.collectionsShowAll = "Прикажи све колекције"
+_l.collectionAuthorCollections = "Колекције аутора"
+_l.collectionMaterialsUnavailable = "Неке објаве нису доступне"
+_l.enabledEditModeCollections = "Изаберите у интерфејсу објаве које желите да укључите у ову колекцију"
+_l.collectionMode = "Режим уређивања колекције"
+_l.removeFromCollection = "Уклони из колекције"
+_l.addToCollection = "Додај у колекцију"
+_l.addToCollectionHint = "Изаберите колекцију за ову објаву"
+_l.collectionNewItem = "Нова колекција"
+_l.collectionContains = "Већ је у овој колекцији"
+_l.collectionAlreadyContains = "Ова објава се не може додати јер је већ у колекцији"
+_l.collectionCoverAdd = "Додај насловну слику"
+_l.collectionCoverHint = "Кликните или превуците слику. Најбоље је квадратна слика"
+_l.collectionCoverChange = "Измени"
+_l.collectionInputCaptionPlaceholder = "На пример: Најбоље у месецу"
+_l.collectionInputDescriptionPlaceholder = "О чему је ова колекција?"
+_l.collectionOptional = "(опционо)"
+_l.collectionMaterialsEmpty = "Још нема објава"
+_l.collectionMaterialsEmptyHint = "Додајте објаве у колекцију. Редослед можете променити превлачењем"
+_l.collectionMaterialsDragHint = "Превуците да промените редослед"
+_l.clearcollection = "Очисти"
+_l.clearCollectionDialog = "Да ли стварно желите да очистите колекцију?"
+_l.collectionsEmptyHint = "Групишите објаве у тематске колекције и делите их"
+_l.collectionTypeArticle = "Чланак"
+_l.collectionTypeStream = "Пренос"
+_l.collectionTypePoll = "Анкета"
+_l.collectionTypePost = "Објава"
+_l.collectionTypePaid = "За претплатнике"
+_l.collectionInRelay = "Колекција се објављује…"
+_l.collectionWaitConf = "Колекција се објављује…"
+_l.collectionPublishError = "Грешка при објављивању"
+
+//pin lock
+
+_l.pinlock_title = "Закључавање PIN-ом"
+_l.pinlock_welcome = function(v){
+	return "Добро дошли назад, " + v
+}
+_l.pinlock_welcomeanon = "Добро дошли назад"
+_l.pinlock_enter = "Унесите PIN"
+_l.pinlock_current = "Унесите тренутни PIN"
+_l.pinlock_new = "Направите PIN"
+_l.pinlock_repeat = "Поновите PIN"
+_l.pinlock_done = "Готово"
+_l.pinlock_mismatch = "PIN-ови се не поклапају"
+_l.pinlock_wrong = "Погрешан PIN"
+_l.pinlock_attemptsleft = function(v){
+	return "преосталих покушаја: " + v
+}
+_l.pinlock_blocked = function(v){
+	return "Превише покушаја. Покушајте поново за " + v
+}
+_l.pinlock_error = "Нешто није у реду. Покушајте поново"
+_l.pinlock_entered = function(v){
+	return "Унето " + v + " од 4"
+}
+_l.pinlock_digit = function(v){
+	return "Цифра " + v
+}
+_l.pinlock_delete = "Обриши"
+_l.pinlock_keyboardhint = "Можете куцати на тастатури"
+_l.pinlock_forgot = "Заборавили сте PIN?"
+_l.pinlock_forgotwarning = "За поновну пријаву биће вам потребна мнемоничка фраза или приватни кључ. Без њих ће приступ налогу бити трајно изгубљен."
+_l.pinlock_signout = "Одјави се"
+_l.pinlock_purpose = "PIN штити апликацију од других особа које до ње дођу. Не замењује резервну копију мнемоничке фразе."
+_l.pinlock_enabled = "PIN је постављен"
+_l.pinlock_changed = "PIN је промењен"
+_l.pinlock_disabled = "PIN је искључен"
+_l.pinlock_lockafter = "Закључај након"
+_l.pinlock_minutes = function(v){
+	return v + " мин"
+}
+_l.pinlock_security = "Безбедност"
+_l.pinlock_settingname = "PIN"
+_l.pinlock_stateon = "Укључен"
+_l.pinlock_stateoff = "Искључен"
+_l.pinlock_set = "Постави PIN"
+_l.pinlock_change = "Промени PIN"
+_l.pinlock_disable = "Искључи PIN"
+_l.pinlock_locknow = "Закључај сада"
+
+_l.a_boost = "Бустовали сте објаву ";
+_l.inclueComments = "Коментари";
+_l.ok = "У реду";
+_l["Most Discussed Over"] = "Највише коментарисано за";
+_l["Top videos"] = "Најбољи видео снимци";
+_l.e13196 = "Може потрајати";
+_l.downvote = "Негативна оцена";
+_l.uploadVideoProgress = "Напредак:";
+_l.HIVTable24 = 'Ово се односи на децентрализоване криптовалуте као што су Bitcoin или Pocketcoin';
+_l.installedApps = "Инсталиране";
+_l.installedBadge = "Инсталирано";
+_l.lowstar3 = "Ако дате 1 или 2 звездице из разлога који нису наведени изнад, након покретања алгоритма модерације чланови жирија ће вам трајно одузети стаж налога.";
+_l.boosts_title = "Бустови";
+_l.boosts_both = "Сви";
+_l.boosts_sent = "Послати";
+_l.boosts_received = "Примљени";
+_l.boosts_sent_badge = "Послато";
+_l.boosts_received_badge = "Примљено";
+_l.boosts_date = "Датум";
+_l.boosts_direction = "Тип";
+_l.boosts_amount = "Износ";
+_l.boosts_amount_loaded = "Учитани износ";
+_l.boosts_participants = "Учесници";
+_l.boosts_booster = "Бустер";
+_l.boosts_contentauthor = "Аутор";
+_l.boosts_content = "Садржај";
+_l.boosts_transaction = "Трансакција";
+_l.boosts_height = "Висина";
+_l.boosts_loaded = "Учитано";
+_l.boosts_empty = "Нема пронађених бустова";
+_l.boosts_error = "Историја бустова није доступна";
+_l.boosts_loadmore = "Учитај још";
+_l.boosts_me = "ја";
+_l.boosts_show = "Прикажи";
+_l.boosts_txcopied = "Трансакција је копирана";
+_l.boosts_summary_stat = function(p){ p = p || {}; return 'Бустова: ' + (p.count || 0) + ' · ' + (p.amount || 0) + ' PKOIN' };
+_l.fastmessagedonate = "као донацију";
+_l.miniApp_missingDescriptionError = "Опис апликације недостаје у датотеци `b_manifest`. Уверите се да је наведено поље `descriptions['en']` или `description`.";
+_l.miniApp_idInvalidMessage = "ID мора бити у формату имена домена, на пример app.pocketnet или example.app. Користите само мала слова и најмање једну тачку.";
+_l.fortaBannerDesc = "Преузмите нови месинџер Forta Chat за Android или посетите сајт за више информација.";
+_l.downloadapk = "Преузми APK";
+_l.fortaVisitSite = "Посети forta.chat";
+_l.gotofortachat = "Иди на Forta Chat";
+_l.sysmodbas="Систем модерације садржаја на Bastyon-у";
+_l.torHintStateRunning = "TOR модул ради";
+_l.torHintStateStarting = "TOR модул се покреће";
+_l.imageerror = "Дошло је до грешке при учитавању слика. Покушајте поново";
+_l.ratingsAndReviews = "Оцене и рецензије";
+_l.allReviews = "Све рецензије";
+_l.rateApp = "Оцени";
+_l.writeComment = "Напиши коментар";
+_l.yourRating = "Ваша оцена";
+_l.youAlreadyRated = "Већ сте оценили ову апликацију";
+_l.noReviewsYet = "Још нема рецензија. Будите први који ће оставити коментар!";
+_l.noRatingsYet = "Још нема оцена";
+_l.beFirstToRate = "Инсталирајте апликацију и будите први који ће је оценити!";
+_l.commentMinLength = "Коментар мора имати најмање 10 карактера";
+_l.commentSent = "Коментар је послат! Појавиће се убрзо након обраде у блокчејну.";
+_l.ratingSent = "Оцена је послата! Појавиће се убрзо након обраде у блокчејну.";
+_l.commentSendError = "Грешка при слању коментара. Покушајте поново.";
+_l.tellAboutExperience = "Испричајте нам о свом искуству са апликацијом...";
+_l.yourComment = "Ваш коментар";
+_l.submitReview = "Пошаљи рецензију";
+_l.cancel = "Откажи";
+_l.all = "Све";
+_l.howDoYouRate = "Како оцењујете ову апликацију?";
+_l.clickStarToRate = "Кликните на звездицу да бисте оценили";
+_l.outOf5 = "од 5";
+_l.ratings = "оцена";
+_l.submitRating = "Оцени";
+_l.mustInstallToComment = "Морате инсталирати апликацију пре писања рецензије";
+_l.mustInstallToRate = "Морате инсталирати апликацију пре оцењивања";
+_l.reviewsAndRatingsMenu = "Рецензије и оцене";
+_l.rateAppPromptMessage = "Да ли вам се свиђа ова апликација? Одвојите тренутак да је оцените!";
+_l.rateAppButton = "Оцени апликацију";

@@ -18,7 +18,12 @@ var commentf = function(comment){
 
 	var src = sUserInfo.image;
 	var name = app.platform.api.clearname(sUserInfo.name, true);
-	var letter = sUserInfo.letter;  
+	var letter = sUserInfo.letter;
+
+	if (sUserInfo.deleted && sUserInfo.deleted != 'temp'){
+		name = e('deletedAccountName');
+		letter = name[0].toUpperCase();
+	}
 
 	if (ed.jury){
 		hiddenComment = false

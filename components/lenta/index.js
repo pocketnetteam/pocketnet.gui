@@ -61,7 +61,8 @@ var lenta = (function(){
 			optimized = {},
 			cachedHeight = 0,
 			optimizedCount = 0,
-			fullscreenvideoShowed = null;
+			fullscreenvideoShowed = null,
+			horizontalLoadmorescroll = null;
 
 		var countshares = 0;
 
@@ -766,7 +767,9 @@ var lenta = (function(){
 				players = {}
 				sharesInview = []
 				visibilityStatus = {}
-				
+
+				if (el) el.share = {}
+
 			},
 
 			next : function(txid, clbk){
@@ -1113,7 +1116,6 @@ var lenta = (function(){
 
 					var callback = (player) => {
 
-						console.log("LENTA PLAYER CLBK", player)
 
 						if(!el.share) return
 
@@ -1176,21 +1178,11 @@ var lenta = (function(){
 						television : app.television,
 
 						pictureInPictureRequest : function(){
-							
-							var player = players[share.txid].p
 
-							self.app.actions.playingvideo(null)
-
-							actions.exitFullScreenVideo(share.txid)
-
-							var startTime = player && player.getPosition ? player.getPosition() : 0
-
-							setTimeout(function(){
-								self.app.platform.ui.pipvideo(share.txid, null, {
-									startTime
-								})
-							}, 300)
-						},	
+							self.app.actions.requestpip(share.txid, players[share.txid].p, function(){
+								actions.exitFullScreenVideo(share.txid)
+							})
+						},
 						
 						volumeChange : function(v){
 							videosVolume = v
@@ -1201,6 +1193,14 @@ var lenta = (function(){
 						fullscreenchange : self.app.mobile.fullscreenmode,
 
 						play : function(){
+
+							// must not open the fullscreen video again after the pip request
+							if (self.app.actions.piprequested(players[share.txid].p)){
+								players[share.txid].p.pause()
+
+								return
+							}
+
 							videopaused = false
 
 							self.app.actions.playingvideo(players[share.txid].p)
@@ -1838,7 +1838,7 @@ var lenta = (function(){
 
 					actions.fullScreenVideoParallax(_el, id)
 
-					self.app.mobile.statusbar.gallerybackground()
+					self.app.mobile.statusbar.push('lentafullscreen', 'gallery')
 
 					self.app.nav.api.history.addParameters({
 						v : id
@@ -1927,7 +1927,7 @@ var lenta = (function(){
 
 				//player.p.muted = true;
 
-				self.app.mobile.statusbar.background()
+				self.app.mobile.statusbar.pop('lentafullscreen')
 				self.app.pseudofullscreenmode = false
 
 				actions.fullScreenVideoParallax(null)
@@ -2838,7 +2838,7 @@ var lenta = (function(){
 
 					if (
 						!loading &&  (!ended && (recommended != 'recommended' || recommended != 'best')) &&
-						(el.w.scrollLeft() + el.w.width() > el.c.find('.shares').width() - 1000)
+						(el.w.scrollLeft() + el.w.width() > el.shares.width() - 1000)
 
 						) {
 
@@ -3171,6 +3171,10 @@ var lenta = (function(){
 
 					actions.addToCollection(shareId)
 
+			},
+
+			showCollectionWindow : function(){
+				self.app.platform.sdk.collections.showwindow()
 			},
 
 			showblockedpost : function(){
@@ -3592,6 +3596,15 @@ var lenta = (function(){
 						c()
 					}, {jury : true})
 					
+					return
+				}
+
+				if (item.type == 'collection'){
+
+					self.app.platform.papi.collection(item.key, _elcnt, () => {
+						c()
+					}, {jury : true})
+
 					return
 				}
 
@@ -5284,6 +5297,7 @@ var lenta = (function(){
 			el.c.on('click', '.unblockbutton', events.unblock)
 			el.c.on('click', '.addToCollection', events.addToCollection)
 			el.c.on('click', '.removeFromCollection', events.removeFromCollection)
+			el.c.on('click', '.collectionMode .label', events.showCollectionWindow)
 			el.c.on('click', '.showblockedpost', events.showblockedpost)
 			el.c.on('click', '.videoTips', events.fullScreenVideo)
 			el.c.on('click', '.videoOpen', events.fullScreenVideo)
@@ -5420,9 +5434,9 @@ var lenta = (function(){
 
 
 					if (essenseData.horizontal){
-						el.w.on('scroll', function(){
-							events.loadmorescroll()
-						});
+						horizontalLoadmorescroll = _.throttle(events.loadmorescroll, 100)
+
+						el.w.on('scroll', horizontalLoadmorescroll);
 					}
 					else{
 						self.app.events.scroll['loadmore' + mid] = events.loadmorescroll
@@ -6211,6 +6225,13 @@ var lenta = (function(){
 					el.w.off('scroll', events.videosInview);
 					el.w.off('scroll', events.loadmorescroll);
 					el.w.off('resize', events.resize);
+
+					if (horizontalLoadmorescroll) el.w.off('scroll', horizontalLoadmorescroll);
+				}
+
+				if (horizontalLoadmorescroll){
+					horizontalLoadmorescroll.cancel()
+					horizontalLoadmorescroll = null
 				}
 				
 				

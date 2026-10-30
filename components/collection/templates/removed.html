@@ -1,0 +1,9 @@
+<div class="empty collectionCard allb">
+	<%= app.platform.ws.tempates.collectionIllustration('empty') %>
+	<div class="emptytitle"><%- e('collectionDeleted') %></div>
+	<% if(author && author.address) { %>
+		<div class="emptylink">
+			<a href="<%- app.platform.api.authorlink(author.address) %>"><%- app.platform.api.name(author.address) %></a>
+		</div>
+	<% } %>
+</div>

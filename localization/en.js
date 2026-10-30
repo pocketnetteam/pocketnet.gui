@@ -114,10 +114,12 @@ _l.ranswer= "You have responded to the comment";
 _l.sentmoney = "You transferred funds to";
 _l.a_unsubscribe = "You have unsubscribed from";
 _l.a_subscribe = "You have subscribed to";
+_l.a_collection = "You created a collection";
 _l.a_block = function(c){
     return c ? `You have blocked ${c} users` : `You have blocked`
 };
 _l.a_unblock= "You have unblocked";
+_l.a_boost = "You boosted the post ";
 _l.a_empty = "No statistics for the last 3 months";
 //user page
 
@@ -526,6 +528,7 @@ _l.embeddingSettings = "Embedding Settings"
 _l.blackTheme = "Black Theme"
 _l.includeComments = "Include comments"
 _l.showOnlyLast = "Show Only last comment"
+_l.inclueComments = "Comments"
 _l.showAll = "Show all comments"
 _l.dontShow = "Don't show comments"
 _l.removeDescription = "Remove description"
@@ -584,6 +587,7 @@ _l.e13055 = "Edit Proxy"
 _l.save = "Save"
 _l.e13056 = "Node Host"
 _l.close = "Close"
+_l.ok = "OK"
 _l.e13057 = "Please fill all fields"
 _l.e13058 = "You alredy have this proxy in list."
 _l.delete = "Delete"
@@ -727,6 +731,8 @@ _l.e13136 = "All Posts"
 _l.e13137 = "My Subscriptions" // This is the equivalent of a ‘News feed’. Don’t change the word ‘Pocket’ however, it’s a feature of "+appname+".
 _l.e13138 = "Top posts"
 _l["Top Posts Over"] = "Top Posts Over"
+_l["Most Discussed Over"] = "Most Discussed Over"
+_l["Top videos"] = "Top videos"
 _l.bestFirst = "The best first"
 _l.topnext = "Next"
 _l.topprevious = "Previous"
@@ -809,6 +815,7 @@ _l.e13192 = "Level"
 _l.e13193 = "BONUS"
 _l.e13194 = "Reputation and Status"
 _l.e13195 = "Limitations"
+_l.e13196 = "It may take"
 _l.с= "It much take up"
 _l.e13197 = "Recieve Pocketcoins"
 _l.e13198 = "Approximate waiting time is"
@@ -932,6 +939,7 @@ _l.e13270d = "Downvotes receive"
 
 _l.e13271 = "Comment receive"
 _l.e13272 = "Answer receive"
+_l.downvote = "Negative rating"
 _l.e13273 = "New Followers"
 _l.e13274 = "Rescued Users"
 _l.e13275 = "Comment Score"
@@ -1229,6 +1237,7 @@ _l.selectAudioFile = "Select audio file"
 _l.uploadVideoProgress_binaries = "Preparing binaries:"
 _l.uploadVideoProgress_processing = "Processing video:"
 _l.uploadVideoProgress_uploading = "Uploading video:"
+_l.uploadVideoProgress = "Progress:"
 _l.uploadAudioProgress_uploading = "Uploading audio:"
 _l.uploadVideoProgress_start = "Video download initialization:"
 _l.uploadAudioProgress_start = "Audio download initialization:"
@@ -1926,6 +1935,7 @@ _l.HIVTable20 = 'Transparent, open to public';
 _l.HIVTable21 = 'No';
 _l.HIVTable22 = 'No';
 _l.HIVTable23 = 'Yes';
+_l.HIVTable24 = 'This means decentralized cryptocurrencies such as Bitcoin or Pocketcoin';
 
 
 
@@ -2337,6 +2347,7 @@ _l.lowstar_reason_5 = "Copyrighted content"
 _l.lowstar_reason_6 = "Spam"
 
 _l.lowstar2 = "Please do not use 1 and 2 star ratings for other reasons. After the new moderation is released in mid. May you will be able to use low ratings for other reasons"
+_l.lowstar3 = "If you give 1 or 2 stars for reasons not listed above, then after the moderation algorithm is released, jury members will permanently take away your account seniority."
 _l.lowstaragree = "I confirm that this post contains one of four types of prohibited content"
 
 _l.usetor = "Connection via Tor network"
@@ -2391,6 +2402,7 @@ _l.removeAccount_undefinedError = 'An unexpected error occurred while deleting y
 _l.deletedAccount_temp = "Account is in the process of being deleted"
 _l.deletedAccount_deleted = "Account deleted"
 _l.deletedAccount_true = "Account deleted"
+_l.deletedAccountName = "Deleted account"
 
 _l.utipdeleted = "Your Account Deleted. You can use only wallet"
 _l.applydonate = "Apply"
@@ -2418,6 +2430,10 @@ _l.recommendations_tags_anotherShares = 'Other publications recommended by these
 _l.profanity_tag = 'profanity'
 _l.addAccessToLibrary = 'Grant access to the gallery'
 _l.cameranotavailable = 'Camera not available'
+_l.photolibrarylimited = 'You have granted limited access to your photos.'
+_l.photolibrarymanage = 'Select more photos'
+_l.photolibrarylimitedempty = 'You have not selected any photos yet'
+_l.photolibraryempty = 'There are no photos in your gallery'
 
 _l.rtip4 = 'This key is your password! Do not lose it.'
 
@@ -2917,6 +2933,31 @@ _l.advertising_exchange = "Buy cryptocurrency"
 _l.advertising_buychat = "Contact via chat"
 _l.advertising_Date = "Date"
 
+_l.boosts_title = "Boosts"
+_l.boosts_both = "Both"
+_l.boosts_sent = "Sent"
+_l.boosts_received = "Received"
+_l.boosts_sent_badge = "Sent"
+_l.boosts_received_badge = "Received"
+_l.boosts_date = "Date"
+_l.boosts_direction = "Type"
+_l.boosts_amount = "Amount"
+_l.boosts_amount_loaded = "Loaded amount"
+_l.boosts_participants = "Participants"
+_l.boosts_booster = "Booster"
+_l.boosts_contentauthor = "Author"
+_l.boosts_content = "Content"
+_l.boosts_transaction = "Transaction"
+_l.boosts_height = "Height"
+_l.boosts_loaded = "Loaded"
+_l.boosts_empty = "No boosts found"
+_l.boosts_error = "Boost history is unavailable"
+_l.boosts_loadmore = "Load more"
+_l.boosts_me = "me"
+_l.boosts_show = "Show"
+_l.boosts_txcopied = "Transaction copied"
+_l.boosts_summary_stat = function(p){ p = p || {}; return (p.count || 0) + ' boosts · ' + (p.amount || 0) + ' PKOIN' }
+
 
 _l.grouping = "Group by"
 _l.groupBy_shares = "shares"
@@ -2927,6 +2968,7 @@ _l.fastmessagemonetization = "as a reward under the monetization program"
 _l.fastmessagemonetization = "as a donate"
 
 _l.sendcoinssm = "Send"
+_l.fastmessagedonate = "as a donation"
 _l.e130961donate = "How much PKOIN do you want to donate?"
 _l.statsWallet = "Wallet information"
 _l.paymentsDate = "Date"
@@ -3031,6 +3073,7 @@ _l.miniApp_missingNameError = "The application name is missing in the manifest. 
 _l.miniApp_missingVersionError = "The application version is missing in the manifest. The `version` field must be filled.";
 _l.miniApp_missingDescriptionEnError = "The application description in English is missing in the `descriptions` section.";
 _l.miniApp_missingScopeError = "The `scope` information is missing in the manifest. Ensure a valid `scope` value is provided.";
+_l.miniApp_missingDescriptionError = "The application description is missing in the `b_manifest` file. Make sure the `descriptions['en']` or `description` field is provided.";
 _l.miniApp_brokenAuthorError = "Invalid application author. This may be caused by a missing or incorrectly formatted `author` field (expected a Base58 address).";
 _l.miniApp_discrepancyIdError = "Discrepancy between the application ID in the manifest and the application ID specified during installation.";
 _l.miniApp_discrepancyDevelopError = "Discrepancy in the development status (`develop`) between the manifest and the specified application.";
@@ -3060,6 +3103,7 @@ _l.miniApp_localhostScopeWarningMessage = "Publishing an application with a loca
 _l.miniApp_createTitle = "Create a New Mini-Application";
 _l.miniApp_tagsRequiredMessage = "Please specify tags for the application.";
 _l.miniApp_scopeInvalidMessage = "This field must be in the format of a subdomain, for example, app.pocketnet. Use only lowercase letters, numbers, and dots without https:// or www prefixes.";
+_l.miniApp_idInvalidMessage = "The ID must be in domain name format, for example, app.pocketnet or example.app. Use only lowercase letters and at least one dot.";
 _l.miniApp_extendedTags = "The maximum number of tags you can add is ";
 
 _l.miniApp_devModeLabel = "Development Environment:";
@@ -3152,6 +3196,7 @@ _l.miniApp_fieldsLockedInfo = "The ID, name, and scope of your application canno
 _l.juryCaptionPost = "Does the publication violate the rules for posting content on a "+appname+"?"
 _l.juryCaptionComment = "Does the comment violate the rules for posting content on a "+appname+"?"
 _l.juryCaptionUser = "Does the user profile violate the rules for posting content on a "+appname+"?"
+_l.juryCaptionCollection = "Does the collection (title, description, cover) violate the rules for posting content on a "+appname+"?"
 _l.juryCaptionReason = "Reason"
 _l.juryYes = "Yes, it does"
 _l.juryNo = "No, it does not violate"
@@ -3267,11 +3312,24 @@ _l.torHintStateStarting = "TOR module is starting"
 
 _l.collections = "Collections"
 _l.emptycollections = "No collections"
+_l.collectionemptymessage = "Collection description is empty"
+_l.collectioncaption = "Collection name is required"
+_l.collectionshares = "Add at least one publication"
+_l.collectionimage = "Collection cover is required"
+_l.collectionby = "Collection by"
+_l.collectionLabel = "Collection"
+_l.collectionEdit = "Edit"
+_l.collectionOpen = "Open collection"
+_l.collectionEditing = "Saving changes…"
+_l.collectionnochanges = "There are no changes in the collection"
+_l.collectionNotFound = "Collection not found"
+_l.collectionDeleted = "Collection deleted"
 _l.newcollection = "Create"
 _l.newcollectionex = "Create a new collection"
 _l.edcollectionex = "Edit a collection"
 _l.savecollection = "Save"
 _l.deletecollection = "Delete"
+_l.removeCollectionDialog = "Do you really want to delete this collection?"
 _l.cancelcollection = "Cancel"
 _l.collectionInputCaption = "Collection name"
 _l.collectionInputDescription = "Collection description"
@@ -3279,11 +3337,37 @@ _l.collectionInputImage = "Collection cover"
 _l.collectionInputImageChange = "Change collection cover"
 _l.collectionMaterialsAdd = "Add publications"
 _l.collectionMaterials = "Publications"
+_l.collectionsShowAll = "Show all collections"
+_l.collectionAuthorCollections = "Author's collections"
+_l.collectionMaterialsUnavailable = "Some publications are unavailable"
 _l.enabledEditModeCollections = "Select the publications in the interface that want to include in this collection"
 _l.collectionMode = "Collection edit mode"
 _l.removeFromCollection = "Remove from collection"
 _l.addToCollection = "Add to collection"
-_l.e13163 = "There are no changes in the collection"
+_l.addToCollectionHint = "Choose a collection for this publication"
+_l.collectionNewItem = "New collection"
+_l.collectionContains = "Already in this collection"
+_l.collectionAlreadyContains = "This publication can't be added to this collection because it is already there"
+_l.collectionCoverAdd = "Add cover"
+_l.collectionCoverHint = "Click or drop an image. A square picture works best"
+_l.collectionCoverChange = "Change"
+_l.collectionInputCaptionPlaceholder = "For example: Best of the month"
+_l.collectionInputDescriptionPlaceholder = "What is this collection about?"
+_l.collectionOptional = "(optional)"
+_l.collectionMaterialsEmpty = "No publications yet"
+_l.collectionMaterialsEmptyHint = "Add publications to the collection. You can change their order by dragging"
+_l.collectionMaterialsDragHint = "Drag to change the order"
+_l.clearcollection = "Clear"
+_l.clearCollectionDialog = "Are you sure you want to clear the collection?"
+_l.collectionsEmptyHint = "Group publications into themed collections and share them with others"
+_l.collectionTypeArticle = "Article"
+_l.collectionTypeStream = "Stream"
+_l.collectionTypePoll = "Poll"
+_l.collectionTypePost = "Post"
+_l.collectionTypePaid = "For subscribers"
+_l.collectionInRelay = "Collection is being published…"
+_l.collectionWaitConf = "Collection is being published…"
+_l.collectionPublishError = "Publishing error"
 
 _l.imageerror = "An error occurred while loading images. Please try again"
 
@@ -3304,6 +3388,7 @@ _l.tellAboutExperience = "Tell us about your experience with the app..."
 _l.yourComment = "Your comment"
 _l.submitReview = "Submit Review"
 _l.cancel = "Cancel"
+_l.all = "All"
 _l.howDoYouRate = "How do you rate this app?"
 _l.clickStarToRate = "Click on a star to rate"
 _l.outOf5 = "out of 5"
@@ -3315,3 +3400,52 @@ _l.mustInstallToRate = "You must install the app before rating"
 _l.reviewsAndRatingsMenu = "Reviews and Ratings"
 _l.rateAppPromptMessage = "Are you enjoying this app? Please take a moment to rate it!"
 _l.rateAppButton = "Rate App"
+
+//pin lock
+
+_l.pinlock_title = "PIN lock"
+_l.pinlock_welcome = function(v){
+	return "Welcome back, " + v
+}
+_l.pinlock_welcomeanon = "Welcome back"
+_l.pinlock_enter = "Enter PIN code"
+_l.pinlock_current = "Enter current PIN code"
+_l.pinlock_new = "Create a PIN code"
+_l.pinlock_repeat = "Repeat PIN code"
+_l.pinlock_done = "Done"
+_l.pinlock_mismatch = "PIN codes do not match"
+_l.pinlock_wrong = "Wrong PIN code"
+_l.pinlock_attemptsleft = function(v){
+	return "attempts left: " + v
+}
+_l.pinlock_blocked = function(v){
+	return "Too many attempts. Try again in " + v
+}
+_l.pinlock_error = "Something went wrong. Please try again"
+_l.pinlock_entered = function(v){
+	return "Entered " + v + " of 4"
+}
+_l.pinlock_digit = function(v){
+	return "Digit " + v
+}
+_l.pinlock_delete = "Delete"
+_l.pinlock_keyboardhint = "You can type on your keyboard"
+_l.pinlock_forgot = "Forgot PIN code?"
+_l.pinlock_forgotwarning = "To sign in again, you will need your mnemonic phrase or private key. Without them, access to the account will be lost forever."
+_l.pinlock_signout = "Sign out"
+_l.pinlock_purpose = "The PIN code protects the app from other people who get access to it. It does not replace a backup of your mnemonic phrase."
+_l.pinlock_enabled = "PIN code is set"
+_l.pinlock_changed = "PIN code changed"
+_l.pinlock_disabled = "PIN code disabled"
+_l.pinlock_lockafter = "Lock after"
+_l.pinlock_minutes = function(v){
+	return v + " min"
+}
+_l.pinlock_security = "Security"
+_l.pinlock_settingname = "PIN code"
+_l.pinlock_stateon = "On"
+_l.pinlock_stateoff = "Off"
+_l.pinlock_set = "Set PIN code"
+_l.pinlock_change = "Change PIN code"
+_l.pinlock_disable = "Disable PIN code"
+_l.pinlock_locknow = "Lock now"

@@ -1090,6 +1090,7 @@ var author = (function(){
 					byauthor : true,
 					hr : hr,
 					optimize : self.app.mobileview,
+					contentvisibility : true,
 					cancelsearch : function(){
 						clearsearch()
 					},

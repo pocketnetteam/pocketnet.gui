@@ -125,6 +125,18 @@ var userpage = (function(){
 			})
 
 			if(!self.app.pkoindisable){
+				reports.push({
+					name : self.app.localization.e('boosts_title'),
+					id : 'boosts',
+					report : 'boosts',
+					mobile : true,
+					if : function(){
+						return !self.app.platform.sdk.user.myaccauntdeleted()
+					}
+				})
+			}
+
+			if(!self.app.pkoindisable){
 				if(self.app.user.validate() && self.app.platform.sdk.users.checkMonetizationOpportunity(self.app.user.address.value)) {
 
 					
@@ -1106,6 +1118,18 @@ var userpage = (function(){
 
 			})
 
+			el.c.on('click', '.pinlocknow', function(){
+
+				self.app.mobile.vibration.small()
+
+				if (self.app.pinlock) self.app.pinlock.lock()
+
+			})
+
+			if (self.app.pinlock) self.app.pinlock.clbks.change.userpage = function(){
+				if (el.c) el.c.find('.pinlocknow').toggle(self.app.pinlock.enabled())
+			}
+
 			el.c.find('.backtabletmenu').on('click', function(){
 				
 				makerep()
@@ -1225,6 +1249,8 @@ var userpage = (function(){
 			destroy : function(){
 
 				delete self.iclbks.mn
+
+				if (self.app.pinlock) delete self.app.pinlock.clbks.change.userpage
 
 				hcready = false;
 

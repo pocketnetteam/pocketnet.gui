@@ -1,0 +1,50 @@
+<% _.each(boosts, function(boost){ %>
+	<div class="boostsRow boostItem <%-boost.direction%>">
+		<div class="date"><span><%-boost.date || '---'%></span></div>
+		<div class="direction">
+			<span class="directionBadge <%-boost.direction%>"><%-boost.directionLabel%></span>
+		</div>
+		<div class="amount">
+			<span class="amountValue"><%-app.platform.mp.coin(boost.boostAmount || 0)%></span>
+			<span class="amountCurrency">PKOIN</span>
+		</div>
+		<div class="booster">
+			<span class="cellLabel"><%=e('boosts_booster')%></span>
+			<% if(boost.boosterIsMe) {%>
+				<span class="profileName" title="<%-boost.boostAddress || ''%>"><%-boost.boostAddressName || '---'%></span>
+			<% } else if(boost.boostAddress) {%>
+				<a href="<%-app.platform.api.authorlink(boost.boostAddress)%>" title="<%-boost.boostAddress%>"><%-boost.boostAddressName || '---'%></a>
+			<% } else { %>
+				<span>---</span>
+			<% } %>
+		</div>
+		<div class="author">
+			<span class="cellLabel"><%=e('boosts_contentauthor')%></span>
+			<% if(boost.authorIsMe) {%>
+				<span class="profileName" title="<%-boost.contentAddress || ''%>"><%-boost.contentAddressName || '---'%></span>
+			<% } else if(boost.contentAddress) {%>
+				<a href="<%-app.platform.api.authorlink(boost.contentAddress)%>" title="<%-boost.contentAddress%>"><%-boost.contentAddressName || '---'%></a>
+			<% } else { %>
+				<span>---</span>
+			<% } %>
+		</div>
+		<div class="transaction">
+			<% if(boost.txid) {%>
+				<span class="txidMuted boostTransaction" txid="<%-boost.txid%>" title="<%-boost.txid%>"><%-boost.txidShort || '---'%></span>
+				<i class="far fa-copy copyBoostTx" txid="<%-boost.txid%>" title="<%=e('dcopyToClipboard')%>"></i>
+			<% } else { %>
+				<span>---</span>
+			<% } %>
+		</div>
+		<div class="content">
+			<% if(boost.contentTxid) {%>
+				<button class="boostContent ghost" txid="<%-boost.contentTxid%>">
+					<span><%=e('boosts_show')%></span>
+				</button>
+				<i class="far fa-copy copyBoostContentLink" link="<%-boost.contentLink%>" title="<%=e('copylink')%>"></i>
+			<% } else { %>
+				<span>---</span>
+			<% } %>
+		</div>
+	</div>
+<% }) %>

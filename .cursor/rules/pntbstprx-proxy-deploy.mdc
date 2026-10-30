@@ -1,0 +1,32 @@
+---
+description: Deploy pocketnet proxy fleet (4/5.pocketnet.app) via GHCR + PROXY_FLEET_JSON
+globs: proxy16/deploy/**
+alwaysApply: false
+---
+
+# Proxy fleet deploy
+
+## Secrets
+
+| Secret | Meaning |
+|--------|---------|
+| `PROXY_FLEET_JSON` | base64 of fleet JSON (see `C:\keys\bastyon\proxy-fleet`) |
+| `PNTBSTPRX_SSH_KEY` | shared private key on all fleet hosts |
+
+Local encode: `C:\keys\bastyon\proxy-fleet\encode-secret.ps1 -Copy`
+
+Fleet fields per host: `id`, `ip`, `host`, `sshUser`, `admin` (required non-empty), `email` (Let's Encrypt).
+
+## Workflow
+
+`.github/workflows/deploy.proxy.fleet.yml` — `workflow_dispatch` only.
+
+1. Build `ghcr.io/<owner>/pocketnet-proxy:proxy16`
+2. Decode fleet → matrix
+3. Per host: LE cert → `/opt/proxy/cert/` → pull image → bootstrap (admin/domain/enabled) → up
+
+
+## Do not
+
+- Commit `C:\keys\bastyon\proxy-fleet\fleet.json` or `fleet.b64` into the repo
+- Put private keys inside the fleet JSON

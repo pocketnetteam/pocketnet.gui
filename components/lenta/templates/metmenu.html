@@ -16,6 +16,12 @@ var all = {
 		class : 'opennewwindow'
 	},
 
+	addtocollection : {
+		icon : '<i class="fas fa-layer-group"></i>',
+		text : e('addToCollection'),
+		class : 'addtocollection'
+	},
+
 	pin : {
 		icon : '<i class="fas fa-thumbtack"></i>',
 		text : e('pin'),
@@ -169,6 +175,11 @@ if(share){
 		var my = (user.address.value && share.address == user.address.value.toString('hex'))
 		var subscribed = '';
 		var me = psdk.userInfo.getmy()
+
+		// a publication that is not in the blockchain yet can't be added
+		if (!share.temp && !share.relay){
+			m.push('addtocollection')
+		}
 
 
 		if (my){

@@ -1,21 +1,34 @@
-<div id="<%-module.map.id%>" class="<%- ed.preview ? 'preview' : ''%>">
+<div id="<%-module.map.id%>" class="<%- ed.preview ? 'preview' : ''%> <%- ed.select ? 'select' : ''%>">
+
+	<% if(ed.select) {%>
+
+		<div class="selectHeader">
+			<div class="selectTitle"><%- e('addToCollection') %></div>
+			<div class="selectHint"><%- e('addToCollectionHint') %></div>
+		</div>
+
+	<% } else { %>
 
 	<div class="captionWrapper">
 		<div class="caption">
-			<span><%- e('collections') %></span> <span class="count"></span>
+			<span><%- e('collections') %></span> <span class="headcount"></span>
 		</div>
 		<% if(author.me) {%>
 
 			<div class="panel">
-				<div class="iconbutton newcollection">
-					<i class="fas fa-plus-circle"></i>
-				</div>
+				<% if(ed.preview) {%>
+					<div class="iconbutton newcollection" title="<%- e('newcollectionex') %>">
+						<i class="fas fa-plus-circle"></i>
+					</div>
+				<% } else { %>
+					<button class="button small newcollection"><i class="fas fa-plus"></i> <%- e('newcollection') %></button>
+				<% } %>
 			</div>
 
 		<% } %>
 	</div>
 
-	
+	<% } %>
 
 	<div class="collectionsdata">
 		<div class="loaderWrapper">
@@ -25,13 +38,10 @@
 		</div>
 	</div>
 
-	
-
 	<% if(ed.preview) {%>
 		<div class="showmoreWrapper">
-			<button class="button ghost showmore"><%-e('e13021')%></button>
+			<button class="button ghost showmore"><%- e('collectionsShowAll') %></button>
 		</div>
 	<% } %>
-
 
 </div>

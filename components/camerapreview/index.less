@@ -10,7 +10,7 @@
     .useselectedWrapper{
         display: none;
         position: absolute;
-        bottom : 6 * @rhythm;
+        bottom : calc(6 * @rhythm + env(safe-area-inset-bottom, 0px));
         left : 0;
         right: 0;
         text-align: center;
@@ -46,6 +46,40 @@
             margin-top: 4 * @rhythm;
         }
 
+        .limitedlibrary{
+            display: none;
+            margin-bottom: 2 * @rhythm;
+            padding: 2 * @rhythm;
+            border-radius: 6px;
+            background: rgba(var(--text-on-bg-shadow-color), 0.08);
+            color : rgba(var(--text-on-bg-shadow-color), 0.8);
+
+            .limitedlibrarytext{
+                font-size: 0.9em;
+                margin-bottom: 1.5 * @rhythm;
+            }
+        }
+
+        .emptylibrary{
+            display: none;
+            padding: 6 * @rhythm 2 * @rhythm;
+            text-align: center;
+            color : rgba(var(--text-on-bg-shadow-color), 0.6);
+
+            i{
+                font-size: 3em;
+                margin-bottom: 2 * @rhythm;
+            }
+
+            .emptylibrarytext{
+                font-size: 0.9em;
+            }
+
+            .emptylimited{
+                display: none;
+            }
+        }
+
         .caption{
             padding : 2 * @rhythm 0;
             color : rgba(var(--text-on-bg-shadow-color), 0.8);
@@ -70,6 +104,7 @@
             right: 0;
             top : calc(65px + var(--app-margin-top));
             padding : @rhythm 2 * @rhythm;
+            padding-bottom: calc(12 * @rhythm + env(safe-area-inset-bottom, 0px));
             overflow-y: scroll;
             .imagescontent{
                 display: grid;
@@ -118,6 +153,32 @@
     &.photolibraryaccessdeclined{
         .gallery{
             .declinedlibrary{
+                display: block;
+            }
+        }
+    }
+
+    &.photolibraryaccesslimited{
+        .gallery{
+            .limitedlibrary{
+                display: block;
+            }
+
+            .emptylibrary{
+                .emptylimited{
+                    display: block;
+                }
+
+                .emptyfull{
+                    display: none;
+                }
+            }
+        }
+    }
+
+    &.photolibraryempty:not(.photolibraryaccessdeclined){
+        .gallery{
+            .emptylibrary{
                 display: block;
             }
         }
@@ -242,7 +303,7 @@
         margin : 0 auto;
         position: absolute;
         left : 50%;
-        bottom : 6 * @rhythm;
+        bottom : calc(6 * @rhythm + env(safe-area-inset-bottom, 0px));
         margin-left: -27px;
         z-index: 150;
 

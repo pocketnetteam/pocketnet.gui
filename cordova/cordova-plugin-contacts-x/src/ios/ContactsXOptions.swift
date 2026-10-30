@@ -1,3 +1,5 @@
+import Foundation
+
 class ContactsXOptions {
 
     var firstName: Bool = true;

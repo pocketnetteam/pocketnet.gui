@@ -1,6 +1,6 @@
 {
     "name": "pocketnetproxy",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Pocketnet Proxy Server 16",
     "main": "index.js",
     "scripts": {

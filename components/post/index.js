@@ -539,16 +539,9 @@ var post = (function () {
 						},
 
 						pictureInPictureRequest : function(){
-							self.closeContainer()
-
-							var startTime = player && player.getPosition ? player.getPosition() : 0
-
-							setTimeout(function(){
-								self.app.platform.ui.pipvideo(share.txid, null, {
-									startTime
-								})
-							}, 300)
-							
+							self.app.actions.requestpip(share.txid, player, function(){
+								self.closeContainer()
+							})
 						},
 
 						
@@ -654,7 +647,6 @@ var post = (function () {
 
 								}
 
-								console.log('muted', player)
 
 								if (player.enableHotKeys && !ed.repost) player.enableHotKeys()
 							}
@@ -1500,6 +1492,10 @@ var post = (function () {
 
 						_p.el.find('.addToCollection').on('click', function(){
 							actions.addToCollection()
+						})
+
+						_p.el.find('.collectionMode .label').on('click', function(){
+							self.app.platform.sdk.collections.showwindow()
 						})
 
 
@@ -2385,7 +2381,7 @@ var post = (function () {
 				if(allcontentenabled){
 					window.rifticker.add(() => {
 						self.app.el.html.removeClass('allcontent')
-						self.app.mobile.statusbar.background()
+						self.app.mobile.statusbar.set('page', null)
 					})
 				}
 
@@ -2439,7 +2435,7 @@ var post = (function () {
 
 					window.rifticker.add(() => {
 						self.app.el.html.addClass('allcontent')
-						self.app.mobile.statusbar.topfadebackground()
+						self.app.mobile.statusbar.set('page', 'topfade')
 					})
 				}
 

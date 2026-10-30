@@ -1,27 +1,63 @@
 @import "../../css/__cssvar";
 
+@clRadius : 10px;
+
 #collections{
 	padding : 5 * @rhythm;
 	background: rgb(var(--background-total-theme));
 
-	&.preview{
-		padding : 0;
+	/* header */
+
+	.captionWrapper{
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap : @rhythm;
+		margin-bottom: 2 * @rhythm;
 	}
 
 	.caption{
-		font-weight: 100;
-		font-size: 2em;
+		display: flex;
+		align-items: center;
+		gap : @rhythm;
+		font-weight: 600;
+		font-size: 1.3em;
+
+		.headcount{
+			font-size: 0.55em;
+			font-weight: 600;
+			min-width: 22px;
+			height: 22px;
+			line-height: 22px;
+			padding : 0 @rhythm;
+			border-radius: 11px;
+			text-align: center;
+			background: rgba(var(--color-bg-ac-bright), 0.12);
+			color : rgb(var(--color-bg-ac-bright));
+
+			&:empty{
+				display: none;
+			}
+		}
 	}
 
-    .panel{
-        text-align: center;
-    }
-	
-    .captionWrapper{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+	.panel{
+		flex-shrink: 0;
+
+		.button{
+			font-size: 0.9em;
+			border-radius: 8px;
+		}
+	}
+
+	.iconbutton{
+		cursor: pointer;
+		color : rgb(var(--color-txt-ac));
+		padding : @rhythm;
+		padding-right: 0;
+	}
+
+	/* loader */
 
 	.loaderWrapper{
 		display : none;
@@ -35,50 +71,477 @@
 		}
 	}
 
+	/* grid of collections (window / full page) */
+
 	.collectionslist{
-		.collection{
-			padding : @rhythm 0;
-			margin-top: @rhythm;
-			margin-bottom: @rhythm;
+
+		.items{
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+			gap : 2 * @rhythm;
 		}
 
-        .empty{
-            padding : @rhythm 0;
-			margin-top: @rhythm;
-			margin-bottom: @rhythm;
+		.collection{
+			cursor: pointer;
+			min-width: 0;
 
-        }
+			.cover{
+				position: relative;
+				aspect-ratio: 1;
+				border-radius: @clRadius;
+				overflow: hidden;
+				background: rgb(var(--neutral-grad-0));
+
+				.img{
+					position: absolute;
+					left: 0;
+					top: 0;
+					right: 0;
+					bottom: 0;
+					background-size: cover;
+					background-position: center;
+					.transition(0.3s);
+				}
+
+				.coverbadge{
+					position: absolute;
+					right: @rhythm;
+					bottom: @rhythm;
+					padding : 0.5 * @rhythm @rhythm;
+					border-radius: 6px;
+					font-size: 0.7em;
+					font-weight: 600;
+					color : #fff;
+					background: rgba(0, 0, 0, 0.55);
+					backdrop-filter: blur(4px);
+
+					i{
+						margin-right: 0.25 * @rhythm;
+						font-size: 0.9em;
+					}
+				}
+
+				/* select mode: the publication is already in this collection */
+				.containsbadge{
+					position: absolute;
+					left: @rhythm;
+					top: @rhythm;
+					width: 24px;
+					height: 24px;
+					border-radius: 50%;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					font-size: 0.7em;
+					color : rgb(var(--text-on-bg-ac-color));
+					background: rgb(var(--color-bg-ac-bright));
+				}
+			}
+
+			.info{
+				padding : @rhythm 0.25 * @rhythm 0;
+				min-width: 0;
+			}
+
+			.itemcaption{
+				font-weight: 600;
+				font-size: 0.9em;
+				line-height: 1.3em;
+				overflow: hidden;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+				word-break: break-word;
+			}
+
+			.itemcount{
+				display: none;
+				font-size: 0.75em;
+				color : rgb(var(--neutral-grad-3));
+				margin-top: 0.25 * @rhythm;
+			}
+
+			&:hover{
+				.cover .img{
+					transform: scale(1.04);
+				}
+
+				.itemcaption{
+					color : rgb(var(--color-txt-ac));
+				}
+			}
+
+			/* collection that is still being published (temp actions), like temp shares in lenta */
+
+			.publishoverlay{
+				position: absolute;
+				left: 0;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 1.6em;
+				color : rgb(var(--color-bg-ac-bright));
+				background: rgba(var(--background-total-theme), 0.55);
+				-webkit-backdrop-filter: blur(2px);
+				backdrop-filter: blur(2px);
+			}
+
+			.publishstate{
+				font-size: 0.75em;
+				line-height: 1.3em;
+				margin-top: 0.25 * @rhythm;
+				color : rgb(var(--color-txt-ac));
+			}
+
+			&.publishing{
+				.coverbadge{
+					display: none;
+				}
+
+				&:hover{
+					.cover .img{
+						transform: none;
+					}
+				}
+			}
+
+			&.relay,
+			&.rejected{
+				cursor: default;
+
+				&:hover{
+					.itemcaption{
+						color : inherit;
+					}
+				}
+			}
+
+			&.rejected{
+				.publishoverlay,
+				.publishstate{
+					color : rgb(var(--color-bad));
+				}
+			}
+		}
+
+		/* empty state */
+
+		.empty{
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+			padding : 5 * @rhythm 2 * @rhythm;
+			border-radius: @clRadius;
+			background: rgb(var(--background-main));
+
+			.collectionIllustration{
+				width: 170px;
+				margin-bottom: 2 * @rhythm;
+			}
+
+			.emptyicon{
+				font-size: 2.4em;
+				color : rgb(var(--neutral-grad-2));
+				margin-bottom: 1.5 * @rhythm;
+			}
+
+			.emptytitle{
+				font-weight: 700;
+			}
+
+			.emptyhint{
+				margin-top: @rhythm;
+				font-size: 0.85em;
+				line-height: 1.4em;
+				color : rgb(var(--neutral-grad-3));
+				max-width: 320px;
+			}
+
+			.emptybuttons{
+				margin-top: 2.5 * @rhythm;
+
+				/* soft accent pill, same as in the collection editor */
+				.button{
+					font-size: 0.9em;
+					border-radius: 18px;
+					padding-left : 2.5 * @rhythm;
+					padding-right : 2.5 * @rhythm;
+					color : rgb(var(--color-bg-ac-bright));
+					background: rgba(var(--color-bg-ac-bright), 0.1);
+					border-color: transparent;
+
+					&:hover{
+						background: rgba(var(--color-bg-ac-bright), 0.18);
+						color : rgb(var(--color-bg-ac-bright));
+					}
+				}
+			}
+		}
 	}
 
-    .iconbutton{
-        cursor: pointer;
-        color : rgb(var(--color-txt-ac));
-        padding : @rhythm;
-        padding-right: 0;
-    }
+	.showmoreWrapper{
+		display: none;
+	}
+
+	&.hasitems{
+		display: block;
+	}
+
+	/* compact list (profile sidebar preview) */
 
 	&.preview{
 		padding : 0;
+
+		.captionWrapper{
+			margin-bottom: @rhythm;
+		}
 
 		.caption{
 			font-weight: 700;
 			font-size: 1em;
 		}
 
+		.collectionslist{
+			.items{
+				display: block;
+			}
+
+			.collection{
+				display: flex;
+				align-items: center;
+				padding : @rhythm;
+				margin : 0 -1 * @rhythm;
+				border-radius: 8px;
+				.transition(0.15s);
+
+				&:hover{
+					background: rgb(var(--neutral-grad-0));
+
+					.cover .img{
+						transform: none;
+					}
+				}
+
+				.cover{
+					flex-shrink: 0;
+					width: 48px;
+					height: 48px;
+					border-radius: 8px;
+					margin-right: 1.5 * @rhythm;
+				}
+
+				.coverbadge{
+					display: none;
+				}
+
+				.info{
+					flex-grow: 1;
+					padding : 0;
+				}
+
+				.itemcaption{
+					-webkit-line-clamp: 1;
+				}
+
+				.itemcount{
+					display: block;
+				}
+
+				.publishoverlay{
+					font-size: 1em;
+				}
+			}
+
+			.empty{
+				padding : 2 * @rhythm;
+				border-width: 1px;
+
+				.emptyicon{
+					font-size: 1.6em;
+					margin-bottom: @rhythm;
+				}
+
+				.emptytitle{
+					font-weight: 400;
+					font-size: 0.9em;
+					color : rgb(var(--neutral-grad-3));
+				}
+
+				.emptyhint{
+					font-size: 0.8em;
+				}
+
+				.emptybuttons{
+					margin-top: 1.5 * @rhythm;
+				}
+			}
+		}
+
 		.showmoreWrapper{
+			margin-top: @rhythm;
+
 			button{
 				width: 100%;
 			}
 		}
+
+		&.hasmore{
+			.showmoreWrapper{
+				display: block;
+			}
+		}
+	}
+}
+
+/* select mode (post menu "add to collection"): picker list */
+
+#collections.select{
+
+	.selectHeader{
+		padding-right: 4 * @rhythm; /* window cross */
+		margin-bottom: 2.5 * @rhythm;
+
+		.selectTitle{
+			font-weight: 700;
+			font-size: 1.25em;
+			line-height: 1.3em;
+		}
+
+		.selectHint{
+			margin-top: 0.5 * @rhythm;
+			font-size: 0.85em;
+			line-height: 1.4em;
+			color : rgb(var(--neutral-grad-3));
+		}
 	}
 
-    .showmoreWrapper{
-        display: none;
-    }
+	.collectionslist{
 
-    &.hasitems{
-        display: block;
-    }
+		.items{
+			display: flex;
+			flex-direction: column;
+			gap : 0.5 * @rhythm;
+		}
+
+		.collection{
+			display: flex;
+			align-items: center;
+			gap : 1.5 * @rhythm;
+			padding : @rhythm;
+			margin : 0 -1 * @rhythm;
+			border-radius: @clRadius;
+			.transition(0.15s);
+
+			.cover{
+				flex-shrink: 0;
+				width: 56px;
+				height: 56px;
+				aspect-ratio: auto;
+				border-radius: 8px;
+
+				.coverbadge,
+				.containsbadge{
+					display: none;
+				}
+			}
+
+			.info{
+				flex-grow: 1;
+				padding : 0;
+			}
+
+			.itemcaption{
+				font-size: 0.95em;
+				-webkit-line-clamp: 1;
+			}
+
+			.itemcount{
+				display: block;
+			}
+
+			.publishoverlay{
+				font-size: 1em;
+			}
+
+			.selectmark{
+				flex-shrink: 0;
+				width: 32px;
+				height: 32px;
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 0.8em;
+				color : rgb(var(--neutral-grad-3));
+				border : 1px solid rgb(var(--neutral-grad-1));
+				.transition(0.15s);
+			}
+
+			&:hover{
+				background: rgb(var(--neutral-grad-0));
+
+				.cover .img{
+					transform: none;
+				}
+
+				.selectmark{
+					color : rgb(var(--color-bg-ac-bright));
+					border-color: rgb(var(--color-bg-ac-bright));
+				}
+			}
+
+			&.contains{
+				cursor: default;
+
+				&:hover{
+					background: transparent;
+
+					.itemcaption{
+						color : inherit;
+					}
+				}
+
+				.selectmark{
+					color : rgb(var(--text-on-bg-ac-color));
+					background: rgb(var(--color-bg-ac-bright));
+					border-color: rgb(var(--color-bg-ac-bright));
+				}
+			}
+
+			&.publishing{
+				.selectmark{
+					visibility: hidden;
+				}
+			}
+
+			/* first row: create a new collection with the publication */
+			&.newitem{
+
+				.cover{
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					font-size: 1.1em;
+					color : rgb(var(--color-bg-ac-bright));
+					background: rgba(var(--color-bg-ac-bright), 0.08);
+					border : 1.5px dashed rgba(var(--color-bg-ac-bright), 0.5);
+				}
+
+				.itemcaption{
+					color : rgb(var(--color-bg-ac-bright));
+				}
+
+				&:hover{
+					background: rgba(var(--color-bg-ac-bright), 0.06);
+				}
+			}
+		}
+	}
 }
 
 .wnd.userlistwindow{
@@ -88,29 +551,16 @@
 	}
 
 	#collections{
-		padding : 0;
-	}
-}
-
-.wnd.userlistwindow{
-	
-	#collections{
-		padding : 2 * @rhythm;
-
-		.caption{
-		}
-
-		.users{
-			.addressTable{
-				>div{
-				}
-
-			}
-		}
+		padding : 3 * @rhythm;
+		min-height: 300px;
 	}
 
+	&.collectionsselect{
+		#collections{
+			min-height: 0;
+		}
+	}
 }
-
 
 html.mobileview{
 	.wnd{

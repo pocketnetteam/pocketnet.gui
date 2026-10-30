@@ -213,6 +213,32 @@ if(activity.txType === 208)
 	<% }%>
 </div>
 <%}
+//	Collection (my collections are merged on the client, the node has no collection activities)
+if(activity.txType === 'collection' && activity.collection) {
+	var collection = activity.collection
+%>
+<div class="comment collectionactivity" tid="<%-activity.hash%>">
+	<div class="avatar">
+		<div class="collectioncover" <% if(collection.image) {%> <%= bgImagesClApplyTemplate(collection.image) %> <% } %>>
+			<% if(!collection.image) {%>
+				<i class="fas fa-layer-group"></i>
+			<% } %>
+		</div>
+	</div>
+	<div class="description">
+		<div class="head"><%=e('a_collection')%>
+			<strong><%-collection.caption%></strong>
+		</div>
+		<% if(collection.settings && collection.settings.m) { %>
+		<div class="message"><%-collection.settings.m%></div>
+		<% } %>
+		<div class="date"><%- activity.date.calendar() %></div>
+	</div>
+	<div class="icon">
+		<span class="collectioncount"><i class="fas fa-layer-group"></i> <%-(collection.contentIds || []).length%></span>
+	</div>
+</div>
+<%}
 //	Content Score
 if(activity.txType === 300) {
 %>

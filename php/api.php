@@ -2,7 +2,7 @@
 
 class PAPI {
 
-    protected $aapi = 'https://5.pocketnet.app:8899/';
+    protected $aapi = 'https://2.pocketnet.app:8899/';
 
 	public function __construct ($proxypath)
 	{
@@ -39,6 +39,9 @@ class PAPI {
         curl_setopt($ch,CURLOPT_POSTFIELDS, json_encode($fields));
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        // bots (telegram etc.) give up on slow pages, so a dead proxy must not hang the page
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
         $result = curl_exec($ch);
         //echo curl_error($ch);
         curl_close($ch);

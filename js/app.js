@@ -976,12 +976,12 @@ Application = function (p) {
 
 		author: {
 			href: 'author',
-			childrens: ['author', 'authorn', 's', 'chat', 'share', 'userpage', 'post', 'post', 'application', 'home']
+			childrens: ['author', 'authorn', 's', 'chat', 'share', 'userpage', 'post', 'post', 'application', 'home', 'collection']
 		},
 
 		authorn: {
 			href: 'authorn',
-			childrens: ['author', 'authorn', 's', 'chat', 'share', 'userpage', 'post', 'post', 'application', 'home']
+			childrens: ['author', 'authorn', 's', 'chat', 'share', 'userpage', 'post', 'post', 'application', 'home', 'collection']
 		},
 
 		userpage: {
@@ -1337,6 +1337,8 @@ Application = function (p) {
 				if (!_OpenApi)
 					self.nav.init(p.nav, function () {
 
+						if (self.pinlockscreen) self.pinlockscreen.ready()
+
 						if (typeof hideSplashScreen != 'undefined') {
 							hideSplashScreen();
 						}
@@ -1511,7 +1513,18 @@ Application = function (p) {
 		self.el.html.attr('chatposition', attr)
 	}
 
+	self.initPinlock = function () {
+
+		if (typeof PinLock == 'undefined' || self.pinlock) return
+
+		self.pinlock = new PinLock(self)
+		self.pinlockscreen = new PinLockScreen(self, self.pinlock)
+		self.pinlock.init()
+	}
+
 	self.deviceReadyInit = function (p) {
+
+		self.initPinlock()
 
 		//self.hasTor = (window.cordova?.plugins?.torRunner && !isios()) || self.electronview || false
 		self.hasTor = (window.cordova && !isios()) || self.electronview || false
@@ -1708,6 +1721,7 @@ Application = function (p) {
 	self.pipwindow = null
 
 	var blockScroll = false
+	var pipRequested = null
 	var scrollmodechanging = false
 	var optimizeTimeout = null
 	var scrollrif = null
@@ -1718,6 +1732,34 @@ Application = function (p) {
 				self.pipwindow.container.close()
 				self.pipwindow = null
 			}
+		},
+
+		// Moves the video from an inline player to the pip window.
+		// before: the caller closes its own view of the video (fullscreen mode, post window)
+		requestpip: function (txid, player, before) {
+
+			// the player may emit 'play' right after the request, see piprequested
+			pipRequested = {
+				player: player,
+				time: Date.now()
+			}
+
+			var startTime = player && player.getPosition ? player.getPosition() : 0
+
+			self.actions.playingvideo(null)
+
+			if (before) before()
+
+			setTimeout(function () {
+				self.platform.ui.pipvideo(txid, null, {
+					startTime: startTime
+				})
+			}, 300)
+		},
+
+		// true while the player that requested pip must stay paused
+		piprequested: function (player) {
+			return !!(player && pipRequested && pipRequested.player === player && Date.now() - pipRequested.time < 2000)
 		},
 		pipwindow: function (p) {
 
@@ -2009,8 +2051,8 @@ Application = function (p) {
 
 	var initevents = function () {
 
-		self.height = self.el.window.height()
-		self.width = self.el.window.width()
+		self.height = self.el.window[0].innerHeight || self.el.window.height()
+		self.width = self.el.window[0].innerWidth || self.el.window.width()
 
 
 
@@ -2072,9 +2114,7 @@ Application = function (p) {
 					window.requestAnimationFrame(() => {
 						self.el.html.addClass('scroll65')
 
-						if (self.mobile.statusbar.status != 'background'){
-							self.mobile.statusbar.background()
-						}
+						self.mobile.statusbar.set('page', null)
 					})
 				}
 			}
@@ -2083,8 +2123,8 @@ Application = function (p) {
 					window.requestAnimationFrame(() => {
 						self.el.html.removeClass('scroll65')
 
-						if (self.el.html.hasClass('allcontent') && self.mobile.statusbar.status != 'topfadebackground'){
-							self.mobile.statusbar.topfadebackground()
+						if (self.el.html.hasClass('allcontent')){
+							self.mobile.statusbar.set('page', 'topfade')
 						}
 
 						
@@ -2181,8 +2221,8 @@ Application = function (p) {
 
 
 			var scrollTop = self.actions.getScroll(),
-				height = self.el.window.height(),
-				width = self.el.window.width();
+				height = self.el.window[0].innerHeight || self.el.window.height(),
+				width = self.el.window[0].innerWidth || self.el.window.width();
 
 			self.height = height
 			self.width = width
@@ -2571,7 +2611,7 @@ Application = function (p) {
 		},
 
 		supportimagegallery: function () {
-			return window.cordova && !isios()
+			return !!(window.cordova && window.cordova.plugins && window.cordova.plugins.photoLibrary)
 		},
 
 		safearea: function () {
@@ -2767,6 +2807,9 @@ Application = function (p) {
 								self.mobile.pip.element.removeClass('pipped')
 								self.mobile.pip.element = null
 							}
+
+							// Android resets the system bars after PiP: restore the current status bar mode
+							self.mobile.statusbar.restore()
 						}
 
 						self.mobile.pip.enabled = res
@@ -2907,94 +2950,186 @@ Application = function (p) {
 				}
 			}
 		},
+		// System bars are computed from a stack of layers, see docs/statusbar-plan.md.
+		// Components open and close their layer: push(id, mode) / pop(id). The top layer wins:
+		// higher priority first, the last opened one inside the same priority.
 		statusbar: {
-			status : 'background',
+
+			// icons: 'light' | 'dark' | 'theme'; navbar: color | 'theme'; hidden: hide both bars.
+			// A property that a mode does not define is taken from the layers below
+			modes : {
+				theme : { icons : 'theme', navbar : 'theme', hidden : false },
+				topfade : { icons : 'light', navbar : 'theme', hidden : false },
+				gallery : { icons : 'light', navbar : '#030F1B', hidden : false },
+				fullscreen : { hidden : true },
+				// bottom sheets dim the page with a dark backdrop
+				sheet : { icons : 'light', navbar : 'theme' }
+			},
+
+			// by layer id, the part before ':' for ids like 'dialog:<id>'
+			priorities : {
+				page : 1,
+				camerapreview : 2,
+				lentafullscreen : 2,
+				dialog : 2,
+				chat : 3,
+				imagegallery : 3,
+				sheet : 3,
+				video : 4,
+				call : 4,
+				pinlock : 5
+			},
+
+			themecolors : {
+				white : '#FFF',
+				black : '#121621',
+				gray : '#1e1d1a'
+			},
+
+			layers : [],
+			order : 0,
+			applied : null,
+			hidden : false,
+
 			initial : function(){
-				/*if (window.NavigationBar)
-					window.NavigationBar.hide()*/
 
-			
+				self.mobile.statusbar.restore()
+
+				if (!window.cordova || isios()) return
+
+				// System dialogs and app switching may show the hidden system bars again (fullscreen video, calls).
+				// Colors are not reset: the core SystemBarPlugin is disabled in cordova-plugin-statusbar
+				document.addEventListener('resume', function(){
+					if (self.mobile.statusbar.hidden) self.mobile.statusbar.restore()
+				}, false)
 			},
-			background: function () {
 
-				var colors = {
-					white: "#FFF",
-					black: "#121621",
-					gray: '#1e1d1a'
+			priority : function(id){
+				return self.mobile.statusbar.priorities[id.split(':')[0]] || 2
+			},
+
+			// Opens the layer or changes its mode and moves it to the top of its priority
+			push : function(id, mode){
+				var statusbar = self.mobile.statusbar
+
+				if (!statusbar.modes[mode]) return
+
+				var layer = _.find(statusbar.layers, function(l){ return l.id == id })
+
+				if (!layer){
+					layer = { id : id, priority : statusbar.priority(id) }
+					statusbar.layers.push(layer)
+				}
+
+				layer.mode = mode
+				layer.order = ++statusbar.order
+
+				statusbar.apply()
+			},
+
+			pop : function(id){
+				var statusbar = self.mobile.statusbar
+				var count = statusbar.layers.length
+
+				statusbar.layers = _.filter(statusbar.layers, function(l){ return l.id != id })
+
+				if (statusbar.layers.length != count) statusbar.apply()
+			},
+
+			// set(id, mode) opens or changes the layer, set(id, null) closes it
+			set : function(id, mode){
+				mode ? self.mobile.statusbar.push(id, mode) : self.mobile.statusbar.pop(id)
+			},
+
+			// Layers from the top one down
+			sorted : function(){
+				return _.sortBy(self.mobile.statusbar.layers, function(l){
+					return -(l.priority * 1000000 + l.order)
+				})
+			},
+
+			// Merged mode: every property comes from the topmost layer that defines it
+			current : function(){
+				var statusbar = self.mobile.statusbar
+				var mode = {}
+
+				_.each(statusbar.sorted().concat({ mode : 'theme' }), function(l){
+					_.each(statusbar.modes[l.mode], function(v, k){
+						if (typeof mode[k] == 'undefined') mode[k] = v
+					})
+				})
+
+				return mode
+			},
+
+			resolve : function(mode){
+				var statusbar = self.mobile.statusbar
+
+				if (mode.hidden) return { hidden : true }
+
+				// called before the platform exists too (pinlock on start), the theme is applied again when it loads
+				var current = deep(self, 'platform.sdk.theme.current')
+				var theme = statusbar.themecolors[current] ? current : 'white'
+				var icons = mode.icons == 'theme' ? (theme == 'white' ? 'dark' : 'light') : mode.icons
+				var navbar = mode.navbar == 'theme' ? statusbar.themecolors[theme] : mode.navbar
+
+				return {
+					icons : icons,
+					navbar : navbar,
+					navbarlight : mode.navbar == 'theme' && theme == 'white'
+				}
+			},
+
+			// Draws the current mode if it changed (force: draw anyway)
+			apply : function(force){
+				var statusbar = self.mobile.statusbar
+				var state = statusbar.resolve(statusbar.current())
+				var key = JSON.stringify(state)
+
+				if (!force && key == statusbar.applied) return
+
+				statusbar.applied = key
+				statusbar.draw(state)
+			},
+
+			restore : function(){
+				self.mobile.statusbar.apply(true)
+			},
+
+			draw : function(state){
+				var statusbar = self.mobile.statusbar
+
+				if (state.hidden){
+					statusbar.hidden = true
+
+					if (window.StatusBar) window.StatusBar.hide()
+					if (window.NavigationBar) window.NavigationBar.hide()
+
+					return
+				}
+
+				if (statusbar.hidden){
+					statusbar.hidden = false
+
+					if (window.StatusBar) window.StatusBar.show()
+					if (window.NavigationBar) window.NavigationBar.show()
 				}
 
 				if (window.StatusBar) {
-					StatusBar.overlaysWebView(true);
+					window.StatusBar.overlaysWebView(true);
 					window.StatusBar.backgroundColorByHexString('#00000000');
-					self.platform.sdk.theme.current == 'white' ? window.StatusBar.styleDefault() : window.StatusBar.styleLightContent()
-				}
-
-				if (window.NavigationBar){
-
-					var c = self.platform.sdk.theme.current || 'white'
-
-					if(!colors[c]) c = 'white'
-
-					window.NavigationBar.backgroundColorByHexString(colors[c], c == 'white');
-				}
-
-				self.mobile.statusbar.status = 'background'
-					
-			},
-
-			gallerybackground: function () {
-
-				if (window.StatusBar) {
-
-					StatusBar.overlaysWebView(true);
-					window.StatusBar.backgroundColorByHexString('#00000000');
-					window.StatusBar.styleLightContent()
+					state.icons == 'dark' ? window.StatusBar.styleDefault() : window.StatusBar.styleLightContent()
 				}
 
 				if (window.NavigationBar)
-					window.NavigationBar.backgroundColorByHexString("#030F1B", true);
-
-				self.mobile.statusbar.status = 'gallerybackground'
-				
-
+					window.NavigationBar.backgroundColorByHexString(state.navbar, state.navbarlight);
 			},
 
-			topfadebackground: function () {
+			debug : function(){
+				var statusbar = self.mobile.statusbar
 
-				if (window.StatusBar) {
-
-					StatusBar.overlaysWebView(true);
-					window.StatusBar.backgroundColorByHexString('#00000000');
-					window.StatusBar.styleLightContent()
-				}
-
-				self.mobile.statusbar.status = 'topfadebackground'
-				
-
-			},
-
-			hide: function () {
-				if (window.StatusBar) {
-					window.StatusBar.hide()
-					//window.StatusBar.overlaysWebView(true);
-				}
-
-				if (window.NavigationBar) {
-					window.NavigationBar.hide()
-				}
-			},
-			show: function () {
-				if (window.StatusBar) {
-					window.StatusBar.show()
-					//window.StatusBar.overlaysWebView(false);
-				}
-
-				if (window.NavigationBar) {
-					window.NavigationBar.show()
-				}
-
-				self.mobile.statusbar.background()
-			},
+				console.log('statusbar', statusbar.current(), JSON.parse(statusbar.applied || 'null'), statusbar.sorted())
+			}
 		},
 
 		unsleep: function (t) {
@@ -3056,7 +3191,7 @@ Application = function (p) {
 				window.requestAnimationFrame(() => {
 
 					v ? self.mobile.screen.unlock() : self.mobile.screen.lock()
-					v ? self.mobile.statusbar.hide() : self.mobile.statusbar.show()
+					self.mobile.statusbar.set('video', v ? 'fullscreen' : null)
 
 				})
 			}

@@ -1,483 +1,340 @@
 package com.terikon.cordova.photolibrary;
 
-import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.util.Base64;
-import android.webkit.WebResourceResponse;
 import android.os.Build;
-import android.os.Environment;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.webkit.WebViewAssetLoader;
+import android.provider.Settings;
+import android.util.Base64;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.CordovaPluginPathHandler;
-import org.apache.cordova.CordovaResourceApi;
 import org.apache.cordova.LOG;
 import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
+// Authorization statuses returned to JavaScript:
+// "full"          - access to all photos
+// "limited"       - access to photos selected by the user (Android 14+)
+// "notDetermined" - the user has not been asked yet
+// "denied"        - denied, the system dialog can be shown again
+// "blocked"       - denied permanently, can be changed only in Settings
 
 public class PhotoLibrary extends CordovaPlugin {
-  private static final String TAG = PhotoLibrary.class.getSimpleName();
+  private static final String TAG = "PhotoLibrary";
 
-  public static final String PHOTO_LIBRARY_PROTOCOL = "cdvphotolibrary";
+  public static final String STATUS_FULL = "full";
+  public static final String STATUS_LIMITED = "limited";
+  public static final String STATUS_NOT_DETERMINED = "notDetermined";
+  public static final String STATUS_DENIED = "denied";
+  public static final String STATUS_BLOCKED = "blocked";
 
-  public static final int DEFAULT_WIDTH = 512;
-  public static final int DEFAULT_HEIGHT = 384;
-  public static final double DEFAULT_QUALITY = 0.5;
+  private static final String READ_EXTERNAL_STORAGE = "android.permission.READ_EXTERNAL_STORAGE";
+  private static final String WRITE_EXTERNAL_STORAGE = "android.permission.WRITE_EXTERNAL_STORAGE";
+  private static final String READ_MEDIA_IMAGES = "android.permission.READ_MEDIA_IMAGES";
+  private static final String READ_MEDIA_VISUAL_USER_SELECTED = "android.permission.READ_MEDIA_VISUAL_USER_SELECTED";
 
-  public static final String ACTION_GET_LIBRARY = "getLibrary";
-  public static final String ACTION_GET_ALBUMS = "getAlbums";
-  public static final String ACTION_GET_THUMBNAIL = "getThumbnail";
-  public static final String ACTION_GET_PHOTO = "getPhoto";
-  public static final String ACTION_STOP_CACHING = "stopCaching";
-  public static final String ACTION_REQUEST_AUTHORIZATION = "requestAuthorization";
-  public static final String ACTION_SAVE_IMAGE = "saveImage";
-  public static final String ACTION_SAVE_VIDEO = "saveVideo";
+  private static final String PREFERENCES = "cordova-plugin-photo-library";
+  private static final String PREFERENCE_ASKED = "asked";
 
-  public CallbackContext callbackContext;
+  private static final int REQUEST_AUTHORIZATION = 1;
+
+  private PhotoLibraryService service;
+  private CallbackContext authorizationCallback;
 
   @Override
   protected void pluginInitialize() {
     super.pluginInitialize();
 
     service = PhotoLibraryService.getInstance();
-
   }
 
   @Override
   public boolean execute(String action, final JSONArray args, final CallbackContext callbackContext) throws JSONException {
 
-    this.callbackContext = callbackContext;
+    switch (action) {
+      case "getAuthorizationStatus":
+        callbackContext.success(getStatus());
+        return true;
+
+      case "requestAuthorization":
+        requestAuthorization(callbackContext);
+        return true;
+
+      case "manageLimitedAccess":
+        manageLimitedAccess(callbackContext);
+        return true;
+
+      case "openSettings":
+        openSettings(callbackContext);
+        return true;
+
+      case "getLibrary":
+        runInBackground(callbackContext, new BackgroundTask() {
+          public void run() throws Exception {
+            getLibrary(args, callbackContext);
+          }
+        });
+        return true;
+
+      case "getThumbnail":
+        runInBackground(callbackContext, new BackgroundTask() {
+          public void run() throws Exception {
+            getThumbnail(args, callbackContext);
+          }
+        });
+        return true;
+
+      case "getPhoto":
+        runInBackground(callbackContext, new BackgroundTask() {
+          public void run() throws Exception {
+            getPhoto(args, callbackContext);
+          }
+        });
+        return true;
+
+      case "saveImage":
+        runInBackground(callbackContext, new BackgroundTask() {
+          public void run() throws Exception {
+            saveImage(args, callbackContext);
+          }
+        });
+        return true;
+
+      default:
+        return false;
+    }
+  }
+
+  @Override
+  public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    if (requestCode != REQUEST_AUTHORIZATION) {
+      return;
+    }
+
+    getPreferences().edit().putBoolean(PREFERENCE_ASKED, true).apply();
+
+    CallbackContext callbackContext = authorizationCallback;
+    authorizationCallback = null;
+
+    if (callbackContext != null) {
+      sendAuthorizationResult(callbackContext);
+    }
+  }
+
+  // Authorization
+
+  private void requestAuthorization(CallbackContext callbackContext) {
+    if (canRead() && canWrite()) {
+      callbackContext.success(getStatus());
+      return;
+    }
+
+    askPermissions(callbackContext);
+  }
+
+  // On Android 14+ asking again in limited mode shows the system dialog to select more photos
+  private void manageLimitedAccess(CallbackContext callbackContext) {
+    if (Build.VERSION.SDK_INT >= 34 && STATUS_LIMITED.equals(getStatus())) {
+      askPermissions(callbackContext);
+      return;
+    }
+
+    sendAuthorizationResult(callbackContext);
+  }
+
+  private void askPermissions(CallbackContext callbackContext) {
+    if (authorizationCallback != null) {
+      authorizationCallback.error(getStatus());
+    }
+
+    authorizationCallback = callbackContext;
+    cordova.requestPermissions(this, REQUEST_AUTHORIZATION, getRequiredPermissions());
+  }
+
+  private void openSettings(CallbackContext callbackContext) {
+    Activity activity = cordova.getActivity();
+    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", activity.getPackageName(), null));
 
     try {
-
-      if (ACTION_GET_LIBRARY.equals(action)) {
-        cordova.getThreadPool().execute(new Runnable() {
-          public void run() {
-            try {
-
-              final JSONObject options = args.optJSONObject(0);
-              final int itemsInChunk = options.getInt("itemsInChunk");
-              final double chunkTimeSec = options.getDouble("chunkTimeSec");
-              final boolean includeAlbumData = options.getBoolean("includeAlbumData");
-
-              if (!checkReadPermissions()) {
-                callbackContext.error(service.PERMISSION_ERROR);
-                return;
-              }
-
-              PhotoLibraryGetLibraryOptions getLibraryOptions = new PhotoLibraryGetLibraryOptions(itemsInChunk, chunkTimeSec, includeAlbumData);
-
-              service.getLibrary(getContext(), getLibraryOptions, new PhotoLibraryService.ChunkResultRunnable() {
-                @Override
-                public void run(ArrayList<JSONObject> library, int chunkNum, boolean isLastChunk) {
-                  try {
-
-                    JSONObject result = createGetLibraryResult(library, chunkNum, isLastChunk);
-                    PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, result);
-                    pluginResult.setKeepCallback(!isLastChunk);
-                    callbackContext.sendPluginResult(pluginResult);
-
-                  } catch (Exception e) {
-                    e.printStackTrace();
-                    callbackContext.error(e.getMessage());
-                  }
-                }
-              });
-
-            } catch (Exception e) {
-              e.printStackTrace();
-              callbackContext.error(e.getMessage());
-            }
-          }
-        });
-        return true;
-
-      } else if (ACTION_GET_ALBUMS.equals(action)) {
-        cordova.getThreadPool().execute(new Runnable() {
-          public void run() {
-            try {
-
-              if (!checkReadPermissions()) {
-                callbackContext.error(service.PERMISSION_ERROR);
-                return;
-              }
-
-              ArrayList<JSONObject> albums = service.getAlbums(getContext());
-
-              callbackContext.success(createGetAlbumsResult(albums));
-
-            } catch (Exception e) {
-              e.printStackTrace();
-              callbackContext.error(e.getMessage());
-            }
-          }
-        });
-        return true;
-
-      } else if (ACTION_GET_THUMBNAIL.equals(action)) {
-        cordova.getThreadPool().execute(new Runnable() {
-          public void run() {
-            try {
-
-              final String photoId = args.getString(0);
-              final JSONObject options = args.optJSONObject(1);
-              final int thumbnailWidth = options.getInt("thumbnailWidth");
-              final int thumbnailHeight = options.getInt("thumbnailHeight");
-              final double quality = options.getDouble("quality");
-
-              if (!checkReadPermissions()) {
-                callbackContext.error(service.PERMISSION_ERROR);
-                return;
-              }
-
-              PhotoLibraryService.PictureData thumbnail = service.getThumbnail(getContext(), photoId, thumbnailWidth, thumbnailHeight, quality);
-              callbackContext.sendPluginResult(createMultipartPluginResult(PluginResult.Status.OK, thumbnail));
-
-            } catch (Exception e) {
-              e.printStackTrace();
-              callbackContext.error(e.getMessage());
-            }
-          }
-        });
-        return true;
-
-      } else if (ACTION_GET_PHOTO.equals(action)) {
-
-        cordova.getThreadPool().execute(new Runnable() {
-          public void run() {
-            try {
-
-              final String photoId = args.getString(0);
-
-              if (!checkReadPermissions()) {
-                callbackContext.error(service.PERMISSION_ERROR);
-                return;
-              }
-
-              PhotoLibraryService.PictureData photo = service.getPhoto(getContext(), photoId);
-              callbackContext.sendPluginResult(createMultipartPluginResult(PluginResult.Status.OK, photo));
-
-            } catch (Exception e) {
-              e.printStackTrace();
-              callbackContext.error(e.getMessage());
-            }
-          }
-        });
-        return true;
-
-      } else if (ACTION_STOP_CACHING.equals(action)) {
-
-        // Nothing to do - it's ios only functionality
-        callbackContext.success();
-        return true;
-
-      } else if (ACTION_REQUEST_AUTHORIZATION.equals(action)) {
-        try {
-
-          final JSONObject options = args.optJSONObject(0);
-          final boolean read = options.getBoolean("read");
-          final boolean write = options.getBoolean("write");
-
-          if (
-            
-            (read && !checkReadPermissions())
-
-            || (write && !checkWritePermissions())) {
-            requestAuthorization(read, write);
-          } else {
-            callbackContext.success();
-          }
-        } catch (Exception e) {
-          e.printStackTrace();
-          callbackContext.error(e.getMessage());
-        }
-        return true;
-
-      } else if (ACTION_SAVE_IMAGE.equals(action)) {
-        cordova.getThreadPool().execute(new Runnable() {
-          public void run() {
-            try {
-
-              final String url = args.getString(0);
-              final String album = args.getString(1);
-
-              if (!checkWritePermissions()) {
-                callbackContext.error(service.PERMISSION_ERROR);
-                return;
-              }
-
-              service.saveImage(getContext(), cordova, url, album, new PhotoLibraryService.JSONObjectRunnable() {
-                @Override
-                public void run(JSONObject result) {
-                  callbackContext.success(result);
-                }
-              });
-
-            } catch (Exception e) {
-              e.printStackTrace();
-              callbackContext.error(e.getMessage());
-            }
-          }
-        });
-        return true;
-
-      } else if (ACTION_SAVE_VIDEO.equals(action)) {
-        cordova.getThreadPool().execute(new Runnable() {
-          public void run() {
-            try {
-
-              final String url = args.getString(0);
-              final String album = args.getString(1);
-
-              if (!checkWritePermissions()) {
-                callbackContext.error(service.PERMISSION_ERROR);
-                return;
-              }
-
-              service.saveVideo(getContext(), cordova, url, album);
-
-              callbackContext.success();
-
-            } catch (Exception e) {
-              e.printStackTrace();
-              callbackContext.error(e.getMessage());
-            }
-          }
-        });
-        return true;
-
-      }
-
-      return false;
-
+      activity.startActivity(intent);
+      callbackContext.success("opened");
     } catch (Exception e) {
-      e.printStackTrace();
-      callbackContext.error(e.getMessage());
-      return false;
+      LOG.e(TAG, "Could not open settings", e);
+      callbackContext.error("Could not open settings");
     }
   }
 
-  @Override
-  public Uri remapUri(Uri uri) {
+  private void sendAuthorizationResult(CallbackContext callbackContext) {
+    String status = getStatus();
 
-    if (!PHOTO_LIBRARY_PROTOCOL.equals(uri.getScheme())) {
-      return null;
+    if (canRead()) {
+      callbackContext.success(status);
+    } else {
+      callbackContext.error(status);
     }
-    return toPluginUri(uri);
-
   }
 
-  @Override
-  public CordovaPluginPathHandler getPathHandler() {
-    //Adapted from https://github.com/apache/cordova-android/issues/1361#issuecomment-978763603
-    return new CordovaPluginPathHandler(new WebViewAssetLoader.PathHandler() {
-      @Nullable
-      @Override
-      public WebResourceResponse handle(@NonNull String path) {
-        LOG.d(TAG, "Path Handler " + path);
-        //e.g. cdvphotolibrary/thumbnail/photoId=3112&width=512&height=384&quality=0.8
-        if (path.startsWith(PHOTO_LIBRARY_PROTOCOL)) {
-          path = path.replaceAll("^cdvphotolibrary/", "cdvphotolibrary://");
-          path = path.replaceAll("thumbnail/", "thumbnail?");
-          path = path.replaceAll("photo/", "photo?");
+  private String getStatus() {
+    if (Build.VERSION.SDK_INT >= 33 && hasPermission(READ_MEDIA_IMAGES)) {
+      return STATUS_FULL;
+    }
 
-          Uri uri = Uri.parse(path);
-          LOG.d(TAG, "URI " + uri);
-          Uri remappedUri = remapUri(uri);
-          LOG.d(TAG, "RemappedUri " + uri);
-          if (remappedUri != null) {
-            try {
-              CordovaResourceApi.OpenForReadResult result = handleOpenForRead(remappedUri);
-              LOG.d(TAG, "Result " + result.inputStream.available());
-              return new WebResourceResponse(result.mimeType, "utf-8", result.inputStream);
-            } catch (IOException e) {
-              LOG.e(TAG, "error open cdvphotolibrary resource " + e);
-            }
-          }
-        }
-        return null;
+    if (Build.VERSION.SDK_INT >= 34 && hasPermission(READ_MEDIA_VISUAL_USER_SELECTED)) {
+      return STATUS_LIMITED;
+    }
+
+    if (Build.VERSION.SDK_INT < 33 && hasPermission(READ_EXTERNAL_STORAGE)) {
+      return STATUS_FULL;
+    }
+
+    if (!getPreferences().getBoolean(PREFERENCE_ASKED, false)) {
+      return STATUS_NOT_DETERMINED;
+    }
+
+    String permission = Build.VERSION.SDK_INT >= 33 ? READ_MEDIA_IMAGES : READ_EXTERNAL_STORAGE;
+
+    return cordova.getActivity().shouldShowRequestPermissionRationale(permission) ? STATUS_DENIED : STATUS_BLOCKED;
+  }
+
+  private String[] getRequiredPermissions() {
+    if (Build.VERSION.SDK_INT >= 34) {
+      return new String[] { READ_MEDIA_IMAGES, READ_MEDIA_VISUAL_USER_SELECTED };
+    }
+
+    if (Build.VERSION.SDK_INT == 33) {
+      return new String[] { READ_MEDIA_IMAGES };
+    }
+
+    if (Build.VERSION.SDK_INT >= 29) {
+      return new String[] { READ_EXTERNAL_STORAGE };
+    }
+
+    return new String[] { READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE };
+  }
+
+  private boolean canRead() {
+    String status = getStatus();
+    return STATUS_FULL.equals(status) || STATUS_LIMITED.equals(status);
+  }
+
+  // Since Android 10 images are saved through MediaStore without permissions
+  private boolean canWrite() {
+    return Build.VERSION.SDK_INT >= 29 || hasPermission(WRITE_EXTERNAL_STORAGE);
+  }
+
+  private boolean hasPermission(String permission) {
+    return cordova.getActivity().checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
+  }
+
+  private SharedPreferences getPreferences() {
+    return getContext().getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
+  }
+
+  // Library
+
+  private void getLibrary(JSONArray args, final CallbackContext callbackContext) throws Exception {
+    if (!canRead()) {
+      callbackContext.error(PhotoLibraryService.PERMISSION_ERROR);
+      return;
+    }
+
+    JSONObject options = args.optJSONObject(0);
+    int itemsInChunk = options != null ? options.optInt("itemsInChunk", 0) : 0;
+    int maxItems = options != null ? options.optInt("maxItems", 0) : 0;
+
+    service.getLibrary(getContext(), itemsInChunk, maxItems, new PhotoLibraryService.ChunkCallback() {
+      public void run(JSONArray chunk, int chunkNum, boolean isLastChunk) throws JSONException {
+        JSONObject result = new JSONObject();
+        result.put("chunkNum", chunkNum);
+        result.put("isLastChunk", isLastChunk);
+        result.put("library", chunk);
+
+        PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, result);
+        pluginResult.setKeepCallback(!isLastChunk);
+        callbackContext.sendPluginResult(pluginResult);
       }
     });
   }
 
-  @Override
-  public CordovaResourceApi.OpenForReadResult handleOpenForRead(Uri uri) throws IOException {
-
-    Uri origUri = fromPluginUri(uri);
-
-    boolean isThumbnail = origUri.getHost().toLowerCase().equals("thumbnail") && origUri.getPath().isEmpty();
-    boolean isPhoto = origUri.getHost().toLowerCase().equals("photo") && origUri.getPath().isEmpty();
-
-    if (!isThumbnail && !isPhoto) {
-      throw new FileNotFoundException("URI not supported by PhotoLibrary");
+  private void getThumbnail(JSONArray args, CallbackContext callbackContext) throws Exception {
+    if (!canRead()) {
+      callbackContext.error(PhotoLibraryService.PERMISSION_ERROR);
+      return;
     }
 
-    String photoId = origUri.getQueryParameter("photoId");
-    if (photoId == null || photoId.isEmpty()) {
-      throw new FileNotFoundException("Missing 'photoId' query parameter");
-    }
+    String photoId = args.getString(0);
+    JSONObject options = args.optJSONObject(1);
+    int width = options != null ? options.optInt("thumbnailWidth", 256) : 256;
+    int height = options != null ? options.optInt("thumbnailHeight", 256) : 256;
+    double quality = options != null ? options.optDouble("quality", 0.7) : 0.7;
 
-    if (isThumbnail) {
-
-      String widthStr = origUri.getQueryParameter("width");
-      int width;
-      try {
-        width = widthStr == null || widthStr.isEmpty() ? DEFAULT_WIDTH : Integer.parseInt(widthStr);
-      } catch (NumberFormatException e) {
-        throw new FileNotFoundException("Incorrect 'width' query parameter");
-      }
-
-      String heightStr = origUri.getQueryParameter("height");
-      int height;
-      try {
-        height = heightStr == null || heightStr.isEmpty() ? DEFAULT_HEIGHT : Integer.parseInt(heightStr);
-      } catch (NumberFormatException e) {
-        throw new FileNotFoundException("Incorrect 'height' query parameter");
-      }
-
-      String qualityStr = origUri.getQueryParameter("quality");
-      double quality;
-      try {
-        quality = qualityStr == null || qualityStr.isEmpty() ? DEFAULT_QUALITY : Double.parseDouble(qualityStr);
-      } catch (NumberFormatException e) {
-        throw new FileNotFoundException("Incorrect 'quality' query parameter");
-      }
-
-      PhotoLibraryService.PictureData thumbnailData = service.getThumbnail(getContext(), photoId, width, height, quality);
-
-      if (thumbnailData == null) {
-        throw new FileNotFoundException("Could not create thumbnail");
-      }
-
-      InputStream is = new ByteArrayInputStream(thumbnailData.bytes);
-
-      return new CordovaResourceApi.OpenForReadResult(uri, is, thumbnailData.mimeType, is.available(), null);
-
-    } else { // isPhoto == true
-
-      PhotoLibraryService.PictureAsStream pictureAsStream = service.getPhotoAsStream(getContext(), photoId);
-      InputStream is = pictureAsStream.getStream();
-
-      return new CordovaResourceApi.OpenForReadResult(uri, is, pictureAsStream.getMimeType(), is.available(), null);
-
-    }
-
+    sendPicture(callbackContext, service.getThumbnail(getContext(), photoId, width, height, quality), "Could not fetch the thumbnail");
   }
 
-  @Override
-  public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults) throws JSONException {
-    super.onRequestPermissionResult(requestCode, permissions, grantResults);
-
-    for (int r : grantResults) {
-      if (r == PackageManager.PERMISSION_DENIED) {
-        this.callbackContext.error(PhotoLibraryService.PERMISSION_ERROR);
-        return;
-      }
+  private void getPhoto(JSONArray args, CallbackContext callbackContext) throws Exception {
+    if (!canRead()) {
+      callbackContext.error(PhotoLibraryService.PERMISSION_ERROR);
+      return;
     }
 
-    this.callbackContext.success();
+    String photoId = args.getString(0);
+    JSONObject options = args.optJSONObject(1);
+    int maxWidth = options != null ? options.optInt("maxWidth", 2048) : 2048;
+    int maxHeight = options != null ? options.optInt("maxHeight", 2048) : 2048;
+    double quality = options != null ? options.optDouble("quality", 0.9) : 0.9;
+
+    sendPicture(callbackContext, service.getPhoto(getContext(), photoId, maxWidth, maxHeight, quality), "Could not fetch the image");
   }
 
-  private static final String READ_EXTERNAL_STORAGE = android.Manifest.permission.READ_EXTERNAL_STORAGE;
-  private static final String READ_MEDIA_IMAGES = android.Manifest.permission.READ_MEDIA_IMAGES;
-  private static final String WRITE_EXTERNAL_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
-  private static final int REQUEST_AUTHORIZATION_REQ_CODE = 0;
+  private void saveImage(JSONArray args, CallbackContext callbackContext) throws Exception {
+    if (!canWrite()) {
+      callbackContext.error(PhotoLibraryService.PERMISSION_ERROR);
+      return;
+    }
 
-  private PhotoLibraryService service;
+    callbackContext.success(service.saveImage(getContext(), args.getString(0)));
+  }
+
+  // Helpers
+
+  private interface BackgroundTask {
+    void run() throws Exception;
+  }
+
+  private void runInBackground(final CallbackContext callbackContext, final BackgroundTask task) {
+    cordova.getThreadPool().execute(new Runnable() {
+      public void run() {
+        try {
+          task.run();
+        } catch (Exception e) {
+          LOG.e(TAG, "Photo library error", e);
+          callbackContext.error(e.getMessage() != null ? e.getMessage() : "Photo library error");
+        }
+      }
+    });
+  }
+
+  // cordova-android does not support multipart results, so data is sent as base64 in JSON
+  private void sendPicture(CallbackContext callbackContext, PhotoLibraryService.PictureData picture, String errorMessage) throws JSONException {
+    if (picture == null) {
+      callbackContext.error(errorMessage);
+      return;
+    }
+
+    JSONObject result = new JSONObject();
+    result.put("data", Base64.encodeToString(picture.bytes, Base64.NO_WRAP));
+    result.put("mimeType", picture.mimeType);
+
+    callbackContext.success(result);
+  }
 
   private Context getContext() {
-
-    return this.cordova.getActivity().getApplicationContext();
-
+    return cordova.getActivity().getApplicationContext();
   }
-
-  private PluginResult createMultipartPluginResult(PluginResult.Status status, PhotoLibraryService.PictureData pictureData) throws JSONException {
-
-    // As cordova-android 6.x uses EVAL_BRIDGE, and it breaks support for multipart result, we will encode result by ourselves.
-    // see encodeAsJsMessage method of https://github.com/apache/cordova-android/blob/master/framework/src/org/apache/cordova/NativeToJsMessageQueue.java
-
-    JSONObject resultJSON = new JSONObject();
-    resultJSON.put("data", Base64.encodeToString(pictureData.bytes, Base64.NO_WRAP));
-    resultJSON.put("mimeType", pictureData.mimeType);
-
-    return new PluginResult(status, resultJSON);
-
-// This is old good code that worked with cordova-android 5.x
-//    return new PluginResult(status,
-//      Arrays.asList(
-//        new PluginResult(status, pictureData.getBytes()),
-//        new PluginResult(status, pictureData.getMimeType())));
-
-  }
-
-  private void requestAuthorization(boolean read, boolean write) {
-
-    List<String> permissions = new ArrayList<String>();
-
-    if (read) {
-
-      if(Build.VERSION.SDK_INT > 32){
-        permissions.add(READ_MEDIA_IMAGES);
-      }
-      else{
-        permissions.add(READ_EXTERNAL_STORAGE);
-      }
-      
-    }
-
-    if (write) {
-      permissions.add(WRITE_EXTERNAL_STORAGE);
-    }
-
-    cordova.requestPermissions(this, REQUEST_AUTHORIZATION_REQ_CODE, permissions.toArray(new String[0]));
-  }
-
-  private static JSONArray createGetAlbumsResult(ArrayList<JSONObject> albums) throws JSONException {
-    return new JSONArray(albums);
-  }
-
-  private static JSONObject createGetLibraryResult(ArrayList<JSONObject> library, int chunkNum, boolean isLastChunk) throws JSONException {
-    JSONObject result = new JSONObject();
-    result.put("chunkNum", chunkNum);
-    result.put("isLastChunk", isLastChunk);
-    result.put("library", new JSONArray(library));
-    return result;
-  }
-
-  private boolean checkReadPermissions(){
-    return (Build.VERSION.SDK_INT <= 32 && cordova.hasPermission(READ_EXTERNAL_STORAGE)) || 
-    (Build.VERSION.SDK_INT > 32 && cordova.hasPermission(READ_MEDIA_IMAGES));
-
-  }
-
-  private boolean checkWritePermissions(){
-
-    int version = Build.VERSION.SDK_INT;
-
-    if( version <= 32 ) {
-        boolean isAllowPermissionApi28 = cordova.hasPermission(WRITE_EXTERNAL_STORAGE);
-        return  isAllowPermissionApi28;
-    } else {
-        boolean isAllowPermissionApi33 = Environment.isExternalStorageManager();
-
-        return true;
-    }
-  }
-  
-
 }

@@ -13,7 +13,7 @@
 #camerapreview .useselectedWrapper {
   display: none;
   position: absolute;
-  bottom: 3em;
+  bottom: calc(6 * 0.5em + env(safe-area-inset-bottom, 0px));
   left: 0;
   right: 0;
   text-align: center;
@@ -41,6 +41,34 @@
   display: none;
   margin-top: 2em;
 }
+#camerapreview .gallery .limitedlibrary {
+  display: none;
+  margin-bottom: 1em;
+  padding: 1em;
+  border-radius: 6px;
+  background: rgba(var(--text-on-bg-shadow-color), 0.08);
+  color: rgba(var(--text-on-bg-shadow-color), 0.8);
+}
+#camerapreview .gallery .limitedlibrary .limitedlibrarytext {
+  font-size: 0.9em;
+  margin-bottom: 0.75em;
+}
+#camerapreview .gallery .emptylibrary {
+  display: none;
+  padding: 3em 1em;
+  text-align: center;
+  color: rgba(var(--text-on-bg-shadow-color), 0.6);
+}
+#camerapreview .gallery .emptylibrary i {
+  font-size: 3em;
+  margin-bottom: 1em;
+}
+#camerapreview .gallery .emptylibrary .emptylibrarytext {
+  font-size: 0.9em;
+}
+#camerapreview .gallery .emptylibrary .emptylimited {
+  display: none;
+}
 #camerapreview .gallery .caption {
   padding: 1em 0;
   color: rgba(var(--text-on-bg-shadow-color), 0.8);
@@ -63,6 +91,7 @@
   right: 0;
   top: calc(65px + var(--app-margin-top));
   padding: 0.5em 1em;
+  padding-bottom: calc(12 * 0.5em + env(safe-area-inset-bottom, 0px));
   overflow-y: scroll;
 }
 #camerapreview .gallery .images .imagescontent {
@@ -93,6 +122,18 @@
   content: "\f058";
 }
 #camerapreview.photolibraryaccessdeclined .gallery .declinedlibrary {
+  display: block;
+}
+#camerapreview.photolibraryaccesslimited .gallery .limitedlibrary {
+  display: block;
+}
+#camerapreview.photolibraryaccesslimited .gallery .emptylibrary .emptylimited {
+  display: block;
+}
+#camerapreview.photolibraryaccesslimited .gallery .emptylibrary .emptyfull {
+  display: none;
+}
+#camerapreview.photolibraryempty:not(.photolibraryaccessdeclined) .gallery .emptylibrary {
   display: block;
 }
 #camerapreview .gallerymode {
@@ -189,7 +230,7 @@
   margin: 0 auto;
   position: absolute;
   left: 50%;
-  bottom: 3em;
+  bottom: calc(6 * 0.5em + env(safe-area-inset-bottom, 0px));
   margin-left: -27px;
   z-index: 150;
 }

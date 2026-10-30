@@ -25,6 +25,7 @@
   * - https://gist.github.com/defagos/1312fec96b48540efa5c
   */
 
+#import <Foundation/Foundation.h>
 #import <objc/runtime.h>
 #import <objc/message.h>
 

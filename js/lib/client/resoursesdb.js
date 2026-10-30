@@ -103,7 +103,7 @@ ResoursesDB = function(storageName, version, storages){
 
             }
             catch(e){
-                console.error(e)
+                console.error(e, name)
                 return Promise.reject(e)
             }
 

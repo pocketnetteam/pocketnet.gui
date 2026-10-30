@@ -42,7 +42,7 @@ var authorn = (function(){
 
 				window.rifticker.add(() => {
 					self.app.el.html.removeClass('allcontent')
-					self.app.mobile.statusbar.background()
+					self.app.mobile.statusbar.set('page', null)
 				})
 
 				setTimeout(() => {
@@ -178,7 +178,7 @@ var authorn = (function(){
 				el.c.addClass('opensvishowedWillremoved')
 
 				self.app.el.html.addClass('allcontent')
-				self.app.mobile.statusbar.topfadebackground()
+				self.app.mobile.statusbar.set('page', 'topfade')
 
 				renders.upbutton()
 				renders.post(null)
@@ -640,6 +640,21 @@ var authorn = (function(){
 					href : self.app.mobileview ? 'videoCabinet' : 'userpage?id=videoCabinet',
 					history : true,
 					inWnd : self.app.mobileview
+				})
+			},
+
+			openCollections : function(){
+				self.nav.api.load({
+					open : true,
+					id : 'collections',
+					animation : false,
+					inWnd : true,
+					history : true,
+					essenseData : {
+						address : author.address,
+						preview : false,
+						count : 100
+					}
 				})
 			},
 
@@ -1134,6 +1149,7 @@ var authorn = (function(){
 					p.el.find('.startchat').on('click', events.startchat)
 					p.el.find('.openwallet').on('click', events.openwallet)
 					p.el.find('.videoCabinet').on('click', events.videoCabinet)
+					p.el.find('.openCollections').on('click', events.openCollections)
 					p.el.find('.sendcoins').on('click', events.sendcoins)
 					p.el.find('.donate').on('click', events.donate)
 					p.el.find('.settings').on('click', events.settings)
@@ -1392,6 +1408,7 @@ var authorn = (function(){
 
 					},
 					fixposition : true,
+					contentvisibility : true,
 					canloadmorescroll : function(){
 
 						if(openedpost) return false
@@ -1415,7 +1432,7 @@ var authorn = (function(){
 
 					var monetizationPromise = (() => {return Promise.resolve(false)})()
 
-					var monetizationStatic = /*!self.user.isItMe(author.address) && */!params.searchValue && !params.searchTags && !params.read && !params.audio && !params.video
+					var monetizationStatic = !self.user.isItMe(author.address) && !params.searchValue && !params.searchTags && !params.read && !params.audio && !params.video
 
 					if (monetizationStatic) 
 						monetizationPromise = self.app.platform.sdk.users.checkMonetization(author.address)
@@ -1567,8 +1584,6 @@ var authorn = (function(){
 
 						modules['collections'] = p
 
-						el.collections.addClass('active')
-
 						if (clbk)
 							clbk(e, p)
 					}
@@ -1716,7 +1731,7 @@ var authorn = (function(){
 
 			window.rifticker.add(() => {
 				self.app.el.html.removeClass('allcontent')
-				self.app.mobile.statusbar.background()
+				self.app.mobile.statusbar.set('page', null)
 			})
 
 			if (page){
@@ -1786,7 +1801,7 @@ var authorn = (function(){
 				renders.subscribes()
 				renders.subscribers()
 				renders.blocking()
-				//renders.collections()
+				renders.collections()
 			}
 
 			renders.upbutton()
@@ -1838,10 +1853,10 @@ var authorn = (function(){
 
 				window.rifticker.add(() => {
 					self.app.el.html.addClass('allcontent')
-					self.app.mobile.statusbar.topfadebackground()
+					self.app.mobile.statusbar.set('page', 'topfade')
 				})
 
-				ed = p.settings.essenseData
+				ed = p.settings.essenseData || {}
 
 				var data = {
 					ed
@@ -1881,7 +1896,7 @@ var authorn = (function(){
 
 				if (href != 'author') {
 					self.app.el.html.removeClass('allcontent')
-					self.app.mobile.statusbar.background()
+					self.app.mobile.statusbar.set('page', null)
 				}
 
 				delete self.app.platform.actionListeners.authorn

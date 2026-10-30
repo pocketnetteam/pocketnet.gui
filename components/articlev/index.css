@@ -123,7 +123,7 @@
 #articlev .showpreview {
   position: fixed;
   left: 0.5em;
-  bottom: 0.5em;
+  bottom: calc(0.5em + env(safe-area-inset-bottom, 0px));
   z-index: 2;
 }
 #articlev .showpreview button {

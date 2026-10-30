@@ -141,6 +141,12 @@
 						color : rgb(var(--color-bad));
 					}
 				}
+
+				.collectioncount{
+					font-size: 0.8em;
+					white-space: nowrap;
+					color : rgb(var(--neutral-grad-3));
+				}
 			}
 
 			.avatar {
@@ -161,6 +167,20 @@
 				img {
 					height: 100%;
 					width: 100%;
+				}
+
+				/* collection activity: cover instead of a user icon */
+				.collectioncover{
+					width: 3em;
+					height: 3em;
+					border-radius: 8px;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					color : rgb(var(--neutral-grad-2));
+					background-color: rgb(var(--neutral-grad-0));
+					background-size: cover;
+					background-position: center;
 				}
 
 				&.multy {

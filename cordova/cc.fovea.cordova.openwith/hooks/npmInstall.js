@@ -20,15 +20,18 @@
 
 const PLUGIN_ID = "cc.fovea.cordova.openwith";
 
+var utils = require('./lib/utils');
+
 module.exports = function (context) {
     var child_process = require('child_process');
-    var deferral = require('q').defer();
+    var deferral = utils.defer();
 
     console.log('Installing "' + PLUGIN_ID + '" dependencies');
     child_process.exec('npm install --production', {cwd:__dirname}, function (error) {
         if (error !== null) {
             console.log('exec error: ' + error);
-            deferral.reject('npm installation failed');
+            deferral.reject(new Error('npm installation failed'));
+            return;
         }
         deferral.resolve();
     });

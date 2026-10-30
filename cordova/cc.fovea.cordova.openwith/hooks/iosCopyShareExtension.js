@@ -31,6 +31,7 @@
 
 var fs = require('fs');
 var path = require('path');
+var utils = require('./lib/utils');
 const PLUGIN_ID = "cc.fovea.cordova.openwith";
 
 function redError(message) {
@@ -116,8 +117,7 @@ function findXCodeproject(context, callback) {
 }
 
 module.exports = function(context) {
-  var Q = require('q');
-  var deferral = new Q.defer();
+  var deferral = utils.defer();
 
   findXCodeproject(context, function(projectFolder, projectName) {
 

@@ -277,6 +277,15 @@ var socialshare2 = (function(){
 						parentid : ed.embedding.parentid
 					}
 				}
+			},
+
+			collection : {
+				settings : function(id){
+					return Promise.resolve(['black', 'comments'])
+				},
+				action : function(settings, id){
+					return Promise.resolve('collection')
+				}
 			}
 		}
 

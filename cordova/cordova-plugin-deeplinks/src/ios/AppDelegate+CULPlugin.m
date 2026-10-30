@@ -12,7 +12,7 @@
  */
 static NSString *const PLUGIN_NAME = @"UniversalLinks";
 
-@implementation AppDelegate (CULPlugin)
+@implementation CDVAppDelegate (CULPlugin)
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *))restorationHandler {
     // ignore activities that are not for Universal Links

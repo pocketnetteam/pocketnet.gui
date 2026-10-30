@@ -927,3 +927,10 @@ html.mobileview.fullscreen #lenta .fullScreenVideo #comments {
 .item.loadingBar .loading-bar {
   margin: auto;
 }
+#lenta.contentvisibility .share.shareinlenta {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}
+#lenta.contentvisibility .share.shareinlenta.fullScreenVideo {
+  content-visibility: visible;
+}

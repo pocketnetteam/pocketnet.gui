@@ -1242,7 +1242,7 @@ html.mobileview .wnd.wndsharepost .wndcontent #share .absolutetxwrapper {
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 3em;
+    bottom: calc(6 * 0.5em + env(safe-area-inset-bottom, 0px));
   }
   #share .sLoader .prwrapper .prwrappermiddle {
     text-align: center;

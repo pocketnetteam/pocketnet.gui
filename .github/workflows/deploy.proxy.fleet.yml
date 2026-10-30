@@ -1,0 +1,152 @@
+name: Deploy Proxy fleet
+
+# Manual only. Fleet list = base64 JSON in secret PROXY_FLEET_JSON.
+# SSH = shared PNTBSTPRX_SSH_USER + PNTBSTPRX_SSH_KEY.
+on:
+  workflow_dispatch:
+
+env:
+  IMAGE_TAG: proxy16
+  REGISTRY: ghcr.io
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      image: ${{ steps.image.outputs.image }}
+    steps:
+      - name: Check Out Repo
+        uses: actions/checkout@v4
+
+      - name: Image name
+        id: image
+        run: |
+          owner=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          echo "image=${{ env.REGISTRY }}/${owner}/pocketnet-proxy:${{ env.IMAGE_TAG }}" >> "$GITHUB_OUTPUT"
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: ./proxy16/
+          file: ./proxy16/dockerfile
+          push: true
+          tags: ${{ steps.image.outputs.image }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  prepare:
+    runs-on: ubuntu-22.04
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    steps:
+      - name: Decode fleet secret
+        id: matrix
+        env:
+          FLEET_B64: ${{ secrets.PROXY_FLEET_JSON }}
+        run: |
+          set -euo pipefail
+          if [ -z "${FLEET_B64:-}" ]; then
+            echo "Secret PROXY_FLEET_JSON is empty. Encode C:\\keys\\bastyon\\proxy-fleet\\fleet.json and add it."
+            exit 1
+          fi
+          echo "$FLEET_B64" | base64 -d > /tmp/fleet.json
+          python3 - <<'PY'
+          import json, os
+          fleet = json.load(open("/tmp/fleet.json"))
+          if not isinstance(fleet, list) or not fleet:
+              raise SystemExit("fleet JSON must be a non-empty array")
+          include = []
+          for row in fleet:
+              for key in ("id", "ip", "host", "sshUser", "admin", "email"):
+                  if key not in row:
+                      raise SystemExit(f"missing field {key} in {row!r}")
+              if not str(row["admin"]).strip():
+                  raise SystemExit(f"admin is empty for host {row.get('host')}")
+              if not str(row["sshUser"]).strip():
+                  raise SystemExit(f"sshUser is empty for host {row.get('host')}")
+              include.append({
+                  "id": str(row["id"]),
+                  "ip": str(row["ip"]),
+                  "host": str(row["host"]),
+                  "sshUser": str(row["sshUser"]).strip(),
+                  "admin": str(row["admin"]).strip(),
+                  "email": str(row["email"]).strip(),
+              })
+          matrix = {"include": include}
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
+              f.write("matrix=" + json.dumps(matrix, separators=(",", ":")) + "\n")
+          print("Fleet hosts:", ", ".join(x["host"] for x in include))
+          PY
+
+  deploy:
+    needs: [build, prepare]
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      packages: read
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.prepare.outputs.matrix) }}
+    name: deploy ${{ matrix.host }}
+    steps:
+      - name: Check Out Repo
+        uses: actions/checkout@v4
+
+      - name: Prepare remote dirs
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ matrix.ip }}
+          username: ${{ matrix.sshUser }}
+          key: ${{ secrets.PNTBSTPRX_SSH_KEY }}
+          script: mkdir -p /opt/proxy/data /opt/proxy/cert
+
+      - name: Copy deploy scripts
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ matrix.ip }}
+          username: ${{ matrix.sshUser }}
+          key: ${{ secrets.PNTBSTPRX_SSH_KEY }}
+          source: proxy16/deploy/proxy-pull-up.sh,proxy16/deploy/issue-letsencrypt.sh,proxy16/deploy/ensure-docker.sh
+          target: /opt/proxy/
+          strip_components: 2
+
+      - name: Cert + pull + bootstrap + up
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ matrix.ip }}
+          username: ${{ matrix.sshUser }}
+          key: ${{ secrets.PNTBSTPRX_SSH_KEY }}
+          envs: IMAGE,GHCR_USER,GHCR_TOKEN,BOOTSTRAP_ADMIN,BOOTSTRAP_DOMAIN,CERT_EMAIL
+          script: |
+            set -euo pipefail
+            chmod +x /opt/proxy/proxy-pull-up.sh /opt/proxy/issue-letsencrypt.sh /opt/proxy/ensure-docker.sh
+            export DOMAIN="$BOOTSTRAP_DOMAIN"
+            export EMAIL="$CERT_EMAIL"
+            /opt/proxy/issue-letsencrypt.sh
+            /opt/proxy/ensure-docker.sh
+            echo "$GHCR_TOKEN" | docker login ghcr.io -u "$GHCR_USER" --password-stdin
+            export PROXY_IMAGE="$IMAGE"
+            export BOOTSTRAP_ADMIN
+            export BOOTSTRAP_DOMAIN
+            /opt/proxy/proxy-pull-up.sh
+            docker logout ghcr.io
+        env:
+          IMAGE: ${{ needs.build.outputs.image }}
+          GHCR_USER: ${{ github.actor }}
+          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BOOTSTRAP_ADMIN: ${{ matrix.admin }}
+          BOOTSTRAP_DOMAIN: ${{ matrix.host }}
+          CERT_EMAIL: ${{ matrix.email }}
