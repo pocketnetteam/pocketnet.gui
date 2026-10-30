@@ -27,8 +27,8 @@ Fleet fields per host: `id`, `ip`, `host`, `sshUser`, `admin` (required non-empt
 
 ## Current hosts in local fleet.json
 
-- `4.pocketnet.app` → Timeweb `147.45.228.210`
-- `5.pocketnet.app` → Hetzner `46.224.170.196` (SSH key must work on that host)
+- `4.pocketnet.app` → `147.45.228.210`
+- `6.pocketnet.app` → `147.45.169.45`
 
 ## Do not
 
