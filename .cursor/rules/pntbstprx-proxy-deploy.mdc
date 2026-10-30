@@ -25,6 +25,7 @@ Fleet fields per host: `id`, `ip`, `host`, `sshUser`, `admin` (required non-empt
 2. Decode fleet → matrix
 3. Per host: LE cert → `/opt/proxy/cert/` → pull image → bootstrap (admin/domain/enabled) → up
 
+
 ## Do not
 
 - Commit `C:\keys\bastyon\proxy-fleet\fleet.json` or `fleet.b64` into the repo
