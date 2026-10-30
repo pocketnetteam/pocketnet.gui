@@ -238,7 +238,11 @@ class TorControl {
     }
 
     initializeTorRunner() {
-        this.provideTorRunner();
+        try {
+            this.provideTorRunner();
+        } catch (e) {
+            return Promise.reject(e);
+        }
 
         if (!this.torRunnerInitTask) {
             this.torRunnerInitTask = this.torRunner.init()
