@@ -1,0 +1,566 @@
+---
+description: Build system and deployment guidelines
+globs: "{minimize.js,gruntfile.js,package.json,tpls/**/*}"
+alwaysApply: false
+---
+
+# Build and Deployment Guidelines
+
+## Build System Overview
+
+Bastyon uses a **custom build system** (`minimize.js`) instead of modern bundlers like Webpack or Vite.
+
+## Build Scripts
+
+### Development
+```bash
+# Frontend development build
+npm run dev:bastyon           # Standard build
+npm run dev:bastyon:test      # Test environment
+
+# Start Electron app
+npm start                     # Normal mode
+npm run startinspect          # With debugger
+
+# Backend development
+cd proxy16
+npm run servecl               # Start proxy server
+npm run serveinspect          # With debugger
+```
+
+### Production
+```bash
+# Web production build
+npm run minimize:bastyon      # Main build
+npm run minimize:bastyon:test # Test build
+
+# Full build (backend + frontend)
+npm run build
+
+# Mobile builds
+npm run minimize:cordova           # Standard Cordova
+npm run minimize:cordova:store     # App store version
+npm run minimize:cordova:gfree     # Google-free version
+```
+
+### Distribution
+```bash
+# Desktop packaging
+npm run pack                  # Development package
+npm run dist                  # Windows distributable
+npm run distm                 # macOS distributable (.dmg)
+npm run distl                 # Linux distributables (.deb, .rpm, AppImage)
+npm run dist:arm64            # macOS ARM64
+
+# Publishing (auto-updates)
+npm run publish               # Publish to GitHub releases
+```
+
+## minimize.js Script
+
+### Purpose
+Custom build script that:
+1. Reads templates from `tpls/`
+2. Processes variables (version, paths, config)
+3. Minifies JavaScript files
+4. Minifies CSS/LESS files
+5. Combines and concatenates files
+6. Generates output HTML
+7. Creates platform-specific builds
+
+### Key Options
+
+```bash
+node minimize.js \
+  -prodaction=true \        # Production mode (minification)
+  -test=false \             # Test environment
+  -project=Bastyon \        # Project name
+  -path=/pocketnet/ \       # Base path
+  -vendor=30069 \           # Vendor ID
+  -composetemplates=true \  # Generate Cordova templates
+  -store=false \            # App store build
+  -gfree=false              # Google-free build
+```
+
+### Build Process Flow
+
+```
+1. Read templates (tpls/*.tpl)
+   ↓
+2. Process template variables
+   ↓
+3. Read source files
+   ↓
+4. Minify JavaScript (uglify-js)
+   ↓
+5. Minify CSS/LESS (uglifycss)
+   ↓
+6. Combine files
+   ↓
+7. Generate output files
+   ↓
+8. Write to destination
+```
+
+## Template System (tpls/)
+
+### Template Files
+```
+tpls/
+├── index.html.tpl        # Main HTML template
+├── main.js.tpl           # Electron main process
+├── config.xml.tpl        # Cordova config
+├── package.cordova.json.tpl
+├── manifest.json.tpl     # PWA manifest
+└── service-worker.js.tpl # Service worker
+```
+
+### Template Variables
+
+Templates use `<%= variable %>` syntax:
+
+```html
+<!-- index.html.tpl -->
+<script>window.pocketnetpublicpath = "<%= path %>";</script>
+<script>window.project_config = <%= config %>;</script>
+<script>window.packageversion = "<%= version %>";</script>
+```
+
+**Available Variables:**
+- `<%= version %>` - Package version
+- `<%= path %>` - Base path
+- `<%= project %>` - Project name
+- `<%= config %>` - JSON configuration
+- `<%= vendor %>` - Vendor ID
+- `<%= test %>` - Test mode flag
+
+### Script Concatenation
+
+Scripts marked with `join` attribute are concatenated:
+
+```html
+<!-- Separate files in development -->
+<script join src="js/vendor/underscore-min.js"></script>
+<script join src="js/kit.js"></script>
+<script join src="js/app.js"></script>
+
+<!-- Combined in production -->
+<script src="js/all-combined.min.js"></script>
+```
+
+## Grunt (proxy16)
+
+### Purpose
+Task runner for backend builds
+
+### Gruntfile Tasks
+```javascript
+// proxy16/gruntfile.js
+module.exports = function(grunt) {
+  grunt.initConfig({
+    // Task configurations
+  });
+
+  grunt.registerTask('default', ['build']);
+  grunt.registerTask('build', function() {
+    // Build tasks
+  });
+};
+```
+
+### Usage
+```bash
+cd proxy16
+grunt           # Run default task
+grunt build     # Explicit build
+```
+
+## File Minification
+
+### JavaScript Minification
+
+```javascript
+// minimize.js uses uglify-js
+var UglifyJS = require('uglify-js');
+
+var result = UglifyJS.minify(code, {
+  compress: {
+    dead_code: true,
+    unused: true
+  },
+  mangle: true,
+  output: {
+    comments: false
+  }
+});
+
+var minified = result.code;
+```
+
+### CSS Minification
+
+```javascript
+// minimize.js uses uglifycss
+var uglifycss = require('uglifycss');
+
+var minified = uglifycss.processString(css, {
+  maxLineLen: 0,
+  expandVars: true
+});
+```
+
+### HTML Minification
+
+```javascript
+// Uses html-minifier-terser
+var minify = require('html-minifier-terser').minify;
+
+var minified = minify(html, {
+  collapseWhitespace: true,
+  removeComments: true,
+  minifyJS: true,
+  minifyCSS: true
+});
+```
+
+## Electron Builder
+
+### Configuration (package.json)
+
+```json
+{
+  "build": {
+    "productName": "Bastyon",
+    "appId": "app.pocketnet.gui",
+    "files": [
+      "**/*",
+      "!cordova${/*}",
+      "!proxy16/data${/*}"
+    ],
+    "mac": {
+      "target": "dmg",
+      "icon": "res/electron/icons/mac/icon.icns",
+      "notarize": {
+        "teamId": "Y5JW9JU787"
+      }
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "res/electron/icons/win/icon.ico"
+    },
+    "linux": {
+      "target": ["deb", "AppImage", "rpm"],
+      "category": "Network"
+    }
+  }
+}
+```
+
+### Build Artifacts
+
+**Windows:**
+- `BastyonSetup.exe` - NSIS installer
+- Auto-update support
+
+**macOS:**
+- `BastyonSetup.dmg` - DMG installer
+- Notarized for Gatekeeper
+- Universal binary (x64 + arm64)
+
+**Linux:**
+- `BastyonSetup.deb` - Debian package
+- `BastyonSetup.rpm` - RPM package
+- `Bastyon.AppImage` - Portable AppImage
+
+## Cordova Build
+
+### Process
+
+```bash
+# 1. Build frontend
+npm run minimize:cordova
+
+# 2. Navigate to cordova directory
+cd cordova
+
+# 3. Build platform
+cordova build android --release
+cordova build ios --release
+
+# 4. Sign and align (Android)
+jarsigner -verbose -sigalg SHA256withRSA \
+  -digestalg SHA-256 \
+  -keystore my-release-key.keystore \
+  app-release-unsigned.apk alias_name
+
+zipalign -v 4 app-release-unsigned.apk Bastyon.apk
+```
+
+### Platform-Specific Files
+
+**Android:**
+- `cordova/platforms/android/`
+- `cordova/config.xml` - Cordova configuration
+- Custom plugins in `cordova/plugins/`
+
+**iOS:**
+- `cordova/platforms/ios/`
+- Requires Xcode for building
+- Requires Apple Developer account
+
+## Deployment Workflow
+
+### Web Deployment
+
+```bash
+# 1. Build production
+npm run minimize:bastyon
+
+# 2. Test build locally
+# Open index.html in browser or serve with local server
+
+# 3. Deploy to server
+# Upload files to web server
+# Configure nginx (see nginx.conf)
+
+# 4. Verify deployment
+# Test in browser
+# Check console for errors
+```
+
+### Desktop Deployment
+
+```bash
+# 1. Update version in package.json
+# "version": "0.9.138"
+
+# 2. Build distributables
+npm run dist    # Windows
+npm run distm   # macOS
+npm run distl   # Linux
+
+# 3. Sign binaries (production)
+# Windows: Code signing certificate
+# macOS: Apple Developer certificate + notarization
+# Linux: GPG signing (optional)
+
+# 4. Upload to GitHub releases
+# Tag: v0.9.138
+# Upload: BastyonSetup.exe, BastyonSetup.dmg, etc.
+
+# 5. Auto-updater will notify users
+# electron-updater checks for new releases
+```
+
+### Mobile Deployment
+
+```bash
+# Android (Google Play)
+# 1. Build signed APK
+npm run minimize:cordova:store
+cd cordova
+cordova build android --release
+
+# 2. Sign APK
+# Use Android keystore
+
+# 3. Upload to Google Play Console
+# Create release
+# Upload APK/AAB
+
+# Android (Google-free)
+# Build without Google services
+npm run minimize:cordova:gfree
+
+# iOS (App Store)
+# 1. Build with Xcode
+npm run minimize:cordova:store
+cd cordova
+cordova build ios --release
+
+# 2. Open in Xcode
+# Configure signing
+# Archive app
+
+# 3. Upload with Xcode
+# Use Transporter or Xcode Organizer
+```
+
+## Configuration Files
+
+### package.json
+- Dependencies and versions
+- Build scripts
+- Electron builder configuration
+
+### proxy16/config.json
+- Backend server configuration
+- Node settings
+- API endpoints
+
+### config/*.json
+- Frontend configuration
+- Server lists
+- Feature flags
+
+## Environment Variables
+
+### Build Environment
+
+```bash
+# Development
+NODE_ENV=development npm run dev:bastyon
+
+# Production
+NODE_ENV=production npm run minimize:bastyon
+
+# Test
+npm run dev:bastyon:test
+```
+
+### Runtime Environment (Electron)
+
+```javascript
+// Check environment
+if (process.env.NODE_ENV === 'production') {
+  // Production behavior
+}
+
+// Command line arguments
+if (process.argv.includes('--development')) {
+  // Development mode
+}
+
+if (process.argv.includes('--test')) {
+  // Test environment
+}
+```
+
+## Version Management
+
+### Update Version
+
+```bash
+# 1. Update package.json
+{
+  "version": "0.9.138",
+  "versionsuffix": "0",
+  "cordovaversion": "1.8.138",
+  "cordovaversioncode": "1801380"
+}
+
+# 2. Update proxy16/package.json
+{
+  "version": "1.0.2"
+}
+
+# 3. Build will use new version
+npm run build
+```
+
+### Version Scheme
+- `0.9.138` - Major.Minor.Patch
+- `versionsuffix` - Build suffix
+- `cordovaversioncode` - Integer for Android (must increment)
+
+## Common Build Issues
+
+### 1. **Build Fails - Module Not Found**
+```bash
+# Clean and reinstall
+rm -rf node_modules
+npm install
+
+# Backend too
+cd proxy16
+rm -rf node_modules
+npm install
+```
+
+### 2. **Minification Errors**
+```bash
+# Check for syntax errors
+# Run without minification
+node minimize.js -prodaction=false
+```
+
+### 3. **Electron Build Fails**
+```bash
+# Clear cache
+rm -rf node_modules/.cache
+rm -rf ~/.electron
+
+# Rebuild native modules
+npm rebuild
+```
+
+### 4. **Cordova Build Fails**
+```bash
+cd cordova
+
+# Clean
+cordova clean
+
+# Remove and re-add platform
+cordova platform remove android
+cordova platform add android
+
+# Rebuild
+cordova build android
+```
+
+## Testing Builds
+
+### Local Testing
+```bash
+# Test web build
+npm run minimize:bastyon
+python -m http.server 8000
+# Open http://localhost:8000
+
+# Test Electron build
+npm run pack
+# Test from dist/ directory
+
+# Test proxy16
+cd proxy16
+npm run serve:test
+```
+
+### Pre-Release Checklist
+
+- [ ] Version updated in package.json
+- [ ] CHANGELOG updated
+- [ ] All tests passing
+- [ ] Builds successfully on all platforms
+- [ ] No console errors
+- [ ] Tested on multiple OS versions
+- [ ] Auto-updater tested
+- [ ] Code signed (production)
+
+## Best Practices
+
+### ✅ DO:
+- Test builds before deploying
+- Increment version numbers correctly
+- Sign production builds
+- Test auto-updater
+- Keep dependencies updated
+- Document configuration changes
+- Use staging environment
+
+### ❌ DON'T:
+- Don't skip version increments
+- Don't deploy untested builds
+- Don't expose development builds to users
+- Don't modify minimize.js without testing
+- Don't commit build artifacts to git
+- Don't use outdated Electron versions
+
+## References
+
+- `minimize.js` - Main build script
+- `package.json` - Build configuration
+- `proxy16/gruntfile.js` - Backend builds
+- `electron-builder` docs - Desktop packaging
+- `cordova` docs - Mobile builds
