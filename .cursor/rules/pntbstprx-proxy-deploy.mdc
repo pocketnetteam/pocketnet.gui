@@ -1,5 +1,5 @@
 ---
-description: Deploy pocketnet proxy fleet (4/5/6.pocketnet.app) via GHCR + PROXY_FLEET_JSON
+description: Deploy pocketnet proxy fleet (4/5.pocketnet.app) via GHCR + PROXY_FLEET_JSON
 globs: proxy16/deploy/**
 alwaysApply: false
 ---
@@ -24,11 +24,6 @@ Fleet fields per host: `id`, `ip`, `host`, `sshUser`, `admin` (required non-empt
 1. Build `ghcr.io/<owner>/pocketnet-proxy:proxy16`
 2. Decode fleet → matrix
 3. Per host: LE cert → `/opt/proxy/cert/` → pull image → bootstrap (admin/domain/enabled) → up
-
-## Current hosts in local fleet.json
-
-- `4.pocketnet.app` → `147.45.228.210`
-- `6.pocketnet.app` → `147.45.169.45`
 
 ## Do not
 
