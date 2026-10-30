@@ -30,7 +30,7 @@ docker run --rm \
   -e BOOTSTRAP_ADMIN="$ADMIN" \
   -e BOOTSTRAP_DOMAIN="$DOMAIN" \
   "$IMAGE" \
-  deploy/bootstrap-settings.js
+  deploy/bootstrap-settings.js --cli
 
 docker run -d \
   --name "$NAME" \

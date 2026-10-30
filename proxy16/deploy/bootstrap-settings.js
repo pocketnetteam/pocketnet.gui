@@ -12,6 +12,11 @@ global.USE_TRUST_NODES_ONLY = false
 global.USE_TLS_NODES_ONLY = false
 global.usecli = true
 
+// f.path() only uses cwd when --cli is in argv; without it Linux resolves under $HOME (/root/cert/...)
+if (process.argv.indexOf('--cli') === -1) {
+	process.argv.push('--cli')
+}
+
 var fs = require('fs')
 var path = require('path')
 process.chdir(path.join(__dirname, '..'))
