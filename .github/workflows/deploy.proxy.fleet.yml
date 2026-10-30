@@ -119,7 +119,7 @@ jobs:
           host: ${{ matrix.ip }}
           username: ${{ matrix.sshUser }}
           key: ${{ secrets.PNTBSTPRX_SSH_KEY }}
-          source: proxy16/deploy/proxy-pull-up.sh,proxy16/deploy/issue-letsencrypt.sh
+          source: proxy16/deploy/proxy-pull-up.sh,proxy16/deploy/issue-letsencrypt.sh,proxy16/deploy/ensure-docker.sh
           target: /opt/proxy/
           strip_components: 2
 
@@ -132,10 +132,11 @@ jobs:
           envs: IMAGE,GHCR_USER,GHCR_TOKEN,BOOTSTRAP_ADMIN,BOOTSTRAP_DOMAIN,CERT_EMAIL
           script: |
             set -euo pipefail
-            chmod +x /opt/proxy/proxy-pull-up.sh /opt/proxy/issue-letsencrypt.sh
+            chmod +x /opt/proxy/proxy-pull-up.sh /opt/proxy/issue-letsencrypt.sh /opt/proxy/ensure-docker.sh
             export DOMAIN="$BOOTSTRAP_DOMAIN"
             export EMAIL="$CERT_EMAIL"
             /opt/proxy/issue-letsencrypt.sh
+            /opt/proxy/ensure-docker.sh
             echo "$GHCR_TOKEN" | docker login ghcr.io -u "$GHCR_USER" --password-stdin
             export PROXY_IMAGE="$IMAGE"
             export BOOTSTRAP_ADMIN

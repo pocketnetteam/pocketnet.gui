@@ -12,6 +12,14 @@ CERT_DIR="${PROXY_CERT_DIR:-/opt/proxy/cert}"
 
 mkdir -p "$DATA_DIR" "$CERT_DIR"
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [[ -x "${SCRIPT_DIR}/ensure-docker.sh" ]]; then
+  "${SCRIPT_DIR}/ensure-docker.sh"
+elif ! command -v docker >/dev/null 2>&1; then
+  echo "docker not found and ensure-docker.sh missing" >&2
+  exit 127
+fi
+
 if [[ ! -f "${CERT_DIR}/cert.pem" || ! -f "${CERT_DIR}/key.pem" ]]; then
   echo "WARNING: ${CERT_DIR}/cert.pem or key.pem missing — bootstrap will skip SSL until certs exist"
 fi
