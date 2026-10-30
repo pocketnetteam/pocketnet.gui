@@ -10,6 +10,13 @@ LIVE="/etc/letsencrypt/live/${DOMAIN}"
 
 mkdir -p "$CERT_DIR"
 
+if ! command -v certbot >/dev/null 2>&1; then
+  echo "Installing certbot..."
+  export DEBIAN_FRONTEND=noninteractive
+  apt-get update -qq
+  apt-get install -y -qq certbot
+fi
+
 # Standalone needs free :80 (stop anything bound to 80 briefly)
 if command -v docker >/dev/null 2>&1; then
   if docker ps --format '{{.Names}}' | grep -qx pocketnet-proxy; then
