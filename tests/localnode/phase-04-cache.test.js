@@ -304,13 +304,31 @@ test('cache: set/get hit within TTL; miss after fake clock past TTL', () => {
 	assert.equal(cache.set('getnodeinfo', [], { height: 1 }), true)
 	assert.deepEqual(cache.get('getnodeinfo', []), { height: 1 })
 
-	// getnodeinfo TTL = 360s
+	// getnodeinfo TTL = 360s (non-Android default)
 	clock.advance(359 * 1000)
 	assert.deepEqual(cache.get('getnodeinfo', []), { height: 1 })
 
 	clock.advance(2 * 1000)
 	assert.equal(cache.get('getnodeinfo', []), undefined)
 	assert.equal(cache.size(), 0)
+})
+
+test('cache: Android getnodeinfo TTL = 1800s', () => {
+	const clock = createFakeClock()
+	const cache = new LocalNodeCache({
+		now: clock.now,
+		android: true,
+	})
+
+	assert.equal(cache.ckeys.getnodeinfo.time, 1800)
+	assert.equal(cache.set('getnodeinfo', [], { height: 2 }), true)
+	assert.deepEqual(cache.get('getnodeinfo', []), { height: 2 })
+
+	clock.advance(1799 * 1000)
+	assert.deepEqual(cache.get('getnodeinfo', []), { height: 2 })
+
+	clock.advance(2 * 1000)
+	assert.equal(cache.get('getnodeinfo', []), undefined)
 })
 
 test('cache: wait dedupe — wrap shares one in-flight promise for identical key', async () => {

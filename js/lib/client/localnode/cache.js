@@ -12,19 +12,70 @@ var LocalNodeCache = (function () {
 	/**
 	 * TTL seconds — deliberate subset of proxy16/server/cache.js ckeys.
 	 * Sync debt: keep times aligned when those server keys change.
+	 * Android exception: getnodeinfo uses GETNODEINFO_TTL_ANDROID_S (30 min).
 	 */
+	var GETNODEINFO_TTL_S = 360
+	var GETNODEINFO_TTL_ANDROID_S = 1800
+
 	var CKEYS = {
 		getlastcomments: { time: 960 },
 		getcomments: { time: 360 },
 		search: { time: 2000 },
 		gettags: { time: 82000 },
-		getnodeinfo: { time: 360 },
+		getnodeinfo: { time: GETNODEINFO_TTL_S },
 		getrawtransactionwithmessagebyid: { time: 460 },
 		gethierarchicalstrip: { time: 460 },
 		getprofilefeed: { time: 460 },
 		getsubscribesfeed: { time: 460 },
 		gethotposts: { time: 460 },
 		getuserprofile: { time: 560 },
+	}
+
+	/**
+	 * Cordova Android only (device.platform / cordova.platformId).
+	 * options.android true|false overrides detection for tests.
+	 */
+	var isAndroidEnv = function (options) {
+		var env
+		var platform
+
+		options = options || {}
+		if (options.android === true) return true
+		if (options.android === false) return false
+
+		env = options.env || null
+		if (env && env.android === true) return true
+		if (env && env.android === false) return false
+
+		platform =
+			(env && (env.platform || env.platformId)) ||
+			(typeof window !== 'undefined' &&
+				window.device &&
+				window.device.platform) ||
+			(typeof window !== 'undefined' &&
+				window.cordova &&
+				window.cordova.platformId) ||
+			''
+
+		return String(platform).toLowerCase() === 'android'
+	}
+
+	var resolveCkeys = function (options) {
+		var out
+		var k
+
+		options = options || {}
+		if (options.ckeys) return options.ckeys
+		if (!isAndroidEnv(options)) return CKEYS
+
+		out = {}
+		for (k in CKEYS) {
+			if (Object.prototype.hasOwnProperty.call(CKEYS, k)) {
+				out[k] = CKEYS[k]
+			}
+		}
+		out.getnodeinfo = { time: GETNODEINFO_TTL_ANDROID_S }
+		return out
 	}
 
 	function LocalNodeCacheCtor(options) {
@@ -46,7 +97,7 @@ var LocalNodeCache = (function () {
 				: function () {
 						return Date.now()
 				  }
-		var ckeys = options.ckeys || CKEYS
+		var ckeys = resolveCkeys(options)
 
 		self.ckeys = ckeys
 		self.maxEntries = maxEntries
@@ -331,6 +382,10 @@ var LocalNodeCache = (function () {
 
 	LocalNodeCacheCtor.CKEYS = CKEYS
 	LocalNodeCacheCtor.DEFAULT_MAX_ENTRIES = DEFAULT_MAX_ENTRIES
+	LocalNodeCacheCtor.GETNODEINFO_TTL_S = GETNODEINFO_TTL_S
+	LocalNodeCacheCtor.GETNODEINFO_TTL_ANDROID_S = GETNODEINFO_TTL_ANDROID_S
+	LocalNodeCacheCtor.isAndroidEnv = isAndroidEnv
+	LocalNodeCacheCtor.resolveCkeys = resolveCkeys
 
 	return LocalNodeCacheCtor
 })()

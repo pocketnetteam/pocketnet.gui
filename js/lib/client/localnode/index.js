@@ -31,6 +31,9 @@ var LocalNodeProxy = function (app, options) {
 			self.cache = new CacheCtor({
 				now: options.now,
 				maxEntries: options.cacheMaxEntries,
+				ckeys: options.ckeys,
+				android: options.android,
+				env: options.env,
 			})
 		}
 	}
