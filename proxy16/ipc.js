@@ -298,13 +298,19 @@ var IPC = function(ipc, wc, ComLayer){
 	var useSnowFlake2 = false
 
 	try{
+		// Bare language tags are common; RU/BY + IR + TM (not ru-KZ, fa-AF, zh-CN, …)
+		var localeCandidates = [
+			Intl.DateTimeFormat().resolvedOptions().locale,
+			(typeof navigator != 'undefined' && navigator.language) || null
+		].concat((typeof navigator != 'undefined' && navigator.languages) || [])
 
-		var locale = Intl.DateTimeFormat().resolvedOptions().locale
-
-		if(locale == 'ru-RU' || locale == 'fa-IR') {
-			useSnowFlake2 = true
-		}
-
+		useSnowFlake2 = localeCandidates.some(function(raw){
+			if(!raw) return false
+			var locale = String(raw).toLowerCase().replace(/_/g, '-')
+			return locale === 'ru' || locale.startsWith('ru-ru') || locale.startsWith('ru-by')
+				|| locale === 'fa' || locale.startsWith('fa-ir')
+				|| locale === 'tk' || locale.startsWith('tk-tm')
+		})
 	}catch(e){
 
 	}

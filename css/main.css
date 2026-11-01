@@ -6108,6 +6108,26 @@ html.allcontent_application #footerWrapper {
   align-items: center;
   flex-direction: column;
 }
+#splashScreen .splash-status {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  text-align: center;
+  color: #fff;
+  pointer-events: none;
+  font-size: 0.85em;
+  opacity: 0.9;
+  line-height: 1.4;
+  padding: 0 1em;
+}
+#splashScreen .splash-status .splash-status-tor[hidden] {
+  display: none;
+}
+#splashScreen .splash-status .splash-status-app {
+  opacity: 0.75;
+  margin-top: 0.35em;
+}
 #splashScreen h1 {
   color: white;
   margin-top: 1em;

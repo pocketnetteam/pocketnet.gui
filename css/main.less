@@ -7488,6 +7488,29 @@ html.allcontent_application{
     align-items: center;
     flex-direction: column;
 
+    .splash-status {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+        text-align: center;
+        color: #fff;
+        pointer-events: none;
+        font-size: 0.85em;
+        opacity: 0.9;
+        line-height: 1.4;
+        padding: 0 1em;
+
+        .splash-status-tor[hidden] {
+            display: none;
+        }
+
+        .splash-status-app {
+            opacity: 0.75;
+            margin-top: 0.35em;
+        }
+    }
+
     h1 {
         color: white;
         margin-top: 1em;

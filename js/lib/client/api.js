@@ -115,14 +115,160 @@ var ProxyRequest = function(app = {}, proxy){
 
 
             //if(!isonline()) time = 3000
+
+            var requestoptions = _.extend({}, p, { timeout : time })
     
-            return timeout(time, directclear(url, data, controller.signal, p), controller)
+            return timeout(time, directclear(url, data, controller.signal, requestoptions), controller)
         }   
         else{
             return directclear(url, data, null, p)
         }
 
        
+    }
+
+    var parseNativeHttpBody = function(body){
+        if (_.isObject(body)) return body
+        if (typeof body != 'string' || !body) return {}
+
+        try{
+            return JSON.parse(body)
+        }
+        catch(e){
+            return {}
+        }
+    }
+
+    var finalizeDirectResult = function(url, result, er){
+        if (er){
+            return Promise.reject((result && result.error) || result)
+        }
+
+        if (url.indexOf('sendrawtransaction') > -1 && result.data){
+            txidnodestorage[result.data] = result.node
+        }
+
+        return Promise.resolve(result.data || {})
+    }
+
+    var cordovaHttp = function(){
+        return deep(window, 'cordova.plugin.http')
+    }
+
+    var directclearNative = function(url, data, signal, p, headers){
+        var http = cordovaHttp()
+        var method = String(p.method || 'POST').toLowerCase()
+        var timeoutSec = null
+
+        if (p.timeout){
+            timeoutSec = Math.max(1, Math.ceil(Number(p.timeout) / 1000))
+        }
+
+        return new Promise(function(resolve, reject){
+            var settled = false
+            var requestId = null
+            var onAbort = null
+
+            var cleanup = function(){
+                if (signal && onAbort){
+                    signal.removeEventListener('abort', onAbort)
+                }
+            }
+
+            var finish = function(handler, value){
+                if (settled) return
+                settled = true
+
+                cleanup()
+
+                if (signal) signal.dontabortable = true
+
+                handler(value)
+            }
+
+            onAbort = function(){
+                if (settled) return
+
+                if (requestId != null && http.abort){
+                    try{
+                        http.abort(requestId, function(){}, function(){})
+                    }
+                    catch(e){}
+                }
+
+                finish(reject, { code : 20 })
+            }
+
+            if (signal){
+                if (signal.aborted){
+                    onAbort()
+                    return
+                }
+
+                signal.addEventListener('abort', onAbort)
+            }
+
+            var options = {
+                method : method,
+                headers : headers,
+                serializer : 'json',
+                responseType : 'json',
+                data : data
+            }
+
+            if (timeoutSec) options.timeout = timeoutSec
+
+            requestId = http.sendRequest(url, options, function(response){
+                var status = response && response.status
+                var result = parseNativeHttpBody(response && response.data)
+                var er = false
+
+                if (status && status == 261){
+                    finish(reject, { code : status })
+                    return
+                }
+
+                if (!status || status < 200 || status >= 300){
+                    er = true
+                }
+
+                finalizeDirectResult(url, result, er).then(function(value){
+                    finish(resolve, value)
+                }).catch(function(e){
+                    finish(reject, e)
+                })
+
+            }, function(response){
+                var status = response && response.status
+
+                if (status === -8){
+                    finish(reject, { code : 20 })
+                    return
+                }
+
+                if (status && status == 261){
+                    finish(reject, { code : status })
+                    return
+                }
+
+                if (status && status > 0){
+                    var result = parseNativeHttpBody(response.error)
+
+                    finalizeDirectResult(url, result, true).then(function(value){
+                        finish(resolve, value)
+                    }).catch(function(e){
+                        finish(reject, e)
+                    })
+
+                    return
+                }
+
+                finish(reject, {
+                    code : status || -1,
+                    message : (response && response.error) || 'nativehttp'
+                })
+            })
+        })
     }
 
     var directclear = function(url, data, signal, p){
@@ -148,6 +294,19 @@ var ProxyRequest = function(app = {}, proxy){
             data = sign(data)
         else{
             if (app.user && (app.user.getstate && app.user.getstate() == 1)){ data.state = 1 }
+        }
+
+        if (window.cordova && cordovaHttp() && cordovaHttp().sendRequest){
+            return directclearNative(url, data, signal, p, headers).catch(e => {
+
+                if (e.code == 20){
+                    return Promise.reject({
+                        code : 2000
+                    })
+                }
+
+                return Promise.reject(e)
+            })
         }
 
 
@@ -182,31 +341,7 @@ var ProxyRequest = function(app = {}, proxy){
 
         }).then(result => {
 
-            if (er){
-                return Promise.reject(result.error)
-            }
-
-            /*if(p.withnode){
-                return Promise.resolve({
-                    data : result.data || {},
-                    node : result.node
-                })
-            }
-
-            else{*/
-
-
-            if (url.indexOf('sendrawtransaction') > -1 && result.data){
-                txidnodestorage[result.data] = result.node
-            }
-
-
-            return Promise.resolve(result.data || {})
-
-
-            //}
-
-            
+            return finalizeDirectResult(url, result, er)
 
         }).catch(e => {
 

@@ -25296,10 +25296,13 @@ Platform = function (app, listofnodes) {
 
         console.log('prepare')
 
+        self.app.splashNetState = 'connecting'
+
         self.app.api.wait.ready('use', 6000).then(r => {
 
             console.log('prepare use')
 
+            self.app.splashNetState = 'finding'
 
             return new Promise((resolve, reject) => {
                 setTimeout(function () {
@@ -25307,6 +25310,8 @@ Platform = function (app, listofnodes) {
                     self.app.api.changeProxyIfNeed().then(l => {
 
                         console.log('prepare use changeProxyIfNeedchangeProxyIfNeed', l)
+
+                        self.app.splashNetState = l ? 'connected' : 'failed'
 
                         if (!l) {
 
@@ -25322,7 +25327,10 @@ Platform = function (app, listofnodes) {
 
                         resolve()
 
-                    }).catch(reject)
+                    }).catch(function (e) {
+                        self.app.splashNetState = 'failed'
+                        reject(e)
+                    })
 
                 }, 50)
             })
@@ -25412,6 +25420,7 @@ Platform = function (app, listofnodes) {
 
         }).catch(e => {
             console.log("ERROR", e)
+            self.app.splashNetState = 'failed'
         })
 
         self.sdk.payments.make = (new window.__BastyonLib(window.project_config)).payments

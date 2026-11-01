@@ -60,6 +60,7 @@
         "cordova-plugin-camera-preview": "^0.12.3",
         "cordova-plugin-contacts-x": "file:cordova-plugin-contacts-x",
         "cordova-plugin-device": "^3.0.0",
+        "cordova-plugin-advanced-http": "3.3.1",
         "cordova-plugin-file": "^8.1.3",
         "cordova-plugin-file-transfer": "file:cordova-plugin-file-transfer",
         "cordova-plugin-insomnia": "file:cordova-plugin-insomnia",
@@ -130,6 +131,7 @@
             },
             "cordova-plugin-network-information": {},
             "cordova-plugin-vibration": {},
+            "cordova-plugin-advanced-http": {},
             "cordova-plugin-file-transfer": {},
             "cordova-plugin-actionsheet": {},
             "cordova-plugin-media": {
