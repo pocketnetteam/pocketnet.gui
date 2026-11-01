@@ -2,14 +2,16 @@
 
 _.each((info.peertube || {}).instances, function(instance){
 
-    var stats = instance.stats
+    var stats = instance.stats || {}
+    var slice = stats.slice || {}
+    var events = stats.events || {}
     
 %>
 
     <div class="instanceWrapper">
         <div elementsid="openinstance" class="work">
             <div class="tableovfWrapper">
-                <div class="instance table" instance="<%-instance.host%>">
+                <div class="instance table <% if(instance.canuse === false) {%> cantuse <% } %>" instance="<%-instance.host%>">
                     <div class="use <% if(instance.host == currentinstance) {%> using <% } %> <% if(typeof fixedinstance != 'undefined' && fixedinstance == instance.key) {%> locked <% } %>">
                         <i class="far fa-check-circle"></i>   
                     </div>
@@ -22,19 +24,23 @@ _.each((info.peertube || {}).instances, function(instance){
                     
                         
 
-                        <% if(stats.slice && stats.slice.time && stats.slice.percent) {%>
+                        <% if(slice.time && slice.percent) {%>
 
-                            <span title="In the last 5 minutes"><%- stats.slice.time.toFixed(0) %>ms, <%- stats.slice.percent.toFixed(0) %> % <i class="fas fa-clock"></i></span> 
+                            <span title="In the last 5 minutes"><%- slice.time.toFixed(0) %>ms, <%- slice.percent.toFixed(0) %> % <i class="fas fa-clock"></i></span> 
                     
+                        <% } else if(typeof instance.canuse !== 'undefined') { %>
+
+                            <span><%- instance.canuse ? 'online' : 'offline' %></span>
+
                         <% } else { %> 
                             
                             <span>&mdash; <i class="fas fa-clock"></i> </span>
 
                         <% } %>
 
-                        <% if(stats.events && stats.events.time && stats.events.percent) {%>
+                        <% if(events.time && events.percent) {%>
 
-                            <span class="alltime" title="In the entire history of observations"> / <%- stats.events.time.toFixed(0) %>ms, <%- stats.events.percent.toFixed(0) %> %</span> 
+                            <span class="alltime" title="In the entire history of observations"> / <%- events.time.toFixed(0) %>ms, <%- events.percent.toFixed(0) %> %</span> 
                     
                         <% } else { %> 
                             
@@ -45,7 +51,7 @@ _.each((info.peertube || {}).instances, function(instance){
 
                         
 
-                        <% if(stats.events.date) {%><br><span class="smalllabel"><%- app.reltime(new Date(stats.events.date)) %> (<%- stats.events.count %>)</span><% } %>
+                        <% if(events.date) {%><br><span class="smalllabel"><%- app.reltime(new Date(events.date)) %> (<%- events.count %>)</span><% } %>
                         
                     </div>
 
@@ -75,6 +81,7 @@ _.each((info.peertube || {}).instances, function(instance){
                 </div>
             </div>
         </div>
+    </div>
 
 
 <% }) %>

@@ -25,6 +25,9 @@
 
                         <div class="name">
                             <%- _proxy.get.name() %> <i class="fas fa-check"></i>
+                            <% if (_proxy.localnodes && _proxy.pingerror) { %>
+                                <div class="localnodesUnavailable"><%=e('localNodeProxyUnavailable')%></div>
+                            <% } %>
                         </div>
 
                         <div class="panel">

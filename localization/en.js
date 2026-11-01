@@ -2617,6 +2617,8 @@ _l.supportTicketSuccess = "You messave has been sent and volunteers will contact
 
 _l.torusing_directProxy = "Built-in proxy";
 _l.torusing_notdirectProxy = "External proxy";
+_l.localNodeProxy = "Local Node Proxy";
+_l.localNodeProxyUnavailable = "No usable nodes yet. Wait for connection or try again.";
 
 _l.commentBannedWarning = function(name){
 	return name + " blocked you. You won't be able to comment on it.";
@@ -3309,6 +3311,14 @@ _l.sysmodbas="Content moderation system on Bastyon"
 
 _l.torHintStateRunning = "The TOR module is working"
 _l.torHintStateStarting = "TOR module is starting"
+
+_l.splashNetConnecting = "Connecting to network…"
+_l.splashNetFinding = "Looking for a proxy…"
+_l.splashNetConnected = "Connected"
+_l.splashNetFailed = "Could not connect"
+_l.splashTorStarting = "Starting Tor…"
+_l.splashTorConnected = "Tor is connected"
+_l.splashTorFailed = "Tor connection failed"
 
 _l.collections = "Collections"
 _l.emptycollections = "No collections"

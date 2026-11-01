@@ -491,14 +491,24 @@ var menu = (function(){
 
                                 if (d.torMode == 'UNDEFINED') {
                                     try{
-                                        const locale = Intl.DateTimeFormat().resolvedOptions().locale
+                                        // Android often returns bare language tags; RU/BY + IR + TM
+                                        // (not ru-KZ, fa-AF, zh-CN, … — Snowflake is poor there)
+                                        var localeCandidates = [
+                                            Intl.DateTimeFormat().resolvedOptions().locale,
+                                            navigator.language
+                                        ].concat(navigator.languages || [])
+
+                                        var useSnowflake = _.find(localeCandidates, function(raw){
+                                            if(!raw) return false
+                                            var locale = String(raw).toLowerCase().replace(/_/g, '-')
+                                            return locale === 'ru' || locale.startsWith('ru-ru') || locale.startsWith('ru-by')
+                                                || locale === 'fa' || locale.startsWith('fa-ir')
+                                                || locale === 'tk' || locale.startsWith('tk-tm')
+                                        })
+
                                         const st = {
-                                            torMode: 'AUTO'
-                                        }
-                                        if (locale == 'ru-RU' || locale == 'fa-IR') {
-                                            st.bridgeType = 'SNOWFLAKE'
-                                        } else {
-                                            st.bridgeType = 'NONE'
+                                            torMode: 'AUTO',
+                                            bridgeType: useSnowflake ? 'SNOWFLAKE' : 'NONE'
                                         }
                                         window.cordova?.plugins?.torRunner.configure(st)
                                         d = window.cordova?.plugins?.torRunner.getSettings()
@@ -539,7 +549,8 @@ var menu = (function(){
 							else{
 								const currentProxy = app.api.get.current();
 
-								if (!currentProxy.direct) {
+								// Electron System16 Tor only — Local Node Proxy has no proxy16 Tor daemon.
+								if (!currentProxy.direct || currentProxy.localnodes) {
 									controlTorElem.removeClass(['on', 'loading']);
 									controlTorElem.addClass('off');
 									controlTorStatusText.removeClass('visible');

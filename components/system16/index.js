@@ -283,10 +283,17 @@ var system16 = (function(){
 
 				if(!address) return false
 
+				// Local Node Proxy is direct+localnodes, but has no proxy-admin surface.
+				if (proxy && proxy.localnodes) return false
 
 				if (proxy && info){
 					return proxy.direct || _.indexOf(info.admins, address) > -1
 				}
+			},
+
+			/** Cordova/browser Local Node Proxy — not Electron System16. */
+			localnodes : function(){
+				return !!(proxy && proxy.localnodes)
 			},
 
 
@@ -433,18 +440,23 @@ var system16 = (function(){
 						
 						if (el.c){
 							renders.nodescontenttable(el.c)
-							//renders.notificationcontenttable(el.c)
-							//renders.notificationuserstable(el.c)
 							renders.peertubeinstancestable(el.c)
-							renders.webadminscontent(el.c)
-							renders.webdistributionwallets(el.c)
-							renders.webserverstatus(el.c)
-							renders.translateapicontent(el.c)
+
+							if (!actions.localnodes()){
+								//renders.notificationcontenttable(el.c)
+								//renders.notificationuserstable(el.c)
+								renders.webadminscontent(el.c)
+								renders.webdistributionwallets(el.c)
+								renders.webserverstatus(el.c)
+								renders.translateapicontent(el.c)
+							}
 						}
 		
-						setTimeout(function(){
-							makers.stats(true)
-						}, 200)
+						if (!actions.localnodes()){
+							setTimeout(function(){
+								makers.stats(true)
+							}, 200)
+						}
 					})
 
 				}
@@ -791,8 +803,16 @@ var system16 = (function(){
 
 
 					windows.proxieslist(use, "Select Proxy that using Interface", function(selected){
+						var isSystem16Direct = function(p){
+							if (typeof LocalNodeProxy !== 'undefined' && LocalNodeProxy.isSystem16Direct) {
+								return LocalNodeProxy.isSystem16Direct(p)
+							}
+							return !!(p && p.direct && !p.localnodes)
+						}
+
 						function onSettingsReceived(settings) {
-							if (settings.tor.enabled3) {
+							// Tor manage only on Electron System16, never Local Node Proxy.
+							if (isSystem16Direct(selected) && settings.tor && settings.tor.enabled3) {
 								selected.fetchauth('manage', {
 									action: 'tor.start',
 									data: { persistence: false },
@@ -801,7 +821,8 @@ var system16 = (function(){
 							}
 						}
 
-						if (!selected.direct) {
+						// Leaving System16 for a remote: stop Tor on the old Electron proxy only.
+						if (isSystem16Direct(use) && !selected.direct) {
 							use.fetchauth('manage', {
 								action: 'tor.stop',
 								data: { persistence: false },
@@ -2829,6 +2850,8 @@ var system16 = (function(){
 				}
 				else{
 
+					var localnodes = actions.localnodes()
+
 					self.shell({
 
 						inner : html,
@@ -2837,7 +2860,8 @@ var system16 = (function(){
 							info : info,
 							proxy : proxy,
 							admin : actions.admin(),
-							electron : typeof _Electron != 'undefined' ? _Electron : false
+							electron : typeof _Electron != 'undefined' ? _Electron : false,
+							localnodes : localnodes
 						},
 						insertimmediately : true,
 						el : el.proxycontent
@@ -2846,16 +2870,20 @@ var system16 = (function(){
 					function(p){
 	
 						renders.proxyservers(p.el)
-						renders.servercontent(p.el)
 						renders.nodescontent(p.el)
-
-						if(actions.admin()) renders.notificationcontent(p.el)
-
-						renders.chaincontent(p.el)
 						renders.peertubecontent(el.c)
-						renders.translateapicontent(el.c)
-						renders.nodecontent(p.el)
-						renders.bots(p.el)
+
+						// Local Node Proxy (Android/browser): only nodes + peertube; no proxy-admin calls/UI.
+						if (!localnodes){
+							renders.servercontent(p.el)
+
+							if(actions.admin()) renders.notificationcontent(p.el)
+
+							renders.chaincontent(p.el)
+							renders.translateapicontent(el.c)
+							renders.nodecontent(p.el)
+							renders.bots(p.el)
+						}
 
 						if (clbk)
 							clbk()
@@ -3766,7 +3794,7 @@ var system16 = (function(){
 						info : info,
 						proxy : proxy,
 						admin : actions.admin(),
-						
+						localnodes : actions.localnodes(),
 					},
 					insertimmediately : true,
 					el : elc.find('.peertubeWrapper')
@@ -3777,7 +3805,7 @@ var system16 = (function(){
 
 					renders.peertubeinstancestable(elc)
 
-					if(actions.admin()){
+					if(actions.admin() && !actions.localnodes()){
 						_p.el.find('.restartcomponent').on('click', function(){
 							new dialog({
 								class : 'zindex',
@@ -4127,7 +4155,7 @@ var system16 = (function(){
 						manager : info.nodeManager,
 						proxy : proxy,
 						admin : actions.admin(),
-						
+						localnodes : actions.localnodes(),
 					},
 					insertimmediately : true,
 					el : elc.find('.nodesWrapper')
@@ -4413,16 +4441,21 @@ var system16 = (function(){
 			panel : function(){
 				if(el.c){
 					renders.nodescontenttable(el.c)
-					//renders.notificationcontenttable(el.c)
 					renders.peertubeinstancestable(el.c)
-					renders.webadminscontent(el.c)
-					renders.webdistributionwallets(el.c)
-					renders.webserveradmin(el.c)
+
+					if (!actions.localnodes()){
+						//renders.notificationcontenttable(el.c)
+						renders.webadminscontent(el.c)
+						renders.webdistributionwallets(el.c)
+						renders.webserveradmin(el.c)
+					}
 				}
 				
 			},
 
 			stats : function(update){
+
+				if (actions.localnodes()) return
 
 				if (stats){
 					chart.make('server', stats, null, update)
@@ -4509,9 +4542,20 @@ var system16 = (function(){
 
 					makers.proxycontent()
 
+					// Local Node Proxy: info only (nodes + peertube UI). No stats/chain/admin RPC.
+					if (actions.localnodes()){
+						el.c.find('.collapsepart').each(function (i) {
+							if (expanded[i]) $(this).addClass('expanded');
+						});
+
+						return Promise.resolve(null)
+					}
+
 					return proxy.get.stats()
 
 				}).then(data => {
+
+					if (!data || actions.localnodes()) return
 
 					el.c.find('.collapsepart').each(function (i) {
 						if (expanded[i]) $(this).addClass('expanded');

@@ -105,6 +105,10 @@ When a Cordova (Android/iOS) or Electron (macOS/Windows/Linux) build suddenly fa
 - Cite the sources you used when reporting the cause to the user.
 
 
+## Related docs
+
+- Local Node Proxy (client-side truncated node manager for Cordova/browser, Electron-parity `direct` proxy): see [`docs/local-node-proxy/README.md`](docs/local-node-proxy/README.md), roadmap in [`docs/local-node-proxy/ROADMAP.md`](docs/local-node-proxy/ROADMAP.md). Agents implementing it should follow [`docs/local-node-proxy/AGENT_CHECKLIST.md`](docs/local-node-proxy/AGENT_CHECKLIST.md). Preferred driver skill: [`.cursor/skills/next-step-local-node-proxy/SKILL.md`](.cursor/skills/next-step-local-node-proxy/SKILL.md) (`next-step-local-node-proxy` — plan phase if missing, else execute next plan step and run `tests/localnode` gates; see [`docs/local-node-proxy/TESTING.md`](docs/local-node-proxy/TESTING.md)).
+
 ## Current Boost Context
 
 - Boost is a content advertising action, not just a generic wallet transaction.

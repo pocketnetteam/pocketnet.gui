@@ -2470,6 +2470,8 @@ _l.torusing_always = "Всегда";
 
 _l.torusing_directProxy = "Встроенный прокси";
 _l.torusing_notdirectProxy = "Внешний прокси";
+_l.localNodeProxy = "Прокси локальных нод";
+_l.localNodeProxyUnavailable = "Нет доступных нод. Подождите подключения или попробуйте снова.";
 
 _l.torusing_changedirectProxy = "Сменить на внешний прокси";
 _l.torusing_changenotdirectProxy = "Сменить на встроенный прокси";
@@ -3120,6 +3122,14 @@ _l.sysmodbas="Система модерации контента на Bastyon"
 
 _l.torHintStateRunning = "Модуль ТОР работает"
 _l.torHintStateStarting = "Модуль ТОР запускается"
+
+_l.splashNetConnecting = "Подключение к сети…"
+_l.splashNetFinding = "Поиск прокси…"
+_l.splashNetConnected = "Подключено"
+_l.splashNetFailed = "Не удалось подключиться"
+_l.splashTorStarting = "Запуск Tor…"
+_l.splashTorConnected = "Tor подключён"
+_l.splashTorFailed = "Не удалось запустить Tor"
 
 _l.collections = "Коллекции"
 _l.emptycollections = "Нет коллекций"

@@ -1051,6 +1051,8 @@ _l.torusing_always = "始终";
 
 _l.torusing_directProxy = "内置代理";
 _l.torusing_notdirectProxy = "外部代理";
+_l.localNodeProxy = "本地节点代理";
+_l.localNodeProxyUnavailable = "暂无可用节点。请等待连接或重试。";
 
 _l.torusing_changedirectProxy = "改变为外部代理";
 _l.torusing_changenotdirectProxy = "改为内置代理";

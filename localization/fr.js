@@ -1404,6 +1404,8 @@ _l.torusing_always = "Toujours";
 
 _l.torusing_directProxy = "Proxy intégré";
 _l.torusing_notdirectProxy = "Proxy externe";
+_l.localNodeProxy = "Proxy de nœuds locaux";
+_l.localNodeProxyUnavailable = "Aucun nœud utilisable pour le moment. Attendez la connexion ou réessayez.";
 
 _l.torusing_changedirectProxy = "Passer à un proxy externe";
 _l.torusing_changenotdirectProxy = "Passer à un proxy intégré";

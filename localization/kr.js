@@ -880,6 +880,8 @@ _l.torusing_always = "항상";
 
 _l.torusing_directProxy = "기본 제공 프록시";
 _l.torusing_notdirectProxy = "외부 프록시";
+_l.localNodeProxy = "로컬 노드 프록시";
+_l.localNodeProxyUnavailable = "사용 가능한 노드가 없습니다. 연결을 기다리거나 다시 시도하세요.";
 
 _l.torusing_changedirectProxy = "외부 프록시로 변경";
 _l.torusing_changenotdirectProxy = "기본 제공 프록시로 변경";

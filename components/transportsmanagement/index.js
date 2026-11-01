@@ -49,11 +49,21 @@ var transportsmanagement = (function(){
 				var address = self.app.platform.sdk.address.pnet()
 
 				if (proxy && info){
+					// Local Node Proxy is direct+localnodes but has no proxy-admin / Tor manage surface.
+					if (proxy.localnodes) return false
 					return proxy.direct || (address && _.indexOf(info.admins, address.address) > -1)
 				}
 			},
+			/** Any failover direct entry (Electron System16 or Local Node Proxy). */
 			directProxy : function(){
 				return proxy && proxy.direct ? true : false
+			},
+
+			/** Electron on-machine System16 only — not Local Node Proxy. */
+			electronDirect : function(){
+				return typeof LocalNodeProxy !== 'undefined' && LocalNodeProxy.isSystem16Direct
+					? LocalNodeProxy.isSystem16Direct(proxy)
+					: !!(proxy && proxy.direct && !proxy.localnodes)
 			},
 
 			candirect : function(){
@@ -112,7 +122,8 @@ var transportsmanagement = (function(){
 				}).catch(() => {
 					return null
 				}).then(() => {
-					if (actions.admin()) {
+					// get.settings / manage only on System16 or remote admin — not localnodes.
+					if (actions.admin() && !proxy.localnodes) {
 						return proxy.system.request('get.settings').catch(() => {
 							return null
 						})
@@ -150,7 +161,8 @@ var transportsmanagement = (function(){
 		var renders = {
 			settings : function(initial){
 
-				if(system && (actions.directProxy() || cordovaProxy)){
+				// Electron System16 Tor settings, or Cordova torRunner — not Local Node Proxy.
+				if(system && (actions.electronDirect() || cordovaProxy)){
 					self.shell({
 						name : 'settings',
 						data : {
@@ -213,7 +225,7 @@ var transportsmanagement = (function(){
 										}, 500)
 									})
 								}
-								else{
+								else if (actions.electronDirect()){
 
 									if (changes.torenabled3) {
 										actions.toggleTorElectronProxy(changes.torenabled3);
@@ -225,6 +237,9 @@ var transportsmanagement = (function(){
 											settings: changes
 										}
 									})
+								}
+								else{
+									promise = Promise.resolve()
 								}
 
 								promise.then(r => {
@@ -349,7 +364,10 @@ var transportsmanagement = (function(){
 									promise.then(() => {
 										return remake();
 									}).then(() => {
-										actions.toggleTorElectronProxy(info?.tor?.enabled3);
+										// Electron session Tor only when current is System16.
+										if (actions.electronDirect()) {
+											actions.toggleTorElectronProxy(info?.tor?.enabled3);
+										}
 									}).catch(e => {
 										sitemessage(self.app.localization.e('error'))
 									}).finally(() => {

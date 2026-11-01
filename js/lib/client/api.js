@@ -115,14 +115,160 @@ var ProxyRequest = function(app = {}, proxy){
 
 
             //if(!isonline()) time = 3000
+
+            var requestoptions = _.extend({}, p, { timeout : time })
     
-            return timeout(time, directclear(url, data, controller.signal, p), controller)
+            return timeout(time, directclear(url, data, controller.signal, requestoptions), controller)
         }   
         else{
             return directclear(url, data, null, p)
         }
 
        
+    }
+
+    var parseNativeHttpBody = function(body){
+        if (_.isObject(body)) return body
+        if (typeof body != 'string' || !body) return {}
+
+        try{
+            return JSON.parse(body)
+        }
+        catch(e){
+            return {}
+        }
+    }
+
+    var finalizeDirectResult = function(url, result, er){
+        if (er){
+            return Promise.reject((result && result.error) || result)
+        }
+
+        if (url.indexOf('sendrawtransaction') > -1 && result.data){
+            txidnodestorage[result.data] = result.node
+        }
+
+        return Promise.resolve(result.data || {})
+    }
+
+    var cordovaHttp = function(){
+        return deep(window, 'cordova.plugin.http')
+    }
+
+    var directclearNative = function(url, data, signal, p, headers){
+        var http = cordovaHttp()
+        var method = String(p.method || 'POST').toLowerCase()
+        var timeoutSec = null
+
+        if (p.timeout){
+            timeoutSec = Math.max(1, Math.ceil(Number(p.timeout) / 1000))
+        }
+
+        return new Promise(function(resolve, reject){
+            var settled = false
+            var requestId = null
+            var onAbort = null
+
+            var cleanup = function(){
+                if (signal && onAbort){
+                    signal.removeEventListener('abort', onAbort)
+                }
+            }
+
+            var finish = function(handler, value){
+                if (settled) return
+                settled = true
+
+                cleanup()
+
+                if (signal) signal.dontabortable = true
+
+                handler(value)
+            }
+
+            onAbort = function(){
+                if (settled) return
+
+                if (requestId != null && http.abort){
+                    try{
+                        http.abort(requestId, function(){}, function(){})
+                    }
+                    catch(e){}
+                }
+
+                finish(reject, { code : 20 })
+            }
+
+            if (signal){
+                if (signal.aborted){
+                    onAbort()
+                    return
+                }
+
+                signal.addEventListener('abort', onAbort)
+            }
+
+            var options = {
+                method : method,
+                headers : headers,
+                serializer : 'json',
+                responseType : 'json',
+                data : data
+            }
+
+            if (timeoutSec) options.timeout = timeoutSec
+
+            requestId = http.sendRequest(url, options, function(response){
+                var status = response && response.status
+                var result = parseNativeHttpBody(response && response.data)
+                var er = false
+
+                if (status && status == 261){
+                    finish(reject, { code : status })
+                    return
+                }
+
+                if (!status || status < 200 || status >= 300){
+                    er = true
+                }
+
+                finalizeDirectResult(url, result, er).then(function(value){
+                    finish(resolve, value)
+                }).catch(function(e){
+                    finish(reject, e)
+                })
+
+            }, function(response){
+                var status = response && response.status
+
+                if (status === -8){
+                    finish(reject, { code : 20 })
+                    return
+                }
+
+                if (status && status == 261){
+                    finish(reject, { code : status })
+                    return
+                }
+
+                if (status && status > 0){
+                    var result = parseNativeHttpBody(response.error)
+
+                    finalizeDirectResult(url, result, true).then(function(value){
+                        finish(resolve, value)
+                    }).catch(function(e){
+                        finish(reject, e)
+                    })
+
+                    return
+                }
+
+                finish(reject, {
+                    code : status || -1,
+                    message : (response && response.error) || 'nativehttp'
+                })
+            })
+        })
     }
 
     var directclear = function(url, data, signal, p){
@@ -148,6 +294,19 @@ var ProxyRequest = function(app = {}, proxy){
             data = sign(data)
         else{
             if (app.user && (app.user.getstate && app.user.getstate() == 1)){ data.state = 1 }
+        }
+
+        if (window.cordova && cordovaHttp() && cordovaHttp().sendRequest){
+            return directclearNative(url, data, signal, p, headers).catch(e => {
+
+                if (e.code == 20){
+                    return Promise.reject({
+                        code : 2000
+                    })
+                }
+
+                return Promise.reject(e)
+            })
         }
 
 
@@ -182,31 +341,7 @@ var ProxyRequest = function(app = {}, proxy){
 
         }).then(result => {
 
-            if (er){
-                return Promise.reject(result.error)
-            }
-
-            /*if(p.withnode){
-                return Promise.resolve({
-                    data : result.data || {},
-                    node : result.node
-                })
-            }
-
-            else{*/
-
-
-            if (url.indexOf('sendrawtransaction') > -1 && result.data){
-                txidnodestorage[result.data] = result.node
-            }
-
-
-            return Promise.resolve(result.data || {})
-
-
-            //}
-
-            
+            return finalizeDirectResult(url, result, er)
 
         }).catch(e => {
 
@@ -275,13 +410,21 @@ var Proxy16 = function(meta, app, api){
     var self = this
     var request = new ProxyRequest(app, self)
 
-    self.system = new System16(app, self, meta.direct)
-
     self.host = meta.host || ""
     self.port = meta.port || 0
     self.wss = meta.wss || 0
     self.direct = meta.direct
+    // localnodes: client JS manager → remote seeds (Cordova/web). NOT a local node process.
+    // Electron's on-machine proxy remains direct && !localnodes via System16.
+    self.localnodes = meta.localnodes
     self.user = meta.user || false
+
+    // Electron System16 only for classic direct (local computer proxy), never for localnodes.
+    self.system = new System16(app, self, self.direct && !self.localnodes)
+
+    if (self.localnodes && typeof LocalNodeProxy !== 'undefined') {
+        self.localNodeProxy = new LocalNodeProxy(app)
+    }
 
     self.lastinfo = {}
 
@@ -459,6 +602,8 @@ var Proxy16 = function(meta, app, api){
                 return Promise.resolve(r)
             }).catch(e => {
 
+                console.error(e)
+
                 var rdate = new Date()
 
                 self.ping = rdate.addSeconds(30)
@@ -574,7 +719,12 @@ var Proxy16 = function(meta, app, api){
 
         var promise = null
 
-        if (self.direct){
+        if (self.localnodes){
+            promise = self.localNodeProxy
+                ? self.localNodeProxy.rpc(method, parameters, options)
+                : Promise.reject('localnodeproxy')
+        }
+        else if (self.direct){
             promise = self.system.rpc(method, parameters, options)
         }
         else{
@@ -617,6 +767,22 @@ var Proxy16 = function(meta, app, api){
     var wait = {}
 
     self.fetch = async function(path, data, p) {
+        if (self.localnodes) {
+            if (!self.localNodeProxy) return Promise.reject('localnodeproxy')
+
+            // info / ping / nodes/* / peertubeserversList / peertube/* via LocalNodeProxy; other paths stay unimplemented.
+            if (typeof self.localNodeProxy.fetch === 'function') {
+                return self.localNodeProxy.fetch(path, data)
+            }
+
+            if (path === 'ping' || path === '/ping') {
+                return self.localNodeProxy.ping()
+            }
+
+            console.error('notimplemented', { path: path, data: data })
+            return Promise.reject('notimplemented')
+        }
+
         if (self.direct) {
             return self.system.fetch(path, data, p);
         } else {
@@ -635,9 +801,20 @@ var Proxy16 = function(meta, app, api){
         nodes : () => nodes,
 
         name : function(){
-            if(self.direct) return 'Electron Proxy'
+            if (self.localnodes){
+                // Prefer localization; fall back if key missing / localization not ready.
+                if (app && app.localization && typeof app.localization.e === 'function'){
+                    var localized = app.localization.e('localNodeProxy')
 
-            else return self.url.https()
+                    if (localized && localized !== 'localNodeProxy') return localized
+                }
+
+                return 'Local Node Proxy'
+            }
+
+            if (self.direct) return 'Electron Proxy'
+
+            return self.url.https()
         },
 
         info : function(){
@@ -659,10 +836,11 @@ var Proxy16 = function(meta, app, api){
 
     self.init = function(){
 
-        if (self.direct) {
+        if (self.direct && !self.localnodes) {
             self.system.listen()
         }
 
+        // System16 is constructed disabled for localnodes; tick callback is harmless.
         self.system.clbks.tick.proxy = function(settings, proxystate){
 
             if(!proxystate) return
@@ -688,6 +866,12 @@ var Proxy16 = function(meta, app, api){
             }
         }
 
+        if (self.localnodes && self.localNodeProxy && self.localNodeProxy.init) {
+            return self.localNodeProxy.init().then(function () {
+                return Promise.resolve()
+            })
+        }
+
         return Promise.resolve()
 
         // return self.refreshNodes()
@@ -703,7 +887,12 @@ var Proxy16 = function(meta, app, api){
 
     self.destroy = function(){
 
-        if(self.direct) self.system.stop()
+        if(self.direct && !self.localnodes) self.system.stop()
+
+        if (self.localnodes && self.localNodeProxy && self.localNodeProxy.destroy) {
+            self.localNodeProxy.destroy()
+            self.localNodeProxy = null
+        }
 
         nodes = []
     }
@@ -865,6 +1054,10 @@ var Api = function(app){
 
                     return this.addlocalelectronproxy().then(r => {
 
+                        return this.addlocalnodeproxy()
+
+                    }).then(r => {
+
                         this.addlist(initialProxies)
 
                         if (deep(app, 'options.translateApiProxy')){
@@ -936,6 +1129,23 @@ var Api = function(app){
                     else{
                         return Promise.resolve()
                     }
+                },
+                addlocalnodeproxy : function(){
+                    if (typeof LocalNodeProxy !== 'undefined' && LocalNodeProxy.isEnabled(app)){
+                        var meta = typeof LocalNodeProxy.proxyListMeta === 'function'
+                            ? LocalNodeProxy.proxyListMeta()
+                            : {
+                                direct : true,
+                                localnodes : true,
+                                host : 'localnodes',
+                                port : 0,
+                                wss : 0,
+                            }
+
+                        this.add(meta)
+                    }
+
+                    return Promise.resolve()
                 },
                 addlist : function(metas){
                     _.each(metas, meta => { this.add(meta) })
@@ -1366,6 +1576,7 @@ var Api = function(app){
 
         working : function(){
 
+            // Remotes only — never include Electron System16 or Local Node Proxy.
             var _proxies = _.filter(proxies, function(proxy){
                 return !proxy.direct
             })
@@ -1375,7 +1586,7 @@ var Api = function(app){
             })
 
             return Promise.all(promises).then(r => {
-                return _.filter(proxies, function(p, i){
+                return _.filter(_proxies, function(p, i){
                     if (r[i]){
                         return true
                     }
@@ -1384,6 +1595,15 @@ var Api = function(app){
         },
 
         direct : function(){
+            var env = {
+                electron : typeof _Electron !== 'undefined' && !!_Electron,
+                cordova : typeof window !== 'undefined' && !!window.cordova,
+            }
+
+            if (typeof LocalNodeProxy !== 'undefined' && LocalNodeProxy.pickDirectProxy){
+                return LocalNodeProxy.pickDirectProxy(proxies, env)
+            }
+
             var _proxies = _.filter(proxies, function(proxy){
                 return proxy.direct
             })

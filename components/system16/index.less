@@ -1572,29 +1572,58 @@
 
 html.mobileview{
     #system16{
+        max-width: 100%;
+        overflow-x: hidden;
+
         .work{
             padding: 0 2 * @rhythm!important;
+            max-width: 100%;
+            box-sizing: border-box;
         }
     }
 }
 
 /*t*/ @media only screen and (max-width: 768px){
     #system16{
+        max-width: 100%;
+        overflow-x: hidden;
+
         .work{
             padding: 0 2 * @rhythm!important;
-           
+            max-width: 100%;
+            box-sizing: border-box;
         }
 
         .tableovfWrapper{
             overflow: hidden;
-            overflow-x: scroll;
+            max-width: 100%;
         }
 
         .table{
             &:not(.errorTable){
-                width : 1024px!important;
+                width : 100%!important;
+                max-width: 100%;
+                table-layout: fixed;
             }
             
+        }
+
+        .node{
+            >div{
+                &.blockfork{
+                    display: none;
+                }
+
+                &.panelWrapper{
+                    width: 44px;
+                }
+
+                &.statistic{
+                    .alltime{
+                        display: none;
+                    }
+                }
+            }
         }
 
         .botsWrapper{
@@ -1623,6 +1652,20 @@ html.mobileview{
         }
 
         .peertubecontent {
+            .instance{
+                >div{
+                    &.panelWrapper{
+                        width: 44px;
+                    }
+
+                    &.statistic{
+                        .alltime{
+                            display: none;
+                        }
+                    }
+                }
+            }
+
             .performancesWrapper{
                 padding-left: 0;
             }

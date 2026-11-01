@@ -9967,10 +9967,248 @@ if (typeof window != 'undefined') {
 		// Interval
 		var splashScreeninterval;
 
+		var splashStatusFallbacks = {
+			splashNetConnecting: 'Connecting to network…',
+			splashNetFinding: 'Looking for a proxy…',
+			splashNetConnected: 'Connected',
+			splashNetFailed: 'Could not connect',
+			splashTorStarting: 'Starting Tor…',
+			splashTorConnected: 'Tor is connected',
+			splashTorFailed: 'Tor connection failed',
+			localNodeProxy: 'Local Node Proxy',
+			torusing_directProxy: 'Built-in proxy'
+		}
+
+		window.splashStatus = (function () {
+			var statusInterval = null
+			var torFetchPending = false
+			var lastTorText = ''
+			var lastTorVisible = false
+
+			var getEls = function () {
+				if (!splashScreen) return null
+				return {
+					app: splashScreen.querySelector('.splash-status-app'),
+					net: splashScreen.querySelector('.splash-status-net'),
+					tor: splashScreen.querySelector('.splash-status-tor')
+				}
+			}
+
+			var t = function (key) {
+				try {
+					if (typeof app != 'undefined' && app.localization && typeof app.localization.e == 'function') {
+						var v = app.localization.e(key)
+						if (v && v !== key) return v
+					}
+				} catch (e) {}
+				return splashStatusFallbacks[key] || key
+			}
+
+			var fillApp = function (els) {
+				if (!els || !els.app) return
+				var cfg = window.project_config || {}
+				var name = cfg.fullname || cfg.name || 'Bastyon'
+				var ver = window.packageversion || ''
+				els.app.textContent = ver ? (name + ' ' + ver) : name
+			}
+
+			var getCurrentProxy = function () {
+				try {
+					if (typeof app != 'undefined' && app.api && app.api.get && typeof app.api.get.current == 'function') {
+						return app.api.get.current()
+					}
+				} catch (e) {}
+				return null
+			}
+
+			// How we are (or will be) connected: remote host, built-in Electron proxy, or local-nodes path.
+			var proxyDetail = function (proxy) {
+				var node = null
+				var seed = ''
+
+				if (!proxy) return ''
+
+				try {
+					if (proxy.localnodes) {
+						node = proxy.current
+						if ((!node || !node.host) && proxy.localNodeProxy && proxy.localNodeProxy.current) {
+							node = proxy.localNodeProxy.current
+						}
+						if (node && node.host) seed = String(node.host)
+						return seed ? (t('localNodeProxy') + ' · ' + seed) : t('localNodeProxy')
+					}
+
+					if (proxy.direct) {
+						return t('torusing_directProxy')
+					}
+
+					if (proxy.host) {
+						return proxy.port ? (String(proxy.host) + ':' + String(proxy.port)) : String(proxy.host)
+					}
+				} catch (e) {}
+
+				return ''
+			}
+
+			var withProxyDetail = function (base, proxy) {
+				var detail = proxyDetail(proxy)
+				if (!detail) return base
+				return base + ' · ' + detail
+			}
+
+			var netText = function () {
+				var state = (typeof app != 'undefined' && app.splashNetState) || ''
+				var proxy = getCurrentProxy()
+
+				if (state === 'failed') return withProxyDetail(t('splashNetFailed'), proxy)
+				if (state === 'connected') return withProxyDetail(t('splashNetConnected'), proxy)
+				if (state === 'finding') return withProxyDetail(t('splashNetFinding'), proxy)
+				if (state === 'connecting') return withProxyDetail(t('splashNetConnecting'), proxy)
+
+				if (proxy) {
+					if (proxy.successping) return withProxyDetail(t('splashNetConnected'), proxy)
+					if (proxy.pingerror) return withProxyDetail(t('splashNetFailed'), proxy)
+					return withProxyDetail(t('splashNetFinding'), proxy)
+				}
+
+				return t('splashNetConnecting')
+			}
+
+			var setTorLine = function (els, text, visible) {
+				if (!els || !els.tor) return
+				lastTorText = text || ''
+				lastTorVisible = !!visible
+				if (!visible || !text) {
+					els.tor.setAttribute('hidden', 'hidden')
+					els.tor.textContent = ''
+					return
+				}
+				els.tor.removeAttribute('hidden')
+				els.tor.textContent = text
+			}
+
+			var updateTorCordova = function (els) {
+				try {
+					if (!(window.cordova && typeof isios == 'function' && !isios())) {
+						setTorLine(els, '', false)
+						return
+					}
+
+					var torRunner = window.cordova.plugins && window.cordova.plugins.torRunner
+					if (!torRunner || typeof torRunner.getSettings != 'function') {
+						setTorLine(els, '', false)
+						return
+					}
+
+					var d = torRunner.getSettings() || {}
+					var mode = String(d.torMode || '').toUpperCase()
+					var state = String(d.torState || '').toUpperCase()
+
+					if (mode === 'NEVER') {
+						setTorLine(els, '', false)
+						return
+					}
+
+					if (state === 'RUNNING') {
+						setTorLine(els, t('splashTorConnected'), true)
+					} else if (state === 'FAILED') {
+						setTorLine(els, t('splashTorFailed'), true)
+					} else {
+						// STARTING / STOPPED / UNDEFINED while AUTO/ALWAYS may still boot
+						setTorLine(els, t('splashTorStarting'), true)
+					}
+				} catch (e) {
+					setTorLine(els, '', false)
+				}
+			}
+
+			var updateTorElectron = function (els) {
+				try {
+					if (typeof _Electron == 'undefined' || typeof app == 'undefined' || !app.api || !app.api.get) {
+						setTorLine(els, '', false)
+						return
+					}
+
+					var proxy = typeof app.api.get.current == 'function' ? app.api.get.current() : null
+					// Electron System16 Tor only — skip Local Node Proxy (direct+localnodes).
+					if (!proxy || !proxy.direct || proxy.localnodes || typeof proxy.get != 'object' || typeof proxy.get.info != 'function') {
+						setTorLine(els, '', false)
+						return
+					}
+
+					if (torFetchPending) {
+						setTorLine(els, lastTorText, lastTorVisible)
+						return
+					}
+
+					torFetchPending = true
+					proxy.get.info().then(function (proxyData) {
+						torFetchPending = false
+						var tor = deep(proxyData, 'info.tor') || {}
+						var enabled3 = tor.enabled3
+						var status = deep(tor, 'state.status')
+
+						if (enabled3 === 'neveruse') {
+							setTorLine(els, '', false)
+							return
+						}
+
+						if (status === 'started') {
+							setTorLine(els, t('splashTorConnected'), true)
+						} else if (status === 'failed') {
+							setTorLine(els, t('splashTorFailed'), true)
+						} else if (status === 'running' || status === 'stopped' || enabled3 === 'auto' || enabled3 === 'always') {
+							setTorLine(els, t('splashTorStarting'), true)
+						} else {
+							setTorLine(els, '', false)
+						}
+					}).catch(function () {
+						torFetchPending = false
+					})
+				} catch (e) {
+					torFetchPending = false
+					setTorLine(els, '', false)
+				}
+			}
+
+			var tick = function () {
+				var els = getEls()
+				if (!els) return
+
+				fillApp(els)
+
+				if (els.net) els.net.textContent = netText()
+
+				if (window.cordova) {
+					updateTorCordova(els)
+				} else if (typeof _Electron != 'undefined') {
+					updateTorElectron(els)
+				} else {
+					setTorLine(els, '', false)
+				}
+			}
+
+			return {
+				start: function () {
+					if (statusInterval) return
+					tick()
+					statusInterval = setInterval(tick, 700)
+				},
+				stop: function () {
+					if (statusInterval) {
+						clearInterval(statusInterval)
+						statusInterval = null
+					}
+				},
+				tick: tick
+			}
+		})()
+
 		// Function to start the ending process of the splash screen
 		hideSplashScreen = function () {
 			// Set the boolean, so we can stop during the end of the next animation
 			stopRotation = true;
+			if (window.splashStatus) window.splashStatus.stop()
 		}
 
 		// Function triggered at the end of each rotating animation
@@ -9992,6 +10230,7 @@ if (typeof window != 'undefined') {
 						if (splashScreeninterval != undefined) {
 							clearInterval(splashScreeninterval);
 						}
+						if (window.splashStatus) window.splashStatus.stop()
 						// Completely remove the splashscreen
 	
 						if (splashScreen)
@@ -10019,6 +10258,8 @@ if (typeof window != 'undefined') {
 				splashScreeninterval = setInterval(rotatingAnimationEnded, rotatingDuration);
 			})
 		}, zoomInDuration);
+
+		if (window.splashStatus) window.splashStatus.start()
 
 	}
 

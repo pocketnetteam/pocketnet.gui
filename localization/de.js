@@ -880,6 +880,8 @@ _l.torusing_always = "Immer";
 
 _l.torusing_directProxy = "Eingebauter proxy";
 _l.torusing_notdirectProxy = "Externer proxy";
+_l.localNodeProxy = "Local Node Proxy";
+_l.localNodeProxyUnavailable = "Noch keine nutzbaren Nodes. Warten Sie auf die Verbindung oder versuchen Sie es erneut.";
 
 _l.torusing_changedirectProxy = "Wechsel zum externen proxy";
 _l.torusing_changenotdirectProxy = "Wechsel zum eingebauter proxy";

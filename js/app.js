@@ -1311,6 +1311,11 @@ Application = function (p) {
 
 			newObjects(p);
 
+			self.splashNetState = self.splashNetState || 'connecting'
+			if (typeof window.splashStatus != 'undefined' && window.splashStatus.start) {
+				window.splashStatus.start()
+			}
+
 			lazyActions([
 				self.platform.prepare
 			], function () {
@@ -1642,6 +1647,16 @@ Application = function (p) {
 					cordova.plugins.backgroundMode.on('activate', function () {
 						cordova.plugins.backgroundMode.disableWebViewOptimizations();
 					});
+
+				// Native HTTP can ignore invalid/self-signed certs and IP hostnames;
+				// WebView fetch/XHR cannot. ProxyRequest uses this path on Cordova.
+				if (cordova.plugin && cordova.plugin.http) {
+					try {
+						cordova.plugin.http.setDataSerializer('json')
+						cordova.plugin.http.setServerTrustMode('nocheck', function () {}, function () {})
+					}
+					catch (e) {}
+				}
 
 				self.init(p)
 
