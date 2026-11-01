@@ -5,7 +5,8 @@
  * Cordova uses cordova.plugin.http directly (existing cleartext / trust nocheck; no new plugin).
  *
  * Relay contract (scripts/local-node-cors-relay.js):
- *   URL:  {relayBase}/public/ or {relayBase}/post/
+ *   URL:  {relayBase}/public[/method] or {relayBase}/post[/method]
+ *   Method suffix is DevTools-only; relay strips it before forwarding to the node.
  *   Headers: X-Node-Host, X-Node-Port, X-Node-TLS ("1"|"0")
  * Default relayBase: http://127.0.0.1:18081 (override setRelayBase / window.localNodeCorsRelay)
  */
@@ -200,20 +201,65 @@ var LocalNodeTransport = (function () {
 	}
 
 	/**
-	 * Browser → relay rewrite: node url → { url, headers }.
+	 * Safe RPC method token for DevTools URL suffix (Chrome Network Name column).
 	 */
-	var buildBrowserRelay = function (nodeUrl, base) {
+	var sanitizeRpcMethodName = function (method) {
+		var s = String(method || '').trim()
+
+		if (!s || !/^[a-zA-Z][a-zA-Z0-9_]*$/.test(s)) {
+			return ''
+		}
+
+		return s
+	}
+
+	/**
+	 * Pull JSON-RPC method from request body when present (object or JSON string).
+	 */
+	var rpcMethodFromBody = function (body) {
+		var parsed
+
+		if (body && typeof body === 'object' && !Array.isArray(body)) {
+			return sanitizeRpcMethodName(body.method)
+		}
+
+		if (typeof body === 'string' && body) {
+			try {
+				parsed = JSON.parse(body)
+			} catch (e) {
+				return ''
+			}
+			if (parsed && typeof parsed === 'object') {
+				return sanitizeRpcMethodName(parsed.method)
+			}
+		}
+
+		return ''
+	}
+
+	/**
+	 * Browser → relay rewrite: node url → { url, headers }.
+	 * Optional rpcMethod is appended for DevTools only (/public/getnodeinfo).
+	 */
+	var buildBrowserRelay = function (nodeUrl, base, rpcMethod) {
 		var parsed = parseNodeRpcUrl(nodeUrl)
 		var relayBase
+		var suffix
+		var url
 
 		if (!parsed) {
 			return null
 		}
 
 		relayBase = normalizeRelayBase(base || resolveRelayBase())
+		suffix = sanitizeRpcMethodName(rpcMethod)
+		url = relayBase + parsed.rpcPath
+		if (suffix) {
+			url = url + suffix
+		}
 
 		return {
-			url: relayBase + parsed.rpcPath,
+			url: url,
 			headers: {
 				'X-Node-Host': parsed.host,
 				'X-Node-Port': parsed.port,
@@ -233,12 +279,13 @@ var LocalNodeTransport = (function () {
 		var timer = null
 		var fetchOpts
 		var relay
+		var debugMethod = rpcMethodFromBody(body)
 
 		if (!shouldUseBrowserRelay()) {
 			return rejectError(-1, 'relaydisabled')
 		}
 
-		relay = buildBrowserRelay(url)
+		relay = buildBrowserRelay(url, null, debugMethod)
 
 		if (!relay) {
 			return rejectError(-1, 'badnodeurl')

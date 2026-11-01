@@ -25342,7 +25342,12 @@ Platform = function (app, listofnodes) {
 
             var directproxy = self.app.api.get.direct()
 
-            if (directproxy) {
+            // node.update / manage only on Electron System16 — not Local Node Proxy.
+            var isSystem16Direct = typeof LocalNodeProxy !== 'undefined' && LocalNodeProxy.isSystem16Direct
+                ? LocalNodeProxy.isSystem16Direct(directproxy)
+                : !!(directproxy && directproxy.direct && !directproxy.localnodes)
+
+            if (isSystem16Direct) {
                 directproxy.clbks.tick.globalclbk = function (data) {
 
                     if (data.nodeControl.state.hasUpdate) {

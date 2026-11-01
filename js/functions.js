@@ -10130,7 +10130,8 @@ if (typeof window != 'undefined') {
 					}
 
 					var proxy = typeof app.api.get.current == 'function' ? app.api.get.current() : null
-					if (!proxy || !proxy.direct || typeof proxy.get != 'object' || typeof proxy.get.info != 'function') {
+					// Electron System16 Tor only — skip Local Node Proxy (direct+localnodes).
+					if (!proxy || !proxy.direct || proxy.localnodes || typeof proxy.get != 'object' || typeof proxy.get.info != 'function') {
 						setTorLine(els, '', false)
 						return
 					}

@@ -3,6 +3,8 @@
  * Phase 0–2: flags, transport, list meta. Phase 3: manager + seed health/ping.
  * Phase 4: allowlist + RPC dispatch + slim TTL cache + nodes/select|canchange.
  * Phase 5: IndexedDB/memory catalog store + cold-start reload / discovery persist.
+ * Phase 8: simplified peertube/* (list markers + on-demand HTTP).
+ * Phase 9: rpc-ex feed scenarios (gethierarchicalstrip + aliases).
  */
 var LocalNodeProxy = function (app, options) {
 	var self = this
@@ -16,6 +18,7 @@ var LocalNodeProxy = function (app, options) {
 	self._managerOptions = options.managerOptions || null
 	self.cache = options.cache || null
 	self.store = options.store || null
+	self.peertube = options.peertube || null
 	/** Sticky LocalNode instance after selectNode (Api also keeps export on Proxy16.current). */
 	self.current = null
 
@@ -80,10 +83,57 @@ var LocalNodeProxy = function (app, options) {
 		return self.manager
 	}
 
+	var buildPeertube = function () {
+		var PeertubeCtor =
+			typeof LocalNodePeertube !== 'undefined'
+				? LocalNodePeertube
+				: LocalNodeProxy.Peertube
+		var constants =
+			(typeof LocalNodeConstants !== 'undefined' && LocalNodeConstants) ||
+			LocalNodeProxy.Constants ||
+			{}
+		var opts
+		var testnet = false
+
+		if (self.peertube) return self.peertube
+		if (!PeertubeCtor) return null
+
+		if (self.app && self.app.testpocketnet) testnet = true
+		else if (typeof window !== 'undefined' && window.testpocketnet) testnet = true
+
+		opts = {
+			constants: constants,
+			listUrl: options.peertubeListUrl || constants.PEERTUBE_LIST_URL,
+			archivedStorageKey:
+				options.peertubeStorageKey || constants.PEERTUBE_LIST_STORAGE_KEY,
+			fullStorageKey:
+				options.peertubeFullStorageKey ||
+				constants.PEERTUBE_LIST_FULL_STORAGE_KEY,
+			listFetch: options.peertubeFetch || null,
+			httpGet: options.peertubeHttpGet || null,
+			fetch: options.peertubeHttpFetch || null,
+			storage: options.storage || null,
+			testnet: testnet,
+			now: options.now,
+		}
+
+		self.peertube = new PeertubeCtor(opts)
+		return self.peertube
+	}
+
+	buildPeertube()
+
 	var resolveAllowlist = function () {
 		if (options.allowlist) return options.allowlist
 		if (LocalNodeProxy.rpcAllowlist) return LocalNodeProxy.rpcAllowlist
 		if (typeof LocalNodeRpcAllowlist !== 'undefined') return LocalNodeRpcAllowlist
+		return null
+	}
+
+	var resolveScenarios = function () {
+		if (options.rpcScenarios) return options.rpcScenarios
+		if (LocalNodeProxy.RpcScenarios) return LocalNodeProxy.RpcScenarios
+		if (typeof LocalNodeRpcScenarios !== 'undefined') return LocalNodeRpcScenarios
 		return null
 	}
 
@@ -248,6 +298,10 @@ var LocalNodeProxy = function (app, options) {
 		}
 
 		return p.then(function () {
+			if (self.peertube && typeof self.peertube.destroy === 'function') {
+				self.peertube.destroy()
+			}
+			self.peertube = null
 			self.manager = null
 			self.current = null
 			self.store = null
@@ -261,17 +315,22 @@ var LocalNodeProxy = function (app, options) {
 	 * Allowlisted JSON-RPC via manager transport (/public/ or /post/).
 	 * Slim cache (TTL + wait dedupe) when method is in reduced ckeys.
 	 * Skip cache read when opts.updateRPCCache (still writes on success).
+	 * When opts.ex and a feed scenario exists, enrich like proxy16 /rpc-ex
+	 * (users + peertube videos) outside the cache wrap.
 	 * Propagates errors with .code for Api soft-retry (408/429/-28/-1).
 	 */
 	self.rpc = function (method, parameters, rpcOptions) {
 		var manager = self.manager
 		var allowlist = resolveAllowlist()
+		var scenarios = resolveScenarios()
 		var opts = rpcOptions || {}
 		var params = parameters || []
 		var node
 		var dispatchOpts
 		var cachehash
 		var doDispatch
+		var optsNoEx
+		var k
 
 		if (allowlist) {
 			if (!allowlist.isAllowed(method, opts)) {
@@ -280,6 +339,33 @@ var LocalNodeProxy = function (app, options) {
 		} else if (method !== 'getnodeinfo') {
 			// Without allowlist module (rare in Node tests), keep Phase 3 getnodeinfo-only.
 			return Promise.reject({ code: -32601, message: 'methodnotallowed' })
+		}
+
+		// rpc-ex: feed enrichment (mirror proxy16 rpcscenarios). Nested rpc calls
+		// clear ex so the base method still hits allowlist + cache + transport.
+		if (
+			opts.ex === true &&
+			scenarios &&
+			typeof scenarios.has === 'function' &&
+			scenarios.has(method)
+		) {
+			optsNoEx = {}
+			for (k in opts) {
+				if (Object.prototype.hasOwnProperty.call(opts, k) && k !== 'ex') {
+					optsNoEx[k] = opts[k]
+				}
+			}
+			optsNoEx.ex = false
+
+			return scenarios.run(method, {
+				method: method,
+				parameters: params,
+				options: optsNoEx,
+				rpc: function (m, p, o) {
+					return self.rpc(m, p, o)
+				},
+				peertube: buildPeertube(),
+			})
 		}
 
 		if (!manager) {
@@ -504,7 +590,11 @@ var LocalNodeProxy = function (app, options) {
 				nodeControl: {},
 				server: {},
 				wss: {},
-				peertube: {},
+				peertube: (function () {
+					var pt = buildPeertube()
+					if (pt && typeof pt.info === 'function') return pt.info()
+					return {}
+				})(),
 				remote: {},
 				translateapi: {},
 				admins: [],
@@ -530,96 +620,97 @@ var LocalNodeProxy = function (app, options) {
 	}
 
 	/**
-	 * peertubeserversList — GitHub list.json → archived hosts; localStorage fallback.
+	 * peertubeserversList — GitHub list.json → archived hosts via LocalNodePeertube catalog.
 	 */
 	self.peertubeserversList = function () {
-		var constants =
-			(typeof LocalNodeConstants !== 'undefined' && LocalNodeConstants) ||
-			LocalNodeProxy.Constants ||
-			{}
-		var url =
-			options.peertubeListUrl ||
-			constants.PEERTUBE_LIST_URL ||
-			LocalNodeProxy.PEERTUBE_LIST_URL
-		var storageKey =
-			options.peertubeStorageKey ||
-			constants.PEERTUBE_LIST_STORAGE_KEY ||
-			'localnode:peertubeserversList'
-		var doFetch =
-			options.peertubeFetch ||
-			(typeof fetch === 'function'
-				? function (u) {
-						return fetch(u).then(function (res) {
-							if (!res || !res.ok) {
-								return Promise.reject({
-									code: res && res.status,
-									message: 'peertubefetch',
-								})
-							}
-							return res.json()
-						})
-				  }
-				: null)
-		var storage = options.storage || null
+		var pt = buildPeertube()
 
-		var readCache = function () {
-			var raw
-			var parsed
-
-			try {
-				if (storage && typeof storage.getItem === 'function') {
-					raw = storage.getItem(storageKey)
-				} else if (typeof localStorage !== 'undefined') {
-					raw = localStorage.getItem(storageKey)
-				}
-			} catch (e) {
-				raw = null
-			}
-
-			if (!raw) return null
-
-			try {
-				parsed = JSON.parse(raw)
-			} catch (e2) {
-				return null
-			}
-
-			if (Array.isArray(parsed)) return parsed
-			return null
+		if (!pt) {
+			return Promise.resolve({ archivedPeertubeServers: [] })
 		}
 
-		var writeCache = function (hosts) {
-			try {
-				if (storage && typeof storage.setItem === 'function') {
-					storage.setItem(storageKey, JSON.stringify(hosts))
-				} else if (typeof localStorage !== 'undefined') {
-					localStorage.setItem(storageKey, JSON.stringify(hosts))
-				}
-			} catch (e) {}
-		}
-
-		var finish = function (hosts) {
+		return pt.ensureList().then(function () {
 			return {
-				archivedPeertubeServers: hosts || [],
+				archivedPeertubeServers: pt.getArchivedHosts(),
+			}
+		})
+	}
+
+	/**
+	 * Dispatch peertube/* API (unwrapped payloads for localnodes api.fetch).
+	 */
+	self.peertubeFetch = function (method, data) {
+		var pt = buildPeertube()
+		var m = String(method || '')
+			.replace(/^\//, '')
+			.replace(/^peertube\//, '')
+		var qIndex
+		var query = {}
+		var parts
+		var i
+		var pair
+		var eq
+		var payload
+
+		if (!pt) return Promise.reject('notimplemented')
+
+		qIndex = m.indexOf('?')
+		if (qIndex !== -1) {
+			parts = m.slice(qIndex + 1).split('&')
+			m = m.slice(0, qIndex)
+			for (i = 0; i < parts.length; i++) {
+				pair = parts[i]
+				if (!pair) continue
+				eq = pair.indexOf('=')
+				if (eq === -1) query[decodeURIComponent(pair)] = ''
+				else {
+					query[decodeURIComponent(pair.slice(0, eq))] = decodeURIComponent(
+						pair.slice(eq + 1)
+					)
+				}
 			}
 		}
 
-		if (!doFetch || !url) {
-			return Promise.resolve(finish(readCache() || []))
+		payload = data || {}
+		if (typeof payload !== 'object') payload = {}
+		for (i in query) {
+			if (Object.prototype.hasOwnProperty.call(query, i) && payload[i] == null) {
+				payload[i] = query[i]
+			}
 		}
 
-		return Promise.resolve()
-			.then(function () {
-				return doFetch(url)
-			})
-			.then(function (list) {
-				var hosts = LocalNodeProxy.extractArchivedPeertubeHosts(list)
-				writeCache(hosts)
-				return finish(hosts)
-			})
-			.catch(function () {
-				return finish(readCache() || [])
-			})
+		if (m === 'videos' && typeof pt.videos === 'function') {
+			return pt.videos(payload)
+		}
+		if (m === 'video' && typeof pt.video === 'function') {
+			return pt.video(payload)
+		}
+		if (m === 'best' && typeof pt.best === 'function') {
+			return pt.best(payload)
+		}
+		if (m === 'roys' && typeof pt.roys === 'function') {
+			return pt.roys(payload)
+		}
+		if (m === 'allservers' && typeof pt.allservers === 'function') {
+			return pt.allservers(payload)
+		}
+		if (
+			(m === 'getHosts' || m === 'gethosts') &&
+			typeof pt.getHosts === 'function'
+		) {
+			return pt.getHosts(payload)
+		}
+		if (
+			(m === 'getHostIp' || m === 'gethostip') &&
+			typeof pt.getHostIp === 'function'
+		) {
+			return pt.getHostIp(payload)
+		}
+		if (m === 'stats') {
+			return Promise.resolve({})
+		}
+
+		return Promise.reject('notimplemented')
 	}
 
 	/**
@@ -667,10 +758,11 @@ var LocalNodeProxy = function (app, options) {
 
 	/**
 	 * Facade used by Proxy16.fetch for localnodes paths
-	 * (info / ping / nodes/* / peertubeserversList / safe stubs).
+	 * (info / ping / nodes/* / peertubeserversList / peertube/* / safe stubs).
 	 */
 	self.fetch = function (path, data) {
 		var p = path || ''
+		var peertubePath
 
 		if (p === 'ping' || p === '/ping') {
 			return self.ping()
@@ -710,6 +802,14 @@ var LocalNodeProxy = function (app, options) {
 
 		if (p === 'peertubeserversList' || p === '/peertubeserversList') {
 			return self.peertubeserversList()
+		}
+
+		peertubePath = p.replace(/^\//, '')
+		if (
+			peertubePath === 'peertube' ||
+			peertubePath.indexOf('peertube/') === 0
+		) {
+			return self.peertubeFetch(peertubePath, data)
 		}
 
 		console.error('notimplemented', { path: p, data: data })
@@ -846,6 +946,14 @@ if (typeof LocalNodeConstants !== 'undefined') {
 	LocalNodeProxy.Constants = LocalNodeConstants
 }
 
+if (typeof LocalNodePeertube !== 'undefined') {
+	LocalNodeProxy.Peertube = LocalNodePeertube
+}
+
+if (typeof LocalNodeRpcScenarios !== 'undefined') {
+	LocalNodeProxy.RpcScenarios = LocalNodeRpcScenarios
+}
+
 /** Allowlist helpers (publics/posts/privates) when the module is loaded. */
 LocalNodeProxy.rpcAllowlist =
 	typeof LocalNodeRpcAllowlist !== 'undefined' ? LocalNodeRpcAllowlist : null
@@ -888,6 +996,26 @@ if (
 	} catch (e) {}
 }
 
+if (
+	!LocalNodeProxy.Peertube &&
+	typeof module !== 'undefined' &&
+	typeof require === 'function'
+) {
+	try {
+		LocalNodeProxy.Peertube = require('./peertube.js')
+	} catch (e) {}
+}
+
+if (
+	!LocalNodeProxy.RpcScenarios &&
+	typeof module !== 'undefined' &&
+	typeof require === 'function'
+) {
+	try {
+		LocalNodeProxy.RpcScenarios = require('./rpc-scenarios.js')
+	} catch (e) {}
+}
+
 /**
  * Meta for Api proxy list registration.
  * `direct: true` here is ONLY the Api failover flag (exclude from get.working,
@@ -910,6 +1038,18 @@ LocalNodeProxy.proxyListMeta = function () {
 LocalNodeProxy.proxyListId = function (meta) {
 	var m = meta || LocalNodeProxy.proxyListMeta()
 	return String(m.host) + ':' + String(m.port) + ':' + String(m.wss)
+}
+
+/**
+ * True for Electron System16 / on-machine proxy16 (`direct && !localnodes`).
+ * False for Local Node Proxy (`direct && localnodes`) and remotes.
+ * Use before Tor manage (tor.start/stop), set.server.settings, node.update, etc.
+ *
+ * @param {Object} proxy Api Proxy16-like object
+ * @returns {boolean}
+ */
+LocalNodeProxy.isSystem16Direct = function (proxy) {
+	return !!(proxy && proxy.direct && !proxy.localnodes)
 }
 
 /**
@@ -984,52 +1124,16 @@ LocalNodeProxy.PEERTUBE_LIST_URL =
  * @returns {string[]}
  */
 LocalNodeProxy.extractArchivedPeertubeHosts = function (list) {
-	var hosts = []
-	var seen = {}
-	var swarms
-	var archive
-	var key
-	var swarm
-	var i
-	var server
-	var host
-	var archKey
-	var archEntry
+	var PeertubeCtor =
+		typeof LocalNodePeertube !== 'undefined'
+			? LocalNodePeertube
+			: LocalNodeProxy.Peertube
 
-	var add = function (h) {
-		if (!h || typeof h !== 'string' || seen[h]) return
-		seen[h] = true
-		hosts.push(h)
+	if (PeertubeCtor && typeof PeertubeCtor.extractArchivedHosts === 'function') {
+		return PeertubeCtor.extractArchivedHosts(list)
 	}
 
-	if (!list || typeof list !== 'object') return hosts
-
-	swarms = list.swarms || {}
-	archive = list.archive || {}
-
-	for (key in swarms) {
-		if (!Object.prototype.hasOwnProperty.call(swarms, key)) continue
-		swarm = swarms[key]
-		if (!swarm || !swarm.archived) continue
-
-		if (swarm.list && swarm.list.length) {
-			for (i = 0; i < swarm.list.length; i++) {
-				server = swarm.list[i]
-				host = server && (server.host || server)
-				if (typeof host === 'string') add(host)
-			}
-		}
-
-		if (Object.prototype.toString.call(swarm.archived) === '[object Array]') {
-			for (i = 0; i < swarm.archived.length; i++) {
-				archKey = swarm.archived[i]
-				archEntry = archive[archKey]
-				if (archEntry && archEntry.host) add(archEntry.host)
-			}
-		}
-	}
-
-	return hosts
+	return []
 }
 
 /**

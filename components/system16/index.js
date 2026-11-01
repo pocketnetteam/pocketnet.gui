@@ -803,8 +803,16 @@ var system16 = (function(){
 
 
 					windows.proxieslist(use, "Select Proxy that using Interface", function(selected){
+						var isSystem16Direct = function(p){
+							if (typeof LocalNodeProxy !== 'undefined' && LocalNodeProxy.isSystem16Direct) {
+								return LocalNodeProxy.isSystem16Direct(p)
+							}
+							return !!(p && p.direct && !p.localnodes)
+						}
+
 						function onSettingsReceived(settings) {
-							if (settings.tor.enabled3) {
+							// Tor manage only on Electron System16, never Local Node Proxy.
+							if (isSystem16Direct(selected) && settings.tor && settings.tor.enabled3) {
 								selected.fetchauth('manage', {
 									action: 'tor.start',
 									data: { persistence: false },
@@ -813,7 +821,8 @@ var system16 = (function(){
 							}
 						}
 
-						if (!selected.direct) {
+						// Leaving System16 for a remote: stop Tor on the old Electron proxy only.
+						if (isSystem16Direct(use) && !selected.direct) {
 							use.fetchauth('manage', {
 								action: 'tor.stop',
 								data: { persistence: false },

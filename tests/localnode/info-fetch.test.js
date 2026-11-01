@@ -281,5 +281,8 @@ test('unknown fetch path still notimplemented', async () => {
 
 test('api.js localnodes fetch comment mentions info and peertubeserversList', () => {
 	const apiSrc = fs.readFileSync(path.join(root, 'js/lib/client/api.js'), 'utf8')
-	assert.match(apiSrc, /info\s*\/\s*ping\s*\/\s*nodes\/\*\s*\/\s*peertubeserversList/)
+	assert.match(
+		apiSrc,
+		/info\s*\/\s*ping\s*\/\s*nodes\/\*\s*\/\s*peertubeserversList\s*\/\s*peertube\/\*/
+	)
 })

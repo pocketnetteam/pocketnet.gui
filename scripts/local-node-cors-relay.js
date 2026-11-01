@@ -1,7 +1,8 @@
 /**
  * Dev-only CORS relay for Local Node Proxy browser testing.
- * Binds 127.0.0.1 only; forwards POST /public/ and /post/ to a node
+ * Binds 127.0.0.1 only; forwards POST /public[/method] and /post[/method] to a node
  * identified by X-Node-Host / X-Node-Port / X-Node-TLS.
+ * Optional method suffix is DevTools-only; upstream path is always /public/ or /post/.
  *
  * Contract (matches tests/localnode/phase-01-transport.test.js):
  *   X-Node-Host  required (node hostname or IP)
@@ -20,11 +21,27 @@ var DEFAULT_PORT = 18081
 var DEFAULT_NODE_PORT = 38081
 var BIND_HOST = '127.0.0.1'
 
-var ALLOWED_PATHS = {
-	'/public': '/public/',
-	'/public/': '/public/',
-	'/post': '/post/',
-	'/post/': '/post/'
+/**
+ * Map inbound request path → canonical node RPC path.
+ * Accepts /public, /public/, /public/<method>, same for /post.
+ */
+function canonicalizeRpcPath(requestPath) {
+	var pathOnly = String(requestPath || '').split('?')[0]
+	var m
+
+	if (pathOnly === '/public' || pathOnly === '/public/') {
+		return '/public/'
+	}
+	if (pathOnly === '/post' || pathOnly === '/post/') {
+		return '/post/'
+	}
+
+	m = pathOnly.match(/^\/(public|post)\/([a-zA-Z][a-zA-Z0-9_]*)$/)
+	if (m) {
+		return '/' + m[1] + '/'
+	}
+
+	return null
 }
 
 function normalizeHeaderMap(headers) {
@@ -70,8 +87,7 @@ function isTruthyTls(value) {
  * @returns {{ ok: true, scheme, host, port, path, url } | { ok: false, status, message }}
  */
 function resolveTarget(headers, requestPath) {
-	var pathOnly = String(requestPath || '').split('?')[0]
-	var rpcPath = ALLOWED_PATHS[pathOnly]
+	var rpcPath = canonicalizeRpcPath(requestPath)
 	var host
 	var portRaw
 	var port

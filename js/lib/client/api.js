@@ -770,7 +770,7 @@ var Proxy16 = function(meta, app, api){
         if (self.localnodes) {
             if (!self.localNodeProxy) return Promise.reject('localnodeproxy')
 
-            // info / ping / nodes/* / peertubeserversList via LocalNodeProxy; other paths stay unimplemented.
+            // info / ping / nodes/* / peertubeserversList / peertube/* via LocalNodeProxy; other paths stay unimplemented.
             if (typeof self.localNodeProxy.fetch === 'function') {
                 return self.localNodeProxy.fetch(path, data)
             }

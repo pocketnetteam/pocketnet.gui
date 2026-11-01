@@ -549,7 +549,8 @@ var menu = (function(){
 							else{
 								const currentProxy = app.api.get.current();
 
-								if (!currentProxy.direct) {
+								// Electron System16 Tor only — Local Node Proxy has no proxy16 Tor daemon.
+								if (!currentProxy.direct || currentProxy.localnodes) {
 									controlTorElem.removeClass(['on', 'loading']);
 									controlTorElem.addClass('off');
 									controlTorStatusText.removeClass('visible');

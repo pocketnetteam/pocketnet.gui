@@ -90,6 +90,16 @@ test('browser relay header contract from public/post URLs', () => {
 		'X-Node-TLS': '0'
 	})
 
+	const named = Transport.buildBrowserRelay(
+		httpPublic,
+		null,
+		'getrawtransactionwithmessagebyid'
+	)
+	assert.equal(
+		named.url,
+		'http://127.0.0.1:18081/public/getrawtransactionwithmessagebyid'
+	)
+
 	const httpsPost = Transport.buildPostUrl('node.local', 443, true)
 	const httpsRelay = Transport.buildBrowserRelay(httpsPost)
 
@@ -152,6 +162,18 @@ test('cors relay script exists; resolveTarget matches header contract', () => {
 	const badPath = Relay.resolveTarget({ 'X-Node-Host': 'seed.example' }, '/admin/')
 	assert.equal(badPath.ok, false)
 	assert.equal(badPath.status, 404)
+
+	const withMethod = Relay.resolveTarget(
+		{
+			'X-Node-Host': 'seed.example',
+			'X-Node-Port': '38081',
+			'X-Node-TLS': '0'
+		},
+		'/public/getrawtransactionwithmessagebyid'
+	)
+	assert.equal(withMethod.ok, true)
+	assert.equal(withMethod.path, '/public/')
+	assert.equal(withMethod.url, 'http://seed.example:38081/public/')
 })
 
 test('setMode / getMode / auto resolves cordova when plugin present', () => {
@@ -210,7 +232,7 @@ test('browser request rewrites through relay; parses JSON; no real network', asy
 	})
 
 	assert.deepEqual(out, { result: { ok: true }, id: 1 })
-	assert.equal(called.url, 'http://127.0.0.1:18081/public/')
+	assert.equal(called.url, 'http://127.0.0.1:18081/public/getnodeinfo')
 	assert.equal(called.opts.method, 'POST')
 	assert.equal(called.opts.body, JSON.stringify(body))
 	assert.equal(called.opts.headers['Content-Type'], 'application/json')

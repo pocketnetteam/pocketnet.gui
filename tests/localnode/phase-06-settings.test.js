@@ -401,3 +401,71 @@ test('empty ping rejects without throw; localization key for unavailable UX exis
 	assert.match(proxiesTpl, /localnodes\s*&&\s*_proxy\.pingerror/)
 	assert.match(proxiesTpl, /e\('localNodeProxyUnavailable'\)/)
 })
+
+test('isSystem16Direct true only for Electron System16 (direct && !localnodes)', () => {
+	assert.equal(
+		LocalNodeProxy.isSystem16Direct({ direct: true, localnodes: false }),
+		true
+	)
+	assert.equal(
+		LocalNodeProxy.isSystem16Direct({ direct: true, localnodes: true }),
+		false
+	)
+	assert.equal(
+		LocalNodeProxy.isSystem16Direct({ direct: false }),
+		false
+	)
+	assert.equal(LocalNodeProxy.isSystem16Direct(null), false)
+	assert.equal(LocalNodeProxy.isSystem16Direct(undefined), false)
+})
+
+test('selectUsing gates tor.stop/start on System16 direct, not localnodes (static)', () => {
+	const sysSrc = fs.readFileSync(
+		path.join(root, 'components/system16/index.js'),
+		'utf8'
+	)
+
+	assert.match(
+		sysSrc,
+		/isSystem16Direct\(use\)\s*&&\s*!selected\.direct/,
+		'tor.stop must require System16 current proxy'
+	)
+	assert.match(
+		sysSrc,
+		/isSystem16Direct\(selected\)\s*&&\s*settings\.tor/,
+		'tor.start must require System16 selected proxy'
+	)
+	assert.doesNotMatch(
+		sysSrc,
+		/if\s*\(\s*!selected\.direct\s*\)\s*\{\s*use\.fetchauth\(\s*'manage'/,
+		'must not fire tor.stop on any non-direct selected without System16 gate'
+	)
+})
+
+test('transportsmanagement excludes localnodes from admin/Tor manage (static)', () => {
+	const src = fs.readFileSync(
+		path.join(root, 'components/transportsmanagement/index.js'),
+		'utf8'
+	)
+
+	assert.match(
+		src,
+		/if \(proxy\.localnodes\) return false/,
+		'admin() must stay false for localnodes'
+	)
+	assert.match(
+		src,
+		/electronDirect\s*:\s*function/,
+		'must expose electronDirect helper'
+	)
+	assert.match(
+		src,
+		/actions\.electronDirect\(\)\s*\|\|\s*cordovaProxy/,
+		'Tor settings panel only for System16 or Cordova torRunner'
+	)
+	assert.match(
+		src,
+		/else if \(actions\.electronDirect\(\)\)/,
+		'save manage/set.server.settings only on System16'
+	)
+})

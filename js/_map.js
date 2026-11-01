@@ -99,6 +99,8 @@ __map =  {
 		{path : "js/lib/client/localnode/manager.js", babelify : true},
 		{path : "js/lib/client/localnode/rpc-allowlist.js", babelify : true},
 		{path : "js/lib/client/localnode/cache.js", babelify : true},
+		{path : "js/lib/client/localnode/peertube.js", babelify : true},
+		{path : "js/lib/client/localnode/rpc-scenarios.js", babelify : true},
 		{path : "js/lib/client/localnode/index.js", babelify : true},
 		{path : "js/lib/client/api.js", babelify : true},
 		{path : "js/lib/client/resoursesdb.js", babelify : true},

@@ -29,7 +29,7 @@ One invocation = either **write** the missing detailed plan for the current phas
 | Phase tests | `tests/localnode/phase-NN*.test.js` |
 | Code root | `js/lib/client/localnode/` |
 
-Phase number `NN` is zero-padded: `00` … `06`. **Phase 7 (WebSocket) is cancelled** — never create or execute it.
+Phase number `NN` is zero-padded: `00` … `06`, then `08` (PeerTube), `09` (rpc-ex scenarios). **Phase 7 (WebSocket) is cancelled** — never create or execute it.
 
 ## Testing discipline (non-negotiable)
 
@@ -48,7 +48,7 @@ Phase number `NN` is zero-padded: `00` … `06`. **Phase 7 (WebSocket) is cancel
 
 1. Read `docs/local-node-proxy/ROADMAP.md`.
 2. Find the **first phase** that still has any unchecked `- [ ]` step (ignore done phases).
-3. If phases 0–6 are all done, tell the user Local Node Proxy roadmap is complete (Phase 7 cancelled) and stop.
+3. If phases 0–6, 8, and 9 are all done, tell the user Local Node Proxy roadmap is complete (Phase 7 cancelled) and stop. Skip Phase 7 always.
 4. Note phase id `NN` and open `docs/local-node-proxy/phases/` matching file for that phase.
 
 ### 2. Branch: plan missing vs plan exists

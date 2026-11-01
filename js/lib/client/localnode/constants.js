@@ -72,6 +72,24 @@ var LocalNodeConstants = {
 	/** localStorage key for archived peertube hosts cache. */
 	PEERTUBE_LIST_STORAGE_KEY: 'localnode:peertubeserversList',
 
+	/** localStorage key for full GitHub list.json (catalog offline fallback). */
+	PEERTUBE_LIST_FULL_STORAGE_KEY: 'localnode:peertubeListJson',
+
+	/** Soft reachability probe for peertube/best (ms). */
+	PEERTUBE_PROBE_TIMEOUT_MS: 4000,
+
+	/** Memory TTL for a successful best-host probe (ms). */
+	PEERTUBE_PROBE_TTL_MS: 600000,
+
+	/** Default video metadata cache TTL (ms); matches proxy peertubevideo ~600s. */
+	PEERTUBE_VIDEO_CACHE_TTL_MS: 600000,
+
+	/** Shorter video cache for live / transcoding states (ms). */
+	PEERTUBE_VIDEO_CACHE_LIVE_TTL_MS: 20000,
+
+	/** HTTP timeout for peertube/videos GETs (ms); proxy Peertube.timeout ~5500. */
+	PEERTUBE_VIDEO_HTTP_TIMEOUT_MS: 5500,
+
 	/**
 	 * Versions purged from catalog (copy of proxy16/node/manager.js cleardatabase $in).
 	 * Sync debt: update when proxy list changes.
