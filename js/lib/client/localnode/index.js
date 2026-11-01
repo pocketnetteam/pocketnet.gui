@@ -375,59 +375,103 @@ var LocalNodeProxy = function (app, options) {
 			return Promise.reject({ code: -1, message: 'nomanager' })
 		}
 
-		node = pickRpcNode(manager, opts)
-		if (!node) {
-			return Promise.reject({ code: -1, message: 'node' })
-		}
+		/**
+		 * Mirror proxy16 request/requestprobnew: wait/probe until a canuse node
+		 * exists (or catalog/health is exhausted), then dispatch.
+		 */
+		var ensureRpcNode = function () {
+			var selected = pickRpcNode(manager, opts)
+			var waitProbe
 
-		dispatchOpts = {
-			allowlist: allowlist,
-			timeout: opts.timeout,
-			id: opts.id,
-			rpcuser: opts.rpcuser,
-			rpcpass: opts.rpcpass,
-		}
-
-		if (allowlist && typeof allowlist.pathFor === 'function') {
-			dispatchOpts.path = allowlist.pathFor(method, opts)
-		}
-
-		doDispatch = function () {
-			if (typeof manager.requestRpc === 'function') {
-				return manager.requestRpc(node, method, params, dispatchOpts)
+			if (selected) {
+				return Promise.resolve(selected)
 			}
 
-			if (method === 'getnodeinfo' && typeof manager.requestNodeInfo === 'function') {
-				return manager.requestNodeInfo(node)
+			waitProbe = Promise.resolve(false)
+
+			if (typeof manager.waitreadywithrating === 'function') {
+				waitProbe = manager.waitreadywithrating().catch(function () {
+					return false
+				})
 			}
 
-			return Promise.reject({ code: -1, message: 'notransport' })
+			return waitProbe
+				.then(function () {
+					selected = pickRpcNode(manager, opts)
+					if (selected) return selected
+
+					// Still empty: actively probe remaining uninited (to MIN_NODES_COUNT).
+					if (typeof manager.probeSeedsHealth === 'function') {
+						return manager.probeSeedsHealth().then(function () {
+							return pickRpcNode(manager, opts)
+						})
+					}
+
+					return null
+				})
+				.then(function (n) {
+					if (!n) {
+						return Promise.reject({ code: -1, message: 'node' })
+					}
+					return n
+				})
 		}
 
-		cachehash = opts.cachehash
-		// Mirror proxy16: getnodeinfo is per-node (cachehash = node.key).
-		if (
-			(cachehash == null || cachehash === '') &&
-			method === 'getnodeinfo' &&
-			node &&
-			node.key
-		) {
-			cachehash = node.key
-		}
+		return ensureRpcNode().then(function (selectedNode) {
+			node = selectedNode
 
-		if (self.cache && typeof self.cache.wrap === 'function') {
-			return self.cache.wrap(
-				method,
-				params,
-				{
-					cachehash: cachehash,
-					updateRPCCache: opts.updateRPCCache === true,
-				},
-				doDispatch
-			)
-		}
+			dispatchOpts = {
+				allowlist: allowlist,
+				timeout: opts.timeout,
+				id: opts.id,
+				rpcuser: opts.rpcuser,
+				rpcpass: opts.rpcpass,
+			}
 
-		return doDispatch()
+			if (allowlist && typeof allowlist.pathFor === 'function') {
+				dispatchOpts.path = allowlist.pathFor(method, opts)
+			}
+
+			doDispatch = function () {
+				if (typeof manager.requestRpc === 'function') {
+					return manager.requestRpc(node, method, params, dispatchOpts)
+				}
+
+				if (
+					method === 'getnodeinfo' &&
+					typeof manager.requestNodeInfo === 'function'
+				) {
+					return manager.requestNodeInfo(node)
+				}
+
+				return Promise.reject({ code: -1, message: 'notransport' })
+			}
+
+			cachehash = opts.cachehash
+			// Mirror proxy16: getnodeinfo is per-node (cachehash = node.key).
+			if (
+				(cachehash == null || cachehash === '') &&
+				method === 'getnodeinfo' &&
+				node &&
+				node.key
+			) {
+				cachehash = node.key
+			}
+
+			if (self.cache && typeof self.cache.wrap === 'function') {
+				return self.cache.wrap(
+					method,
+					params,
+					{
+						cachehash: cachehash,
+						updateRPCCache: opts.updateRPCCache === true,
+					},
+					doDispatch
+				)
+			}
+
+			return doDispatch()
+		})
 	}
 
 	/**
@@ -549,6 +593,7 @@ var LocalNodeProxy = function (app, options) {
 	/**
 	 * Proxy16 kit.info-shaped payload for get.info / fetchauth('info').
 	 * Real data: nodeManager from manager.info() (non-compact: nodes + tmp for UI).
+	 * PeerTube instances via ensureList + peertube.info() (system16 table shape).
 	 * Other keys are safe stubs so system16 can skip admin/stats paths.
 	 */
 	self.info = function () {
@@ -557,6 +602,8 @@ var LocalNodeProxy = function (app, options) {
 		var nodeManager
 		var status = 0
 		var testFlag = false
+		var pt = buildPeertube()
+		var peertubeReady
 
 		if (manager && typeof manager.canuseNodes === 'function') {
 			canuse = manager.canuseNodes().length
@@ -580,30 +627,43 @@ var LocalNodeProxy = function (app, options) {
 		if (self.app && self.app.testpocketnet) testFlag = true
 		else if (typeof window !== 'undefined' && window.testpocketnet) testFlag = true
 
-		return Promise.resolve({
-			info: {
-				status: status,
-				localnodes: true,
-				test: testFlag,
-				nodeManager: nodeManager,
-				captcha: { hexCaptcha: false, ip: 0, all: 0 },
-				wallet: { inited: false, addresses: {} },
-				firebase: { useNotifications: false, inited: false },
-				tor: { enabled3: 'neveruse' },
-				nodeControl: {},
-				server: {},
-				wss: {},
-				peertube: (function () {
-					var pt = buildPeertube()
-					if (pt && typeof pt.info === 'function') return pt.info()
-					return {}
-				})(),
-				remote: {},
-				translateapi: {},
-				admins: [],
-				memory: {},
-				loadavg: {},
-			},
+		if (pt && typeof pt.ensureList === 'function') {
+			peertubeReady = pt.ensureList().then(
+				function () {
+					return typeof pt.info === 'function' ? pt.info() : {}
+				},
+				function () {
+					return typeof pt.info === 'function' ? pt.info() : {}
+				}
+			)
+		} else if (pt && typeof pt.info === 'function') {
+			peertubeReady = Promise.resolve(pt.info())
+		} else {
+			peertubeReady = Promise.resolve({})
+		}
+
+		return peertubeReady.then(function (peertubeInfo) {
+			return {
+				info: {
+					status: status,
+					localnodes: true,
+					test: testFlag,
+					nodeManager: nodeManager,
+					captcha: { hexCaptcha: false, ip: 0, all: 0 },
+					wallet: { inited: false, addresses: {} },
+					firebase: { useNotifications: false, inited: false },
+					tor: { enabled3: 'neveruse' },
+					nodeControl: {},
+					server: {},
+					wss: {},
+					peertube: peertubeInfo || {},
+					remote: {},
+					translateapi: {},
+					admins: [],
+					memory: {},
+					loadavg: {},
+				},
+			}
 		})
 	}
 

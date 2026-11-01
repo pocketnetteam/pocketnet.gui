@@ -834,3 +834,203 @@ test('T5: 408/429/521 penalty lowers probability vs unpenalized twin; selectbest
 		assert.equal(manager.selectProbability(), healthy)
 	})
 })
+
+test('health: keeps probing batches until MIN_NODES_COUNT canuse', async () => {
+	const clock = createFakeClock()
+	let calls = 0
+	const transport = createMockTransport(function (opts) {
+		calls++
+		const host = String(opts.url || '')
+		// First 4 hosts fail; hosts 5–7 succeed → need 2 rounds (iniNodeCount=5).
+		if (
+			host.indexOf('n5.') !== -1 ||
+			host.indexOf('n6.') !== -1 ||
+			host.indexOf('n7.') !== -1
+		) {
+			return Promise.resolve({
+				jsonrpc: '2.0',
+				id: 1,
+				result: nodeInfoResult({ lastblock: { height: 200 + calls, hash: 'h' + calls } }),
+			})
+		}
+		return Promise.reject({ code: -1, message: 'nativehttp' })
+	})
+
+	const manager = new LocalNodeManager({
+		Node: LocalNode,
+		util: LocalNodeUtil,
+		transport: transport,
+		bestapplyInterval: 0,
+		now: clock.now,
+		loadSeeds: false,
+		probeHealth: false,
+		minNodesCount: 3,
+		iniNodeCount: 5,
+		random: function () {
+			return 0
+		},
+	})
+
+	for (let i = 1; i <= 7; i++) {
+		manager.createNode(
+			clock.nodeOptions({
+				host: 'n' + i + '.example',
+				port: 38081,
+				inited: false,
+				canuse: false,
+				allowRpc: false,
+			})
+		)
+	}
+
+	const connected = await manager.probeSeedsHealth()
+	assert.equal(connected.length, 3)
+	assert.equal(manager.canuseNodes().length, 3)
+	assert.ok(calls > 5, 'should probe beyond first iniNodeCount batch, calls=' + calls)
+	assert.equal(manager.healthState(), 'done')
+})
+
+test('health: stops after one try per uninited when none become canuse', async () => {
+	const clock = createFakeClock()
+	let calls = 0
+	const transport = createMockTransport(function () {
+		calls++
+		return Promise.reject({ code: -1, message: 'nativehttp' })
+	})
+
+	const manager = new LocalNodeManager({
+		Node: LocalNode,
+		util: LocalNodeUtil,
+		transport: transport,
+		bestapplyInterval: 0,
+		now: clock.now,
+		loadSeeds: false,
+		probeHealth: false,
+		minNodesCount: 3,
+		iniNodeCount: 2,
+		random: function () {
+			return 0
+		},
+	})
+
+	for (let i = 1; i <= 5; i++) {
+		manager.createNode(
+			clock.nodeOptions({
+				host: 'dead' + i + '.example',
+				port: 38081,
+			})
+		)
+	}
+
+	const connected = await manager.probeSeedsHealth()
+	assert.equal(connected.length, 0)
+	assert.equal(calls, 5, 'each uninited probed once')
+	assert.equal(manager.canuseNodes().length, 0)
+	assert.equal(manager.healthState(), 'done')
+})
+
+test('findTick: probes when under MIN_NODES_COUNT; no-ops when already at min', async () => {
+	const clock = createFakeClock()
+	let calls = 0
+	const transport = createMockTransport(function () {
+		calls++
+		return Promise.resolve({
+			jsonrpc: '2.0',
+			id: 1,
+			result: nodeInfoResult({ lastblock: { height: 99, hash: 'z' } }),
+		})
+	})
+
+	const manager = new LocalNodeManager({
+		Node: LocalNode,
+		util: LocalNodeUtil,
+		transport: transport,
+		bestapplyInterval: 0,
+		now: clock.now,
+		loadSeeds: false,
+		probeHealth: false,
+		minNodesCount: 2,
+		iniNodeCount: 5,
+		random: function () {
+			return 0
+		},
+	})
+
+	manager.createNode(
+		clock.nodeOptions({
+			host: 'a.example',
+			port: 38081,
+		})
+	)
+	manager.createNode(
+		clock.nodeOptions({
+			host: 'b.example',
+			port: 38081,
+		})
+	)
+
+	const first = await manager.findTick()
+	assert.equal(first.length, 2)
+	assert.equal(manager.canuseNodes().length, 2)
+	assert.equal(calls, 2)
+
+	const before = calls
+	const second = await manager.findTick()
+	assert.equal(second.length, 0)
+	assert.equal(calls, before, 'findTick must not re-probe when at min canuse')
+})
+
+test('rpc: waits/probes until a canuse node appears', async () => {
+	const clock = createFakeClock()
+	let release
+	const gate = new Promise(function (resolve) {
+		release = resolve
+	})
+	const transport = createMockTransport(function (opts) {
+		const method = opts && opts.body && opts.body.method
+		if (method === 'getnodeinfo') {
+			return gate.then(function () {
+				return {
+					jsonrpc: '2.0',
+					id: 1,
+					result: nodeInfoResult({ lastblock: { height: 77, hash: 'w' } }),
+				}
+			})
+		}
+		// later rpc getnodeinfo via requestRpc after canuse
+		return Promise.resolve({
+			jsonrpc: '2.0',
+			id: 1,
+			result: nodeInfoResult({ lastblock: { height: 77, hash: 'w' } }),
+		})
+	})
+
+	const manager = new LocalNodeManager({
+		Node: LocalNode,
+		util: LocalNodeUtil,
+		transport: transport,
+		bestapplyInterval: 0,
+		now: clock.now,
+		loadSeeds: false,
+		probeHealth: false,
+		setTimeout: clock.setTimeout,
+		clearTimeout: clock.clearTimeout,
+		minNodesCount: 1,
+	})
+
+	manager.createNode(
+		clock.nodeOptions({
+			host: 'late.example',
+			port: 38081,
+		})
+	)
+
+	const proxy = new LocalNodeProxy(null, { manager: manager, transport: transport })
+	const rpcPromise = proxy.rpc('getnodeinfo')
+	assert.equal(manager.hasUsableNode(), false)
+
+	release()
+	const info = await rpcPromise
+	assert.equal(info.lastblock.height, 77)
+	assert.equal(manager.canuseNodes().length, 1)
+})

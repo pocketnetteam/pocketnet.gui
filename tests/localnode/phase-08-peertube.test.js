@@ -254,6 +254,42 @@ test('getHosts / getHostIp / allservers from markers', async () => {
 	assert.ok(flat.indexOf('up.example') !== -1)
 })
 
+test('info() peertube instances match system16 table shape', async () => {
+	const mem = {}
+	const proxy = new LocalNodeProxy(null, {
+		createStore: false,
+		storage: {
+			getItem: function (k) {
+				return mem[k] || null
+			},
+			setItem: function (k, v) {
+				mem[k] = v
+			},
+		},
+		peertubeFetch: function () {
+			return Promise.resolve(sampleList)
+		},
+		peertubeHttpGet: function () {
+			return Promise.reject({ message: 'noprobe' })
+		},
+	})
+
+	const r = await proxy.info()
+	const instances = (r.info.peertube && r.info.peertube.instances) || {}
+
+	assert.ok(instances['up.example'])
+	assert.equal(instances['up.example'].host, 'up.example')
+	assert.equal(instances['up.example'].key, 'up.example')
+	assert.equal(instances['up.example'].canuse, true)
+	assert.ok(instances['up.example'].stats)
+	assert.ok(instances['up.example'].stats.events)
+	assert.ok(instances['up.example'].stats.slice)
+
+	assert.ok(instances['a2.example'])
+	assert.equal(instances['a2.example'].canuse, false)
+	assert.ok(!instances['test.example'])
+})
+
 test('LocalNodeProxy.fetch routes peertube/*', async () => {
 	const mem = {}
 	const proxy = new LocalNodeProxy(null, {

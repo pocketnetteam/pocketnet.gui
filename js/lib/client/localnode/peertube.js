@@ -970,11 +970,22 @@ var LocalNodePeertube = (function () {
 			})
 		}
 
+		/**
+		 * system16 peertubeinstancestable shape (proxy16 peertube.info).
+		 * No live PerformanceMetric — empty stats so the template can render hosts.
+		 */
 		self.info = function () {
 			var instances = {}
 			var i
 			var j
 			var s
+			var cached
+
+			// Hydrate from cache when list was not loaded yet (info() is sync).
+			if (!swarms.length) {
+				cached = readFullCache()
+				if (cached) applyList(cached)
+			}
 
 			for (i = 0; i < swarms.length; i++) {
 				for (j = 0; j < swarms[i].length; j++) {
@@ -982,10 +993,15 @@ var LocalNodePeertube = (function () {
 					if (!s || !s.host) continue
 					instances[s.host] = {
 						host: s.host,
+						key: s.host,
 						ip: s.ip,
 						archived: !!s.archived,
 						canuse: !s.offline && !s.old,
 						auto: false,
+						stats: {
+							events: {},
+							slice: {},
+						},
 					}
 				}
 			}

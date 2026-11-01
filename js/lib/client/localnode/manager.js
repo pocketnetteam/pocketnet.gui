@@ -115,6 +115,8 @@ var LocalNodeManager = function (options) {
 	/** idle | probing | done */
 	var healthState = 'idle'
 	var healthStartedAt = 0
+	/** In-flight probeSeedsHealth (deduped; Electron find may overlap callers). */
+	var healthPromise = null
 	/** True after cold-start init finishes (health + optional discovery). */
 	var ready = false
 	/** In-flight manager.init() promise (deduped). */
@@ -316,9 +318,8 @@ var LocalNodeManager = function (options) {
 		if (bestapplyMs <= 0) return self
 
 		bestapplyTimer = clockInterval(function () {
-			self.bestapply()
-			self.bestnodesapply()
-			self.manageNodeBudget()
+			// Electron find interval: keep probing until MIN_NODES_COUNT canuse.
+			self.findTick().catch(function () {})
 		}, bestapplyMs)
 
 		return self
@@ -720,8 +721,8 @@ var LocalNodeManager = function (options) {
 	}
 
 	/**
-	 * Light find-style tick: init a few not-inited if under budget, then forget extras.
-	 * Does not hammer RPC (initIfNeed does not probe; health/discovery stay separate).
+	 * Light budget tick: init a few not-inited if under budget, then forget extras.
+	 * Health probing lives in probeSeedsHealth / find (not here).
 	 */
 	self.manageNodeBudget = function () {
 		var u = ensureUtil()
@@ -741,6 +742,35 @@ var LocalNodeManager = function (options) {
 		}
 
 		return self.forgetIfNotUsing()
+	}
+
+	/**
+	 * Electron find()-interval equivalent (lookup remains self.find(key)).
+	 * If canuse < MIN_NODES_COUNT, probe more uninited nodes via getnodeinfo;
+	 * then manageNodeBudget + bestapply.
+	 * @returns {Promise<Array>} nodes that became canuse during this tick's probe
+	 */
+	self.findTick = function () {
+		var finish = function (connected) {
+			try {
+				self.manageNodeBudget()
+			} catch (e) {}
+			self.bestapply()
+			self.bestnodesapply()
+			return connected || []
+		}
+
+		if (self.canuseNodes().length >= self.minNodesCount) {
+			return Promise.resolve(finish([]))
+		}
+
+		if (!self.transport || typeof self.transport.request !== 'function') {
+			return Promise.resolve(finish([]))
+		}
+
+		return self.probeSeedsHealth().then(finish, function () {
+			return finish([])
+		})
 	}
 
 	/**
@@ -1306,15 +1336,28 @@ var LocalNodeManager = function (options) {
 	}
 
 	/**
-	 * Probe up to iniNodeCount not-yet-inited seeds via getnodeinfo.
-	 * @returns {Promise<Array>} nodes that became canuse
+	 * Probe not-yet-inited nodes via getnodeinfo in batches of iniNodeCount until
+	 * canuse reaches MIN_NODES_COUNT or every current uninited candidate was tried
+	 * once this call (failed stay uninited for a later find/probe retry).
+	 * Concurrent callers share one in-flight promise.
+	 * @returns {Promise<Array>} nodes that became canuse during this probe
 	 */
 	self.probeSeedsHealth = function () {
-		var u = ensureUtil()
-		var expected = self.expectedBchain()
-		var candidates
-		var slice
-		var connected = []
+		var u
+		var expected
+		var connected
+		var tried
+		var min
+
+		if (healthPromise) {
+			return healthPromise
+		}
+
+		u = ensureUtil()
+		expected = self.expectedBchain()
+		connected = []
+		tried = {}
+		min = self.minNodesCount || 3
 
 		if (!self.transport || typeof self.transport.request !== 'function') {
 			healthState = 'done'
@@ -1324,44 +1367,81 @@ var LocalNodeManager = function (options) {
 		healthState = 'probing'
 		healthStartedAt = clockNow()
 
-		candidates = u.filter(self.nodes, function (n) {
-			return n && !n.inited
-		})
-		slice = (typeof u.shuffle === 'function' ? u.shuffle(candidates, random) : candidates).slice(
-			0,
-			self.iniNodeCount || 5
-		)
-
-		if (!slice.length) {
-			healthState = 'done'
-			return Promise.resolve(connected)
+		var probeBatch = function (slice) {
+			return Promise.all(
+				u.map(slice, function (node) {
+					return self.requestNodeInfo(node).then(
+						function (info) {
+							if (self.applyHealthResult(node, info, expected)) {
+								connected.push(node)
+							}
+							return node
+						},
+						function () {
+							// Failures already recorded statistic/penalty; leave canuse false.
+							return null
+						}
+					)
+				})
+			)
 		}
 
-		return Promise.all(
-			u.map(slice, function (node) {
-				return self.requestNodeInfo(node).then(
-					function (info) {
-						if (self.applyHealthResult(node, info, expected)) {
-							connected.push(node)
-						}
-						return node
-					},
-					function () {
-						// Failures already recorded statistic/penalty; leave canuse false.
-						return null
-					}
-				)
-			})
-		).then(function () {
-			healthState = 'done'
-			if (connected.length) {
-				self.bestapply()
-				self.bestnodesapply()
+		var round = function () {
+			var candidates
+			var slice
+			var i
+			var key
+
+			if (self.canuseNodes().length >= min) {
+				return Promise.resolve(connected)
 			}
-			return persistConnectedNodes(connected).then(function () {
-				return connected
+
+			candidates = u.filter(self.nodes, function (n) {
+				if (!n || n.inited) return false
+				key = n.key || n.host + ':' + n.port
+				return !tried[key]
 			})
-		})
+
+			if (!candidates.length) {
+				return Promise.resolve(connected)
+			}
+
+			slice = (
+				typeof u.shuffle === 'function'
+					? u.shuffle(candidates, random)
+					: candidates
+			).slice(0, self.iniNodeCount || 5)
+
+			for (i = 0; i < slice.length; i++) {
+				key = slice[i].key || slice[i].host + ':' + slice[i].port
+				tried[key] = true
+			}
+
+			return probeBatch(slice).then(function () {
+				return round()
+			})
+		}
+
+		healthPromise = round()
+			.then(function () {
+				healthState = 'done'
+				if (connected.length) {
+					self.bestapply()
+					self.bestnodesapply()
+				}
+				return persistConnectedNodes(connected).then(function () {
+					return connected
+				})
+			})
+			.catch(function (err) {
+				healthState = 'done'
+				throw err
+			})
+			.finally(function () {
+				healthPromise = null
+			})
+
+		return healthPromise
 	}
 
 	/**
@@ -1450,6 +1530,7 @@ var LocalNodeManager = function (options) {
 		self.askingpeer = {}
 		healthState = 'idle'
 		healthStartedAt = 0
+		healthPromise = null
 		ready = false
 		initPromise = null
 
