@@ -2617,6 +2617,8 @@ _l.supportTicketSuccess = "You messave has been sent and volunteers will contact
 
 _l.torusing_directProxy = "Built-in proxy";
 _l.torusing_notdirectProxy = "External proxy";
+_l.localNodeProxy = "Local Node Proxy";
+_l.localNodeProxyUnavailable = "No usable nodes yet. Wait for connection or try again.";
 
 _l.commentBannedWarning = function(name){
 	return name + " blocked you. You won't be able to comment on it.";

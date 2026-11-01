@@ -1243,6 +1243,8 @@ _l.torusing_always = "Sempre";
 
 _l.torusing_directProxy = "Proxy integrato";
 _l.torusing_notdirectProxy = "Proxy esterno";
+_l.localNodeProxy = "Proxy nodi locali";
+_l.localNodeProxyUnavailable = "Nessun nodo utilizzabile. Attendi la connessione o riprova.";
 
 _l.torusing_changedirectProxy = "Passare a un proxy esterno";
 _l.torusing_changenotdirectProxy = "Passare a un proxy integrato";

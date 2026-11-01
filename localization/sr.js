@@ -2669,6 +2669,8 @@ _l.anotherSupport = "Подржи "+appname+" на други начин";
 _l.supportTicketSuccess = "Твоја порука је послата и волонтери ће те контактирати. Хвала ти на спремности да подржиш "+appname+"!";
 _l.torusing_directProxy = "Уграђени прокси";
 _l.torusing_notdirectProxy = "Екстерни прокси";
+_l.localNodeProxy = "Прокси локалних нодова";
+_l.localNodeProxyUnavailable = "Још нема употребљивих нодова. Сачекајте везу или покушајте поново.";
 
 _l.commentBannedWarning = function(name){
 	return name + " те је блокирао. Нећеш моћи да коментаришеш његове објаве.";

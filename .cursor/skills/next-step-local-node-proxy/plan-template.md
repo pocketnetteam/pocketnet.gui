@@ -17,6 +17,8 @@
 
 ## Tasks
 
+**Order rule:** T1 (first code) → **T-tests** → T2… Never put T-tests last. Skill will force T-tests if code exists and suite is missing.
+
 ### T1 — (title) ↔ ROADMAP X.Y
 
 - [ ] **Implement**
@@ -24,7 +26,18 @@
   - Actions: …
 - **Verify**
   - …
+  - Tests: after T1 only, Progress may say `tests: deferred to T-tests` **once**; then T-tests must run next
 - **Done when:** …
+
+### T-tests — phase NN automated checks
+
+- [ ] **Implement**
+  - Files: `tests/localnode/phase-NN-….test.js` (+ helpers if needed)
+  - Cover minimum from `docs/local-node-proxy/TESTING.md` for this phase
+  - Export `module.exports` from pure helpers if Node cannot load browser globals
+- **Verify**
+  - `node --test "tests/localnode/phase-NN*.test.js"` exits 0
+- **Done when:** phase unit/static tests exist and pass under Node
 
 ### T2 — …
 
@@ -32,13 +45,15 @@
   - …
 - **Verify**
   - …
+  - Tests: `node --test "tests/localnode/phase-NN*.test.js"` **must** pass (no skip)
 - **Done when:** …
 
 ## Phase exit criteria
 
-- [ ] All tasks above checked
+- [ ] All tasks above checked (including T-tests)
 - [ ] Matching ROADMAP phase checkboxes checked
-- [ ] Phase brief **Progress** updated
+- [ ] `node --test "tests/localnode/**/*.test.js"` passes
+- [ ] Phase brief **Progress** updated with test results
 
 ## Progress
 

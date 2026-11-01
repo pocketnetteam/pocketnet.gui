@@ -410,13 +410,21 @@ var Proxy16 = function(meta, app, api){
     var self = this
     var request = new ProxyRequest(app, self)
 
-    self.system = new System16(app, self, meta.direct)
-
     self.host = meta.host || ""
     self.port = meta.port || 0
     self.wss = meta.wss || 0
     self.direct = meta.direct
+    // localnodes: client JS manager → remote seeds (Cordova/web). NOT a local node process.
+    // Electron's on-machine proxy remains direct && !localnodes via System16.
+    self.localnodes = meta.localnodes
     self.user = meta.user || false
+
+    // Electron System16 only for classic direct (local computer proxy), never for localnodes.
+    self.system = new System16(app, self, self.direct && !self.localnodes)
+
+    if (self.localnodes && typeof LocalNodeProxy !== 'undefined') {
+        self.localNodeProxy = new LocalNodeProxy(app)
+    }
 
     self.lastinfo = {}
 
@@ -709,7 +717,12 @@ var Proxy16 = function(meta, app, api){
 
         var promise = null
 
-        if (self.direct){
+        if (self.localnodes){
+            promise = self.localNodeProxy
+                ? self.localNodeProxy.rpc(method, parameters, options)
+                : Promise.reject('localnodeproxy')
+        }
+        else if (self.direct){
             promise = self.system.rpc(method, parameters, options)
         }
         else{
@@ -752,6 +765,22 @@ var Proxy16 = function(meta, app, api){
     var wait = {}
 
     self.fetch = async function(path, data, p) {
+        if (self.localnodes) {
+            if (!self.localNodeProxy) return Promise.reject('localnodeproxy')
+
+            // ping + nodes/select + nodes/canchange via LocalNodeProxy; other paths stay unimplemented.
+            if (typeof self.localNodeProxy.fetch === 'function') {
+                return self.localNodeProxy.fetch(path, data)
+            }
+
+            if (path === 'ping' || path === '/ping') {
+                return self.localNodeProxy.ping()
+            }
+
+            console.error('notimplemented', { path: path, data: data })
+            return Promise.reject('notimplemented')
+        }
+
         if (self.direct) {
             return self.system.fetch(path, data, p);
         } else {
@@ -770,9 +799,20 @@ var Proxy16 = function(meta, app, api){
         nodes : () => nodes,
 
         name : function(){
-            if(self.direct) return 'Electron Proxy'
+            if (self.localnodes){
+                // Prefer localization; fall back if key missing / localization not ready.
+                if (app && app.localization && typeof app.localization.e === 'function'){
+                    var localized = app.localization.e('localNodeProxy')
 
-            else return self.url.https()
+                    if (localized && localized !== 'localNodeProxy') return localized
+                }
+
+                return 'Local Node Proxy'
+            }
+
+            if (self.direct) return 'Electron Proxy'
+
+            return self.url.https()
         },
 
         info : function(){
@@ -794,10 +834,11 @@ var Proxy16 = function(meta, app, api){
 
     self.init = function(){
 
-        if (self.direct) {
+        if (self.direct && !self.localnodes) {
             self.system.listen()
         }
 
+        // System16 is constructed disabled for localnodes; tick callback is harmless.
         self.system.clbks.tick.proxy = function(settings, proxystate){
 
             if(!proxystate) return
@@ -823,6 +864,12 @@ var Proxy16 = function(meta, app, api){
             }
         }
 
+        if (self.localnodes && self.localNodeProxy && self.localNodeProxy.init) {
+            return self.localNodeProxy.init().then(function () {
+                return Promise.resolve()
+            })
+        }
+
         return Promise.resolve()
 
         // return self.refreshNodes()
@@ -838,7 +885,12 @@ var Proxy16 = function(meta, app, api){
 
     self.destroy = function(){
 
-        if(self.direct) self.system.stop()
+        if(self.direct && !self.localnodes) self.system.stop()
+
+        if (self.localnodes && self.localNodeProxy && self.localNodeProxy.destroy) {
+            self.localNodeProxy.destroy()
+            self.localNodeProxy = null
+        }
 
         nodes = []
     }
@@ -1000,6 +1052,10 @@ var Api = function(app){
 
                     return this.addlocalelectronproxy().then(r => {
 
+                        return this.addlocalnodeproxy()
+
+                    }).then(r => {
+
                         this.addlist(initialProxies)
 
                         if (deep(app, 'options.translateApiProxy')){
@@ -1071,6 +1127,23 @@ var Api = function(app){
                     else{
                         return Promise.resolve()
                     }
+                },
+                addlocalnodeproxy : function(){
+                    if (typeof LocalNodeProxy !== 'undefined' && LocalNodeProxy.isEnabled(app)){
+                        var meta = typeof LocalNodeProxy.proxyListMeta === 'function'
+                            ? LocalNodeProxy.proxyListMeta()
+                            : {
+                                direct : true,
+                                localnodes : true,
+                                host : 'localnodes',
+                                port : 0,
+                                wss : 0,
+                            }
+
+                        this.add(meta)
+                    }
+
+                    return Promise.resolve()
                 },
                 addlist : function(metas){
                     _.each(metas, meta => { this.add(meta) })
@@ -1501,6 +1574,7 @@ var Api = function(app){
 
         working : function(){
 
+            // Remotes only — never include Electron System16 or Local Node Proxy.
             var _proxies = _.filter(proxies, function(proxy){
                 return !proxy.direct
             })
@@ -1510,7 +1584,7 @@ var Api = function(app){
             })
 
             return Promise.all(promises).then(r => {
-                return _.filter(proxies, function(p, i){
+                return _.filter(_proxies, function(p, i){
                     if (r[i]){
                         return true
                     }
@@ -1519,6 +1593,15 @@ var Api = function(app){
         },
 
         direct : function(){
+            var env = {
+                electron : typeof _Electron !== 'undefined' && !!_Electron,
+                cordova : typeof window !== 'undefined' && !!window.cordova,
+            }
+
+            if (typeof LocalNodeProxy !== 'undefined' && LocalNodeProxy.pickDirectProxy){
+                return LocalNodeProxy.pickDirectProxy(proxies, env)
+            }
+
             var _proxies = _.filter(proxies, function(proxy){
                 return proxy.direct
             })

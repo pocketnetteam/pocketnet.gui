@@ -2470,6 +2470,8 @@ _l.torusing_always = "Всегда";
 
 _l.torusing_directProxy = "Встроенный прокси";
 _l.torusing_notdirectProxy = "Внешний прокси";
+_l.localNodeProxy = "Прокси локальных нод";
+_l.localNodeProxyUnavailable = "Нет доступных нод. Подождите подключения или попробуйте снова.";
 
 _l.torusing_changedirectProxy = "Сменить на внешний прокси";
 _l.torusing_changenotdirectProxy = "Сменить на встроенный прокси";
