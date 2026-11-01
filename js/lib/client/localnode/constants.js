@@ -14,6 +14,15 @@ var LocalNodeConstants = {
 	 */
 	HEALTH_TIMEOUT_MS: 12000,
 
+	/**
+	 * Max time ping may wait for IndexedDB + seed list + first working node
+	 * (proxy16 waitreadywithrating window; client uses 30s as requested).
+	 */
+	WAIT_READY_MS: 30000,
+
+	/** Poll interval while waiting for a rated/canuse node (proxy16 f.pretry default). */
+	WAIT_READY_INTERVAL_MS: 30,
+
 	/** Minimum working/inited nodes to keep (proxy16/ipc.js). */
 	MIN_NODES_COUNT: 3,
 
@@ -52,6 +61,16 @@ var LocalNodeConstants = {
 	 * WSS user count is treated as 0 on client — extras are eligible after this grace.
 	 */
 	FORGET_GRACE_MS: 60000,
+
+	/**
+	 * Peertube swarm list (mirror proxy16/config.json peertubesListLink).
+	 * LocalNodeProxy.fetch('peertubeserversList') loads this directly.
+	 */
+	PEERTUBE_LIST_URL:
+		'https://raw.githubusercontent.com/shpingalet007/bastyon-peertubes/master/list.json',
+
+	/** localStorage key for archived peertube hosts cache. */
+	PEERTUBE_LIST_STORAGE_KEY: 'localnode:peertubeserversList',
 
 	/**
 	 * Versions purged from catalog (copy of proxy16/node/manager.js cleardatabase $in).

@@ -45,6 +45,24 @@ var LocalNodeManager = function (options) {
 		function (id) {
 			return clearInterval(id)
 		}
+	var clockTimeout =
+		options.setTimeout ||
+		function (fn, ms) {
+			return setTimeout(fn, ms)
+		}
+	var clockClearTimeout =
+		options.clearTimeout ||
+		function (id) {
+			return clearTimeout(id)
+		}
+	var waitReadyMs =
+		typeof options.waitReadyMs === 'number'
+			? options.waitReadyMs
+			: (constants && constants.WAIT_READY_MS) || 30000
+	var waitReadyIntervalMs =
+		typeof options.waitReadyIntervalMs === 'number'
+			? options.waitReadyIntervalMs
+			: (constants && constants.WAIT_READY_INTERVAL_MS) || 30
 	var seedEnv = options.seedEnv || options.app || null
 	var loadSeedsOnInit = options.loadSeeds !== false
 	var loadCatalogOnInit = options.loadCatalog !== false
@@ -97,6 +115,10 @@ var LocalNodeManager = function (options) {
 	/** idle | probing | done */
 	var healthState = 'idle'
 	var healthStartedAt = 0
+	/** True after cold-start init finishes (health + optional discovery). */
+	var ready = false
+	/** In-flight manager.init() promise (deduped). */
+	var initPromise = null
 
 	self.nodes = []
 	self.nodesmap = {}
@@ -114,6 +136,12 @@ var LocalNodeManager = function (options) {
 	self.peernodesCheckTime = peernodesCheckTime
 	self.healthState = function () {
 		return healthState
+	}
+	self.isReady = function () {
+		return ready
+	}
+	self.getInitPromise = function () {
+		return initPromise
 	}
 
 	/**
@@ -461,6 +489,89 @@ var LocalNodeManager = function (options) {
 	}
 
 	/**
+	 * Proxy16 nodeManager.getnodes — keyed map for info / nodes/get.
+	 * Local: users/pending always 0 (no WSS / pending queue).
+	 */
+	self.getnodes = function (filter) {
+		var nodes = {}
+		var list
+		var i
+		var node
+		var ex
+		var pending = 0
+		var probability = 0
+
+		list = ensureUtil().filter(self.nodes, filter || function () {
+			return true
+		})
+
+		for (i = 0; i < list.length; i++) {
+			node = list[i]
+			if (!node || !node.key) continue
+
+			ex =
+				typeof node.export === 'function'
+					? node.export()
+					: { key: node.key, host: node.host, port: node.port }
+
+			probability =
+				node.statistic && typeof node.statistic.probability === 'function'
+					? Number(node.statistic.probability()) || 0
+					: 0
+
+			nodes[node.key] = {
+				node: ex,
+				statistic:
+					node.statistic && typeof node.statistic.getst === 'function'
+						? node.statistic.getst()
+						: {},
+				slice:
+					node.statistic && typeof node.statistic.get5min === 'function'
+						? node.statistic.get5min()
+						: null,
+				penalty: typeof node.penalty === 'function' ? node.penalty() : null,
+				status: typeof node.chainStatus === 'function' ? node.chainStatus() : {},
+				rating:
+					node.statistic && typeof node.statistic.rating === 'function'
+						? node.statistic.rating()
+						: 0,
+				users: 0,
+				probability: probability,
+				pending: pending,
+				pendingpercent: 0,
+				pendingpercentdifference: 0,
+			}
+		}
+
+		return nodes
+	}
+
+	/**
+	 * Proxy16 nodeManager.info(compact) — used by kit.info / LocalNodeProxy.info.
+	 */
+	self.info = function (compact) {
+		var stats = {
+			count: self.nodes.length,
+			inited: true,
+			queuelength: 0,
+			countuse: self.canuseNodes().length,
+			chain: null,
+			nodes: self.getnodes(function (n) {
+				return n && n.inited
+			}),
+		}
+
+		if (!compact) {
+			stats.tmp = self.getnodes(function (n) {
+				return n && !n.inited
+			})
+			stats.peers = self.askedpeers || {}
+		}
+
+		return stats
+	}
+
+	/**
 	 * HTTP working set (proxy getWorkingNodes without WSS gate).
 	 * Treat WSS count as 0 → use the longer success-time budget (7000ms).
 	 */
@@ -634,12 +745,100 @@ var LocalNodeManager = function (options) {
 
 	/**
 	 * True while seed health is in flight and within pingConnectingMs.
-	 * Lets LocalNodeProxy.ping succeed briefly before canuse exists.
+	 * Kept for diagnostics; ping now waits via waitreadywithrating instead of
+	 * resolving a soft "connecting" success during this window.
 	 */
 	self.isHealthConnecting = function () {
 		if (healthState !== 'probing') return false
 		if (!healthStartedAt) return true
 		return clockNow() - healthStartedAt < pingConnectingMs
+	}
+
+	/**
+	 * True when at least one canuse or inited-with-rating node exists.
+	 */
+	self.hasRatedNode = function () {
+		if (typeof self.hasUsableNode === 'function' && self.hasUsableNode()) {
+			return true
+		}
+		return (
+			typeof self.initednodeswithrating === 'function' &&
+			self.initednodeswithrating().length > 0
+		)
+	}
+
+	/**
+	 * Wait until a usable/rated node appears, or init/health finishes empty,
+	 * or waitReadyMs elapses (proxy16 nodeManager.waitreadywithrating).
+	 * @param {number} [totalMs]
+	 * @returns {Promise<boolean>} true when a rated/canuse node is available
+	 */
+	self.waitreadywithrating = function (totalMs) {
+		var waitMs = typeof totalMs === 'number' ? totalMs : waitReadyMs
+		var intervalMs = waitReadyIntervalMs
+		var finished = false
+		var timerId = null
+		var elapsed = 0
+
+		if (self.hasRatedNode()) {
+			return Promise.resolve(true)
+		}
+
+		// Nothing in flight — fail fast (empty catalog / init never started).
+		if (!initPromise && healthState !== 'probing') {
+			return Promise.resolve(false)
+		}
+
+		return new Promise(function (resolve) {
+			var settle = function (ok) {
+				if (finished) return
+				finished = true
+				if (timerId != null) clockClearTimeout(timerId)
+				timerId = null
+				resolve(ok === true)
+			}
+
+			var check = function () {
+				if (self.hasRatedNode()) {
+					settle(true)
+					return true
+				}
+				if (ready || healthState === 'done') {
+					settle(self.hasRatedNode())
+					return true
+				}
+				return false
+			}
+
+			var schedule = function () {
+				timerId = clockTimeout(function () {
+					if (finished) return
+					elapsed += intervalMs
+					if (check()) return
+					if (elapsed >= waitMs) {
+						settle(self.hasRatedNode())
+						return
+					}
+					schedule()
+				}, intervalMs)
+			}
+
+			if (check()) return
+
+			// Wake when cold-start init settles (IDB + seeds + health), even under a fake clock.
+			if (initPromise && typeof initPromise.then === 'function') {
+				initPromise.then(
+					function () {
+						settle(self.hasRatedNode())
+					},
+					function () {
+						settle(self.hasRatedNode())
+					}
+				)
+			}
+
+			schedule()
+		})
 	}
 
 	var rpcIdCounter = 1
@@ -1169,13 +1368,19 @@ var LocalNodeManager = function (options) {
 	 * Cold start: purge bad versions → seeds → ≤N shuffled store peers → health →
 	 * discovery tick → bestapply interval. Seeds win key conflicts for stable flags.
 	 * Does not load 127.0.0.1 local PocketNet node on Cordova/web.
+	 * Deduped: concurrent callers share one initPromise (ping can await it).
 	 */
 	self.init = function () {
-		var chain = self.purgeBadVersions().catch(function () {
+		var chain
+
+		if (initPromise) return initPromise
+
+		ready = false
+		chain = self.purgeBadVersions().catch(function () {
 			return 0
 		})
 
-		return chain
+		initPromise = chain
 			.then(function () {
 				if (loadSeedsOnInit) {
 					self.loadSeeds()
@@ -1215,8 +1420,15 @@ var LocalNodeManager = function (options) {
 				self.bestapply()
 				self.bestnodesapply()
 				self.startBestapply()
+				ready = true
 				return self
 			})
+			.catch(function (err) {
+				ready = true
+				throw err
+			})
+
+		return initPromise
 	}
 
 	self.destroy = function () {
@@ -1238,6 +1450,8 @@ var LocalNodeManager = function (options) {
 		self.askingpeer = {}
 		healthState = 'idle'
 		healthStartedAt = 0
+		ready = false
+		initPromise = null
 
 		if (
 			closeStoreOnDestroy &&

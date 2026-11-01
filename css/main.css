@@ -6120,9 +6120,14 @@ html.allcontent_application #footerWrapper {
   opacity: 0.9;
   line-height: 1.4;
   padding: 0 1em;
+  word-break: break-word;
 }
 #splashScreen .splash-status .splash-status-tor[hidden] {
   display: none;
+}
+#splashScreen .splash-status .splash-status-net {
+  max-width: 36em;
+  margin: 0 auto;
 }
 #splashScreen .splash-status .splash-status-app {
   opacity: 0.75;

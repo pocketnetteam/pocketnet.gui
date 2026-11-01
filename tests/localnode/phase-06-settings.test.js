@@ -327,6 +327,43 @@ test('browser relay rewrite skipped when production host / disabled', async () =
 	}
 })
 
+test('system16 localnodes: only nodes+peertube UI; skip stats/chain/admin calls (static)', () => {
+	const sysSrc = fs.readFileSync(
+		path.join(root, 'components/system16/index.js'),
+		'utf8'
+	)
+	const proxyTpl = fs.readFileSync(
+		path.join(root, 'components/system16/templates/proxycontent.html'),
+		'utf8'
+	)
+	const nodesTpl = fs.readFileSync(
+		path.join(root, 'components/system16/templates/nodescontent.html'),
+		'utf8'
+	)
+	const peertubeTpl = fs.readFileSync(
+		path.join(root, 'components/system16/templates/peertubecontent.html'),
+		'utf8'
+	)
+
+	assert.match(sysSrc, /localnodes\s*:\s*function\(\)\s*\{\s*return !!\(proxy && proxy\.localnodes\)/)
+	assert.match(
+		sysSrc,
+		/if \(proxy && proxy\.localnodes\) return false/,
+		'admin() must stay false for localnodes despite direct:true'
+	)
+	assert.match(
+		sysSrc,
+		/Local Node Proxy: info only[\s\S]*?if \(actions\.localnodes\(\)\)/,
+		'make() must short-circuit after info for localnodes'
+	)
+	assert.match(sysSrc, /if \(actions\.localnodes\(\)\) return/)
+	assert.match(proxyTpl, /if\(localnodes\)/)
+	assert.match(proxyTpl, /nodesWrapper/)
+	assert.match(proxyTpl, /peertubeWrapper/)
+	assert.match(nodesTpl, /if\(!localnodes\)/)
+	assert.match(peertubeTpl, /if\(!localnodes\)/)
+})
+
 test('empty ping rejects without throw; localization key for unavailable UX exists', async () => {
 	const clock = createFakeClock()
 	const transport = createMockTransport(function () {

@@ -602,6 +602,8 @@ var Proxy16 = function(meta, app, api){
                 return Promise.resolve(r)
             }).catch(e => {
 
+                console.error(e)
+
                 var rdate = new Date()
 
                 self.ping = rdate.addSeconds(30)
@@ -768,7 +770,7 @@ var Proxy16 = function(meta, app, api){
         if (self.localnodes) {
             if (!self.localNodeProxy) return Promise.reject('localnodeproxy')
 
-            // ping + nodes/select + nodes/canchange via LocalNodeProxy; other paths stay unimplemented.
+            // info / ping / nodes/* / peertubeserversList via LocalNodeProxy; other paths stay unimplemented.
             if (typeof self.localNodeProxy.fetch === 'function') {
                 return self.localNodeProxy.fetch(path, data)
             }

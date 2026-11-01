@@ -211,14 +211,23 @@ var LocalNodeProxy = function (app, options) {
 		return out
 	}
 
+	self._initPromise = null
+
 	self.init = function () {
-		var manager = buildManager()
+		var manager
+
+		if (self._initPromise) return self._initPromise
+
+		manager = buildManager()
 		if (!manager || typeof manager.init !== 'function') {
 			return Promise.resolve(self)
 		}
-		return manager.init().then(function () {
+
+		self._initPromise = manager.init().then(function () {
 			return self
 		})
+
+		return self._initPromise
 	}
 
 	self.destroy = function () {
@@ -243,6 +252,7 @@ var LocalNodeProxy = function (app, options) {
 			self.current = null
 			self.store = null
 			self.app = null
+			self._initPromise = null
 			return self
 		})
 	}
@@ -448,7 +458,216 @@ var LocalNodeProxy = function (app, options) {
 	}
 
 	/**
-	 * Facade used by Proxy16.fetch for localnodes paths (ping / nodes/*).
+	 * Proxy16 kit.info-shaped payload for get.info / fetchauth('info').
+	 * Real data: nodeManager from manager.info() (non-compact: nodes + tmp for UI).
+	 * Other keys are safe stubs so system16 can skip admin/stats paths.
+	 */
+	self.info = function () {
+		var manager = self.manager
+		var canuse = 0
+		var nodeManager
+		var status = 0
+		var testFlag = false
+
+		if (manager && typeof manager.canuseNodes === 'function') {
+			canuse = manager.canuseNodes().length
+		}
+
+		if (manager && typeof manager.info === 'function') {
+			nodeManager = manager.info(false)
+		} else {
+			nodeManager = {
+				count: 0,
+				inited: false,
+				countuse: 0,
+				nodes: {},
+				tmp: {},
+			}
+		}
+
+		if (canuse) status = 2
+		else if (manager) status = 1
+
+		if (self.app && self.app.testpocketnet) testFlag = true
+		else if (typeof window !== 'undefined' && window.testpocketnet) testFlag = true
+
+		return Promise.resolve({
+			info: {
+				status: status,
+				localnodes: true,
+				test: testFlag,
+				nodeManager: nodeManager,
+				captcha: { hexCaptcha: false, ip: 0, all: 0 },
+				wallet: { inited: false, addresses: {} },
+				firebase: { useNotifications: false, inited: false },
+				tor: { enabled3: 'neveruse' },
+				nodeControl: {},
+				server: {},
+				wss: {},
+				peertube: {},
+				remote: {},
+				translateapi: {},
+				admins: [],
+				memory: {},
+				loadavg: {},
+			},
+		})
+	}
+
+	/**
+	 * Local nodes/get — full getnodes map (Api.nodes.get → addlist).
+	 */
+	self.getNodes = function () {
+		var manager = self.manager || buildManager()
+
+		if (!manager || typeof manager.getnodes !== 'function') {
+			return Promise.resolve({ nodes: {} })
+		}
+
+		return Promise.resolve({
+			nodes: manager.getnodes(),
+		})
+	}
+
+	/**
+	 * peertubeserversList — GitHub list.json → archived hosts; localStorage fallback.
+	 */
+	self.peertubeserversList = function () {
+		var constants =
+			(typeof LocalNodeConstants !== 'undefined' && LocalNodeConstants) ||
+			LocalNodeProxy.Constants ||
+			{}
+		var url =
+			options.peertubeListUrl ||
+			constants.PEERTUBE_LIST_URL ||
+			LocalNodeProxy.PEERTUBE_LIST_URL
+		var storageKey =
+			options.peertubeStorageKey ||
+			constants.PEERTUBE_LIST_STORAGE_KEY ||
+			'localnode:peertubeserversList'
+		var doFetch =
+			options.peertubeFetch ||
+			(typeof fetch === 'function'
+				? function (u) {
+						return fetch(u).then(function (res) {
+							if (!res || !res.ok) {
+								return Promise.reject({
+									code: res && res.status,
+									message: 'peertubefetch',
+								})
+							}
+							return res.json()
+						})
+				  }
+				: null)
+		var storage = options.storage || null
+
+		var readCache = function () {
+			var raw
+			var parsed
+
+			try {
+				if (storage && typeof storage.getItem === 'function') {
+					raw = storage.getItem(storageKey)
+				} else if (typeof localStorage !== 'undefined') {
+					raw = localStorage.getItem(storageKey)
+				}
+			} catch (e) {
+				raw = null
+			}
+
+			if (!raw) return null
+
+			try {
+				parsed = JSON.parse(raw)
+			} catch (e2) {
+				return null
+			}
+
+			if (Array.isArray(parsed)) return parsed
+			return null
+		}
+
+		var writeCache = function (hosts) {
+			try {
+				if (storage && typeof storage.setItem === 'function') {
+					storage.setItem(storageKey, JSON.stringify(hosts))
+				} else if (typeof localStorage !== 'undefined') {
+					localStorage.setItem(storageKey, JSON.stringify(hosts))
+				}
+			} catch (e) {}
+		}
+
+		var finish = function (hosts) {
+			return {
+				archivedPeertubeServers: hosts || [],
+			}
+		}
+
+		if (!doFetch || !url) {
+			return Promise.resolve(finish(readCache() || []))
+		}
+
+		return Promise.resolve()
+			.then(function () {
+				return doFetch(url)
+			})
+			.then(function (list) {
+				var hosts = LocalNodeProxy.extractArchivedPeertubeHosts(list)
+				writeCache(hosts)
+				return finish(hosts)
+			})
+			.catch(function () {
+				return finish(readCache() || [])
+			})
+	}
+
+	/**
+	 * exchanges/history — proxy16 returns history = { prices: { market: [...] } }.
+	 * Staking/apps read result.prices; empty prices → price=0, no crash.
+	 */
+	self.exchangesHistory = function () {
+		return Promise.resolve({
+			prices: {},
+		})
+	}
+
+	/**
+	 * urlPreview — satolist expects { og }; missing/empty og → null preview (no throw).
+	 */
+	self.urlPreview = function () {
+		return Promise.resolve({})
+	}
+
+	/**
+	 * urlPreviewFormatted — Editor.js LinkTool shape; success:0 = no preview, no throw.
+	 */
+	self.urlPreviewFormatted = function () {
+		return Promise.resolve({
+			success: 0,
+		})
+	}
+
+	/**
+	 * stats — system16 / Proxy16.get.stats expects { stats: [{ time, info }, ...] }.
+	 * One snapshot from current info() is enough for charts/panels that still call it.
+	 */
+	self.stats = function () {
+		return self.info().then(function (r) {
+			return {
+				stats: [
+					{
+						time: new Date(),
+						info: (r && r.info) || {},
+					},
+				],
+			}
+		})
+	}
+
+	/**
+	 * Facade used by Proxy16.fetch for localnodes paths
+	 * (info / ping / nodes/* / peertubeserversList / safe stubs).
 	 */
 	self.fetch = function (path, data) {
 		var p = path || ''
@@ -457,12 +676,40 @@ var LocalNodeProxy = function (app, options) {
 			return self.ping()
 		}
 
+		if (p === 'info' || p === '/info') {
+			return self.info()
+		}
+
+		if (p === 'stats' || p === '/stats') {
+			return self.stats()
+		}
+
+		if (p === 'exchanges/history' || p === '/exchanges/history') {
+			return self.exchangesHistory()
+		}
+
+		if (p === 'urlPreview' || p === '/urlPreview') {
+			return self.urlPreview(data)
+		}
+
+		if (p === 'urlPreviewFormatted' || p === '/urlPreviewFormatted') {
+			return self.urlPreviewFormatted(data)
+		}
+
 		if (p === 'nodes/select' || p === '/nodes/select') {
 			return self.selectNode(data || {})
 		}
 
+		if (p === 'nodes/get' || p === '/nodes/get') {
+			return self.getNodes()
+		}
+
 		if (p === 'nodes/canchange' || p === '/nodes/canchange') {
 			return self.canchangeNode(data || {})
+		}
+
+		if (p === 'peertubeserversList' || p === '/peertubeserversList') {
+			return self.peertubeserversList()
 		}
 
 		console.error('notimplemented', { path: p, data: data })
@@ -475,64 +722,96 @@ var LocalNodeProxy = function (app, options) {
 	 * Predicate:
 	 * - No manager yet → stub resolve (facade-only / Phase 2 compat).
 	 * - ≥1 canuse (or inited-with-rating via selectbest) → resolve with height, no stub.
-	 * - Health still probing within pingConnectingMs → resolve connecting (no stub).
-	 * - Otherwise reject so Api treats localnodes as down.
+	 * - Init / health still in flight → wait up to WAIT_READY_MS for a working node
+	 *   (IndexedDB catalog + seeds + getnodeinfo), then resolve or reject nolocalnodes.
+	 * - Otherwise reject so Api treats localnodes as down (pingerror → UI unavailable).
 	 */
 	self.ping = function () {
 		var manager = self.manager
-		var usable
-		var best
-		var height = 0
+		var result
+		var err
+
+		var evaluate = function () {
+			var usable
+			var best
+			var height = 0
+			var out
+
+			usable =
+				typeof manager.canuseNodes === 'function' ? manager.canuseNodes() : []
+
+			if (usable.length) {
+				best =
+					(typeof manager.selectbest === 'function' && manager.selectbest()) ||
+					usable[0]
+				if (best && typeof best.height === 'function') {
+					height = best.height() || 0
+				}
+				out = {
+					session: 'localnodes',
+					height: height,
+					canuse: usable.length,
+				}
+				console.log('[localnode] ping', out)
+				return Promise.resolve(out)
+			}
+
+			if (
+				typeof manager.initednodeswithrating === 'function' &&
+				manager.initednodeswithrating().length
+			) {
+				best = manager.selectbest() || manager.initednodeswithrating()[0]
+				if (best && typeof best.height === 'function') {
+					height = best.height() || 0
+				}
+				out = {
+					session: 'localnodes',
+					height: height,
+				}
+				console.log('[localnode] ping', out)
+				return Promise.resolve(out)
+			}
+
+			err = {
+				code: -1,
+				message: 'nolocalnodes',
+			}
+			console.log('[localnode] ping', err)
+			return Promise.reject(err)
+		}
 
 		if (!manager) {
-			return Promise.resolve({
+			result = {
 				session: 'localnodes',
 				height: 0,
 				stub: true,
-			})
-		}
-
-		usable =
-			typeof manager.canuseNodes === 'function' ? manager.canuseNodes() : []
-
-		if (usable.length) {
-			best =
-				(typeof manager.selectbest === 'function' && manager.selectbest()) ||
-				usable[0]
-			if (best && typeof best.height === 'function') {
-				height = best.height() || 0
 			}
-			return Promise.resolve({
-				session: 'localnodes',
-				height: height,
-			})
+			console.log('[localnode] ping', result)
+			return Promise.resolve(result)
 		}
 
 		if (
-			typeof manager.initednodeswithrating === 'function' &&
-			manager.initednodeswithrating().length
+			(typeof manager.hasRatedNode === 'function' && manager.hasRatedNode()) ||
+			(typeof manager.canuseNodes === 'function' &&
+				manager.canuseNodes().length)
 		) {
-			best = manager.selectbest() || manager.initednodeswithrating()[0]
-			if (best && typeof best.height === 'function') {
-				height = best.height() || 0
+			return evaluate()
+		}
+
+		if (typeof manager.waitreadywithrating !== 'function') {
+			return evaluate()
+		}
+
+		return manager.waitreadywithrating().then(function (ok) {
+			if (!ok) {
+				err = {
+					code: -1,
+					message: 'nolocalnodes',
+				}
+				console.log('[localnode] ping', err)
+				return Promise.reject(err)
 			}
-			return Promise.resolve({
-				session: 'localnodes',
-				height: height,
-			})
-		}
-
-		if (typeof manager.isHealthConnecting === 'function' && manager.isHealthConnecting()) {
-			return Promise.resolve({
-				session: 'localnodes',
-				height: 0,
-				connecting: true,
-			})
-		}
-
-		return Promise.reject({
-			code: -1,
-			message: 'nolocalnodes',
+			return evaluate()
 		})
 	}
 
@@ -691,6 +970,66 @@ LocalNodeProxy.pickDirectProxy = function (proxies, env) {
  */
 LocalNodeProxy.isPingOk = function (result) {
 	return result != null && typeof result === 'object'
+}
+
+/** Default peertube list URL (mirror constants / proxy16 config). */
+LocalNodeProxy.PEERTUBE_LIST_URL =
+	(typeof LocalNodeConstants !== 'undefined' &&
+		LocalNodeConstants.PEERTUBE_LIST_URL) ||
+	'https://raw.githubusercontent.com/shpingalet007/bastyon-peertubes/master/list.json'
+
+/**
+ * Extract archived peertube hosts from GitHub list.json (proxy syncAndReadList shape).
+ * @param {Object} list
+ * @returns {string[]}
+ */
+LocalNodeProxy.extractArchivedPeertubeHosts = function (list) {
+	var hosts = []
+	var seen = {}
+	var swarms
+	var archive
+	var key
+	var swarm
+	var i
+	var server
+	var host
+	var archKey
+	var archEntry
+
+	var add = function (h) {
+		if (!h || typeof h !== 'string' || seen[h]) return
+		seen[h] = true
+		hosts.push(h)
+	}
+
+	if (!list || typeof list !== 'object') return hosts
+
+	swarms = list.swarms || {}
+	archive = list.archive || {}
+
+	for (key in swarms) {
+		if (!Object.prototype.hasOwnProperty.call(swarms, key)) continue
+		swarm = swarms[key]
+		if (!swarm || !swarm.archived) continue
+
+		if (swarm.list && swarm.list.length) {
+			for (i = 0; i < swarm.list.length; i++) {
+				server = swarm.list[i]
+				host = server && (server.host || server)
+				if (typeof host === 'string') add(host)
+			}
+		}
+
+		if (Object.prototype.toString.call(swarm.archived) === '[object Array]') {
+			for (i = 0; i < swarm.archived.length; i++) {
+				archKey = swarm.archived[i]
+				archEntry = archive[archKey]
+				if (archEntry && archEntry.host) add(archEntry.host)
+			}
+		}
+	}
+
+	return hosts
 }
 
 /**

@@ -234,9 +234,18 @@ test('T5 static: localnode modules do not add firebase/notification paths', () =
 	const dir = path.join(root, 'js/lib/client/localnode')
 	const files = fs.readdirSync(dir).filter((f) => f.endsWith('.js'))
 	const banned = [/firebase/i, /pushNotification/i, /FCM/i]
+	// kit.info stub may name firebase only to set useNotifications/inited false.
+	const stripSafeFirebaseStub = function (src) {
+		return src.replace(
+			/firebase:\s*\{\s*useNotifications:\s*false,\s*inited:\s*false\s*\}/g,
+			'/* kit.info stub stripped */'
+		)
+	}
 
 	files.forEach((file) => {
-		const src = fs.readFileSync(path.join(dir, file), 'utf8')
+		const src = stripSafeFirebaseStub(
+			fs.readFileSync(path.join(dir, file), 'utf8')
+		)
 		banned.forEach((re) => {
 			assert.equal(
 				re.test(src),

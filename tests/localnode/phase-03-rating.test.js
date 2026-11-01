@@ -503,7 +503,7 @@ test('health: mock 408 → penalty, not canuse; ping rejects after probe', async
 	})
 })
 
-test('ping: connecting window resolves while probing; facade without manager stays stub', async () => {
+test('ping: waits while probing then resolves; facade without manager stays stub', async () => {
 	const clock = createFakeClock()
 	let release
 	const gate = new Promise(function (resolve) {
@@ -542,21 +542,179 @@ test('ping: connecting window resolves while probing; facade without manager sta
 	assert.equal(manager.isHealthConnecting(), true)
 
 	const proxy = new LocalNodeProxy(null, { manager: manager })
-	const mid = await proxy.ping()
-	assert.equal(mid.connecting, true)
-	assert.equal(mid.height, 0)
-	assert.equal(mid.stub, undefined)
+	const pingPromise = proxy.ping()
 
 	release()
 	await probePromise
+	const mid = await pingPromise
+	assert.equal(mid.height, 42)
+	assert.equal(mid.connecting, undefined)
+	assert.equal(mid.stub, undefined)
+
 	const after = await proxy.ping()
 	assert.equal(after.height, 42)
-	assert.equal(after.connecting, undefined)
 
 	const bare = new LocalNodeProxy(null)
 	const stub = await bare.ping()
 	assert.equal(stub.stub, true)
 	assert.equal(stub.height, 0)
+})
+
+test('ping: waits through init (catalog load) until a seed answers', async () => {
+	const clock = createFakeClock()
+	let releaseCatalog
+	let releaseHealth
+	const catalogGate = new Promise(function (resolve) {
+		releaseCatalog = resolve
+	})
+	const healthGate = new Promise(function (resolve) {
+		releaseHealth = resolve
+	})
+
+	const store = {
+		getAll: function () {
+			return catalogGate.then(function () {
+				return []
+			})
+		},
+		clear: function () {
+			return Promise.resolve(0)
+		},
+		put: function () {
+			return Promise.resolve(null)
+		},
+		close: function () {
+			return Promise.resolve()
+		},
+	}
+
+	const transport = createMockTransport(function () {
+		return healthGate.then(function () {
+			return {
+				jsonrpc: '2.0',
+				id: 1,
+				result: nodeInfoResult({ lastblock: { height: 77, hash: 'h' } }),
+			}
+		})
+	})
+
+	const manager = new LocalNodeManager({
+		Node: LocalNode,
+		util: LocalNodeUtil,
+		transport: transport,
+		store: store,
+		bestapplyInterval: 0,
+		now: clock.now,
+		loadSeeds: false,
+		loadCatalog: true,
+		probeHealth: true,
+		discoverOnInit: false,
+		waitReadyMs: 5000,
+	})
+
+	manager.createNode(
+		clock.nodeOptions({
+			host: 'seed.example',
+			port: 38081,
+		})
+	)
+
+	const initPromise = manager.init()
+	assert.equal(manager.isReady(), false)
+	assert.equal(manager.healthState(), 'idle')
+
+	const proxy = new LocalNodeProxy(null, { manager: manager })
+	const pingPromise = proxy.ping()
+
+	// Still loading catalog — must not have rejected yet.
+	let pingSettled = false
+	pingPromise.then(
+		function () {
+			pingSettled = true
+		},
+		function () {
+			pingSettled = true
+		}
+	)
+	await Promise.resolve()
+	assert.equal(pingSettled, false)
+
+	releaseCatalog()
+	await Promise.resolve()
+	releaseHealth()
+	await initPromise
+
+	const result = await pingPromise
+	assert.equal(result.height, 77)
+	assert.equal(manager.isReady(), true)
+	assert.ok(result.canuse >= 1)
+})
+
+test('ping: init finishes with no working node → nolocalnodes after wait', async () => {
+	const clock = createFakeClock()
+	let releaseCatalog
+	const catalogGate = new Promise(function (resolve) {
+		releaseCatalog = resolve
+	})
+
+	const store = {
+		getAll: function () {
+			return catalogGate.then(function () {
+				return []
+			})
+		},
+		clear: function () {
+			return Promise.resolve(0)
+		},
+		put: function () {
+			return Promise.resolve(null)
+		},
+		close: function () {
+			return Promise.resolve()
+		},
+	}
+
+	const transport = createMockTransport(function () {
+		const err = new Error('timeout')
+		err.code = 408
+		return Promise.reject(err)
+	})
+
+	const manager = new LocalNodeManager({
+		Node: LocalNode,
+		util: LocalNodeUtil,
+		transport: transport,
+		store: store,
+		bestapplyInterval: 0,
+		now: clock.now,
+		loadSeeds: false,
+		loadCatalog: true,
+		probeHealth: true,
+		discoverOnInit: false,
+		waitReadyMs: 5000,
+		setTimeout: clock.setTimeout,
+		clearTimeout: clock.clearTimeout,
+	})
+
+	manager.createNode(
+		clock.nodeOptions({
+			host: 'dead.example',
+			port: 38081,
+		})
+	)
+
+	const initPromise = manager.init()
+	const proxy = new LocalNodeProxy(null, { manager: manager })
+	const pingPromise = proxy.ping()
+
+	releaseCatalog()
+	await initPromise
+
+	await assert.rejects(() => pingPromise, (err) => {
+		assert.equal(err.code, -1)
+		assert.equal(err.message, 'nolocalnodes')
+		return true
+	})
 })
 
 // --- T5 / ROADMAP 3.5: rating rises, penalty cuts weight, selectProbability picks seed ---

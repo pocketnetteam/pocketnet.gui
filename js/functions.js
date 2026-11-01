@@ -9968,13 +9968,15 @@ if (typeof window != 'undefined') {
 		var splashScreeninterval;
 
 		var splashStatusFallbacks = {
-			splashNetConnecting: 'Connecting…',
-			splashNetFinding: 'Finding server…',
+			splashNetConnecting: 'Connecting to network…',
+			splashNetFinding: 'Looking for a proxy…',
 			splashNetConnected: 'Connected',
-			splashNetFailed: 'Connection failed',
-			splashTorStarting: 'Tor starting…',
-			splashTorConnected: 'Tor connected',
-			splashTorFailed: 'Tor failed'
+			splashNetFailed: 'Could not connect',
+			splashTorStarting: 'Starting Tor…',
+			splashTorConnected: 'Tor is connected',
+			splashTorFailed: 'Tor connection failed',
+			localNodeProxy: 'Local Node Proxy',
+			torusing_directProxy: 'Built-in proxy'
 		}
 
 		window.splashStatus = (function () {
@@ -10010,24 +10012,64 @@ if (typeof window != 'undefined') {
 				els.app.textContent = ver ? (name + ' ' + ver) : name
 			}
 
-			var netText = function () {
-				var state = (typeof app != 'undefined' && app.splashNetState) || ''
-
-				if (state === 'failed') return t('splashNetFailed')
-				if (state === 'connected') return t('splashNetConnected')
-				if (state === 'finding') return t('splashNetFinding')
-				if (state === 'connecting') return t('splashNetConnecting')
-
+			var getCurrentProxy = function () {
 				try {
 					if (typeof app != 'undefined' && app.api && app.api.get && typeof app.api.get.current == 'function') {
-						var proxy = app.api.get.current()
-						if (proxy) {
-							if (proxy.successping) return t('splashNetConnected')
-							if (proxy.pingerror) return t('splashNetFailed')
-							return t('splashNetFinding')
-						}
+						return app.api.get.current()
 					}
 				} catch (e) {}
+				return null
+			}
+
+			// How we are (or will be) connected: remote host, built-in Electron proxy, or local-nodes path.
+			var proxyDetail = function (proxy) {
+				var node = null
+				var seed = ''
+
+				if (!proxy) return ''
+
+				try {
+					if (proxy.localnodes) {
+						node = proxy.current
+						if ((!node || !node.host) && proxy.localNodeProxy && proxy.localNodeProxy.current) {
+							node = proxy.localNodeProxy.current
+						}
+						if (node && node.host) seed = String(node.host)
+						return seed ? (t('localNodeProxy') + ' · ' + seed) : t('localNodeProxy')
+					}
+
+					if (proxy.direct) {
+						return t('torusing_directProxy')
+					}
+
+					if (proxy.host) {
+						return proxy.port ? (String(proxy.host) + ':' + String(proxy.port)) : String(proxy.host)
+					}
+				} catch (e) {}
+
+				return ''
+			}
+
+			var withProxyDetail = function (base, proxy) {
+				var detail = proxyDetail(proxy)
+				if (!detail) return base
+				return base + ' · ' + detail
+			}
+
+			var netText = function () {
+				var state = (typeof app != 'undefined' && app.splashNetState) || ''
+				var proxy = getCurrentProxy()
+
+				if (state === 'failed') return withProxyDetail(t('splashNetFailed'), proxy)
+				if (state === 'connected') return withProxyDetail(t('splashNetConnected'), proxy)
+				if (state === 'finding') return withProxyDetail(t('splashNetFinding'), proxy)
+				if (state === 'connecting') return withProxyDetail(t('splashNetConnecting'), proxy)
+
+				if (proxy) {
+					if (proxy.successping) return withProxyDetail(t('splashNetConnected'), proxy)
+					if (proxy.pingerror) return withProxyDetail(t('splashNetFailed'), proxy)
+					return withProxyDetail(t('splashNetFinding'), proxy)
+				}
 
 				return t('splashNetConnecting')
 			}

@@ -79,6 +79,67 @@ var LocalNodeUtil = (function () {
 	}
 
 	/**
+	 * Poll until checkFn() is true or totalMs elapses (proxy16 f.pretry).
+	 * Resolves true when check passes, false on timeout.
+	 * @param {function():boolean} checkFn
+	 * @param {number} [intervalMs]
+	 * @param {number} [totalMs]
+	 * @param {{setTimeout?:function, clearTimeout?:function}} [timers]
+	 * @returns {Promise<boolean>}
+	 */
+	api.pretry = function (checkFn, intervalMs, totalMs, timers) {
+		var setT
+		var clearT
+		var elapsed = 0
+		var timerId = null
+
+		intervalMs = typeof intervalMs === 'number' ? intervalMs : 30
+		timers = timers || {}
+		setT =
+			typeof timers.setTimeout === 'function'
+				? timers.setTimeout
+				: typeof setTimeout !== 'undefined'
+					? setTimeout
+					: null
+		clearT =
+			typeof timers.clearTimeout === 'function'
+				? timers.clearTimeout
+				: typeof clearTimeout !== 'undefined'
+					? clearTimeout
+					: null
+
+		return new Promise(function (resolve) {
+			var finish = function (ok) {
+				if (timerId != null && clearT) clearT(timerId)
+				timerId = null
+				resolve(ok === true)
+			}
+
+			var tick = function () {
+				if (typeof checkFn === 'function' && checkFn()) {
+					finish(true)
+					return
+				}
+
+				if (totalMs != null && elapsed >= totalMs) {
+					finish(false)
+					return
+				}
+
+				if (!setT) {
+					finish(false)
+					return
+				}
+
+				elapsed += intervalMs
+				timerId = setT(tick, intervalMs)
+			}
+
+			tick()
+		})
+	}
+
+	/**
 	 * Weighted pick by `probability` (ported from proxy16/functions.js randmap).
 	 * @param {Array<{probability:number}>} ar
 	 * @param {function(number,number):number} [randomFloat] — default Math.random in [min,max)
