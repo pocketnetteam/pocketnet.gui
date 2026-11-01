@@ -25245,7 +25245,7 @@ Platform = function (app, listofnodes) {
                     resolve()
                 },
 
-                class: 'zindex'
+                class: 'zindexsplash'
             })
 
             self.app.api.wait.ready('useexternal').then(r => {

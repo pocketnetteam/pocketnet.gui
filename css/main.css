@@ -3176,6 +3176,7 @@ html.mobileview.android .wnd .wndback {
   right: 0;
   background: rgba(var(--color-shadow-var), 0.9);
   z-index: 1010;
+  /* Above #splashScreen (10000030) — local/direct proxy boot prompt only */
 }
 .dialog.ratingPromptDialog .buttons > div.btn1wr button {
   background: rgb(var(--color-bg-ac-bright));
@@ -3196,6 +3197,9 @@ html.mobileview.android .wnd .wndback {
 }
 .dialog.zindex {
   z-index: 5000;
+}
+.dialog.zindexsplash {
+  z-index: 10000040;
 }
 .dialog.bop {
   background: #000000;
