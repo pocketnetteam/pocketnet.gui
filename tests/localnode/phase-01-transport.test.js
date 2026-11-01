@@ -19,6 +19,7 @@ beforeEach(() => {
 	Transport.setMode('auto')
 	Transport.setRelayBase(null)
 	Transport.setRelayAllowed(null)
+	Transport.setCordovaTorResolver(null)
 })
 
 afterEach(() => {
@@ -31,6 +32,7 @@ afterEach(() => {
 	Transport.setMode('auto')
 	Transport.setRelayBase(null)
 	Transport.setRelayAllowed(null)
+	Transport.setCordovaTorResolver(null)
 })
 
 test('transport.js exists and is registered in js/_map.js before index.js', () => {
@@ -449,4 +451,100 @@ test('cordova mode without plugin rejects nocordovahttp', async () => {
 			}),
 		(err) => err && err.code === -1 && err.message === 'nocordovahttp'
 	)
+})
+
+test('buildCordovaTorProxyUrl matches service-worker encodeURIComponent path', () => {
+	assert.equal(Transport.CORDVA_TOR_HTTP_BASE, 'http://localhost:8181/')
+	assert.equal(
+		Transport.buildCordovaTorProxyUrl('http://1.2.3.4:38081/public/'),
+		'http://localhost:8181/' + encodeURIComponent('http://1.2.3.4:38081/public/')
+	)
+})
+
+test('resolveCordovaRequestUrl: no torRunner → passthrough', async () => {
+	global.window = {}
+	const url = 'http://seed.example:38081/public/'
+	assert.equal(await Transport.resolveCordovaRequestUrl(url), url)
+})
+
+test('resolveCordovaRequestUrl: redirect true → localhost:8181 proxy', async () => {
+	const url = 'http://seed.example:38081/post/'
+	Transport.setCordovaTorResolver(function () {
+		return Transport.buildCordovaTorProxyUrl(url)
+	})
+	assert.equal(
+		await Transport.resolveCordovaRequestUrl(url),
+		'http://localhost:8181/' + encodeURIComponent(url)
+	)
+})
+
+test('resolveCordovaRequestUrl: redirect false / passthrough mock', async () => {
+	const url = 'http://seed.example:38081/public/'
+	Transport.setCordovaTorResolver(function (u) {
+		return u
+	})
+	assert.equal(await Transport.resolveCordovaRequestUrl(url), url)
+})
+
+test('resolveCordovaRequestUrl: live isUseWithTor redirect object', async () => {
+	const url = 'http://10.0.0.1:38081/public/'
+	global.window = {
+		cordova: {
+			plugins: {
+				torRunner: {
+					isUseWithTor: function (address, success) {
+						assert.equal(address, url)
+						success({ redirect: true, port: 9051 })
+					},
+				},
+			},
+		},
+	}
+	assert.equal(
+		await Transport.resolveCordovaRequestUrl(url),
+		Transport.buildCordovaTorProxyUrl(url)
+	)
+
+	global.window.cordova.plugins.torRunner.isUseWithTor = function (address, success) {
+		success({ redirect: false, port: 0 })
+	}
+	assert.equal(await Transport.resolveCordovaRequestUrl(url), url)
+})
+
+test('cordova request uses Tor proxy URL when resolver redirects; body unchanged', async () => {
+	Transport.setMode('cordova')
+	const nodeUrl = 'http://1.2.3.4:38081/public/'
+	const body = Transport.buildJsonRpcBody('getnodeinfo', [], 1)
+	let called = null
+
+	Transport.setCordovaTorResolver(function (u) {
+		return Transport.buildCordovaTorProxyUrl(u)
+	})
+
+	global.window = {
+		cordova: {
+			plugin: {
+				http: {
+					sendRequest: function (url, options, success) {
+						called = { url: url, options: options }
+						success({
+							status: 200,
+							data: { result: { height: 1 }, id: 1 },
+						})
+					},
+				},
+			},
+		},
+	}
+
+	const out = await Transport.request({
+		url: nodeUrl,
+		method: 'POST',
+		body: body,
+	})
+
+	assert.deepEqual(out, { result: { height: 1 }, id: 1 })
+	assert.equal(called.url, Transport.buildCordovaTorProxyUrl(nodeUrl))
+	assert.equal(called.options.method, 'post')
+	assert.deepEqual(called.options.data, body)
 })

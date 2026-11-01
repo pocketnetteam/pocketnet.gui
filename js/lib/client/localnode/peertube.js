@@ -210,6 +210,33 @@ var LocalNodePeertube = (function () {
 		}
 	}
 
+	/** Prefer global LocalNodeTransport (map order); Node tests may require. */
+	function resolveTransportApi() {
+		if (typeof LocalNodeTransport !== 'undefined' && LocalNodeTransport) {
+			return LocalNodeTransport
+		}
+		try {
+			if (typeof require === 'function') {
+				return require('./transport.js')
+			}
+		} catch (e) {}
+		return null
+	}
+
+	/**
+	 * Cordova Tor rewrite via transport (same isUseWithTor → localhost:8181 path).
+	 * @returns {Promise<string>}
+	 */
+	function resolvePeertubeCordovaUrl(url) {
+		var t = resolveTransportApi()
+
+		if (t && typeof t.resolveCordovaRequestUrl === 'function') {
+			return t.resolveCordovaRequestUrl(url)
+		}
+
+		return Promise.resolve(String(url || ''))
+	}
+
 	/**
 	 * GET https://{host}{path} — Cordova native HTTP or browser fetch.
 	 * @returns {Promise<Object>} parsed JSON body
@@ -232,46 +259,52 @@ var LocalNodePeertube = (function () {
 
 		http = getCordovaHttp()
 		if (http && http.sendRequest) {
-			return new Promise(function (resolve, reject) {
-				http.setRequestTimeout(Math.ceil(timeoutMs / 1000))
-				http.sendRequest(
-					url,
-					{
-						method: 'get',
-						headers: { Accept: 'application/json' },
-					},
-					function (response) {
-						var status = response && response.status
-						var body = response && response.data
-						var parsed
+			return resolvePeertubeCordovaUrl(url).then(function (requestUrl) {
+				return new Promise(function (resolve, reject) {
+					http.setRequestTimeout(Math.ceil(timeoutMs / 1000))
+					http.sendRequest(
+						requestUrl,
+						{
+							method: 'get',
+							headers: { Accept: 'application/json' },
+						},
+						function (response) {
+							var status = response && response.status
+							var body = response && response.data
+							var parsed
 
-						if (status < 200 || status >= 300) {
-							reject({ code: status || -1, message: 'httperror', status: status })
-							return
+							if (status < 200 || status >= 300) {
+								reject({
+									code: status || -1,
+									message: 'httperror',
+									status: status,
+								})
+								return
+							}
+
+							try {
+								parsed =
+									typeof body === 'string'
+										? body
+											? JSON.parse(body)
+											: {}
+										: body || {}
+							} catch (e) {
+								reject({ code: -1, message: 'invalidjson' })
+								return
+							}
+
+							resolve(parsed)
+						},
+						function (err) {
+							reject({
+								code: (err && err.status) || -1,
+								message: (err && err.error) || 'network',
+								status: err && err.status,
+							})
 						}
-
-						try {
-							parsed =
-								typeof body === 'string'
-									? body
-										? JSON.parse(body)
-										: {}
-									: body || {}
-						} catch (e) {
-							reject({ code: -1, message: 'invalidjson' })
-							return
-						}
-
-						resolve(parsed)
-					},
-					function (err) {
-						reject({
-							code: (err && err.status) || -1,
-							message: (err && err.error) || 'network',
-							status: err && err.status,
-						})
-					}
-				)
+					)
+				})
 			})
 		}
 

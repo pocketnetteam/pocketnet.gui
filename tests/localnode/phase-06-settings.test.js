@@ -149,11 +149,13 @@ test('empty / non-canuse catalog: ping rejects; rpc rejects without transport; c
 		clearTimeout: clock.clearTimeout,
 	})
 
+	// Already probed / non-canuse (inited): rpc must not re-hit transport.
+	// Uninited candidates may still be probed by ensureRpcNode → probeSeedsHealth.
 	manager.createNode(
 		clock.nodeOptions({
 			host: 'dead.example',
 			port: 38081,
-			inited: false,
+			inited: true,
 			canuse: false,
 			allowRpc: false,
 		})
@@ -173,7 +175,7 @@ test('empty / non-canuse catalog: ping rejects; rpc rejects without transport; c
 		return true
 	})
 
-	assert.equal(transport.calls.length, 0, 'empty catalog must not hit transport')
+	assert.equal(transport.calls.length, 0, 'non-canuse catalog must not hit transport')
 
 	const canchange = await proxy.canchangeNode({ node: 'dead.example:38081' })
 	assert.deepEqual(canchange, {}, 'no usable alternative → empty object (Api stops retry)')

@@ -2,7 +2,8 @@
  * Local Node Proxy HTTP transport (browser fetch + Cordova native HTTP).
  * Browser/dev mode rewrites node /public|/post URLs through the local CORS relay.
  * Production web hosts must not rewrite to 127.0.0.1 (see shouldUseBrowserRelay).
- * Cordova uses cordova.plugin.http directly (existing cleartext / trust nocheck; no new plugin).
+ * Cordova uses cordova.plugin.http (existing cleartext / trust nocheck; no new plugin).
+ * When torRunner says redirect, Cordova URLs rewrite through localhost:8181 like the SW.
  *
  * Relay contract (scripts/local-node-cors-relay.js):
  *   URL:  {relayBase}/public[/method] or {relayBase}/post[/method]
@@ -15,9 +16,19 @@ var LocalNodeTransport = (function () {
 	var DEFAULT_RELAY_BASE = 'http://127.0.0.1:18081'
 	/** Match ProxyRequest default (`p.timeout || 30000`); 30–55s family. */
 	var DEFAULT_TIMEOUT_MS = 30000
+	/**
+	 * Cordova torRunner HTTP reverse-proxy (tpls/service-worker.js.tpl torAnswerCordova).
+	 * Not settings.torPort / SOCKS.
+	 */
+	var CORDVA_TOR_HTTP_BASE = 'http://localhost:8181/'
 	var relayBaseOverride = null
 	/** Test / agent override: null = auto, true/false force relay gate. */
 	var relayAllowedOverride = null
+	/**
+	 * Test override for Cordova Tor URL resolve.
+	 * null = live torRunner; function(url) → Promise<string>|string.
+	 */
+	var cordovaTorResolverOverride = null
 
 	var getCordovaHttp = function () {
 		if (typeof deep === 'function') {
@@ -174,6 +185,90 @@ var LocalNodeTransport = (function () {
 		}
 
 		return DEFAULT_TIMEOUT_MS
+	}
+
+	/**
+	 * SW-compatible Cordova Tor HTTP proxy URL.
+	 * http://localhost:8181/ + encodeURIComponent(targetUrl)
+	 */
+	var buildCordovaTorProxyUrl = function (targetUrl) {
+		return CORDVA_TOR_HTTP_BASE + encodeURIComponent(String(targetUrl || ''))
+	}
+
+	var getTorRunner = function () {
+		try {
+			if (typeof deep === 'function') {
+				return deep(
+					typeof window !== 'undefined' ? window : null,
+					'cordova.plugins.torRunner'
+				)
+			}
+			return (
+				(typeof window !== 'undefined' &&
+					window.cordova &&
+					window.cordova.plugins &&
+					window.cordova.plugins.torRunner) ||
+				null
+			)
+		} catch (e) {
+			return null
+		}
+	}
+
+	/**
+	 * Live torRunner.isUseWithTor → original or localhost:8181 proxied URL.
+	 * Missing plugin / error / !redirect → passthrough.
+	 */
+	var defaultCordovaTorResolver = function (url) {
+		var tor = getTorRunner()
+		var target = String(url || '')
+
+		if (!tor || typeof tor.isUseWithTor !== 'function') {
+			return Promise.resolve(target)
+		}
+
+		return new Promise(function (resolve) {
+			try {
+				tor.isUseWithTor(
+					target,
+					function (data) {
+						if (data && data.redirect) {
+							resolve(buildCordovaTorProxyUrl(target))
+							return
+						}
+						resolve(target)
+					},
+					function () {
+						resolve(target)
+					}
+				)
+			} catch (e) {
+				resolve(target)
+			}
+		})
+	}
+
+	/**
+	 * Resolve Cordova outbound URL (direct vs torRunner HTTP proxy).
+	 * @returns {Promise<string>}
+	 */
+	var resolveCordovaRequestUrl = function (url) {
+		var target = String(url || '')
+		var override = cordovaTorResolverOverride
+		var out
+
+		if (typeof override === 'function') {
+			try {
+				out = override(target)
+			} catch (e) {
+				return Promise.resolve(target)
+			}
+			return Promise.resolve(out).then(function (resolved) {
+				return resolved == null || resolved === '' ? target : String(resolved)
+			})
+		}
+
+		return defaultCordovaTorResolver(target)
 	}
 
 	/**
@@ -417,76 +512,98 @@ var LocalNodeTransport = (function () {
 		}
 
 		// Relies on existing app cleartext / trust nocheck init; do not call setServerTrustMode here.
-		return new Promise(function (resolve, reject) {
-			http.sendRequest(
-				opts.url,
-				options,
-				function (response) {
-					var status = response && response.status
-					var parsed
+		// Tor: same rewrite as service-worker torAnswerCordova when isUseWithTor.redirect.
+		return resolveCordovaRequestUrl(opts.url).then(function (requestUrl) {
+			return new Promise(function (resolve, reject) {
+				http.sendRequest(
+					requestUrl,
+					options,
+					function (response) {
+						var status = response && response.status
+						var parsed
 
-					try {
-						parsed = parseJsonBody(response && response.data)
-					} catch (e) {
-						reject({ code: -1, message: 'invalidjson' })
-						return
-					}
-
-					if (!status || status < 200 || status >= 300) {
-						reject({
-							code: status || -1,
-							message: (parsed && parsed.message) || 'httperror'
-						})
-						return
-					}
-
-					resolve(parsed)
-				},
-				function (response) {
-					var status = response && response.status
-					var parsed
-					var errMsg
-
-					if (status === -8) {
-						reject({ code: 20, message: 'timeout' })
-						return
-					}
-
-					if (status && status > 0) {
 						try {
-							parsed = parseJsonBody(response && response.error)
+							parsed = parseJsonBody(response && response.data)
 						} catch (e) {
-							parsed = null
+							reject({ code: -1, message: 'invalidjson' })
+							return
+						}
+
+						if (!status || status < 200 || status >= 300) {
+							reject({
+								code: status || -1,
+								message: (parsed && parsed.message) || 'httperror'
+							})
+							return
+						}
+
+						resolve(parsed)
+					},
+					function (response) {
+						var status = response && response.status
+						var parsed
+						var errMsg
+
+						if (status === -8) {
+							reject({ code: 20, message: 'timeout' })
+							return
+						}
+
+						if (status && status > 0) {
+							try {
+								parsed = parseJsonBody(response && response.error)
+							} catch (e) {
+								parsed = null
+							}
+
+							reject({
+								code: status,
+								message:
+									(parsed && parsed.message) ||
+									(typeof (response && response.error) === 'string'
+										? response.error
+										: 'httperror')
+							})
+							return
+						}
+
+						errMsg = response && response.error
+						if (errMsg && typeof errMsg !== 'string') {
+							errMsg = 'nativehttp'
 						}
 
 						reject({
-							code: status,
-							message:
-								(parsed && parsed.message) ||
-								(typeof (response && response.error) === 'string'
-									? response.error
-									: 'httperror')
+							code: status || -1,
+							message: errMsg || 'nativehttp'
 						})
-						return
 					}
-
-					errMsg = response && response.error
-					if (errMsg && typeof errMsg !== 'string') {
-						errMsg = 'nativehttp'
-					}
-
-					reject({
-						code: status || -1,
-						message: errMsg || 'nativehttp'
-					})
-				}
-			)
+				)
+			})
 		})
 	}
 
 	var api = {
 		DEFAULT_RELAY_BASE: DEFAULT_RELAY_BASE,
 		DEFAULT_TIMEOUT_MS: DEFAULT_TIMEOUT_MS,
+		CORDVA_TOR_HTTP_BASE: CORDVA_TOR_HTTP_BASE,
+
+		buildCordovaTorProxyUrl: buildCordovaTorProxyUrl,
+
+		resolveCordovaRequestUrl: resolveCordovaRequestUrl,
+
+		/**
+		 * Inject Cordova Tor URL resolver for tests: fn(url) → string|Promise<string>.
+		 * null restores live torRunner path.
+		 */
+		setCordovaTorResolver: function (fn) {
+			if (typeof fn === 'function') {
+				cordovaTorResolverOverride = fn
+			} else {
+				cordovaTorResolverOverride = null
+			}
+
+			return cordovaTorResolverOverride
+		},
 
 		buildPublicUrl: function (host, port, tls) {
 			var scheme = tls ? 'https' : 'http'
