@@ -64,6 +64,9 @@ var LocalNodePeertube = (function () {
 			}
 
 			if (swarm.archived) {
+				// Match proxy16 syncAndReadList: mark swarm.list only.
+				// Archive bucket hosts are appended without archived:true
+				// (unless the archive entry itself carries that flag).
 				for (j = 0; j < serversList.length; j++) {
 					serversList[j].archived = true
 				}
@@ -82,7 +85,7 @@ var LocalNodePeertube = (function () {
 								offline: false,
 								cantuploading: false,
 								archiveDouble: true,
-								archived: true,
+								archived: !!archEntry.archived,
 							})
 						}
 						archKey = swarm.archived[1]
@@ -94,7 +97,7 @@ var LocalNodePeertube = (function () {
 								upload: archEntry.upload,
 								offline: false,
 								cantuploading: !archEntry.upload,
-								archived: true,
+								archived: !!archEntry.archived,
 							})
 						}
 					} else if (swarm.archived.length >= 1) {
@@ -107,7 +110,7 @@ var LocalNodePeertube = (function () {
 								upload: archEntry.upload,
 								offline: false,
 								cantuploading: true,
-								archived: true,
+								archived: !!archEntry.archived,
 							})
 						}
 					}
@@ -121,20 +124,21 @@ var LocalNodePeertube = (function () {
 	}
 
 	/**
-	 * Archived hosts for peertubeserversList (same idea as extractArchivedPeertubeHosts).
+	 * Archived hosts for peertubeserversList / replaceArchiveInImage.
+	 * Match proxy16 peertube.getArchivedServers(): only swarm.list hosts marked
+	 * archived — NOT archive{} bucket hosts (peertube.archive / 601 / 701).
+	 * Including archive targets would rewrite live archive URLs onto
+	 * peertube.archive.pocketnet.app and break thumbnails.
 	 */
 	function extractArchivedHosts(list) {
 		var hosts = []
 		var seen = {}
 		var swarms
-		var archive
 		var key
 		var swarm
 		var i
 		var server
 		var host
-		var archKey
-		var archEntry
 
 		var add = function (h) {
 			if (!h || typeof h !== 'string' || seen[h]) return
@@ -145,7 +149,6 @@ var LocalNodePeertube = (function () {
 		if (!list || typeof list !== 'object') return hosts
 
 		swarms = list.swarms || {}
-		archive = list.archive || {}
 
 		for (key in swarms) {
 			if (!Object.prototype.hasOwnProperty.call(swarms, key)) continue
@@ -157,14 +160,6 @@ var LocalNodePeertube = (function () {
 					server = swarm.list[i]
 					host = server && (server.host || server)
 					if (typeof host === 'string') add(host)
-				}
-			}
-
-			if (Object.prototype.toString.call(swarm.archived) === '[object Array]') {
-				for (i = 0; i < swarm.archived.length; i++) {
-					archKey = swarm.archived[i]
-					archEntry = archive[archKey]
-					if (archEntry && archEntry.host) add(archEntry.host)
 				}
 			}
 		}
@@ -238,26 +233,23 @@ var LocalNodePeertube = (function () {
 	}
 
 	/**
-	 * GET https://{host}{path} — Cordova native HTTP or browser fetch.
+	 * GET absolute URL — Cordova native HTTP (bypasses WKWebView CORS) or fetch.
+	 * Used for GitHub list.json on Cordova/iOS where window.fetch is origin-null.
 	 * @returns {Promise<Object>} parsed JSON body
 	 */
-	function peertubeHttpGet(host, path, timeoutMs, injectFetch) {
-		var url
+	function peertubeHttpGetUrl(url, timeoutMs, injectFetch) {
 		var http
 		var doFetch
 		var controller
 		var timer
 
-		if (!host) {
-			return Promise.reject({ code: -1, message: 'host' })
+		if (!url) {
+			return Promise.reject({ code: -1, message: 'url' })
 		}
 
-		path = path || '/'
-		if (path.charAt(0) !== '/') path = '/' + path
-		url = 'https://' + host + path
-		timeoutMs = timeoutMs || 5500
-
+		timeoutMs = timeoutMs || 15000
 		http = getCordovaHttp()
+
 		if (http && http.sendRequest) {
 			return resolvePeertubeCordovaUrl(url).then(function (requestUrl) {
 				return new Promise(function (resolve, reject) {
@@ -361,6 +353,29 @@ var LocalNodePeertube = (function () {
 			})
 	}
 
+	/**
+	 * GET https://{host}{path} — Cordova native HTTP or browser fetch.
+	 * @returns {Promise<Object>} parsed JSON body
+	 */
+	function peertubeHttpGet(host, path, timeoutMs, injectFetch) {
+		var url
+
+		if (!host) {
+			return Promise.reject({ code: -1, message: 'host' })
+		}
+
+		path = path || '/'
+		if (path.charAt(0) !== '/') path = '/' + path
+		url = 'https://' + host + path
+
+		return peertubeHttpGetUrl(url, timeoutMs || 5500, injectFetch)
+	}
+
+	/** Default list.json loader — native HTTP on Cordova, else fetch. */
+	function defaultListFetch(url) {
+		return peertubeHttpGetUrl(url, 15000)
+	}
+
 	function LocalNodePeertubeCtor(options) {
 		options = options || {}
 		var self = this
@@ -417,21 +432,7 @@ var LocalNodePeertube = (function () {
 				: function () {
 						return options.testnet ? 'testnet' : 'mainnet'
 				  }
-		var listFetch =
-			options.listFetch ||
-			(typeof fetch === 'function'
-				? function (u) {
-						return fetch(u).then(function (res) {
-							if (!res || !res.ok) {
-								return Promise.reject({
-									code: res && res.status,
-									message: 'peertubefetch',
-								})
-							}
-							return res.json()
-						})
-				  }
-				: null)
+		var listFetch = options.listFetch || defaultListFetch
 
 		var storageGet = function (key) {
 			try {
@@ -1060,6 +1061,8 @@ var LocalNodePeertube = (function () {
 	LocalNodePeertubeCtor.extractArchivedHosts = extractArchivedHosts
 	LocalNodePeertubeCtor.parselink = parselink
 	LocalNodePeertubeCtor.peertubeHttpGet = peertubeHttpGet
+	LocalNodePeertubeCtor.peertubeHttpGetUrl = peertubeHttpGetUrl
+	LocalNodePeertubeCtor.defaultListFetch = defaultListFetch
 
 	return LocalNodePeertubeCtor
 })()

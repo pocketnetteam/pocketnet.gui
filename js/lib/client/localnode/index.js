@@ -67,6 +67,11 @@ var LocalNodeProxy = function (app, options) {
 				options.bestapplyInterval != null ? options.bestapplyInterval : 5000,
 		}
 
+		// Cordova defaults TLS inside manager; allow explicit override from proxy opts.
+		if (typeof options.tls === 'boolean') {
+			opts.tls = options.tls
+		}
+
 		if (options.store) {
 			opts.store = options.store
 		} else if (self.store) {

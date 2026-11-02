@@ -98,6 +98,28 @@ test('constants expose peertube probe/video TTL keys', () => {
 	)
 })
 
+test('extractArchivedHosts matches proxy16 (swarm.list only)', () => {
+	const hosts = LocalNodePeertube.extractArchivedHosts(sampleList)
+	assert.ok(hosts.indexOf('a1.example') !== -1)
+	assert.ok(hosts.indexOf('a2.example') !== -1)
+	assert.ok(hosts.indexOf('archive.example') === -1)
+	assert.ok(hosts.indexOf('up.example') === -1)
+
+	const swarms = LocalNodePeertube.toLegacySwarms(sampleList, 'mainnet')
+	const archived = swarms
+		.reduce(function (acc, list) {
+			return acc.concat(list)
+		}, [])
+		.filter(function (s) {
+			return s && s.archived
+		})
+		.map(function (s) {
+			return s.host
+		})
+	assert.ok(archived.indexOf('a1.example') !== -1)
+	assert.ok(archived.indexOf('archive.example') === -1)
+})
+
 test('toLegacySwarms maps markers and skips testnet on mainnet', () => {
 	const swarms = LocalNodePeertube.toLegacySwarms(sampleList, 'mainnet')
 	assert.ok(swarms.length >= 3)
@@ -321,7 +343,8 @@ test('LocalNodeProxy.fetch routes peertube/*', async () => {
 	assert.equal(best.host, 'up.example')
 
 	const list = await proxy.fetch('peertubeserversList')
-	assert.ok(list.archivedPeertubeServers.indexOf('archive.example') !== -1)
+	// Match proxy16 getArchivedServers: swarm.list only, not archive{} hosts.
+	assert.ok(list.archivedPeertubeServers.indexOf('archive.example') === -1)
 	assert.ok(list.archivedPeertubeServers.indexOf('a1.example') !== -1)
 
 	const ip = await proxy.fetch('peertube/getHostIp?host=up.example')
