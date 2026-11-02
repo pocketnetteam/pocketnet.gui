@@ -49,6 +49,10 @@ var instance = function (host, ip, Roy) {
 	}
 
 	var getinfo = function () {
+		// Skip if instance is destroyed
+		if (!inited) {
+			return Promise.resolve();
+		}
 
 		var result = {
 			date : new Date()
@@ -110,6 +114,14 @@ var instance = function (host, ip, Roy) {
 		var canuploading = false;
 		var v = null
 
+		// Return safe defaults if instance destroyed
+		if (!inited) {
+			return {
+				last: null,
+				canuploading: false
+			};
+		}
+
 		if (info.length) {
 			v = info[info.length - 1]
 			////
@@ -132,6 +144,11 @@ var instance = function (host, ip, Roy) {
 	};
 
 	self.request = function (method, data, p = {}) {
+		// Reject requests to destroyed instances immediately
+		if (!inited) {
+			return Promise.reject('INSTANCE_DESTROYED');
+		}
+
 		var responseTime = performance.now();
 		var url = methods[method];
 
@@ -204,10 +221,24 @@ var instance = function (host, ip, Roy) {
 	};
 
 	self.availability = function(){
+		// Return 0 availability if instance destroyed
+		if (!inited) {
+			return 0;
+		}
 		return statistic.get.availability()
 	}
 
 	self.stats = function () {
+		// Return safe defaults if instance destroyed
+		if (!inited) {
+			return {
+				events: [],
+				slice: {},
+				penalty: 0,
+				info: { last: null, canuploading: false },
+				availability: 0
+			};
+		}
 
 		return {
 			events : statistic.get.events(),
@@ -216,8 +247,6 @@ var instance = function (host, ip, Roy) {
 			info : self.info(),
 			availability : statistic.get.availability()
 		}
-
-
 	};
 
 	self.canuse = function () {

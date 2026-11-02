@@ -1,0 +1,534 @@
+---
+description: Code style and formatting conventions (legacy and modern)
+alwaysApply: true
+---
+
+# Code Style Guidelines
+
+## Hybrid Approach: Legacy + Modern
+
+This project contains **both legacy and modern JavaScript**:
+- **Legacy code** (existing files): Uses pre-ES6 patterns
+- **New code** (new files): Can use modern ES6+ syntax
+
+**Golden Rule:** Match the style of the file you're editing.
+
+## Variable Declarations
+
+### Legacy Files (Use `var`)
+```javascript
+var self = this;
+var items = [];
+var count = 0;
+```
+
+### New Files (Use `const`/`let`)
+```javascript
+const self = this;
+let items = [];
+const MAX_ITEMS = 100;
+```
+
+**When to use each:**
+- **Editing existing files:** Use `var` to match existing style
+- **Creating new files:** Prefer `const`/`let` for better scoping
+- **Utility modules:** Modern syntax encouraged
+
+## Function Declarations
+
+### Legacy Files (Function Expressions)
+```javascript
+// Named function
+var myFunction = function(param) {
+  return param + 1;
+};
+
+// Anonymous in callbacks
+setTimeout(function() {
+  // code
+}, 1000);
+
+// Method assignment
+var obj = {
+  method: function() {
+    // code
+  }
+};
+```
+
+### New Files (Arrow Functions & Modern)
+```javascript
+// Arrow functions
+const myFunction = (param) => param + 1;
+
+// Arrow in callbacks
+setTimeout(() => {
+  // code
+}, 1000);
+
+// Concise methods
+const obj = {
+  method() {
+    // code
+  }
+};
+```
+
+**When to use each:**
+- **Legacy files:** Function expressions with `var`
+- **New utilities:** Arrow functions preferred
+- **Callbacks:** Arrow functions for brevity (when `this` binding not needed)
+
+## Classes vs Constructors
+
+### Legacy Files (Function Constructors)
+```javascript
+var MyClass = function(options) {
+  var self = this;
+  
+  self.property = options.property;
+  
+  self.method = function() {
+    // Use self, not this
+  };
+  
+  return self;
+};
+
+// Usage
+var instance = new MyClass({ property: "value" });
+```
+
+### New Files (ES6 Classes Allowed)
+```javascript
+class MyClass {
+  constructor(options) {
+    this.property = options.property;
+  }
+  
+  method() {
+    // code
+  }
+}
+
+// Usage
+const instance = new MyClass({ property: "value" });
+```
+
+**When to use each:**
+- **Component files:** Continue using function constructor pattern (for consistency)
+- **Utility classes:** ES6 classes OK
+- **New modules:** Choose based on team preference
+
+## Module Pattern
+
+### Legacy Files (IIFE Pattern)
+```javascript
+var moduleName = (function() {
+  var self = new nModule();
+  var privateVar = "private";
+  
+  var privateFunction = function() {
+    // private method
+  };
+  
+  self.publicMethod = function() {
+    // public method
+  };
+  
+  return self;
+})();
+```
+
+### New Standalone Files (ES6 Modules Allowed)
+```javascript
+// ES6 modules OK for new utility files
+import { something } from './module';
+
+export default class MyClass {
+  // class definition
+}
+
+export const myFunction = () => {
+  // function
+};
+```
+
+**Important:**
+- **Component files:** Must use IIFE pattern (loaded via script tags)
+- **Utility files:** Can use ES6 modules if properly bundled
+- **Check build system:** Ensure ES6 modules are transpiled if needed
+
+## Semicolons
+
+### ✅ Always Use Semicolons
+```javascript
+var x = 1;
+var y = 2;
+
+function test() {
+  return x + y;
+};
+```
+
+## Quotes
+
+### ✅ Use Double Quotes (Generally)
+```javascript
+var text = "Hello world";
+var selector = ".myClass";
+```
+
+**Flexibility:** Single quotes OK if already used in file.
+
+## Indentation
+
+### ✅ Tabs or Spaces (Match File)
+- Check existing file indentation
+- Most files use **tabs** or **4 spaces**
+- Stay consistent within each file
+
+## Object/Array Formatting
+
+### ✅ Clear Formatting
+```javascript
+// Objects
+var config = {
+  name: "value",
+  count: 10,
+  enabled: true
+};
+
+// Arrays
+var items = [
+  "item1",
+  "item2",
+  "item3"
+];
+
+// Nested
+var complex = {
+  settings: {
+    option1: true,
+    option2: false
+  },
+  items: [1, 2, 3]
+};
+```
+
+## Conditionals
+
+### ✅ Consistent Style
+```javascript
+// Always use braces
+if (condition) {
+  doSomething();
+}
+
+// Even for single line
+if (x > 0) {
+  return true;
+}
+
+// Else formatting
+if (condition) {
+  doSomething();
+} else {
+  doSomethingElse();
+}
+```
+
+### ❌ Avoid Ternary Abuse
+```javascript
+// ✅ OK for simple cases
+var result = condition ? "yes" : "no";
+
+// ❌ BAD for complex logic
+var result = condition1 ? value1 :
+             condition2 ? value2 :
+             condition3 ? value3 : defaultValue;
+```
+
+## Callbacks vs Promises
+
+### ✅ Callbacks (Primary Pattern)
+```javascript
+// Standard callback pattern
+function loadData(param, callback) {
+  doAsyncWork(function(error, data) {
+    if (error) {
+      return callback(error);
+    }
+    callback(null, data);
+  });
+}
+
+// Usage
+loadData("param", function(error, data) {
+  if (error) {
+    handleError(error);
+    return;
+  }
+  useData(data);
+});
+```
+
+### ✅ Promises (Newer Code)
+```javascript
+// Modern backend code uses promises
+function loadData(param) {
+  return new Promise(function(resolve, reject) {
+    doAsyncWork(function(error, data) {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(data);
+      }
+    });
+  });
+}
+
+// Usage with .then()
+loadData("param")
+  .then(function(data) {
+    useData(data);
+  })
+  .catch(function(error) {
+    handleError(error);
+  });
+```
+
+### ⚠️ Async/Await (Minimal Use)
+```javascript
+// Async/await used sparingly in newest code
+var loadData = async function(param) {
+  try {
+    var data = await doAsyncWork(param);
+    return data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+```
+
+## Comments
+
+### ✅ Use Comments Liberally
+```javascript
+// Single line comment
+var x = 1;
+
+/*
+ * Multi-line comment
+ * for complex explanations
+ */
+var complex = {
+  // Inline comments OK
+  setting: true
+};
+
+// Section headers
+// ===== User Actions =====
+var actions = {
+  // ...
+};
+```
+
+## Naming Conventions
+
+### ✅ Descriptive Names
+```javascript
+// Variables: camelCase
+var userName = "John";
+var postCount = 10;
+var isEnabled = true;
+
+// Functions: camelCase
+var loadUserData = function() {};
+var calculateTotal = function() {};
+
+// Constructors: PascalCase
+var UserProfile = function() {};
+var PostManager = function() {};
+
+// Constants: UPPER_CASE
+var MAX_POSTS = 100;
+var API_ENDPOINT = "https://api.example.com";
+
+// Private: underscore prefix (convention)
+var _privateMethod = function() {};
+var _internalState = {};
+```
+
+## jQuery Conventions
+
+### ✅ Prefix jQuery Objects with `$`
+```javascript
+var $container = $("#container");
+var $buttons = $(".button");
+
+$container.find(".item").on("click", function() {
+  var $this = $(this);
+  // ...
+});
+```
+
+## Error Handling
+
+### ✅ Check for Errors First
+```javascript
+// Callback pattern
+function doWork(param, callback) {
+  if (!param) {
+    return callback(new Error("param required"));
+  }
+  
+  asyncOperation(param, function(error, result) {
+    if (error) {
+      return callback(error);
+    }
+    callback(null, result);
+  });
+}
+
+// Promise pattern
+function doWork(param) {
+  return new Promise(function(resolve, reject) {
+    if (!param) {
+      return reject(new Error("param required"));
+    }
+    // ...
+  });
+}
+```
+
+## Underscore.js Usage
+
+### ✅ Use Underscore Utilities
+```javascript
+// Iteration
+_.each(items, function(item, index) {
+  // process item
+});
+
+// Mapping
+var names = _.map(users, function(user) {
+  return user.name;
+});
+
+// Filtering
+var active = _.filter(items, function(item) {
+  return item.active;
+});
+
+// Finding
+var item = _.find(items, function(item) {
+  return item.id === targetId;
+});
+
+// Object utilities
+var merged = _.extend({}, defaults, options);
+var cloned = _.clone(obj);
+var keys = _.keys(obj);
+```
+
+## Component-Specific Patterns
+
+### ✅ Follow Component Pattern
+```javascript
+var componentname = (function() {
+  var self = new nModule();
+  var essenses = {};
+
+  var Essense = function(p) {
+    var primary = deep(p, "history");
+    var el, ed;
+
+    // Sections
+    var actions = {};
+    var events = {};
+    var renders = {};
+    var state = {};
+
+    // Methods
+    var init = function() {};
+    var destroy = function() {};
+
+    return {
+      primary: primary,
+      init: init,
+      destroy: destroy
+    };
+  };
+
+  // Module methods
+  self.run = function(p) {
+    var essense = self.addEssense(essenses, Essense, p);
+    self.init(essense, p);
+  };
+
+  self.stop = function() {
+    _.each(essenses, function(essense) {
+      essense.destroy();
+    });
+  };
+
+  return self;
+})();
+```
+
+## File Organization
+
+### ✅ Section Comments
+```javascript
+var MyModule = function() {
+  var self = this;
+
+  // ===== Private Variables =====
+  var privateVar = "value";
+
+  // ===== Private Methods =====
+  var privateMethod = function() {
+    // ...
+  };
+
+  // ===== Public Methods =====
+  self.publicMethod = function() {
+    // ...
+  };
+
+  // ===== Initialization =====
+  self.init = function() {
+    // ...
+  };
+
+  return self;
+};
+```
+
+## When to Use Modern JavaScript
+
+### ✅ Use Modern Syntax When:
+1. **Creating new standalone utility files**
+2. **Working in files that already use modern syntax**
+3. **Writing new backend code** (proxy16 can use modern Node.js features)
+4. **Building new isolated modules**
+5. **User explicitly requests it**
+
+### ⚠️ Use Legacy Syntax When:
+1. **Editing existing component files** (components/**/*)
+2. **Modifying js/satolist.js or js/app.js** (core legacy files)
+3. **Working with IIFE modules** (match existing pattern)
+4. **Maintaining consistency** in a legacy file
+
+### 🤔 When Unsure:
+- **Check the file:** Does it use `var` or `const`? Match it.
+- **Check surroundings:** What pattern do nearby files use?
+- **Ask yourself:** Is this a new module or editing legacy code?
+
+## References
+
+- Check existing files for patterns
+- See `js/satolist.js` for main platform style
+- See `components/*/index.js` for component style
+- See `proxy16/proxy.js` for backend style
