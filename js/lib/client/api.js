@@ -1784,7 +1784,9 @@ var Api = function(app){
     self.getPeertubeserversList = function(){
         return internal.proxy.api.peertubeserversList().then(result => {
 
-            if (result)
+            // Keep baked config/common.json list if proxy returns empty
+            // ([] is truthy — would wipe rewrite targets and break thumbnails).
+            if (result && result.length)
                 window.project_config.archivedPeertubeServers = result 
 
             return Promise.resolve()

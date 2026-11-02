@@ -81,7 +81,22 @@ var LocalNodeManager = function (options) {
 		typeof options.pingConnectingMs === 'number'
 			? options.pingConnectingMs
 			: 15000
-	var useTls = options.tls === true
+	/**
+	 * Cordova/iOS: ATS blocks cleartext http://IP:38081 (Android allows via
+	 * network_security_config). Default TLS → https://host:38881 like Electron
+	 * USE_TLS_NODES_ONLY; app.js setServerTrustMode('nocheck') covers self-signed.
+	 * Explicit options.tls wins; Node/unit tests stay HTTP unless tls:true.
+	 */
+	var resolveDefaultTls = function () {
+		try {
+			if (typeof window !== 'undefined' && window.cordova) {
+				return true
+			}
+		} catch (e) {}
+		return false
+	}
+	var useTls =
+		typeof options.tls === 'boolean' ? options.tls : resolveDefaultTls()
 	var peernodesCheckTime =
 		typeof options.peernodesCheckTime === 'number'
 			? options.peernodesCheckTime
@@ -152,6 +167,15 @@ var LocalNodeManager = function (options) {
 	self.setStore = function (store) {
 		self.store = store || null
 		return self
+	}
+
+	self.getTls = function () {
+		return useTls === true
+	}
+
+	self.setTls = function (value) {
+		useTls = value === true
+		return useTls
 	}
 
 	/** Fixed client budgets — never scale by proxy.users(). */

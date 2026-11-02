@@ -458,6 +458,52 @@ test('health: mock getnodeinfo success → canuse + ping height; no stub', async
 	assert.equal(info.lastblock.height, 100500)
 })
 
+test('tls:true uses https://host:sport (Cordova/iOS ATS path)', async () => {
+	const clock = createFakeClock()
+	const transport = createMockTransport(function () {
+		return {
+			jsonrpc: '2.0',
+			id: 1,
+			result: nodeInfoResult({ lastblock: { height: 42, hash: 'tls' } }),
+		}
+	})
+	const manager = new LocalNodeManager({
+		Node: LocalNode,
+		util: LocalNodeUtil,
+		seeds: LocalNodeSeeds,
+		constants: LocalNodeConstants,
+		transport: transport,
+		bestapplyInterval: 0,
+		now: clock.now,
+		seedEnv: { test: false },
+		loadSeeds: false,
+		probeHealth: false,
+		tls: true,
+		random: function () {
+			return 0
+		},
+	})
+
+	assert.equal(manager.getTls(), true)
+	manager.createNode(
+		clock.nodeOptions({
+			host: 'seed.example',
+			port: 38081,
+			sport: 38881,
+			inited: false,
+			canuse: false,
+			allowRpc: false,
+		})
+	)
+
+	await manager.probeSeedsHealth()
+	assert.ok(transport.calls.length >= 1)
+	assert.match(
+		transport.calls[0].url,
+		/^https:\/\/seed\.example:38881\/public\/$/
+	)
+})
+
 test('health: mock 408 → penalty, not canuse; ping rejects after probe', async () => {
 	const clock = createFakeClock()
 	const transport = createMockTransport(function () {

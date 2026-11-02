@@ -55,7 +55,7 @@ test('constants expose peertube list URL and storage key', () => {
 	)
 })
 
-test('extractArchivedPeertubeHosts from swarm archived + archive map', () => {
+test('extractArchivedPeertubeHosts matches proxy16 (swarm.list only)', () => {
 	const hosts = LocalNodeProxy.extractArchivedPeertubeHosts({
 		swarms: {
 			a: {
@@ -72,7 +72,8 @@ test('extractArchivedPeertubeHosts from swarm archived + archive map', () => {
 	})
 
 	assert.ok(hosts.indexOf('swarm-a.example') !== -1)
-	assert.ok(hosts.indexOf('archive0.example') !== -1)
+	// archive{} targets stay out of rewrite list (proxy16 getArchivedServers).
+	assert.ok(hosts.indexOf('archive0.example') === -1)
 	assert.ok(hosts.indexOf('live.example') === -1)
 })
 
@@ -208,7 +209,7 @@ test('peertubeserversList: fetch ok writes storage; fail reads cache; empty → 
 	const ok = await okProxy.fetch('peertubeserversList')
 	assert.ok(ok.archivedPeertubeServers.indexOf('pt-archived.example') !== -1)
 	assert.ok(
-		ok.archivedPeertubeServers.indexOf('pt-archive-entry.example') !== -1
+		ok.archivedPeertubeServers.indexOf('pt-archive-entry.example') === -1
 	)
 	assert.ok(mem[LocalNodeConstants.PEERTUBE_LIST_STORAGE_KEY])
 

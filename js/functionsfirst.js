@@ -325,16 +325,17 @@ edjsHTMLCnt = function (a, app) {
 			if (app.thislink(t.link)) {
 				return '<div class="article_this_embed" href="' + _.escape(t.link) + '"></div>'
 			}
-			else {
 
-				var img = ''
-
-				if (deep(t, 'meta.image.url'))
-					img = '<div class="article_link_custom_image"><div class="img" image="' + _.escape(deep(t, 'meta.image.url')) + '"></div></div>'
-
-				return ('<a href="' + _.escape(t.link) + '" donottrust="true"><div class="article_link_custom">' + _.escape(img) + '<div class="article_link_custom_content"><div class="article_link_custom_title">' + _.escape(deep(t, 'meta.title') || url.host || 'Undefined Link') + '</div><div class="article_link_custom_description">' + _.escape(deep(t, 'meta.description') || '') + '</div><div class="article_link_custom_href">' + _.escape(t.link) + '</div></div></div></a>')
+			if (!isSafeHttpUrl(t.link)) {
+				return this.error('link', e)
 			}
 
+			var img = ''
+
+			if (deep(t, 'meta.image.url'))
+				img = '<div class="article_link_custom_image"><div class="img" image="' + _.escape(deep(t, 'meta.image.url')) + '"></div></div>'
+
+			return ('<a href="' + _.escape(t.link) + '" donottrust="true"><div class="article_link_custom">' + img + '<div class="article_link_custom_content"><div class="article_link_custom_title">' + _.escape(deep(t, 'meta.title') || url.host || 'Undefined Link') + '</div><div class="article_link_custom_description">' + _.escape(deep(t, 'meta.description') || '') + '</div><div class="article_link_custom_href">' + _.escape(t.link) + '</div></div></div></a>')
 
 		},
 
@@ -1048,6 +1049,18 @@ formatInternalLinkHref = function(value = ''){
 	}
 
 	return value
+}
+
+isSafeHttpUrl = function (link) {
+	if (!link || typeof link !== 'string') return false
+
+	try {
+		var u = new URL(link.trim())
+		return u.protocol === 'http:' || u.protocol === 'https:'
+	}
+	catch (e) {
+		return false
+	}
 }
 
 thislink = function (_url = '') {

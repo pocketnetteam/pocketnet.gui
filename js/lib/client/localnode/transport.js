@@ -2,7 +2,9 @@
  * Local Node Proxy HTTP transport (browser fetch + Cordova native HTTP).
  * Browser/dev mode rewrites node /public|/post URLs through the local CORS relay.
  * Production web hosts must not rewrite to 127.0.0.1 (see shouldUseBrowserRelay).
- * Cordova uses cordova.plugin.http (existing cleartext / trust nocheck; no new plugin).
+ * Cordova uses cordova.plugin.http (setServerTrustMode nocheck in app.js; no new plugin).
+ * iOS ATS blocks cleartext to node IPs — LocalNodeManager defaults tls:true on Cordova
+ * (https://host:38881). Android still allows HTTP via network_security_config.
  * When torRunner says redirect, Cordova URLs rewrite through localhost:8181 like the SW.
  *
  * Relay contract (scripts/local-node-cors-relay.js):
