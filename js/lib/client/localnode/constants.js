@@ -67,7 +67,7 @@ var LocalNodeConstants = {
 	 * LocalNodeProxy.fetch('peertubeserversList') loads this directly.
 	 */
 	PEERTUBE_LIST_URL:
-		'https://raw.githubusercontent.com/shpingalet007/bastyon-peertubes/master/list.json',
+		'https://raw.githubusercontent.com/pocketnetteam/bastyon-peertubes/master/list.json',
 
 	/** localStorage key for archived peertube hosts cache. */
 	PEERTUBE_LIST_STORAGE_KEY: 'localnode:peertubeserversList',
