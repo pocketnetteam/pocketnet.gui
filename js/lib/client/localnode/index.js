@@ -1179,7 +1179,7 @@ LocalNodeProxy.isPingOk = function (result) {
 LocalNodeProxy.PEERTUBE_LIST_URL =
 	(typeof LocalNodeConstants !== 'undefined' &&
 		LocalNodeConstants.PEERTUBE_LIST_URL) ||
-	'https://raw.githubusercontent.com/shpingalet007/bastyon-peertubes/master/list.json'
+	'https://raw.githubusercontent.com/pocketnetteam/bastyon-peertubes/master/list.json'
 
 /**
  * Extract archived peertube hosts from GitHub list.json (proxy syncAndReadList shape).
