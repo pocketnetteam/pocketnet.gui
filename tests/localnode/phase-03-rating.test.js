@@ -717,6 +717,91 @@ test('ping: init finishes with no working node → nolocalnodes after wait', asy
 	})
 })
 
+test('ping: waits past empty seed health while init discovery still runs', async () => {
+	const clock = createFakeClock()
+	let releaseDiscovery
+	const discoveryGate = new Promise(function (resolve) {
+		releaseDiscovery = resolve
+	})
+
+	const transport = createMockTransport(function () {
+		const err = new Error('timeout')
+		err.code = 408
+		return Promise.reject(err)
+	})
+
+	const manager = new LocalNodeManager({
+		Node: LocalNode,
+		util: LocalNodeUtil,
+		transport: transport,
+		bestapplyInterval: 0,
+		now: clock.now,
+		loadSeeds: false,
+		loadCatalog: false,
+		probeHealth: true,
+		discoverOnInit: true,
+		// Cap stays 30s-family; old bug settled false as soon as healthState=done.
+		waitReadyMs: 5000,
+		setTimeout: clock.setTimeout,
+		clearTimeout: clock.clearTimeout,
+	})
+
+	manager.createNode(
+		clock.nodeOptions({
+			host: 'dead.example',
+			port: 38081,
+		})
+	)
+
+	manager.discoverPeers = function () {
+		return discoveryGate.then(function () {
+			const late = manager.createNode(
+				clock.nodeOptions({
+					host: 'late.example',
+					port: 38081,
+				})
+			)
+			manager.applyHealthResult(
+				late,
+				nodeInfoResult({ lastblock: { height: 55, hash: 'late' } }),
+				null
+			)
+			return [late]
+		})
+	}
+
+	const initPromise = manager.init()
+	const proxy = new LocalNodeProxy(null, { manager: manager })
+	const pingPromise = proxy.ping()
+
+	let pingSettled = false
+	pingPromise.then(
+		function () {
+			pingSettled = true
+		},
+		function () {
+			pingSettled = true
+		}
+	)
+
+	// Let seed health settle (empty); discovery still gated.
+	for (let i = 0; i < 30 && manager.healthState() === 'probing'; i++) {
+		clock.advance(20)
+		await Promise.resolve()
+	}
+
+	assert.equal(manager.isReady(), false)
+	assert.equal(pingSettled, false)
+
+	releaseDiscovery()
+	await initPromise
+
+	const result = await pingPromise
+	assert.equal(result.height, 55)
+	assert.ok(result.canuse >= 1)
+	assert.equal(pingSettled, true)
+})
+
 // --- T5 / ROADMAP 3.5: rating rises, penalty cuts weight, selectProbability picks seed ---
 
 test('T5: repeated mock 200 health raises rating and selectProbability returns seed key', async () => {

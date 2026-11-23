@@ -191,6 +191,119 @@ test('best probe picks reachable candidate', async () => {
 	assert.ok(calls.indexOf('good.example') !== -1)
 })
 
+test('archived video prefers online archive hosts over offline originals', async () => {
+	const calls = []
+	const pt = new LocalNodePeertube({
+		listFetch: function () {
+			return Promise.resolve({
+				archive: {
+					ar01: { host: 'archive.example', upload: false },
+					ar02: { host: 'archive2.example', upload: false },
+				},
+				swarms: {
+					s: {
+						archived: ['ar01'],
+						list: [
+							{
+								host: 'dead.example',
+								upload: false,
+								online: false,
+							},
+						],
+					},
+				},
+			})
+		},
+		httpGet: function (host, path) {
+			if (path.indexOf('/api/v1/videos/') === 0) {
+				calls.push(host)
+				if (host === 'archive.example') {
+					return Promise.resolve({
+						uuid: 'vid-arch',
+						previewPath: '/p.jpg',
+						thumbnailPath: '/t.jpg',
+						views: 1,
+						duration: 5,
+						aspectRatio: 1.77,
+					})
+				}
+				return Promise.reject({ status: 500 })
+			}
+			return Promise.resolve({})
+		},
+	})
+
+	const body = await pt.video({
+		url: 'peertube://dead.example/vid-arch',
+	})
+	assert.equal(body.from, 'archive.example')
+	assert.ok(calls.indexOf('archive.example') !== -1)
+	// Offline original must not be tried before online archive mirrors.
+	assert.ok(calls.indexOf('dead.example') === -1 || calls.indexOf('dead.example') > calls.indexOf('archive.example'))
+	assert.ok(calls.indexOf('archive2.example') === -1 || calls.indexOf('archive.example') < calls.indexOf('archive2.example') || body.from === 'archive.example')
+})
+
+test('archived video prefers archiveDouble and sets from on working mirror', async () => {
+	const calls = []
+	const pt = new LocalNodePeertube({
+		listFetch: function () {
+			return Promise.resolve({
+				archive: {
+					ar01: { host: 'archive.example', upload: false },
+					ar02: {
+						host: 'double.example',
+						upload: false,
+						archiveDouble: true,
+					},
+				},
+				swarms: {
+					s: {
+						archived: ['ar01'],
+						list: [
+							{
+								host: 'dead.example',
+								upload: false,
+								online: false,
+							},
+						],
+					},
+				},
+			})
+		},
+		httpGet: function (host, path) {
+			if (path.indexOf('/api/v1/videos/') === 0) {
+				calls.push(host)
+				if (host === 'archive.example') {
+					return Promise.reject({ status: 504 })
+				}
+				if (host === 'double.example') {
+					return Promise.resolve({
+						data: {
+							uuid: 'vid-double',
+							previewPath: '/p.jpg',
+							thumbnailPath: '/t.jpg',
+							views: 2,
+							duration: 8,
+							aspectRatio: '1.77',
+						},
+					})
+				}
+				return Promise.reject({ status: 500 })
+			}
+			return Promise.resolve({})
+		},
+	})
+
+	const body = await pt.video({
+		url: 'peertube://dead.example/vid-double',
+	})
+	assert.equal(body.from, 'double.example')
+	assert.equal(body.uuid, 'vid-double')
+	assert.equal(body.aspectRatio, 1.77)
+	assert.equal(calls[0], 'double.example')
+	assert.ok(calls.indexOf('dead.example') === -1 || calls.indexOf('dead.example') > calls.indexOf('double.example'))
+})
+
 test('videos failover sets from on second host', async () => {
 	const pt = new LocalNodePeertube({
 		listFetch: function () {
@@ -328,6 +441,71 @@ test('LocalNodeProxy.fetch routes peertube/*', async () => {
 	assert.equal(ip, '1.2.3.4')
 })
 
+test('peertube355-shaped swarm: extract + video from archive host', async () => {
+	// Mirrors live list.json s61 (peertube355 → archive.ar01).
+	const list355 = {
+		archive: {
+			ar01: {
+				host: 'peertube.archive.pocketnet.app',
+				upload: false,
+			},
+		},
+		swarms: {
+			s61: {
+				archived: ['ar01'],
+				list: [
+					{
+						host: 'peertube355.pocketnet.app',
+						ip: '185.148.146.11',
+						upload: false,
+						special: true,
+						online: false,
+					},
+				],
+			},
+		},
+	}
+
+	const hosts = LocalNodePeertube.extractArchivedHosts(list355)
+	assert.ok(hosts.indexOf('peertube355.pocketnet.app') !== -1)
+	assert.ok(hosts.indexOf('peertube.archive.pocketnet.app') === -1)
+
+	const calls = []
+	const pt = new LocalNodePeertube({
+		listFetch: function () {
+			return Promise.resolve(list355)
+		},
+		httpGet: function (host, path) {
+			if (path.indexOf('/api/v1/videos/') === 0) {
+				calls.push(host)
+				if (host === 'peertube.archive.pocketnet.app') {
+					return Promise.resolve({
+						uuid: 'vid-355',
+						previewPath: '/lazy-static/previews/x.jpg',
+						thumbnailPath: '/lazy-static/thumbnails/x.jpg',
+						views: 1,
+						duration: 10,
+						aspectRatio: 1.77,
+					})
+				}
+				return Promise.reject({ status: 500 })
+			}
+			return Promise.resolve({})
+		},
+	})
+
+	const body = await pt.video({
+		url: 'peertube://peertube355.pocketnet.app/vid-355',
+	})
+	assert.equal(body.from, 'peertube.archive.pocketnet.app')
+	assert.ok(calls.indexOf('peertube.archive.pocketnet.app') !== -1)
+	assert.ok(
+		calls.indexOf('peertube355.pocketnet.app') === -1 ||
+			calls.indexOf('peertube355.pocketnet.app') >
+				calls.indexOf('peertube.archive.pocketnet.app')
+	)
+})
+
 test('_map.js registers peertube.js before index.js', () => {
 	const mapSrc = fs.readFileSync(path.join(root, 'js/_map.js'), 'utf8')
 	const peertubeAt = mapSrc.indexOf('localnode/peertube.js')
@@ -343,4 +521,6 @@ test('api.js mentions peertube/* in localnodes fetch comment', () => {
 		'utf8'
 	)
 	assert.match(apiSrc, /peertubeserversList\s*\/\s*peertube\/\*/)
+	// Empty [] must not stick forever in peertubeserversListRecieved.
+	assert.match(apiSrc, /Array\.isArray\(s\)\s*&&\s*s\.length/)
 })

@@ -79,6 +79,20 @@ var LocalNodeUtil = (function () {
 	}
 
 	/**
+	 * Mirror proxy16/node/node.js rpcs(): node JSON-RPC expects an array.
+	 * Plain objects (e.g. getapps filters with orderBy/id) must be wrapped as
+	 * `[obj]`; sending the object as `params` makes the node treat keys as
+	 * named parameters → "Unknown named parameter orderBy".
+	 * @param {*} parameters
+	 * @returns {Array}
+	 */
+	api.normalizeRpcParams = function (parameters) {
+		if (!parameters) return []
+		if (!Array.isArray(parameters)) return [parameters]
+		return parameters
+	}
+
+	/**
 	 * Poll until checkFn() is true or totalMs elapses (proxy16 f.pretry).
 	 * Resolves true when check passes, false on timeout.
 	 * @param {function():boolean} checkFn

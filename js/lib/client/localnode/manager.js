@@ -798,8 +798,14 @@ var LocalNodeManager = function (options) {
 	}
 
 	/**
-	 * Wait until a usable/rated node appears, or init/health finishes empty,
-	 * or waitReadyMs elapses (proxy16 nodeManager.waitreadywithrating).
+	 * Wait until a usable/rated node appears, or init finishes empty,
+	 * or waitReadyMs elapses (default 30s). Lives entirely in LocalNodeManager —
+	 * Api must not special-case localnodes around this.
+	 *
+	 * Do not treat healthState==='done' as final while cold-start init is still
+	 * running (discoverPeers after seed health): that aborted wait early and
+	 * made ping reject before the 30s window / before peers appeared.
+	 *
 	 * @param {number} [totalMs]
 	 * @returns {Promise<boolean>} true when a rated/canuse node is available
 	 */
@@ -833,7 +839,13 @@ var LocalNodeManager = function (options) {
 					settle(true)
 					return true
 				}
-				if (ready || healthState === 'done') {
+				// Full cold-start finished (seeds + health + discovery).
+				if (ready) {
+					settle(self.hasRatedNode())
+					return true
+				}
+				// Standalone health probe finished with nothing usable (no init).
+				if (healthState === 'done' && !initPromise) {
 					settle(self.hasRatedNode())
 					return true
 				}
@@ -845,6 +857,7 @@ var LocalNodeManager = function (options) {
 					if (finished) return
 					elapsed += intervalMs
 					if (check()) return
+					// Hard cap: success or waitReadyMs (30s) — including during init.
 					if (elapsed >= waitMs) {
 						settle(self.hasRatedNode())
 						return
@@ -855,7 +868,7 @@ var LocalNodeManager = function (options) {
 
 			if (check()) return
 
-			// Wake when cold-start init settles (IDB + seeds + health), even under a fake clock.
+			// Wake when cold-start init settles (IDB + seeds + health + discovery).
 			if (initPromise && typeof initPromise.then === 'function') {
 				initPromise.then(
 					function () {
@@ -975,13 +988,23 @@ var LocalNodeManager = function (options) {
 		timeoutMs =
 			typeof opts.timeout === 'number' ? opts.timeout : defaultRpcTimeoutMs
 		id = opts.id != null ? opts.id : rpcIdCounter++
+		// Same as proxy16 node.rpcs: wrap non-array params so filter objects
+		// (getapps orderBy/id, etc.) are positional, not named RPC keys.
+		parameters =
+			util && typeof util.normalizeRpcParams === 'function'
+				? util.normalizeRpcParams(parameters)
+				: parameters
+					? Array.isArray(parameters)
+						? parameters
+						: [parameters]
+					: []
 		body =
 			typeof t.buildJsonRpcBody === 'function'
-				? t.buildJsonRpcBody(method, parameters || [], id)
+				? t.buildJsonRpcBody(method, parameters, id)
 				: {
 						jsonrpc: '2.0',
 						method: method,
-						params: parameters || [],
+						params: parameters,
 						id: id,
 				  }
 

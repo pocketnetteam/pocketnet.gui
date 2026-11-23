@@ -245,6 +245,27 @@ test('default RPC timeout is in 30–55s family; health stays shorter', () => {
 	assert.equal(LocalNodeTransport.DEFAULT_TIMEOUT_MS, 30000)
 })
 
+test('normalizeRpcParams wraps object filters like proxy16 node.rpcs', () => {
+	const filter = {
+		tags: [],
+		search: '',
+		topHeight: 100,
+		pageStart: 0,
+		pageSize: 20,
+		orderBy: 'height',
+		orderDesc: true,
+	}
+
+	assert.deepEqual(LocalNodeUtil.normalizeRpcParams(null), [])
+	assert.deepEqual(LocalNodeUtil.normalizeRpcParams(undefined), [])
+	assert.deepEqual(LocalNodeUtil.normalizeRpcParams([]), [])
+	assert.deepEqual(LocalNodeUtil.normalizeRpcParams(['a']), ['a'])
+	assert.deepEqual(LocalNodeUtil.normalizeRpcParams(filter), [filter])
+	assert.deepEqual(LocalNodeUtil.normalizeRpcParams({ id: 'app1' }), [
+		{ id: 'app1' },
+	])
+})
+
 test('requestRpc omits timeout → transport gets DEFAULT_RPC_TIMEOUT_MS (not health)', async () => {
 	const clock = createFakeClock()
 	const transport = createMockTransport(function () {
@@ -285,6 +306,67 @@ test('requestRpc omits timeout → transport gets DEFAULT_RPC_TIMEOUT_MS (not he
 		transport.calls[0].timeout,
 		LocalNodeConstants.DEFAULT_RPC_TIMEOUT_MS
 	)
+})
+
+test('requestRpc wraps getapps object params so orderBy is not a named RPC key', async () => {
+	const clock = createFakeClock()
+	const transport = createMockTransport(function () {
+		return {
+			jsonrpc: '2.0',
+			id: 1,
+			result: [],
+		}
+	})
+	const filter = {
+		tags: [],
+		search: '',
+		topHeight: 100,
+		pageStart: 0,
+		pageSize: 20,
+		orderBy: 'height',
+		orderDesc: true,
+	}
+
+	const manager = new LocalNodeManager({
+		Node: LocalNode,
+		util: LocalNodeUtil,
+		transport: transport,
+		bestapplyInterval: 0,
+		now: clock.now,
+		loadSeeds: false,
+		probeHealth: false,
+		setTimeout: clock.setTimeout,
+		clearTimeout: clock.clearTimeout,
+	})
+
+	const node = manager.createNode(
+		clock.nodeOptions({
+			host: 'rpc.example',
+			port: 38081,
+			inited: true,
+			canuse: true,
+			allowRpc: true,
+			height: 1,
+		})
+	)
+
+	await manager.requestRpc(node, 'getapps', filter, { path: '/public/' })
+
+	assert.equal(transport.calls.length, 1)
+	assert.deepEqual(transport.calls[0].body.params, [filter])
+	assert.equal(Array.isArray(transport.calls[0].body.params), true)
+	assert.equal(
+		Object.prototype.hasOwnProperty.call(transport.calls[0].body.params, 'orderBy'),
+		false,
+		'params must be an array, not a named-parameter object'
+	)
+
+	await manager.requestRpc(node, 'getapps', { id: 'miniapp1', pageStart: 0, pageSize: 1 }, {
+		path: '/public/',
+	})
+	assert.deepEqual(transport.calls[1].body.params, [
+		{ id: 'miniapp1', pageStart: 0, pageSize: 1 },
+	])
 })
 
 test('browser relay rewrite skipped when production host / disabled', async () => {

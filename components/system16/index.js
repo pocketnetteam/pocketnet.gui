@@ -286,6 +286,8 @@ var system16 = (function(){
 				// Local Node Proxy is direct+localnodes, but has no proxy-admin surface.
 				if (proxy && proxy.localnodes) return false
 
+				console.log('info.admins', info.admins, address , _.indexOf(info.admins, address))
+
 				if (proxy && info){
 					return proxy.direct || _.indexOf(info.admins, address) > -1
 				}

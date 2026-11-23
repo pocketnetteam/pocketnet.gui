@@ -201,7 +201,16 @@ function onFetch(event) {
           return;
         }
       } catch(err) {
-        reject(err);
+        // Tor path failed (plugin/proxy down). Fall through to direct
+        // fetch — rejecting here breaks Cordova images/avatars/peertube.
+        networkTotalStats.torFailCount++;
+        swBroadcaster.send('network-stats', {
+          status: 'failed',
+          reason: err,
+          url: request.url,
+          torUsed: true,
+          totalStats: networkTotalStats,
+        });
       }
     }
 
