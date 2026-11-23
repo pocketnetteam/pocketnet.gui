@@ -8,6 +8,7 @@ error_reporting(E_ALL);*/
 class OG {
 
     private $rpc = NULL;
+    private $lapi = NULL;
     private $author = NULL;
     private $application = NULL;
     private $connect = FALSE;
@@ -17,6 +18,7 @@ class OG {
     private $imageNum = 0;
     private $ext = NULL;
     private $stx = NULL;
+    private $upath = '';
 
     private $domain = NULL;
     private $project = NULL;
