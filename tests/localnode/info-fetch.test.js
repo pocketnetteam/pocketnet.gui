@@ -244,6 +244,47 @@ test('peertubeserversList: fetch ok writes storage; fail reads cache; empty → 
 	assert.deepEqual(empty.archivedPeertubeServers, [])
 })
 
+test('peertubeserversList: peertube355-shaped swarm is SoT rewrite host', async () => {
+	const list355 = {
+		swarms: {
+			s61: {
+				archived: ['ar01'],
+				list: [
+					{
+						host: 'peertube355.pocketnet.app',
+						upload: false,
+						special: true,
+						online: false,
+					},
+				],
+			},
+		},
+		archive: {
+			ar01: {
+				host: 'peertube.archive.pocketnet.app',
+				upload: false,
+			},
+		},
+	}
+
+	const proxy = new LocalNodeProxy(null, {
+		createStore: false,
+		peertubeFetch: function () {
+			return Promise.resolve(list355)
+		},
+	})
+
+	const list = await proxy.fetch('peertubeserversList')
+	assert.ok(
+		list.archivedPeertubeServers.indexOf('peertube355.pocketnet.app') !== -1
+	)
+	assert.ok(
+		list.archivedPeertubeServers.indexOf(
+			'peertube.archive.pocketnet.app'
+		) === -1
+	)
+})
+
 test('stub fetch: exchanges/history, urlPreview*, stats resolve without error', async () => {
 	const clock = createFakeClock()
 	const { manager } = makeManagerWithCanuse(clock)

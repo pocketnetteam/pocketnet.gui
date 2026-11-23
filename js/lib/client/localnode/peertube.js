@@ -635,18 +635,62 @@ var LocalNodePeertube = (function () {
 			return first ? first.host : null
 		}
 
-		var failoverHosts = function (swarmHosts, preferredHost) {
+		/**
+		 * Order hosts for video lookup. Prefer online / archive mirrors first;
+		 * offline (dead) hosts last — otherwise archived videos burn the
+		 * timeout budget on nohost.me before reaching peertube.archive / 601.
+		 *
+		 * archivedLookup: skip dead originals; try archiveDouble (601/701)
+		 * before primary archive — some networks time out on archive:443 while
+		 * doubles still answer (then `from` points at the working mirror).
+		 */
+		var failoverHosts = function (swarmHosts, preferredHost, opts) {
 			var ordered = []
 			var seen = {}
 			var i
 			var s
-			var h
+			var archive
+			var archKey
+			var entry
+			var archivedLookup = !!(opts && opts.archivedLookup)
+
+			var pushHost = function (host) {
+				if (!host || typeof host !== 'string' || seen[host]) return
+				seen[host] = true
+				ordered.push(host)
+			}
 
 			var push = function (server) {
-				h = hostOf(server)
-				if (!h || seen[h] || (server && server.old)) return
-				seen[h] = true
-				ordered.push(h)
+				if (server && server.old) return
+				pushHost(hostOf(server))
+			}
+
+			archive = (rawList && rawList.archive) || {}
+
+			if (archivedLookup) {
+				// archiveDouble mirrors first (peertube601 / 701).
+				for (archKey in archive) {
+					if (!Object.prototype.hasOwnProperty.call(archive, archKey)) continue
+					entry = archive[archKey]
+					if (entry && entry.host && entry.archiveDouble) {
+						pushHost(entry.host)
+					}
+				}
+				// Remaining archive{} hosts (peertube.archive.pocketnet.app).
+				for (archKey in archive) {
+					if (!Object.prototype.hasOwnProperty.call(archive, archKey)) continue
+					entry = archive[archKey]
+					if (entry && entry.host) pushHost(entry.host)
+				}
+				// Online swarm members (archive mirrors already appended above).
+				for (i = 0; i < swarmHosts.length; i++) {
+					s = swarmHosts[i]
+					if (s && !s.offline) push(s)
+				}
+				for (i = 0; i < swarmHosts.length; i++) {
+					push(swarmHosts[i])
+				}
+				return ordered
 			}
 
 			if (preferredHost) {
@@ -656,21 +700,63 @@ var LocalNodePeertube = (function () {
 						break
 					}
 				}
-				if (!seen[preferredHost]) {
-					ordered.push(preferredHost)
-					seen[preferredHost] = true
-				}
+				pushHost(preferredHost)
 			}
 
+			// Online swarm members (includes archive mirrors with offline:false).
 			for (i = 0; i < swarmHosts.length; i++) {
 				s = swarmHosts[i]
 				if (s && !s.offline) push(s)
 			}
+
+			// All archive{} bucket hosts as extra fallbacks (601/701 etc.).
+			for (archKey in archive) {
+				if (!Object.prototype.hasOwnProperty.call(archive, archKey)) continue
+				if (archive[archKey] && archive[archKey].host) {
+					pushHost(archive[archKey].host)
+				}
+			}
+
+			// Dead/offline hosts last (still tried once).
 			for (i = 0; i < swarmHosts.length; i++) {
 				push(swarmHosts[i])
 			}
 
 			return ordered
+		}
+
+		/**
+		 * Simplified proxy16/peertube/roy.js: r.data.from = instance.host.
+		 * Client catchPeertubeLinks builds https://{from}{previewPath|thumbnailPath}.
+		 */
+		var normalizeVideoInfo = function (body, host) {
+			var video
+
+			if (!body || typeof body !== 'object') return null
+
+			// Tolerate accidental { data: video } wrappers.
+			if (
+				body.data &&
+				typeof body.data === 'object' &&
+				!Array.isArray(body.data) &&
+				(body.data.uuid || body.data.previewPath || body.data.thumbnailPath)
+			) {
+				video = body.data
+			} else {
+				video = body
+			}
+
+			if (!host) return null
+			video.from = host
+
+			if (video.isLive && (!video.aspectRatio || video.aspectRatio == '0')) {
+				video.aspectRatio = 1.78
+			}
+			if (video.aspectRatio != null) {
+				video.aspectRatio = Number(video.aspectRatio)
+			}
+
+			return video
 		}
 
 		self.roys = function (data) {
@@ -885,6 +971,7 @@ var LocalNodePeertube = (function () {
 
 			var next = function () {
 				var host
+				var video
 				if (index >= hosts.length) {
 					return Promise.reject({ error: true })
 				}
@@ -897,17 +984,11 @@ var LocalNodePeertube = (function () {
 					options.fetch
 				)
 					.then(function (body) {
-						if (!body || typeof body !== 'object') {
+						video = normalizeVideoInfo(body, host)
+						if (!video || (!video.uuid && !video.previewPath && !video.thumbnailPath)) {
 							return Promise.reject({ error: true })
 						}
-						body.from = host
-						if (body.isLive && (!body.aspectRatio || body.aspectRatio == '0')) {
-							body.aspectRatio = 1.78
-						}
-						if (body.aspectRatio != null) {
-							body.aspectRatio = Number(body.aspectRatio)
-						}
-						return body
+						return video
 					})
 					.catch(function () {
 						return next()
@@ -931,7 +1012,7 @@ var LocalNodePeertube = (function () {
 
 			if (fast && !update) {
 				cached = videoCacheGet(parsed.id)
-				if (cached && !cached.error && cached.data) {
+				if (cached && !cached.error && cached.data && cached.data.from) {
 					return Promise.resolve(cached.data)
 				}
 				return Promise.resolve({})
@@ -943,15 +1024,41 @@ var LocalNodePeertube = (function () {
 					if (cached.error) {
 						return Promise.reject({ error: true, cached: true })
 					}
-					if (cached.data) return Promise.resolve(cached.data)
+					if (cached.data && cached.data.from) {
+						return Promise.resolve(cached.data)
+					}
 				}
 			}
 
 			return self.ensureList().then(function () {
 				var swarmInfo = getSwarm(parsed.host)
-				var hosts = failoverHosts(
-					(swarmInfo && swarmInfo.hosts) || [{ host: parsed.host }],
-					parsed.host
+				var swarmHosts =
+					(swarmInfo && swarmInfo.hosts) || [{ host: parsed.host }]
+				var preferredServer
+				var archivedLookup = false
+				var i
+				var s
+				var hosts
+
+				if (swarmInfo && swarmInfo.hosts) {
+					for (i = 0; i < swarmInfo.hosts.length; i++) {
+						s = swarmInfo.hosts[i]
+						if (s && s.archived) archivedLookup = true
+						if (hostOf(s) === parsed.host) preferredServer = s
+					}
+				}
+
+				if (
+					preferredServer &&
+					(preferredServer.archived || preferredServer.offline)
+				) {
+					archivedLookup = true
+				}
+
+				hosts = failoverHosts(
+					swarmHosts,
+					archivedLookup ? null : parsed.host,
+					{ archivedLookup: archivedLookup }
 				)
 
 				return fetchVideoOnHosts(parsed.id, hosts).then(
@@ -988,8 +1095,11 @@ var LocalNodePeertube = (function () {
 					return self
 						.video({ url: url, fast: fast, update: update })
 						.then(function (r) {
-							if (r && r.uuid) result[url] = r
-							else if (r && Object.keys(r).length) result[url] = r
+							// Mirror proxy16 videos(): only keep payloads with from
+							// (catchPeertubeLinks builds https://{from}{path}).
+							if (r && r.from && (r.uuid || r.previewPath || r.thumbnailPath)) {
+								result[url] = r
+							}
 							return null
 						})
 						.catch(function () {

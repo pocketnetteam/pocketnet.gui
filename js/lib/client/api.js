@@ -560,10 +560,11 @@ var Proxy16 = function(meta, app, api){
 
                 var s = (r || {}).archivedPeertubeServers
 
-                if (s){
+                // Only cache a non-empty SoT list. Empty [] is truthy and would
+                // stick forever, blocking retries after a transient empty/fail.
+                if (Array.isArray(s) && s.length){
                     peertubeserversListRecieved = s
                 }
-                
 
                 return Promise.resolve(peertubeserversListRecieved)
 
@@ -1784,7 +1785,10 @@ var Api = function(app){
     self.getPeertubeserversList = function(){
         return internal.proxy.api.peertubeserversList().then(result => {
 
-            if (result)
+            // peertubeserversList is the SoT for archived rewrite hosts.
+            // Empty/null = not ready or error — keep current list (boot stub
+            // from config/common.json or a previous successful SoT).
+            if (result && result.length)
                 window.project_config.archivedPeertubeServers = result 
 
             return Promise.resolve()

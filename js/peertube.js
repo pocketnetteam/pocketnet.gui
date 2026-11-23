@@ -603,42 +603,58 @@ PeerTubePocketnet = function (app) {
 
 				return this.roys({ type, special, })
 					.then((data = {}) => {
+						var royList = Object.values(data);
+						var roysAmount = royList.length;
+						var royId = 0;
+						var ordered = [];
+						var i;
 
-						const roysAmount = Object.keys(data).length;
-						var royId;
+						if (!roysAmount) {
+							return Promise.reject(error('host'));
+						}
 
 						if (app.user.address.value) {
-
 							var sq = Number(Math.pow(Number(
 								self.helpers.base58.decode(app.user.address.value) / Math.pow(10, 26)
 							), 1 / 3).toFixed(0)).toString().substr(9)
 
-							try{
+							try {
 								royId = sq % roysAmount;
 							}
-							catch(e){
+							catch (e) {
 								console.error(e)
+								royId = 0;
 							}
-							
 						}
 						else {
 							royId = rand(0, roysAmount - 1);
 						}
 
-						return Object.values(data)[royId];
+						for (i = 0; i < roysAmount; i++) {
+							ordered.push(royList[(royId + i) % roysAmount]);
+						}
+
+						var tryRoy = function (index, lastError) {
+							if (index >= ordered.length) {
+								return Promise.reject(lastError || error('host'));
+							}
+
+							return app.api.fetch('peertube/best', { roy: ordered[index], type })
+								.then((data) => {
+									if (!data || !data.host) {
+										return Promise.reject(error('host'));
+									}
+
+									setactive(data.host);
+									return data.host;
+								})
+								.catch((e) => tryRoy(index + 1, e));
+						};
+
+						return tryRoy(0);
 					})
-
-					.catch(() => 0)
-					.then((roy) => app.api.fetch('peertube/best', { roy, type }))
-					.then((data) => {
-						if (!data.host) return Promise.reject(error('host'));
-
-						setactive(data.host)
-						return Promise.resolve(data.host);
-					})
-
 					.catch((e) => {
-						if (e.data == 'best') {
+						if (e && e.data == 'best') {
 							e.text = 'Unable to connect to video server';
 						}
 
