@@ -1,0 +1,503 @@
+---
+description: Modern JavaScript (ES6+) patterns for new code
+globs: "{js/lib/**/*.js,js/utils/**/*.js,js/helpers/**/*.js,proxy16/**/*.js}"
+alwaysApply: false
+---
+
+# Modern JavaScript Guidelines
+
+## When This Rule Applies
+
+Use modern JavaScript syntax when:
+- Creating **new utility/helper files**
+- Working in **proxy16 backend** (Node.js supports modern features)
+- Building **new isolated modules**
+- The file already uses modern syntax
+
+## Modern Syntax Patterns
+
+### Variables
+
+```javascript
+// ✅ Use const by default
+const MAX_RETRIES = 3;
+const config = { timeout: 5000 };
+
+// ✅ Use let for reassignment
+let counter = 0;
+let currentUser = null;
+
+// ❌ Avoid var (except in legacy files)
+var oldStyle = "avoid";
+```
+
+### Arrow Functions
+
+```javascript
+// ✅ Arrow functions for callbacks
+const numbers = [1, 2, 3];
+const doubled = numbers.map(n => n * 2);
+
+// ✅ Arrow functions for simple operations
+const add = (a, b) => a + b;
+const square = x => x * x;
+
+// ✅ Arrow functions in promises
+fetchData()
+  .then(data => processData(data))
+  .catch(error => handleError(error));
+
+// ⚠️ Use regular functions when you need 'this' binding
+const obj = {
+  name: 'example',
+  // ❌ BAD - arrow doesn't bind 'this'
+  badMethod: () => {
+    console.log(this.name); // undefined
+  },
+  // ✅ GOOD - regular function binds 'this'
+  goodMethod() {
+    console.log(this.name); // 'example'
+  }
+};
+```
+
+### Classes
+
+```javascript
+// ✅ Use ES6 classes for new code
+class UserManager {
+  constructor(config) {
+    this.config = config;
+    this.users = new Map();
+  }
+
+  async addUser(userData) {
+    const user = await this.validateUser(userData);
+    this.users.set(user.id, user);
+    return user;
+  }
+
+  async validateUser(userData) {
+    // validation logic
+    return userData;
+  }
+
+  static create(config) {
+    return new UserManager(config);
+  }
+}
+
+// Usage
+const manager = new UserManager({ timeout: 5000 });
+await manager.addUser({ id: 1, name: 'John' });
+```
+
+### Async/Await
+
+```javascript
+// ✅ Use async/await for cleaner async code
+async function loadUserData(userId) {
+  try {
+    const user = await fetchUser(userId);
+    const posts = await fetchUserPosts(user.id);
+    const comments = await fetchUserComments(user.id);
+    
+    return {
+      user,
+      posts,
+      comments
+    };
+  } catch (error) {
+    console.error('Failed to load user data:', error);
+    throw error;
+  }
+}
+
+// ✅ Parallel async operations
+async function loadMultipleUsers(userIds) {
+  const promises = userIds.map(id => fetchUser(id));
+  const users = await Promise.all(promises);
+  return users;
+}
+
+// ✅ Error handling
+async function safeOperation() {
+  try {
+    const result = await riskyOperation();
+    return { success: true, data: result };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+}
+```
+
+### Destructuring
+
+```javascript
+// ✅ Object destructuring
+const { name, email, age } = user;
+const { data, error } = await fetchData();
+
+// ✅ Array destructuring
+const [first, second, ...rest] = items;
+const [error, result] = await promiseWrapper();
+
+// ✅ Function parameter destructuring
+function createUser({ name, email, role = 'user' }) {
+  return { name, email, role, createdAt: Date.now() };
+}
+
+// ✅ Nested destructuring
+const { 
+  user: { name, profile: { avatar } },
+  settings: { theme }
+} = data;
+```
+
+### Template Literals
+
+```javascript
+// ✅ String interpolation
+const greeting = `Hello, ${user.name}!`;
+const url = `${baseUrl}/api/users/${userId}`;
+
+// ✅ Multi-line strings
+const html = `
+  <div class="user-card">
+    <h3>${user.name}</h3>
+    <p>${user.email}</p>
+  </div>
+`;
+
+// ✅ Tagged templates (advanced)
+const query = sql`
+  SELECT * FROM users 
+  WHERE id = ${userId}
+  AND active = ${true}
+`;
+```
+
+### Spread/Rest Operators
+
+```javascript
+// ✅ Object spread
+const defaults = { timeout: 5000, retries: 3 };
+const config = { ...defaults, timeout: 10000 };
+
+// ✅ Array spread
+const allItems = [...items1, ...items2, ...items3];
+
+// ✅ Rest parameters
+function sum(...numbers) {
+  return numbers.reduce((total, n) => total + n, 0);
+}
+
+// ✅ Object rest
+const { id, ...userData } = user;
+const [first, ...remaining] = items;
+```
+
+### Object Shorthand
+
+```javascript
+// ✅ Property shorthand
+const name = 'John';
+const age = 30;
+const user = { name, age }; // Instead of { name: name, age: age }
+
+// ✅ Method shorthand
+const obj = {
+  // Instead of: method: function() { }
+  method() {
+    return 'result';
+  },
+  
+  async asyncMethod() {
+    return await fetchData();
+  }
+};
+
+// ✅ Computed property names
+const key = 'dynamicKey';
+const obj = {
+  [key]: 'value',
+  [`${prefix}_name`]: 'John'
+};
+```
+
+### Default Parameters
+
+```javascript
+// ✅ Function default parameters
+function createUser(name, role = 'user', active = true) {
+  return { name, role, active };
+}
+
+// ✅ Object defaults with destructuring
+function configure({ 
+  timeout = 5000, 
+  retries = 3, 
+  cache = true 
+} = {}) {
+  return { timeout, retries, cache };
+}
+```
+
+### Enhanced Object Literals
+
+```javascript
+// ✅ Computed properties
+const key = 'status';
+const user = {
+  name: 'John',
+  [key]: 'active',
+  [`is${key.charAt(0).toUpperCase() + key.slice(1)}`]: true
+};
+
+// ✅ Method properties
+const api = {
+  async fetchUser(id) {
+    return await fetch(`/users/${id}`);
+  },
+  
+  *generateIds() {
+    let id = 0;
+    while (true) {
+      yield id++;
+    }
+  }
+};
+```
+
+### Modules (When Bundled)
+
+```javascript
+// ✅ Named exports
+export const API_URL = 'https://api.example.com';
+export const MAX_RETRIES = 3;
+
+export function fetchData(url) {
+  return fetch(url);
+}
+
+export class ApiClient {
+  // class definition
+}
+
+// ✅ Default export
+export default class UserManager {
+  // class definition
+}
+
+// ✅ Import syntax
+import UserManager from './UserManager';
+import { fetchData, API_URL } from './api';
+import * as utils from './utils';
+```
+
+### Optional Chaining & Nullish Coalescing
+
+```javascript
+// ✅ Optional chaining
+const userName = user?.profile?.name;
+const firstItem = array?.[0];
+const result = obj?.method?.();
+
+// ✅ Nullish coalescing
+const timeout = config.timeout ?? 5000; // Only 0/null/undefined
+const name = user.name ?? 'Anonymous';
+
+// ⚠️ Different from || operator
+const port = config.port ?? 8080; // port = 0 is valid
+const port2 = config.port || 8080; // port = 0 becomes 8080
+```
+
+### Array Methods
+
+```javascript
+// ✅ Modern array methods
+const doubled = numbers.map(n => n * 2);
+const evens = numbers.filter(n => n % 2 === 0);
+const sum = numbers.reduce((acc, n) => acc + n, 0);
+
+// ✅ Array.from
+const array = Array.from({ length: 5 }, (_, i) => i);
+const unique = Array.from(new Set(duplicates));
+
+// ✅ Find methods
+const found = users.find(u => u.id === targetId);
+const index = users.findIndex(u => u.id === targetId);
+
+// ✅ Includes
+const hasItem = array.includes(value);
+const startsWith = array.some(item => item.startsWith('prefix'));
+```
+
+## Async Patterns
+
+### Promise Patterns
+
+```javascript
+// ✅ Promise.all for parallel
+const [users, posts, comments] = await Promise.all([
+  fetchUsers(),
+  fetchPosts(),
+  fetchComments()
+]);
+
+// ✅ Promise.allSettled for error tolerance
+const results = await Promise.allSettled([
+  fetchDataA(),
+  fetchDataB(),
+  fetchDataC()
+]);
+results.forEach(result => {
+  if (result.status === 'fulfilled') {
+    console.log(result.value);
+  } else {
+    console.error(result.reason);
+  }
+});
+
+// ✅ Promise.race for timeout
+const dataWithTimeout = await Promise.race([
+  fetchData(),
+  new Promise((_, reject) => 
+    setTimeout(() => reject(new Error('Timeout')), 5000)
+  )
+]);
+```
+
+### Error Handling
+
+```javascript
+// ✅ Try-catch with async/await
+async function safeOperation() {
+  try {
+    const result = await riskyOperation();
+    return result;
+  } catch (error) {
+    if (error instanceof NetworkError) {
+      return handleNetworkError(error);
+    }
+    if (error instanceof ValidationError) {
+      return handleValidationError(error);
+    }
+    throw error; // Re-throw unknown errors
+  } finally {
+    cleanup();
+  }
+}
+
+// ✅ Promise error handling
+fetchData()
+  .then(data => processData(data))
+  .catch(error => {
+    console.error('Operation failed:', error);
+    return fallbackData;
+  })
+  .finally(() => {
+    hideLoader();
+  });
+```
+
+## Best Practices
+
+### Immutability
+
+```javascript
+// ✅ Use const and avoid mutations
+const original = { name: 'John', age: 30 };
+const updated = { ...original, age: 31 }; // New object
+
+const originalArray = [1, 2, 3];
+const newArray = [...originalArray, 4]; // New array
+
+// ❌ Avoid direct mutations
+original.age = 31; // Mutates original
+originalArray.push(4); // Mutates original
+```
+
+### Pure Functions
+
+```javascript
+// ✅ Pure function (no side effects)
+const calculateTotal = (items) => {
+  return items.reduce((sum, item) => sum + item.price, 0);
+};
+
+// ❌ Impure function (side effects)
+let total = 0;
+const addToTotal = (price) => {
+  total += price; // Modifies external state
+};
+```
+
+### Function Composition
+
+```javascript
+// ✅ Compose small functions
+const double = x => x * 2;
+const increment = x => x + 1;
+const square = x => x * x;
+
+const compute = x => square(increment(double(x)));
+
+// ✅ Pipe pattern
+const pipe = (...fns) => x => fns.reduce((v, f) => f(v), x);
+const transform = pipe(double, increment, square);
+```
+
+## When NOT to Use Modern Syntax
+
+### ❌ Component Files (components/**)
+Component files use IIFE pattern and must remain compatible:
+```javascript
+// Continue using legacy pattern in components/
+var mycomponent = (function() {
+  var self = new nModule();
+  // ...
+  return self;
+})();
+```
+
+### ❌ Core Platform Files
+Files like `js/satolist.js` and `js/app.js` should maintain legacy syntax for consistency.
+
+### ❌ Files Without Transpilation
+If creating standalone scripts loaded via `<script>` tags without build process, ensure browser compatibility.
+
+## Browser Compatibility
+
+### Check Support
+- **Const/Let:** All modern browsers ✅
+- **Arrow functions:** All modern browsers ✅
+- **Classes:** All modern browsers ✅
+- **Async/await:** All modern browsers ✅
+- **Optional chaining:** Check browser support ⚠️
+- **Nullish coalescing:** Check browser support ⚠️
+
+### Transpilation
+If targeting older browsers, ensure build process includes Babel transpilation.
+
+## Migration Strategy
+
+### Gradual Adoption
+1. **New utility files:** Use modern syntax from start
+2. **Backend code:** Modernize as you edit
+3. **Frontend utilities:** Modern syntax OK
+4. **Components:** Keep legacy pattern (for now)
+5. **Core files:** Discuss major changes with team
+
+### Refactoring Guidelines
+When updating legacy code:
+- **Small functions:** OK to modernize
+- **Isolated utilities:** OK to modernize
+- **Core modules:** Get team approval first
+- **Components:** Maintain pattern consistency
+
+## References
+
+- MDN JavaScript Guide: https://developer.mozilla.org/en-US/docs/Web/JavaScript
+- Modern JavaScript Cheatsheet: https://github.com/mbeaudru/modern-js-cheatsheet
+- Node.js ES6 Support: https://node.green/

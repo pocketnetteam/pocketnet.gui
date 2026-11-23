@@ -1,0 +1,535 @@
+---
+description: Backend server development guidelines for proxy16
+globs: proxy16/**/*.js
+alwaysApply: false
+---
+
+# Proxy16 Backend Development
+
+## Overview
+
+`proxy16/` is the **Node.js backend server** that acts as an intermediary between the frontend and the blockchain node.
+
+## Architecture
+
+```
+Frontend (Browser/Electron/Mobile)
+         ↓
+   WebSocket/HTTP
+         ↓
+   Proxy16 Server
+         ↓
+   RPC (JSON-RPC)
+         ↓
+   Pocketcoin Core Node (Blockchain)
+```
+
+## Key Files
+
+```
+proxy16/
+├── proxy.js              # Main server orchestrator
+├── pocketnet.js          # Blockchain crypto/signatures
+├── cli.js                # CLI entry point
+├── functions.js          # Helper functions
+├── node/
+│   ├── control.js       # Node lifecycle management
+│   ├── manager.js       # Node manager (multiple nodes)
+│   ├── rpc.js           # RPC calls to blockchain
+│   ├── wss.js           # WebSocket server for node events
+│   └── notifications.js # Push notification system
+├── server/
+│   ├── https.js         # HTTPS/HTTP server
+│   ├── wss.js           # WebSocket server
+│   ├── firebase.js      # Firebase push notifications
+│   ├── miniapp.js       # Mini-app support
+│   └── translateapi.js  # Translation API
+├── wallet/
+│   └── wallet.js        # Wallet operations
+├── peertube/
+│   └── index.js         # PeerTube video server integration
+└── lib/
+    └── btc16.js         # Bitcoin library
+```
+
+## Main Server (proxy.js)
+
+### Initialization Pattern
+
+```javascript
+var Proxy = function (settings, manage, test, logger, reverseproxy) {
+  var self = this;
+  
+  // Initialize subsystems
+  var server = new Server(settings.server);
+  var wss = new WSS(settings.admins, manage);
+  var nodeControl = new NodeControl(settings.node, self);
+  var wallet = new Wallet(settings.wallet);
+  // ... etc
+  
+  // Mix all subsystems into self
+  f.mix({
+    server, wss, nodeControl, wallet,
+    proxy: self
+  });
+  
+  // Initialization
+  self.init = function(clbk) {
+    // Start services
+  };
+};
+```
+
+### Key Responsibilities
+
+1. **Request Routing**: HTTP endpoints for frontend
+2. **WebSocket Management**: Real-time updates
+3. **Node Communication**: RPC calls to blockchain
+4. **Caching**: Performance optimization
+5. **Rate Limiting**: Anti-spam protection
+6. **Authentication**: Signature verification
+7. **Error Handling**: Graceful degradation
+
+## RPC Communication (node/rpc.js)
+
+### Making RPC Calls
+
+```javascript
+// Example RPC call
+self.rpc('getblock', [blockHash])
+  .then(function(block) {
+    // Process block data
+  })
+  .catch(function(error) {
+    // Handle error
+  });
+
+// With callback
+self.rpc('getblockhash', [height], function(err, blockHash) {
+  if (err) {
+    // Handle error
+    return;
+  }
+  // Use blockHash
+});
+```
+
+### Common RPC Methods
+
+```javascript
+// Blockchain queries
+self.rpc('getblockcount')              // Latest block height
+self.rpc('getblock', [blockHash])      // Get block data
+self.rpc('getrawtransaction', [txid])  // Get transaction
+
+// Mempool
+self.rpc('getrawmempool')              // Pending transactions
+
+// Wallet (if node has wallet)
+self.rpc('sendrawtransaction', [hex])  // Broadcast transaction
+self.rpc('getaddressbalance', [addr])  // Get balance
+
+// Content (Pocketnet-specific)
+self.rpc('getaddressregistration', [addr])
+self.rpc('getpostscores', [postid])
+self.rpc('getcomments', [postid])
+```
+
+## WebSocket Server (server/wss.js)
+
+### WebSocket Events
+
+```javascript
+// Client subscribes to updates
+wss.on('subscribe', function(ws, data) {
+  var address = data.address;
+  
+  // Add to subscription list
+  self.subscriptions[address] = self.subscriptions[address] || [];
+  self.subscriptions[address].push(ws);
+});
+
+// Broadcast update to subscribers
+wss.broadcast = function(event, data) {
+  _.each(self.clients, function(ws) {
+    if (ws.readyState === WebSocket.OPEN) {
+      ws.send(JSON.stringify({ event, data }));
+    }
+  });
+};
+```
+
+### Real-time Updates
+
+```javascript
+// When new block arrives
+nodeControl.on('newblock', function(block) {
+  // Notify all connected clients
+  wss.broadcast('newblock', {
+    height: block.height,
+    hash: block.hash,
+    time: block.time
+  });
+});
+
+// When new transaction in mempool
+nodeControl.on('newtransaction', function(tx) {
+  // Notify relevant subscribers
+  _.each(tx.addresses, function(address) {
+    if (self.subscriptions[address]) {
+      _.each(self.subscriptions[address], function(ws) {
+        ws.send(JSON.stringify({
+          event: 'transaction',
+          data: tx
+        }));
+      });
+    }
+  });
+});
+```
+
+## Node Control (node/control.js)
+
+### Node Lifecycle
+
+```javascript
+// Start node
+self.start = function(clbk) {
+  if (self.process) {
+    return clbk(null, "already running");
+  }
+  
+  // Spawn pocketcoind process
+  self.process = child_process.spawn(
+    self.nodePath,
+    self.nodeArgs,
+    { cwd: self.nodeDir }
+  );
+  
+  // Monitor process
+  self.process.on('close', function(code) {
+    // Handle node exit
+  });
+  
+  clbk(null);
+};
+
+// Stop node
+self.stop = function(clbk) {
+  if (!self.process) {
+    return clbk(null);
+  }
+  
+  // Graceful shutdown
+  self.rpc('stop').then(function() {
+    setTimeout(clbk, 2000);
+  });
+};
+```
+
+### Health Monitoring
+
+```javascript
+// Check node health
+self.health = function(clbk) {
+  self.rpc('getblockcount')
+    .then(function(height) {
+      clbk(null, {
+        running: true,
+        height: height,
+        synced: height > 0
+      });
+    })
+    .catch(function(error) {
+      clbk(error);
+    });
+};
+```
+
+## Wallet Operations (wallet/wallet.js)
+
+### Key Management
+
+```javascript
+// Import private key
+self.import = function(privateKey, clbk) {
+  try {
+    var keyPair = bitcoin.ECPair.fromWIF(privateKey);
+    var address = self.getAddress(keyPair);
+    
+    // Store encrypted key
+    self.keys[address] = {
+      key: encrypt(privateKey),
+      address: address
+    };
+    
+    clbk(null, address);
+  } catch (e) {
+    clbk(e);
+  }
+};
+
+// Sign transaction
+self.sign = function(address, tx, clbk) {
+  var keyPair = self.getKeyPair(address);
+  
+  if (!keyPair) {
+    return clbk(new Error("Key not found"));
+  }
+  
+  // Sign transaction
+  var signed = tx.sign(keyPair);
+  clbk(null, signed);
+};
+```
+
+## Blockchain Integration (pocketnet.js)
+
+### Signature Verification
+
+```javascript
+self.kit.authorization.signature = function(signature, addresses) {
+  if (!signature.pubkey) return false;
+  if (!signature.nonce) return false;
+  if (!signature.address) return false;
+  
+  try {
+    var pkbuffer = Buffer.from(signature.pubkey, 'hex');
+    var keyPair = bitcoin.ECPair.fromPublicKey(pkbuffer);
+    var hash = Buffer.from(signature.nonce, 'utf8');
+    
+    var verify = self.kit.authorization.verifyhash(
+      keyPair,
+      signature.signature,
+      hash
+    ) && signature.address === self.kit.addressByPublicKey(pkbuffer);
+    
+    return verify;
+  } catch (e) {
+    return false;
+  }
+};
+```
+
+### Address Validation
+
+```javascript
+self.kit.address.validation = function(address) {
+  try {
+    bitcoin.address.toOutputScript(address);
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+```
+
+## HTTP API (server/https.js)
+
+### Route Registration
+
+```javascript
+// GET endpoint
+app.get('/api/user/:address', function(req, res) {
+  var address = req.params.address;
+  
+  // Validate address
+  if (!pocketnet.kit.address.validation(address)) {
+    return res.status(400).json({
+      error: "Invalid address"
+    });
+  }
+  
+  // Get user data from blockchain
+  nodeControl.rpc('getaddressinfo', [address])
+    .then(function(data) {
+      res.json(data);
+    })
+    .catch(function(error) {
+      res.status(500).json({ error: error.message });
+    });
+});
+
+// POST endpoint with signature verification
+app.post('/api/post', function(req, res) {
+  var signature = req.body.signature;
+  
+  // Verify signature
+  if (!pocketnet.kit.authorization.signature(signature)) {
+    return res.status(401).json({
+      error: "Invalid signature"
+    });
+  }
+  
+  // Process request
+  // ...
+});
+```
+
+### Rate Limiting
+
+```javascript
+var RateLimiter = require('lambda-rate-limiter');
+
+var limiter = RateLimiter({
+  interval: 60 * 1000,  // 1 minute
+  uniqueTokenPerInterval: 500
+});
+
+app.use(function(req, res, next) {
+  try {
+    limiter.check(10, req.ip); // 10 requests per minute
+    next();
+  } catch (e) {
+    res.status(429).json({
+      error: "Rate limit exceeded"
+    });
+  }
+});
+```
+
+## Error Handling
+
+### Standard Error Pattern
+
+```javascript
+// In RPC calls
+self.rpc('someMethod', [params])
+  .then(function(result) {
+    // Success
+  })
+  .catch(function(error) {
+    logger.error('RPC error:', error);
+    
+    // Don't expose internal errors
+    if (error.message.includes('connection refused')) {
+      return callback(new Error("Node unavailable"));
+    }
+    
+    callback(error);
+  });
+
+// In HTTP endpoints
+app.get('/api/endpoint', function(req, res) {
+  try {
+    // Process request
+  } catch (error) {
+    logger.error('API error:', error);
+    res.status(500).json({
+      error: "Internal server error"
+    });
+  }
+});
+```
+
+## Configuration
+
+### config.json Structure
+
+```json
+{
+  "server": {
+    "port": 8899,
+    "host": "0.0.0.0",
+    "https": true,
+    "cert": "./cert/cert.pem",
+    "key": "./cert/key.pem"
+  },
+  "node": {
+    "path": "./pocketcoind",
+    "datadir": "./data",
+    "rpcport": 38081,
+    "rpcuser": "rpcuser",
+    "rpcpassword": "rpcpassword"
+  },
+  "firebase": {
+    "serviceAccount": "./firebase-key.json"
+  }
+}
+```
+
+## Best Practices
+
+### ✅ DO:
+- Use Winston logger for all logging
+- Validate all inputs
+- Verify signatures for authenticated endpoints
+- Handle node failures gracefully
+- Implement rate limiting
+- Cache frequently accessed data
+- Use async/await for modern code
+- Test RPC calls with node running
+
+### ❌ DON'T:
+- Don't expose internal errors to clients
+- Don't store private keys unencrypted
+- Don't trust client data without verification
+- Don't block the event loop
+- Don't make synchronous RPC calls
+- Don't ignore error handling
+- Don't expose RPC directly to frontend
+
+## Common Issues
+
+### 1. **Node Not Responding**
+```javascript
+// Implement retry logic
+function rpcWithRetry(method, params, attempts = 3) {
+  return self.rpc(method, params)
+    .catch(function(error) {
+      if (attempts > 0) {
+        return new Promise(function(resolve) {
+          setTimeout(function() {
+            resolve(rpcWithRetry(method, params, attempts - 1));
+          }, 1000);
+        });
+      }
+      throw error;
+    });
+}
+```
+
+### 2. **WebSocket Disconnects**
+```javascript
+// Implement reconnection
+ws.on('close', function() {
+  setTimeout(function() {
+    reconnect();
+  }, 5000);
+});
+```
+
+### 3. **Memory Leaks**
+```javascript
+// Clean up subscriptions
+self.cleanup = function() {
+  // Remove closed connections
+  self.subscriptions = _.mapObject(self.subscriptions, function(subs) {
+    return _.filter(subs, function(ws) {
+      return ws.readyState === WebSocket.OPEN;
+    });
+  });
+};
+
+setInterval(self.cleanup, 60000); // Every minute
+```
+
+## Testing
+
+```bash
+# Run in test mode
+npm run serve:test
+
+# Run with inspector
+npm run serveinspect
+
+# View logs
+tail -f logs/proxy.log
+```
+
+## References
+
+- `proxy16/proxy.js` - Main server structure
+- `proxy16/node/rpc.js` - RPC examples
+- `proxy16/pocketnet.js` - Blockchain utilities
+- `ARCHITECTURE.md` - Overall architecture
