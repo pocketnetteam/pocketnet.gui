@@ -382,7 +382,7 @@ var LocalNodePeertube = (function () {
 		var listUrl =
 			options.listUrl ||
 			constants.PEERTUBE_LIST_URL ||
-			'https://raw.githubusercontent.com/shpingalet007/bastyon-peertubes/master/list.json'
+			'https://raw.githubusercontent.com/pocketnetteam/bastyon-peertubes/master/list.json'
 		var archivedStorageKey =
 			options.archivedStorageKey ||
 			constants.PEERTUBE_LIST_STORAGE_KEY ||
