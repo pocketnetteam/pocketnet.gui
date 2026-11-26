@@ -2800,6 +2800,7 @@ brtOffer = function(){
 	self.serialize = function(){
 		return self.address +
 					 (self.hash ?? '') +
+					 self.published +
 					 self.language +
 					 self.caption +
 					 self.description +
@@ -2807,7 +2808,7 @@ brtOffer = function(){
 						t: self.tag,
 						a: self.tags,
 						c: self.condition,
-						p: self.published,
+						p: self.published, // DEPRECATED
 						f: self.currencyPrice,
 						d: self.delivery,
 						v: self.videoSettings,
@@ -2847,6 +2848,7 @@ brtOffer = function(){
 		return {
 			s1: self.address,
 			...(self.hash && { s2: self.hash }),
+			s3: self.published,
 			p: {
 				s1: self.language,
 				s2: self.caption,
@@ -2855,7 +2857,7 @@ brtOffer = function(){
 					t: self.tag,
 					a: self.tags,
 					c: self.condition,
-					p: self.published,
+					p: self.published, // DEPRECATED
 					f: self.currencyPrice,
 					d: self.delivery,
 					v: self.videoSettings,
