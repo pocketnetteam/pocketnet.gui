@@ -1,0 +1,2 @@
+proxy16/deploy/*.sh text eol=lf
+proxy16/deploy/*.tpl text eol=lf

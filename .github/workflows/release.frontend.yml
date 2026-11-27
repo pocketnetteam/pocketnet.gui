@@ -1,0 +1,53 @@
+name: Release frontend mirror
+
+# Builds dist/frontend and publishes rolling GitHub Release tag frontend-mirror
+# Asset: bastyon-frontend.tar.gz
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install and build frontend
+        run: |
+          npm i
+          npm run build:frontend -- --sha=${{ github.sha }}
+
+      - name: Pack tarball
+        run: |
+          set -euo pipefail
+          tar czf /tmp/bastyon-frontend.tar.gz -C dist/frontend .
+          ls -lh /tmp/bastyon-frontend.tar.gz
+          # sanity
+          tar tzf /tmp/bastyon-frontend.tar.gz | head -n 20
+          tar tzf /tmp/bastyon-frontend.tar.gz | grep -qx 'index.html'
+
+      - name: Publish rolling release (tag frontend-mirror)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          NOTES="Static Bastyon frontend for proxy/PeerTube mirrors.
+          Built from ${{ github.sha }} on ${{ github.ref_name }}.
+          Asset: bastyon-frontend.tar.gz"
+          if gh release view frontend-mirror >/dev/null 2>&1; then
+            gh release upload frontend-mirror /tmp/bastyon-frontend.tar.gz --clobber
+            gh release edit frontend-mirror --title "Frontend mirror" --notes "$NOTES"
+          else
+            gh release create frontend-mirror /tmp/bastyon-frontend.tar.gz \
+              --title "Frontend mirror" \
+              --notes "$NOTES" \
+              --latest=false
+          fi

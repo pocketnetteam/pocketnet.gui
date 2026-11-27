@@ -1,5 +1,5 @@
 ---
-description: Deploy pocketnet proxy fleet (4/5.pocketnet.app) via GHCR + PROXY_FLEET_JSON
+description: Deploy pocketnet proxy fleet (4/5.pocketnet.app) via GHCR + PROXY_FLEET_JSON; optional frontend mirror on :443
 globs: proxy16/deploy/**
 alwaysApply: false
 ---
@@ -17,14 +17,42 @@ Local encode: `C:\keys\bastyon\proxy-fleet\encode-secret.ps1 -Copy`
 
 Fleet fields per host: `id`, `ip`, `host`, `sshUser`, `admin` (required non-empty), `email` (Let's Encrypt).
 
-## Workflow
+## Workflows
 
-`.github/workflows/deploy.proxy.fleet.yml` — `workflow_dispatch` only.
+### Proxy API — `.github/workflows/deploy.proxy.fleet.yml`
+
+`workflow_dispatch` only.
 
 1. Build `ghcr.io/<owner>/pocketnet-proxy:proxy16`
 2. Decode fleet → matrix
-3. Per host: LE cert → `/opt/proxy/cert/` → pull image → bootstrap (admin/domain/enabled) → up
+3. Per host: nginx ACME webroot → LE cert → `/opt/proxy/cert/` → pull image → bootstrap → up (`:8899` / `:8099`)
 
+### Frontend mirror — two steps
+
+1. `.github/workflows/release.frontend.yml` — `npm run build:frontend` → rolling Release tag `frontend-mirror` / asset `bastyon-frontend.tar.gz`
+2. `.github/workflows/deploy.frontend.fleet.yml` — SSH to fleet, `frontend-pull-up.sh` → `/opt/proxy/frontend` + nginx `:443`
+
+Manual on host (one command after scripts are in `/opt/proxy`):
+
+```bash
+/opt/proxy/frontend-up.sh
+# or explicit domain:
+/opt/proxy/frontend-up.sh 7.pocketnet.app
+```
+
+Defaults: DOMAIN from LE cert CN; tarball from GitHub Release `frontend-mirror` (`bastyon-frontend.tar.gz`); on download failure uses cache `/opt/proxy/bastyon-frontend.tar.gz`.
+
+Prerequisite once: run Actions **Release frontend mirror** (or leave a tar.gz in `/opt/proxy/bastyon-frontend.tar.gz`).
+
+Site: `https://<host>/` (static). API unchanged: `https://<host>:8899/`.
+
+PHP/OG is not served on mirrors (static `index.html` only).
+
+### Frontend quality
+
+- Always ship **production** `minimize:bastyon` (`path=/`, `join.min.js` / `vendor.min.js` / `master.css`). Never pack a `dev:bastyon` tree (`window.design`, `/pocketnet/` path, dozens of raw `join` scripts).
+- `scripts/build-frontend.js` asserts those production markers.
+- nginx cache: HTML/SW `no-cache`; js/css/img/fonts `immutable` 1y (assets are `?v=`-busted). Shared include: `proxy16/deploy/nginx-static-cache.inc` (also for PeerTube client overrides).
 
 ## Do not
 
