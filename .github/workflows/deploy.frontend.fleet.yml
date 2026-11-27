@@ -1,0 +1,111 @@
+name: Deploy Frontend fleet
+
+# Manual. Uses same PROXY_FLEET_JSON + PNTBSTPRX_SSH_KEY as proxy fleet.
+# Expects Release tag frontend-mirror with asset bastyon-frontend.tar.gz
+# (run workflow Release frontend mirror first), or pass FRONTEND_URL input.
+on:
+  workflow_dispatch:
+    inputs:
+      frontend_url:
+        description: "Override tarball URL (empty = GitHub Release frontend-mirror asset)"
+        required: false
+        default: ""
+
+jobs:
+  prepare:
+    runs-on: ubuntu-22.04
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+      frontend_url: ${{ steps.url.outputs.frontend_url }}
+    steps:
+      - name: Resolve FRONTEND_URL
+        id: url
+        run: |
+          set -euo pipefail
+          if [ -n "${{ inputs.frontend_url }}" ]; then
+            echo "frontend_url=${{ inputs.frontend_url }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "frontend_url=https://github.com/${{ github.repository }}/releases/download/frontend-mirror/bastyon-frontend.tar.gz" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Decode fleet secret
+        id: matrix
+        env:
+          FLEET_B64: ${{ secrets.PROXY_FLEET_JSON }}
+        run: |
+          set -euo pipefail
+          if [ -z "${FLEET_B64:-}" ]; then
+            echo "Secret PROXY_FLEET_JSON is empty."
+            exit 1
+          fi
+          echo "$FLEET_B64" | base64 -d > /tmp/fleet.json
+          python3 - <<'PY'
+          import json, os
+          fleet = json.load(open("/tmp/fleet.json"))
+          if not isinstance(fleet, list) or not fleet:
+              raise SystemExit("fleet JSON must be a non-empty array")
+          include = []
+          for row in fleet:
+              for key in ("id", "ip", "host", "sshUser", "admin", "email"):
+                  if key not in row:
+                      raise SystemExit(f"missing field {key} in {row!r}")
+              include.append({
+                  "id": str(row["id"]),
+                  "ip": str(row["ip"]),
+                  "host": str(row["host"]),
+                  "sshUser": str(row["sshUser"]).strip(),
+                  "admin": str(row["admin"]).strip(),
+                  "email": str(row["email"]).strip(),
+              })
+          matrix = {"include": include}
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
+              f.write("matrix=" + json.dumps(matrix, separators=(",", ":")) + "\n")
+          print("Fleet hosts:", ", ".join(x["host"] for x in include))
+          PY
+
+  deploy:
+    needs: prepare
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.prepare.outputs.matrix) }}
+    name: frontend ${{ matrix.host }}
+    steps:
+      - name: Check Out Repo
+        uses: actions/checkout@v4
+
+      - name: Prepare remote dirs
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ matrix.ip }}
+          username: ${{ matrix.sshUser }}
+          key: ${{ secrets.PNTBSTPRX_SSH_KEY }}
+          script: mkdir -p /opt/proxy/frontend /opt/proxy/cert /var/www/acme
+
+      - name: Copy deploy scripts
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ matrix.ip }}
+          username: ${{ matrix.sshUser }}
+          key: ${{ secrets.PNTBSTPRX_SSH_KEY }}
+          source: >-
+            proxy16/deploy/frontend-pull-up.sh,proxy16/deploy/ensure-nginx.sh,proxy16/deploy/nginx-frontend.conf.tpl,proxy16/deploy/nginx-acme-only.conf.tpl,proxy16/deploy/issue-letsencrypt.sh
+          target: /opt/proxy/
+          strip_components: 2
+
+      - name: Pull frontend + nginx
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ matrix.ip }}
+          username: ${{ matrix.sshUser }}
+          key: ${{ secrets.PNTBSTPRX_SSH_KEY }}
+          envs: FRONTEND_URL,DOMAIN,GH_TOKEN
+          script: |
+            set -euo pipefail
+            chmod +x /opt/proxy/frontend-pull-up.sh /opt/proxy/ensure-nginx.sh /opt/proxy/issue-letsencrypt.sh
+            export FRONTEND_URL DOMAIN GH_TOKEN
+            /opt/proxy/frontend-pull-up.sh
+        env:
+          FRONTEND_URL: ${{ needs.prepare.outputs.frontend_url }}
+          DOMAIN: ${{ matrix.host }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

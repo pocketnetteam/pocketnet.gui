@@ -20,7 +20,9 @@ var args = {
     path : '/',
     makewebnode: false,
 	project : "",
-	composetemplates : false
+	composetemplates : false,
+	// Skip cordova/www + cordova config copies (used by dist/frontend builds).
+	skipcopy : false
 }
 
 var uglify = true
@@ -1116,6 +1118,11 @@ fs.exists(mapJsPath, function (exists) {
 
 
 		makePocketnet(function(){
+
+			if(args.skipcopy){
+				console.log('skipcopy: skipping cordova/web copies')
+				return
+			}
 
 			copycontent(cordova, function(){
 			})

@@ -2,8 +2,9 @@
  * Build a self-contained website frontend into dist/frontend.
  *
  * Mirrors the packaging used by .github/workflows/deploy.web.yml /
- * night.bastyon.com.yml: run minimize:bastyon, then copy the repo
- * excluding proxy16, cordova, Electron/build tooling, and node_modules.
+ * night.bastyon.com.yml, but without mutating the repo root:
+ * copy sources into dist/frontend first, then run minimize there
+ * (cwd = outDir, -skipcopy so cordova/www is not created under dist).
  *
  * Usage:
  *   node scripts/build-frontend.js
@@ -14,10 +15,11 @@
 
 var fs = require('fs');
 var path = require('path');
-var { execSync } = require('child_process');
+var { execFileSync, execSync } = require('child_process');
 
 var root = path.resolve(__dirname, '..');
 var outDir = path.join(root, 'dist', 'frontend');
+var minimizeJs = path.join(root, 'minimize.js');
 
 // Same excludes as web deploy rsync, plus local/desktop-only noise.
 var EXCLUDE = {
@@ -39,7 +41,9 @@ var EXCLUDE = {
 	'dist': true,
 	'tor': true,
 	'tests': true,
-	'docs': true
+	'docs': true,
+	// Mirror hosts serve static index.html only (no PHP/OG runtime).
+	'php': true
 };
 
 function parseArgs(argv) {
@@ -89,17 +93,15 @@ function ensureDir(dir) {
 	fs.mkdirSync(dir, { recursive: true });
 }
 
-function shouldSkip(name) {
-	return !!EXCLUDE[name];
-}
-
-function copyTree(src, dest) {
+function copyTree(src, dest, atRoot) {
 	ensureDir(dest);
 
 	var entries = fs.readdirSync(src, { withFileTypes: true });
 
 	entries.forEach(function (entry) {
-		if (shouldSkip(entry.name)) {
+		// EXCLUDE applies only to repo-root names (e.g. top-level assets/),
+		// not nested paths like js/vendor/owl/assets/.
+		if (atRoot && EXCLUDE[entry.name]) {
 			return;
 		}
 
@@ -111,7 +113,7 @@ function copyTree(src, dest) {
 		}
 
 		if (entry.isDirectory()) {
-			copyTree(from, to);
+			copyTree(from, to, false);
 			return;
 		}
 
@@ -121,27 +123,50 @@ function copyTree(src, dest) {
 	});
 }
 
-function runMinimize(opts) {
-	var script = opts.test ? 'minimize:bastyon:test' : 'minimize:bastyon';
-	var extra = [];
-
-	if (opts.path) {
-		extra.push('-path=' + opts.path);
+function resolveSha(opts) {
+	if (opts.sha) {
+		return opts.sha;
 	}
 
-	if (opts.sha) {
-		extra.push('-sha=' + opts.sha);
+	try {
+		return execSync('git rev-parse HEAD', {
+			cwd: root,
+			encoding: 'utf8',
+			windowsHide: true
+		}).trim();
+	} catch (e) {
+		return null;
+	}
+}
+
+function runMinimize(opts) {
+	var sha = resolveSha(opts);
+	var args = [
+		minimizeJs,
+		'-prodaction=true',
+		'-vendor=30069',
+		'-path=' + (opts.path || '/'),
+		'-project=Bastyon',
+		'-skipcopy=true'
+	];
+
+	if (opts.test) {
+		args.push('-test=true');
+	}
+
+	if (sha) {
+		args.push('-sha=' + sha);
 	}
 
 	if (opts.run) {
-		extra.push('-run=' + opts.run);
+		args.push('-run=' + opts.run);
 	}
 
-	var cmd = 'npm run ' + script + (extra.length ? ' -- ' + extra.join(' ') : '');
+	console.log('[build-frontend] node minimize.js (cwd=' + outDir + ')');
+	console.log('[build-frontend] args:', args.slice(1).join(' '));
 
-	console.log('[build-frontend] ' + cmd);
-	execSync(cmd, {
-		cwd: root,
+	execFileSync(process.execPath, args, {
+		cwd: outDir,
 		stdio: 'inherit',
 		windowsHide: true
 	});
@@ -154,16 +179,19 @@ function main() {
 	console.log('[build-frontend] out  =', outDir);
 	console.log('[build-frontend] mode =', opts.test ? 'test' : 'prod');
 
+	console.log('[build-frontend] packing sources into dist/frontend ...');
+	rmrf(outDir);
+	ensureDir(path.dirname(outDir));
+	copyTree(root, outDir, true);
+
 	if (!opts.skipMinimize) {
 		runMinimize(opts);
 	} else {
 		console.log('[build-frontend] skip minimize');
 	}
 
-	console.log('[build-frontend] packing into dist/frontend ...');
-	rmrf(outDir);
-	ensureDir(path.dirname(outDir));
-	copyTree(root, outDir);
+	// Cordova must never land in the mirror package.
+	rmrf(path.join(outDir, 'cordova'));
 
 	var required = ['index.html', 'js', 'css', 'components', 'chat', 'localization'];
 	var missing = required.filter(function (name) {
@@ -172,11 +200,60 @@ function main() {
 
 	if (missing.length) {
 		console.error('[build-frontend] missing required paths:', missing.join(', '));
-		console.error('[build-frontend] run without --skip-minimize, or run npm run minimize:bastyon first');
+		console.error('[build-frontend] run without --skip-minimize');
 		process.exit(1);
 	}
 
+	assertProductionMirror(outDir, opts);
+
 	console.log('[build-frontend] done:', outDir);
+}
+
+/**
+ * Mirror packages must be production minimize (joined bundles, path=/),
+ * not a local `npm run dev:bastyon` tree.
+ */
+function assertProductionMirror(dir, opts) {
+	var indexPath = path.join(dir, 'index.html');
+	var html = fs.readFileSync(indexPath, 'utf8');
+	var problems = [];
+
+	if (html.indexOf('window.design = true') !== -1) {
+		problems.push('index.html has window.design=true (dev minimize)');
+	}
+
+	if (html.indexOf('pocketnetpublicpath = "/pocketnet/"') !== -1) {
+		problems.push('index.html still has path=/pocketnet/ (use minimize:bastyon -path=/)');
+	}
+
+	if (!opts.test) {
+		if (html.indexOf('js/join.min.js') === -1 && html.indexOf('js/joinfirst.min.js') === -1) {
+			problems.push('index.html missing join.min.js / joinfirst.min.js (production bundles)');
+		}
+
+		if (!fs.existsSync(path.join(dir, 'js', 'join.min.js'))) {
+			problems.push('js/join.min.js file missing');
+		}
+
+		if (!fs.existsSync(path.join(dir, 'css', 'master.css'))) {
+			problems.push('css/master.css missing (production CSS bundle)');
+		}
+	}
+
+	if (fs.existsSync(path.join(dir, 'cordova'))) {
+		problems.push('cordova/ must not be present in dist/frontend');
+	}
+
+	if (problems.length) {
+		console.error('[build-frontend] production mirror checks failed:');
+		problems.forEach(function (p) {
+			console.error('  - ' + p);
+		});
+		console.error('[build-frontend] run: npm run build:frontend   (without --skip-minimize)');
+		process.exit(1);
+	}
+
+	console.log('[build-frontend] production mirror checks ok');
 }
 
 main();
